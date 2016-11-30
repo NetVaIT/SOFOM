@@ -671,6 +671,32 @@
             <Form>frmAnexosCreditos</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Procesos\FacturasDM.pas">
+            <Form>dmFacturas</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Procesos\FacturasForm.pas">
+            <Form>frmFacturasGrid</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Procesos\FacturasEdit.pas">
+            <Form>frmEdFactura</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Procesos\ConceptosFacturaForm.pas">
+            <Form>frmConceptos</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Facturar\DocComprobanteFiscal.pas"/>
+        <DCCReference Include="Facturar\FacturaTipos.pas"/>
+        <DCCReference Include="Facturar\VirtualXML.pas"/>
+        <DCCReference Include="Facturar\XMLtoPDFDmod.pas">
+            <Form>dmodXMLtoPDF</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Facturar\FacturaReglamentacion.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -730,8 +756,6 @@
                     <VersionInfoKeys Name="CFBundleDevelopmentRegion"/>
                 </VersionInfoKeys>
                 <Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\bcboffice2k180.bpl">Embarcadero C++Builder Office 2000 Servers Package</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\bcbofficexp180.bpl">Embarcadero C++Builder Office XP Servers Package</Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dcloffice2k180.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dclofficexp180.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
                 </Excluded_Packages>

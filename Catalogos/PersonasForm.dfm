@@ -1,24 +1,26 @@
 inherited frmPersonas: TfrmPersonas
   BorderStyle = bsToolWindow
   Caption = 'frmPersonas'
+  ClientHeight = 428
   ClientWidth = 645
   ExplicitWidth = 651
-  ExplicitHeight = 486
+  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
+    Top = 343
     Width = 645
     ExplicitTop = 389
     ExplicitWidth = 645
   end
   inherited splDetail1: TSplitter
-    Top = 281
+    Top = 252
     Width = 645
     ExplicitTop = 132
     ExplicitWidth = 645
   end
   inherited splDetail2: TSplitter
-    Top = 325
+    Top = 296
     Width = 645
     ExplicitLeft = -4
     ExplicitTop = 348
@@ -26,14 +28,14 @@ inherited frmPersonas: TfrmPersonas
   end
   inherited pnlMaster: TPanel
     Width = 645
-    Height = 250
+    Height = 221
     ExplicitWidth = 645
-    ExplicitHeight = 36
+    ExplicitHeight = 221
     inherited cxGrid: TcxGrid
       Width = 645
-      Height = 250
+      Height = 221
       ExplicitWidth = 645
-      ExplicitHeight = 36
+      ExplicitHeight = 221
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdPersona: TcxGridDBColumn
           DataBinding.FieldName = 'IdPersona'
@@ -137,29 +139,32 @@ inherited frmPersonas: TfrmPersonas
     end
   end
   inherited pnlDetail3: TPanel
+    Top = 346
     Width = 645
-    ExplicitTop = 351
+    TabOrder = 2
+    ExplicitTop = 346
     ExplicitWidth = 645
   end
   inherited pnlDetail2: TPanel
-    Top = 328
+    Top = 299
     Width = 645
     Height = 44
     TabOrder = 1
-    ExplicitTop = 304
+    ExplicitTop = 299
     ExplicitWidth = 645
     ExplicitHeight = 44
   end
   inherited pnlDetail1: TPanel
-    Top = 284
+    Top = 255
     Width = 645
     TabOrder = 7
-    ExplicitTop = 329
+    ExplicitTop = 255
     ExplicitWidth = 645
   end
   inherited pnlClose: TPanel
+    Top = 387
     Width = 645
-    ExplicitTop = 392
+    ExplicitTop = 387
     ExplicitWidth = 645
   end
   inherited dxBarManager: TdxBarManager
@@ -178,6 +183,7 @@ inherited frmPersonas: TfrmPersonas
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42664.566576585650000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

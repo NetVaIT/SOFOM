@@ -1,14 +1,17 @@
 inherited dmPersona: TdmPersona
   OldCreateOrder = True
-  Height = 528
-  Width = 451
+  Height = 593
+  Width = 770
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
+    OnNewRecord = adodsMasterNewRecord
     CommandText = 
-      'SELECT IdPersona, IdPersonaTipo, IdRazonSocialTipo, IdRolTipo, I' +
-      'dSexo, IdEstadoCivil, IdPais, IdPoblacion, RFC, CURP, RazonSocia' +
-      'l, Nombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, Lu' +
-      'garNacimiento, IdPersonaTitular, VigenciaFM34 FROM Personas'
+      'SELECT IdPersona, IdPersonaTipo, IdRazonSocialTipo, '#13#10'IdRolTipo,' +
+      ' IdSexo, IdEstadoCivil, IdPais, IdPoblacion, RFC, CURP,'#13#10' RazonS' +
+      'ocial, Nombre, ApellidoPaterno, ApellidoMaterno,'#13#10' FechaNacimien' +
+      'to, LugarNacimiento, IdPersonaTitular, '#13#10'VigenciaFM34 ,IdMetodoP' +
+      'ago, IdRegimenFiscal, IdDocumentoLogo,'#13#10' IdPersonaEstatus, Ident' +
+      'ificador, NumCtaPagoCliente, '#13#10'SaldoCliente'#13#10'FROM Personas'
     Left = 56
     object adodsMasterIdPersona: TAutoIncField
       FieldName = 'IdPersona'
@@ -154,6 +157,64 @@ inherited dmPersona: TdmPersona
       FieldName = 'VigenciaFM34'
       Visible = False
     end
+    object adodsMasterIdMetodoPago: TIntegerField
+      FieldName = 'IdMetodoPago'
+    end
+    object adodsMasterIdRegimenFiscal: TIntegerField
+      FieldName = 'IdRegimenFiscal'
+    end
+    object adodsMasterIdPersonaEstatus: TIntegerField
+      FieldName = 'IdPersonaEstatus'
+    end
+    object adodsMasterNumCtaPagoCliente: TStringField
+      DisplayLabel = 'No.Cuenta Pago Cliente'
+      FieldName = 'NumCtaPagoCliente'
+      Size = 30
+    end
+    object adodsMasterExigeCta: TBooleanField
+      FieldKind = fkLookup
+      FieldName = 'ExigeCta'
+      LookupDataSet = ADOdsMetodosPago
+      LookupKeyFields = 'IdMetodoPago'
+      LookupResultField = 'ExigeCuenta'
+      KeyFields = 'IdMetodoPago'
+      Lookup = True
+    end
+    object adodsMasterSaldoCliente: TFMTBCDField
+      FieldName = 'SaldoCliente'
+      Precision = 18
+      Size = 6
+    end
+    object adodsMasterMetodoPago: TStringField
+      FieldKind = fkLookup
+      FieldName = 'MetodoPago'
+      LookupDataSet = ADOdsMetodosPago
+      LookupKeyFields = 'IdMetodoPago'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IdMetodoPago'
+      Size = 50
+      Lookup = True
+    end
+    object adodsMasterRegimenFiscal: TStringField
+      FieldKind = fkLookup
+      FieldName = 'RegimenFiscal'
+      LookupDataSet = ADOdsRegimenFiscal
+      LookupKeyFields = 'IdRegimenFiscal'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IdRegimenFiscal'
+      Size = 150
+      Lookup = True
+    end
+    object adodsMasterEstatusPersona: TStringField
+      FieldKind = fkLookup
+      FieldName = 'EstatusPersona'
+      LookupDataSet = ADOdsPersonaEstatus
+      LookupKeyFields = 'IdPersonaEstatus'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IdPersonaEstatus'
+      Size = 15
+      Lookup = True
+    end
   end
   inherited adodsUpdate: TADODataSet
     Left = 216
@@ -227,8 +288,8 @@ inherited dmPersona: TdmPersona
         Precision = 10
         Value = 1
       end>
-    Left = 352
-    Top = 117
+    Left = 600
+    Top = 101
     object adodsPersonaRolesIdPersonaRol: TAutoIncField
       FieldName = 'IdPersonaRol'
       ReadOnly = True
@@ -354,32 +415,32 @@ inherited dmPersona: TdmPersona
       '.IdRol, PersonasRoles.IdPersona '#13#10'FROM Personas '#13#10'LEFT JOIN Pers' +
       'onasRoles ON Personas.IdPersona = PersonasRoles.IdPersona'#13#10
     Parameters = <>
-    Left = 352
-    Top = 173
+    Left = 600
+    Top = 157
   end
   object adodsRol: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdRol, IdRolTipo, Descripcion FROM Roles'
     Parameters = <>
-    Left = 352
-    Top = 229
+    Left = 600
+    Top = 213
   end
   object adodsRolEstatus: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdRolEstatus, Descripcion FROM RolesEstatus'
     Parameters = <>
-    Left = 352
-    Top = 293
+    Left = 600
+    Top = 277
   end
   object adodsRolClase: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdRolClase, Descripcion FROM RolesClases'
     Parameters = <>
-    Left = 352
-    Top = 349
+    Left = 600
+    Top = 333
   end
   object dsMaster: TDataSource
     DataSet = adodsMaster
@@ -402,6 +463,36 @@ inherited dmPersona: TdmPersona
     CommandText = 'select IdRolTipo, Identificador, Descripcion from RolesTipos'
     Parameters = <>
     Left = 56
+    Top = 432
+  end
+  object ADOdsPersonaEstatus: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdPersonaEstatus, Identificador, Descripcion from Persona' +
+      'sEstatus'
+    Parameters = <>
+    Left = 216
+    Top = 432
+  end
+  object ADOdsMetodosPago: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdMetodoPago, Identificador, Descripcion, ExigeCuenta,'#13#10' ' +
+      'ClaveSAT2016  from MetodosPago'
+    Parameters = <>
+    Left = 336
+    Top = 432
+  end
+  object ADOdsRegimenFiscal: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdRegimenFiscal, Identificador, Descripcion from Regimene' +
+      'sFiscales'
+    Parameters = <>
+    Left = 464
     Top = 432
   end
 end

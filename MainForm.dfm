@@ -11,9 +11,11 @@ inherited frmMain: TfrmMain
     OnApplicationMenuClick = dxRibbon1ApplicationMenuClick
     ExplicitWidth = 1076
     inherited dxRibbon1Tab1: TdxRibbonTab
+      Active = False
       Index = 0
     end
     object dxRibbon1Tab2: TdxRibbonTab
+      Active = True
       Caption = 'Catalogos'
       Groups = <
         item
@@ -74,6 +76,7 @@ inherited frmMain: TfrmMain
   end
   inherited pnlMain: TPanel
     Width = 1076
+    ExplicitTop = 149
     ExplicitWidth = 1076
   end
   inherited dxBarManager: TdxBarManager
@@ -101,6 +104,8 @@ inherited frmMain: TfrmMain
         end>
     end
     inherited dxbArchivo: TdxBar
+      DockedDockControl = nil
+      DockedDockingStyle = dsNone
       FloatClientWidth = 51
       FloatClientHeight = 76
     end
@@ -185,6 +190,10 @@ inherited frmMain: TfrmMain
         item
           Visible = True
           ItemName = 'dxBarLargeButton5'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton39'
         end>
       OneOnRow = False
       Row = 0
@@ -265,7 +274,7 @@ inherited frmMain: TfrmMain
       FloatLeft = 1133
       FloatTop = 8
       FloatClientWidth = 98
-      FloatClientHeight = 108
+      FloatClientHeight = 162
       ItemLinks = <
         item
           Visible = True
@@ -274,6 +283,10 @@ inherited frmMain: TfrmMain
         item
           Visible = True
           ItemName = 'dxBarLargeButton35'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBrLrgBtnFacturas'
         end>
       OneOnRow = True
       Row = 0
@@ -502,6 +515,16 @@ inherited frmMain: TfrmMain
     object dxBarLargeButton38: TdxBarLargeButton
       Action = actAmortizaciones
       Category = 0
+    end
+    object dxBrLrgBtnFacturas: TdxBarLargeButton
+      Action = actFacturacion
+      Category = 0
+    end
+    object dxBarLargeButton39: TdxBarLargeButton
+      Action = ActEmisor
+      Category = 0
+      SyncImageIndex = False
+      ImageIndex = 11
     end
     object dxBarLargeButton31: TdxBarLargeButton
       Action = actRptDispersion
@@ -9491,6 +9514,20 @@ inherited frmMain: TfrmMain
       Category = 'Procesos'
       Caption = 'Amortizaciones'
       ImageIndex = 44
+      OnExecute = actCatalogoExecute
+    end
+    object actFacturacion: TAction
+      Tag = 32
+      Category = 'Procesos'
+      Caption = 'Facturaci'#243'n'
+      ImageIndex = 45
+      OnExecute = actCatalogoExecute
+    end
+    object ActEmisor: TAction
+      Tag = 28
+      Category = 'Catalogos'
+      Caption = 'Emisor'
+      ImageIndex = 11
       OnExecute = actCatalogoExecute
     end
   end

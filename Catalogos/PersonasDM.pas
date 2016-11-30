@@ -8,7 +8,7 @@ uses
 
 type
   TRolTipo = (rNone, rDuenoProceso, rOutSourcing, rCliente, rProveedor, rEmpleado,
-           rSocio, rAutoridad, rComisionista);
+           rSocio, rAutoridad, rComisionista, rEmisor);   //Nov 28/16 Emisor
   TdmPersona = class(T_dmStandar)
     adodsMasterIdPersona: TAutoIncField;
     adodsMasterRFC: TStringField;
@@ -68,8 +68,21 @@ type
     adodsMasterIdRolTipo: TIntegerField;
     adodsRolesTipos: TADODataSet;
     adodsMasterRolTipo: TStringField;
+    ADOdsPersonaEstatus: TADODataSet;
+    adodsMasterIdMetodoPago: TIntegerField;
+    adodsMasterIdRegimenFiscal: TIntegerField;
+    adodsMasterIdPersonaEstatus: TIntegerField;
+    adodsMasterNumCtaPagoCliente: TStringField;
+    adodsMasterSaldoCliente: TFMTBCDField;
+    ADOdsMetodosPago: TADODataSet;
+    ADOdsRegimenFiscal: TADODataSet;
+    adodsMasterMetodoPago: TStringField;
+    adodsMasterRegimenFiscal: TStringField;
+    adodsMasterEstatusPersona: TStringField;
+    adodsMasterExigeCta: TBooleanField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsPersonaRolesNewRecord(DataSet: TDataSet);
+    procedure adodsMasterNewRecord(DataSet: TDataSet);
   private
     { Private declarations }
     FRolTipo: TRolTipo;
@@ -89,6 +102,13 @@ implementation
 uses PersonasForm;//, PersonasRolesForm, PersonasSeleccionRolDmod;
 
 {$R *.dfm}
+
+procedure TdmPersona.adodsMasterNewRecord(DataSet: TDataSet);
+begin
+  inherited;
+  DataSet.FieldByName('IdRolTipo').AsInteger:=integer(RolTipo); //Nov 28/16
+  DataSet.FieldByName('IdPersonaEstatus').AsInteger:=1; //Nov 30/16
+end;
 
 procedure TdmPersona.adodsPersonaRolesNewRecord(DataSet: TDataSet);
 begin
@@ -116,6 +136,7 @@ begin
   // Busqueda
   SQLSelect:= 'SELECT IdPersona, IdPersonaTipo, IdRolTipo, IdRazonSocialTipo, IdSexo, IdEstadoCivil, IdPais, IdPoblacion, RFC, CURP, ' +
   'RazonSocial, Nombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, LugarNacimiento, IdPersonaTitular, VigenciaFM34 ' +
+  ',IdMetodoPago, IdRegimenFiscal, IdDocumentoLogo, IdPersonaEstatus, Identificador, NumCtaPagoCliente, SaldoCliente '+ //Nov 28/16
   'FROM Personas ';
   SQLOrderBy:= 'ORDER BY RazonSocial';
   actSearch.Execute;

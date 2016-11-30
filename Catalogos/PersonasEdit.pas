@@ -21,7 +21,8 @@ uses
   cxContainer, cxEdit, cxMaskEdit, cxDropDownEdit, cxCalendar, cxDBEdit,
   Vcl.DBCtrls, cxTextEdit, cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox,
   PersonasDM, TelefonosDM, EmailsDM, PersonasDomiciliosDM, PersonasContactoDM,
-  CuentasBancariasDM, ShellApi, PersonasCSDDM, PersonasDocumentosDM;
+  CuentasBancariasDM, ShellApi, PersonasCSDDM, PersonasDocumentosDM, cxLabel,
+  cxDBLabel;
 
 type
   TfrmPersonaEdit = class(T_frmEdit)
@@ -55,9 +56,6 @@ type
     Label11: TLabel;
     cxDBLookupComboBox1: TcxDBLookupComboBox;
     btnNext: TButton;
-    lblCURP: TLabel;
-    cxDBEditCURP: TcxDBMaskEdit;
-    btnWeb: TButton;
     tsContacto: TcxTabSheet;
     Label12: TLabel;
     cxDBTextEdit2: TcxDBTextEdit;
@@ -70,6 +68,22 @@ type
     cxDBDateEdit2: TcxDBDateEdit;
     tsCSD: TcxTabSheet;
     tsDocumentos: TcxTabSheet;
+    Label16: TLabel;
+    DBLookupComboBox1: TDBLookupComboBox;
+    PnlCliente: TPanel;
+    Label17: TLabel;
+    DBLookupComboBox2: TDBLookupComboBox;
+    PnlNoCtaCliente: TPanel;
+    Label18: TLabel;
+    cxDBTextEdit4: TcxDBTextEdit;
+    Label19: TLabel;
+    cxDBLabel1: TcxDBLabel;
+    PnlEmisor: TPanel;
+    Label20: TLabel;
+    DBLookupComboBox3: TDBLookupComboBox;
+    lblCURP: TLabel;
+    cxDBEditCURP: TcxDBMaskEdit;
+    btnWeb: TButton;
     procedure FormShow(Sender: TObject);
     procedure cxDBLookupComboBox1PropertiesChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);

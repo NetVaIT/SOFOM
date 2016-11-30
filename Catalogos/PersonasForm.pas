@@ -115,7 +115,14 @@ begin
       Self.Caption := 'Comisionistas';
 //      tvMaster.Columns[tvMasterTitular.Index].Visible := true;
     end;
+    rEmisor: begin
+      Self.Caption := 'Emisor';
+//      tvMaster.Columns[tvMasterTitular.Index].Visible := true;
+
+    end;
   end;
+  TfrmPersonaEdit(gEditForm).PnlCliente.Visible:=RolTipo=rCliente; //Nov 28/16
+  TfrmPersonaEdit(gEditForm).PnlEmisor.Visible:=RolTipo=rEmisor; //Nov 28/16
 end;
 
 procedure TfrmPersonas.SetRolTipo(const Value: TRolTipo);

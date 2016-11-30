@@ -139,7 +139,16 @@ uses
   AnexosSegmentosForm in 'Procesos\AnexosSegmentosForm.pas' {frmAnexosSegmentos},
   AnexosSegmentosEdit in 'Procesos\AnexosSegmentosEdit.pas' {frmAnexosSegmentosEdit},
   AnexosAmortizacionesForm in 'Procesos\AnexosAmortizacionesForm.pas' {frmAnexosAmortizaciones},
-  AnexosCreditosForm in 'Procesos\AnexosCreditosForm.pas' {frmAnexosCreditos};
+  AnexosCreditosForm in 'Procesos\AnexosCreditosForm.pas' {frmAnexosCreditos},
+  FacturasDM in 'Procesos\FacturasDM.pas' {dmFacturas: TDataModule},
+  FacturasForm in 'Procesos\FacturasForm.pas' {frmFacturasGrid},
+  FacturasEdit in 'Procesos\FacturasEdit.pas' {frmEdFactura},
+  ConceptosFacturaForm in 'Procesos\ConceptosFacturaForm.pas' {frmConceptos},
+  DocComprobanteFiscal in 'Facturar\DocComprobanteFiscal.pas',
+  FacturaTipos in 'Facturar\FacturaTipos.pas',
+  VirtualXML in 'Facturar\VirtualXML.pas',
+  XMLtoPDFDmod in 'Facturar\XMLtoPDFDmod.pas' {dmodXMLtoPDF: TDataModule},
+  FacturaReglamentacion in 'Facturar\FacturaReglamentacion.pas';
 
 {$R *.res}
 
