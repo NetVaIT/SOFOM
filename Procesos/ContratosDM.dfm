@@ -80,6 +80,7 @@ inherited dmContratos: TdmContratos
   object dsMaster: TDataSource
     AutoEdit = False
     DataSet = adodsMaster
+    OnDataChange = dsMasterDataChange
     Left = 104
     Top = 16
   end
@@ -115,14 +116,15 @@ inherited dmContratos: TdmContratos
   object adodsAnexos: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
+    OnNewRecord = adodsAnexosNewRecord
     CommandText = 
       'select IdAnexo, IdContrato, IdMoneda, IdAnexoEstatus, Identifica' +
       'dor, Descripcion, Fecha, PrecioMoneda, TipoCambio, Precio, Impue' +
       'sto, PrecioTotal, EnganchePorcentaje, Enganche, ComisionPorcenta' +
       'je, Comision, ComisionImpuesto, Gastos, GastosImpuestos, Desposi' +
       'tosNumero, Depositos, PagoIncial, MontoFinanciar, TasaAnual, Pla' +
-      'zo, PagoMensual, FechaInicial from Anexos'#13#10'where IdContrato = :I' +
-      'dContrato'
+      'zo, PagoMensual, FechaInicial, FechaCorte from Anexos'#13#10'where IdC' +
+      'ontrato = :IdContrato'
     DataSource = dsMaster
     MasterFields = 'IdContrato'
     Parameters = <
@@ -131,6 +133,7 @@ inherited dmContratos: TdmContratos
         Attributes = [paSigned]
         DataType = ftInteger
         Precision = 10
+        Size = 4
         Value = 4
       end>
     Left = 104
@@ -168,6 +171,7 @@ inherited dmContratos: TdmContratos
     object adodsAnexosPrecioMoneda: TFMTBCDField
       DisplayLabel = 'Precio'
       FieldName = 'PrecioMoneda'
+      OnChange = adodsAnexosPrecioMonedaChange
       currency = True
       Precision = 18
       Size = 6
@@ -185,6 +189,7 @@ inherited dmContratos: TdmContratos
     object adodsAnexosTipoCambio: TFMTBCDField
       DisplayLabel = 'Tipod de cambio'
       FieldName = 'TipoCambio'
+      OnChange = adodsAnexosPrecioMonedaChange
       currency = True
       Precision = 18
       Size = 6
@@ -213,6 +218,7 @@ inherited dmContratos: TdmContratos
     object adodsAnexosEnganchePorcentaje: TBCDField
       DisplayLabel = 'Porcentaje enganche'
       FieldName = 'EnganchePorcentaje'
+      OnChange = adodsAnexosPrecioMonedaChange
       DisplayFormat = '0.00 %'
       EditFormat = '0.00'
       Precision = 19
@@ -226,6 +232,7 @@ inherited dmContratos: TdmContratos
     object adodsAnexosComisionPorcentaje: TBCDField
       DisplayLabel = 'Porcentaje comisi'#243'n'
       FieldName = 'ComisionPorcentaje'
+      OnChange = adodsAnexosPrecioMonedaChange
       DisplayFormat = '0.00 %'
       EditFormat = '0.00'
       Precision = 19
@@ -247,6 +254,7 @@ inherited dmContratos: TdmContratos
     object adodsAnexosGastos: TFMTBCDField
       DisplayLabel = 'Gastos de administraci'#243'n'
       FieldName = 'Gastos'
+      OnChange = adodsAnexosPrecioMonedaChange
       currency = True
       Precision = 18
       Size = 6
@@ -261,6 +269,7 @@ inherited dmContratos: TdmContratos
     object adodsAnexosDespositosNumero: TIntegerField
       DisplayLabel = 'No. de Desp'#243'sitos'
       FieldName = 'DespositosNumero'
+      OnChange = adodsAnexosPrecioMonedaChange
     end
     object adodsAnexosDepositos: TFMTBCDField
       DisplayLabel = 'Dep'#243'sito en garantia'
@@ -286,12 +295,14 @@ inherited dmContratos: TdmContratos
     object adodsAnexosTasaAnual: TBCDField
       DisplayLabel = 'Tasa anual'
       FieldName = 'TasaAnual'
+      OnChange = adodsAnexosPrecioMonedaChange
       DisplayFormat = '0.00 %'
       EditFormat = '0.00'
       Precision = 19
     end
     object adodsAnexosPlazo: TIntegerField
       FieldName = 'Plazo'
+      OnChange = adodsAnexosPrecioMonedaChange
       DisplayFormat = '0 mes(es)'
       EditFormat = '0'
     end
@@ -305,6 +316,10 @@ inherited dmContratos: TdmContratos
     object adodsAnexosFechaInicial: TDateTimeField
       DisplayLabel = 'Fecha inicial'
       FieldName = 'FechaInicial'
+    end
+    object adodsAnexosFechaCorte: TDateTimeField
+      DisplayLabel = 'Fecha de corte'
+      FieldName = 'FechaCorte'
     end
     object adodsAnexosEstatus2: TStringField
       FieldKind = fkLookup
@@ -432,52 +447,69 @@ inherited dmContratos: TdmContratos
       FieldName = 'Fecha'
     end
     object adodsAmortizacionesSaldoInicial: TFMTBCDField
+      DisplayLabel = 'Saldo inicial'
       FieldName = 'SaldoInicial'
+      currency = True
       Precision = 18
       Size = 6
     end
     object adodsAmortizacionesPago: TFMTBCDField
       FieldName = 'Pago'
+      currency = True
       Precision = 18
       Size = 6
     end
     object adodsAmortizacionesCapital: TFMTBCDField
       FieldName = 'Capital'
+      currency = True
       Precision = 18
       Size = 6
     end
     object adodsAmortizacionesCapitalImpuesto: TFMTBCDField
+      DisplayLabel = 'IVA del capital'
       FieldName = 'CapitalImpuesto'
+      currency = True
       Precision = 18
       Size = 6
     end
     object adodsAmortizacionesCapitalTotal: TFMTBCDField
+      DisplayLabel = 'Capital IVA incluido'
       FieldName = 'CapitalTotal'
+      currency = True
       Precision = 18
       Size = 6
     end
     object adodsAmortizacionesInteres: TFMTBCDField
       FieldName = 'Interes'
+      currency = True
       Precision = 18
       Size = 6
     end
     object adodsAmortizacionesInteresImpuesto: TFMTBCDField
+      DisplayLabel = 'IVA de intereses'
       FieldName = 'InteresImpuesto'
+      currency = True
       Precision = 18
       Size = 6
     end
     object adodsAmortizacionesInteresTotal: TFMTBCDField
+      DisplayLabel = 'Intereses con IVA'
       FieldName = 'InteresTotal'
+      currency = True
       Precision = 18
       Size = 6
     end
     object adodsAmortizacionesSaldoFinal: TFMTBCDField
+      DisplayLabel = 'Saldo insoluto'
       FieldName = 'SaldoFinal'
+      currency = True
       Precision = 18
       Size = 6
     end
     object adodsAmortizacionesPagoTotal: TFMTBCDField
+      DisplayLabel = 'Pago del periodo'
       FieldName = 'PagoTotal'
+      currency = True
       Precision = 18
       Size = 6
     end
@@ -485,6 +517,8 @@ inherited dmContratos: TdmContratos
   object adodsCreditos: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
+    AfterPost = adodsCreditosAfterPost
+    OnNewRecord = adodsCreditosNewRecord
     CommandText = 
       'select IdAnexoCredito, IdAnexo, IdAnexoCreditoEstatus, IdUsuario' +
       ', Fecha, MontoFiananciar, TasaAnual, Plazo, PagoMensual, FechaIn' +
@@ -518,37 +552,6 @@ inherited dmContratos: TdmContratos
       FieldName = 'IdUsuario'
       Visible = False
     end
-    object adodsCreditosFecha: TDateTimeField
-      FieldName = 'Fecha'
-    end
-    object adodsCreditosMontoFiananciar: TFMTBCDField
-      DisplayLabel = 'Monto a fiananciar'
-      FieldName = 'MontoFiananciar'
-      Precision = 18
-      Size = 6
-    end
-    object adodsCreditosTasaAnual: TBCDField
-      DisplayLabel = 'Tasa anual'
-      FieldName = 'TasaAnual'
-      Precision = 19
-    end
-    object adodsCreditosPlazo: TIntegerField
-      FieldName = 'Plazo'
-    end
-    object adodsCreditosPagoMensual: TFMTBCDField
-      DisplayLabel = 'Pago mensual'
-      FieldName = 'PagoMensual'
-      Precision = 18
-      Size = 6
-    end
-    object adodsCreditosFechaInicial: TDateTimeField
-      DisplayLabel = 'Fecha inicial'
-      FieldName = 'FechaInicial'
-    end
-    object adodsCreditosFechaCorte: TDateTimeField
-      DisplayLabel = 'Fecha de corte'
-      FieldName = 'FechaCorte'
-    end
     object adodsCreditosEstatus: TStringField
       FieldKind = fkLookup
       FieldName = 'Estatus'
@@ -558,6 +561,46 @@ inherited dmContratos: TdmContratos
       KeyFields = 'IdAnexoCreditoEstatus'
       Size = 50
       Lookup = True
+    end
+    object adodsCreditosFechaInicial: TDateTimeField
+      DisplayLabel = 'Fecha inicial'
+      FieldName = 'FechaInicial'
+    end
+    object adodsCreditosFechaCorte: TDateTimeField
+      DisplayLabel = 'Fecha de corte'
+      FieldName = 'FechaCorte'
+    end
+    object adodsCreditosMontoFiananciar: TFMTBCDField
+      DisplayLabel = 'Monto a fiananciar'
+      FieldName = 'MontoFiananciar'
+      OnChange = adodsCreditosMontoFiananciarChange
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object adodsCreditosTasaAnual: TBCDField
+      DisplayLabel = 'Tasa anual'
+      FieldName = 'TasaAnual'
+      OnChange = adodsCreditosMontoFiananciarChange
+      DisplayFormat = '0.00 %'
+      EditFormat = '0.00'
+      Precision = 19
+    end
+    object adodsCreditosPlazo: TIntegerField
+      FieldName = 'Plazo'
+      OnChange = adodsCreditosMontoFiananciarChange
+      DisplayFormat = '0 mes(es)'
+      EditFormat = '0'
+    end
+    object adodsCreditosPagoMensual: TFMTBCDField
+      DisplayLabel = 'Pago mensual'
+      FieldName = 'PagoMensual'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object adodsCreditosFecha: TDateTimeField
+      FieldName = 'Fecha'
     end
     object adodsCreditosUsuario: TStringField
       FieldKind = fkLookup
@@ -571,6 +614,8 @@ inherited dmContratos: TdmContratos
     end
   end
   object dsCreditos: TDataSource
+    AutoEdit = False
+    DataSet = adodsCreditos
     Left = 296
     Top = 144
   end

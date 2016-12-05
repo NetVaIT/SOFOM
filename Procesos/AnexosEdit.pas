@@ -19,7 +19,7 @@ uses
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, Vcl.ImgList,
   System.Actions, Vcl.ActnList, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls, cxPC,
   cxContainer, cxEdit, cxSpinEdit, cxDBEdit, cxCurrencyEdit, Vcl.DBCtrls,
-  cxMaskEdit, cxDropDownEdit, cxCalendar, cxTextEdit, System.Math,
+  cxMaskEdit, cxDropDownEdit, cxCalendar, cxTextEdit,
   AmortizacionesDM, AnexosSegmentosDM;
 
 type
@@ -72,16 +72,21 @@ type
     DBLookupComboBox2: TDBLookupComboBox;
     tsAmortizaciones: TcxTabSheet;
     tsSegmentos: TcxTabSheet;
+    Label5: TLabel;
+    cxDBDateEdit3: TcxDBDateEdit;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure pcMainChange(Sender: TObject);
   private
     { Private declarations }
-    dmAnexosSegmentos: TdmAnexosSegmentos;
+//    dmAnexosSegmentos: TdmAnexosSegmentos;
     dmAmortizaciones: TdmAmortizaciones;
+    FGenerarImpuestoInteres: Boolean;
+    procedure SetGenerarImpuestoInteres(const Value: Boolean);
   public
     { Public declarations }
+    property GenerarImpuestoInteres: Boolean read FGenerarImpuestoInteres write SetGenerarImpuestoInteres;
   end;
 
 implementation
@@ -93,41 +98,40 @@ uses ContratosDM;
 procedure TfrmAnexosEdit.FormCreate(Sender: TObject);
 begin
   inherited;
-  dmAnexosSegmentos := TdmAnexosSegmentos.Create(Self);
+//  dmAnexosSegmentos := TdmAnexosSegmentos.Create(Self);
   dmAmortizaciones := TdmAmortizaciones.Create(Self);
-  dmAmortizaciones.PaymentTime := ptEndOfPeriod;
+//  dmAmortizaciones.PaymentTime := ptEndOfPeriod;
 end;
 
 procedure TfrmAnexosEdit.FormDestroy(Sender: TObject);
 begin
   inherited;
-  FreeAndNil(dmAnexosSegmentos);
+//  FreeAndNil(dmAnexosSegmentos);
   FreeAndNil(dmAmortizaciones);
 end;
 
 procedure TfrmAnexosEdit.FormShow(Sender: TObject);
 begin
   inherited;
-  dmAnexosSegmentos.MasterSource := DataSource;
-  dmAnexosSegmentos.MasterFields:= 'IdAnexo';
-  dmAnexosSegmentos.ShowModule(tsSegmentos,'');
+//  dmAnexosSegmentos.MasterSource := DataSource;
+//  dmAnexosSegmentos.MasterFields:= 'IdAnexo';
+//  dmAnexosSegmentos.ShowModule(tsSegmentos,'');
   dmAmortizaciones.ShowModule(tsAmortizaciones,'');
 end;
 
 procedure TfrmAnexosEdit.pcMainChange(Sender: TObject);
 begin
   inherited;
-//  if (pcMain.ActivePage <> tsGeneral) and (DataSource.DataSet.State in [dsInsert]) then
-//    try
-//      DataSource.DataSet.Post;
-//    except
-//      pcMain.ActivePage := tsGeneral;
-//      raise;
-//    end;
+  dmAmortizaciones.GenerarImpuestoInteres:= GenerarImpuestoInteres;
   dmAmortizaciones.Execute(DataSource.DataSet.FieldByName('FechaInicial').AsDateTime,
   DataSource.DataSet.FieldByName('TasaAnual').AsExtended,
   DataSource.DataSet.FieldByName('Plazo').AsInteger,
   DataSource.DataSet.FieldByName('MontoFinanciar').AsExtended, 0);
+end;
+
+procedure TfrmAnexosEdit.SetGenerarImpuestoInteres(const Value: Boolean);
+begin
+  FGenerarImpuestoInteres := Value;
 end;
 
 end.

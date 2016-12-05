@@ -44,6 +44,7 @@ type
     tvMasterFechadecorte: TcxGridDBColumn;
     tvMasterEstatus: TcxGridDBColumn;
     tvMasterUsuario: TcxGridDBColumn;
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -54,6 +55,13 @@ implementation
 
 {$R *.dfm}
 
-uses ContratosDM;
+uses ContratosDM, AnexosCreditosEdit;
+
+procedure TfrmAnexosCreditos.FormCreate(Sender: TObject);
+begin
+  inherited;
+  gEditForm:= TfrmAnexosCreditosEdit.Create(Self);
+
+end;
 
 end.

@@ -41,12 +41,19 @@ type
     edtFechaInicial: TcxBarEditItem;
     tvMasterRecId: TcxGridDBColumn;
     tvMasterSegmento: TcxGridDBColumn;
-    tvMasterValorPresente: TcxGridDBColumn;
+    tvMasterPeriodo: TcxGridDBColumn;
+    tvMasterFecha: TcxGridDBColumn;
+    tvMasterSaldoInicial: TcxGridDBColumn;
     tvMasterTasaAnual: TcxGridDBColumn;
-    tvMasterPagoMensual: TcxGridDBColumn;
-    tvMasterValorFuturo: TcxGridDBColumn;
-    tvMasterPlazoIni: TcxGridDBColumn;
-    tvMasterPlazoFin: TcxGridDBColumn;
+    tvMasterPago: TcxGridDBColumn;
+    tvMasterCapital: TcxGridDBColumn;
+    tvMasterCapitalImpuesto: TcxGridDBColumn;
+    tvMasterCapitalTotal: TcxGridDBColumn;
+    tvMasterInteres: TcxGridDBColumn;
+    tvMasterInteresImpuesto: TcxGridDBColumn;
+    tvMasterInteresTotal: TcxGridDBColumn;
+    tvMasterSaldoFinal: TcxGridDBColumn;
+    tvMasterPagoTotal: TcxGridDBColumn;
   private
     { Private declarations }
     FactCalcular: TBasicAction;

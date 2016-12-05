@@ -58,9 +58,6 @@ inherited frmAnexosAmortizaciones: TfrmAnexosAmortizaciones
       end
     end
   end
-  inherited DataSource: TDataSource
-    DataSet = dmContratos.adodsAmortizaciones
-  end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
       0
@@ -77,6 +74,7 @@ inherited frmAnexosAmortizaciones: TfrmAnexosAmortizaciones
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42691.490725081020000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

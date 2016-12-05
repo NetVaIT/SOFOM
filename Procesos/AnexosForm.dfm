@@ -98,12 +98,18 @@ inherited frmAnexos: TfrmAnexos
         object tvMasterFechaInicial: TcxGridDBColumn
           DataBinding.FieldName = 'FechaInicial'
         end
+        object tvMasterFechaCorte: TcxGridDBColumn
+          DataBinding.FieldName = 'FechaCorte'
+        end
         object tvMasterEstatus: TcxGridDBColumn
           DataBinding.FieldName = 'Estatus'
           Width = 60
         end
       end
     end
+  end
+  inherited DataSource: TDataSource
+    OnDataChange = DataSourceDataChange
   end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
@@ -142,7 +148,7 @@ inherited frmAnexos: TfrmAnexos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42683.688746423610000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

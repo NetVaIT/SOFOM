@@ -12,7 +12,6 @@ inherited frmSegmentos: TfrmSegmentos
   inherited splDetail1: TSplitter
     Top = 263
     Width = 878
-    Align = alTop
     ExplicitTop = 263
     ExplicitWidth = 878
   end
@@ -24,7 +23,6 @@ inherited frmSegmentos: TfrmSegmentos
     Top = 63
     Width = 878
     Height = 200
-    Align = alTop
     ExplicitTop = 63
     ExplicitWidth = 878
     ExplicitHeight = 200
@@ -42,29 +40,46 @@ inherited frmSegmentos: TfrmSegmentos
         end
         object tvMasterSegmento: TcxGridDBColumn
           DataBinding.FieldName = 'Segmento'
-          Width = 80
+          Visible = False
         end
-        object tvMasterValorPresente: TcxGridDBColumn
-          DataBinding.FieldName = 'ValorPresente'
-          Width = 80
+        object tvMasterPeriodo: TcxGridDBColumn
+          DataBinding.FieldName = 'Periodo'
         end
-        object tvMasterPlazoIni: TcxGridDBColumn
-          DataBinding.FieldName = 'PlazoIni'
+        object tvMasterFecha: TcxGridDBColumn
+          DataBinding.FieldName = 'Fecha'
         end
-        object tvMasterPlazoFin: TcxGridDBColumn
-          DataBinding.FieldName = 'PlazoFin'
+        object tvMasterSaldoInicial: TcxGridDBColumn
+          DataBinding.FieldName = 'SaldoInicial'
         end
         object tvMasterTasaAnual: TcxGridDBColumn
           DataBinding.FieldName = 'TasaAnual'
-          Width = 80
         end
-        object tvMasterPagoMensual: TcxGridDBColumn
-          DataBinding.FieldName = 'PagoMensual'
-          Width = 80
+        object tvMasterPago: TcxGridDBColumn
+          DataBinding.FieldName = 'Pago'
         end
-        object tvMasterValorFuturo: TcxGridDBColumn
-          DataBinding.FieldName = 'ValorFuturo'
-          Width = 80
+        object tvMasterCapital: TcxGridDBColumn
+          DataBinding.FieldName = 'Capital'
+        end
+        object tvMasterCapitalImpuesto: TcxGridDBColumn
+          DataBinding.FieldName = 'CapitalImpuesto'
+        end
+        object tvMasterCapitalTotal: TcxGridDBColumn
+          DataBinding.FieldName = 'CapitalTotal'
+        end
+        object tvMasterInteres: TcxGridDBColumn
+          DataBinding.FieldName = 'Interes'
+        end
+        object tvMasterInteresImpuesto: TcxGridDBColumn
+          DataBinding.FieldName = 'InteresImpuesto'
+        end
+        object tvMasterInteresTotal: TcxGridDBColumn
+          DataBinding.FieldName = 'InteresTotal'
+        end
+        object tvMasterSaldoFinal: TcxGridDBColumn
+          DataBinding.FieldName = 'SaldoFinal'
+        end
+        object tvMasterPagoTotal: TcxGridDBColumn
+          DataBinding.FieldName = 'PagoTotal'
         end
       end
     end
@@ -81,7 +96,6 @@ inherited frmSegmentos: TfrmSegmentos
     Top = 266
     Width = 878
     Height = 62
-    Align = alClient
     Visible = True
     ExplicitTop = 266
     ExplicitWidth = 878
@@ -97,7 +111,6 @@ inherited frmSegmentos: TfrmSegmentos
   end
   inherited DataSource: TDataSource
     AutoEdit = True
-    DataSet = dmAmortizaciones.dxmSegmentos
   end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
@@ -224,6 +237,7 @@ inherited frmSegmentos: TfrmSegmentos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42684.503633287040000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

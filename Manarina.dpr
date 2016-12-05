@@ -148,7 +148,8 @@ uses
   FacturaTipos in 'Facturar\FacturaTipos.pas',
   VirtualXML in 'Facturar\VirtualXML.pas',
   XMLtoPDFDmod in 'Facturar\XMLtoPDFDmod.pas' {dmodXMLtoPDF: TDataModule},
-  FacturaReglamentacion in 'Facturar\FacturaReglamentacion.pas';
+  FacturaReglamentacion in 'Facturar\FacturaReglamentacion.pas',
+  AnexosCreditosEdit in 'Procesos\AnexosCreditosEdit.pas' {frmAnexosCreditosEdit};
 
 {$R *.res}
 

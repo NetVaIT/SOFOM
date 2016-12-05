@@ -697,6 +697,10 @@
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Facturar\FacturaReglamentacion.pas"/>
+        <DCCReference Include="Procesos\AnexosCreditosEdit.pas">
+            <Form>frmAnexosCreditosEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

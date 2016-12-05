@@ -61,13 +61,18 @@ type
     tvMasterFechaInicial: TcxGridDBColumn;
     tvMasterEstatus: TcxGridDBColumn;
     dxbbProductos: TdxBarButton;
+    tvMasterFechaCorte: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
+    procedure DataSourceDataChange(Sender: TObject; Field: TField);
   private
     { Private declarations }
     FactProductos: TBasicAction;
+    FGenerarImpuestoInteres: Boolean;
     procedure SetactProductos(const Value: TBasicAction);
+    procedure SetGenerarImpuestoInteres(const Value: Boolean);
   public
     { Public declarations }
+    property GenerarImpuestoInteres: Boolean read FGenerarImpuestoInteres write SetGenerarImpuestoInteres;
     property actProductos: TBasicAction read FactProductos write SetactProductos;
   end;
 
@@ -76,6 +81,12 @@ implementation
 {$R *.dfm}
 
 uses ContratosDM, AnexosEdit;
+
+procedure TfrmAnexos.DataSourceDataChange(Sender: TObject; Field: TField);
+begin
+  inherited;
+  TfrmAnexosEdit(gEditForm).GenerarImpuestoInteres:= GenerarImpuestoInteres;
+end;
 
 procedure TfrmAnexos.FormCreate(Sender: TObject);
 begin
@@ -87,6 +98,11 @@ procedure TfrmAnexos.SetactProductos(const Value: TBasicAction);
 begin
   FactProductos := Value;
   dxbbProductos.Action := Value;
+end;
+
+procedure TfrmAnexos.SetGenerarImpuestoInteres(const Value: Boolean);
+begin
+  FGenerarImpuestoInteres := Value;
 end;
 
 end.

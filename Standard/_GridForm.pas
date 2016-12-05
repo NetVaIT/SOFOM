@@ -122,6 +122,7 @@ type
     FView: Boolean;
     FactSearch: TBasicAction;
     FPrintTitle: string;
+    FApplyBestFit: Boolean;
     procedure SetReadOnlyGrid(const Value: Boolean);
     procedure SetDataSet(const Value: TDataSet);
     procedure SetView(const Value: Boolean);
@@ -136,6 +137,7 @@ type
     property DataSet: TDataSet read FDataSet write SetDataSet;
     property ReadOnlyGrid: Boolean read FReadOnlyGrid write SetReadOnlyGrid default False;
     property View: Boolean read FView write SetView default False;
+    property ApplyBestFit: Boolean read FApplyBestFit write FApplyBestFit default True;
     property actSearch: TBasicAction read FactSearch write SetactSearch;
     property PrintTitle: string read FPrintTitle write SetPrintTitle;
   end;
@@ -234,7 +236,8 @@ begin
     gEditForm.DataSet:= DataSet;
   cxGrid.SetFocus;
   tvMaster.DataController.Groups.FullExpand;
-  tvMaster.ApplyBestFit();
+  if ApplyBestFit then
+    tvMaster.ApplyBestFit();
 //  tvMaster.ViewData.Expand(True);
   dxbNavigator.DockedLeft:= 82;
   dxbTools.DockedLeft:= 210;

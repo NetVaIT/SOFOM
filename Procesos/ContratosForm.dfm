@@ -1,25 +1,31 @@
 inherited frmContratos: TfrmContratos
   Caption = 'frmContratos'
-  ClientHeight = 656
+  ClientHeight = 705
   ExplicitWidth = 651
-  ExplicitHeight = 656
+  ExplicitHeight = 705
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Top = 571
+    Top = 537
+    Align = alTop
+    ExplicitTop = 571
   end
   inherited splDetail1: TSplitter
+    Top = 231
     Align = alTop
     ExplicitTop = 293
   end
   inherited splDetail2: TSplitter
-    Top = 487
+    Top = 384
     Align = alTop
+    ExplicitTop = 487
   end
   inherited pnlMaster: TPanel
+    Height = 200
     Align = alTop
+    ExplicitHeight = 200
     inherited cxGrid: TcxGrid
-      ExplicitTop = -3
+      Height = 200
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdContrato: TcxGridDBColumn
           DataBinding.FieldName = 'IdContrato'
@@ -62,20 +68,28 @@ inherited frmContratos: TfrmContratos
     end
   end
   inherited pnlDetail3: TPanel
-    Top = 574
+    Top = 540
+    Height = 124
+    Align = alClient
+    ExplicitTop = 574
   end
   inherited pnlDetail2: TPanel
-    Top = 490
-    Height = 81
-    Align = alClient
+    Top = 387
+    Height = 150
+    Align = alTop
+    ExplicitTop = 387
+    ExplicitHeight = 150
   end
   inherited pnlDetail1: TPanel
-    Height = 200
+    Top = 234
+    Height = 150
     Align = alTop
-    ExplicitHeight = 200
+    ExplicitTop = 234
+    ExplicitHeight = 150
   end
   inherited pnlClose: TPanel
-    Top = 615
+    Top = 664
+    ExplicitTop = 615
   end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
@@ -93,7 +107,6 @@ inherited frmContratos: TfrmContratos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42683.590026041670000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end
