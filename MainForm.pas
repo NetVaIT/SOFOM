@@ -139,6 +139,12 @@ type
     actFacturacion: TAction;
     dxBarLargeButton39: TdxBarLargeButton;
     ActEmisor: TAction;
+    dxBrLrgBtnCuentasXCobrar: TdxBarLargeButton;
+    ActCuentasXCobrar: TAction;
+    dxBrLrgBtnPagos: TdxBarLargeButton;
+    ActPagos: TAction;
+    dxBrLrgBtnAplicaciones: TdxBarLargeButton;
+    ActAplicacionPagos: TAction;
     procedure actCatalogoExecute(Sender: TObject);
     procedure actIntervaCXPExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -168,7 +174,8 @@ implementation
 
 uses UbicacionesDM, BancosDM, MonedasDM, PuestosDM, PlazasTurnosDM,
   EstablecimientosDM,   CapacitacionDM, PersonasDM, RptPlazasDM, ProductosDM,
-  MarcasDM, FamiliasDM, ContratosDM, AmortizacionesDM, FacturasDM;
+  MarcasDM, FamiliasDM, ContratosDM, AmortizacionesDM, FacturasDM,
+  CuentasXCobrarDM, PagosDM;
 //  EsquemaPagosDM, FormulasDM, ReglasNegocioDM,
 //  MovimientosTiposDM, RolesDM, InstruccionesDM,
 //  IncidenciasDM, InstruccionesTiposDM, PeriodosDM, MovimientosDM,
@@ -224,6 +231,9 @@ begin
    30: gModulo := TdmContratos.Create(Self);
    31: gModulo := TdmAmortizaciones.Create(Self);
    32: gModulo := TDMFacturas.CreateWMostrar(Self,True,1); //Nov 25/16 mod  nov29/16
+   33: gModulo := TDMCuentasXCobrar.Create(Self); //Nov 25/16 mod  nov29/16
+   34: gModulo := TdmPagos.Create(Self);
+//   35: gModulo := TdmAplicacionesPagos.Create(Self);
 //   32: gModulo := TdmMovimientos.Create(Self);
 //   33: gModulo := TdmCuentasXPagar.Create(Self);
 //   34: gModulo := TdmCuentasXCobrar.Create(Self);

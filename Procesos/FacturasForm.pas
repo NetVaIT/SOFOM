@@ -78,6 +78,7 @@ type
     tvMasterMetodoPago: TcxGridDBColumn;
     dxBrBtnCFDI: TdxBarButton;
     procedure FormCreate(Sender: TObject);
+    procedure DataSourceDataChange(Sender: TObject; Field: TField);
   private
     FActGenerarCFDI: TBasicAction;
     procedure SetActGenerarCFDI(const Value: TBasicAction);
@@ -95,6 +96,12 @@ implementation
 {$R *.dfm}
 
 uses FacturasDM, FacturasEdit;
+
+procedure TfrmFacturasGrid.DataSourceDataChange(Sender: TObject; Field: TField);
+begin
+  inherited;
+  dxBrBtnCFDI.Enabled:=datasource.DataSet.FieldByName('IDCFDIEstatus').AsInteger=1;  //Dic 7/16
+end;
 
 procedure TfrmFacturasGrid.FormCreate(Sender: TObject);
 begin

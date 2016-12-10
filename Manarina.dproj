@@ -697,6 +697,32 @@
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Facturar\FacturaReglamentacion.pas"/>
+        <DCCReference Include="Procesos\CuentasXCobrarForm.pas">
+            <Form>FrmConCuentasXCobrar</Form>
+        </DCCReference>
+        <DCCReference Include="Procesos\CuentasXCobrarDM.pas">
+            <Form>dmCuentasXCobrar</Form>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Procesos\CuentasXCobrarDetalleForm.pas">
+            <Form>FrmCXCDetalle</Form>
+        </DCCReference>
+        <DCCReference Include="Procesos\CuentasXCobrarEdit.pas">
+            <Form>FrmEdCuentasXCobrar</Form>
+        </DCCReference>
+        <DCCReference Include="Procesos\PagosDM.pas">
+            <Form>dmPagos</Form>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Procesos\PagosForm.pas">
+            <Form>FrmConPagos</Form>
+        </DCCReference>
+        <DCCReference Include="Procesos\PagosEdit.pas">
+            <Form>FrmEdPagos</Form>
+        </DCCReference>
+        <DCCReference Include="Procesos\AplicacionPagos.pas">
+            <Form>FrmAplicacionPago</Form>
+        </DCCReference>
         <DCCReference Include="Procesos\AnexosCreditosEdit.pas">
             <Form>frmAnexosCreditosEdit</Form>
             <FormType>dfm</FormType>

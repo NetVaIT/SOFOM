@@ -16,9 +16,9 @@ inherited dmFacturas: TdmFacturas
       ' NumCtaPago, '#13#10'CadenaOriginal, TotalImpuestoRetenido, TotalImpue' +
       'stoTrasladado, '#13#10'SaldoDocumento, FechaCancelacion, Observaciones' +
       ', '#13#10'PorcentajeIVA, EmailCliente, UUID_TB, SelloCFD_TB, '#13#10'SelloSA' +
-      'T_TB, CertificadoSAT_TB, FechaTimbrado_TB '#13#10' from CFDI C'#13#10'where ' +
-      'fecha>DATEADD(MM, DATEDIFF(MM,0,GETDATE()), 0)'#13#10'order by IDCFDIE' +
-      'STATUS, Fecha '
+      'T_TB, CertificadoSAT_TB, FechaTimbrado_TB, IdCXC '#13#10' from CFDI C'#13 +
+      #10'-- where fecha>DATEADD(MM, DATEDIFF(MM,0,GETDATE()), 0)'#13#10'order ' +
+      'by IDCFDIESTATUS, Fecha '
     Left = 40
     object adodsMasterIdCFDI: TLargeintField
       FieldName = 'IdCFDI'
@@ -230,6 +230,9 @@ inherited dmFacturas: TdmFacturas
       FieldName = 'DirCompleta'
       Size = 300
       Calculated = True
+    end
+    object adodsMasterIdCXC: TIntegerField
+      FieldName = 'IdCXC'
     end
   end
   inherited adodsUpdate: TADODataSet
@@ -777,7 +780,7 @@ inherited dmFacturas: TdmFacturas
   object ADOQryAuxiliar: TADOQuery
     Connection = _dmConection.ADOConnection
     Parameters = <>
-    Left = 324
+    Left = 316
     Top = 393
   end
   object ADODSAuxiliar: TADODataSet

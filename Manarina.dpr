@@ -149,6 +149,14 @@ uses
   VirtualXML in 'Facturar\VirtualXML.pas',
   XMLtoPDFDmod in 'Facturar\XMLtoPDFDmod.pas' {dmodXMLtoPDF: TDataModule},
   FacturaReglamentacion in 'Facturar\FacturaReglamentacion.pas',
+  CuentasXCobrarForm in 'Procesos\CuentasXCobrarForm.pas' {FrmConCuentasXCobrar},
+  CuentasXCobrarDM in 'Procesos\CuentasXCobrarDM.pas' {dmCuentasXCobrar: TDataModule},
+  CuentasXCobrarDetalleForm in 'Procesos\CuentasXCobrarDetalleForm.pas' {FrmCXCDetalle},
+  CuentasXCobrarEdit in 'Procesos\CuentasXCobrarEdit.pas' {FrmEdCuentasXCobrar},
+  PagosDM in 'Procesos\PagosDM.pas' {dmPagos: TDataModule},
+  PagosForm in 'Procesos\PagosForm.pas' {FrmConPagos},
+  PagosEdit in 'Procesos\PagosEdit.pas' {FrmEdPagos},
+  AplicacionPagos in 'Procesos\AplicacionPagos.pas' {FrmAplicacionPago},
   AnexosCreditosEdit in 'Procesos\AnexosCreditosEdit.pas' {frmAnexosCreditosEdit};
 
 {$R *.res}

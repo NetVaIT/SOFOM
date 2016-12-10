@@ -374,7 +374,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
     PrinterSetup.mmPaperHeight = 279401
     PrinterSetup.mmPaperWidth = 215900
     PrinterSetup.PaperSize = 1
-    Template.FileName = 'C:\Desarrollo\TractoPartes\MAS\Win32\Debug\CFDIManarina.rtm'
+    Template.FileName = 'C:\Desarrollo\SOFOM\Win32\Debug\CFDIManarina.rtm'
     Units = utScreenPixels
     AllowPrintToFile = True
     ArchiveFileName = '($MyDocuments)\ReportArchive.raf'
@@ -420,7 +420,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
     object ppHeaderBand1: TppHeaderBand
       Background.Brush.Style = bsClear
       mmBottomOffset = 0
-      mmHeight = 93134
+      mmHeight = 100542
       mmPrintPosition = 0
       object ppLblEtiqueta: TppLabel
         UserName = 'LblEtiqueta'
@@ -434,8 +434,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Style = [fsBold, fsItalic]
         Transparent = True
         mmHeight = 120386
-        mmLeft = 47362
-        mmTop = 46302
+        mmLeft = 46833
+        mmTop = 59267
         mmWidth = 108744
         BandType = 0
         LayerName = Foreground
@@ -444,20 +444,21 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
       end
       object ppShape1: TppShape
         UserName = 'Shape1'
-        Brush.Color = clBtnFace
+        Brush.Style = bsClear
         Shape = stRoundRect
         mmHeight = 36248
         mmLeft = 3175
-        mmTop = 48948
+        mmTop = 50273
         mmWidth = 105304
         BandType = 0
         LayerName = Foreground
       end
       object ppShape7: TppShape
         UserName = 'Shape7'
+        Brush.Color = clBtnFace
         mmHeight = 5027
         mmLeft = 3175
-        mmTop = 53975
+        mmTop = 55300
         mmWidth = 105305
         BandType = 0
         LayerName = Foreground
@@ -467,9 +468,9 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Brush.Style = bsClear
         Pen.Width = 2
         Shape = stRoundRect
-        mmHeight = 10848
-        mmLeft = 7673
-        mmTop = 36248
+        mmHeight = 8731
+        mmLeft = 2638
+        mmTop = 40486
         mmWidth = 37042
         BandType = 0
         LayerName = Foreground
@@ -478,10 +479,10 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         UserName = 'Shape8'
         Brush.Color = clBtnFace
         Shape = stRoundRect
-        mmHeight = 6615
-        mmLeft = 262
-        mmTop = 86519
-        mmWidth = 202671
+        mmHeight = 5820
+        mmLeft = 3177
+        mmTop = 94733
+        mmWidth = 201346
         BandType = 0
         LayerName = Foreground
       end
@@ -495,8 +496,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Style = [fsBold]
         Transparent = True
         mmHeight = 3969
-        mmLeft = 1580
-        mmTop = 87842
+        mmLeft = 4495
+        mmTop = 95524
         mmWidth = 15346
         BandType = 0
         LayerName = Foreground
@@ -511,9 +512,9 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Style = [fsBold]
         Transparent = True
         mmHeight = 3969
-        mmLeft = 90223
-        mmTop = 87842
-        mmWidth = 20638
+        mmLeft = 38634
+        mmTop = 95524
+        mmWidth = 70644
         BandType = 0
         LayerName = Foreground
       end
@@ -527,8 +528,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Style = [fsBold]
         Transparent = True
         mmHeight = 3704
-        mmLeft = 156369
-        mmTop = 87842
+        mmLeft = 157164
+        mmTop = 95789
         mmWidth = 24077
         BandType = 0
         LayerName = Foreground
@@ -543,8 +544,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Style = [fsBold]
         Transparent = True
         mmHeight = 3969
-        mmLeft = 186530
-        mmTop = 87842
+        mmLeft = 187590
+        mmTop = 95524
         mmWidth = 13758
         BandType = 0
         LayerName = Foreground
@@ -563,8 +564,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 4762
-        mmLeft = 16669
-        mmTop = 41540
+        mmLeft = 11634
+        mmTop = 43925
         mmWidth = 10054
         BandType = 0
         LayerName = Foreground
@@ -583,8 +584,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 3969
-        mmLeft = 24871
-        mmTop = 41540
+        mmLeft = 19836
+        mmTop = 43925
         mmWidth = 17198
         BandType = 0
         LayerName = Foreground
@@ -604,7 +605,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 3704
         mmLeft = 155045
-        mmTop = 73026
+        mmTop = 74351
         mmWidth = 44715
         BandType = 0
         LayerName = Foreground
@@ -621,7 +622,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         mmHeight = 4233
         mmLeft = 112184
-        mmTop = 67998
+        mmTop = 69323
         mmWidth = 42333
         BandType = 0
         LayerName = Foreground
@@ -636,8 +637,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Style = [fsBold]
         Transparent = True
         mmHeight = 3969
-        mmLeft = 20368
-        mmTop = 87842
+        mmLeft = 23283
+        mmTop = 95524
         mmWidth = 11377
         BandType = 0
         LayerName = Foreground
@@ -653,7 +654,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         mmHeight = 4233
         mmLeft = 58473
-        mmTop = 49477
+        mmTop = 50802
         mmWidth = 6879
         BandType = 0
         LayerName = Foreground
@@ -670,7 +671,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         mmHeight = 4233
         mmLeft = 6085
-        mmTop = 59793
+        mmTop = 61118
         mmWidth = 11377
         BandType = 0
         LayerName = Foreground
@@ -687,7 +688,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         mmHeight = 4233
         mmLeft = 6085
-        mmTop = 70121
+        mmTop = 71446
         mmWidth = 12700
         BandType = 0
         LayerName = Foreground
@@ -704,7 +705,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         mmHeight = 4233
         mmLeft = 5556
-        mmTop = 49477
+        mmTop = 50802
         mmWidth = 10583
         BandType = 0
         LayerName = Foreground
@@ -720,7 +721,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         mmHeight = 4233
         mmLeft = 65621
-        mmTop = 70115
+        mmTop = 71440
         mmWidth = 7938
         BandType = 0
         LayerName = Foreground
@@ -735,8 +736,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Style = []
         Transparent = True
         mmHeight = 4233
-        mmLeft = 85463
-        mmTop = 23554
+        mmLeft = 90763
+        mmTop = 29119
         mmWidth = 16140
         BandType = 0
         LayerName = Foreground
@@ -751,8 +752,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Style = []
         Transparent = True
         mmHeight = 4233
-        mmLeft = 155311
-        mmTop = 23554
+        mmLeft = 160611
+        mmTop = 29119
         mmWidth = 6879
         BandType = 0
         LayerName = Foreground
@@ -771,8 +772,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 5027
-        mmLeft = 78846
-        mmTop = 5298
+        mmLeft = 84146
+        mmTop = 10863
         mmWidth = 103452
         BandType = 0
         LayerName = Foreground
@@ -790,8 +791,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 3969
-        mmLeft = 164572
-        mmTop = 23819
+        mmLeft = 169872
+        mmTop = 29384
         mmWidth = 15346
         BandType = 0
         LayerName = Foreground
@@ -809,8 +810,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 3969
-        mmLeft = 124346
-        mmTop = 15088
+        mmLeft = 129646
+        mmTop = 20653
         mmWidth = 43112
         BandType = 0
         LayerName = Foreground
@@ -829,8 +830,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 3704
-        mmLeft = 99745
-        mmTop = 19320
+        mmLeft = 105045
+        mmTop = 24885
         mmWidth = 49742
         BandType = 0
         LayerName = Foreground
@@ -848,8 +849,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 3969
-        mmLeft = 150019
-        mmTop = 19320
+        mmLeft = 155319
+        mmTop = 24885
         mmWidth = 15346
         BandType = 0
         LayerName = Foreground
@@ -867,8 +868,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 3969
-        mmLeft = 166952
-        mmTop = 19322
+        mmLeft = 172252
+        mmTop = 24887
         mmWidth = 15346
         BandType = 0
         LayerName = Foreground
@@ -886,8 +887,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 4233
-        mmLeft = 141816
-        mmTop = 28581
+        mmLeft = 147116
+        mmTop = 34146
         mmWidth = 30956
         BandType = 0
         LayerName = Foreground
@@ -905,8 +906,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 4233
-        mmLeft = 118004
-        mmTop = 28581
+        mmLeft = 123304
+        mmTop = 34146
         mmWidth = 22490
         BandType = 0
         LayerName = Foreground
@@ -925,8 +926,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 4233
-        mmLeft = 79375
-        mmTop = 28580
+        mmLeft = 84675
+        mmTop = 34145
         mmWidth = 35719
         BandType = 0
         LayerName = Foreground
@@ -944,8 +945,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 4233
-        mmLeft = 102661
-        mmTop = 23818
+        mmLeft = 107961
+        mmTop = 29383
         mmWidth = 51858
         BandType = 0
         LayerName = Foreground
@@ -964,7 +965,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 3969
         mmLeft = 78321
-        mmTop = 70115
+        mmTop = 71440
         mmWidth = 29104
         BandType = 0
         LayerName = Foreground
@@ -983,7 +984,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 3969
         mmLeft = 91032
-        mmTop = 60058
+        mmTop = 61383
         mmWidth = 15346
         BandType = 0
         LayerName = Foreground
@@ -1002,7 +1003,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 3969
         mmLeft = 73305
-        mmTop = 60058
+        mmTop = 61383
         mmWidth = 15346
         BandType = 0
         LayerName = Foreground
@@ -1023,7 +1024,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 9790
         mmLeft = 16669
-        mmTop = 59796
+        mmTop = 61121
         mmWidth = 55563
         BandType = 0
         LayerName = Foreground
@@ -1042,7 +1043,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 3704
         mmLeft = 68792
-        mmTop = 50007
+        mmTop = 51332
         mmWidth = 26723
         BandType = 0
         LayerName = Foreground
@@ -1055,13 +1056,13 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Color = clBlack
         Font.Name = 'Arial'
         Font.Size = 9
-        Font.Style = []
+        Font.Style = [fsBold]
         ParentDataPipeline = False
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 3969
         mmLeft = 5556
-        mmTop = 55033
+        mmTop = 56358
         mmWidth = 102394
         BandType = 0
         LayerName = Foreground
@@ -1072,7 +1073,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Weight = 0.750000000000000000
         mmHeight = 4763
         mmLeft = 56621
-        mmTop = 48948
+        mmTop = 50273
         mmWidth = 2381
         BandType = 0
         LayerName = Foreground
@@ -1091,7 +1092,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 4233
         mmLeft = 78321
-        mmTop = 79904
+        mmTop = 81229
         mmWidth = 29104
         BandType = 0
         LayerName = Foreground
@@ -1110,7 +1111,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 4233
         mmLeft = 78325
-        mmTop = 74883
+        mmTop = 76208
         mmWidth = 29104
         BandType = 0
         LayerName = Foreground
@@ -1129,7 +1130,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 4233
         mmLeft = 19315
-        mmTop = 79906
+        mmTop = 81231
         mmWidth = 44980
         BandType = 0
         LayerName = Foreground
@@ -1149,7 +1150,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 8468
         mmLeft = 19579
-        mmTop = 70115
+        mmTop = 71440
         mmWidth = 44981
         BandType = 0
         LayerName = Foreground
@@ -1160,8 +1161,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Pen.Width = 2
         Shape = stRoundRect
         mmHeight = 5556
-        mmLeft = 7673
-        mmTop = 35719
+        mmLeft = 2638
+        mmTop = 38104
         mmWidth = 37042
         BandType = 0
         LayerName = Foreground
@@ -1177,8 +1178,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Style = [fsItalic]
         Transparent = True
         mmHeight = 4233
-        mmLeft = 8996
-        mmTop = 36248
+        mmLeft = 3961
+        mmTop = 38633
         mmWidth = 34131
         BandType = 0
         LayerName = Foreground
@@ -1195,7 +1196,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         mmHeight = 4233
         mmLeft = 112184
-        mmTop = 72761
+        mmTop = 74086
         mmWidth = 40746
         BandType = 0
         LayerName = Foreground
@@ -1214,8 +1215,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineRegimenFiscal'
         mmHeight = 3969
-        mmLeft = 78846
-        mmTop = 10590
+        mmLeft = 84146
+        mmTop = 16155
         mmWidth = 103452
         BandType = 0
         LayerName = Foreground
@@ -1236,7 +1237,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 4234
         mmLeft = 155574
-        mmTop = 68263
+        mmTop = 69588
         mmWidth = 44186
         BandType = 0
         LayerName = Foreground
@@ -4380,10 +4381,10 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
           D6CB77887627F8172172EB7788762748F01F88440625489020418204093E2812
           199420418204091224F8A048645082040912244890E043E2EDEDFF03C0F5D53B
           9452D1590000000049454E44AE426082}
-        mmHeight = 31485
-        mmLeft = 7408
-        mmTop = 2114
-        mmWidth = 64823
+        mmHeight = 37835
+        mmLeft = 6085
+        mmTop = 529
+        mmWidth = 71702
         BandType = 0
         LayerName = Foreground
       end
@@ -4402,7 +4403,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 4233
         mmLeft = 145520
-        mmTop = 77523
+        mmTop = 78848
         mmWidth = 54240
         BandType = 0
         LayerName = Foreground
@@ -4419,7 +4420,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         mmHeight = 4233
         mmLeft = 112448
-        mmTop = 77523
+        mmTop = 78848
         mmWidth = 34131
         BandType = 0
         LayerName = Foreground
@@ -4437,7 +4438,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         WordWrap = True
         mmHeight = 4233
         mmLeft = 112184
-        mmTop = 48683
+        mmTop = 50008
         mmWidth = 25665
         BandType = 0
         LayerName = Foreground
@@ -4458,7 +4459,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 3969
         mmLeft = 134143
-        mmTop = 48683
+        mmTop = 50008
         mmWidth = 65617
         BandType = 0
         LayerName = Foreground
@@ -4476,7 +4477,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         WordWrap = True
         mmHeight = 4233
         mmLeft = 112184
-        mmTop = 53446
+        mmTop = 54771
         mmWidth = 49213
         BandType = 0
         LayerName = Foreground
@@ -4494,7 +4495,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         WordWrap = True
         mmHeight = 4233
         mmLeft = 112448
-        mmTop = 57944
+        mmTop = 59269
         mmWidth = 49742
         BandType = 0
         LayerName = Foreground
@@ -4512,7 +4513,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         WordWrap = True
         mmHeight = 4498
         mmLeft = 112444
-        mmTop = 62708
+        mmTop = 64033
         mmWidth = 50536
         BandType = 0
         LayerName = Foreground
@@ -4533,7 +4534,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 3969
         mmLeft = 168010
-        mmTop = 53446
+        mmTop = 54771
         mmWidth = 31750
         BandType = 0
         LayerName = Foreground
@@ -4554,7 +4555,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 3969
         mmLeft = 173830
-        mmTop = 57944
+        mmTop = 59269
         mmWidth = 25930
         BandType = 0
         LayerName = Foreground
@@ -4575,7 +4576,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 3969
         mmLeft = 163247
-        mmTop = 63500
+        mmTop = 64825
         mmWidth = 36513
         BandType = 0
         LayerName = Foreground
@@ -4592,8 +4593,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 3969
-        mmLeft = 92867
-        mmTop = 15088
+        mmLeft = 98167
+        mmTop = 20653
         mmWidth = 29626
         BandType = 0
         LayerName = Foreground
@@ -4608,8 +4609,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Style = []
         Transparent = True
         mmHeight = 4233
-        mmLeft = 116154
-        mmTop = 29375
+        mmLeft = 121454
+        mmTop = 34940
         mmWidth = 1058
         BandType = 0
         LayerName = Foreground
@@ -4625,7 +4626,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         mmHeight = 4234
         mmLeft = 65622
-        mmTop = 74883
+        mmTop = 76208
         mmWidth = 12169
         BandType = 0
         LayerName = Foreground
@@ -4641,7 +4642,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         mmHeight = 4234
         mmLeft = 6085
-        mmTop = 79918
+        mmTop = 81243
         mmWidth = 11642
         BandType = 0
         LayerName = Foreground
@@ -4657,7 +4658,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         mmHeight = 4233
         mmLeft = 65621
-        mmTop = 79904
+        mmTop = 81229
         mmWidth = 7938
         BandType = 0
         LayerName = Foreground
@@ -4675,24 +4676,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         mmHeight = 4233
         mmLeft = 37571
-        mmTop = 49477
+        mmTop = 50802
         mmWidth = 17992
-        BandType = 0
-        LayerName = Foreground
-      end
-      object ppLabel24: TppLabel
-        UserName = 'Label24'
-        Caption = 'NO.PARTE'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Name = 'Arial'
-        Font.Size = 9
-        Font.Style = [fsBold]
-        Transparent = True
-        mmHeight = 3969
-        mmLeft = 38894
-        mmTop = 87842
-        mmWidth = 15346
         BandType = 0
         LayerName = Foreground
       end
@@ -4701,8 +4686,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Position = lpLeft
         Weight = 0.750000000000000000
         mmHeight = 6615
-        mmLeft = 19049
-        mmTop = 86517
+        mmLeft = 21964
+        mmTop = 93938
         mmWidth = 2379
         BandType = 0
         LayerName = Foreground
@@ -4712,19 +4697,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Position = lpLeft
         Weight = 0.750000000000000000
         mmHeight = 6350
-        mmLeft = 33599
-        mmTop = 86519
-        mmWidth = 2114
-        BandType = 0
-        LayerName = Foreground
-      end
-      object ppLine6: TppLine
-        UserName = 'Line6'
-        Position = lpLeft
-        Weight = 0.750000000000000000
-        mmHeight = 6615
-        mmLeft = 60061
-        mmTop = 86519
+        mmLeft = 36514
+        mmTop = 94203
         mmWidth = 2114
         BandType = 0
         LayerName = Foreground
@@ -4734,8 +4708,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Position = lpLeft
         Weight = 0.750000000000000000
         mmHeight = 6615
-        mmLeft = 155310
-        mmTop = 86519
+        mmLeft = 156105
+        mmTop = 93938
         mmWidth = 2379
         BandType = 0
         LayerName = Foreground
@@ -4745,9 +4719,25 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Position = lpLeft
         Weight = 0.750000000000000000
         mmHeight = 6615
-        mmLeft = 181760
-        mmTop = 86519
+        mmLeft = 182820
+        mmTop = 93938
         mmWidth = 1054
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLblDatosContrato: TppLabel
+        UserName = 'Label4'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 11
+        Font.Style = [fsBold, fsItalic]
+        Transparent = True
+        WordWrap = True
+        mmHeight = 4498
+        mmLeft = 6085
+        mmTop = 88371
+        mmWidth = 1059
         BandType = 0
         LayerName = Foreground
       end
@@ -4758,7 +4748,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
       ColumnBalancing = True
       PrintHeight = phDynamic
       mmBottomOffset = 0
-      mmHeight = 5292
+      mmHeight = 7673
       mmPrintPosition = 0
       object ppDBText24: TppDBText
         UserName = 'DBText24'
@@ -4775,8 +4765,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosDetalleFactura'
         mmHeight = 3969
-        mmLeft = 3173
-        mmTop = 265
+        mmLeft = 6088
+        mmTop = 1325
         mmWidth = 13229
         BandType = 4
         LayerName = Foreground
@@ -4796,8 +4786,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosDetalleFactura'
         mmHeight = 4233
-        mmLeft = 156369
-        mmTop = 265
+        mmLeft = 157164
+        mmTop = 1325
         mmWidth = 25135
         BandType = 4
         LayerName = Foreground
@@ -4817,8 +4807,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosDetalleFactura'
         mmHeight = 4233
-        mmLeft = 186005
-        mmTop = 530
+        mmLeft = 187065
+        mmTop = 1590
         mmWidth = 16140
         BandType = 4
         LayerName = Foreground
@@ -4839,9 +4829,9 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosDetalleFactura'
         mmHeight = 4233
-        mmLeft = 61648
-        mmTop = 265
-        mmWidth = 94456
+        mmLeft = 38634
+        mmTop = 1588
+        mmWidth = 115094
         BandType = 4
         LayerName = Foreground
         mmBottomOffset = 0
@@ -4865,30 +4855,9 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosDetalleFactura'
         mmHeight = 3969
-        mmLeft = 20108
-        mmTop = 265
+        mmLeft = 23023
+        mmTop = 1325
         mmWidth = 12171
-        BandType = 4
-        LayerName = Foreground
-      end
-      object ppDBText46: TppDBText
-        UserName = 'DBText46'
-        AutoSize = True
-        DataField = 'noIdentificacion'
-        DataPipeline = ppDBPipelineDatosDetalleFactura
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 9
-        Font.Style = []
-        ParentDataPipeline = False
-        TextAlignment = taCentered
-        Transparent = True
-        DataPipelineName = 'ppDBPipelineDatosDetalleFactura'
-        mmHeight = 3969
-        mmLeft = 34133
-        mmTop = 530
-        mmWidth = 26194
         BandType = 4
         LayerName = Foreground
       end
@@ -4904,9 +4873,9 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         UserName = 'Shape9'
         Shape = stRoundRect
         mmHeight = 7673
-        mmLeft = 0
+        mmLeft = 2915
         mmTop = 0
-        mmWidth = 202936
+        mmWidth = 201611
         BandType = 7
         LayerName = Foreground
       end
@@ -4989,7 +4958,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Style = [fsBold]
         Transparent = True
         mmHeight = 3704
-        mmLeft = 1058
+        mmLeft = 3973
         mmTop = 529
         mmWidth = 28840
         BandType = 7
@@ -5008,7 +4977,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 4233
-        mmLeft = 30956
+        mmLeft = 33871
         mmTop = 2117
         mmWidth = 162984
         BandType = 7
@@ -5026,9 +4995,9 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         ParentDataPipeline = False
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 27517
-        mmLeft = 125413
+        mmLeft = 126208
         mmTop = 12435
-        mmWidth = 27517
+        mmWidth = 19315
         BandType = 7
         LayerName = Foreground
       end
@@ -5085,8 +5054,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         WordWrap = True
         mmHeight = 4233
-        mmLeft = 2381
-        mmTop = 38100
+        mmLeft = 3178
+        mmTop = 31223
         mmWidth = 82815
         BandType = 7
         LayerName = Foreground
@@ -5095,7 +5064,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         UserName = 'Line11'
         Weight = 0.750000000000000000
         mmHeight = 1058
-        mmLeft = 0
+        mmLeft = 795
         mmTop = 43656
         mmWidth = 202936
         BandType = 7
@@ -5117,7 +5086,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 8996
-        mmLeft = 265
+        mmLeft = 1060
         mmTop = 49742
         mmWidth = 200290
         BandType = 7
@@ -5139,7 +5108,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         WordWrap = True
         mmHeight = 4498
-        mmLeft = 265
+        mmLeft = 1060
         mmTop = 45515
         mmWidth = 37835
         BandType = 7
@@ -5156,7 +5125,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         WordWrap = True
         mmHeight = 4233
-        mmLeft = 0
+        mmLeft = 795
         mmTop = 59274
         mmWidth = 37835
         BandType = 7
@@ -5178,7 +5147,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 8996
-        mmLeft = 0
+        mmLeft = 795
         mmTop = 64029
         mmWidth = 200555
         BandType = 7
@@ -5205,7 +5174,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 15081
-        mmLeft = 0
+        mmLeft = 795
         mmTop = 76994
         mmWidth = 200555
         BandType = 7
@@ -5227,7 +5196,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         WordWrap = True
         mmHeight = 4234
-        mmLeft = 0
+        mmLeft = 795
         mmTop = 73032
         mmWidth = 37835
         BandType = 7
@@ -5243,10 +5212,10 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Style = [fsBold, fsItalic]
         Transparent = True
         WordWrap = True
-        mmHeight = 8467
-        mmLeft = 135202
-        mmTop = 33867
-        mmWidth = 67733
+        mmHeight = 5292
+        mmLeft = 3176
+        mmTop = 37045
+        mmWidth = 101336
         BandType = 7
         LayerName = Foreground
       end
@@ -5256,10 +5225,10 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         AlignVertical = avCenter
         MaintainAspectRatio = False
         Stretch = True
-        mmHeight = 32547
-        mmLeft = 101601
-        mmTop = 9785
-        mmWidth = 32547
+        mmHeight = 32544
+        mmLeft = 109805
+        mmTop = 9261
+        mmWidth = 32544
         BandType = 7
         LayerName = Foreground
       end
@@ -5312,8 +5281,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Style = [fsItalic]
         Transparent = True
         mmHeight = 4233
-        mmLeft = 2381
-        mmTop = 15875
+        mmLeft = 3176
+        mmTop = 16670
         mmWidth = 25929
         BandType = 7
         LayerName = Foreground
@@ -5332,8 +5301,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 3704
-        mmLeft = 29105
-        mmTop = 16404
+        mmLeft = 29900
+        mmTop = 17199
         mmWidth = 5815
         BandType = 7
         LayerName = Foreground
@@ -5352,8 +5321,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 3968
-        mmLeft = 2646
-        mmTop = 9790
+        mmLeft = 3441
+        mmTop = 10585
         mmWidth = 42069
         BandType = 7
         LayerName = Foreground
@@ -5368,8 +5337,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Style = [fsItalic]
         Transparent = True
         mmHeight = 4234
-        mmLeft = 2646
-        mmTop = 21431
+        mmLeft = 3441
+        mmTop = 22226
         mmWidth = 33602
         BandType = 7
         LayerName = Foreground
@@ -5388,8 +5357,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 3704
-        mmLeft = 49213
-        mmTop = 21431
+        mmLeft = 50008
+        mmTop = 22226
         mmWidth = 41804
         BandType = 7
         LayerName = Foreground
@@ -5408,7 +5377,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 3704
-        mmLeft = 81492
+        mmLeft = 82287
         mmTop = 16404
         mmWidth = 16140
         BandType = 7
@@ -5418,7 +5387,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         UserName = 'Line1'
         Weight = 0.750000000000000000
         mmHeight = 1058
-        mmLeft = 0
+        mmLeft = 795
         mmTop = 95779
         mmWidth = 202936
         BandType = 7
@@ -5438,8 +5407,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 3969
-        mmLeft = 35719
-        mmTop = 16404
+        mmLeft = 36514
+        mmTop = 17199
         mmWidth = 24606
         BandType = 7
         LayerName = Foreground

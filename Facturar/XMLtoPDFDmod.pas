@@ -198,10 +198,8 @@ type
     ppLabel10: TppLabel;
     ppLabel22: TppLabel;
     ppLblIdentificador: TppLabel;
-    ppLabel24: TppLabel;
     ppLine4: TppLine;
     ppLine5: TppLine;
-    ppLine6: TppLine;
     ppLine7: TppLine;
     ppLine8: TppLine;
     ppDetailBand1: TppDetailBand;
@@ -210,7 +208,6 @@ type
     ppDBText29: TppDBText;
     ppDBMemo2: TppDBMemo;
     ppDBText9: TppDBText;
-    ppDBText46: TppDBText;
     ppSummaryBand1: TppSummaryBand;
     ppShape9: TppShape;
     ppLabel14: TppLabel;
@@ -246,6 +243,7 @@ type
     ppDesignLayers1: TppDesignLayers;
     ppDesignLayer2: TppDesignLayer;
     ppDesignLayer1: TppDesignLayer;
+    ppLblDatosContrato: TppLabel;
     procedure cdsXMLCalcFields(DataSet: TDataSet);
     procedure ppReportFileDeviceCreate(Sender: TObject);
     procedure ppImageCBBPrint(Sender: TObject);
@@ -340,7 +338,9 @@ begin
     ppReport.DeviceType:= 'PDF';
     ppLblTipoDoc.Caption:= ATipoDoc;  //Mar 31/16
     //Para que cambie etiqueta
-    ppLblEtiqueta.Caption:=Etiqueta;
+    ppLblDatosContrato.Caption:=Etiqueta; //Dic 6/16
+
+  {  ppLblEtiqueta.Caption:=Etiqueta;   //ERa de Tractopartes
     if Etiqueta<>'' then
     begin
       case Etiqueta[2] of
@@ -350,7 +350,7 @@ begin
       'X':ppShpMarco.Pen.Color:=clOlive;
       end;
       ppShpTitulo.pen.Color:=ppShpMarco.Pen.Color;
-    end;
+    end;}
 
     ppLblIdentificador.Caption:=identifica; //Identificador cliente  //Ago 26/16
 

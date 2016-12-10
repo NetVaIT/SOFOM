@@ -193,6 +193,7 @@ type
     StringField10: TStringField;
     StringField11: TStringField;
     adodsMasterDirCompleta: TStringField;
+    adodsMasterIdCXC: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actProcesaFacturaExecute(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
@@ -216,7 +217,8 @@ type
     function VerificaArchivo(var IDArchivo: Integer; Archivo: String;
       var Respuesta: String): Boolean;
     procedure SetMuestra(const Value: Boolean);
-    function SacaTipoComp(tipoD: Integer): String; //Regresado
+    function SacaTipoComp(tipoD: Integer): String;
+    function InformacionContrato(IdCXC: Integer): String; //Regresado
   public
     { Public declarations }
      EsProduccion:Boolean;
@@ -262,6 +264,7 @@ var
   FechaAux:TDAteTime;//Porque si se intento generar le mande la misma fecha original
   TipoDoc:String; //Mar 31/16 para enviar como parametro
   IdCFDIAuxiliar:integer; //Oct 27/16 para verificar que este en el mismo , idOrdenSalAux se quito nov 28/16
+  Contrato:String; //Para mañarina dic 7/16
 begin
   inherited;
   //Habilitado Dic 21/15
@@ -459,7 +462,9 @@ begin
         begin
           XMLpdf.FileIMG := RutaFactura + fePNG; //Dic 21/15
           XMLpdf.CadenaOriginalTimbre:= TimbreCFDI.CadenaTimbre; //Dic 28/15                  tenia nov 28/16  adodsMasterIdentificadorCte.AsString
-          RutaPDF := XMLpdf.GeneratePDFFile(RutaFactura,TipoDoc,'',''); //Dic 21/15  //verificar si sirve ese Formato
+          //SAcar infocontrato
+          Contrato:=Informacioncontrato(adodsMasterIdCXC.Value); //Dic 7/16
+          RutaPDF := XMLpdf.GeneratePDFFile(RutaFactura,TipoDoc,Contrato,''); //Dic 21/15  //verificar si sirve ese Formato
           //Actualizar datos de Timbre en CFDI         //Mar 31/16              //Ago 26/16
           adodsMaster.Edit;
           adodsMasterUUID_TB.AsString:=  TimbreCFDI.UUID;
@@ -557,6 +562,20 @@ begin
   else
     Showmessage('CFDI generado con anterioridad');
 
+end;
+
+function TdmFacturas.InformacionContrato(IdCXC:Integer):String;
+begin        //Dic 7/16
+  result:='';
+  ADODSAuxiliar.Close;
+  ADODSAuxiliar.CommandText:='select C.Identificador, from Contratos C'    //   C.Fecha, C.IdContratoTipo, C.MontoAutorizado
+                             +' inner join Anexos A on A.IdContrato =C.IdContrato '
+                             +' inner join CuentasXCobrar CXC on CXC.idAnexo= A.idAnexo and IdCuentaXCobrar='+intToStr(idCXC);
+  ADODSAuxiliar.open;
+  if not ADODSAuxiliar.eof then
+  begin
+    result:=   ADODSAuxiliar.fieldbyname('Identificador').asString;
+  end;
 end;
 
 function TdmFacturas.ActualizaSaldoCliente(IdCFDI, IDCliente,

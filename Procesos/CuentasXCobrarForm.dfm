@@ -1,222 +1,97 @@
-inherited frmFacturasGrid: TfrmFacturasGrid
-  Caption = 'frmFacturasGrid'
-  ClientWidth = 815
-  ExplicitWidth = 815
+inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
+  Caption = 'FrmConCuentasXCobrar'
+  ClientWidth = 1078
+  ExplicitWidth = 1078
   ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Width = 815
-    ExplicitWidth = 815
+    Width = 1078
+    ExplicitWidth = 1078
   end
   inherited splDetail1: TSplitter
-    Width = 815
-    ExplicitWidth = 815
+    Width = 1078
+    ExplicitWidth = 1078
   end
   inherited splDetail2: TSplitter
-    Width = 815
-    ExplicitWidth = 815
+    Width = 1078
+    ExplicitWidth = 1078
   end
   inherited pnlMaster: TPanel
-    Width = 815
-    ExplicitWidth = 815
+    Width = 1078
+    ExplicitWidth = 1078
     inherited cxGrid: TcxGrid
-      Width = 815
-      ExplicitWidth = 815
+      Width = 1078
+      ExplicitTop = -3
+      ExplicitWidth = 1078
       inherited tvMaster: TcxGridDBTableView
-        OptionsCustomize.ColumnFiltering = False
+        object tvMasterIdCuentaXCobrar: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCuentaXCobrar'
+          Width = 103
+        end
+        object tvMasterIdCuentaXCobrarEstatus: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCuentaXCobrarEstatus'
+          Visible = False
+        end
+        object tvMasterIdPersona: TcxGridDBColumn
+          DataBinding.FieldName = 'IdPersona'
+          Visible = False
+        end
+        object tvMasterIdAnexosAmortizaciones: TcxGridDBColumn
+          DataBinding.FieldName = 'IdAnexosAmortizaciones'
+          Visible = False
+        end
         object tvMasterCliente: TcxGridDBColumn
           DataBinding.FieldName = 'Cliente'
-          Width = 241
-        end
-        object tvMasterSerie: TcxGridDBColumn
-          DataBinding.FieldName = 'Serie'
-        end
-        object tvMasterFolio: TcxGridDBColumn
-          DataBinding.FieldName = 'Folio'
+          Width = 284
         end
         object tvMasterFecha: TcxGridDBColumn
           DataBinding.FieldName = 'Fecha'
         end
-        object tvMasterIdCFDITipoDocumento: TcxGridDBColumn
-          DataBinding.FieldName = 'IdCFDITipoDocumento'
-          Visible = False
+        object tvMasterEstatusCXC: TcxGridDBColumn
+          DataBinding.FieldName = 'EstatusCXC'
+          Width = 99
         end
-        object tvMasterIdCFDIFormaPago: TcxGridDBColumn
-          DataBinding.FieldName = 'IdCFDIFormaPago'
-          Visible = False
+        object tvMasterImporte: TcxGridDBColumn
+          DataBinding.FieldName = 'Importe'
         end
-        object tvMasterIdMetodoPago: TcxGridDBColumn
-          DataBinding.FieldName = 'IdMetodoPago'
-          Visible = False
+        object tvMasterImpuesto: TcxGridDBColumn
+          DataBinding.FieldName = 'Impuesto'
         end
-        object tvMasterIdMoneda: TcxGridDBColumn
-          DataBinding.FieldName = 'IdMoneda'
-          Visible = False
-        end
-        object tvMasterIdPersonaEmisor: TcxGridDBColumn
-          DataBinding.FieldName = 'IdPersonaEmisor'
-          Visible = False
-        end
-        object tvMasterIdPersonaReceptor: TcxGridDBColumn
-          DataBinding.FieldName = 'IdPersonaReceptor'
-          Visible = False
-        end
-        object tvMasterIdDocumentoCBB: TcxGridDBColumn
-          DataBinding.FieldName = 'IdDocumentoCBB'
-          Visible = False
-        end
-        object tvMasterIdDocumentoXML: TcxGridDBColumn
-          DataBinding.FieldName = 'IdDocumentoXML'
-          Visible = False
-        end
-        object tvMasterIdDocumentoPDF: TcxGridDBColumn
-          DataBinding.FieldName = 'IdDocumentoPDF'
-          Visible = False
-        end
-        object tvMasterIdCFDIEstatus: TcxGridDBColumn
-          DataBinding.FieldName = 'IdCFDIEstatus'
-          Visible = False
-        end
-        object tvMasterIdCFDIFacturaGral: TcxGridDBColumn
-          DataBinding.FieldName = 'IdCFDIFacturaGral'
-          Visible = False
-        end
-        object tvMasterIdClienteDomicilio: TcxGridDBColumn
-          DataBinding.FieldName = 'IdClienteDomicilio'
-          Visible = False
-        end
-        object tvMasterCuentaCte: TcxGridDBColumn
-          DataBinding.FieldName = 'CuentaCte'
-          Visible = False
-          Width = 121
-        end
-        object tvMasterTipoCambio: TcxGridDBColumn
-          DataBinding.FieldName = 'TipoCambio'
-          Visible = False
-        end
-        object tvMasterTipoComp: TcxGridDBColumn
-          DataBinding.FieldName = 'TipoComp'
-        end
-        object tvMasterEstatus: TcxGridDBColumn
-          DataBinding.FieldName = 'Estatus'
-        end
-        object tvMasterLugarExpedicion: TcxGridDBColumn
-          DataBinding.FieldName = 'LugarExpedicion'
-        end
-        object tvMasterSello: TcxGridDBColumn
-          DataBinding.FieldName = 'Sello'
-        end
-        object tvMasterCondPago: TcxGridDBColumn
-          DataBinding.FieldName = 'CondPago'
-          Visible = False
-        end
-        object tvMasterNoCertificado: TcxGridDBColumn
-          DataBinding.FieldName = 'NoCertificado'
-          Visible = False
-        end
-        object tvMasterCertificado: TcxGridDBColumn
-          DataBinding.FieldName = 'Certificado'
-          Visible = False
-        end
-        object tvMasterSubTotal: TcxGridDBColumn
-          DataBinding.FieldName = 'SubTotal'
-        end
-        object tvMasterDescto: TcxGridDBColumn
-          DataBinding.FieldName = 'Descto'
-          Visible = False
-        end
-        object tvMasterMotivoDescto: TcxGridDBColumn
-          DataBinding.FieldName = 'MotivoDescto'
-          Visible = False
+        object tvMasterInteres: TcxGridDBColumn
+          DataBinding.FieldName = 'Interes'
         end
         object tvMasterTotal: TcxGridDBColumn
           DataBinding.FieldName = 'Total'
         end
-        object tvMasterNumCtaPago: TcxGridDBColumn
-          DataBinding.FieldName = 'NumCtaPago'
-          Visible = False
-        end
-        object tvMasterCadenaOriginal: TcxGridDBColumn
-          DataBinding.FieldName = 'CadenaOriginal'
-          Visible = False
-        end
-        object tvMasterTotalImpuestoRetenido: TcxGridDBColumn
-          DataBinding.FieldName = 'TotalImpuestoRetenido'
-          Visible = False
-        end
-        object tvMasterTotalImpuestoTrasladado: TcxGridDBColumn
-          DataBinding.FieldName = 'TotalImpuestoTrasladado'
-        end
-        object tvMasterSaldoDocumento: TcxGridDBColumn
-          DataBinding.FieldName = 'SaldoDocumento'
-        end
-        object tvMasterFechaCancelacion: TcxGridDBColumn
-          DataBinding.FieldName = 'FechaCancelacion'
-          Visible = False
-        end
-        object tvMasterObservaciones: TcxGridDBColumn
-          DataBinding.FieldName = 'Observaciones'
-          Visible = False
-        end
-        object tvMasterPorcentajeIVA: TcxGridDBColumn
-          DataBinding.FieldName = 'PorcentajeIVA'
-          Visible = False
-        end
-        object tvMasterEmailCliente: TcxGridDBColumn
-          DataBinding.FieldName = 'EmailCliente'
-          Visible = False
-        end
-        object tvMasterUUID_TB: TcxGridDBColumn
-          DataBinding.FieldName = 'UUID_TB'
-        end
-        object tvMasterSelloCFD_TB: TcxGridDBColumn
-          DataBinding.FieldName = 'SelloCFD_TB'
-          Visible = False
-        end
-        object tvMasterSelloSAT_TB: TcxGridDBColumn
-          DataBinding.FieldName = 'SelloSAT_TB'
-          Visible = False
-        end
-        object tvMasterCertificadoSAT_TB: TcxGridDBColumn
-          DataBinding.FieldName = 'CertificadoSAT_TB'
-          Visible = False
-        end
-        object tvMasterFechaTimbrado_TB: TcxGridDBColumn
-          DataBinding.FieldName = 'FechaTimbrado_TB'
-          Visible = False
-        end
-        object tvMasterMetodoPago: TcxGridDBColumn
-          DataBinding.FieldName = 'MetodoPago'
-          Visible = False
+        object tvMasterSaldo: TcxGridDBColumn
+          DataBinding.FieldName = 'Saldo'
         end
       end
     end
   end
   inherited pnlDetail3: TPanel
-    Width = 815
-    ExplicitWidth = 815
+    Width = 1078
+    ExplicitWidth = 1078
   end
   inherited pnlDetail2: TPanel
-    Width = 815
-    ExplicitWidth = 815
+    Width = 1078
+    ExplicitWidth = 1078
   end
   inherited pnlDetail1: TPanel
-    Width = 815
-    ExplicitLeft = 48
-    ExplicitTop = 281
-    ExplicitWidth = 815
+    Width = 1078
+    ExplicitWidth = 1078
   end
   inherited pnlClose: TPanel
-    Width = 815
-    ExplicitWidth = 815
+    Width = 1078
+    ExplicitWidth = 1078
     inherited btnClose: TButton
-      Left = 730
-      ExplicitLeft = 730
+      Left = 993
+      ExplicitLeft = 993
     end
   end
   inherited DataSource: TDataSource
-    DataSet = dmFacturas.adodsMaster
+    DataSet = dmCuentasXCobrar.adodsMaster
     OnDataChange = DataSourceDataChange
   end
   inherited dxBarManager: TdxBarManager
@@ -225,11 +100,7 @@ inherited frmFacturasGrid: TfrmFacturasGrid
       0
       31
       0)
-    inherited dxbNavigator: TdxBar
-      DockedLeft = 107
-    end
     inherited dxbTools: TdxBar
-      DockedLeft = 238
       ItemLinks = <
         item
           Visible = True
@@ -241,15 +112,23 @@ inherited frmFacturasGrid: TfrmFacturasGrid
         end
         item
           Visible = True
-          ItemName = 'dxBrBtnCFDI'
+          ItemName = 'dxBtnPrefacturas'
         end>
     end
-    object dxBrBtnCFDI: TdxBarButton
-      Caption = 'CFDI'
+    object dxBarButton8: TdxBarButton
+      Caption = 'New Button'
       Category = 0
-      Hint = 'Generar CFDI'
+      Hint = 'New Button'
+      Visible = ivAlways
+      ImageIndex = 16
+    end
+    object dxBtnPrefacturas: TdxBarButton
+      Caption = 'Generar Prefactura'
+      Category = 0
+      Hint = 'Generar Prefactura'
       Visible = ivAlways
       ImageIndex = 17
+      PaintStyle = psCaptionGlyph
     end
   end
   inherited cxStyleRepository: TcxStyleRepository
@@ -992,45 +871,45 @@ inherited frmFacturasGrid: TfrmFacturasGrid
       item
         Image.Data = {
           36040000424D3604000000000000360000002800000010000000100000000100
-          2000000000000004000000000000000000000000000000000000FF00FF00FF00
-          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
-          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
-          FF00808080008080800080808000808080008080800080808000808080008080
-          80008080800080808000808080008080800080808000FF00FF00FF00FF008080
-          8000000000000000000000000000EAD99900EAD9990000000000000000000000
-          0000EAD99900EAD99900EAD99900EAD9990080808000FF00FF00FF00FF00EAD9
-          9900EAD99900EAD9990000000000EAD99900EAD9990000000000EAD99900EAD9
-          9900EAD99900EAD99900EAD99900EAD9990080808000FF00FF00FF00FF00EAD9
-          9900EAD999000000000000000000EAD99900EAD99900EAD99900000000000000
-          0000EAD99900EAD99900EAD99900EAD9990080808000FF00FF00FF00FF00EAD9
-          9900EAD99900EAD9990000000000EAD99900EAD9990000000000EAD999000000
-          0000EAD99900EAD99900EAD99900EAD9990080808000FF00FF00FF00FF00EAD9
-          9900000000000000000000000000EAD99900EAD9990000000000000000000000
-          0000EAD99900EAD99900EAD99900EAD9990080808000FF00FF00FF00FF00EAD9
-          9900EAD99900EAD99900EAD99900EAD99900EAD99900EAD99900EAD99900EAD9
-          9900EAD99900EAD9990000000000EAD9990080808000FF00FF00FF00FF00EAD9
-          9900EAD99900EAD99900EAD99900EAD99900EAD99900EAD99900000000000000
-          000000000000EAD9990000000000EAD9990080808000FF00FF00FF00FF00EAD9
-          9900EAD99900EAD99900EAD9990000000000EAD99900EAD9990000000000EAD9
-          990000000000EAD9990000000000EAD9990080808000FF00FF00FF00FF00EAD9
-          99000000000000000000EAD9990000000000EAD99900EAD9990000000000EAD9
-          990000000000EAD9990000000000EAD9990080808000FF00FF00FF00FF00EAD9
-          990000000000EAD99900EAD999000000000000000000EAD9990000000000EAD9
-          990000000000EAD9990000000000EAD9990080808000FF00FF00FF00FF00EAD9
-          990000000000EAD99900EAD9990000000000EAD99900EAD99900000000000000
-          0000EAD99900EAD99900EAD9990080808000FF00FF00FF00FF00FF00FF00EAD9
-          990000000000EAD99900EAD99900000000000000000000000000EAD99900EAD9
-          9900EAD99900EAD9990080808000FF00FF00FF00FF00FF00FF00FF00FF00EAD9
-          99000000000000000000EAD99900EAD99900EAD99900EAD99900EAD99900EAD9
-          990080808000FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
-          FF00808080008080800080808000808080008080800080808000808080008080
-          8000FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00}
-        MaskColor = clFuchsia
+          2000000000000004000000000000000000000000000000000000FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00CAC9C800CAC9C800FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF004E3131004E313100766D6A00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00CAC9
+          C800CAC9C800FFFFFF004E31310099C64E0099C64E004E313100FFFFFF00CAC9
+          C800CAC9C800CAC9C800CAC9C800CAC9C800CAC9C800CAC9C800776C6C004E31
+          3100A2A0A0004E31310099C64E00CCF6A80099C64E004E313100735C5C004730
+          30004730300047303000473030004730300047303000473030004E31310099C6
+          4E004E31310099C64E00CCF6A80099C64E004E313100FFFFFF0047303000EED4
+          BA00EED4BA00EED4BA00EED4BA00EED4BA00EED4BA00ECD2B9005C414100CFF6
+          AC009CC85400CCF6A80099C64E004E313100FFFFFF00FFFFFF0047303000FFFF
+          FF00FFEFE000FFEFE000FFEFE000FFEFE000FFEFE000FDEDDE00755E5E00D8F8
+          BC00D7F8BB00A8CE68004E313100CAC9C800CAC9C800FFFFFF00513B3B00FFFF
+          FF00FFEFE000F9E1C900F9E1C900F9E1C900F9E1C90095662F0089767600DEF9
+          C700DDF9C500D8F8BC00A1CA5C004E313100CAC9C800FFFFFF005F4B4B00FFFF
+          FF009D723E00986B350095662E0095662E00FFEFE00095662F00948383009786
+          8600917F7F00836E6E006D5555007E737300FFFFFF00FFFFFF0065515100FFFF
+          FF00FFF1E400FFF1E300FFF0E100FFEFE000FFEFE00095662F0095662E009566
+          2E00EED4BA0047303000CAC9C800FFFFFF00FFFFFF00FFFFFF0065515100FFFF
+          FF00FFF1E400FFF1E300FFF0E100FFEFE000FFEFE000FFEFE000F9E1C900F9E1
+          C900EED4BA0047303000CAC9C800FFFFFF00FFFFFF00FFFFFF006A585800FFFF
+          FF00FFF2E600FAE6D200FAE4CF00F9E3CD00F9E3CD00986A340095662E009566
+          2E00D9C2AA0047303000CAC9C800FFFFFF00FFFFFF00FFFFFF0076656500FFFF
+          FF00B4936B00B3916800AE895E00AA845700FFF2E600A57D4E00FFFFFF009566
+          2E00D9C2AA0047303000CAC9C800FFFFFF00FFFFFF00FFFFFF0081717100FFFF
+          FF00FFF5EB00FFF5EB00FFF4EA00FFF4E900FFF4E900AF8C6200A57D4E009A6D
+          3700EED4BA0047303000CAC9C800FFFFFF00FFFFFF00FFFFFF008A7B7B00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00EFD6BC0047303000CAC9C800FFFFFF00FFFFFF00FFFFFF00AC9E9E009689
+          890096898900948787008F8181008C7E7E008C7E7E00887979007F6F6F007261
+          6100624F4F0078626200FFFFFF00FFFFFF00FFFFFF00FFFFFF00}
+        MaskColor = clWhite
       end>
   end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
-      ReportDocument.CreationDate = 42699.643536909720000000
+      ReportDocument.CreationDate = 42709.621321724540000000
       BuiltInReportLink = True
     end
   end
