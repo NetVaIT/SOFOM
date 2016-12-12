@@ -46,6 +46,8 @@ type
     tvMasterSaldoFinal: TcxGridDBColumn;
     tvMasterPagoTotal: TcxGridDBColumn;
     tvMasterIdAnexoCredito: TcxGridDBColumn;
+    tvMasterTasaAnual: TcxGridDBColumn;
+    tvMasterImpactoISR: TcxGridDBColumn;
   private
     { Private declarations }
   public

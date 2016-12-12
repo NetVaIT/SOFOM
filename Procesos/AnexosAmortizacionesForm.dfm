@@ -1,7 +1,5 @@
 inherited frmAnexosAmortizaciones: TfrmAnexosAmortizaciones
   Caption = 'frmAnexosAmortizaciones'
-  ExplicitWidth = 651
-  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlMaster: TPanel
@@ -25,11 +23,12 @@ inherited frmAnexosAmortizaciones: TfrmAnexosAmortizaciones
         object tvMasterFecha: TcxGridDBColumn
           DataBinding.FieldName = 'Fecha'
         end
+        object tvMasterTasaAnual: TcxGridDBColumn
+          DataBinding.FieldName = 'TasaAnual'
+          Visible = False
+        end
         object tvMasterSaldoInicial: TcxGridDBColumn
           DataBinding.FieldName = 'SaldoInicial'
-        end
-        object tvMasterPago: TcxGridDBColumn
-          DataBinding.FieldName = 'Pago'
         end
         object tvMasterCapital: TcxGridDBColumn
           DataBinding.FieldName = 'Capital'
@@ -49,14 +48,23 @@ inherited frmAnexosAmortizaciones: TfrmAnexosAmortizaciones
         object tvMasterInteresTotal: TcxGridDBColumn
           DataBinding.FieldName = 'InteresTotal'
         end
-        object tvMasterSaldoFinal: TcxGridDBColumn
-          DataBinding.FieldName = 'SaldoFinal'
+        object tvMasterImpactoISR: TcxGridDBColumn
+          DataBinding.FieldName = 'ImpactoISR'
+        end
+        object tvMasterPago: TcxGridDBColumn
+          DataBinding.FieldName = 'Pago'
         end
         object tvMasterPagoTotal: TcxGridDBColumn
           DataBinding.FieldName = 'PagoTotal'
         end
+        object tvMasterSaldoFinal: TcxGridDBColumn
+          DataBinding.FieldName = 'SaldoFinal'
+        end
       end
     end
+  end
+  inherited DataSource: TDataSource
+    DataSet = dmContratos.adodsAmortizaciones
   end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
@@ -74,7 +82,7 @@ inherited frmAnexosAmortizaciones: TfrmAnexosAmortizaciones
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42691.490725081020000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

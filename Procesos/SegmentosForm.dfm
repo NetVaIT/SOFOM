@@ -1,34 +1,37 @@
 inherited frmSegmentos: TfrmSegmentos
-  Caption = 'frmSegmentos'
-  ClientWidth = 878
-  ExplicitWidth = 878
-  ExplicitHeight = 457
+  Caption = 'Amortizaciones'
+  ClientHeight = 600
+  ClientWidth = 930
+  ExplicitWidth = 930
+  ExplicitHeight = 600
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Width = 878
+    Top = 515
+    Width = 930
     ExplicitWidth = 878
   end
   inherited splDetail1: TSplitter
-    Top = 263
-    Width = 878
+    Top = 406
+    Width = 930
     ExplicitTop = 263
     ExplicitWidth = 878
   end
   inherited splDetail2: TSplitter
-    Width = 878
+    Top = 471
+    Width = 930
     ExplicitWidth = 878
   end
   inherited pnlMaster: TPanel
     Top = 63
-    Width = 878
-    Height = 200
+    Width = 930
+    Height = 343
     ExplicitTop = 63
-    ExplicitWidth = 878
+    ExplicitWidth = 931
     ExplicitHeight = 200
     inherited cxGrid: TcxGrid
-      Width = 878
-      Height = 200
+      Width = 930
+      Height = 343
       ExplicitWidth = 878
       ExplicitHeight = 200
       inherited tvMaster: TcxGridDBTableView
@@ -48,14 +51,12 @@ inherited frmSegmentos: TfrmSegmentos
         object tvMasterFecha: TcxGridDBColumn
           DataBinding.FieldName = 'Fecha'
         end
-        object tvMasterSaldoInicial: TcxGridDBColumn
-          DataBinding.FieldName = 'SaldoInicial'
-        end
         object tvMasterTasaAnual: TcxGridDBColumn
           DataBinding.FieldName = 'TasaAnual'
+          Visible = False
         end
-        object tvMasterPago: TcxGridDBColumn
-          DataBinding.FieldName = 'Pago'
+        object tvMasterSaldoInicial: TcxGridDBColumn
+          DataBinding.FieldName = 'SaldoInicial'
         end
         object tvMasterCapital: TcxGridDBColumn
           DataBinding.FieldName = 'Capital'
@@ -75,44 +76,49 @@ inherited frmSegmentos: TfrmSegmentos
         object tvMasterInteresTotal: TcxGridDBColumn
           DataBinding.FieldName = 'InteresTotal'
         end
-        object tvMasterSaldoFinal: TcxGridDBColumn
-          DataBinding.FieldName = 'SaldoFinal'
+        object tvMasterImpactoISR: TcxGridDBColumn
+          DataBinding.FieldName = 'ImpactoISR'
+        end
+        object tvMasterPago: TcxGridDBColumn
+          DataBinding.FieldName = 'Pago'
         end
         object tvMasterPagoTotal: TcxGridDBColumn
           DataBinding.FieldName = 'PagoTotal'
+        end
+        object tvMasterSaldoFinal: TcxGridDBColumn
+          DataBinding.FieldName = 'SaldoFinal'
         end
       end
     end
   end
   inherited pnlDetail3: TPanel
-    Width = 878
+    Top = 518
+    Width = 930
     ExplicitWidth = 878
   end
   inherited pnlDetail2: TPanel
-    Width = 878
+    Top = 474
+    Width = 930
     ExplicitWidth = 878
   end
   inherited pnlDetail1: TPanel
-    Top = 266
-    Width = 878
+    Top = 409
+    Width = 930
     Height = 62
-    Visible = True
-    ExplicitTop = 266
+    ExplicitTop = 269
     ExplicitWidth = 878
     ExplicitHeight = 62
   end
   inherited pnlClose: TPanel
-    Width = 878
+    Top = 559
+    Width = 930
     ExplicitWidth = 878
     inherited btnClose: TButton
-      Left = 793
+      Left = 845
       ExplicitLeft = 793
     end
   end
-  inherited DataSource: TDataSource
-    AutoEdit = True
-  end
-  inherited dxBarManager: TdxBarManager
+  inherited dxBarManager: TdxBarManager [9]
     DockControlHeights = (
       0
       0
@@ -160,11 +166,19 @@ inherited frmSegmentos: TfrmSegmentos
         end
         item
           Visible = True
-          ItemName = 'EdtSegmentos'
+          ItemName = 'edtFuturo'
+        end
+        item
+          Visible = True
+          ItemName = 'edtImpactoISR'
         end
         item
           Visible = True
           ItemName = 'edtFechaInicial'
+        end
+        item
+          Visible = True
+          ItemName = 'EdtSegmentos'
         end>
       OneOnRow = True
       Row = 1
@@ -185,9 +199,9 @@ inherited frmSegmentos: TfrmSegmentos
       ShowCaption = True
     end
     object edtMonto: TcxBarEditItem
-      Caption = 'Monto a financiar'
+      Caption = 'Monto'
       Category = 0
-      Hint = 'Monto a financiar'
+      Hint = 'Monto'
       Visible = ivAlways
       ShowCaption = True
       PropertiesClassName = 'TcxCurrencyEditProperties'
@@ -200,6 +214,7 @@ inherited frmSegmentos: TfrmSegmentos
       Visible = ivAlways
       ShowCaption = True
       PropertiesClassName = 'TcxCurrencyEditProperties'
+      Properties.DisplayFormat = ',0.00 %;-,0.00 %'
       InternalEditValue = 0c
     end
     object edtPlazo: TcxBarEditItem
@@ -219,17 +234,44 @@ inherited frmSegmentos: TfrmSegmentos
       PropertiesClassName = 'TcxSpinEditProperties'
     end
     object edtFechaInicial: TcxBarEditItem
-      Caption = 'Fecha inicial'
+      Caption = 'Inicial'
       Category = 0
-      Hint = 'Fecha inicial'
+      Hint = 'Inicial'
       Visible = ivAlways
       ShowCaption = True
       PropertiesClassName = 'TcxDateEditProperties'
       InternalEditValue = 0d
     end
+    object edtFuturo: TcxBarEditItem
+      Caption = 'Futuro'
+      Category = 0
+      Hint = 'Futuro'
+      Visible = ivAlways
+      ShowCaption = True
+      PropertiesClassName = 'TcxCurrencyEditProperties'
+      InternalEditValue = '0'
+    end
+    object cxBarEditItem2: TcxBarEditItem
+      Caption = 'New Item'
+      Category = 0
+      Hint = 'New Item'
+      Visible = ivAlways
+      PropertiesClassName = 'TcxCurrencyEditProperties'
+    end
+    object edtImpactoISR: TcxBarEditItem
+      Caption = 'Impacto ISR'
+      Category = 0
+      Hint = 'Impacto ISR'
+      Visible = ivAlways
+      ShowCaption = True
+      PropertiesClassName = 'TcxCurrencyEditProperties'
+      InternalEditValue = '0'
+    end
   end
-  inherited cxStyleRepository: TcxStyleRepository
+  inherited cxStyleRepository: TcxStyleRepository [10]
     PixelsPerInch = 96
+  end
+  inherited DataSource: TDataSource [11]
   end
   inherited cxImageList: TcxImageList
     FormatVersion = 1

@@ -157,7 +157,11 @@ uses
   PagosForm in 'Procesos\PagosForm.pas' {FrmConPagos},
   PagosEdit in 'Procesos\PagosEdit.pas' {FrmEdPagos},
   AplicacionPagos in 'Procesos\AplicacionPagos.pas' {FrmAplicacionPago},
-  AnexosCreditosEdit in 'Procesos\AnexosCreditosEdit.pas' {frmAnexosCreditosEdit};
+  AnexosCreditosEdit in 'Procesos\AnexosCreditosEdit.pas' {frmAnexosCreditosEdit},
+  CotizacionesDM in 'Procesos\CotizacionesDM.pas' {dmCotizaciones: TDataModule},
+  CotizacionesEdit in 'Procesos\CotizacionesEdit.pas' {frmCotizacionesEdit},
+  CotizacionesForm in 'Procesos\CotizacionesForm.pas' {frmCotizaciones},
+  ProcesosType in 'Procesos\ProcesosType.pas';
 
 {$R *.res}
 

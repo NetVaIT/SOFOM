@@ -1,4 +1,4 @@
-unit AnexosForm;
+unit CotizacionesForm;
 
 interface
 
@@ -23,21 +23,26 @@ uses
   dxPSPDFExportCore, dxPSPDFExport, cxDrawTextUtils, dxPSPrVwStd, dxPSPrVwAdv,
   dxPSPrVwRibbon, dxPScxPageControlProducer, dxPScxGridLnk,
   dxPScxGridLayoutViewLnk, dxPScxEditorProducers, dxPScxExtEditorProducers,
-  dxSkinsdxRibbonPainter, dxPSCore, dxPScxCommon, dxBar, Vcl.ImgList,
+  dxSkinsdxRibbonPainter, cxGridCustomTableView, cxGridTableView,
+  cxGridDBTableView, dxPSCore, dxPScxCommon, dxBar, Vcl.ImgList,
   cxGridCustomPopupMenu, cxGridPopupMenu, cxClasses, Vcl.StdActns, Vcl.DBActns,
   System.Actions, Vcl.ActnList, Vcl.StdCtrls, cxGridLevel, cxGridCustomView,
-  cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
-  Vcl.ExtCtrls;
+  cxGrid, Vcl.ExtCtrls;
 
 type
-  TfrmAnexos = class(T_frmGrid)
-    tvMasterIdAnexo: TcxGridDBColumn;
-    tvMasterIdContrato: TcxGridDBColumn;
+  TfrmCotizaciones = class(T_frmGrid)
+    tvMasterIdCotizacion: TcxGridDBColumn;
+    tvMasterIdPersona: TcxGridDBColumn;
+    tvMasterIdContratoTipo: TcxGridDBColumn;
     tvMasterIdMoneda: TcxGridDBColumn;
-    tvMasterIdAnexoEstatus: TcxGridDBColumn;
+    tvMasterIdCotizacionEstatus: TcxGridDBColumn;
+    tvMasterIdUsuario: TcxGridDBColumn;
     tvMasterIdentificador: TcxGridDBColumn;
     tvMasterDescripcion: TcxGridDBColumn;
-    tvMasterFecha: TcxGridDBColumn;
+    tvMasterElaboracion: TcxGridDBColumn;
+    tvMasterVigencia: TcxGridDBColumn;
+    tvMasterCliente: TcxGridDBColumn;
+    tvMasterTipoContrato: TcxGridDBColumn;
     tvMasterPrecioMoneda: TcxGridDBColumn;
     tvMasterMoneda: TcxGridDBColumn;
     tvMasterTipoCambio: TcxGridDBColumn;
@@ -54,45 +59,36 @@ type
     tvMasterDespositosNumero: TcxGridDBColumn;
     tvMasterDepositos: TcxGridDBColumn;
     tvMasterPagoIncial: TcxGridDBColumn;
+    tvMasterOpcionCompraPorcentaje: TcxGridDBColumn;
+    tvMasterOpcionCompra: TcxGridDBColumn;
+    tvMasterValorResidualPorcentaje: TcxGridDBColumn;
+    tvMasterValorResidual: TcxGridDBColumn;
     tvMasterMontoFinanciar: TcxGridDBColumn;
     tvMasterTasaAnual: TcxGridDBColumn;
     tvMasterPlazo: TcxGridDBColumn;
     tvMasterPagoMensual: TcxGridDBColumn;
     tvMasterFechaInicial: TcxGridDBColumn;
-    tvMasterEstatus: TcxGridDBColumn;
-    dxbbProductos: TdxBarButton;
     tvMasterFechaCorte: TcxGridDBColumn;
-    tvMasterOpcionCompraPorcentaje: TcxGridDBColumn;
-    tvMasterOpcionCompra: TcxGridDBColumn;
-    tvMasterValorResidualPorcentaje: TcxGridDBColumn;
-    tvMasterValorResidual: TcxGridDBColumn;
     tvMasterImpactoISR: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
-    FactProductos: TBasicAction;
-    procedure SetactProductos(const Value: TBasicAction);
   public
     { Public declarations }
-    property actProductos: TBasicAction read FactProductos write SetactProductos;
   end;
 
 implementation
 
 {$R *.dfm}
 
-uses ContratosDM, AnexosEdit;
+uses CotizacionesDM, CotizacionesEdit;
 
-procedure TfrmAnexos.FormCreate(Sender: TObject);
+{ TfrmCotizaciones }
+
+procedure TfrmCotizaciones.FormCreate(Sender: TObject);
 begin
   inherited;
-  gEditForm:= TfrmAnexosEdit.Create(Self);
-end;
-
-procedure TfrmAnexos.SetactProductos(const Value: TBasicAction);
-begin
-  FactProductos := Value;
-  dxbbProductos.Action := Value;
+  gEditForm:= TfrmCotizacionesEdit.Create(Self);
 end;
 
 end.

@@ -1,4 +1,4 @@
-unit AnexosEdit;
+unit CotizacionesEdit;
 
 interface
 
@@ -23,36 +23,31 @@ uses
   AmortizacionesDM, AnexosSegmentosDM, cxGroupBox;
 
 type
-  TfrmAnexosEdit = class(T_frmEdit)
+  TfrmCotizacionesEdit = class(T_frmEdit)
+    tsAmortizaciones: TcxTabSheet;
     tsSegmentos: TcxTabSheet;
     cxGroupBox1: TcxGroupBox;
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
+    cxDBTextEdit1: TcxDBTextEdit;
+    cxDBTextEdit2: TcxDBTextEdit;
+    cxDBDateEdit1: TcxDBDateEdit;
+    Label10: TLabel;
+    DBLookupComboBox3: TDBLookupComboBox;
+    Label12: TLabel;
+    DBLookupComboBox4: TDBLookupComboBox;
     Label4: TLabel;
     Label6: TLabel;
     Label7: TLabel;
     Label8: TLabel;
     Label9: TLabel;
-    cxDBTextEdit1: TcxDBTextEdit;
-    cxDBTextEdit2: TcxDBTextEdit;
-    cxDBDateEdit1: TcxDBDateEdit;
     cxDBTextEdit3: TcxDBTextEdit;
     DBLookupComboBox1: TDBLookupComboBox;
     cxDBTextEdit4: TcxDBTextEdit;
     cxDBTextEdit5: TcxDBTextEdit;
     cxDBTextEdit6: TcxDBTextEdit;
     cxDBTextEdit7: TcxDBTextEdit;
-    cxGroupBox4: TcxGroupBox;
-    Label17: TLabel;
-    Label25: TLabel;
-    cxDBTextEdit17: TcxDBTextEdit;
-    cxDBTextEdit18: TcxDBTextEdit;
-    cxGroupBox5: TcxGroupBox;
-    Label26: TLabel;
-    Label27: TLabel;
-    cxDBTextEdit19: TcxDBTextEdit;
-    cxDBTextEdit20: TcxDBTextEdit;
     cxGroupBox2: TcxGroupBox;
     Label11: TLabel;
     Label13: TLabel;
@@ -78,18 +73,33 @@ type
     Label23: TLabel;
     Label24: TLabel;
     Label5: TLabel;
-    Label29: TLabel;
     cxDBTextEdit15: TcxDBTextEdit;
     cxDBCurrencyEdit3: TcxDBCurrencyEdit;
     cxDBSpinEdit2: TcxDBSpinEdit;
     cxDBTextEdit16: TcxDBTextEdit;
     cxDBDateEdit2: TcxDBDateEdit;
     cxDBDateEdit3: TcxDBDateEdit;
+    cxGroupBox4: TcxGroupBox;
+    cxGroupBox5: TcxGroupBox;
+    Label17: TLabel;
+    cxDBTextEdit17: TcxDBTextEdit;
+    Label25: TLabel;
+    cxDBTextEdit18: TcxDBTextEdit;
+    Label26: TLabel;
+    cxDBTextEdit19: TcxDBTextEdit;
+    Label27: TLabel;
+    cxDBTextEdit20: TcxDBTextEdit;
+    Label28: TLabel;
+    cxDBDateEdit4: TcxDBDateEdit;
+    Label29: TLabel;
     cxDBTextEdit21: TcxDBTextEdit;
-    Label10: TLabel;
-    DBLookupComboBox2: TDBLookupComboBox;
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure pcMainChange(Sender: TObject);
   private
     { Private declarations }
+    dmAmortizaciones: TdmAmortizaciones;
   public
     { Public declarations }
   end;
@@ -98,6 +108,37 @@ implementation
 
 {$R *.dfm}
 
-uses ContratosDM;
+uses CotizacionesDM, ProcesosType;
+
+procedure TfrmCotizacionesEdit.FormCreate(Sender: TObject);
+begin
+  inherited;
+  dmAmortizaciones := TdmAmortizaciones.Create(Self);
+//  dmAmortizaciones.PaymentTime := ptEndOfPeriod;
+end;
+
+procedure TfrmCotizacionesEdit.FormDestroy(Sender: TObject);
+begin
+  inherited;
+  FreeAndNil(dmAmortizaciones);
+end;
+
+procedure TfrmCotizacionesEdit.FormShow(Sender: TObject);
+begin
+  inherited;
+  dmAmortizaciones.ShowModule(tsAmortizaciones,'');
+end;
+
+procedure TfrmCotizacionesEdit.pcMainChange(Sender: TObject);
+begin
+  inherited;
+  dmAmortizaciones.TipoContrato:= TCTipoContrato(DataSource.DataSet.FieldByName('IdContratoTipo').AsInteger);
+  dmAmortizaciones.Execute(DataSource.DataSet.FieldByName('FechaInicial').AsDateTime,
+  DataSource.DataSet.FieldByName('TasaAnual').AsExtended,
+  DataSource.DataSet.FieldByName('Plazo').AsInteger,
+  DataSource.DataSet.FieldByName('MontoFinanciar').AsExtended,
+  DataSource.DataSet.FieldByName('ValorResidual').AsExtended,
+  DataSource.DataSet.FieldByName('ImpactoISR').AsExtended);
+end;
 
 end.

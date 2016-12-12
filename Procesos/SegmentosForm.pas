@@ -54,6 +54,10 @@ type
     tvMasterInteresTotal: TcxGridDBColumn;
     tvMasterSaldoFinal: TcxGridDBColumn;
     tvMasterPagoTotal: TcxGridDBColumn;
+    edtFuturo: TcxBarEditItem;
+    cxBarEditItem2: TcxBarEditItem;
+    edtImpactoISR: TcxBarEditItem;
+    tvMasterImpactoISR: TcxGridDBColumn;
   private
     { Private declarations }
     FactCalcular: TBasicAction;
@@ -68,12 +72,18 @@ type
     procedure SetFechaInicial(const Value: TDateTime);
     function GetTasaAnual: Extended;
     procedure SetTasaAnual(const Value: Extended);
+    function GetFuturo: Extended;
+    function GetImpactoISR: Extended;
+    procedure SetFuturo(const Value: Extended);
+    procedure SetImpactoISR(const Value: Extended);
   public
     { Public declarations }
     property actCalcular: TBasicAction read FactCalcular write SetactCalcular;
     property Monto: Extended read GetMonto write SetMonto;
     property TasaAnual: Extended read GetTasaAnual write SetTasaAnual;
     property Plazo: Integer read GetPlazo write SetPlazo;
+    property Futuro: Extended read GetFuturo write SetFuturo;
+    property ImpactoISR: Extended read GetImpactoISR write SetImpactoISR;
     property Segmentos: Integer read GetSegmentos write SetSegmentos;
     property FechaInicial: TDateTime read GetFechaInicial write SetFechaInicial;
   end;
@@ -89,6 +99,16 @@ uses AmortizacionesDM;
 function TfrmSegmentos.GetFechaInicial: TDateTime;
 begin
   Result := edtFechaInicial.EditValue;
+end;
+
+function TfrmSegmentos.GetFuturo: Extended;
+begin
+  Result := edtFuturo.EditValue;
+end;
+
+function TfrmSegmentos.GetImpactoISR: Extended;
+begin
+  Result := edtImpactoISR.EditValue;
 end;
 
 function TfrmSegmentos.GetMonto: Extended;
@@ -120,6 +140,16 @@ end;
 procedure TfrmSegmentos.SetFechaInicial(const Value: TDateTime);
 begin
   edtFechaInicial.EditValue := Value;
+end;
+
+procedure TfrmSegmentos.SetFuturo(const Value: Extended);
+begin
+  edtFuturo.EditValue := Value;
+end;
+
+procedure TfrmSegmentos.SetImpactoISR(const Value: Extended);
+begin
+  edtImpactoISR.EditValue := Value;
 end;
 
 procedure TfrmSegmentos.SetMonto(const Value: Extended);

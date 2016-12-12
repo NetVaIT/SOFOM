@@ -76,16 +76,24 @@ inherited dmContratos: TdmContratos
       Caption = 'Productos'
       OnExecute = actProductosExecute
     end
+    object actPreAmortizaciones: TAction
+      Caption = 'Prever'
+      Hint = 'Prever amortizaciones'
+      OnExecute = actPreAmortizacionesExecute
+    end
+    object actGenAmortizaciones: TAction
+      Caption = 'Generar'
+      Hint = 'Generar amortizaciones'
+      OnExecute = actGenAmortizacionesExecute
+    end
   end
   object dsMaster: TDataSource
     AutoEdit = False
     DataSet = adodsMaster
-    OnDataChange = dsMasterDataChange
     Left = 104
     Top = 16
   end
   object adodsPersonas: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -96,7 +104,6 @@ inherited dmContratos: TdmContratos
     Top = 72
   end
   object adodsContratosTipos: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdContratoTipo, Descripcion from ContratosTipos'
@@ -105,7 +112,6 @@ inherited dmContratos: TdmContratos
     Top = 128
   end
   object adodsContratosEstatus: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdContratoEstatus, Descripcion from ContratosEstatus'
@@ -122,9 +128,10 @@ inherited dmContratos: TdmContratos
       'dor, Descripcion, Fecha, PrecioMoneda, TipoCambio, Precio, Impue' +
       'sto, PrecioTotal, EnganchePorcentaje, Enganche, ComisionPorcenta' +
       'je, Comision, ComisionImpuesto, Gastos, GastosImpuestos, Desposi' +
-      'tosNumero, Depositos, PagoIncial, MontoFinanciar, TasaAnual, Pla' +
-      'zo, PagoMensual, FechaInicial, FechaCorte from Anexos'#13#10'where IdC' +
-      'ontrato = :IdContrato'
+      'tosNumero, Depositos, PagoIncial, OpcionCompraPorcentaje, Opcion' +
+      'Compra, ValorResidualPorcentaje, ValorResidual, MontoFinanciar, ' +
+      'TasaAnual, Plazo, PagoMensual, ImpactoISR, FechaInicial, FechaCo' +
+      'rte from Anexos'#13#10'where IdContrato = :IdContrato'
     DataSource = dsMaster
     MasterFields = 'IdContrato'
     Parameters = <
@@ -187,7 +194,7 @@ inherited dmContratos: TdmContratos
       Lookup = True
     end
     object adodsAnexosTipoCambio: TFMTBCDField
-      DisplayLabel = 'Tipod de cambio'
+      DisplayLabel = 'Tipo de cambio'
       FieldName = 'TipoCambio'
       OnChange = adodsAnexosPrecioMonedaChange
       currency = True
@@ -215,16 +222,17 @@ inherited dmContratos: TdmContratos
       Precision = 18
       Size = 6
     end
-    object adodsAnexosEnganchePorcentaje: TBCDField
+    object adodsAnexosEnganchePorcentaje: TFMTBCDField
       DisplayLabel = 'Porcentaje enganche'
       FieldName = 'EnganchePorcentaje'
-      OnChange = adodsAnexosPrecioMonedaChange
+      OnChange = adodsAnexosEnganchePorcentajeChange
       DisplayFormat = '0.00 %'
       EditFormat = '0.00'
       Precision = 19
     end
     object adodsAnexosEnganche: TFMTBCDField
       FieldName = 'Enganche'
+      OnChange = adodsAnexosEngancheChange
       currency = True
       Precision = 18
       Size = 6
@@ -279,8 +287,40 @@ inherited dmContratos: TdmContratos
       Size = 6
     end
     object adodsAnexosPagoIncial: TFMTBCDField
-      DisplayLabel = 'Totlal pago inicial'
+      DisplayLabel = 'Total pago inicial'
       FieldName = 'PagoIncial'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object adodsAnexosOpcionCompraPorcentaje: TFMTBCDField
+      DisplayLabel = 'Porcentaje opci'#243'n de compra'
+      FieldName = 'OpcionCompraPorcentaje'
+      OnChange = adodsAnexosPrecioMonedaChange
+      DisplayFormat = '0.00 %'
+      EditFormat = '0.00'
+      Precision = 18
+      Size = 6
+    end
+    object adodsAnexosOpcionCompra: TFMTBCDField
+      DisplayLabel = 'Opci'#243'n de compra'
+      FieldName = 'OpcionCompra'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object adodsAnexosValorResidualPorcentaje: TBCDField
+      DisplayLabel = 'Porcentaje valor residual'
+      FieldName = 'ValorResidualPorcentaje'
+      OnChange = adodsAnexosPrecioMonedaChange
+      DisplayFormat = '0.00 %'
+      EditFormat = '0.00'
+      Precision = 18
+      Size = 0
+    end
+    object adodsAnexosValorResidual: TFMTBCDField
+      DisplayLabel = 'Valor residual'
+      FieldName = 'ValorResidual'
       currency = True
       Precision = 18
       Size = 6
@@ -313,6 +353,13 @@ inherited dmContratos: TdmContratos
       Precision = 18
       Size = 6
     end
+    object adodsAnexosImpactoISR: TFMTBCDField
+      DisplayLabel = 'Impacto ISR'
+      FieldName = 'ImpactoISR'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
     object adodsAnexosFechaInicial: TDateTimeField
       DisplayLabel = 'Fecha inicial'
       FieldName = 'FechaInicial'
@@ -333,7 +380,6 @@ inherited dmContratos: TdmContratos
     end
   end
   object adodsMonedas: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdMoneda, Descripcion from Monedas'
@@ -342,7 +388,6 @@ inherited dmContratos: TdmContratos
     Top = 144
   end
   object adodsAnexosEstatus: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdAnexoEstatus, Descripcion from AnexosEstatus'
@@ -392,7 +437,6 @@ inherited dmContratos: TdmContratos
     end
   end
   object adodsProductos: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdProducto, Identificador, Descripcion from Productos'
@@ -411,11 +455,12 @@ inherited dmContratos: TdmContratos
     CursorType = ctStatic
     CommandText = 
       'select IdAnexoAmortizacion, IdAnexoCredito, IdAnexoSegmento, Per' +
-      'iodo, Fecha, SaldoInicial, Pago, Capital, CapitalImpuesto, Capit' +
-      'alTotal, Interes, InteresImpuesto, InteresTotal, SaldoFinal, Pag' +
-      'oTotal from AnexosAmortizaciones'#13#10'where IdAnexoCredito = :IdAnex' +
-      'oCredito'
+      'iodo, Fecha, TasaAnual, SaldoInicial, Pago, Capital, CapitalImpu' +
+      'esto, CapitalTotal, Interes, InteresImpuesto, InteresTotal, Impa' +
+      'ctoISR, PagoTotal, SaldoFinal from AnexosAmortizaciones'#13#10'where I' +
+      'dAnexoCredito = :IdAnexoCredito'
     DataSource = dsCreditos
+    MasterFields = 'IdAnexoCredito'
     Parameters = <
       item
         Name = 'IdAnexoCredito'
@@ -446,15 +491,15 @@ inherited dmContratos: TdmContratos
     object adodsAmortizacionesFecha: TDateTimeField
       FieldName = 'Fecha'
     end
+    object adodsAmortizacionesTasaAnual: TBCDField
+      FieldName = 'TasaAnual'
+      DisplayFormat = '0.00 %'
+      EditFormat = '0.00'
+      Precision = 19
+    end
     object adodsAmortizacionesSaldoInicial: TFMTBCDField
       DisplayLabel = 'Saldo inicial'
       FieldName = 'SaldoInicial'
-      currency = True
-      Precision = 18
-      Size = 6
-    end
-    object adodsAmortizacionesPago: TFMTBCDField
-      FieldName = 'Pago'
       currency = True
       Precision = 18
       Size = 6
@@ -499,9 +544,14 @@ inherited dmContratos: TdmContratos
       Precision = 18
       Size = 6
     end
-    object adodsAmortizacionesSaldoFinal: TFMTBCDField
-      DisplayLabel = 'Saldo insoluto'
-      FieldName = 'SaldoFinal'
+    object adodsAmortizacionesImpactoISR: TFMTBCDField
+      FieldName = 'ImpactoISR'
+      LookupCache = True
+      Precision = 18
+      Size = 6
+    end
+    object adodsAmortizacionesPago: TFMTBCDField
+      FieldName = 'Pago'
       currency = True
       Precision = 18
       Size = 6
@@ -509,6 +559,13 @@ inherited dmContratos: TdmContratos
     object adodsAmortizacionesPagoTotal: TFMTBCDField
       DisplayLabel = 'Pago del periodo'
       FieldName = 'PagoTotal'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object adodsAmortizacionesSaldoFinal: TFMTBCDField
+      DisplayLabel = 'Saldo insoluto'
+      FieldName = 'SaldoFinal'
       currency = True
       Precision = 18
       Size = 6
@@ -521,9 +578,11 @@ inherited dmContratos: TdmContratos
     OnNewRecord = adodsCreditosNewRecord
     CommandText = 
       'select IdAnexoCredito, IdAnexo, IdAnexoCreditoEstatus, IdUsuario' +
-      ', Fecha, MontoFiananciar, TasaAnual, Plazo, PagoMensual, FechaIn' +
-      'icial, FechaCorte from AnexosCreditos'#13#10'where IdAnexo = :IdAnexo'
+      ', Fecha, MontoFiananciar, ValorResidual, ImpactoISR, TasaAnual, ' +
+      'Plazo, PagoMensual, FechaInicial, FechaCorte from AnexosCreditos' +
+      #13#10'where IdAnexo = :IdAnexo'
     DataSource = dsAnexos
+    MasterFields = 'IdAnexo'
     Parameters = <
       item
         Name = 'IdAnexo'
@@ -574,6 +633,20 @@ inherited dmContratos: TdmContratos
       DisplayLabel = 'Monto a fiananciar'
       FieldName = 'MontoFiananciar'
       OnChange = adodsCreditosMontoFiananciarChange
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object adodsCreditosValorResidual: TFMTBCDField
+      DisplayLabel = 'Futuro'
+      FieldName = 'ValorResidual'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object adodsCreditosImpactoISR: TFMTBCDField
+      DisplayLabel = 'Impacto ISR'
+      FieldName = 'ImpactoISR'
       currency = True
       Precision = 18
       Size = 6

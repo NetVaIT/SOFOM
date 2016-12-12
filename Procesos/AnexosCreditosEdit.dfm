@@ -7,12 +7,13 @@ inherited frmAnexosCreditosEdit: TfrmAnexosCreditosEdit
   TextHeight = 13
   inherited pcMain: TcxPageControl
     Height = 420
+    ExplicitHeight = 420
     ClientRectBottom = 418
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 2
-      ExplicitTop = 28
+      ExplicitLeft = 3
+      ExplicitTop = 30
       ExplicitWidth = 434
-      ExplicitHeight = 295
+      ExplicitHeight = 390
       object Label1: TLabel
         Left = 48
         Top = 24
@@ -84,6 +85,22 @@ inherited frmAnexosCreditosEdit: TfrmAnexosCreditosEdit
         Height = 13
         Caption = 'Usuario'
         FocusControl = DBLookupComboBox2
+      end
+      object Label10: TLabel
+        Left = 216
+        Top = 144
+        Width = 32
+        Height = 13
+        Caption = 'Futuro'
+        FocusControl = cxDBTextEdit3
+      end
+      object Label11: TLabel
+        Left = 216
+        Top = 264
+        Width = 59
+        Height = 13
+        Caption = 'Impacto ISR'
+        FocusControl = cxDBTextEdit4
       end
       object DBLookupComboBox1: TDBLookupComboBox
         Left = 48
@@ -162,10 +179,27 @@ inherited frmAnexosCreditosEdit: TfrmAnexosCreditosEdit
         Enabled = False
         TabOrder = 8
       end
+      object cxDBTextEdit3: TcxDBTextEdit
+        Left = 216
+        Top = 160
+        DataBinding.DataField = 'ValorResidual'
+        DataBinding.DataSource = DataSource
+        TabOrder = 9
+        Width = 121
+      end
+      object cxDBTextEdit4: TcxDBTextEdit
+        Left = 216
+        Top = 280
+        DataBinding.DataField = 'ImpactoISR'
+        DataBinding.DataSource = DataSource
+        TabOrder = 10
+        Width = 121
+      end
     end
   end
   inherited pmlMain: TPanel
     Top = 420
+    ExplicitTop = 420
   end
   inherited DataSource: TDataSource
     DataSet = dmContratos.adodsCreditos

@@ -40,15 +40,25 @@ type
     tvMasterTasaAnual: TcxGridDBColumn;
     tvMasterPlazo: TcxGridDBColumn;
     tvMasterPagoMensual: TcxGridDBColumn;
-    tvMasterFechainicial: TcxGridDBColumn;
-    tvMasterFechadecorte: TcxGridDBColumn;
     tvMasterEstatus: TcxGridDBColumn;
     tvMasterUsuario: TcxGridDBColumn;
+    dxbbPreAmortizaciones: TdxBarButton;
+    dxbbGenAmortizaciones: TdxBarButton;
+    tvMasterFechaInicial: TcxGridDBColumn;
+    tvMasterFechaCorte: TcxGridDBColumn;
+    tvMasterValorResidual: TcxGridDBColumn;
+    tvMasterImpactoISR: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
+    FactPreAmortizaciones: TBasicAction;
+    FactGenAmortizaciones: TBasicAction;
+    procedure SetactPreAmortizaciones(const Value: TBasicAction);
+    procedure SetactGenAmortizaciones(const Value: TBasicAction);
   public
     { Public declarations }
+    property actPreAmortizaciones: TBasicAction read FactPreAmortizaciones write SetactPreAmortizaciones;
+    property actGenAmortizaciones: TBasicAction read FactGenAmortizaciones write SetactGenAmortizaciones;
   end;
 
 implementation
@@ -61,7 +71,18 @@ procedure TfrmAnexosCreditos.FormCreate(Sender: TObject);
 begin
   inherited;
   gEditForm:= TfrmAnexosCreditosEdit.Create(Self);
+end;
 
+procedure TfrmAnexosCreditos.SetactGenAmortizaciones(const Value: TBasicAction);
+begin
+  FactGenAmortizaciones := Value;
+  dxbbGenAmortizaciones.Action := Value;
+end;
+
+procedure TfrmAnexosCreditos.SetactPreAmortizaciones(const Value: TBasicAction);
+begin
+  FactPreAmortizaciones := Value;
+  dxbbPreAmortizaciones.Action := Value;
 end;
 
 end.

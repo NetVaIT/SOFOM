@@ -41,6 +41,10 @@ type
     cxDBDateEdit3: TcxDBDateEdit;
     Label9: TLabel;
     DBLookupComboBox2: TDBLookupComboBox;
+    Label10: TLabel;
+    cxDBTextEdit3: TcxDBTextEdit;
+    Label11: TLabel;
+    cxDBTextEdit4: TcxDBTextEdit;
   private
     { Private declarations }
   public

@@ -4,10 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, _StandarDMod, System.Actions, Vcl.ActnList,
-  Data.DB, Data.Win.ADODB, System.Math, AmortizacionesDM;
-
-const
-  cIVA = 16.0;
+  Data.DB, Data.Win.ADODB, System.Math, ProcesosType, AmortizacionesDM;
 
 type
   TdmContratos = class(T_dmStandar)
@@ -40,7 +37,7 @@ type
     adodsAnexosPrecio: TFMTBCDField;
     adodsAnexosImpuesto: TFMTBCDField;
     adodsAnexosPrecioTotal: TFMTBCDField;
-    adodsAnexosEnganchePorcentaje: TBCDField;
+    adodsAnexosEnganchePorcentaje: TFMTBCDField;
     adodsAnexosEnganche: TFMTBCDField;
     adodsAnexosComisionPorcentaje: TBCDField;
     adodsAnexosComision: TFMTBCDField;
@@ -99,25 +96,42 @@ type
     adodsCreditosUsuario: TStringField;
     adodsAmortizacionesIdAnexoCredito: TIntegerField;
     adodsAnexosFechaCorte: TDateTimeField;
+    actPreAmortizaciones: TAction;
+    actGenAmortizaciones: TAction;
+    adodsAnexosOpcionCompraPorcentaje: TFMTBCDField;
+    adodsAnexosOpcionCompra: TFMTBCDField;
+    adodsAnexosValorResidualPorcentaje: TBCDField;
+    adodsAnexosValorResidual: TFMTBCDField;
+    adodsAnexosImpactoISR: TFMTBCDField;
+    adodsCreditosValorResidual: TFMTBCDField;
+    adodsCreditosImpactoISR: TFMTBCDField;
+    adodsAmortizacionesTasaAnual: TBCDField;
+    adodsAmortizacionesImpactoISR: TFMTBCDField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actProductosExecute(Sender: TObject);
     procedure adodsAnexosPrecioMonedaChange(Sender: TField);
-    procedure dsMasterDataChange(Sender: TObject; Field: TField);
     procedure adodsAnexosNewRecord(DataSet: TDataSet);
     procedure adodsCreditosNewRecord(DataSet: TDataSet);
     procedure adodsCreditosMontoFiananciarChange(Sender: TField);
     procedure DataModuleDestroy(Sender: TObject);
     procedure adodsCreditosAfterPost(DataSet: TDataSet);
+    procedure adodsAnexosEnganchePorcentajeChange(Sender: TField);
+    procedure adodsAnexosEngancheChange(Sender: TField);
+    procedure actPreAmortizacionesExecute(Sender: TObject);
+    procedure actGenAmortizacionesExecute(Sender: TObject);
   private
     { Private declarations }
     FPaymentTime: TPaymentTime;
     dmAmortizaciones: TdmAmortizaciones;
     procedure CalcularImportes;
+    procedure CalcularImporteEnganche;
     procedure CalcularImportesCredito;
     procedure SetPaymentTime(const Value: TPaymentTime);
-    property PaymentTime: TPaymentTime read FPaymentTime write SetPaymentTime;
+    function GetTipoContrato: TCTipoContrato;
   public
     { Public declarations }
+    property PaymentTime: TPaymentTime read FPaymentTime write SetPaymentTime;
+    property TipoContrato: TCTipoContrato read GetTipoContrato;
   end;
 
 implementation
@@ -128,6 +142,40 @@ uses ContratosForm, AnexosForm, AnexosProductosForm, AnexosAmortizacionesForm,
   AnexosCreditosForm, _ConectionDmod;
 
 {$R *.dfm}
+
+procedure TdmContratos.actGenAmortizacionesExecute(Sender: TObject);
+begin
+  inherited;
+  dmAmortizaciones.TipoContrato := TipoContrato;
+  if dmAmortizaciones.GenAnexosAmortizaciones(adodsCreditosIdAnexoCredito.Value,
+  adodsCreditosFechaInicial.Value, adodsCreditosTasaAnual.Value, adodsCreditosPlazo.Value,
+  adodsCreditosMontoFiananciar.AsExtended,
+    adodsCreditosValorResidual.AsExtended,
+    adodsCreditosImpactoISR.AsExtended) then
+  begin
+    adodsAmortizaciones.Close;
+    adodsAmortizaciones.Open;
+  end;
+end;
+
+procedure TdmContratos.actPreAmortizacionesExecute(Sender: TObject);
+var
+  Amortizaciones: TdmAmortizaciones;
+begin
+  inherited;
+  Amortizaciones := TdmAmortizaciones.Create(Self);
+  try
+    Amortizaciones.TipoContrato:= TipoContrato;
+    Amortizaciones.Execute(adodsCreditosFechaInicial.Value,
+    adodsCreditosTasaAnual.Value, adodsCreditosPlazo.Value,
+    adodsCreditosMontoFiananciar.AsExtended,
+    adodsCreditosValorResidual.AsExtended,
+    adodsCreditosImpactoISR.AsExtended);
+    Amortizaciones.ShowModule(nil, '');
+  finally
+    Amortizaciones.Free;
+  end;
+end;
 
 procedure TdmContratos.actProductosExecute(Sender: TObject);
 var
@@ -146,11 +194,35 @@ begin
   end;
 end;
 
+procedure TdmContratos.adodsAnexosEngancheChange(Sender: TField);
+var
+  a: Extended;
+begin
+  inherited;
+  if adodsAnexos.State in [dsInsert, dsEdit] then
+  begin
+//    adodsAnexosEnganche.Value := adodsAnexosPrecioTotal.Value * (adodsAnexosEnganchePorcentaje.Value/100);
+    if adodsAnexosPrecioTotal.AsExtended <> 0 then
+      a := (adodsAnexosEnganche.AsExtended*100)/ adodsAnexosPrecioTotal.AsExtended
+    else
+      a:= 0;
+    if a <> adodsAnexosEnganchePorcentaje.Value then
+      adodsAnexosEnganchePorcentaje.Value := a;
+  end;
+  CalcularImportes
+end;
+
+procedure TdmContratos.adodsAnexosEnganchePorcentajeChange(Sender: TField);
+begin
+  inherited;
+  CalcularImporteEnganche;
+end;
+
 procedure TdmContratos.adodsAnexosNewRecord(DataSet: TDataSet);
 begin
   inherited;
   adodsAnexosIdAnexoEstatus.Value := 1; // Activo
-//  adodsAnexosIdMoneda.Value :=
+  adodsAnexosIdMoneda.Value := _MONEDAS_ID_DOLAR_USA;
   adodsAnexosFecha.Value := Date;
   adodsAnexosTipoCambio.Value := 19;
   adodsAnexosEnganchePorcentaje.Value := 0;
@@ -161,19 +233,22 @@ end;
 procedure TdmContratos.adodsAnexosPrecioMonedaChange(Sender: TField);
 begin
   inherited;
-  CalcularImportes
+  CalcularImportes;
 end;
 
 procedure TdmContratos.adodsCreditosAfterPost(DataSet: TDataSet);
 begin
   inherited;
-  if dmAmortizaciones.GenAnexosAmortizaciones(adodsCreditosIdAnexoCredito.Value,
-  adodsCreditosFechaInicial.Value, adodsCreditosTasaAnual.Value, adodsCreditosPlazo.Value,
-  adodsCreditosMontoFiananciar.AsExtended, 0) then
-  begin
-    adodsAmortizaciones.Close;
-    adodsAmortizaciones.Open;
-  end;
+//  dmAmortizaciones.TipoContrato := TipoContrato;
+//  if dmAmortizaciones.GenAnexosAmortizaciones(adodsCreditosIdAnexoCredito.Value,
+//  adodsCreditosFechaInicial.Value, adodsCreditosTasaAnual.Value, adodsCreditosPlazo.Value,
+//  adodsCreditosMontoFiananciar.AsExtended,
+////  Falta colocar valor futuro e impactoISR ahora tiene 0
+//  0,0) then
+//  begin
+//    adodsAmortizaciones.Close;
+//    adodsAmortizaciones.Open;
+//  end;
 end;
 
 procedure TdmContratos.adodsCreditosMontoFiananciarChange(Sender: TField);
@@ -189,48 +264,51 @@ begin
   adodsCreditosIdUsuario.Value := _dmConection.IdUsuario;
   adodsCreditosFecha.Value := Now;
   adodsCreditosMontoFiananciar.Value := adodsAnexosMontoFinanciar.Value;
+  adodsCreditosValorResidual.Value := adodsAnexosValorResidual.Value;
+  adodsCreditosImpactoISR.Value := adodsAnexosImpactoISR.Value;
   adodsCreditosTasaAnual.Value := adodsAnexosTasaAnual.Value;
   adodsCreditosPlazo.Value := adodsAnexosPlazo.Value;
   adodsCreditosFechaInicial.Value := adodsAnexosFechaInicial.Value;
   adodsCreditosFechaCorte.Value := adodsAnexosFechaCorte.Value;
 end;
 
+procedure TdmContratos.CalcularImporteEnganche;
+begin
+  if adodsAnexos.State in [dsInsert, dsEdit] then
+  begin
+    adodsAnexosEnganche.Value := adodsAnexosPrecioTotal.Value * (adodsAnexosEnganchePorcentaje.Value/100);
+  end;
+end;
+
 procedure TdmContratos.CalcularImportes;
-var
-//  Tasa: Extended;
-  ValorFuturo: Extended;
 begin
   if adodsAnexos.State in [dsInsert, dsEdit] then
   begin
     adodsAnexosPrecio.Value := adodsAnexosPrecioMoneda.Value * adodsAnexosTipoCambio.Value;
-    adodsAnexosImpuesto.Value := adodsAnexosPrecio.Value * (cIVA/100);
+    adodsAnexosImpuesto.Value := adodsAnexosPrecio.Value * (_IMPUESTOS_IVA/100);
     adodsAnexosPrecioTotal.Value := adodsAnexosPrecio.Value + adodsAnexosImpuesto.Value;
-    adodsAnexosEnganche.Value := adodsAnexosPrecioTotal.Value * (adodsAnexosEnganchePorcentaje.Value/100);
     adodsAnexosComision.Value := (adodsAnexosPrecioTotal.Value-adodsAnexosEnganche.Value)*(adodsAnexosComisionPorcentaje.Value/100);
-    adodsAnexosComisionImpuesto.Value := adodsAnexosComision.Value * (cIVA/100);
-    adodsAnexosGastosImpuestos.Value := adodsAnexosGastos.Value * (cIVA/100);
-
+    adodsAnexosComisionImpuesto.Value := adodsAnexosComision.Value * (_IMPUESTOS_IVA/100);
+    adodsAnexosGastosImpuestos.Value := adodsAnexosGastos.Value * (_IMPUESTOS_IVA/100);
     adodsAnexosDepositos.Value := adodsAnexosPagoMensual.Value * adodsAnexosDespositosNumero.Value;
     adodsAnexosPagoIncial.Value := (adodsAnexosEnganche.Value+adodsAnexosComision.Value+adodsAnexosComisionImpuesto.Value+
     adodsAnexosGastos.Value+adodsAnexosGastosImpuestos.Value+adodsAnexosDepositos.Value);
+    adodsAnexosOpcionCompra.Value := adodsAnexosPrecioTotal.Value * (adodsAnexosOpcionCompraPorcentaje.Value/100);
+    adodsAnexosValorResidual.Value := adodsAnexosPrecioTotal.Value * (adodsAnexosValorResidualPorcentaje.Value/100);
     adodsAnexosMontoFinanciar.Value:= adodsAnexosPrecioTotal.Value-adodsAnexosEnganche.Value;
-//    Tasa := (adodsAnexosTasaAnual.Value / 100) / 12;
-    ValorFuturo:= 0;
     adodsAnexosPagoMensual.Value := dmAmortizaciones.Pago(adodsAnexosTasaAnual.Value,
-    adodsAnexosPlazo.Value, adodsAnexosMontoFinanciar.AsExtended, ValorFuturo);
-//    adodsAnexosPagoMensual.Value := -1*Payment(Tasa, adodsAnexosPlazo.Value, adodsAnexosMontoFinanciar.AsExtended, ValorFuturo, PaymentTime);
+    adodsAnexosPlazo.Value, adodsAnexosMontoFinanciar.AsExtended,
+    adodsAnexosValorResidual.AsExtended)+ adodsAnexosImpactoISR.AsExtended;
   end;
 end;
 
 procedure TdmContratos.CalcularImportesCredito;
-var
-  ValorFuturo: Extended;
 begin
   if adodsCreditos.State in [dsInsert, dsEdit] then
   begin
-    ValorFuturo:= 0;
     adodsCreditosPagoMensual.Value := dmAmortizaciones.Pago(adodsCreditosTasaAnual.Value,
-    adodsCreditosPlazo.Value, adodsCreditosMontoFiananciar.AsExtended, ValorFuturo);
+    adodsCreditosPlazo.Value, adodsCreditosMontoFiananciar.AsExtended,
+    adodsCreditosValorResidual.AsExtended) + adodsCreditosImpactoISR.AsExtended;
   end;
 end;
 
@@ -249,6 +327,8 @@ begin
   gFormDeatil2:= TfrmAnexosCreditos.Create(Self);
   gFormDeatil2.ApplyBestFit := False;
   gFormDeatil2.DataSet:= adodsCreditos;
+  TfrmAnexosCreditos(gFormDeatil2).actPreAmortizaciones := actPreAmortizaciones;
+  TfrmAnexosCreditos(gFormDeatil2).actgenAmortizaciones := actGenAmortizaciones;
   if adodsAmortizaciones.CommandText <> EmptyStr then adodsAmortizaciones.Open;
   gFormDeatil3:= TfrmAnexosAmortizaciones.Create(Self);
   gFormDeatil3.ApplyBestFit := False;
@@ -264,19 +344,12 @@ begin
   FreeAndNil(dmAmortizaciones);
 end;
 
-procedure TdmContratos.dsMasterDataChange(Sender: TObject; Field: TField);
+function TdmContratos.GetTipoContrato: TCTipoContrato;
 begin
-  inherited;
-  if adodsMasterIdContratoTipo.Value = 2 then
-  begin
-    TfrmAnexos(gFormDeatil1).GenerarImpuestoInteres:= True;
-    dmAmortizaciones.GenerarImpuestoInteres:= True;
-  end
+  if adodsMaster.Active then
+    Result := TCTipoContrato(adodsMasterIdContratoTipo.Value)
   else
-  begin
-    TfrmAnexos(gFormDeatil1).GenerarImpuestoInteres:= False;
-    dmAmortizaciones.GenerarImpuestoInteres:= False;
-  end;
+    Result:= tcNone;
 end;
 
 procedure TdmContratos.SetPaymentTime(const Value: TPaymentTime);

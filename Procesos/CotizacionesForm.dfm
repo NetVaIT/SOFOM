@@ -1,29 +1,33 @@
-inherited frmAnexos: TfrmAnexos
-  Caption = 'frmAnexos'
+inherited frmCotizaciones: TfrmCotizaciones
+  Caption = 'frmCotizaciones'
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlMaster: TPanel
     inherited cxGrid: TcxGrid
       inherited tvMaster: TcxGridDBTableView
-        object tvMasterIdAnexo: TcxGridDBColumn
-          DataBinding.FieldName = 'IdAnexo'
+        object tvMasterIdCotizacion: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCotizacion'
           Visible = False
         end
-        object tvMasterIdContrato: TcxGridDBColumn
-          DataBinding.FieldName = 'IdContrato'
+        object tvMasterIdPersona: TcxGridDBColumn
+          DataBinding.FieldName = 'IdPersona'
+          Visible = False
+        end
+        object tvMasterIdContratoTipo: TcxGridDBColumn
+          DataBinding.FieldName = 'IdContratoTipo'
           Visible = False
         end
         object tvMasterIdMoneda: TcxGridDBColumn
           DataBinding.FieldName = 'IdMoneda'
           Visible = False
         end
-        object tvMasterIdAnexoEstatus: TcxGridDBColumn
-          DataBinding.FieldName = 'IdAnexoEstatus'
+        object tvMasterIdCotizacionEstatus: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCotizacionEstatus'
           Visible = False
         end
-        object tvMasterEstatus: TcxGridDBColumn
-          DataBinding.FieldName = 'Estatus'
-          Width = 60
+        object tvMasterIdUsuario: TcxGridDBColumn
+          DataBinding.FieldName = 'IdUsuario'
+          Visible = False
         end
         object tvMasterIdentificador: TcxGridDBColumn
           DataBinding.FieldName = 'Identificador'
@@ -31,17 +35,28 @@ inherited frmAnexos: TfrmAnexos
         end
         object tvMasterDescripcion: TcxGridDBColumn
           DataBinding.FieldName = 'Descripcion'
-          Width = 400
+          Width = 300
         end
-        object tvMasterFecha: TcxGridDBColumn
-          DataBinding.FieldName = 'Fecha'
+        object tvMasterElaboracion: TcxGridDBColumn
+          DataBinding.FieldName = 'Elaboracion'
+        end
+        object tvMasterVigencia: TcxGridDBColumn
+          DataBinding.FieldName = 'Vigencia'
+        end
+        object tvMasterCliente: TcxGridDBColumn
+          DataBinding.FieldName = 'Cliente'
+          Width = 300
+        end
+        object tvMasterTipoContrato: TcxGridDBColumn
+          DataBinding.FieldName = 'TipoContrato'
+          Width = 100
         end
         object tvMasterPrecioMoneda: TcxGridDBColumn
           DataBinding.FieldName = 'PrecioMoneda'
         end
         object tvMasterMoneda: TcxGridDBColumn
           DataBinding.FieldName = 'Moneda'
-          Width = 110
+          Width = 150
         end
         object tvMasterTipoCambio: TcxGridDBColumn
           DataBinding.FieldName = 'TipoCambio'
@@ -121,32 +136,15 @@ inherited frmAnexos: TfrmAnexos
       end
     end
   end
+  inherited DataSource: TDataSource
+    DataSet = dmCotizaciones.adodsMaster
+  end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
       0
       0
       31
       0)
-    inherited dxbTools: TdxBar
-      ItemLinks = <
-        item
-          Visible = True
-          ItemName = 'dxBarButton6'
-        end
-        item
-          Visible = True
-          ItemName = 'dxbbPreview'
-        end
-        item
-          Visible = True
-          ItemName = 'dxbbProductos'
-        end>
-    end
-    object dxbbProductos: TdxBarButton
-      Caption = 'Productos'
-      Category = 0
-      Visible = ivAlways
-    end
   end
   inherited cxStyleRepository: TcxStyleRepository
     PixelsPerInch = 96
@@ -156,7 +154,7 @@ inherited frmAnexos: TfrmAnexos
   end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
-      ReportDocument.CreationDate = 42683.688746423610000000
+      ReportDocument.CreationDate = 42711.658349664350000000
       AssignedFormatValues = []
       BuiltInReportLink = True
     end

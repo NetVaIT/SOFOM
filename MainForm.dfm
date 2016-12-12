@@ -9,9 +9,8 @@ inherited frmMain: TfrmMain
   inherited dxRibbon1: TdxRibbon
     Width = 1020
     OnApplicationMenuClick = dxRibbon1ApplicationMenuClick
-    ExplicitWidth = 1076
+    ExplicitWidth = 1020
     inherited dxRibbon1Tab1: TdxRibbonTab
-      Active = False
       Index = 0
     end
     object dxRibbon1Tab2: TdxRibbonTab
@@ -36,7 +35,6 @@ inherited frmMain: TfrmMain
       Index = 1
     end
     object dxRibbon1Tab3: TdxRibbonTab
-      Active = True
       Caption = 'Procesos'
       Groups = <
         item
@@ -72,13 +70,11 @@ inherited frmMain: TfrmMain
   end
   inherited dxRibbonStatusBar1: TdxRibbonStatusBar
     Width = 1020
-    ExplicitWidth = 1076
+    ExplicitWidth = 1020
   end
   inherited pnlMain: TPanel
     Width = 1020
-    ExplicitLeft = 32
-    ExplicitTop = 149
-    ExplicitWidth = 1076
+    ExplicitWidth = 1020
   end
   inherited dxBarManager: TdxBarManager
     Categories.Strings = (
@@ -274,12 +270,16 @@ inherited frmMain: TfrmMain
       DockedTop = 0
       FloatLeft = 1133
       FloatTop = 8
-      FloatClientWidth = 98
-      FloatClientHeight = 162
+      FloatClientWidth = 134
+      FloatClientHeight = 378
       ItemLinks = <
         item
           Visible = True
           ItemName = 'dxBarLargeButton38'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton40'
         end
         item
           Visible = True
@@ -551,6 +551,10 @@ inherited frmMain: TfrmMain
     end
     object dxBrLrgBtnAplicaciones: TdxBarLargeButton
       Action = ActAplicacionPagos
+      Category = 0
+    end
+    object dxBarLargeButton40: TdxBarLargeButton
+      Action = actCotizaciones
       Category = 0
     end
     object dxBarLargeButton31: TdxBarLargeButton
@@ -10039,18 +10043,25 @@ inherited frmMain: TfrmMain
       Caption = 'Tipos de producto'
       ImageIndex = 34
     end
-    object actContratos: TAction
-      Tag = 30
-      Category = 'Procesos'
-      Caption = 'Contratos'
-      ImageIndex = 7
-      OnExecute = actCatalogoExecute
-    end
     object actAmortizaciones: TAction
       Tag = 31
       Category = 'Procesos'
       Caption = 'Amortizaciones'
       ImageIndex = 44
+      OnExecute = actCatalogoExecute
+    end
+    object actCotizaciones: TAction
+      Tag = 36
+      Category = 'Procesos'
+      Caption = 'Cotizaciones'
+      ImageIndex = 7
+      OnExecute = actCatalogoExecute
+    end
+    object actContratos: TAction
+      Tag = 30
+      Category = 'Procesos'
+      Caption = 'Contratos'
+      ImageIndex = 0
       OnExecute = actCatalogoExecute
     end
     object actFacturacion: TAction

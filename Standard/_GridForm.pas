@@ -228,6 +228,7 @@ end;
 procedure T_frmGrid.FormCreate(Sender: TObject);
 begin
   InsertMenuItem;
+  ApplyBestFit:= True;
 end;
 
 procedure T_frmGrid.FormShow(Sender: TObject);

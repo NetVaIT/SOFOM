@@ -1,13 +1,9 @@
 inherited frmAnexosCreditos: TfrmAnexosCreditos
   Caption = 'frmAnexosCreditos'
-  ExplicitWidth = 651
-  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlMaster: TPanel
     inherited cxGrid: TcxGrid
-      ExplicitLeft = 160
-      ExplicitTop = 8
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdAnexoCredito: TcxGridDBColumn
           DataBinding.FieldName = 'IdAnexoCredito'
@@ -29,17 +25,21 @@ inherited frmAnexosCreditos: TfrmAnexosCreditos
           DataBinding.FieldName = 'Estatus'
           Width = 150
         end
-        object tvMasterFechainicial: TcxGridDBColumn
-          DataBinding.FieldName = 'Fecha inicial'
-          Width = 110
+        object tvMasterFechaInicial: TcxGridDBColumn
+          DataBinding.FieldName = 'FechaInicial'
         end
-        object tvMasterFechadecorte: TcxGridDBColumn
-          DataBinding.FieldName = 'Fecha de corte'
-          Width = 110
+        object tvMasterFechaCorte: TcxGridDBColumn
+          DataBinding.FieldName = 'FechaCorte'
         end
         object tvMasterMontoFiananciar: TcxGridDBColumn
           DataBinding.FieldName = 'MontoFiananciar'
           Width = 110
+        end
+        object tvMasterValorResidual: TcxGridDBColumn
+          DataBinding.FieldName = 'ValorResidual'
+        end
+        object tvMasterImpactoISR: TcxGridDBColumn
+          DataBinding.FieldName = 'ImpactoISR'
         end
         object tvMasterTasaAnual: TcxGridDBColumn
           DataBinding.FieldName = 'TasaAnual'
@@ -70,6 +70,33 @@ inherited frmAnexosCreditos: TfrmAnexosCreditos
       0
       31
       0)
+    inherited dxbTools: TdxBar
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'dxBarButton6'
+        end
+        item
+          Visible = True
+          ItemName = 'dxbbPreview'
+        end
+        item
+          Visible = True
+          ItemName = 'dxbbPreAmortizaciones'
+        end
+        item
+          Visible = True
+          ItemName = 'dxbbGenAmortizaciones'
+        end>
+    end
+    object dxbbPreAmortizaciones: TdxBarButton
+      Action = dmContratos.actPreAmortizaciones
+      Category = 0
+    end
+    object dxbbGenAmortizaciones: TdxBarButton
+      Action = dmContratos.actGenAmortizaciones
+      Category = 0
+    end
   end
   inherited cxStyleRepository: TcxStyleRepository
     PixelsPerInch = 96

@@ -74,17 +74,13 @@ inherited dmAmortizaciones: TdmAmortizaciones
     object dxmAmortizacionesFecha: TDateTimeField
       FieldName = 'Fecha'
     end
-    object dxmAmortizacionesSaldoInicial: TFloatField
-      DisplayLabel = 'Saldo inicial'
-      FieldName = 'SaldoInicial'
-      currency = True
-    end
     object dxmAmortizacionesTasaAnual: TFloatField
       DisplayLabel = 'Tasa anual'
       FieldName = 'TasaAnual'
     end
-    object dxmAmortizacionesPago: TFloatField
-      FieldName = 'Pago'
+    object dxmAmortizacionesSaldoInicial: TFloatField
+      DisplayLabel = 'Saldo inicial'
+      FieldName = 'SaldoInicial'
       currency = True
     end
     object dxmAmortizacionesCapital: TFloatField
@@ -115,24 +111,35 @@ inherited dmAmortizaciones: TdmAmortizaciones
       FieldName = 'InteresTotal'
       currency = True
     end
-    object dxmAmortizacionesSaldoFinal: TFloatField
-      DisplayLabel = 'Saldo insoluto'
-      FieldName = 'SaldoFinal'
+    object dxmAmortizacionesImpactoISR: TFloatField
+      DisplayLabel = 'Impacto ISR'
+      FieldName = 'ImpactoISR'
+      currency = True
+    end
+    object dxmAmortizacionesPago: TFloatField
+      FieldName = 'Pago'
       currency = True
     end
     object dxmAmortizacionesPagoTotal: TFloatField
+      DisplayLabel = 'Pago del periodo'
       FieldName = 'PagoTotal'
+      currency = True
+    end
+    object dxmAmortizacionesSaldoFinal: TFloatField
+      DisplayLabel = 'Saldo insoluto'
+      FieldName = 'SaldoFinal'
       currency = True
     end
   end
   object adocInsAnexosAmrtizaciones: TADOCommand
     CommandText = 
       'INSERT INTO AnexosAmortizaciones (IdAnexoCredito,IdAnexoSegmento' +
-      ',Periodo,Fecha,SaldoInicial,Pago,Capital,CapitalImpuesto,Capital' +
-      'Total,Interes,InteresImpuesto,InteresTotal,SaldoFinal,PagoTotal)' +
-      #13#10'VALUES (:IdAnexoCredito,:IdAnexoSegmento,:Periodo,:Fecha,:Sald' +
-      'oInicial,:Pago,:Capital,:CapitalImpuesto,:CapitalTotal,:Interes,' +
-      ':InteresImpuesto,:InteresTotal,:SaldoFinal,:PagoTotal)'#13#10
+      ',Periodo,Fecha,TasaAnual,SaldoInicial,Pago,Capital,CapitalImpues' +
+      'to,CapitalTotal,Interes,InteresImpuesto,InteresTotal,ImpactoISR,' +
+      'PagoTotal,SaldoFinal)'#13#10'VALUES (:IdAnexoCredito,:IdAnexoSegmento,' +
+      ':Periodo,:Fecha,:TasaAnual,:SaldoInicial,:Pago,:Capital,:Capital' +
+      'Impuesto,:CapitalTotal,:Interes,:InteresImpuesto,:InteresTotal,:' +
+      'ImpactoISR,:PagoTotal,:SaldoFinal)'#13#10
     Connection = _dmConection.ADOConnection
     Parameters = <
       item
@@ -165,6 +172,15 @@ inherited dmAmortizaciones: TdmAmortizaciones
         NumericScale = 3
         Precision = 23
         Size = 16
+        Value = Null
+      end
+      item
+        Name = 'TasaAnual'
+        Attributes = [paSigned]
+        DataType = ftBCD
+        NumericScale = 4
+        Precision = 19
+        Size = 8
         Value = Null
       end
       item
@@ -240,7 +256,7 @@ inherited dmAmortizaciones: TdmAmortizaciones
         Value = Null
       end
       item
-        Name = 'SaldoFinal'
+        Name = 'ImpactoISR'
         Attributes = [paSigned]
         DataType = ftBCD
         NumericScale = 6
@@ -250,6 +266,15 @@ inherited dmAmortizaciones: TdmAmortizaciones
       end
       item
         Name = 'PagoTotal'
+        Attributes = [paSigned]
+        DataType = ftBCD
+        NumericScale = 6
+        Precision = 18
+        Size = 19
+        Value = Null
+      end
+      item
+        Name = 'SaldoFinal'
         Attributes = [paSigned]
         DataType = ftBCD
         NumericScale = 6
