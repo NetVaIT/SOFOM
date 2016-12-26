@@ -93,6 +93,10 @@ type
     cxDBDateEdit4: TcxDBDateEdit;
     Label29: TLabel;
     cxDBTextEdit21: TcxDBTextEdit;
+    Label30: TLabel;
+    DBLookupComboBox2: TDBLookupComboBox;
+    Label31: TLabel;
+    cxDBTextEdit22: TcxDBTextEdit;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);

@@ -88,6 +88,7 @@ begin
   PaymentTime := ptEndOfPeriod;
   gGridForm:= TfrmSegmentos.Create(Self);
   gGridForm.DataSet:= dxmAmortizaciones;
+  gGridForm.ReadOnlyGrid := True;
 //  gGridForm.DataSet:= dxmSegmentos;
   TfrmSegmentos(gGridForm).actCalcular := actCalcular;
   TfrmSegmentos(gGridForm).Monto := 0;
@@ -145,7 +146,7 @@ begin
 //    Interes := InterestPayment(Tasa, Periodo, NPeriodo, ValorPresente, ValorFuturo, PaymentTime)*-1;
     case TipoContrato of
       tcNone: InteresImpuesto := 0;
-      tcCreditoSimple: InteresImpuesto := 0;
+      tcCreditoSimple: InteresImpuesto := Interes * (_IMPUESTOS_IVA/100);
       tcArrendamientoFinasnciero: InteresImpuesto := Interes * (_IMPUESTOS_IVA/100);
       tcArrendamientoPuro: InteresImpuesto := 0;
       else InteresImpuesto := 0;

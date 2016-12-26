@@ -1,5 +1,5 @@
 inherited frmContratosEdit: TfrmContratosEdit
-  Caption = 'frmContratosEdit'
+  Caption = 'Contrato'
   ExplicitWidth = 444
   ExplicitHeight = 395
   PixelsPerInch = 96

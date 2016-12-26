@@ -741,6 +741,18 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\ProcesosType.pas"/>
+        <DCCReference Include="Procesos\CotizacionesCreditosForm.pas">
+            <Form>frmCotizacionesCreditos</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Procesos\CotizacionesCreditosEdit.pas">
+            <Form>frmCotizacionesCreditosEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Procesos\CotizacionesSeleccionarForm.pas">
+            <Form>frmCotizacionesSeleccionar</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

@@ -1,12 +1,11 @@
 inherited frmAnexosProductos: TfrmAnexosProductos
-  Caption = 'frmAnexosProductos'
+  Caption = 'Productos'
   ExplicitWidth = 651
   ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlMaster: TPanel
     inherited cxGrid: TcxGrid
-      ExplicitTop = -3
       inherited tvMaster: TcxGridDBTableView
         OptionsData.Editing = True
         OptionsData.Inserting = True
@@ -90,6 +89,7 @@ inherited frmAnexosProductos: TfrmAnexosProductos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42684.460569618060000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

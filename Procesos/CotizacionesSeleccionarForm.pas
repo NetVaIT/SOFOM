@@ -1,4 +1,4 @@
-unit ContratosForm;
+unit CotizacionesSeleccionarForm;
 
 interface
 
@@ -23,51 +23,31 @@ uses
   dxPSPDFExportCore, dxPSPDFExport, cxDrawTextUtils, dxPSPrVwStd, dxPSPrVwAdv,
   dxPSPrVwRibbon, dxPScxPageControlProducer, dxPScxGridLnk,
   dxPScxGridLayoutViewLnk, dxPScxEditorProducers, dxPScxExtEditorProducers,
-  dxSkinsdxRibbonPainter, cxGridCustomTableView, cxGridTableView,
-  cxGridDBTableView, dxPSCore, dxPScxCommon, dxBar, Vcl.ImgList,
+  dxSkinsdxRibbonPainter, dxPSCore, dxPScxCommon, dxBar, Vcl.ImgList,
   cxGridCustomPopupMenu, cxGridPopupMenu, cxClasses, Vcl.StdActns, Vcl.DBActns,
   System.Actions, Vcl.ActnList, Vcl.StdCtrls, cxGridLevel, cxGridCustomView,
-  cxGrid, Vcl.ExtCtrls;
+  cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
+  Vcl.ExtCtrls;
 
 type
-  TfrmContratos = class(T_frmGrid)
-    tvMasterIdContrato: TcxGridDBColumn;
-    tvMasterIdPersona: TcxGridDBColumn;
-    tvMasterIdContratoTipo: TcxGridDBColumn;
-    tvMasterIdContratoEstatus: TcxGridDBColumn;
+  TfrmCotizacionesSeleccionar = class(T_frmGrid)
+    tvMasterIdCotizacion: TcxGridDBColumn;
     tvMasterIdentificador: TcxGridDBColumn;
-    tvMasterFecha: TcxGridDBColumn;
-    tvMasterCliente: TcxGridDBColumn;
-    tvMasterTipo: TcxGridDBColumn;
-    tvMasterMontoAutorizado: TcxGridDBColumn;
-    tvMasterEstatus: TcxGridDBColumn;
-    dxbbCrearAnexo: TdxBarButton;
-    procedure FormCreate(Sender: TObject);
+    tvMasterDescripcion: TcxGridDBColumn;
+    tvMasterMontoFinanciar: TcxGridDBColumn;
+    tvMasterTasaAnual: TcxGridDBColumn;
+    tvMasterPlazo: TcxGridDBColumn;
+    tvMasterPagoMensual: TcxGridDBColumn;
   private
-    FactCrearAnexo: TBasicAction;
-    procedure SetactCrearAnexo(const Value: TBasicAction);
     { Private declarations }
   public
     { Public declarations }
-    property actCrearAnexo: TBasicAction read FactCrearAnexo write SetactCrearAnexo;
   end;
 
 implementation
 
 {$R *.dfm}
 
-uses ContratosDM, ContratosEdit;
-
-procedure TfrmContratos.FormCreate(Sender: TObject);
-begin
-  inherited;
-  gEditForm:= TfrmContratosEdit.Create(Self);
-end;
-
-procedure TfrmContratos.SetactCrearAnexo(const Value: TBasicAction);
-begin
-  FactCrearAnexo := Value;
-  dxbbCrearAnexo.Action := Value;
-end;
+uses ContratosDM;
 
 end.

@@ -1,6 +1,7 @@
 inherited dmContratos: TdmContratos
   OldCreateOrder = True
-  Width = 551
+  Height = 480
+  Width = 694
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     CommandText = 
@@ -52,6 +53,7 @@ inherited dmContratos: TdmContratos
     object adodsMasterMontoAutorizado: TBCDField
       DisplayLabel = 'Autorizado'
       FieldName = 'MontoAutorizado'
+      currency = True
       Precision = 19
     end
     object adodsMasterEstatus: TStringField
@@ -85,6 +87,16 @@ inherited dmContratos: TdmContratos
       Caption = 'Generar'
       Hint = 'Generar amortizaciones'
       OnExecute = actGenAmortizacionesExecute
+    end
+    object actCrearAnexo: TAction
+      Caption = 'Crear anexo'
+      Hint = 'Crea anexo de una cotizacion'
+      OnExecute = actCrearAnexoExecute
+    end
+    object actCrearPagoInicial: TAction
+      Caption = 'Crear pago inicial'
+      OnExecute = actCrearPagoInicialExecute
+      OnUpdate = actCrearPagoInicialUpdate
     end
   end
   object dsMaster: TDataSource
@@ -124,14 +136,15 @@ inherited dmContratos: TdmContratos
     CursorType = ctStatic
     OnNewRecord = adodsAnexosNewRecord
     CommandText = 
-      'select IdAnexo, IdContrato, IdMoneda, IdAnexoEstatus, Identifica' +
-      'dor, Descripcion, Fecha, PrecioMoneda, TipoCambio, Precio, Impue' +
-      'sto, PrecioTotal, EnganchePorcentaje, Enganche, ComisionPorcenta' +
-      'je, Comision, ComisionImpuesto, Gastos, GastosImpuestos, Desposi' +
-      'tosNumero, Depositos, PagoIncial, OpcionCompraPorcentaje, Opcion' +
-      'Compra, ValorResidualPorcentaje, ValorResidual, MontoFinanciar, ' +
-      'TasaAnual, Plazo, PagoMensual, ImpactoISR, FechaInicial, FechaCo' +
-      'rte from Anexos'#13#10'where IdContrato = :IdContrato'
+      'select IdAnexo, IdContrato, IdCotizacion, IdMoneda, IdAnexoEstat' +
+      'us, Identificador, Descripcion, Fecha, PrecioMoneda, TipoCambio,' +
+      ' Precio, Impuesto, PrecioTotal, EnganchePorcentaje, Enganche, Co' +
+      'misionPorcentaje, Comision, ComisionImpuesto, Gastos, GastosImpu' +
+      'estos, DespositosNumero, Depositos, PagoIncial, OpcionCompraPorc' +
+      'entaje, OpcionCompra, ValorResidualPorcentaje, ValorResidual, Mo' +
+      'ntoFinanciar, TasaAnual, Plazo, PagoMensual, ImpactoISR, FechaIn' +
+      'icial, FechaCorte, PagoInicialCreado from Anexos'#13#10'where IdContra' +
+      'to = :IdContrato'
     DataSource = dsMaster
     MasterFields = 'IdContrato'
     Parameters = <
@@ -152,6 +165,10 @@ inherited dmContratos: TdmContratos
     end
     object adodsAnexosIdContrato: TIntegerField
       FieldName = 'IdContrato'
+      Visible = False
+    end
+    object adodsAnexosIdCotizacion: TIntegerField
+      FieldName = 'IdCotizacion'
       Visible = False
     end
     object adodsAnexosIdMoneda: TIntegerField
@@ -356,6 +373,7 @@ inherited dmContratos: TdmContratos
     object adodsAnexosImpactoISR: TFMTBCDField
       DisplayLabel = 'Impacto ISR'
       FieldName = 'ImpactoISR'
+      OnChange = adodsAnexosPrecioMonedaChange
       currency = True
       Precision = 18
       Size = 6
@@ -378,8 +396,12 @@ inherited dmContratos: TdmContratos
       Size = 50
       Lookup = True
     end
+    object adodsAnexosPagoInicialCreado: TBooleanField
+      FieldName = 'PagoInicialCreado'
+    end
   end
   object adodsMonedas: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdMoneda, Descripcion from Monedas'
@@ -388,6 +410,7 @@ inherited dmContratos: TdmContratos
     Top = 144
   end
   object adodsAnexosEstatus: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdAnexoEstatus, Descripcion from AnexosEstatus'
@@ -640,6 +663,7 @@ inherited dmContratos: TdmContratos
     object adodsCreditosValorResidual: TFMTBCDField
       DisplayLabel = 'Futuro'
       FieldName = 'ValorResidual'
+      OnChange = adodsCreditosMontoFiananciarChange
       currency = True
       Precision = 18
       Size = 6
@@ -647,6 +671,7 @@ inherited dmContratos: TdmContratos
     object adodsCreditosImpactoISR: TFMTBCDField
       DisplayLabel = 'Impacto ISR'
       FieldName = 'ImpactoISR'
+      OnChange = adodsCreditosMontoFiananciarChange
       currency = True
       Precision = 18
       Size = 6
@@ -709,5 +734,131 @@ inherited dmContratos: TdmContratos
     Parameters = <>
     Left = 200
     Top = 264
+  end
+  object adodsCotizaionesSel: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'SELECT IdCotizacion, Identificador, Descripcion, MontoFinanciar,' +
+      ' TasaAnual, Plazo, PagoMensual'#13#10'FROM Cotizaciones'#13#10'WHERE IdCotiz' +
+      'acionEstatus = 1'#13#10'AND IdContratoTipo = :IdContratoTipo'#13#10'AND IdPe' +
+      'rsona = :IdPersona'
+    Parameters = <
+      item
+        Name = 'IdContratoTipo'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end
+      item
+        Name = 'IdPersona'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 56
+    Top = 344
+    object adodsCotizaionesSelIdCotizacion: TAutoIncField
+      FieldName = 'IdCotizacion'
+      ReadOnly = True
+      Visible = False
+    end
+    object adodsCotizaionesSelIdentificador: TStringField
+      FieldName = 'Identificador'
+      Size = 5
+    end
+    object adodsCotizaionesSelDescripcion: TStringField
+      FieldName = 'Descripcion'
+      Size = 100
+    end
+    object adodsCotizaionesSelMontoFinanciar: TFMTBCDField
+      DisplayLabel = 'Monto a financiar'
+      FieldName = 'MontoFinanciar'
+      Precision = 18
+      Size = 6
+    end
+    object adodsCotizaionesSelTasaAnual: TBCDField
+      DisplayLabel = 'Tasa anual'
+      FieldName = 'TasaAnual'
+      Precision = 19
+    end
+    object adodsCotizaionesSelPlazo: TIntegerField
+      FieldName = 'Plazo'
+    end
+    object adodsCotizaionesSelPagoMensual: TFMTBCDField
+      DisplayLabel = 'Pago mensual'
+      FieldName = 'PagoMensual'
+      Precision = 18
+      Size = 6
+    end
+  end
+  object adospGenAnexoDeCotizacion: TADOStoredProc
+    Connection = _dmConection.ADOConnection
+    ProcedureName = 'p_GenAnexoDeCotizacion;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@IdCotizacion'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@IdContrato'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@IdAnexo'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Direction = pdInputOutput
+        Precision = 10
+        Value = Null
+      end>
+    Left = 56
+    Top = 400
+  end
+  object adopSetCXCPorAnexo: TADOStoredProc
+    Connection = _dmConection.ADOConnection
+    ProcedureName = 'p_SetCuentasXCobrarPorAnexo;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@IdAnexo'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@IdCuentaXCobrar'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Direction = pdInputOutput
+        Precision = 10
+        Value = Null
+      end>
+    Left = 224
+    Top = 400
   end
 end

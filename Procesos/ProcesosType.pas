@@ -9,6 +9,7 @@ const
   _CONFIGURACION_DIAS_VIGENCIA = 30;
 type
   TCTipoContrato = (tcNone, tcCreditoSimple, tcArrendamientoFinasnciero, tcArrendamientoPuro);
+  TCotizacionEstatus = (aeNone, aeAbierto, aeContratado, aeCerrado);
 
 implementation
 

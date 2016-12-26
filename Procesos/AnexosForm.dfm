@@ -1,5 +1,7 @@
 inherited frmAnexos: TfrmAnexos
   Caption = 'frmAnexos'
+  ExplicitWidth = 651
+  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlMaster: TPanel
@@ -11,6 +13,10 @@ inherited frmAnexos: TfrmAnexos
         end
         object tvMasterIdContrato: TcxGridDBColumn
           DataBinding.FieldName = 'IdContrato'
+          Visible = False
+        end
+        object tvMasterIdCotizacion: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCotizacion'
           Visible = False
         end
         object tvMasterIdMoneda: TcxGridDBColumn
@@ -118,6 +124,9 @@ inherited frmAnexos: TfrmAnexos
         object tvMasterFechaCorte: TcxGridDBColumn
           DataBinding.FieldName = 'FechaCorte'
         end
+        object tvMasterPagoInicialCreado: TcxGridDBColumn
+          DataBinding.FieldName = 'PagoInicialCreado'
+        end
       end
     end
   end
@@ -139,13 +148,18 @@ inherited frmAnexos: TfrmAnexos
         end
         item
           Visible = True
-          ItemName = 'dxbbProductos'
+          ItemName = 'dxbbCrearPagoInicial'
         end>
     end
     object dxbbProductos: TdxBarButton
       Caption = 'Productos'
       Category = 0
       Visible = ivAlways
+      ImageIndex = 13
+    end
+    object dxbbCrearPagoInicial: TdxBarButton
+      Action = dmContratos.actCrearPagoInicial
+      Category = 0
     end
   end
   inherited cxStyleRepository: TcxStyleRepository
@@ -154,10 +168,41 @@ inherited frmAnexos: TfrmAnexos
   inherited cxImageList: TcxImageList
     FormatVersion = 1
   end
+  inherited PopupMenu: TdxBarPopupMenu
+    ItemLinks = <
+      item
+        Visible = True
+        ItemName = 'Insert1'
+      end
+      item
+        Visible = True
+        ItemName = 'Edit1'
+      end
+      item
+        Visible = True
+        ItemName = 'Delete1'
+      end
+      item
+        Visible = True
+        ItemName = 'dxbbProductos'
+      end
+      item
+        Visible = True
+        ItemName = 'dxBarButton7'
+      end
+      item
+        Visible = True
+        ItemName = 'dxBarSeparator1'
+      end
+      item
+        Visible = True
+        ItemName = 'dxBarButton5'
+      end>
+  end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42683.688746423610000000
-      AssignedFormatValues = []
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

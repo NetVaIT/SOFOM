@@ -26,6 +26,7 @@ inherited frmContratos: TfrmContratos
     ExplicitHeight = 200
     inherited cxGrid: TcxGrid
       Height = 200
+      ExplicitHeight = 200
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdContrato: TcxGridDBColumn
           DataBinding.FieldName = 'IdContrato'
@@ -71,7 +72,8 @@ inherited frmContratos: TfrmContratos
     Top = 540
     Height = 124
     Align = alClient
-    ExplicitTop = 574
+    ExplicitTop = 540
+    ExplicitHeight = 124
   end
   inherited pnlDetail2: TPanel
     Top = 387
@@ -89,7 +91,7 @@ inherited frmContratos: TfrmContratos
   end
   inherited pnlClose: TPanel
     Top = 664
-    ExplicitTop = 615
+    ExplicitTop = 664
   end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
@@ -97,6 +99,27 @@ inherited frmContratos: TfrmContratos
       0
       31
       0)
+    inherited dxbTools: TdxBar
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'dxBarButton6'
+        end
+        item
+          Visible = True
+          ItemName = 'dxbbPreview'
+        end
+        item
+          Visible = True
+          ItemName = 'dxbbCrearAnexo'
+        end>
+    end
+    object dxbbCrearAnexo: TdxBarButton
+      Caption = 'Crear anexo'
+      Category = 0
+      Hint = 'Crea anexo de una cotizacion'
+      Visible = ivAlways
+    end
   end
   inherited cxStyleRepository: TcxStyleRepository
     PixelsPerInch = 96
@@ -107,6 +130,7 @@ inherited frmContratos: TfrmContratos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42683.590026041670000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

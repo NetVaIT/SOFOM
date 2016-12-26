@@ -1,5 +1,5 @@
 inherited frmCotizacionesEdit: TfrmCotizacionesEdit
-  Caption = 'frmCotizacionesEdit'
+  Caption = 'Cotizaci'#243'n'
   ClientHeight = 661
   ClientWidth = 719
   OnDestroy = FormDestroy
@@ -10,17 +10,17 @@ inherited frmCotizacionesEdit: TfrmCotizacionesEdit
   inherited pcMain: TcxPageControl
     Width = 719
     Height = 620
-    ExplicitWidth = 735
-    ExplicitHeight = 617
+    ExplicitWidth = 719
+    ExplicitHeight = 620
     ClientRectBottom = 618
     ClientRectRight = 717
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 2
       ExplicitTop = 28
-      ExplicitWidth = 731
-      ExplicitHeight = 587
+      ExplicitWidth = 715
+      ExplicitHeight = 590
       object cxGroupBox1: TcxGroupBox
-        Left = 3
+        Left = 6
         Top = -1
         Caption = ' '
         TabOrder = 0
@@ -108,11 +108,27 @@ inherited frmCotizacionesEdit: TfrmCotizacionesEdit
         end
         object Label28: TLabel
           Left = 498
-          Top = 19
+          Top = 176
           Width = 39
           Height = 13
           Caption = 'Vigencia'
           FocusControl = cxDBDateEdit4
+          Visible = False
+        end
+        object Label30: TLabel
+          Left = 501
+          Top = 19
+          Width = 36
+          Height = 13
+          Caption = 'Estatus'
+          FocusControl = DBLookupComboBox2
+        end
+        object Label31: TLabel
+          Left = 501
+          Top = 229
+          Width = 36
+          Height = 13
+          Caption = 'Usuario'
         end
         object cxDBTextEdit1: TcxDBTextEdit
           Left = 184
@@ -127,7 +143,7 @@ inherited frmCotizacionesEdit: TfrmCotizacionesEdit
           Top = 43
           DataBinding.DataField = 'Descripcion'
           DataBinding.DataSource = DataSource
-          TabOrder = 3
+          TabOrder = 4
           Width = 480
         end
         object cxDBDateEdit1: TcxDBDateEdit
@@ -145,7 +161,7 @@ inherited frmCotizacionesEdit: TfrmCotizacionesEdit
           Height = 21
           DataField = 'Cliente'
           DataSource = DataSource
-          TabOrder = 4
+          TabOrder = 5
         end
         object DBLookupComboBox4: TDBLookupComboBox
           Left = 184
@@ -154,14 +170,14 @@ inherited frmCotizacionesEdit: TfrmCotizacionesEdit
           Height = 21
           DataField = 'TipoContrato'
           DataSource = DataSource
-          TabOrder = 5
+          TabOrder = 6
         end
         object cxDBTextEdit3: TcxDBTextEdit
           Left = 184
           Top = 119
           DataBinding.DataField = 'PrecioMoneda'
           DataBinding.DataSource = DataSource
-          TabOrder = 6
+          TabOrder = 7
           Width = 121
         end
         object DBLookupComboBox1: TDBLookupComboBox
@@ -171,14 +187,14 @@ inherited frmCotizacionesEdit: TfrmCotizacionesEdit
           Height = 21
           DataField = 'Moneda'
           DataSource = DataSource
-          TabOrder = 7
+          TabOrder = 8
         end
         object cxDBTextEdit4: TcxDBTextEdit
           Left = 184
           Top = 146
           DataBinding.DataField = 'TipoCambio'
           DataBinding.DataSource = DataSource
-          TabOrder = 8
+          TabOrder = 9
           Width = 121
         end
         object cxDBTextEdit5: TcxDBTextEdit
@@ -187,7 +203,7 @@ inherited frmCotizacionesEdit: TfrmCotizacionesEdit
           DataBinding.DataField = 'Precio'
           DataBinding.DataSource = DataSource
           Enabled = False
-          TabOrder = 9
+          TabOrder = 10
           Width = 121
         end
         object cxDBTextEdit6: TcxDBTextEdit
@@ -196,7 +212,7 @@ inherited frmCotizacionesEdit: TfrmCotizacionesEdit
           DataBinding.DataField = 'Impuesto'
           DataBinding.DataSource = DataSource
           Enabled = False
-          TabOrder = 10
+          TabOrder = 11
           Width = 121
         end
         object cxDBTextEdit7: TcxDBTextEdit
@@ -205,15 +221,35 @@ inherited frmCotizacionesEdit: TfrmCotizacionesEdit
           DataBinding.DataField = 'PrecioTotal'
           DataBinding.DataSource = DataSource
           Enabled = False
-          TabOrder = 11
+          TabOrder = 12
           Width = 121
         end
         object cxDBDateEdit4: TcxDBDateEdit
           Left = 543
-          Top = 16
+          Top = 173
           DataBinding.DataField = 'Vigencia'
           DataBinding.DataSource = DataSource
+          TabOrder = 3
+          Visible = False
+          Width = 121
+        end
+        object DBLookupComboBox2: TDBLookupComboBox
+          Left = 543
+          Top = 16
+          Width = 121
+          Height = 21
+          DataField = 'Estatus'
+          DataSource = DataSource
+          Enabled = False
           TabOrder = 2
+        end
+        object cxDBTextEdit22: TcxDBTextEdit
+          Left = 543
+          Top = 226
+          DataBinding.DataField = 'Usuario'
+          DataBinding.DataSource = DataSource
+          Enabled = False
+          TabOrder = 13
           Width = 121
         end
       end
@@ -576,28 +612,25 @@ inherited frmCotizacionesEdit: TfrmCotizacionesEdit
       Caption = 'Segmentos'
       ImageIndex = 2
       TabVisible = False
-      ExplicitWidth = 731
-      ExplicitHeight = 587
     end
     object tsAmortizaciones: TcxTabSheet
       Caption = 'Amortizaciones'
       ImageIndex = 1
-      ExplicitWidth = 731
-      ExplicitHeight = 587
+      TabVisible = False
     end
   end
   inherited pmlMain: TPanel
     Top = 620
     Width = 719
-    ExplicitTop = 617
-    ExplicitWidth = 735
+    ExplicitTop = 620
+    ExplicitWidth = 719
     inherited btnCancel: TButton
       Left = 637
-      ExplicitLeft = 653
+      ExplicitLeft = 637
     end
     inherited btnOk: TButton
       Left = 556
-      ExplicitLeft = 572
+      ExplicitLeft = 556
     end
   end
   inherited DataSource: TDataSource

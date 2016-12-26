@@ -67,14 +67,20 @@ type
     tvMasterValorResidualPorcentaje: TcxGridDBColumn;
     tvMasterValorResidual: TcxGridDBColumn;
     tvMasterImpactoISR: TcxGridDBColumn;
+    tvMasterIdCotizacion: TcxGridDBColumn;
+    dxbbCrearPagoInicial: TdxBarButton;
+    tvMasterPagoInicialCreado: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
     FactProductos: TBasicAction;
+    FactCrearPagoinicial: TBasicAction;
     procedure SetactProductos(const Value: TBasicAction);
+    procedure SetactCrearPagoinicial(const Value: TBasicAction);
   public
     { Public declarations }
     property actProductos: TBasicAction read FactProductos write SetactProductos;
+    property actCrearPagoinicial: TBasicAction read FactCrearPagoinicial write SetactCrearPagoinicial;
   end;
 
 implementation
@@ -87,6 +93,12 @@ procedure TfrmAnexos.FormCreate(Sender: TObject);
 begin
   inherited;
   gEditForm:= TfrmAnexosEdit.Create(Self);
+end;
+
+procedure TfrmAnexos.SetactCrearPagoinicial(const Value: TBasicAction);
+begin
+  FactCrearPagoinicial := Value;
+  dxbbCrearPagoInicial.Action := Value;
 end;
 
 procedure TfrmAnexos.SetactProductos(const Value: TBasicAction);
