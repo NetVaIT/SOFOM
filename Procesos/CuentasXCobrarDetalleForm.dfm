@@ -1,15 +1,12 @@
 inherited FrmCXCDetalle: TFrmCXCDetalle
   Caption = 'FrmCXCDetalle'
-  ExplicitWidth = 651
-  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlMaster: TPanel
     inherited cxGrid: TcxGrid
       inherited tvMaster: TcxGridDBTableView
-        object tvMasterIdCuentaXCobrarDetlle: TcxGridDBColumn
-          DataBinding.FieldName = 'IdCuentaXCobrarDetlle'
-          Visible = False
+        object tvMasterIdCuentaXCobrarDetalle: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCuentaXCobrarDetalle'
         end
         object tvMasterIdCuentaXCobrar: TcxGridDBColumn
           DataBinding.FieldName = 'IdCuentaXCobrar'
@@ -54,6 +51,7 @@ inherited FrmCXCDetalle: TFrmCXCDetalle
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42709.682872592600000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

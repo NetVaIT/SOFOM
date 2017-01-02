@@ -14,8 +14,8 @@ inherited frmEdFactura: TfrmEdFactura
     ClientRectBottom = 611
     ClientRectRight = 1044
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 27
+      ExplicitLeft = 2
+      ExplicitTop = 28
       ExplicitWidth = 1042
       ExplicitHeight = 583
       object Label1: TLabel
@@ -114,7 +114,6 @@ inherited frmEdFactura: TfrmEdFactura
         Align = alBottom
         BevelKind = bkTile
         TabOrder = 0
-        ExplicitTop = 354
       end
       object cxDBDateEdit1: TcxDBDateEdit
         Left = 48
@@ -201,8 +200,9 @@ inherited frmEdFactura: TfrmEdFactura
       object cxDBLabel9: TcxDBLabel
         Left = 552
         Top = 104
-        DataBinding.DataField = 'UUID_TB'
+        DataBinding.DataField = 'DireccionC'
         DataBinding.DataSource = DataSource
+        Visible = False
         Height = 22
         Width = 321
       end

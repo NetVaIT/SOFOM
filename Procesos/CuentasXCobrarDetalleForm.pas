@@ -31,13 +31,13 @@ uses
 
 type
   TFrmCXCDetalle = class(T_frmGrid)
-    tvMasterIdCuentaXCobrarDetlle: TcxGridDBColumn;
     tvMasterIdCuentaXCobrar: TcxGridDBColumn;
     tvMasterIdCuentaXCobrarTipo: TcxGridDBColumn;
     tvMasterIdentificador: TcxGridDBColumn;
     tvMasterDescripcion: TcxGridDBColumn;
     tvMasterImporte: TcxGridDBColumn;
     tvMasterSaldo: TcxGridDBColumn;
+    tvMasterIdCuentaXCobrarDetalle: TcxGridDBColumn;
   private
     { Private declarations }
   public

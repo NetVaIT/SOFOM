@@ -729,18 +729,22 @@
         </DCCReference>
         <DCCReference Include="Procesos\CotizacionesDM.pas">
             <Form>dmCotizaciones</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Procesos\CotizacionesEdit.pas">
             <Form>frmCotizacionesEdit</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\CotizacionesForm.pas">
             <Form>frmCotizaciones</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\ProcesosType.pas"/>
+        <DCCReference Include="Reportes\rptAntiguedadSaldosDM.pas">
+            <Form>dmRptAntiguedadSaldos</Form>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Reportes\rptAntiguedadSaldosForm.pas">
+            <Form>frmRptAntiguedadSaldos</Form>
+        </DCCReference>
         <DCCReference Include="Procesos\CotizacionesCreditosForm.pas">
             <Form>frmCotizacionesCreditos</Form>
             <FormType>dfm</FormType>

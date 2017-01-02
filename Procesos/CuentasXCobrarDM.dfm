@@ -1,4 +1,5 @@
 inherited dmCuentasXCobrar: TdmCuentasXCobrar
+  OldCreateOrder = True
   Height = 466
   Width = 869
   inherited adodsMaster: TADODataSet
@@ -84,12 +85,12 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'select IdCuentaXCobrarDetlle, IdCuentaXCobrar, '#13#10'IdCuentaXCobrar' +
-      'Tipo, Identificador, Descripcion, '#13#10'Importe, Saldo from CuentasX' +
-      'CobrarDetalle '#13#10'where IdCuentaXCobrar =:IDCuentaXCobrar'
+      'select IdCuentaXCobrarDetalle, IdCuentaXCobrar, '#13#10'IdCuentaXCobra' +
+      'rTipo, Identificador, Descripcion, '#13#10'Importe, Saldo from Cuentas' +
+      'XCobrarDetalle '#13#10'where IdCuentaXCobrar =:IDCuentaXCobrar'
     DataSource = DSMaster
     IndexFieldNames = 'IdCuentaXCobrar'
-    MasterFields = 'IdCuentaXCobrar'
+    MasterFields = 'IDCuentaXCobrar'
     Parameters = <
       item
         Name = 'IDCuentaXCobrar'
@@ -101,10 +102,6 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       end>
     Left = 48
     Top = 96
-    object ADOdsCXCDetalleIdCuentaXCobrarDetlle: TAutoIncField
-      FieldName = 'IdCuentaXCobrarDetlle'
-      ReadOnly = True
-    end
     object ADOdsCXCDetalleIdCuentaXCobrar: TIntegerField
       FieldName = 'IdCuentaXCobrar'
     end
@@ -128,6 +125,10 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       FieldName = 'Saldo'
       Precision = 18
       Size = 6
+    end
+    object ADOdsCXCDetalleIdCuentaXCobrarDetalle: TAutoIncField
+      FieldName = 'IdCuentaXCobrarDetalle'
+      ReadOnly = True
     end
   end
   object ADODsCXCTiposConc: TADODataSet
@@ -172,13 +173,13 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'select IdCuentaXCobrarDetlle, IdCuentaXCobrar, '#13#10'CXCD.IdCuentaXC' +
-      'obrarTipo, CXCD.Identificador, CXCD.Descripcion, '#13#10'CXCD.Importe,' +
-      ' CXCD.Saldo,  CXCTC.Facturar,  CXCTC.IdTipoContrato,'#13#10'CXCTC.EsIV' +
-      'A,CXCTC.Temporalidad'#13#10'from CuentasXCobrarDetalle  CXCD '#13#10'inner j' +
-      'oin CuentasXCobrarTiposConceptos CXCTC on CXCD.IdCuentaXCobrarTi' +
-      'po=CXCTC.IdCuentaXCobrarTipo'#13#10' where  CXCTC.Facturar=1 and '#13#10'CXC' +
-      'TC.EsIVA =0 and CXCD.IdCuentaXCobrar =:IDCuentaXCobrar'
+      'select IdCuentaXCobrarDetalle, IdCuentaXCobrar, '#13#10'CXCD.IdCuentaX' +
+      'CobrarTipo, CXCD.Identificador, CXCD.Descripcion, '#13#10'CXCD.Importe' +
+      ', CXCD.Saldo,  CXCTC.Facturar,  CXCTC.IdTipoContrato,'#13#10'CXCTC.EsI' +
+      'VA,CXCTC.Temporalidad'#13#10'from CuentasXCobrarDetalle  CXCD '#13#10'inner ' +
+      'join CuentasXCobrarTiposConceptos CXCTC on CXCD.IdCuentaXCobrarT' +
+      'ipo=CXCTC.IdCuentaXCobrarTipo'#13#10' where  CXCTC.Facturar=1 and '#13#10'CX' +
+      'CTC.EsIVA =0 and CXCD.IdCuentaXCobrar =:IDCuentaXCobrar'
     DataSource = DSMaster
     IndexFieldNames = 'IdCuentaXCobrar'
     MasterFields = 'IDCuentaXCobrar'
@@ -193,10 +194,6 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       end>
     Left = 56
     Top = 256
-    object DetallesCXCParaFacturarIdCuentaXCobrarDetlle: TAutoIncField
-      FieldName = 'IdCuentaXCobrarDetlle'
-      ReadOnly = True
-    end
     object DetallesCXCParaFacturarIdCuentaXCobrar: TIntegerField
       FieldName = 'IdCuentaXCobrar'
     end
@@ -233,6 +230,10 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     object DetallesCXCParaFacturarTemporalidad: TStringField
       FieldName = 'Temporalidad'
       Size = 15
+    end
+    object DetallesCXCParaFacturarIdCuentaXCobrarDetalle: TAutoIncField
+      FieldName = 'IdCuentaXCobrarDetalle'
+      ReadOnly = True
     end
   end
   object ADOSumaIVA: TADODataSet

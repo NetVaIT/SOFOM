@@ -2,7 +2,6 @@ inherited frmFacturasGrid: TfrmFacturasGrid
   Caption = 'frmFacturasGrid'
   ClientWidth = 815
   ExplicitWidth = 815
-  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -18,11 +17,17 @@ inherited frmFacturasGrid: TfrmFacturasGrid
     ExplicitWidth = 815
   end
   inherited pnlMaster: TPanel
+    Top = 75
     Width = 815
+    Height = 209
+    ExplicitTop = 75
     ExplicitWidth = 815
+    ExplicitHeight = 209
     inherited cxGrid: TcxGrid
       Width = 815
+      Height = 209
       ExplicitWidth = 815
+      ExplicitHeight = 209
       inherited tvMaster: TcxGridDBTableView
         OptionsCustomize.ColumnFiltering = False
         object tvMasterCliente: TcxGridDBColumn
@@ -203,16 +208,132 @@ inherited frmFacturasGrid: TfrmFacturasGrid
   end
   inherited pnlDetail1: TPanel
     Width = 815
-    ExplicitLeft = 48
-    ExplicitTop = 281
     ExplicitWidth = 815
   end
   inherited pnlClose: TPanel
     Width = 815
     ExplicitWidth = 815
+    DesignSize = (
+      815
+      41)
     inherited btnClose: TButton
       Left = 730
       ExplicitLeft = 730
+    end
+  end
+  object PnlBusqueda: TPanel [8]
+    Left = 0
+    Top = 31
+    Width = 815
+    Height = 44
+    Align = alTop
+    BevelOuter = bvNone
+    TabOrder = 9
+    DesignSize = (
+      815
+      44)
+    object Button1: TButton
+      Left = 732
+      Top = 6
+      Width = 75
+      Height = 25
+      Anchors = [akTop, akRight]
+      Cancel = True
+      Caption = 'Cerrar'
+      TabOrder = 0
+      OnClick = btnCloseClick
+    end
+    object Panel1: TPanel
+      Left = 0
+      Top = 0
+      Width = 199
+      Height = 44
+      Align = alLeft
+      BevelOuter = bvNone
+      ParentBackground = False
+      TabOrder = 1
+      object Label3: TLabel
+        Left = 16
+        Top = 2
+        Width = 90
+        Height = 13
+        Caption = 'Cliente parecido a:'
+      end
+      object EdtNombre: TEdit
+        Left = 15
+        Top = 17
+        Width = 163
+        Height = 21
+        TabOrder = 0
+        OnChange = EdtNombreChange
+      end
+    end
+    object PnlFechas: TPanel
+      Left = 199
+      Top = 0
+      Width = 616
+      Height = 44
+      Align = alClient
+      BevelOuter = bvNone
+      ParentBackground = False
+      TabOrder = 2
+      object Label1: TLabel
+        Left = 21
+        Top = 4
+        Width = 30
+        Height = 13
+        Caption = 'Desde'
+      end
+      object Label2: TLabel
+        Left = 181
+        Top = 4
+        Width = 28
+        Height = 13
+        Caption = 'Hasta'
+      end
+      object SpdBtnBuscar: TSpeedButton
+        Left = 331
+        Top = 13
+        Width = 25
+        Height = 25
+        Glyph.Data = {
+          76010000424D7601000000000000760000002800000020000000100000000100
+          04000000000000010000130B0000130B00001000000000000000000000000000
+          8000008000000080800080000000800080008080000080808000C0C0C0000000
+          FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+          33033333333333333F7F3333333333333000333333333333F777333333333333
+          000333333333333F777333333333333000333333333333F77733333333333300
+          033333333FFF3F777333333700073B703333333F7773F77733333307777700B3
+          33333377333777733333307F8F8F7033333337F3333337F3333377F8F8F8F773
+          333337333333373F3333078F8F8F870333337F333333337F333307F8F8F8F703
+          33337F333333337F3333078F8F8F8703333373F333333373333377F8F8F8F773
+          333337F3333337F33333307F8F8F70333333373FF333F7333333330777770333
+          333333773FF77333333333370007333333333333777333333333}
+        NumGlyphs = 2
+        OnClick = SpdBtnBuscarClick
+      end
+      object cxDtEdtDesde: TcxDateEdit
+        Left = 16
+        Top = 17
+        TabOrder = 0
+        Width = 145
+      end
+      object cxDtEdtHasta: TcxDateEdit
+        Left = 176
+        Top = 17
+        TabOrder = 1
+        Width = 137
+      end
+      object ChckBxXFecha: TCheckBox
+        Left = 373
+        Top = 18
+        Width = 82
+        Height = 17
+        Caption = 'Usar Fecha'
+        Checked = True
+        State = cbChecked
+        TabOrder = 2
+      end
     end
   end
   inherited DataSource: TDataSource
@@ -242,6 +363,10 @@ inherited frmFacturasGrid: TfrmFacturasGrid
         item
           Visible = True
           ItemName = 'dxBrBtnCFDI'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBrBtnImprimePDF'
         end>
     end
     object dxBrBtnCFDI: TdxBarButton
@@ -250,6 +375,13 @@ inherited frmFacturasGrid: TfrmFacturasGrid
       Hint = 'Generar CFDI'
       Visible = ivAlways
       ImageIndex = 17
+    end
+    object dxBrBtnImprimePDF: TdxBarButton
+      Caption = 'ImprimePDF'
+      Category = 0
+      Hint = 'Imprime PDF'
+      Visible = ivAlways
+      ImageIndex = 18
     end
   end
   inherited cxStyleRepository: TcxStyleRepository
@@ -1026,11 +1158,50 @@ inherited frmFacturasGrid: TfrmFacturasGrid
           FF00808080008080800080808000808080008080800080808000808080008080
           8000FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00}
         MaskColor = clFuchsia
+      end
+      item
+        Image.Data = {
+          36040000424D3604000000000000360000002800000010000000100000000100
+          2000000000000004000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000BC7B4900BB7A4800BA784500B8774500B8754300B7744200B6734000B572
+          3F00B4703D00B36F3C00B36E3B00B16D3A000000000000000000000000000000
+          0000BE834D00F9EDE000F9ECDF00F9EBDE00F8EADD00F8EADC00F8E9DB00241C
+          ED00F7E8D900F7E7D800F7E7D700B4703D000000000000000000000000000000
+          0000C1875200FCF1E600FBF1E500FBEFE400FBEFE200FAEEE100FAEDE000241C
+          ED00F9ECDE00F9EBDD00F9EBDD00B67340000000000000000000000000000000
+          0000C48A5600FEF4EB00FDF4EB00FDF3E900FDF2E900FDF2E700FCF1E600241C
+          ED00241CED00241CED00FBEEE100B87744000000000000000000000000000000
+          0000C78F5A00FFF9F200FFF7F000FFF7EF00FEF7EE00FEF6EC00FEF5EC00241C
+          ED00FEF3E900FDF3E800FCEFE300BB7A47000000000000000000000000000000
+          0000CA935E00FFFAF400FFF9F300FFF9F200241CED00241CED00241CED00FFFF
+          FF00241CED00241CED00241CED00BE814B000000000000000000000000000000
+          0000CD966300FFFAF600FFFAF500FFFAF400241CED00FFF9F300FFF9F200241C
+          ED00FEF5EC00FCF1E600FAEDE000C18550000000000000000000000000000000
+          0000CF9B6800241CED00FFFBF600FFFAF500241CED00FFFAF500FFF9F300241C
+          ED00FCF2E800FAEDE100F7E8D900C38954000000000000000000000000000000
+          0000D29F6C00241CED00FFFBF800FFFBF700241CED00FFFBF600FEF7F100241C
+          ED00FAEFE300F7E8DB00F5E2D100C78D58000000000000000000000000000000
+          0000D5A37100241CED00241CED00241CED00FFFFFF00241CED00241CED00241C
+          ED00F6E7DA00F4E1D000F0DAC600C9915D000000000000000000000000000000
+          0000D9A77600241CED00FFFDFB00FFFDFA00241CED00FCF5EE00FAF0E700F7EB
+          DF00D09A6700CF986500CE976400CC9561000000000000000000000000000000
+          0000DBAB7B00241CED00FFFEFB00FEFAF700241CED00FAF1E900F7EADF00F5E6
+          D800D29E6B00FFFCF90075747200000000000000000000000000000000000000
+          0000DDAF8300241CED00241CED00241CED00241CED00F7EBE100F4E5D700F2E0
+          D000D5A270007470700000000000000000000000000000000000000000000000
+          0000E0B38700DFB18500DFB08300DDAE8200DCAD8000DBAB7B00DAAA7900D8A8
+          7700D8A675000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000}
+        MaskColor = clBlack
       end>
   end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42699.643536909720000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

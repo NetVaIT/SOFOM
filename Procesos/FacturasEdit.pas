@@ -50,6 +50,7 @@ type
     cxDBLabel8: TcxDBLabel;
     cxDBLabel9: TcxDBLabel;
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -73,6 +74,14 @@ begin
   FrmConceptos.Parent:= PnlDetalleFact;
   FrmConceptos.Align:=alClient;
   FrmConceptos.Show;
+
+end;
+
+procedure TfrmEdFactura.FormShow(Sender: TObject);
+begin
+  inherited;
+  pcMain.Enabled:=False; //Dic 20/16 Sólo permite consulta.. Ver que pasa en caso que se quiera realizar factura manual??? o por donde?
+  PnlDetalleFact.Enabled:=False;   //Dic 20/16
 end;
 
 end.

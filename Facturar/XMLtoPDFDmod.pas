@@ -202,6 +202,7 @@ type
     ppLine5: TppLine;
     ppLine7: TppLine;
     ppLine8: TppLine;
+    ppLblDatosContrato: TppLabel;
     ppDetailBand1: TppDetailBand;
     ppDBText24: TppDBText;
     ppDBText28: TppDBText;
@@ -243,7 +244,6 @@ type
     ppDesignLayers1: TppDesignLayers;
     ppDesignLayer2: TppDesignLayer;
     ppDesignLayer1: TppDesignLayer;
-    ppLblDatosContrato: TppLabel;
     procedure cdsXMLCalcFields(DataSet: TDataSet);
     procedure ppReportFileDeviceCreate(Sender: TObject);
     procedure ppImageCBBPrint(Sender: TObject);

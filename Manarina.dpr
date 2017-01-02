@@ -162,6 +162,8 @@ uses
   CotizacionesEdit in 'Procesos\CotizacionesEdit.pas' {frmCotizacionesEdit},
   CotizacionesForm in 'Procesos\CotizacionesForm.pas' {frmCotizaciones},
   ProcesosType in 'Procesos\ProcesosType.pas',
+  rptAntiguedadSaldosDM in 'Reportes\rptAntiguedadSaldosDM.pas' {dmRptAntiguedadSaldos: TDataModule},
+  rptAntiguedadSaldosForm in 'Reportes\rptAntiguedadSaldosForm.pas' {frmRptAntiguedadSaldos},
   CotizacionesCreditosForm in 'Procesos\CotizacionesCreditosForm.pas' {frmCotizacionesCreditos},
   CotizacionesCreditosEdit in 'Procesos\CotizacionesCreditosEdit.pas' {frmCotizacionesCreditosEdit},
   CotizacionesSeleccionarForm in 'Procesos\CotizacionesSeleccionarForm.pas' {frmCotizacionesSeleccionar};

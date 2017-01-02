@@ -5,6 +5,7 @@ inherited dmFacturas: TdmFacturas
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     BeforeOpen = adodsMasterBeforeOpen
+    AfterOpen = adodsMasterAfterOpen
     OnNewRecord = adodsMasterNewRecord
     CommandText = 
       'select  IdCFDI, IdCFDITipoDocumento, IdCFDIFormaPago,'#13#10' IdMetodo' +
@@ -234,6 +235,16 @@ inherited dmFacturas: TdmFacturas
     object adodsMasterIdCXC: TIntegerField
       FieldName = 'IdCXC'
     end
+    object adodsMasterDireccionC: TStringField
+      FieldKind = fkLookup
+      FieldName = 'DireccionC'
+      LookupDataSet = ADODtStDireccionesCliente
+      LookupKeyFields = 'IdPersonaDomicilio'
+      LookupResultField = 'DirCompleta'
+      KeyFields = 'IdClienteDomicilio'
+      Size = 150
+      Lookup = True
+    end
   end
   inherited adodsUpdate: TADODataSet
     Left = 336
@@ -242,6 +253,10 @@ inherited dmFacturas: TdmFacturas
     object actProcesaFactura: TAction
       Caption = 'actProcesaFactura'
       OnExecute = actProcesaFacturaExecute
+    end
+    object ActImprimeFactura: TAction
+      Caption = 'ActImprimeFactura'
+      OnExecute = ActImprimeFacturaExecute
     end
   end
   object ADODtStCFDIConceptos: TADODataSet

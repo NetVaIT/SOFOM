@@ -23,8 +23,6 @@ object FrmAplicacionPago: TFrmAplicacionPago
     Height = 146
     Align = alTop
     TabOrder = 0
-    ExplicitLeft = -32
-    ExplicitTop = 63
     object Label3: TLabel
       Left = 174
       Top = 52
@@ -179,7 +177,7 @@ object FrmAplicacionPago: TFrmAplicacionPago
     object cxDBDateEdit1: TcxDBDateEdit
       Left = 21
       Top = 25
-      DataBinding.DataField = 'Fecha'
+      DataBinding.DataField = 'FechaAplicacion'
       DataBinding.DataSource = DSAplicacion
       TabOrder = 7
       Width = 121
@@ -193,8 +191,6 @@ object FrmAplicacionPago: TFrmAplicacionPago
     Align = alClient
     TabOrder = 1
     LookAndFeel.Kind = lfStandard
-    ExplicitTop = 248
-    ExplicitHeight = 239
     object tvMaster: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = dsConCXCPendientes
@@ -262,7 +258,6 @@ object FrmAplicacionPago: TFrmAplicacionPago
     Height = 57
     Align = alTop
     TabOrder = 2
-    ExplicitWidth = 786
     object Label1: TLabel
       Left = 50
       Top = 20
@@ -306,6 +301,7 @@ object FrmAplicacionPago: TFrmAplicacionPago
         3000333333333333377733333333333333333333333333333333}
       NumGlyphs = 2
       TabOrder = 1
+      OnClick = BtBtnAgregarClick
     end
     object BtBtnAplicar: TBitBtn
       Left = 576
@@ -346,7 +342,6 @@ object FrmAplicacionPago: TFrmAplicacionPago
     Font.Style = [fsBold]
     ParentFont = False
     TabOrder = 3
-    ExplicitWidth = 786
   end
   object Panel1: TPanel
     Left = 0
@@ -362,7 +357,6 @@ object FrmAplicacionPago: TFrmAplicacionPago
     Font.Style = [fsBold]
     ParentFont = False
     TabOrder = 4
-    ExplicitTop = 401
   end
   object cxGrid1: TcxGrid
     Left = 0
@@ -385,10 +379,6 @@ object FrmAplicacionPago: TFrmAplicacionPago
       OptionsData.Inserting = False
       OptionsView.NoDataToDisplayInfoText = ' '
       OptionsView.GroupByBox = False
-      object cxGridDBTableView1IdCuentaXCobrarDetlle: TcxGridDBColumn
-        DataBinding.FieldName = 'IdCuentaXCobrarDetlle'
-        Visible = False
-      end
       object cxGridDBTableView1IdCuentaXCobrar: TcxGridDBColumn
         DataBinding.FieldName = 'IdCuentaXCobrar'
         Visible = False
@@ -399,6 +389,7 @@ object FrmAplicacionPago: TFrmAplicacionPago
       end
       object cxGridDBTableView1Identificador: TcxGridDBColumn
         DataBinding.FieldName = 'Identificador'
+        Width = 72
       end
       object cxGridDBTableView1Descripcion: TcxGridDBColumn
         DataBinding.FieldName = 'Descripcion'
@@ -409,6 +400,10 @@ object FrmAplicacionPago: TFrmAplicacionPago
       end
       object cxGridDBTableView1Saldo: TcxGridDBColumn
         DataBinding.FieldName = 'Saldo'
+      end
+      object cxGridDBTableView1IdCuentaXCobrarDetalle: TcxGridDBColumn
+        DataBinding.FieldName = 'IdCuentaXCobrarDetalle'
+        Visible = False
       end
     end
     object cxGridLevel2: TcxGridLevel
@@ -428,12 +423,12 @@ object FrmAplicacionPago: TFrmAplicacionPago
   object DSAplicacion: TDataSource
     DataSet = dmPagos.ADODtStAplicacionesPagos
     OnStateChange = DSAplicacionStateChange
-    Left = 708
-    Top = 64
+    Left = 692
+    Top = 296
   end
   object DSDetallesCXC: TDataSource
     DataSet = dmPagos.ADODtStCxCDetallePend
-    Left = 892
-    Top = 456
+    Left = 796
+    Top = 288
   end
 end

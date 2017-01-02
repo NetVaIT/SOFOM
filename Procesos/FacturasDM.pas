@@ -194,6 +194,8 @@ type
     StringField11: TStringField;
     adodsMasterDirCompleta: TStringField;
     adodsMasterIdCXC: TIntegerField;
+    ActImprimeFactura: TAction;
+    adodsMasterDireccionC: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actProcesaFacturaExecute(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
@@ -205,6 +207,9 @@ type
     procedure ADODtStCFDIConceptosAfterDelete(DataSet: TDataSet);
     procedure adodsMasterIdPersonaReceptorChange(Sender: TField);
     procedure ADODtStDireccionesClienteCalcFields(DataSet: TDataSet);
+    procedure ActImprimeFacturaExecute(Sender: TObject);
+    procedure adodsMasterAfterOpen(DataSet: TDataSet);
+
   private
     FTipoDoc: Integer;
     FMuestra: Boolean;
@@ -218,7 +223,8 @@ type
       var Respuesta: String): Boolean;
     procedure SetMuestra(const Value: Boolean);
     function SacaTipoComp(tipoD: Integer): String;
-    function InformacionContrato(IdCXC: Integer): String; //Regresado
+    function InformacionContrato(IdCXC: Integer): String;
+    procedure ReadFile(FileName: TFileName); //Regresado
   public
     { Public declarations }
      EsProduccion:Boolean;
@@ -238,6 +244,104 @@ uses FacturasForm, ConceptosFacturaForm, DocComprobanteFiscal, FacturaTipos,
   VirtualXML, XMLtoPDFDmod, _Utils;
 
 {$R *.dfm}
+
+procedure TdmFacturas.ActImprimeFacturaExecute(Sender: TObject);
+var      //Dic 22/15
+  IdDoc, Avance:Integer;
+  nombreArchi, nomImagen,nomAux:TfileName;
+  XMLpdf: TdmodXMLtoPDF;
+  Contrato,TipoDoc:String; //Mar 31/16
+
+begin
+  inherited;
+
+    Avance:=0; //Ene8/16
+    ShowProgress(5,100.1,'Buscando Archivos...' + IntToStr(5) + '%');
+  try
+   // ConvierteBinADec(DMImpresion,ArrBinario);
+      //Sacar ID del Archivo XML del Master
+    idDoc:=adodsMasteridDocumentoXML.asInteger;
+    adoDSDocumento.filter:='IdDocumento='+intToSTR(IDDoc);
+    adoDSDocumento.filtered:=True;
+    adoDSDocumento.open;
+    nombreArchi:=ExtractFileName(AdoDSDocumentoNombreArchivo.asstring);
+
+    readFile( nombreArchi); //sacaxml
+
+    //Sacar PNG Ene6/16
+    idDoc:=adodsMasterIdDocumentoCBB.asInteger;
+    if idDoc>0 then
+    begin
+      adoDSDocumento.filter:='IdDocumento='+intToSTR(IDDoc);
+      adoDSDocumento.filtered:=True;
+      adoDSDocumento.open;
+      nomImagen:=ExtractFileName(AdoDSDocumentoNombreArchivo.asstring);
+
+      readFile(nomImagen); //sacaPng
+    end;
+    //Hasta aca ene6/16
+
+    TipoDoc:= adodsMaster.FieldByName('TipoDocumento').AsString ; //Mar 31/16
+    //nombreArchi:= ChangeFileExt(nombreArchi, fePDF);
+    //nombreArchi:=ExtractfilePath(Application.exename)+nombreArchi;
+    //Se manda el nombre del XML
+    XMLpdf := TdmodXMLtoPDF.Create(Self);
+    XMLpdf.FileRTM:= ExtractFilePath(Application.ExeName) + 'CFDIManarina.rtm'; //dic28/15  HAy  que actualizarlos
+    XMLpdf.FileXTR:= ExtractFilePath(Application.ExeName) + 'Transfor32.xtr';   //dic28/15
+    XMLpdf.CadenaOriginalTimbre:= adodsMasterCadenaOriginal.AsString; //dic 28/15 verificar
+    try
+       XMLpdf.FileIMG := nomImagen;//nombreArchi + fePNG; //Ajustado ene6/16
+       if fileExists(XMLpdf.FileIMG) then//dic 28/15
+       begin
+         ShowProgress(20,100.1,'Generando para imprimir...' + IntToStr(20) + '%');
+         if not adodsMasterIdCXC.isnull then
+            Contrato:='Contrato: '+Informacioncontrato(adodsMasterIdCXC.Value) //Dic 7/16 //verificar  que pasa si la FActura no tiene CXC??
+        else
+           Contrato:='';
+        nomAux:=XMLpdf.GeneratePDFFile(nombreArchi,TipoDoc,Contrato,'');
+        XMLpdf.PrintPDFFile(nomAux);
+       end
+       else
+       begin
+         nombreArchi:='';
+
+       end;
+    finally
+      XMLpdf.Free;
+    end;
+    adoDSDocumento.filter:='';
+    adoDSDocumento.filtered:=false;
+    if nombreArchi<>'' then                        //Ultimo
+         ShellExecute(application.Handle, 'open', PChar(nomAux), nil, nil, SW_SHOWNORMAL)
+      else
+        Showmessage ('No fue posible regenerar el PDF, puede que no se haya encontrado el archivo PNG');
+  except
+      Showmessage ('No fue posible regenerar el PDF, verifique que no se encuentre abierto en si visor de PDFs');
+  end;
+  ShowProgress(100,100);
+  //Filtrar con ID enDocumento
+  //Sacar Documento
+  //Aun no guarda de nuevo.. (Verificar)
+end;
+procedure TDMFacturas.ReadFile(FileName: TFileName); //Dic 15/16
+var
+  Blob : TStream;
+  Fs: TFileStream;
+begin
+  Blob := adodsDocumento.CreateBlobStream(adodsDocumentoArchivo, bmRead);
+  try
+    Blob.Seek(0, soFromBeginning);
+    Fs := TFileStream.Create(FileName, fmCreate);
+    try
+      Fs.CopyFrom(Blob, Blob.Size);
+    finally
+      Fs.Free;
+    end;
+  finally
+    Blob.Free
+  end;
+end;
+
 
 procedure TdmFacturas.actProcesaFacturaExecute(Sender: TObject);
 const  //Copiado de sistema RH Dic 7/15
@@ -463,7 +567,8 @@ begin
           XMLpdf.FileIMG := RutaFactura + fePNG; //Dic 21/15
           XMLpdf.CadenaOriginalTimbre:= TimbreCFDI.CadenaTimbre; //Dic 28/15                  tenia nov 28/16  adodsMasterIdentificadorCte.AsString
           //SAcar infocontrato
-          Contrato:=Informacioncontrato(adodsMasterIdCXC.Value); //Dic 7/16
+          Contrato:=Informacioncontrato(adodsMasterIdCXC.Value); //Dic 7/16 //verificar  que pasa si la FActura no tiene CXC??
+
           RutaPDF := XMLpdf.GeneratePDFFile(RutaFactura,TipoDoc,Contrato,''); //Dic 21/15  //verificar si sirve ese Formato
           //Actualizar datos de Timbre en CFDI         //Mar 31/16              //Ago 26/16
           adodsMaster.Edit;
@@ -568,7 +673,7 @@ function TdmFacturas.InformacionContrato(IdCXC:Integer):String;
 begin        //Dic 7/16
   result:='';
   ADODSAuxiliar.Close;
-  ADODSAuxiliar.CommandText:='select C.Identificador, from Contratos C'    //   C.Fecha, C.IdContratoTipo, C.MontoAutorizado
+  ADODSAuxiliar.CommandText:='select C.Identificador from Contratos C'    //   C.Fecha, C.IdContratoTipo, C.MontoAutorizado
                              +' inner join Anexos A on A.IdContrato =C.IdContrato '
                              +' inner join CuentasXCobrar CXC on CXC.idAnexo= A.idAnexo and IdCuentaXCobrar='+intToStr(idCXC);
   ADODSAuxiliar.open;
@@ -603,12 +708,21 @@ begin
     result:=False;
 end;
 
+procedure TdmFacturas.adodsMasterAfterOpen(DataSet: TDataSet);
+begin
+  inherited;
+  ADODtStDireccionesCliente.Open;
+end;
+
 procedure TdmFacturas.adodsMasterBeforeOpen(DataSet: TDataSet);
 begin
   inherited;
   ADODtStPersonaEmisor.Open;
   ADODtStPersonaReceptor.open;
+
 end;
+
+
 
 procedure TdmFacturas.adodsMasterIdPersonaReceptorChange(Sender: TField);
 begin
@@ -809,7 +923,7 @@ end;
 procedure TdmFacturas.ADODtStDireccionesClienteCalcFields(DataSet: TDataSet);
 begin
   inherited;
-    dataset.FieldByName('DirCompleta').AsString:= dataset.FieldByName('Municipio').AsString +', '+dataset.FieldByName('Estado').AsString+
+  dataset.FieldByName('DirCompleta').AsString:= dataset.FieldByName('Municipio').AsString +', '+dataset.FieldByName('Estado').AsString+
                                                 '. '+dataset.FieldByName('Calle').AsString+ dataset.FieldByName('NoExterior').AsString+
                                                 ' '+dataset.FieldByName('Colonia').AsString +' '+ dataset.FieldByName('CodigoPostal').AsString;
 
@@ -878,7 +992,8 @@ begin
   gGridForm:= TfrmFacturasGrid.Create(Self);
 
   gGridForm.DataSet:= adodsMaster;
-   TfrmFacturasGrid(gGridForm).ActGenerarCFDI := actProcesaFactura;  //Nov29/16
+  TfrmFacturasGrid(gGridForm).ActGenerarCFDI := actProcesaFactura;  //Nov29/16
+  TfrmFacturasGrid(gGridForm).ActImprimePDF := ActImprimeFactura;  //Dic 15/16
 end;
 
 procedure TdmFacturas.ReadFileCERKEY(FileNameCER, FileNameKEY: TFileName);

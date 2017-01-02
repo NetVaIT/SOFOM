@@ -19,7 +19,7 @@ uses
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, cxContainer,
   cxEdit, cxMemo, cxDBEdit, Vcl.DBCtrls, cxTextEdit, cxMaskEdit, cxDropDownEdit,
   cxCalendar, Vcl.StdCtrls, Vcl.ImgList, System.Actions, Vcl.ActnList, Data.DB,
-  Vcl.ExtCtrls, cxPC;
+  Vcl.ExtCtrls, cxPC, cxLabel, cxDBLabel;
 
 type
   TFrmEdPagos = class(T_frmEdit)
@@ -33,14 +33,20 @@ type
     Label5: TLabel;
     cxDBTextEdit3: TcxDBTextEdit;
     Label6: TLabel;
-    cxDBTextEdit4: TcxDBTextEdit;
     Label7: TLabel;
     Label8: TLabel;
     DBLookupComboBox1: TDBLookupComboBox;
     Label9: TLabel;
-    DBLookupComboBox2: TDBLookupComboBox;
+    DBLkpCmbBxCliente: TDBLookupComboBox;
     cxDBMemo1: TcxDBMemo;
     cxDBTextEdit5: TcxDBTextEdit;
+    cxDBLabel1: TcxDBLabel;
+    Label10: TLabel;
+    DBLookupComboBox3: TDBLookupComboBox;
+    Label11: TLabel;
+    cxDBTextEdit4: TcxDBTextEdit;
+    DSPersonas: TDataSource;
+    procedure DBLkpCmbBxClienteClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -55,5 +61,18 @@ implementation
 {$R *.dfm}
 
 uses PagosDM;
+
+procedure TFrmEdPagos.DBLkpCmbBxClienteClick(Sender: TObject);
+begin//Dic 19/16
+  inherited;
+  if datasource.state in[dsEdit,dsInsert]  then
+  begin
+    if not dsPersonas.dataset.Fieldbyname('IdMetodoPago').Isnull then
+     begin
+       datasource.dataset.FieldByName('IdMetodoPago').AsInteger:= dsPersonas.dataset.Fieldbyname('IdMetodoPago').AsInteger;
+       datasource.dataset.FieldByName('CuentaPago').AsString:=dsPersonas.dataset.Fieldbyname('NumCtaPagoCliente').AsString;
+     end;
+  end;
+end;
 
 end.

@@ -127,7 +127,6 @@ type
     ADODtStDireccionesClientePais: TStringField;
     ADODtStDireccionesClienteDirCompleta: TStringField;
     ADOdsAuxiliar: TADODataSet;
-    ADOdsCXCDetalleIdCuentaXCobrarDetlle: TAutoIncField;
     ADOdsCXCDetalleIdCuentaXCobrar: TIntegerField;
     ADOdsCXCDetalleIdCuentaXCobrarTipo: TIntegerField;
     ADOdsCXCDetalleIdentificador: TStringField;
@@ -135,7 +134,6 @@ type
     ADOdsCXCDetalleImporte: TFMTBCDField;
     ADOdsCXCDetalleSaldo: TFMTBCDField;
     ADOQryAuxiliar: TADOQuery;
-    DetallesCXCParaFacturarIdCuentaXCobrarDetlle: TAutoIncField;
     DetallesCXCParaFacturarIdCuentaXCobrar: TIntegerField;
     DetallesCXCParaFacturarIdCuentaXCobrarTipo: TIntegerField;
     DetallesCXCParaFacturarIdentificador: TStringField;
@@ -146,6 +144,8 @@ type
     DetallesCXCParaFacturarIdTipoContrato: TIntegerField;
     DetallesCXCParaFacturarEsIVA: TBooleanField;
     DetallesCXCParaFacturarTemporalidad: TStringField;
+    ADOdsCXCDetalleIdCuentaXCobrarDetalle: TAutoIncField;
+    DetallesCXCParaFacturarIdCuentaXCobrarDetalle: TAutoIncField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actGeneraPreFacturasExecute(Sender: TObject);
     procedure ADODtStPrefacturasCFDINewRecord(DataSet: TDataSet);
@@ -196,7 +196,7 @@ begin
     begin
       ADODtStCFDIConceptosPref.Insert;
       ADODtStCFDIConceptosPrefDescripcion.AsString:= DetallesCXCParaFacturar.fieldbyname('Descripcion').asString;
-      ADODtStCFDIConceptosPrefIdCXCItem.AsInteger:=DetallesCXCParaFacturar.fieldbyname('IDCuentaXCobrarDEtlle').AsInteger;  //Sin a Dic 7/16
+      ADODtStCFDIConceptosPrefIdCXCItem.AsInteger:=DetallesCXCParaFacturar.fieldbyname('IDCuentaXCobrarDEtalle').AsInteger;  //Sin a Dic 7/16
       ADODtStCFDIConceptosPrefValorUnitario.AsFloat:= DetallesCXCParaFacturar.fieldbyname('Importe').asFloat;
 
       ADODtStCFDIConceptosPrefImporte.AsFloat:= DetallesCXCParaFacturar.fieldbyname('Importe').AsFloat;

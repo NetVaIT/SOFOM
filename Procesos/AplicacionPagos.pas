@@ -69,17 +69,18 @@ type
     cxGridDBTableView1: TcxGridDBTableView;
     cxGridLevel2: TcxGridLevel;
     DSDetallesCXC: TDataSource;
-    cxGridDBTableView1IdCuentaXCobrarDetlle: TcxGridDBColumn;
     cxGridDBTableView1IdCuentaXCobrar: TcxGridDBColumn;
     cxGridDBTableView1IdCuentaXCobrarTipo: TcxGridDBColumn;
     cxGridDBTableView1Identificador: TcxGridDBColumn;
     cxGridDBTableView1Descripcion: TcxGridDBColumn;
     cxGridDBTableView1Importe: TcxGridDBColumn;
     cxGridDBTableView1Saldo: TcxGridDBColumn;
+    cxGridDBTableView1IdCuentaXCobrarDetalle: TcxGridDBColumn;
     procedure BtBtnAplicarClick(Sender: TObject);
     procedure DSAplicacionStateChange(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormDestroy(Sender: TObject);
+    procedure BtBtnAgregarClick(Sender: TObject);
   private
     function Quitasignos(TextoPesos: String): String;
     { Private declarations }
@@ -96,12 +97,20 @@ implementation
 
 uses PagosDM;
 
+procedure TFrmAplicacionPago.BtBtnAgregarClick(Sender: TObject);
+begin
+
+   BtBtnAgregar.Enabled:= (strtoFLoat(quitasignos(cxDBLblDisponible.Caption))>0)
+            and (DsAplicacion.state =dsBrowse)and (not dsConCXCpendientes.dataset.eof);
+end;
+
 procedure TFrmAplicacionPago.BtBtnAplicarClick(Sender: TObject);
 var
    valor, aux:Double;
    f:String;
-begin    
-{  f:= quitasignos(DSAplicacion.DataSet.FieldByName('Importe').ASString);  //Ago 15/16
+   idActual:integer; //Dic14/16
+begin
+  f:= quitasignos(DSAplicacion.DataSet.FieldByName('Importe').ASString);  //Ago 15/16
 //  showmessage(f);
   aux:=strtoFLoat(quitasignos(cxDBLblDisponible.Caption));
                            //Ver si ya tiene el valor
@@ -111,43 +120,48 @@ begin
   begin
     // Esta seguro de aplicar al Documento seleccionado del cliente?
   //  if DSAplicacion.DataSet.FieldByName('Importe').Asfloat > Valor then    //Ajustar para evitar centavos perdidos   C. Ago 23/16 pendiente
-    if (Valor>aux)then //de otra forma siempre son iguales
+    if (Valor>aux)then //de otra forma siempre son iguales //Por ahora asi
   //  if abs(DSAplicacion.DataSet.FieldByName('Importe').Asfloat - Valor)>0.001 then
     begin
       ShowMessage('No es posible aplicar un valor mayor al disponible');
       abort;
     end;
-    f:=dsConFacturasPendientes.DataSet.FieldByName('Serie').AsString+'-'+dsConFacturasPendientes.DataSet.FieldByName('Folio').AsString;
+    f:=dsConCXCpendientes.DataSet.FieldByName('IdCuentaXCobrar').AsString;//+'-'+dsConCXCpendientes.DataSet.FieldByName('Folio').AsString;
   //  if dsConFacturasPendientes.dataset.FieldByName('SaldoDocumento').Asfloat >= DSAplicacion.DataSet.FieldByName('Importe').Asfloat then
-    if (dsConFacturasPendientes.dataset.FieldByName('SaldoDocumento').Asfloat >= DSAplicacion.DataSet.FieldByName('Importe').Asfloat)
-    or (abs(dsConFacturasPendientes.dataset.FieldByName('SaldoDocumento').Asfloat - DSAplicacion.DataSet.FieldByName('Importe').Asfloat)<0.0001) then  //Ajustar para evitar centavos perdidos   C. Ago 23/16 pendiente
+    if (dsConCXCpendientes.dataset.FieldByName('Saldo').Asfloat >= DSAplicacion.DataSet.FieldByName('Importe').Asfloat)
+    or (abs(dsConCXCpendientes.dataset.FieldByName('Saldo').Asfloat - DSAplicacion.DataSet.FieldByName('Importe').Asfloat)<0.0001) then  //Ajustar para evitar centavos perdidos   C. Ago 23/16 pendiente
     begin
-      if abs(dsConFacturasPendientes.dataset.FieldByName('SaldoDocumento').Asfloat - DSAplicacion.DataSet.FieldByName('Importe').Asfloat)>0 then
-         showMessage('valor diferencia: '+ floattoStr(dsConFacturasPendientes.dataset.FieldByName('SaldoDocumento').Asfloat - DSAplicacion.DataSet.FieldByName('Importe').Asfloat));
+      if abs(dsConCXCpendientes.dataset.FieldByName('Saldo').Asfloat - DSAplicacion.DataSet.FieldByName('Importe').Asfloat)>0 then
+         showMessage('valor diferencia: '+ floattoStr(dsConCXCpendientes.dataset.FieldByName('Saldo').Asfloat - DSAplicacion.DataSet.FieldByName('Importe').Asfloat));
       if Application.MessageBox(pChar('Esta seguro de aplicar el importe al documento '+f +' ?'),'Confirmación',MB_YESNO)=IDYES then
       begin
-        with DSAplicacion.DataSet do
+       with DSAplicacion.DataSet do
         begin
-          fieldbyName('IdCFDI').AsInteger:=dsConFacturasPendientes.dataset.FieldByName('IDCFDI').AsInteger;
-          fieldbyName('IDPersonacliente').AsInteger:=dsConFacturasPendientes.dataset.FieldByName('IDPersonaReceptor').AsInteger;
+          fieldbyName('IdCuentaXCobrar').AsInteger:=dsConCXCpendientes.dataset.FieldByName('IdCuentaXCobrar').AsInteger;
+          fieldbyName('IDPersonacliente').AsInteger:=dsConCXCpendientes.dataset.FieldByName('IDPersona').AsInteger;
           post;
+          // Proceso de Actualizaciones internas puede ser en el after post de la tabla deAplicaciones
+
         end;
-        dsConFacturasPendientes.DataSet.Close;
-        dsConFacturasPendientes.DataSet.Open;
+        idActual:= dsConCXCpendientes.dataset.FieldByName('IdCuentaXCobrar').AsInteger; //Dic 14/16
+        dsConCXCpendientes.DataSet.Close;
+        dsConCXCpendientes.DataSet.Open;
+
+        dsConCXCpendientes.dataset.Locate('IdCuentaXCobrar', idActual,[]); //Dic 14/16
 
         dsPago.dataset.Refresh;
       end;
     end
     else
-      ShowMessage('No es posible aplicar un valor mayor al saldo. Diferencia:'+ floattoStr(DSAplicacion.DataSet.FieldByName('Importe').Asfloat-dsConFacturasPendientes.dataset.FieldByName('SaldoDocumento').Asfloat ));
+      ShowMessage('No es posible aplicar un valor mayor al saldo. Diferencia:'+ floattoStr(DSAplicacion.DataSet.FieldByName('Importe').Asfloat-dsConCXCpendientes.dataset.FieldByName('Saldo').Asfloat ));
   end
   else
     ShowMessage('No se puede aplicar un valor de 0');
   //showmessage(quitasignos (cxDBLblDisponible.Caption) ); //Ago 15/16
   BtBtnAplicar.Enabled:= (strtoFLoat(quitasignos(cxDBLblDisponible.Caption))>0) and (DSAplicacion.DataSet.state =dsInsert);
-  BtBtnAgregar.Enabled:= (strtoFLoat(quitasignos(cxDBLblDisponible.Caption))>0) and (DsAplicacion.state =dsBrowse)and (not dsConFacturaspendientes.dataset.eof);
+  BtBtnAgregar.Enabled:= (strtoFLoat(quitasignos(cxDBLblDisponible.Caption))>0) and (DsAplicacion.state =dsBrowse)and (not dsConCXCpendientes.dataset.eof);
   cxDBTxtEdtImporteAplicar.Enabled:= (DSAplicacion.DataSet.state =dsInsert);//Ago 15/16
-  }
+{   }
 end;
 
 function TFrmAplicacionPago.Quitasignos(TextoPesos:String):String;//Ago 15/16
@@ -169,8 +183,8 @@ end;
 
 procedure TFrmAplicacionPago.DSAplicacionStateChange(Sender: TObject);
 begin
-//  BtBtnAplicar.Enabled:=(dsAplicacion.DataSet.State=dsInsert) and (not dsConFacturasPendientes.DataSet.Eof);
-
+  if Assigned(dsAplicacion.DataSet) then
+    BtBtnAplicar.Enabled:=(dsAplicacion.DataSet.State=dsInsert) and (not dsConCXCpendientes.DataSet.Eof);
 end;
 
 procedure TFrmAplicacionPago.FormCloseQuery(Sender: TObject;
