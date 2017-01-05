@@ -111,7 +111,7 @@ inherited dmContratos: TdmContratos
   object dsMaster: TDataSource
     AutoEdit = False
     DataSet = adodsMaster
-    Left = 104
+    Left = 128
     Top = 16
   end
   object adodsPersonas: TADODataSet
@@ -168,8 +168,8 @@ inherited dmContratos: TdmContratos
         Size = 4
         Value = 4
       end>
-    Left = 104
-    Top = 88
+    Left = 112
+    Top = 96
     object adodsAnexosIdAnexo: TAutoIncField
       FieldName = 'IdAnexo'
       ReadOnly = True
@@ -414,7 +414,6 @@ inherited dmContratos: TdmContratos
     end
   end
   object adodsMonedas: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdMoneda, Descripcion from Monedas'
@@ -423,7 +422,6 @@ inherited dmContratos: TdmContratos
     Top = 144
   end
   object adodsAnexosEstatus: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdAnexoEstatus, Descripcion from AnexosEstatus'

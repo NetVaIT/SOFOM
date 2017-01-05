@@ -180,7 +180,8 @@ implementation
 uses UbicacionesDM, BancosDM, MonedasDM, PuestosDM, PlazasTurnosDM,
   EstablecimientosDM,   CapacitacionDM, PersonasDM, RptPlazasDM, ProductosDM,
   MarcasDM, FamiliasDM, ContratosDM, AmortizacionesDM, FacturasDM,
-  CuentasXCobrarDM, PagosDM, CotizacionesDM, rptAntiguedadSaldosDM;
+  CuentasXCobrarDM, PagosDM, CotizacionesDM, rptAntiguedadSaldosDM,
+  AplicacionesConsultaDM;
 //  EsquemaPagosDM, FormulasDM, ReglasNegocioDM,
 //  MovimientosTiposDM, RolesDM, InstruccionesDM,
 //  IncidenciasDM, InstruccionesTiposDM, PeriodosDM, MovimientosDM,
@@ -238,7 +239,7 @@ begin
    32: gModulo := TDMFacturas.CreateWMostrar(Self,True,1); //Nov 25/16 mod  nov29/16
    33: gModulo := TDMCuentasXCobrar.Create(Self); //Nov 25/16 mod  nov29/16
    34: gModulo := TdmPagos.Create(Self);
-  // 35: gModulo := TdmAplicacionesPagos.Create(Self);
+   35: gModulo := TdmAplicacionesConsulta.Create(Self); //Ene 5/17
    36: gModulo := TdmCotizaciones.Create(Self);
 
    50: gModulo := TdmRptAntiguedadSaldos.Create(Self);

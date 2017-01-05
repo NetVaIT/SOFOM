@@ -12,6 +12,7 @@ inherited frmMain: TfrmMain
     ExplicitTop = 5
     ExplicitWidth = 1020
     inherited dxRibbon1Tab1: TdxRibbonTab
+      Active = False
       Index = 0
     end
     object dxRibbon1Tab2: TdxRibbonTab
@@ -36,6 +37,7 @@ inherited frmMain: TfrmMain
       Index = 1
     end
     object dxRibbon1Tab3: TdxRibbonTab
+      Active = True
       Caption = 'Procesos'
       Groups = <
         item
@@ -105,6 +107,8 @@ inherited frmMain: TfrmMain
         end>
     end
     inherited dxbArchivo: TdxBar
+      DockedDockControl = nil
+      DockedDockingStyle = dsNone
       FloatClientWidth = 51
       FloatClientHeight = 76
     end

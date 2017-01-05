@@ -15,12 +15,25 @@ type
     adodsMasterFolioPago: TIntegerField;
     adodsMasterSeriePago: TStringField;
     adodsMasterNoCuentaXCobrar: TAutoIncField;
-    adodsMasterRazonSocial: TStringField;
     adodsMasterIdPagoAplicacion: TAutoIncField;
     adodsMasterIdPago: TIntegerField;
     adodsMasterIdCFDI: TLargeintField;
     adodsMasterIdPersonaCliente: TIntegerField;
     adodsMasterFechaCXC: TDateTimeField;
+    ADODtstAplicacionesInternas: TADODataSet;
+    ADODtstAplicacionesInternasIDPagoAplicacionInterna: TIntegerField;
+    ADODtstAplicacionesInternasIDPagoAplicacion: TIntegerField;
+    ADODtstAplicacionesInternasIdCuentaXCobrarDetalle: TIntegerField;
+    ADODtstAplicacionesInternasIDCFDI: TLargeintField;
+    ADODtstAplicacionesInternasIDCFDIConcepto: TLargeintField;
+    DSMaster: TDataSource;
+    ADODtstAplicacionesInternasfechaCXC: TDateTimeField;
+    ADODtstAplicacionesInternasItemCXC: TStringField;
+    ADODtstAplicacionesInternassaldoCXC: TFMTBCDField;
+    ADODtstAplicacionesInternasImportePagado: TFMTBCDField;
+    adodsMasterCliente: TStringField;
+    adodsMasterIDAnexo: TIntegerField;
+    adodsMasterAnexo: TStringField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
@@ -35,16 +48,26 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses AplicacionesConsultaInd;
+uses AplicacionesConsultaGrid, AplicacionesInternasCon;
+
 
 {$R *.dfm}
 
 procedure TdmAplicacionesConsulta.DataModuleCreate(Sender: TObject);
 begin
   inherited;
-  gGridEditForm:= TFrmAplicacionesConsultaInd.Create(Self);
+
+   gGridForm:= TfrmConaplicaciones.Create(Self);
+ // TfrmConaplicaciones(gGridForm).DSAplicacion.DataSet:=ADODtStAplicacionesPagos;
+
+  gGridForm.DataSet:= adodsMaster;
+
+  gFormDeatil1:=TfrmConAplicacionesInternas.Create(self);
+  gFormDeatil1.DataSet:=ADODtstAplicacionesInternas;
+  gFormDeatil1.DataSet.Open;
+ (* gGridEditForm:= TFrmAplicacionesConsultaInd.Create(Self);
   gGridEditForm.DataSet := adodsMaster;
-  TFrmAplicacionesConsultaInd(gGridEditForm).DSQryAuxiliar.DataSet:=ADOQryAuxiliar; //Jun 1/16
+  TFrmAplicacionesConsultaInd(gGridEditForm).DSQryAuxiliar.DataSet:=ADOQryAuxiliar; //Jun 1/16  *)
   adodsMaster.open;
 end;
 

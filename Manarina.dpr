@@ -166,7 +166,11 @@ uses
   rptAntiguedadSaldosForm in 'Reportes\rptAntiguedadSaldosForm.pas' {frmRptAntiguedadSaldos},
   CotizacionesCreditosForm in 'Procesos\CotizacionesCreditosForm.pas' {frmCotizacionesCreditos},
   CotizacionesCreditosEdit in 'Procesos\CotizacionesCreditosEdit.pas' {frmCotizacionesCreditosEdit},
-  CotizacionesSeleccionarForm in 'Procesos\CotizacionesSeleccionarForm.pas' {frmCotizacionesSeleccionar};
+  CotizacionesSeleccionarForm in 'Procesos\CotizacionesSeleccionarForm.pas' {frmCotizacionesSeleccionar},
+  AplicacionesConsultaInd in 'Procesos\AplicacionesConsultaInd.pas' {frmAplicacionesInd},
+  AplicacionesConsultaDM in 'Procesos\AplicacionesConsultaDM.pas' {dmAplicacionesConsulta: TDataModule},
+  AplicacionesConsultaGrid in 'Procesos\AplicacionesConsultaGrid.pas' {frmConaplicaciones},
+  AplicacionesInternasCon in 'Procesos\AplicacionesInternasCon.pas' {frmConAplicacionesInternas};
 
 {$R *.res}
 

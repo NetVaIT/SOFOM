@@ -114,6 +114,7 @@ inherited frmEdFactura: TfrmEdFactura
         Align = alBottom
         BevelKind = bkTile
         TabOrder = 0
+        ExplicitTop = 354
       end
       object cxDBDateEdit1: TcxDBDateEdit
         Left = 48

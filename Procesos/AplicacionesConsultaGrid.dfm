@@ -1,135 +1,169 @@
-inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
-  Caption = 'frmRptAntiguedadSaldos'
-  ClientWidth = 1166
-  ExplicitWidth = 1166
-  ExplicitHeight = 457
+inherited frmConaplicaciones: TfrmConaplicaciones
+  Caption = 'Consulta Aplicaciones'
+  ClientHeight = 609
+  ClientWidth = 1025
+  ExplicitWidth = 1025
+  ExplicitHeight = 609
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Width = 1166
-    ExplicitWidth = 1166
+    Top = 536
+    Width = 1025
+    ExplicitTop = 536
+    ExplicitWidth = 1025
   end
   inherited splDetail1: TSplitter
-    Width = 1166
-    ExplicitWidth = 1166
+    Top = 293
+    Width = 1025
+    ExplicitTop = 293
+    ExplicitWidth = 1025
   end
   inherited splDetail2: TSplitter
-    Width = 1166
-    ExplicitWidth = 1166
+    Top = 498
+    Width = 1025
+    ExplicitLeft = -10
+    ExplicitTop = 337
+    ExplicitWidth = 1025
   end
   inherited pnlMaster: TPanel
-    Top = 100
-    Width = 1166
-    Height = 184
-    ExplicitTop = 100
-    ExplicitWidth = 1166
-    ExplicitHeight = 184
+    Top = 72
+    Width = 1025
+    Height = 221
+    ExplicitTop = 72
+    ExplicitWidth = 1025
+    ExplicitHeight = 221
     inherited cxGrid: TcxGrid
-      Width = 1166
-      Height = 184
-      ExplicitWidth = 1166
-      ExplicitHeight = 184
+      Width = 1025
+      Height = 221
+      ExplicitWidth = 1025
+      ExplicitHeight = 221
       inherited tvMaster: TcxGridDBTableView
         object tvMasterCliente: TcxGridDBColumn
           DataBinding.FieldName = 'Cliente'
-          Width = 308
+          Width = 300
         end
-        object tvMasterFecha: TcxGridDBColumn
-          DataBinding.FieldName = 'Fecha'
+        object tvMasterAnexo: TcxGridDBColumn
+          DataBinding.FieldName = 'Anexo'
+          Width = 318
         end
-        object tvMasterIdCuentaXCobrar: TcxGridDBColumn
-          DataBinding.FieldName = 'IdCuentaXCobrar'
+        object tvMasterNoCuentaXCobrar: TcxGridDBColumn
+          DataBinding.FieldName = 'NoCuentaXCobrar'
+          Width = 101
         end
-        object tvMasterVigentes: TcxGridDBColumn
-          DataBinding.FieldName = 'Vigentes'
+        object tvMasterFechaCXC: TcxGridDBColumn
+          DataBinding.FieldName = 'FechaCXC'
+        end
+        object tvMasterFechaAplicacion: TcxGridDBColumn
+          DataBinding.FieldName = 'FechaAplicacion'
+        end
+        object tvMasterFechaPago: TcxGridDBColumn
+          DataBinding.FieldName = 'FechaPago'
+        end
+        object tvMasterSeriePago: TcxGridDBColumn
+          DataBinding.FieldName = 'SeriePago'
+          Width = 86
+        end
+        object tvMasterFolioPago: TcxGridDBColumn
+          DataBinding.FieldName = 'FolioPago'
           Width = 75
         end
-        object tvMasterVencidosa30das: TcxGridDBColumn
-          DataBinding.FieldName = 'Vencidos a 30 d'#237'as'
-          Width = 93
+        object tvMasterimporte: TcxGridDBColumn
+          DataBinding.FieldName = 'importe'
         end
-        object tvMasterVencidosa60das: TcxGridDBColumn
-          DataBinding.FieldName = 'Vencidos a 60 d'#237'as'
-          Width = 95
-        end
-        object tvMasterVencidosa90das: TcxGridDBColumn
-          DataBinding.FieldName = 'Vencidos a 90 d'#237'as'
-          Width = 93
-        end
-        object tvMasterVencidosmsde90das: TcxGridDBColumn
-          DataBinding.FieldName = 'Vencidos m'#225's de 90 d'#237'as'
-          Width = 124
-        end
-        object tvMasterIdPersona: TcxGridDBColumn
-          DataBinding.FieldName = 'IdPersona'
+        object tvMasterIdPagoAplicacion: TcxGridDBColumn
+          DataBinding.FieldName = 'IdPagoAplicacion'
           Visible = False
         end
-        object tvMasterIdCuentaXCobrarEstatus: TcxGridDBColumn
-          DataBinding.FieldName = 'IdCuentaXCobrarEstatus'
+        object tvMasterIdPago: TcxGridDBColumn
+          DataBinding.FieldName = 'IdPago'
+          Visible = False
+        end
+        object tvMasterIdPersonaCliente: TcxGridDBColumn
+          DataBinding.FieldName = 'IdPersonaCliente'
+          Visible = False
+        end
+        object tvMasterIdCFDI: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCFDI'
+          Visible = False
+        end
+        object tvMasterIDAnexo: TcxGridDBColumn
+          DataBinding.FieldName = 'IDAnexo'
           Visible = False
         end
       end
     end
   end
   inherited pnlDetail3: TPanel
-    Width = 1166
-    ExplicitWidth = 1166
+    Top = 539
+    Width = 1025
+    Height = 35
+    ExplicitTop = 539
+    ExplicitWidth = 1025
+    ExplicitHeight = 35
   end
   inherited pnlDetail2: TPanel
-    Width = 1166
-    ExplicitWidth = 1166
+    Top = 501
+    Width = 1025
+    Height = 35
+    ExplicitTop = 501
+    ExplicitWidth = 1025
+    ExplicitHeight = 35
   end
   inherited pnlDetail1: TPanel
-    Width = 1166
-    ExplicitWidth = 1166
+    Top = 296
+    Width = 1025
+    Height = 202
+    ExplicitTop = 296
+    ExplicitWidth = 1025
+    ExplicitHeight = 202
   end
   inherited pnlClose: TPanel
-    Width = 1166
-    ExplicitWidth = 1166
-    DesignSize = (
-      1166
-      41)
+    Top = 574
+    Width = 1025
+    Height = 35
+    ExplicitTop = 574
+    ExplicitWidth = 1025
+    ExplicitHeight = 35
     inherited btnClose: TButton
-      Left = 1081
-      ExplicitLeft = 1081
+      Left = 940
+      ExplicitLeft = 940
     end
   end
-  object PnlTitulo: TPanel [8]
+  object Panel1: TPanel [8]
     Left = 0
-    Top = 0
-    Width = 1166
-    Height = 22
+    Top = 31
+    Width = 1025
+    Height = 41
     Align = alTop
-    Alignment = taLeftJustify
-    Caption = '     Antiguedad de Saldos'
-    Color = 5553385
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWhite
-    Font.Height = -13
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentBackground = False
-    ParentFont = False
+    BevelOuter = bvNone
     TabOrder = 9
-  end
-  object PnlFiltros: TPanel [9]
-    Left = 0
-    Top = 53
-    Width = 1166
-    Height = 47
-    Align = alTop
-    ParentBackground = False
-    TabOrder = 10
+    object RdGrpSeleccion: TRadioGroup
+      Left = 0
+      Top = 0
+      Width = 305
+      Height = 41
+      Align = alLeft
+      Caption = 'Filtrar por Fecha de:'
+      Columns = 4
+      ItemIndex = 3
+      Items.Strings = (
+        'Aplicaci'#243'n'
+        'Pago'
+        'Cta X Cob'
+        'Sin Filtro')
+      TabOrder = 0
+      OnClick = RdGrpSeleccionClick
+    end
     object PnlBusqueda: TPanel
-      Left = 202
-      Top = 1
+      Left = 305
+      Top = 0
       Width = 201
-      Height = 45
+      Height = 41
       Align = alLeft
       BevelInner = bvLowered
       ParentBackground = False
       ParentColor = True
-      TabOrder = 0
+      TabOrder = 1
       object Label3: TLabel
         Left = 16
         Top = 2
@@ -143,18 +177,17 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
         Width = 163
         Height = 21
         TabOrder = 0
-        OnKeyDown = EdtNombreKeyDown
       end
     end
     object PnlFechas: TPanel
-      Left = 403
-      Top = 1
-      Width = 463
-      Height = 45
+      Left = 506
+      Top = 0
+      Width = 447
+      Height = 41
       Align = alLeft
       BevelInner = bvLowered
       ParentBackground = False
-      TabOrder = 1
+      TabOrder = 2
       object Label4: TLabel
         Left = 21
         Top = 4
@@ -204,47 +237,10 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
         TabOrder = 1
         Width = 137
       end
-      object ChckBxXFecha: TCheckBox
-        Left = 375
-        Top = 17
-        Width = 82
-        Height = 20
-        Caption = 'Usar Fecha'
-        TabOrder = 2
-      end
-    end
-    object PnlTipoDoc: TPanel
-      Left = 1
-      Top = 1
-      Width = 201
-      Height = 45
-      Align = alLeft
-      BevelInner = bvLowered
-      ParentBackground = False
-      ParentColor = True
-      TabOrder = 2
-      Visible = False
-      object ChckLstBxTipoDoc: TCheckListBox
-        Left = 2
-        Top = 2
-        Width = 197
-        Height = 41
-        Align = alClient
-        Columns = 2
-        ItemHeight = 13
-        Items.Strings = (
-          'Facturas '
-          'Notas Cargo'
-          'Notas Venta'
-          'Fletes')
-        TabOrder = 0
-        ExplicitLeft = -2
-        ExplicitTop = -1
-      end
     end
   end
   inherited DataSource: TDataSource
-    DataSet = dmRptAntiguedadSaldos.adodsMaster
+    DataSet = dmAplicacionesConsulta.adodsMaster
   end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
@@ -267,7 +263,8 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
   end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
-      ReportDocument.CreationDate = 42585.483476608800000000
+      ReportDocument.CreationDate = 42738.400515763890000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end
