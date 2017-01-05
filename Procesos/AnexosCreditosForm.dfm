@@ -1,5 +1,7 @@
 inherited frmAnexosCreditos: TfrmAnexosCreditos
   Caption = 'frmAnexosCreditos'
+  ExplicitWidth = 651
+  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlMaster: TPanel
@@ -25,11 +27,11 @@ inherited frmAnexosCreditos: TfrmAnexosCreditos
           DataBinding.FieldName = 'Estatus'
           Width = 150
         end
-        object tvMasterFechaInicial: TcxGridDBColumn
-          DataBinding.FieldName = 'FechaInicial'
-        end
         object tvMasterFechaCorte: TcxGridDBColumn
           DataBinding.FieldName = 'FechaCorte'
+        end
+        object tvMasterFechaVencimiento: TcxGridDBColumn
+          DataBinding.FieldName = 'FechaVencimiento'
         end
         object tvMasterMontoFiananciar: TcxGridDBColumn
           DataBinding.FieldName = 'MontoFiananciar'
@@ -107,7 +109,6 @@ inherited frmAnexosCreditos: TfrmAnexosCreditos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42697.479886030090000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

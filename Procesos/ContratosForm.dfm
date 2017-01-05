@@ -61,6 +61,14 @@ inherited frmContratos: TfrmContratos
         object tvMasterMontoAutorizado: TcxGridDBColumn
           DataBinding.FieldName = 'MontoAutorizado'
         end
+        object tvMasterDiaCorte: TcxGridDBColumn
+          DataBinding.FieldName = 'DiaCorte'
+          Width = 65
+        end
+        object tvMasterDiaVencimiento: TcxGridDBColumn
+          DataBinding.FieldName = 'DiaVencimiento'
+          Width = 106
+        end
         object tvMasterEstatus: TcxGridDBColumn
           DataBinding.FieldName = 'Estatus'
           Width = 150
@@ -130,7 +138,6 @@ inherited frmContratos: TfrmContratos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42683.590026041670000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

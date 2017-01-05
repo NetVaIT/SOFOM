@@ -71,14 +71,10 @@ type
     Label21: TLabel;
     Label22: TLabel;
     Label23: TLabel;
-    Label24: TLabel;
-    Label5: TLabel;
     cxDBTextEdit15: TcxDBTextEdit;
     cxDBCurrencyEdit3: TcxDBCurrencyEdit;
     cxDBSpinEdit2: TcxDBSpinEdit;
     cxDBTextEdit16: TcxDBTextEdit;
-    cxDBDateEdit2: TcxDBDateEdit;
-    cxDBDateEdit3: TcxDBDateEdit;
     cxGroupBox4: TcxGroupBox;
     cxGroupBox5: TcxGroupBox;
     Label17: TLabel;

@@ -6,7 +6,8 @@ inherited dmContratos: TdmContratos
     CursorType = ctStatic
     CommandText = 
       'select IdContrato, IdPersona, IdContratoTipo, IdContratoEstatus,' +
-      ' Identificador, Fecha, MontoAutorizado from Contratos'
+      ' Identificador, Fecha, MontoAutorizado, DiaCorte, DiaVencimiento' +
+      ' from Contratos'
     object adodsMasterIdContrato: TAutoIncField
       FieldName = 'IdContrato'
       ReadOnly = True
@@ -66,6 +67,14 @@ inherited dmContratos: TdmContratos
       Size = 50
       Lookup = True
     end
+    object adodsMasterDiaCorte: TIntegerField
+      DisplayLabel = 'Dia de Corte'
+      FieldName = 'DiaCorte'
+    end
+    object adodsMasterDiaVencimiento: TIntegerField
+      DisplayLabel = 'Dia de Vencimiento'
+      FieldName = 'DiaVencimiento'
+    end
   end
   inherited adodsUpdate: TADODataSet
     Left = 416
@@ -106,6 +115,7 @@ inherited dmContratos: TdmContratos
     Top = 16
   end
   object adodsPersonas: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -116,6 +126,7 @@ inherited dmContratos: TdmContratos
     Top = 72
   end
   object adodsContratosTipos: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdContratoTipo, Descripcion from ContratosTipos'
@@ -124,6 +135,7 @@ inherited dmContratos: TdmContratos
     Top = 128
   end
   object adodsContratosEstatus: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdContratoEstatus, Descripcion from ContratosEstatus'
@@ -142,9 +154,9 @@ inherited dmContratos: TdmContratos
       'misionPorcentaje, Comision, ComisionImpuesto, Gastos, GastosImpu' +
       'estos, DespositosNumero, Depositos, PagoIncial, OpcionCompraPorc' +
       'entaje, OpcionCompra, ValorResidualPorcentaje, ValorResidual, Mo' +
-      'ntoFinanciar, TasaAnual, Plazo, PagoMensual, ImpactoISR, FechaIn' +
-      'icial, FechaCorte, PagoInicialCreado from Anexos'#13#10'where IdContra' +
-      'to = :IdContrato'
+      'ntoFinanciar, TasaAnual, Plazo, PagoMensual, ImpactoISR, FechaCo' +
+      'rte, FechaVencimiento, PagoInicialCreado from Anexos'#13#10'where IdCo' +
+      'ntrato = :IdContrato'
     DataSource = dsMaster
     MasterFields = 'IdContrato'
     Parameters = <
@@ -191,6 +203,7 @@ inherited dmContratos: TdmContratos
     end
     object adodsAnexosFecha: TDateTimeField
       FieldName = 'Fecha'
+      OnChange = adodsAnexosFechaChange
     end
     object adodsAnexosPrecioMoneda: TFMTBCDField
       DisplayLabel = 'Precio'
@@ -378,12 +391,12 @@ inherited dmContratos: TdmContratos
       Precision = 18
       Size = 6
     end
-    object adodsAnexosFechaInicial: TDateTimeField
-      DisplayLabel = 'Fecha inicial'
-      FieldName = 'FechaInicial'
+    object adodsAnexosFechaVencimiento: TDateTimeField
+      DisplayLabel = 'Fecha vencimiento'
+      FieldName = 'FechaVencimiento'
     end
     object adodsAnexosFechaCorte: TDateTimeField
-      DisplayLabel = 'Fecha de corte'
+      DisplayLabel = 'Fecha corte'
       FieldName = 'FechaCorte'
     end
     object adodsAnexosEstatus2: TStringField
@@ -478,10 +491,10 @@ inherited dmContratos: TdmContratos
     CursorType = ctStatic
     CommandText = 
       'select IdAnexoAmortizacion, IdAnexoCredito, IdAnexoSegmento, Per' +
-      'iodo, Fecha, TasaAnual, SaldoInicial, Pago, Capital, CapitalImpu' +
-      'esto, CapitalTotal, Interes, InteresImpuesto, InteresTotal, Impa' +
-      'ctoISR, PagoTotal, SaldoFinal from AnexosAmortizaciones'#13#10'where I' +
-      'dAnexoCredito = :IdAnexoCredito'
+      'iodo, FechaCorte, FechaVencimiento, TasaAnual, SaldoInicial, Pag' +
+      'o, Capital, CapitalImpuesto, CapitalTotal, Interes, InteresImpue' +
+      'sto, InteresTotal, ImpactoISR, PagoTotal, SaldoFinal from Anexos' +
+      'Amortizaciones'#13#10'where IdAnexoCredito = :IdAnexoCredito'
     DataSource = dsCreditos
     MasterFields = 'IdAnexoCredito'
     Parameters = <
@@ -511,8 +524,13 @@ inherited dmContratos: TdmContratos
     object adodsAmortizacionesPeriodo: TIntegerField
       FieldName = 'Periodo'
     end
-    object adodsAmortizacionesFecha: TDateTimeField
-      FieldName = 'Fecha'
+    object adodsAmortizacionesFechaCorte: TDateTimeField
+      DisplayLabel = 'Fecha corte'
+      FieldName = 'FechaCorte'
+    end
+    object adodsAmortizacionesFechaVencimiento: TDateTimeField
+      DisplayLabel = 'Fecha vencimiento'
+      FieldName = 'FechaVencimiento'
     end
     object adodsAmortizacionesTasaAnual: TBCDField
       FieldName = 'TasaAnual'
@@ -602,8 +620,8 @@ inherited dmContratos: TdmContratos
     CommandText = 
       'select IdAnexoCredito, IdAnexo, IdAnexoCreditoEstatus, IdUsuario' +
       ', Fecha, MontoFiananciar, ValorResidual, ImpactoISR, TasaAnual, ' +
-      'Plazo, PagoMensual, FechaInicial, FechaCorte from AnexosCreditos' +
-      #13#10'where IdAnexo = :IdAnexo'
+      'Plazo, PagoMensual, FechaCorte, FechaVencimiento from AnexosCred' +
+      'itos'#13#10'where IdAnexo = :IdAnexo'
     DataSource = dsAnexos
     MasterFields = 'IdAnexo'
     Parameters = <
@@ -644,13 +662,13 @@ inherited dmContratos: TdmContratos
       Size = 50
       Lookup = True
     end
-    object adodsCreditosFechaInicial: TDateTimeField
-      DisplayLabel = 'Fecha inicial'
-      FieldName = 'FechaInicial'
-    end
     object adodsCreditosFechaCorte: TDateTimeField
-      DisplayLabel = 'Fecha de corte'
+      DisplayLabel = 'Fecha corte'
       FieldName = 'FechaCorte'
+    end
+    object adodsCreditosFechaVencimiento: TDateTimeField
+      DisplayLabel = 'Fecha vencimiento'
+      FieldName = 'FechaVencimiento'
     end
     object adodsCreditosMontoFiananciar: TFMTBCDField
       DisplayLabel = 'Monto a fiananciar'
@@ -718,6 +736,7 @@ inherited dmContratos: TdmContratos
     Top = 144
   end
   object adodsCreditoEstatus: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -728,6 +747,7 @@ inherited dmContratos: TdmContratos
     Top = 200
   end
   object adodsUsuario: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdUsuario, Login from Usuarios'
@@ -860,5 +880,30 @@ inherited dmContratos: TdmContratos
       end>
     Left = 224
     Top = 400
+  end
+  object adoqGetFechaDia: TADOQuery
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    Parameters = <
+      item
+        Name = 'Fecha'
+        DataType = ftDateTime
+        Size = -1
+        Value = Null
+      end
+      item
+        Name = 'Dia'
+        DataType = ftInteger
+        Size = -1
+        Value = Null
+      end>
+    SQL.Strings = (
+      'SELECT dbo.GetFechaDia(:Fecha,:Dia) AS FechaNueva')
+    Left = 416
+    Top = 296
+    object adoqGetFechaDiaFechaNueva: TDateTimeField
+      FieldName = 'FechaNueva'
+      ReadOnly = True
+    end
   end
 end

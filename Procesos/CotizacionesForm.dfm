@@ -133,12 +133,6 @@ inherited frmCotizaciones: TfrmCotizaciones
         object tvMasterImpactoISR: TcxGridDBColumn
           DataBinding.FieldName = 'ImpactoISR'
         end
-        object tvMasterFechaInicial: TcxGridDBColumn
-          DataBinding.FieldName = 'FechaInicial'
-        end
-        object tvMasterFechaCorte: TcxGridDBColumn
-          DataBinding.FieldName = 'FechaCorte'
-        end
         object tvMasterUsuario: TcxGridDBColumn
           DataBinding.FieldName = 'Usuario'
           Width = 80
@@ -222,7 +216,6 @@ inherited frmCotizaciones: TfrmCotizaciones
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42711.658349664350000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

@@ -42,6 +42,8 @@ type
     tvMasterMontoAutorizado: TcxGridDBColumn;
     tvMasterEstatus: TcxGridDBColumn;
     dxbbCrearAnexo: TdxBarButton;
+    tvMasterDiaCorte: TcxGridDBColumn;
+    tvMasterDiaVencimiento: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
   private
     FactCrearAnexo: TBasicAction;

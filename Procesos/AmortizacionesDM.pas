@@ -284,7 +284,8 @@ begin
     adocInsAnexosAmrtizaciones.Parameters.ParamByName('IdAnexoCredito').Value := IdAnexoCredito;
 //    adocInsAnexosAmrtizaciones.Parameters.ParamByName('IdAnexoSegmento').Value :=
     adocInsAnexosAmrtizaciones.Parameters.ParamByName('Periodo').Value := dxmAmortizacionesPeriodo.Value;
-    adocInsAnexosAmrtizaciones.Parameters.ParamByName('Fecha').Value := dxmAmortizacionesFecha.Value;
+    adocInsAnexosAmrtizaciones.Parameters.ParamByName('FechaCorte').Value := dxmAmortizacionesFecha.Value;
+    adocInsAnexosAmrtizaciones.Parameters.ParamByName('FechaVencimiento').Value := dxmAmortizacionesFecha.Value;
     adocInsAnexosAmrtizaciones.Parameters.ParamByName('SaldoInicial').Value := dxmAmortizacionesSaldoInicial.Value;
     adocInsAnexosAmrtizaciones.Parameters.ParamByName('TasaAnual').Value := dxmAmortizacionesTasaAnual.Value;
     adocInsAnexosAmrtizaciones.Parameters.ParamByName('Capital').Value := dxmAmortizacionesCapital.Value;

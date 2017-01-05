@@ -34,7 +34,6 @@ type
     tvMasterIdAnexoAmortizacion: TcxGridDBColumn;
     tvMasterIdAnexoSegmento: TcxGridDBColumn;
     tvMasterPeriodo: TcxGridDBColumn;
-    tvMasterFecha: TcxGridDBColumn;
     tvMasterSaldoInicial: TcxGridDBColumn;
     tvMasterPago: TcxGridDBColumn;
     tvMasterCapital: TcxGridDBColumn;
@@ -48,6 +47,8 @@ type
     tvMasterIdAnexoCredito: TcxGridDBColumn;
     tvMasterTasaAnual: TcxGridDBColumn;
     tvMasterImpactoISR: TcxGridDBColumn;
+    tvMasterFechaCorte: TcxGridDBColumn;
+    tvMasterFechaVencimiento: TcxGridDBColumn;
   private
     { Private declarations }
   public

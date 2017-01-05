@@ -58,7 +58,6 @@ type
     tvMasterTasaAnual: TcxGridDBColumn;
     tvMasterPlazo: TcxGridDBColumn;
     tvMasterPagoMensual: TcxGridDBColumn;
-    tvMasterFechaInicial: TcxGridDBColumn;
     tvMasterEstatus: TcxGridDBColumn;
     dxbbProductos: TdxBarButton;
     tvMasterFechaCorte: TcxGridDBColumn;
@@ -70,6 +69,7 @@ type
     tvMasterIdCotizacion: TcxGridDBColumn;
     dxbbCrearPagoInicial: TdxBarButton;
     tvMasterPagoInicialCreado: TcxGridDBColumn;
+    tvMasterFechaVencimiento: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }

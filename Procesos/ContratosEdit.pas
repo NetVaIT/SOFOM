@@ -19,7 +19,7 @@ uses
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, Vcl.ImgList,
   System.Actions, Vcl.ActnList, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls, cxPC,
   cxContainer, cxEdit, cxCurrencyEdit, cxDBEdit, Vcl.DBCtrls, cxMaskEdit,
-  cxDropDownEdit, cxCalendar, cxTextEdit;
+  cxDropDownEdit, cxCalendar, cxTextEdit, cxSpinEdit;
 
 type
   TfrmContratosEdit = class(T_frmEdit)
@@ -35,6 +35,10 @@ type
     cxDBCurrencyEdit1: TcxDBCurrencyEdit;
     Label6: TLabel;
     DBLookupComboBox3: TDBLookupComboBox;
+    Label7: TLabel;
+    cxDBSpinEdit1: TcxDBSpinEdit;
+    Label8: TLabel;
+    cxDBSpinEdit2: TcxDBSpinEdit;
   private
     { Private declarations }
   public

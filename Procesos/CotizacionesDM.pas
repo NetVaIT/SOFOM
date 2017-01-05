@@ -45,8 +45,6 @@ type
     adodsMasterTasaAnual: TBCDField;
     adodsMasterPlazo: TIntegerField;
     adodsMasterPagoMensual: TFMTBCDField;
-    adodsMasterFechaInicial: TDateTimeField;
-    adodsMasterFechaCorte: TDateTimeField;
     adodsPersonas: TADODataSet;
     adodsContratosTipos: TADODataSet;
     adodsMonedas: TADODataSet;
@@ -124,7 +122,7 @@ begin
   Amortizaciones := TdmAmortizaciones.Create(Self);
   try
     Amortizaciones.TipoContrato:= TipoContrato;
-    Amortizaciones.Execute(adodsMasterFechaInicial.Value,
+    Amortizaciones.Execute(adodsMasterElaboracion.Value,
     adodsmasterTasaAnual.Value, adodsmasterPlazo.Value,
     adodsMasterMontoFinanciar.AsExtended,
     adodsMasterValorResidual.AsExtended,

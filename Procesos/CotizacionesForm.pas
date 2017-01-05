@@ -67,8 +67,6 @@ type
     tvMasterTasaAnual: TcxGridDBColumn;
     tvMasterPlazo: TcxGridDBColumn;
     tvMasterPagoMensual: TcxGridDBColumn;
-    tvMasterFechaInicial: TcxGridDBColumn;
-    tvMasterFechaCorte: TcxGridDBColumn;
     tvMasterImpactoISR: TcxGridDBColumn;
     tvMasterEstatus: TcxGridDBColumn;
     tvMasterUsuario: TcxGridDBColumn;

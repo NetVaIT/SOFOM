@@ -25,17 +25,17 @@ inherited frmAnexosCreditosEdit: TfrmAnexosCreditosEdit
       object Label2: TLabel
         Left = 48
         Top = 64
-        Width = 57
+        Width = 89
         Height = 13
-        Caption = 'Fecha inicial'
+        Caption = 'Fecha vencimiento'
         FocusControl = cxDBDateEdit1
       end
       object Label3: TLabel
         Left = 48
         Top = 104
-        Width = 72
+        Width = 57
         Height = 13
-        Caption = 'Fecha de corte'
+        Caption = 'Fecha corte'
         FocusControl = cxDBDateEdit2
       end
       object Label4: TLabel

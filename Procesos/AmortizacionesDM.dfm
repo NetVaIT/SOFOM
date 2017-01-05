@@ -134,12 +134,13 @@ inherited dmAmortizaciones: TdmAmortizaciones
   object adocInsAnexosAmrtizaciones: TADOCommand
     CommandText = 
       'INSERT INTO AnexosAmortizaciones (IdAnexoCredito,IdAnexoSegmento' +
-      ',Periodo,Fecha,TasaAnual,SaldoInicial,Pago,Capital,CapitalImpues' +
-      'to,CapitalTotal,Interes,InteresImpuesto,InteresTotal,ImpactoISR,' +
-      'PagoTotal,SaldoFinal)'#13#10'VALUES (:IdAnexoCredito,:IdAnexoSegmento,' +
-      ':Periodo,:Fecha,:TasaAnual,:SaldoInicial,:Pago,:Capital,:Capital' +
-      'Impuesto,:CapitalTotal,:Interes,:InteresImpuesto,:InteresTotal,:' +
-      'ImpactoISR,:PagoTotal,:SaldoFinal)'#13#10
+      ',Periodo,FechaCorte,FechaVencimiento,TasaAnual,SaldoInicial,Pago' +
+      ',Capital,CapitalImpuesto,CapitalTotal,Interes,InteresImpuesto,In' +
+      'teresTotal,ImpactoISR,PagoTotal,SaldoFinal)'#13#10'VALUES (:IdAnexoCre' +
+      'dito,:IdAnexoSegmento,:Periodo,:FechaCorte,:FechaVencimiento,:Ta' +
+      'saAnual,:SaldoInicial,:Pago,:Capital,:CapitalImpuesto,:CapitalTo' +
+      'tal,:Interes,:InteresImpuesto,:InteresTotal,:ImpactoISR,:PagoTot' +
+      'al,:SaldoFinal)'#13#10
     Connection = _dmConection.ADOConnection
     Parameters = <
       item
@@ -167,7 +168,16 @@ inherited dmAmortizaciones: TdmAmortizaciones
         Value = Null
       end
       item
-        Name = 'Fecha'
+        Name = 'FechaCorte'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        NumericScale = 3
+        Precision = 23
+        Size = 16
+        Value = Null
+      end
+      item
+        Name = 'FechaVencimiento'
         DataType = ftDateTime
         NumericScale = 3
         Precision = 23

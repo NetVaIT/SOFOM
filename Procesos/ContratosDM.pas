@@ -56,7 +56,6 @@ type
     adodsAnexosTasaAnual: TBCDField;
     adodsAnexosPlazo: TIntegerField;
     adodsAnexosPagoMensual: TFMTBCDField;
-    adodsAnexosFechaInicial: TDateTimeField;
     adodsAnexosMoneda: TStringField;
     adodsAnexosEstatus2: TStringField;
     actProductos: TAction;
@@ -71,7 +70,6 @@ type
     adodsAmortizacionesIdAnexoAmortizacion: TAutoIncField;
     adodsAmortizacionesIdAnexoSegmento: TIntegerField;
     adodsAmortizacionesPeriodo: TIntegerField;
-    adodsAmortizacionesFecha: TDateTimeField;
     adodsAmortizacionesSaldoInicial: TFMTBCDField;
     adodsAmortizacionesPago: TFMTBCDField;
     adodsAmortizacionesCapital: TFMTBCDField;
@@ -92,7 +90,6 @@ type
     adodsCreditosTasaAnual: TBCDField;
     adodsCreditosPlazo: TIntegerField;
     adodsCreditosPagoMensual: TFMTBCDField;
-    adodsCreditosFechaInicial: TDateTimeField;
     adodsCreditosFechaCorte: TDateTimeField;
     dsCreditos: TDataSource;
     adodsCreditoEstatus: TADODataSet;
@@ -126,6 +123,14 @@ type
     actCrearPagoInicial: TAction;
     adopSetCXCPorAnexo: TADOStoredProc;
     adodsAnexosPagoInicialCreado: TBooleanField;
+    adodsMasterDiaCorte: TIntegerField;
+    adodsMasterDiaVencimiento: TIntegerField;
+    adodsAnexosFechaVencimiento: TDateTimeField;
+    adodsCreditosFechaVencimiento: TDateTimeField;
+    adodsAmortizacionesFechaCorte: TDateTimeField;
+    adodsAmortizacionesFechaVencimiento: TDateTimeField;
+    adoqGetFechaDia: TADOQuery;
+    adoqGetFechaDiaFechaNueva: TDateTimeField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actProductosExecute(Sender: TObject);
     procedure adodsAnexosPrecioMonedaChange(Sender: TField);
@@ -141,17 +146,19 @@ type
     procedure actCrearAnexoExecute(Sender: TObject);
     procedure actCrearPagoInicialExecute(Sender: TObject);
     procedure actCrearPagoInicialUpdate(Sender: TObject);
+    procedure adodsAnexosFechaChange(Sender: TField);
   private
     { Private declarations }
     FPaymentTime: TPaymentTime;
     dmAmortizaciones: TdmAmortizaciones;
+    procedure SetPaymentTime(const Value: TPaymentTime);
+    function GetTipoContrato: TCTipoContrato;
+    function GetIdAnexo: Integer;
     procedure CalcularImportes;
     procedure CalcularImporteEnganche;
     procedure CalcularImportesCredito;
-    procedure SetPaymentTime(const Value: TPaymentTime);
-    function GetTipoContrato: TCTipoContrato;
     function CrearPagoInicial: Boolean;
-    function GetIdAnexo: Integer;
+    function GetFechaDia(Fecha: TDateTime; Dia: Integer): TDateTime;
   public
     { Public declarations }
     property PaymentTime: TPaymentTime read FPaymentTime write SetPaymentTime;
@@ -186,7 +193,7 @@ begin
   inherited;
   dmAmortizaciones.TipoContrato := TipoContrato;
   if dmAmortizaciones.GenAnexosAmortizaciones(adodsCreditosIdAnexoCredito.Value,
-  adodsCreditosFechaInicial.Value, adodsCreditosTasaAnual.Value, adodsCreditosPlazo.Value,
+  adodsCreditosFechaVencimiento.Value, adodsCreditosTasaAnual.Value, adodsCreditosPlazo.Value,
   adodsCreditosMontoFiananciar.AsExtended,
     adodsCreditosValorResidual.AsExtended,
     adodsCreditosImpactoISR.AsExtended) then
@@ -242,7 +249,7 @@ begin
   Amortizaciones := TdmAmortizaciones.Create(Self);
   try
     Amortizaciones.TipoContrato:= TipoContrato;
-    Amortizaciones.Execute(adodsCreditosFechaInicial.Value,
+    Amortizaciones.Execute(adodsCreditosFechavencimiento.Value,
     adodsCreditosTasaAnual.Value, adodsCreditosPlazo.Value,
     adodsCreditosMontoFiananciar.AsExtended,
     adodsCreditosValorResidual.AsExtended,
@@ -292,6 +299,16 @@ procedure TdmContratos.adodsAnexosEnganchePorcentajeChange(Sender: TField);
 begin
   inherited;
   CalcularImporteEnganche;
+end;
+
+procedure TdmContratos.adodsAnexosFechaChange(Sender: TField);
+begin
+  inherited;
+  if adodsAnexos.State in [dsInsert, dsEdit] then
+  begin
+    adodsAnexosFechaCorte.Value := GetFechaDia(adodsAnexosFecha.Value, adodsMasterDiaCorte.Value);
+    adodsAnexosFechaVencimiento.Value := GetFechaDia(adodsAnexosFecha.Value, adodsMasterDiaVencimiento.Value);
+  end;
 end;
 
 procedure TdmContratos.adodsAnexosNewRecord(DataSet: TDataSet);
@@ -344,7 +361,7 @@ begin
   adodsCreditosImpactoISR.Value := adodsAnexosImpactoISR.Value;
   adodsCreditosTasaAnual.Value := adodsAnexosTasaAnual.Value;
   adodsCreditosPlazo.Value := adodsAnexosPlazo.Value;
-  adodsCreditosFechaInicial.Value := adodsAnexosFechaInicial.Value;
+  adodsCreditosFechaVencimiento.Value := adodsAnexosFechaVencimiento.Value;
   adodsCreditosFechaCorte.Value := adodsAnexosFechaCorte.Value;
 end;
 
@@ -439,6 +456,16 @@ procedure TdmContratos.DataModuleDestroy(Sender: TObject);
 begin
   inherited;
   FreeAndNil(dmAmortizaciones);
+end;
+
+function TdmContratos.GetFechaDia(Fecha: TDateTime; Dia: Integer): TDateTime;
+begin
+  adoqGetFechaDia.Close;
+  adoqGetFechaDia.Parameters.ParamByName('Fecha').Value := Fecha;
+  adoqGetFechaDia.Parameters.ParamByName('Dia').Value := Dia;
+  adoqGetFechaDia.Open;
+  Result := adoqGetFechaDiaFechaNueva.Value;
+  adoqGetFechaDia.Close;
 end;
 
 function TdmContratos.GetIdAnexo: Integer;

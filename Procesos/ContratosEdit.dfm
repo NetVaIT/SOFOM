@@ -1,10 +1,13 @@
 inherited frmContratosEdit: TfrmContratosEdit
   Caption = 'Contrato'
+  ClientHeight = 441
   ExplicitWidth = 444
-  ExplicitHeight = 395
+  ExplicitHeight = 470
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
+    Height = 400
+    ClientRectBottom = 398
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 2
       ExplicitTop = 28
@@ -52,11 +55,27 @@ inherited frmContratosEdit: TfrmContratosEdit
       end
       object Label6: TLabel
         Left = 32
-        Top = 224
+        Top = 304
         Width = 36
         Height = 13
         Caption = 'Estatus'
         FocusControl = DBLookupComboBox3
+      end
+      object Label7: TLabel
+        Left = 32
+        Top = 223
+        Width = 60
+        Height = 13
+        Caption = 'Dia de Corte'
+        FocusControl = cxDBSpinEdit1
+      end
+      object Label8: TLabel
+        Left = 32
+        Top = 263
+        Width = 90
+        Height = 13
+        Caption = 'Dia de Vencimiento'
+        FocusControl = cxDBSpinEdit2
       end
       object cxDBTextEdit1: TcxDBTextEdit
         Left = 32
@@ -102,14 +121,33 @@ inherited frmContratosEdit: TfrmContratosEdit
       end
       object DBLookupComboBox3: TDBLookupComboBox
         Left = 32
-        Top = 240
+        Top = 320
         Width = 121
         Height = 21
         DataField = 'Estatus'
         DataSource = DataSource
+        TabOrder = 7
+      end
+      object cxDBSpinEdit1: TcxDBSpinEdit
+        Left = 32
+        Top = 239
+        DataBinding.DataField = 'DiaCorte'
+        DataBinding.DataSource = DataSource
         TabOrder = 5
+        Width = 121
+      end
+      object cxDBSpinEdit2: TcxDBSpinEdit
+        Left = 32
+        Top = 279
+        DataBinding.DataField = 'DiaVencimiento'
+        DataBinding.DataSource = DataSource
+        TabOrder = 6
+        Width = 121
       end
     end
+  end
+  inherited pmlMain: TPanel
+    Top = 400
   end
   inherited cxImageList: TcxImageList
     FormatVersion = 1

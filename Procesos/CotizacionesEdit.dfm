@@ -442,22 +442,6 @@ inherited frmCotizacionesEdit: TfrmCotizacionesEdit
           Caption = 'Pago mensual'
           FocusControl = cxDBTextEdit16
         end
-        object Label24: TLabel
-          Left = 121
-          Top = 153
-          Width = 57
-          Height = 13
-          Caption = 'Fecha inicial'
-          FocusControl = cxDBDateEdit2
-        end
-        object Label5: TLabel
-          Left = 106
-          Top = 180
-          Width = 72
-          Height = 13
-          Caption = 'Fecha de corte'
-          FocusControl = cxDBDateEdit3
-        end
         object Label29: TLabel
           Left = 119
           Top = 46
@@ -498,22 +482,6 @@ inherited frmCotizacionesEdit: TfrmCotizacionesEdit
           DataBinding.DataSource = DataSource
           Enabled = False
           TabOrder = 4
-          Width = 121
-        end
-        object cxDBDateEdit2: TcxDBDateEdit
-          Left = 184
-          Top = 150
-          DataBinding.DataField = 'FechaInicial'
-          DataBinding.DataSource = DataSource
-          TabOrder = 5
-          Width = 121
-        end
-        object cxDBDateEdit3: TcxDBDateEdit
-          Left = 184
-          Top = 177
-          DataBinding.DataField = 'FechaCorte'
-          DataBinding.DataSource = DataSource
-          TabOrder = 6
           Width = 121
         end
         object cxDBTextEdit21: TcxDBTextEdit

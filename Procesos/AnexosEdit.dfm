@@ -9,15 +9,15 @@ inherited frmAnexosEdit: TfrmAnexosEdit
   inherited pcMain: TcxPageControl
     Width = 719
     Height = 571
-    ExplicitWidth = 640
-    ExplicitHeight = 609
+    ExplicitWidth = 719
+    ExplicitHeight = 571
     ClientRectBottom = 569
     ClientRectRight = 717
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 2
       ExplicitTop = 28
-      ExplicitWidth = 636
-      ExplicitHeight = 579
+      ExplicitWidth = 715
+      ExplicitHeight = 541
       object cxGroupBox1: TcxGroupBox
         Left = 3
         Top = -1
@@ -455,11 +455,11 @@ inherited frmAnexosEdit: TfrmAnexosEdit
           FocusControl = cxDBTextEdit16
         end
         object Label24: TLabel
-          Left = 121
+          Left = 89
           Top = 153
-          Width = 57
+          Width = 89
           Height = 13
-          Caption = 'Fecha inicial'
+          Caption = 'Fecha vencimiento'
           FocusControl = cxDBDateEdit2
         end
         object Label5: TLabel
@@ -515,7 +515,7 @@ inherited frmAnexosEdit: TfrmAnexosEdit
         object cxDBDateEdit2: TcxDBDateEdit
           Left = 184
           Top = 150
-          DataBinding.DataField = 'FechaInicial'
+          DataBinding.DataField = 'FechaVencimiento'
           DataBinding.DataSource = DataSource
           TabOrder = 5
           Width = 121
@@ -542,22 +542,20 @@ inherited frmAnexosEdit: TfrmAnexosEdit
       Caption = 'Segmentos'
       ImageIndex = 2
       TabVisible = False
-      ExplicitWidth = 636
-      ExplicitHeight = 579
     end
   end
   inherited pmlMain: TPanel
     Top = 571
     Width = 719
-    ExplicitTop = 609
-    ExplicitWidth = 640
+    ExplicitTop = 571
+    ExplicitWidth = 719
     inherited btnCancel: TButton
       Left = 637
-      ExplicitLeft = 558
+      ExplicitLeft = 637
     end
     inherited btnOk: TButton
       Left = 556
-      ExplicitLeft = 477
+      ExplicitLeft = 556
     end
   end
   inherited cxImageList: TcxImageList

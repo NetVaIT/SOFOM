@@ -1,9 +1,12 @@
 inherited frmAnexosAmortizaciones: TfrmAnexosAmortizaciones
   Caption = 'frmAnexosAmortizaciones'
+  ExplicitWidth = 651
+  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlMaster: TPanel
     inherited cxGrid: TcxGrid
+      ExplicitTop = -3
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdAnexoAmortizacion: TcxGridDBColumn
           DataBinding.FieldName = 'IdAnexoAmortizacion'
@@ -20,8 +23,11 @@ inherited frmAnexosAmortizaciones: TfrmAnexosAmortizaciones
         object tvMasterPeriodo: TcxGridDBColumn
           DataBinding.FieldName = 'Periodo'
         end
-        object tvMasterFecha: TcxGridDBColumn
-          DataBinding.FieldName = 'Fecha'
+        object tvMasterFechaCorte: TcxGridDBColumn
+          DataBinding.FieldName = 'FechaCorte'
+        end
+        object tvMasterFechaVencimiento: TcxGridDBColumn
+          DataBinding.FieldName = 'FechaVencimiento'
         end
         object tvMasterTasaAnual: TcxGridDBColumn
           DataBinding.FieldName = 'TasaAnual'
@@ -63,9 +69,6 @@ inherited frmAnexosAmortizaciones: TfrmAnexosAmortizaciones
       end
     end
   end
-  inherited DataSource: TDataSource
-    DataSet = dmContratos.adodsAmortizaciones
-  end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
       0
@@ -82,7 +85,6 @@ inherited frmAnexosAmortizaciones: TfrmAnexosAmortizaciones
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42691.490725081020000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

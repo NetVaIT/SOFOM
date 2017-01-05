@@ -44,10 +44,10 @@ type
     tvMasterUsuario: TcxGridDBColumn;
     dxbbPreAmortizaciones: TdxBarButton;
     dxbbGenAmortizaciones: TdxBarButton;
-    tvMasterFechaInicial: TcxGridDBColumn;
     tvMasterFechaCorte: TcxGridDBColumn;
     tvMasterValorResidual: TcxGridDBColumn;
     tvMasterImpactoISR: TcxGridDBColumn;
+    tvMasterFechaVencimiento: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }

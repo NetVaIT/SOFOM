@@ -11,8 +11,7 @@ inherited dmCotizaciones: TdmCotizaciones
       ', ComisionImpuesto, Gastos, GastosImpuestos, DespositosNumero, D' +
       'epositos, PagoIncial, OpcionCompraPorcentaje, OpcionCompra, Valo' +
       'rResidualPorcentaje, ValorResidual, MontoFinanciar, TasaAnual, P' +
-      'lazo, PagoMensual, ImpactoISR, FechaInicial, FechaCorte from Cot' +
-      'izaciones'
+      'lazo, PagoMensual, ImpactoISR from Cotizaciones'
     Left = 40
     object adodsMasterIdCotizacion: TAutoIncField
       FieldName = 'IdCotizacion'
@@ -276,14 +275,6 @@ inherited dmCotizaciones: TdmCotizaciones
       Precision = 18
       Size = 6
     end
-    object adodsMasterFechaInicial: TDateTimeField
-      DisplayLabel = 'Fecha inicial'
-      FieldName = 'FechaInicial'
-    end
-    object adodsMasterFechaCorte: TDateTimeField
-      DisplayLabel = 'Fecha de corte'
-      FieldName = 'FechaCorte'
-    end
     object adodsMasterUsuario: TStringField
       FieldKind = fkLookup
       FieldName = 'Usuario'
@@ -494,18 +485,21 @@ inherited dmCotizaciones: TdmCotizaciones
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@IdCotizacion'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end
       item
         Name = '@IdCotizacionEstatus'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end>
     Left = 304
     Top = 280
