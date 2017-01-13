@@ -39,7 +39,6 @@ type
     ADODtStCFDIConceptosPrefValorUnitario: TFMTBCDField;
     ADODtStCFDIConceptosPrefImporte: TFMTBCDField;
     ADODtStCFDIConceptosPrefIdCFDIConcepto: TLargeintField;
-    ADODtStCFDIConceptosPrefIdCXCItem: TIntegerField;
     ADODtStCFDIImpuestosPref: TADODataSet;
     ADODtStCFDIImpuestosPrefIdCFDI: TLargeintField;
     ADODtStCFDIImpuestosPrefTipoImp: TStringField;
@@ -109,7 +108,6 @@ type
     ADODtStPersonaEmisorPais: TStringField;
     ADODtStPersonaEmisorRegimenFiscalEmisor: TStringField;
     ADODtStPersonaEmisorIdMetodoPago: TIntegerField;
-    ADODtStPrefacturasCFDIIdCXC: TIntegerField;
     ADODtStDireccionesCliente: TADODataSet;
     ADODtStDireccionesClienteIdPersonaDomicilio: TAutoIncField;
     ADODtStDireccionesClienteIdPersona: TIntegerField;
@@ -146,6 +144,8 @@ type
     DetallesCXCParaFacturarTemporalidad: TStringField;
     ADOdsCXCDetalleIdCuentaXCobrarDetalle: TAutoIncField;
     DetallesCXCParaFacturarIdCuentaXCobrarDetalle: TAutoIncField;
+    ADODtStCFDIConceptosPrefIdCuentaXCobrarDetalle: TIntegerField;
+    ADOdsCXCDetalleSaldoFactoraje: TFMTBCDField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actGeneraPreFacturasExecute(Sender: TObject);
     procedure ADODtStPrefacturasCFDINewRecord(DataSet: TDataSet);
@@ -196,7 +196,7 @@ begin
     begin
       ADODtStCFDIConceptosPref.Insert;
       ADODtStCFDIConceptosPrefDescripcion.AsString:= DetallesCXCParaFacturar.fieldbyname('Descripcion').asString;
-      ADODtStCFDIConceptosPrefIdCXCItem.AsInteger:=DetallesCXCParaFacturar.fieldbyname('IDCuentaXCobrarDEtalle').AsInteger;  //Sin a Dic 7/16
+      ADODtStCFDIConceptosPrefIdCuentaXCobrarDetalle.AsInteger:=DetallesCXCParaFacturar.fieldbyname('IDCuentaXCobrarDEtalle').AsInteger;  //Sin a Dic 7/16
       ADODtStCFDIConceptosPrefValorUnitario.AsFloat:= DetallesCXCParaFacturar.fieldbyname('Importe').asFloat;
 
       ADODtStCFDIConceptosPrefImporte.AsFloat:= DetallesCXCParaFacturar.fieldbyname('Importe').AsFloat;
@@ -326,7 +326,7 @@ begin
   DataSet.FieldByName('IDMetodoPago').AsInteger:= SacaMetodo(adodsMasterIdPersona.AsInteger, Cuenta); //  DataSet.FieldByName('IDMetodoPago').AsInteger:=5; //Otros  si no tiene
   if Cuenta <>'' then
      DataSet.FieldByName('NumCtaPago').asString:= cuenta;
-  DataSet.FieldByName('IdCxC').AsInteger:=  adodsMasterIdCuentaXCobrar.AsInteger;
+  DataSet.FieldByName('IdCuentaXCobrar').AsInteger:=  adodsMasterIdCuentaXCobrar.AsInteger;  //Ajustado Ene 12/17 idcxc
 
   Except
     Raise;

@@ -17,9 +17,9 @@ inherited dmFacturas: TdmFacturas
       ' NumCtaPago, '#13#10'CadenaOriginal, TotalImpuestoRetenido, TotalImpue' +
       'stoTrasladado, '#13#10'SaldoDocumento, FechaCancelacion, Observaciones' +
       ', '#13#10'PorcentajeIVA, EmailCliente, UUID_TB, SelloCFD_TB, '#13#10'SelloSA' +
-      'T_TB, CertificadoSAT_TB, FechaTimbrado_TB, IdCXC '#13#10' from CFDI C'#13 +
-      #10'-- where fecha>DATEADD(MM, DATEDIFF(MM,0,GETDATE()), 0)'#13#10'order ' +
-      'by IDCFDIESTATUS, Fecha '
+      'T_TB, CertificadoSAT_TB, FechaTimbrado_TB,'#13#10' IdCuentaXCobrar, Sa' +
+      'ldoFactoraje'#13#10' from CFDI C'#13#10'-- where fecha>DATEADD(MM, DATEDIFF(' +
+      'MM,0,GETDATE()), 0)'#13#10'order by IDCFDIESTATUS, Fecha '
     Left = 40
     object adodsMasterIdCFDI: TLargeintField
       FieldName = 'IdCFDI'
@@ -232,9 +232,6 @@ inherited dmFacturas: TdmFacturas
       Size = 300
       Calculated = True
     end
-    object adodsMasterIdCXC: TIntegerField
-      FieldName = 'IdCXC'
-    end
     object adodsMasterDireccionC: TStringField
       FieldKind = fkLookup
       FieldName = 'DireccionC'
@@ -245,9 +242,17 @@ inherited dmFacturas: TdmFacturas
       Size = 150
       Lookup = True
     end
+    object adodsMasterIdCuentaXCobrar: TIntegerField
+      FieldName = 'IdCuentaXCobrar'
+    end
+    object adodsMasterSaldoFactoraje: TFMTBCDField
+      FieldName = 'SaldoFactoraje'
+      Precision = 18
+      Size = 6
+    end
   end
   inherited adodsUpdate: TADODataSet
-    Left = 336
+    Left = 344
   end
   inherited ActionList: TActionList
     object actProcesaFactura: TAction
@@ -268,8 +273,8 @@ inherited dmFacturas: TdmFacturas
     OnNewRecord = ADODtStCFDIConceptosNewRecord
     CommandText = 
       'select IdCFDIConcepto, IdCFDI, IdUnidadMedida, Cantidad, Unidad,' +
-      #13#10' Descripcion, NoIdentifica, ValorUnitario, Importe, IdCXCItem ' +
-      #13#10'from  CFDIConceptos'#13#10' Where IdCFDI=:IdCFDI'
+      #13#10' Descripcion, NoIdentifica, ValorUnitario, Importe, IdCuentaXC' +
+      'obrarDetalle'#13#10'from  CFDIConceptos'#13#10' Where IdCFDI=:IdCFDI'
     DataSource = DSMaster
     IndexFieldNames = 'IdCFDI'
     MasterFields = 'IdCFDI'
@@ -326,8 +331,8 @@ inherited dmFacturas: TdmFacturas
       FieldName = 'IdCFDIConcepto'
       ReadOnly = True
     end
-    object ADODtStCFDIConceptosIdCXCItem: TIntegerField
-      FieldName = 'IdCXCItem'
+    object ADODtStCFDIConceptosIdCuentaXCobrarDetalle: TIntegerField
+      FieldName = 'IdCuentaXCobrarDetalle'
     end
   end
   object DSMaster: TDataSource
@@ -575,7 +580,7 @@ inherited dmFacturas: TdmFacturas
         Size = 4
         Value = Null
       end>
-    Left = 480
+    Left = 496
     Top = 88
     object ADODtStBuscaFolioSerieIdCFDITipoDocumento: TAutoIncField
       FieldName = 'IdCFDITipoDocumento'

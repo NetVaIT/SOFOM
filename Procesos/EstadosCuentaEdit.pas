@@ -1,4 +1,4 @@
-unit ConceptosFacturaForm;
+unit EstadosCuentaEdit;
 
 interface
 
@@ -30,17 +30,7 @@ uses
   Vcl.ExtCtrls;
 
 type
-  TfrmConceptos = class(T_frmGrid)
-    tvMasterIdCFDI: TcxGridDBColumn;
-    tvMasterIdUnidadMedida: TcxGridDBColumn;
-    tvMasterCantidad: TcxGridDBColumn;
-    tvMasterUnidad: TcxGridDBColumn;
-    tvMasterDescripcion: TcxGridDBColumn;
-    tvMasterNoIdentifica: TcxGridDBColumn;
-    tvMasterValorUnitario: TcxGridDBColumn;
-    tvMasterImporte: TcxGridDBColumn;
-    tvMasterIdCFDIConcepto: TcxGridDBColumn;
-    tvMasterIdCuentaXCobrarDetalle: TcxGridDBColumn;
+  TFrmConEstadosCuenta = class(T_frmGrid)
   private
     { Private declarations }
   public
@@ -48,12 +38,12 @@ type
   end;
 
 var
-  frmConceptos: TfrmConceptos;
+  FrmConEstadosCuenta: TFrmConEstadosCuenta;
 
 implementation
 
 {$R *.dfm}
 
-uses FacturasDM;
+uses EstadosCuentaDM;
 
 end.

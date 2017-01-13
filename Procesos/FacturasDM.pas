@@ -67,7 +67,6 @@ type
     ADODtStCFDIImpuestosImpuesto: TStringField;
     ADODtStCFDIImpuestosTasa: TFloatField;
     ADODtStCFDIImpuestosImporte: TFloatField;
-    ADODtStCFDIConceptosIdCXCItem: TIntegerField;
     ADODtStPersonaEmisor: TADODataSet;
     ADODtStPersonaEmisoridpersona: TAutoIncField;
     ADODtStPersonaEmisorRazonSocial: TStringField;
@@ -193,9 +192,11 @@ type
     StringField10: TStringField;
     StringField11: TStringField;
     adodsMasterDirCompleta: TStringField;
-    adodsMasterIdCXC: TIntegerField;
     ActImprimeFactura: TAction;
     adodsMasterDireccionC: TStringField;
+    ADODtStCFDIConceptosIdCuentaXCobrarDetalle: TIntegerField;
+    adodsMasterIdCuentaXCobrar: TIntegerField;
+    adodsMasterSaldoFactoraje: TFMTBCDField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actProcesaFacturaExecute(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
@@ -294,8 +295,8 @@ begin
        if fileExists(XMLpdf.FileIMG) then//dic 28/15
        begin
          ShowProgress(20,100.1,'Generando para imprimir...' + IntToStr(20) + '%');
-         if not adodsMasterIdCXC.isnull then
-            Contrato:='Contrato: '+Informacioncontrato(adodsMasterIdCXC.Value) //Dic 7/16 //verificar  que pasa si la FActura no tiene CXC??
+         if not adodsMasterIdCuentaXCobrar.isnull then
+            Contrato:='Contrato: '+Informacioncontrato(adodsMasterIDCuentaXCobrar.Value) //Dic 7/16 //verificar  que pasa si la FActura no tiene CXC??
         else
            Contrato:='';
         nomAux:=XMLpdf.GeneratePDFFile(nombreArchi,TipoDoc,Contrato,'');
@@ -566,8 +567,8 @@ begin
         begin
           XMLpdf.FileIMG := RutaFactura + fePNG; //Dic 21/15
           XMLpdf.CadenaOriginalTimbre:= TimbreCFDI.CadenaTimbre; //Dic 28/15                  tenia nov 28/16  adodsMasterIdentificadorCte.AsString
-          //SAcar infocontrato
-          Contrato:=Informacioncontrato(adodsMasterIdCXC.Value); //Dic 7/16 //verificar  que pasa si la FActura no tiene CXC??
+          //SAcar infocontrato                     //Ene 12/17
+          Contrato:=Informacioncontrato(adodsMasterIdCuentaXCobrar.Value); //Dic 7/16 //verificar  que pasa si la FActura no tiene CXC??
 
           RutaPDF := XMLpdf.GeneratePDFFile(RutaFactura,TipoDoc,Contrato,''); //Dic 21/15  //verificar si sirve ese Formato
           //Actualizar datos de Timbre en CFDI         //Mar 31/16              //Ago 26/16

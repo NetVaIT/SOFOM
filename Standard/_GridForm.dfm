@@ -1282,7 +1282,6 @@ object _frmGrid: T_frmGrid
       Active = True
       Component = cxGrid
       DesignerCaption = 'Formato del reporte'
-      PageNumberFormat = pnfNumeral
       PrinterPage.DMPaper = 1
       PrinterPage.Footer = 6350
       PrinterPage.GrayShading = True
@@ -1299,8 +1298,7 @@ object _frmGrid: T_frmGrid
       PrinterPage.PageSize.Y = 279400
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
-      ReportDocument.CreationDate = 42716.407517754630000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
+      ReportDocument.CreationDate = 42740.564811168980000000
       OptionsView.Caption = False
       OptionsView.FilterBar = False
       BuiltInReportLink = True

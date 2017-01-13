@@ -170,7 +170,10 @@ uses
   AplicacionesConsultaInd in 'Procesos\AplicacionesConsultaInd.pas' {frmAplicacionesInd},
   AplicacionesConsultaDM in 'Procesos\AplicacionesConsultaDM.pas' {dmAplicacionesConsulta: TDataModule},
   AplicacionesConsultaGrid in 'Procesos\AplicacionesConsultaGrid.pas' {frmConaplicaciones},
-  AplicacionesInternasCon in 'Procesos\AplicacionesInternasCon.pas' {frmConAplicacionesInternas};
+  AplicacionesInternasCon in 'Procesos\AplicacionesInternasCon.pas' {frmConAplicacionesInternas},
+  EstadosCuentaDM in 'Procesos\EstadosCuentaDM.pas' {dmEstadosCuenta: TDataModule},
+  EstadosCuentaForm in 'Procesos\EstadosCuentaForm.pas' {FrmConEstadosCuenta},
+  EstadosCuentaDetalleForm in 'Procesos\EstadosCuentaDetalleForm.pas' {FrmConEstadoCtaDetalle};
 
 {$R *.res}
 
@@ -182,5 +185,8 @@ begin
   Application.CreateForm(T_frmMain, _frmMain);
   Application.CreateForm(T_frmMainRibbon, _frmMainRibbon);
   Application.CreateForm(T_frmProgress, _frmProgress);
+  Application.CreateForm(TdmEstadosCuenta, dmEstadosCuenta);
+  Application.CreateForm(TFrmConEstadosCuenta, FrmConEstadosCuenta);
+  Application.CreateForm(TFrmConEstadoCtaDetalle, FrmConEstadoCtaDetalle);
   Application.Run;
 end.

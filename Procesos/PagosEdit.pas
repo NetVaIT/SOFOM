@@ -19,7 +19,7 @@ uses
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, cxContainer,
   cxEdit, cxMemo, cxDBEdit, Vcl.DBCtrls, cxTextEdit, cxMaskEdit, cxDropDownEdit,
   cxCalendar, Vcl.StdCtrls, Vcl.ImgList, System.Actions, Vcl.ActnList, Data.DB,
-  Vcl.ExtCtrls, cxPC, cxLabel, cxDBLabel;
+  Vcl.ExtCtrls, cxPC, cxLabel, cxDBLabel, cxGroupBox, cxRadioGroup;
 
 type
   TFrmEdPagos = class(T_frmEdit)
@@ -46,6 +46,7 @@ type
     Label11: TLabel;
     cxDBTextEdit4: TcxDBTextEdit;
     DSPersonas: TDataSource;
+    cxDBRdGrpOrigenPago: TcxDBRadioGroup;
     procedure DBLkpCmbBxClienteClick(Sender: TObject);
   private
     { Private declarations }

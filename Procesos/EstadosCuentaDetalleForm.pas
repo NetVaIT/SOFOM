@@ -1,4 +1,4 @@
-unit ConceptosFacturaForm;
+unit EstadosCuentaDetalleForm;
 
 interface
 
@@ -23,24 +23,27 @@ uses
   dxPSPDFExportCore, dxPSPDFExport, cxDrawTextUtils, dxPSPrVwStd, dxPSPrVwAdv,
   dxPSPrVwRibbon, dxPScxPageControlProducer, dxPScxGridLnk,
   dxPScxGridLayoutViewLnk, dxPScxEditorProducers, dxPScxExtEditorProducers,
-  dxSkinsdxRibbonPainter, dxPSCore, dxPScxCommon, dxBar, Vcl.ImgList,
+  dxSkinsdxRibbonPainter, cxGridCustomTableView, cxGridTableView,
+  cxGridDBTableView, dxPSCore, dxPScxCommon, dxBar, Vcl.ImgList,
   cxGridCustomPopupMenu, cxGridPopupMenu, cxClasses, Vcl.StdActns, Vcl.DBActns,
   System.Actions, Vcl.ActnList, Vcl.StdCtrls, cxGridLevel, cxGridCustomView,
-  cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
-  Vcl.ExtCtrls;
+  cxGrid, Vcl.ExtCtrls;
 
 type
-  TfrmConceptos = class(T_frmGrid)
-    tvMasterIdCFDI: TcxGridDBColumn;
-    tvMasterIdUnidadMedida: TcxGridDBColumn;
-    tvMasterCantidad: TcxGridDBColumn;
-    tvMasterUnidad: TcxGridDBColumn;
-    tvMasterDescripcion: TcxGridDBColumn;
-    tvMasterNoIdentifica: TcxGridDBColumn;
-    tvMasterValorUnitario: TcxGridDBColumn;
+  TFrmConEstadoCtaDetalle = class(T_frmGrid)
+    tvMasterIdEstadoCuentaDetalle: TcxGridDBColumn;
+    tvMasterIdEstadoCuenta: TcxGridDBColumn;
+    tvMasterIdContrato: TcxGridDBColumn;
+    tvMasterIdAnexo: TcxGridDBColumn;
+    tvMasterIdPago: TcxGridDBColumn;
+    tvMasterIdAplicacionIntena: TcxGridDBColumn;
     tvMasterImporte: TcxGridDBColumn;
-    tvMasterIdCFDIConcepto: TcxGridDBColumn;
+    tvMasterConcepto: TcxGridDBColumn;
+    tvMasterTipoContrato: TcxGridDBColumn;
+    tvMasterIdCuentaXCobrar: TcxGridDBColumn;
     tvMasterIdCuentaXCobrarDetalle: TcxGridDBColumn;
+    tvMasterFechaMovimiento: TcxGridDBColumn;
+    tvMasterTipoMovimiento: TcxGridDBColumn;
   private
     { Private declarations }
   public
@@ -48,12 +51,12 @@ type
   end;
 
 var
-  frmConceptos: TfrmConceptos;
+  FrmConEstadoCtaDetalle: TFrmConEstadoCtaDetalle;
 
 implementation
 
 {$R *.dfm}
 
-uses FacturasDM;
+uses EstadosCuentaDM;
 
 end.

@@ -774,6 +774,19 @@
             <Form>frmConAplicacionesInternas</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Procesos\EstadosCuentaDM.pas">
+            <Form>dmEstadosCuenta</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Procesos\EstadosCuentaForm.pas">
+            <Form>FrmConEstadosCuenta</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Procesos\EstadosCuentaDetalleForm.pas">
+            <Form>FrmConEstadoCtaDetalle</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

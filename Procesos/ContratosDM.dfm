@@ -115,7 +115,6 @@ inherited dmContratos: TdmContratos
     Top = 16
   end
   object adodsPersonas: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -126,7 +125,6 @@ inherited dmContratos: TdmContratos
     Top = 72
   end
   object adodsContratosTipos: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdContratoTipo, Descripcion from ContratosTipos'
@@ -135,7 +133,6 @@ inherited dmContratos: TdmContratos
     Top = 128
   end
   object adodsContratosEstatus: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdContratoEstatus, Descripcion from ContratosEstatus'
@@ -481,7 +478,7 @@ inherited dmContratos: TdmContratos
   object dsAnexos: TDataSource
     AutoEdit = False
     DataSet = adodsAnexos
-    Left = 200
+    Left = 208
     Top = 88
   end
   object adodsAmortizaciones: TADODataSet
@@ -734,7 +731,6 @@ inherited dmContratos: TdmContratos
     Top = 144
   end
   object adodsCreditoEstatus: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -745,7 +741,6 @@ inherited dmContratos: TdmContratos
     Top = 200
   end
   object adodsUsuario: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdUsuario, Login from Usuarios'
@@ -897,7 +892,7 @@ inherited dmContratos: TdmContratos
       end>
     SQL.Strings = (
       'SELECT dbo.GetFechaDia(:Fecha,:Dia) AS FechaNueva')
-    Left = 416
+    Left = 424
     Top = 296
     object adoqGetFechaDiaFechaNueva: TDateTimeField
       FieldName = 'FechaNueva'

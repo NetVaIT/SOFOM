@@ -52,7 +52,6 @@ type
     ADODtStAplicacionesPagosIdPago: TIntegerField;
     ADODtStAplicacionesPagosIdCFDI: TLargeintField;
     ADODtStAplicacionesPagosIdPersonaCliente: TIntegerField;
-    ADODtStAplicacionesPagosIdCuentaXCobrarDetalle: TIntegerField;
     ADODtStAplicacionesPagosIdCuentaXCobrar: TIntegerField;
     ADODtStAplicacionesPagosFechaAplicacion: TDateTimeField;
     ADODtStAplicacionesPagosImporte: TFMTBCDField;
@@ -117,6 +116,11 @@ type
     adodsMasterIdMetodoPago: TIntegerField;
     adodsMasterCuentaPago: TStringField;
     adodsMasterMetodoPago: TStringField;
+    adodsMasterOrigenPago: TIntegerField;
+    ADODtStCXCPendientesIdEstadoCuenta: TIntegerField;
+    ADODtStCXCPendientesSaldoFactoraje: TFMTBCDField;
+    ADODtStCxCDetallePendSaldoFactoraje: TFMTBCDField;
+    ADODtStAplicacionesPagosImporteFactoraje: TFMTBCDField;
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsMasterAfterPost(DataSet: TDataSet);
     procedure adodsMasterBeforePost(DataSet: TDataSet);

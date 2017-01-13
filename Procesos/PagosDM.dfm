@@ -12,7 +12,8 @@ inherited dmPagos: TdmPagos
     CommandText = 
       'select  IdPago, IdBanco, IdPersonaCliente, IdCuentaBancariaEstad' +
       'oCuenta, '#13#10'FechaPago, FolioPago, SeriePago, Referencia, Importe,' +
-      ' Saldo, '#13#10'Observaciones, IdMetodoPago, CuentaPago from Pagos'
+      ' Saldo, '#13#10'Observaciones, IdMetodoPago, CuentaPago, OrigenPago fr' +
+      'om Pagos'
     Left = 48
     object adodsMasterIdPago: TAutoIncField
       FieldName = 'IdPago'
@@ -91,6 +92,12 @@ inherited dmPagos: TdmPagos
       Size = 30
       Lookup = True
     end
+    object adodsMasterOrigenPago: TIntegerField
+      FieldName = 'OrigenPago'
+    end
+  end
+  inherited adodsUpdate: TADODataSet
+    Left = 328
   end
   inherited ActionList: TActionList
     Top = 72
@@ -161,9 +168,8 @@ inherited dmPagos: TdmPagos
     OnNewRecord = ADODtStAplicacionesPagosNewRecord
     CommandText = 
       'select IdPagoAplicacion, IdPago, IdCFDI, IdPersonaCliente,'#13#10' IdC' +
-      'uentaXCobrarDetalle, IdCuentaXCobrar,'#13#10' FechaAplicacion, Importe' +
-      ' from PagosAplicaciones'#13#10'where IdPersonaCliente=:IdPersonaClient' +
-      'e'
+      'uentaXCobrar, FechaAplicacion, Importe, ImporteFactoraje'#13#10' from ' +
+      'PagosAplicaciones'#13#10'where IdPersonaCliente=:IdPersonaCliente'
     DataSource = DSMaster
     IndexFieldNames = 'IdPersonaCliente'
     MasterFields = 'IdPersonaCliente'
@@ -190,9 +196,6 @@ inherited dmPagos: TdmPagos
     object ADODtStAplicacionesPagosIdPersonaCliente: TIntegerField
       FieldName = 'IdPersonaCliente'
     end
-    object ADODtStAplicacionesPagosIdCuentaXCobrarDetalle: TIntegerField
-      FieldName = 'IdCuentaXCobrarDetalle'
-    end
     object ADODtStAplicacionesPagosIdCuentaXCobrar: TIntegerField
       FieldName = 'IdCuentaXCobrar'
     end
@@ -201,6 +204,11 @@ inherited dmPagos: TdmPagos
     end
     object ADODtStAplicacionesPagosImporte: TFMTBCDField
       FieldName = 'Importe'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStAplicacionesPagosImporteFactoraje: TFMTBCDField
+      FieldName = 'ImporteFactoraje'
       Precision = 18
       Size = 6
     end
@@ -267,6 +275,14 @@ inherited dmPagos: TdmPagos
     end
     object ADODtStCXCPendientesSaldo: TFMTBCDField
       FieldName = 'Saldo'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStCXCPendientesIdEstadoCuenta: TIntegerField
+      FieldName = 'IdEstadoCuenta'
+    end
+    object ADODtStCXCPendientesSaldoFactoraje: TFMTBCDField
+      FieldName = 'SaldoFactoraje'
       Precision = 18
       Size = 6
     end
@@ -367,6 +383,11 @@ inherited dmPagos: TdmPagos
       FieldName = 'IdCuentaXCobrarDetalle'
       ReadOnly = True
     end
+    object ADODtStCxCDetallePendSaldoFactoraje: TFMTBCDField
+      FieldName = 'SaldoFactoraje'
+      Precision = 18
+      Size = 6
+    end
   end
   object DSMaster: TDataSource
     DataSet = adodsMaster
@@ -384,8 +405,9 @@ inherited dmPagos: TdmPagos
     AfterPost = ADODtstAplicacionesInternasAfterPost
     CommandText = 
       'select IDPagoAplicacionInterna, IDPagoAplicacion,'#13#10' IdCuentaXCob' +
-      'rarDetalle, IDCFDI, IDCFDIConcepto,'#13#10' Importe from PagosAplicaci' +
-      'onesInternas'#13#10' where IDPagoAplicacion=:IDPagoAplicacion'
+      'rarDetalle, IDCFDI, IDCFDIConcepto,'#13#10' Importe, ImporteFactoraje ' +
+      'from PagosAplicacionesInternas'#13#10' where IDPagoAplicacion=:IDPagoA' +
+      'plicacion'
     DataSource = DSAplicaciones
     IndexFieldNames = 'IDPagoAplicacion'
     MasterFields = 'IdPagoAplicacion'

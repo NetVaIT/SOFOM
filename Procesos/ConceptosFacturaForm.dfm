@@ -60,8 +60,8 @@ inherited frmConceptos: TfrmConceptos
           DataBinding.FieldName = 'IdCFDIConcepto'
           Visible = False
         end
-        object tvMasterIdCXCItem: TcxGridDBColumn
-          DataBinding.FieldName = 'IdCXCItem'
+        object tvMasterIdCuentaXCobrarDetalle: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCuentaXCobrarDetalle'
           Visible = False
         end
       end
@@ -112,7 +112,6 @@ inherited frmConceptos: TfrmConceptos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42699.356933969910000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

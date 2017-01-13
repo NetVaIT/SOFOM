@@ -8,8 +8,8 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     CommandText = 
       'select IdCuentaXCobrar, IdCuentaXCobrarEstatus, IdPersona,'#13#10' IdA' +
       'nexosAmortizaciones, Fecha, Importe, Impuesto, Interes, '#13#10'Total,' +
-      ' Saldo from CuentasXCobrar '#13#10'--where idcuentaxcobrarEstatus =-1 ' +
-      '-- precargada'
+      ' Saldo, SaldoFactoraje from CuentasXCobrar '#13#10'--where idcuentaxco' +
+      'brarEstatus =-1 -- precargada'
     Left = 48
     Top = 24
     object adodsMasterIdCuentaXCobrar: TAutoIncField
@@ -75,6 +75,9 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       Lookup = True
     end
   end
+  inherited adodsUpdate: TADODataSet
+    Left = 328
+  end
   inherited ActionList: TActionList
     object actGeneraPreFacturas: TAction
       Caption = 'Generar PreFacturas'
@@ -86,8 +89,9 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     CursorType = ctStatic
     CommandText = 
       'select IdCuentaXCobrarDetalle, IdCuentaXCobrar, '#13#10'IdCuentaXCobra' +
-      'rTipo, Identificador, Descripcion, '#13#10'Importe, Saldo from Cuentas' +
-      'XCobrarDetalle '#13#10'where IdCuentaXCobrar =:IDCuentaXCobrar'
+      'rTipo, Identificador, Descripcion, '#13#10'Importe, Saldo, SaldoFactor' +
+      'aje from CuentasXCobrarDetalle '#13#10'where IdCuentaXCobrar =:IDCuent' +
+      'aXCobrar'
     DataSource = DSMaster
     IndexFieldNames = 'IdCuentaXCobrar'
     MasterFields = 'IDCuentaXCobrar'
@@ -129,6 +133,11 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     object ADOdsCXCDetalleIdCuentaXCobrarDetalle: TAutoIncField
       FieldName = 'IdCuentaXCobrarDetalle'
       ReadOnly = True
+    end
+    object ADOdsCXCDetalleSaldoFactoraje: TFMTBCDField
+      FieldName = 'SaldoFactoraje'
+      Precision = 18
+      Size = 6
     end
   end
   object ADODsCXCTiposConc: TADODataSet
@@ -275,9 +284,9 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       ' NumCtaPago, '#13#10'CadenaOriginal, TotalImpuestoRetenido, TotalImpue' +
       'stoTrasladado, '#13#10'SaldoDocumento, FechaCancelacion, Observaciones' +
       ', '#13#10'PorcentajeIVA, EmailCliente, UUID_TB, SelloCFD_TB, '#13#10'SelloSA' +
-      'T_TB, CertificadoSAT_TB, FechaTimbrado_TB, IdCXC '#13#10' from CFDI C'#13 +
-      #10'where fecha>DATEADD(MM, DATEDIFF(MM,0,GETDATE()), 0)'#13#10'order by ' +
-      'IDCFDIESTATUS, Fecha '
+      'T_TB, CertificadoSAT_TB, FechaTimbrado_TB,'#13#10' IdCuentaXCobrar, Sa' +
+      'ldoFactoraje'#13#10' from CFDI C'#13#10'where fecha>DATEADD(MM, DATEDIFF(MM,' +
+      '0,GETDATE()), 0)'#13#10'order by IDCFDIESTATUS, Fecha '
     Parameters = <>
     Left = 456
     Top = 24
@@ -422,9 +431,6 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     object ADODtStPrefacturasCFDIFechaTimbrado_TB: TDateTimeField
       FieldName = 'FechaTimbrado_TB'
     end
-    object ADODtStPrefacturasCFDIIdCXC: TIntegerField
-      FieldName = 'IdCXC'
-    end
   end
   object ADODtStCFDIConceptosPref: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -433,8 +439,8 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     OnNewRecord = ADODtStCFDIConceptosPrefNewRecord
     CommandText = 
       'select IdCFDIConcepto, IdCFDI, IdUnidadMedida, Cantidad, Unidad,' +
-      #13#10' Descripcion, NoIdentifica, ValorUnitario, Importe, IdCXCItem ' +
-      #13#10'from  CFDIConceptos'#13#10' Where IdCFDI=:IdCFDI'
+      #13#10' Descripcion, NoIdentifica, ValorUnitario, Importe, IdCuentaXC' +
+      'obrarDetalle'#13#10'from  CFDIConceptos'#13#10' Where IdCFDI=:IdCFDI'
     DataSource = DSPrefacturasCFDI
     IndexFieldNames = 'IdCFDI'
     MasterFields = 'IdCFDI'
@@ -489,8 +495,8 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       FieldName = 'IdCFDIConcepto'
       ReadOnly = True
     end
-    object ADODtStCFDIConceptosPrefIdCXCItem: TIntegerField
-      FieldName = 'IdCXCItem'
+    object ADODtStCFDIConceptosPrefIdCuentaXCobrarDetalle: TIntegerField
+      FieldName = 'IdCuentaXCobrarDetalle'
     end
   end
   object ADODtStCFDIImpuestosPref: TADODataSet
