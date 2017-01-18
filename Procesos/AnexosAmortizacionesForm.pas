@@ -49,6 +49,11 @@ type
     tvMasterImpactoISR: TcxGridDBColumn;
     tvMasterFechaCorte: TcxGridDBColumn;
     tvMasterFechaVencimiento: TcxGridDBColumn;
+    tvMasterFechaMoratorio: TcxGridDBColumn;
+    tvMasterDiasVencimiento: TcxGridDBColumn;
+    tvMasterMoratorioBase: TcxGridDBColumn;
+    tvMasterMoratorio: TcxGridDBColumn;
+    tvMasterMoratorioImpuesto: TcxGridDBColumn;
   private
     { Private declarations }
   public

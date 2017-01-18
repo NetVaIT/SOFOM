@@ -1,18 +1,24 @@
 inherited frmContratosEdit: TfrmContratosEdit
   Caption = 'Contrato'
   ClientHeight = 441
-  ExplicitWidth = 444
+  ClientWidth = 794
+  OnDestroy = FormDestroy
+  ExplicitWidth = 800
   ExplicitHeight = 470
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
+    Width = 794
     Height = 400
+    ExplicitWidth = 794
+    ExplicitHeight = 400
     ClientRectBottom = 398
+    ClientRectRight = 792
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 2
       ExplicitTop = 28
-      ExplicitWidth = 434
-      ExplicitHeight = 295
+      ExplicitWidth = 790
+      ExplicitHeight = 370
       object Label1: TLabel
         Left = 32
         Top = 24
@@ -145,9 +151,24 @@ inherited frmContratosEdit: TfrmContratosEdit
         Width = 121
       end
     end
+    object tsDocumentos: TcxTabSheet
+      Caption = 'Documentos'
+      ImageIndex = 1
+    end
   end
   inherited pmlMain: TPanel
     Top = 400
+    Width = 794
+    ExplicitTop = 400
+    ExplicitWidth = 794
+    inherited btnCancel: TButton
+      Left = 712
+      ExplicitLeft = 712
+    end
+    inherited btnOk: TButton
+      Left = 631
+      ExplicitLeft = 631
+    end
   end
   inherited cxImageList: TcxImageList
     FormatVersion = 1

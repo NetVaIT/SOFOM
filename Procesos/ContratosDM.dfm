@@ -488,8 +488,11 @@ inherited dmContratos: TdmContratos
       'select IdAnexoAmortizacion, IdAnexoCredito, IdAnexoSegmento, Per' +
       'iodo, FechaCorte, FechaVencimiento, TasaAnual, SaldoInicial, Pag' +
       'o, Capital, CapitalImpuesto, CapitalTotal, Interes, InteresImpue' +
-      'sto, InteresTotal, ImpactoISR, PagoTotal, SaldoFinal from Anexos' +
-      'Amortizaciones'#13#10'where IdAnexoCredito = :IdAnexoCredito'
+      'sto, InteresTotal, ImpactoISR, PagoTotal, SaldoFinal, '#13#10'FechaMor' +
+      'atorio, DATEDIFF(DAY, AnexosAmortizaciones.FechaVencimiento, Fec' +
+      'haMoratorio) AS DiasVencimiento, MoratorioBase, Moratorio, Morat' +
+      'orioImpuesto from AnexosAmortizaciones'#13#10'where IdAnexoCredito = :' +
+      'IdAnexoCredito'
     DataSource = dsCreditos
     MasterFields = 'IdAnexoCredito'
     Parameters = <
@@ -582,7 +585,7 @@ inherited dmContratos: TdmContratos
     end
     object adodsAmortizacionesImpactoISR: TFMTBCDField
       FieldName = 'ImpactoISR'
-      LookupCache = True
+      currency = True
       Precision = 18
       Size = 6
     end
@@ -602,6 +605,36 @@ inherited dmContratos: TdmContratos
     object adodsAmortizacionesSaldoFinal: TFMTBCDField
       DisplayLabel = 'Saldo insoluto'
       FieldName = 'SaldoFinal'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object adodsAmortizacionesFechaMoratorio: TDateTimeField
+      DisplayLabel = 'Fecha moratorio'
+      FieldName = 'FechaMoratorio'
+      Visible = False
+    end
+    object adodsAmortizacionesDiasVencimiento: TIntegerField
+      DisplayLabel = 'Dias de vencimiento'
+      FieldName = 'DiasVencimiento'
+      ReadOnly = True
+    end
+    object adodsAmortizacionesMoratorioBase: TFMTBCDField
+      DisplayLabel = 'Base para moratorios'
+      FieldName = 'MoratorioBase'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object adodsAmortizacionesMoratorio: TFMTBCDField
+      FieldName = 'Moratorio'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object adodsAmortizacionesMoratorioImpuesto: TFMTBCDField
+      DisplayLabel = 'IVA Moratorio'
+      FieldName = 'MoratorioImpuesto'
       currency = True
       Precision = 18
       Size = 6

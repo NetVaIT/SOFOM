@@ -9,19 +9,23 @@ uses
 type
   TdmPersonasDocumentos = class(T_dmStandar)
     adodsDocumento: TADODataSet;
-    adodsDocumentoTipo: TADODataSet;
-    adodsDocumentoClase: TADODataSet;
-    dsMaster: TDataSource;
     actNuevoDocumento: TAction;
     actEditaDocumento: TAction;
     adodsMasterIdPersonaDocumento: TAutoIncField;
     adodsMasterIdPersona: TIntegerField;
     adodsMasterIdDocumento: TIntegerField;
     adodsMasterDocumento: TStringField;
+    adodsMasterIdPersonaDocumentoTipo: TIntegerField;
+    adodsMasterDescripcion: TStringField;
+    adodsMasterFechaEmision: TDateTimeField;
+    adodsMasterVigenciaMeses: TIntegerField;
+    adodsTipo: TADODataSet;
+    adodsMasterTipo: TStringField;
+    actUpdateFile: TAction;
     procedure DataModuleCreate(Sender: TObject);
-//    procedure actExpedienteDigitalExecute(Sender: TObject);
     procedure actNuevoDocumentoExecute(Sender: TObject);
     procedure actEditaDocumentoExecute(Sender: TObject);
+    procedure actUpdateFileExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -55,8 +59,26 @@ begin
   dmDocumentos.Free;
 end;
 
-{procedure TdmPersonasRolesDocumentos.actExpedienteDigitalExecute(
-  Sender: TObject);
+procedure TdmPersonasDocumentos.actNuevoDocumentoExecute(Sender: TObject);
+var
+  dmDocumentos : TdmDocumentos;
+  Id : Integer;
+begin
+  inherited;
+  dmDocumentos := TdmDocumentos.Create(nil);
+  dmDocumentos.FileAllowed := faAll;
+  Id := dmDocumentos.Add;
+  if  Id <> 0 then
+  begin
+    adodsDocumento.Requery();
+    adodsMaster.Insert;
+    adodsMasterIdDocumento.AsInteger := Id;
+    adodsMaster.Post;
+  end;
+  dmDocumentos.Free;
+end;
+
+procedure TdmPersonasDocumentos.actUpdateFileExecute(Sender: TObject);
 var
   dmDocumentos: TdmDocumentos;
   Id: Integer;
@@ -80,25 +102,6 @@ begin
     end;
   end;
   dmDocumentos.Free;
-end;}
-
-procedure TdmPersonasDocumentos.actNuevoDocumentoExecute(Sender: TObject);
-var
-  dmDocumentos : TdmDocumentos;
-  Id : Integer;
-begin
-  inherited;
-  dmDocumentos := TdmDocumentos.Create(nil);
-  dmDocumentos.FileAllowed := faAll;
-  Id := dmDocumentos.Add;
-  if  Id <> 0 then
-  begin
-    adodsDocumento.Requery();
-    adodsMaster.Insert;
-    adodsMasterIdDocumento.AsInteger := Id;
-    adodsMaster.Post;
-  end;
-  dmDocumentos.Free;
 end;
 
 procedure TdmPersonasDocumentos.DataModuleCreate(Sender: TObject);
@@ -106,9 +109,7 @@ begin
   inherited;
   gGridForm := TfrmPersonasDocumentos.Create(Self);
   gGridForm.DataSet := adodsMaster;
-//  TfrmPersonasRolesDocumentos(gGridForm).UpdateFile := actExpedienteDigital;
-  TfrmPersonasDocumentos(gGridForm).InsertFile := actNuevoDocumento;
-  TfrmPersonasDocumentos(gGridForm).EditFile := actEditaDocumento;
+  TfrmPersonasDocumentos(gGridForm).UpdateFile := actUpdateFile;
 end;
 
 end.

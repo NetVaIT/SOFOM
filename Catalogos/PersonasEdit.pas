@@ -99,7 +99,7 @@ type
     dmPersonasContacto: TdmPersonasContacto;
     dmCuentasBancarias: TdmCuentasBancarias;
     dmPersonasCSD: TdmPersonasCSD;
-    dmPersonasDocumentos: TdmPersonasDocumentos;
+    dmDocumentos: TdmPersonasDocumentos;
     FRolTipo: TRolTipo;
     procedure MostrarPanel();
     procedure SetRolTipo(const Value: TRolTipo);
@@ -151,7 +151,7 @@ begin
   dmPersonasContacto := TdmPersonasContacto.Create(nil);
   dmCuentasBancarias := TdmCuentasBancarias.Create(nil);
   dmPersonasCSD:= TdmPersonasCSD.Create(nil);
-  dmPersonasDocumentos:= TdmPersonasDocumentos.Create(nil);
+  dmDocumentos:= TdmPersonasDocumentos.Create(nil);
 end;
 
 procedure TfrmPersonaEdit.FormDestroy(Sender: TObject);
@@ -163,7 +163,7 @@ begin
   FreeAndNil(dmPersonasContacto);
   FreeAndNil(dmCuentasBancarias);
   FreeAndNil(dmPersonasCSD);
-  FreeAndNil(dmPersonasDocumentos);
+  FreeAndNil(dmDocumentos);
 end;
 
 procedure TfrmPersonaEdit.FormShow(Sender: TObject);
@@ -188,9 +188,9 @@ begin
   dmPersonasCSD.MasterSource := DataSource;
   dmPersonasCSD.MasterFields := 'IdPersona';
   dmPersonasCSD.ShowModule(tsCSD,'');
-  dmPersonasDocumentos.MasterSource := DataSource;
-  dmPersonasDocumentos.MasterFields := 'IdPersona';
-  dmPersonasDocumentos.ShowModule(tsDocumentos,'');
+  dmDocumentos.MasterSource := DataSource;
+  dmDocumentos.MasterFields := 'IdPersona';
+  dmDocumentos.ShowModule(tsDocumentos,'');
 end;
 
 procedure TfrmPersonaEdit.MostrarPanel;
@@ -198,6 +198,9 @@ begin
   pnlPersonaMoral.Visible := False;
   pnlPersonaFisica.Visible := False;
   pnlOrigen.Visible := False;
+  PnlCliente.Visible:= (RolTipo=rCliente);
+  PnlEmisor.Visible:= (RolTipo=rEmisor);
+  tsCSD.TabVisible := (RolTipo=rEmisor);
   if DataSource.DataSet.State in [dsEdit] then
   begin
     if DataSource.DataSet.FieldByName('IdPersonaTipo').AsInteger = 1 then

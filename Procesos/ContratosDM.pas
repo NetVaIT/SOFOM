@@ -131,6 +131,11 @@ type
     adodsAmortizacionesFechaVencimiento: TDateTimeField;
     adoqGetFechaDia: TADOQuery;
     adoqGetFechaDiaFechaNueva: TDateTimeField;
+    adodsAmortizacionesFechaMoratorio: TDateTimeField;
+    adodsAmortizacionesDiasVencimiento: TIntegerField;
+    adodsAmortizacionesMoratorioBase: TFMTBCDField;
+    adodsAmortizacionesMoratorio: TFMTBCDField;
+    adodsAmortizacionesMoratorioImpuesto: TFMTBCDField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actProductosExecute(Sender: TObject);
     procedure adodsAnexosPrecioMonedaChange(Sender: TField);

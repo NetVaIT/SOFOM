@@ -2,10 +2,9 @@ inherited frmPersonasContactoEdit: TfrmPersonasContactoEdit
   Caption = 'Contacto'
   ClientHeight = 247
   ClientWidth = 506
-  OnCreate = FormCreate
   OnDestroy = FormDestroy
   ExplicitWidth = 512
-  ExplicitHeight = 275
+  ExplicitHeight = 276
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
@@ -16,8 +15,8 @@ inherited frmPersonasContactoEdit: TfrmPersonasContactoEdit
     ClientRectBottom = 204
     ClientRectRight = 504
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 2
-      ExplicitTop = 28
+      ExplicitLeft = 1
+      ExplicitTop = 30
       ExplicitWidth = 502
       ExplicitHeight = 176
       object Label1: TLabel
@@ -27,14 +26,13 @@ inherited frmPersonasContactoEdit: TfrmPersonasContactoEdit
         Height = 13
         Caption = 'Contacto'
       end
-      object cxDBCheckBox1: TcxDBCheckBox
+      object Label2: TLabel
         Left = 24
-        Top = 59
-        Caption = 'Principal'
-        DataBinding.DataField = 'Principal'
-        DataBinding.DataSource = DataSource
-        TabOrder = 0
-        Width = 121
+        Top = 56
+        Width = 33
+        Height = 13
+        Caption = 'Puesto'
+        FocusControl = cxDBTextEdit1
       end
       object cxDBLookupComboBox1: TcxDBLookupComboBox
         Left = 23
@@ -42,33 +40,60 @@ inherited frmPersonasContactoEdit: TfrmPersonasContactoEdit
         DataBinding.DataField = 'Contacto'
         DataBinding.DataSource = DataSource
         Properties.ListColumns = <>
-        TabOrder = 1
+        TabOrder = 0
         Width = 402
+      end
+      object cxDBTextEdit1: TcxDBTextEdit
+        Left = 24
+        Top = 72
+        DataBinding.DataField = 'Puesto'
+        DataBinding.DataSource = DataSource
+        TabOrder = 1
+        Width = 401
+      end
+      object cxDBCheckBox1: TcxDBCheckBox
+        Left = 24
+        Top = 96
+        Caption = 'Principal'
+        DataBinding.DataField = 'Principal'
+        DataBinding.DataSource = DataSource
+        TabOrder = 2
+        Width = 121
+      end
+      object cxDBCheckBox2: TcxDBCheckBox
+        Left = 24
+        Top = 120
+        Caption = 'Apoderado legal'
+        DataBinding.DataField = 'ApoderadoLegal'
+        DataBinding.DataSource = DataSource
+        TabOrder = 3
+        Width = 121
+      end
+      object cxDBCheckBox3: TcxDBCheckBox
+        Left = 24
+        Top = 144
+        Caption = 'Representante legal'
+        DataBinding.DataField = 'RepresentanteLegal'
+        DataBinding.DataSource = DataSource
+        TabOrder = 4
+        Width = 121
       end
     end
     object tsDomicilio: TcxTabSheet
       Caption = 'Domicilios'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 417
-      ExplicitHeight = 130
     end
     object tsTelefono: TcxTabSheet
       Caption = 'Telefonos'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 417
-      ExplicitHeight = 130
     end
     object tsCorreo: TcxTabSheet
       Caption = 'Correos'
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 417
-      ExplicitHeight = 130
+    end
+    object tsDocumentos: TcxTabSheet
+      Caption = 'Documentos'
+      ImageIndex = 4
     end
   end
   inherited pmlMain: TPanel
@@ -76,13 +101,13 @@ inherited frmPersonasContactoEdit: TfrmPersonasContactoEdit
     Width = 506
     ExplicitTop = 206
     ExplicitWidth = 506
-    inherited btnOk: TButton
-      Left = 343
-      ExplicitLeft = 343
-    end
     inherited btnCancel: TButton
       Left = 424
       ExplicitLeft = 424
+    end
+    inherited btnOk: TButton
+      Left = 343
+      ExplicitLeft = 343
     end
   end
   inherited DataSource: TDataSource

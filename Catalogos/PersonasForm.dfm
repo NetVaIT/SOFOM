@@ -75,6 +75,7 @@ inherited frmPersonas: TfrmPersonas
         end
         object tvMasterRFC: TcxGridDBColumn
           DataBinding.FieldName = 'RFC'
+          Width = 200
         end
         object tvMasterCURP: TcxGridDBColumn
           DataBinding.FieldName = 'CURP'
@@ -82,14 +83,16 @@ inherited frmPersonas: TfrmPersonas
         end
         object tvMasterRazonSocial: TcxGridDBColumn
           DataBinding.FieldName = 'RazonSocial'
-          Width = 800
+          Width = 400
         end
         object tvMasterPersonaTipo: TcxGridDBColumn
           Caption = 'Tipo'
           DataBinding.FieldName = 'PersonaTipo'
+          Width = 100
         end
         object tvMasterRolTipo: TcxGridDBColumn
           DataBinding.FieldName = 'RolTipo'
+          Visible = False
         end
         object tvMasterRazonSocialTipo: TcxGridDBColumn
           DataBinding.FieldName = 'RazonSocialTipo'
@@ -183,7 +186,7 @@ inherited frmPersonas: TfrmPersonas
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42664.566576585650000000
-      AssignedFormatValues = []
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

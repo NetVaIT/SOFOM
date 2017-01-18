@@ -1,4 +1,4 @@
-unit PersonasDocumentosEdit;
+unit ProductosDocumentosEdit;
 
 interface
 
@@ -18,26 +18,24 @@ uses
   dxSkinWhiteprint, dxSkinXmas2008Blue, dxSkinscxPCPainter, cxPCdxBarPopupMenu,
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, Vcl.ImgList,
   System.Actions, Vcl.ActnList, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls, cxPC,
-  cxContainer, cxEdit, cxLabel, cxDBLabel, Vcl.Buttons, cxSpinEdit, cxDBEdit,
-  cxMaskEdit, cxDropDownEdit, cxCalendar, cxTextEdit, Vcl.DBCtrls;
+  cxContainer, cxEdit, cxMaskEdit, cxDropDownEdit, cxCalendar, cxDBEdit,
+  cxTextEdit, Vcl.DBCtrls, cxLabel, cxDBLabel, Vcl.Buttons;
 
 type
-  TfrmPersonasDocumentosEdit = class(T_frmEdit)
+  TfrmProductosDocumentosEdit = class(T_frmEdit)
     Label1: TLabel;
-    cxDBLabel1: TcxDBLabel;
     btnUpdateFile: TSpeedButton;
     Label2: TLabel;
-    DBLookupComboBox1: TDBLookupComboBox;
     Label3: TLabel;
-    cxDBTextEdit1: TcxDBTextEdit;
     Label4: TLabel;
+    cxDBLabel1: TcxDBLabel;
+    DBLookupComboBox1: TDBLookupComboBox;
+    cxDBTextEdit1: TcxDBTextEdit;
     cxDBDateEdit1: TcxDBDateEdit;
-    Label5: TLabel;
-    cxDBSpinEdit1: TcxDBSpinEdit;
   private
-    { Private declarations }
     FUpdateFile: TBasicAction;
     procedure SetUpdateFile(const Value: TBasicAction);
+    { Private declarations }
   public
     { Public declarations }
     property UpdateFile: TBasicAction read FUpdateFile write SetUpdateFile;
@@ -47,11 +45,11 @@ implementation
 
 {$R *.dfm}
 
-uses PersonasDocumentosDM;
+uses ProductosDocumentosDM;
 
-{ TfrmRolesDocumentosEdit }
+{ TfrmProductosDocumentosEdit }
 
-procedure TfrmPersonasDocumentosEdit.SetUpdateFile(const Value: TBasicAction);
+procedure TfrmProductosDocumentosEdit.SetUpdateFile(const Value: TBasicAction);
 begin
   FUpdateFile := Value;
   btnUpdateFile.Action := Value;

@@ -35,65 +35,37 @@ type
     tvMasterIdPersona: TcxGridDBColumn;
     tvMasterIdDocumento: TcxGridDBColumn;
     tvMasterDocumento: TcxGridDBColumn;
-    procedure tvMasterCellDblClick(Sender: TcxCustomGridTableView;
-      ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
-      AShift: TShiftState; var AHandled: Boolean);
-    procedure DatasetInsertExecute(Sender: TObject);
-    procedure DatasetEditExecute(Sender: TObject);
+    tvMasterIdPersonaDocumentoTipo: TcxGridDBColumn;
+    tvMasterTipo: TcxGridDBColumn;
+    tvMasterDescripcion: TcxGridDBColumn;
+    tvMasterFechaEmision: TcxGridDBColumn;
+    tvMasterVigenciaMeses: TcxGridDBColumn;
+    procedure FormShow(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
-//    FUpdateFile: TBasicAction;
-    FInsertFile : TBasicAction;
-    FEditFile : TBasicAction;
-//    procedure SetUpdateFile(const Value: TBasicAction);
-    procedure SetInsertFile(const Value: TBasicAction);
-    procedure SetEditFile(const Value: TBasicAction);
+    FUpdateFile: TBasicAction;
   public
     { Public declarations }
-//    property UpdateFile: TBasicAction read FUpdateFile write SetUpdateFile;
-    property InsertFile : TBasicAction read FInsertFile write SetInsertFile;
-    property EditFile : TBasicAction read FEditFile write SetEditFile;
+    property UpdateFile: TBasicAction read FUpdateFile write FUpdateFile;
   end;
 
 implementation
 
 {$R *.dfm}
 
-uses PersonasDocumentosDM;
+uses PersonasDocumentosDM, PersonasDocumentosEdit;
 
-procedure TfrmPersonasDocumentos.DatasetEditExecute(Sender: TObject);
+procedure TfrmPersonasDocumentos.FormCreate(Sender: TObject);
 begin
-  EditFile.Execute;
+  inherited;
+  gEditForm:= TfrmPersonasDocumentosEdit.Create(Self);
 end;
 
-procedure TfrmPersonasDocumentos.DatasetInsertExecute(Sender: TObject);
+procedure TfrmPersonasDocumentos.FormShow(Sender: TObject);
 begin
-  InsertFile.Execute;
-end;
-
-procedure TfrmPersonasDocumentos.SetEditFile(const Value: TBasicAction);
-begin
-  FEditFile := Value;
-end;
-
-procedure TfrmPersonasDocumentos.SetInsertFile(const Value: TBasicAction);
-begin
-  FInsertFile := Value;
-end;
-
-{procedure TfrmPersonasRolesDocumentos.SetUpdateFile(const Value: TBasicAction);
-begin
-  FUpdateFile := Value;
-end;}
-
-procedure TfrmPersonasDocumentos.tvMasterCellDblClick(
-  Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo;
-  AButton: TMouseButton; AShift: TShiftState; var AHandled: Boolean);
-begin
-  if ReadOnlyGrid then
-    actShow.Execute
-  else
-    EditFile.Execute;
+  inherited;
+  TfrmPersonasDocumentosEdit(gEditForm).UpdateFile:= UpdateFile;
 end;
 
 end.

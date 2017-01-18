@@ -1,6 +1,5 @@
 inherited frmPersonasContacto: TfrmPersonasContacto
   Caption = 'frmPersonasContacto'
-  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlMaster: TPanel
@@ -21,8 +20,20 @@ inherited frmPersonasContacto: TfrmPersonasContacto
         object tvMasterContacto: TcxGridDBColumn
           DataBinding.FieldName = 'Contacto'
         end
+        object tvMasterPuesto: TcxGridDBColumn
+          DataBinding.FieldName = 'Puesto'
+        end
         object tvMasterPrincipal: TcxGridDBColumn
           DataBinding.FieldName = 'Principal'
+          Width = 105
+        end
+        object tvMasterApoderadoLegal: TcxGridDBColumn
+          DataBinding.FieldName = 'ApoderadoLegal'
+          Width = 105
+        end
+        object tvMasterRepresentanteLegal: TcxGridDBColumn
+          DataBinding.FieldName = 'RepresentanteLegal'
+          Width = 105
         end
       end
     end
@@ -42,6 +53,8 @@ inherited frmPersonasContacto: TfrmPersonasContacto
   end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
+      ReportDocument.CreationDate = 42741.451573425930000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

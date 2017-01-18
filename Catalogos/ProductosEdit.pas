@@ -18,7 +18,8 @@ uses
   dxSkinWhiteprint, dxSkinXmas2008Blue, dxSkinscxPCPainter, cxPCdxBarPopupMenu,
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, Vcl.ImgList,
   System.Actions, Vcl.ActnList, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls, cxPC,
-  cxContainer, cxEdit, cxMaskEdit, cxSpinEdit, cxDBEdit, Vcl.DBCtrls, cxTextEdit;
+  cxContainer, cxEdit, cxMaskEdit, cxSpinEdit, cxDBEdit, Vcl.DBCtrls, cxTextEdit,
+  ProductosDocumentosDM;
 
 type
   TfrmProductosEdit = class(T_frmEdit)
@@ -42,8 +43,13 @@ type
     cxDBTextEdit5: TcxDBTextEdit;
     Label10: TLabel;
     DBLookupComboBox4: TDBLookupComboBox;
+    tsDocumentos: TcxTabSheet;
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
+    dmDocumentos: TdmProductosDocumentos;
   public
     { Public declarations }
   end;
@@ -53,5 +59,25 @@ implementation
 {$R *.dfm}
 
 uses ProductosDM;
+
+procedure TfrmProductosEdit.FormCreate(Sender: TObject);
+begin
+  inherited;
+  dmDocumentos:= TdmProductosDocumentos.Create(nil);
+end;
+
+procedure TfrmProductosEdit.FormDestroy(Sender: TObject);
+begin
+  inherited;
+  FreeAndNil(dmDocumentos);
+end;
+
+procedure TfrmProductosEdit.FormShow(Sender: TObject);
+begin
+  inherited;
+  dmDocumentos.MasterSource := DataSource;
+  dmDocumentos.MasterFields := 'IdProducto';
+  dmDocumentos.ShowModule(tsDocumentos,'');
+end;
 
 end.

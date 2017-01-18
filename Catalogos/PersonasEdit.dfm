@@ -10,15 +10,15 @@ inherited frmPersonaEdit: TfrmPersonaEdit
   inherited pcMain: TcxPageControl
     Width = 629
     Height = 525
-    ExplicitWidth = 624
-    ExplicitHeight = 437
+    ExplicitWidth = 629
+    ExplicitHeight = 525
     ClientRectBottom = 523
     ClientRectRight = 627
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 2
       ExplicitTop = 28
-      ExplicitWidth = 620
-      ExplicitHeight = 407
+      ExplicitWidth = 625
+      ExplicitHeight = 495
       object pnlPersona: TPanel
         Left = 0
         Top = 0
@@ -27,7 +27,6 @@ inherited frmPersonaEdit: TfrmPersonaEdit
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 620
         object Label1: TLabel
           Left = 195
           Top = 3
@@ -87,8 +86,6 @@ inherited frmPersonaEdit: TfrmPersonaEdit
         BevelOuter = bvNone
         TabOrder = 1
         Visible = False
-        ExplicitTop = 50
-        ExplicitWidth = 700
         object Label3: TLabel
           Left = 16
           Top = 8
@@ -147,7 +144,6 @@ inherited frmPersonaEdit: TfrmPersonaEdit
         BevelOuter = bvNone
         TabOrder = 2
         Visible = False
-        ExplicitWidth = 678
         object Label5: TLabel
           Left = 16
           Top = 39
@@ -167,7 +163,7 @@ inherited frmPersonaEdit: TfrmPersonaEdit
         object Label7: TLabel
           Left = 413
           Top = 39
-          Width = 79
+          Width = 80
           Height = 13
           Caption = 'Apellido Materno'
           FocusControl = edtAMaterno
@@ -349,9 +345,6 @@ inherited frmPersonaEdit: TfrmPersonaEdit
         BevelOuter = bvNone
         TabOrder = 3
         Visible = False
-        ExplicitTop = 475
-        ExplicitWidth = 700
-        ExplicitHeight = 22
       end
       object PnlCliente: TPanel
         Left = 0
@@ -362,9 +355,6 @@ inherited frmPersonaEdit: TfrmPersonaEdit
         BevelOuter = bvNone
         TabOrder = 4
         Visible = False
-        ExplicitTop = 391
-        ExplicitWidth = 639
-        ExplicitHeight = 56
         object Label17: TLabel
           Left = 16
           Top = 14
@@ -400,7 +390,7 @@ inherited frmPersonaEdit: TfrmPersonaEdit
             Left = 8
             Top = -3
             Width = 115
-            Height = 14
+            Height = 13
             Caption = 'No.Cuenta Pago Cliente'
             FocusControl = cxDBTextEdit4
           end
@@ -429,8 +419,6 @@ inherited frmPersonaEdit: TfrmPersonaEdit
         BevelOuter = bvNone
         TabOrder = 5
         Visible = False
-        ExplicitTop = 449
-        ExplicitHeight = 48
         object Label20: TLabel
           Left = 16
           Top = 4
@@ -453,58 +441,44 @@ inherited frmPersonaEdit: TfrmPersonaEdit
     object tsDomicilio: TcxTabSheet
       Caption = 'Domicilio'
       ImageIndex = 1
-      ExplicitWidth = 620
-      ExplicitHeight = 407
     end
     object tsTelefono: TcxTabSheet
       Caption = 'Telefono'
       ImageIndex = 2
-      ExplicitWidth = 620
-      ExplicitHeight = 407
     end
     object tsCorreo: TcxTabSheet
       Caption = 'Correo Electronico'
       ImageIndex = 3
-      ExplicitWidth = 620
-      ExplicitHeight = 407
     end
     object tsContacto: TcxTabSheet
       Caption = 'Contactos'
       ImageIndex = 4
-      ExplicitWidth = 620
-      ExplicitHeight = 407
     end
     object tsDocumentos: TcxTabSheet
       Caption = 'Documentos'
       ImageIndex = 7
-      ExplicitWidth = 620
-      ExplicitHeight = 407
     end
     object tsCuentasBancarias: TcxTabSheet
       Caption = 'Cuentas Bancarias'
       ImageIndex = 5
-      ExplicitWidth = 620
-      ExplicitHeight = 407
     end
     object tsCSD: TcxTabSheet
       Caption = 'Sello digital'
       ImageIndex = 6
-      ExplicitWidth = 620
-      ExplicitHeight = 407
     end
   end
   inherited pmlMain: TPanel
     Top = 525
     Width = 629
-    ExplicitTop = 529
+    ExplicitTop = 525
     ExplicitWidth = 629
     inherited btnCancel: TButton
       Left = 547
-      ExplicitLeft = 542
+      ExplicitLeft = 547
     end
     inherited btnOk: TButton
       Left = 466
-      ExplicitLeft = 461
+      ExplicitLeft = 466
     end
     object btnNext: TButton
       Left = 372
@@ -518,14 +492,10 @@ inherited frmPersonaEdit: TfrmPersonaEdit
       OnClick = btnNextClick
     end
   end
-  inherited DataSource: TDataSource
-    Left = 632
-  end
   inherited ActionList: TActionList
-    Left = 720
+    Left = 296
   end
   inherited cxImageList: TcxImageList
     FormatVersion = 1
-    DesignInfo = 66208
   end
 end

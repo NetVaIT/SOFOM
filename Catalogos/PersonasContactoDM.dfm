@@ -1,9 +1,10 @@
 inherited dmPersonasContacto: TdmPersonasContacto
+  OldCreateOrder = True
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     CommandText = 
-      'SELECT IdPersonaContacto, IdPersona, IdContacto, Principal FROM ' +
-      'PersonasContactos'
+      'SELECT IdPersonaContacto, IdPersona, IdContacto, Puesto, Princip' +
+      'al, ApoderadoLegal, RepresentanteLegal FROM PersonasContactos'
     Left = 40
     object adodsMasterIdPersonaContacto: TAutoIncField
       FieldName = 'IdPersonaContacto'
@@ -28,8 +29,20 @@ inherited dmPersonasContacto: TdmPersonasContacto
       Size = 50
       Lookup = True
     end
+    object adodsMasterPuesto: TStringField
+      FieldName = 'Puesto'
+      Size = 50
+    end
     object adodsMasterPrincipal: TBooleanField
       FieldName = 'Principal'
+    end
+    object adodsMasterApoderadoLegal: TBooleanField
+      DisplayLabel = 'Apoderado legal'
+      FieldName = 'ApoderadoLegal'
+    end
+    object adodsMasterRepresentanteLegal: TBooleanField
+      DisplayLabel = 'Representante legal'
+      FieldName = 'RepresentanteLegal'
     end
   end
   object adodsContacto: TADODataSet

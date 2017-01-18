@@ -1,43 +1,30 @@
-inherited frmPersonasDocumentos: TfrmPersonasDocumentos
-  Caption = 'frmPersonasDocumentos'
+inherited frmProductosDocumentos: TfrmProductosDocumentos
+  Caption = 'frmProductosDocumentos'
   ExplicitWidth = 651
   ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
-  inherited splDetail3: TSplitter
-    ExplicitTop = 348
-    ExplicitWidth = 645
-  end
-  inherited splDetail1: TSplitter
-    ExplicitLeft = 256
-    ExplicitTop = 290
-  end
-  inherited splDetail2: TSplitter
-    ExplicitTop = 304
-    ExplicitWidth = 645
-  end
   inherited pnlMaster: TPanel
     inherited cxGrid: TcxGrid
       inherited tvMaster: TcxGridDBTableView
-        object tvMasterIdPersonaDocumento: TcxGridDBColumn
-          DataBinding.FieldName = 'IdPersonaDocumento'
+        object tvMasterIdProductoDocumento: TcxGridDBColumn
+          DataBinding.FieldName = 'IdProductoDocumento'
           Visible = False
         end
-        object tvMasterIdPersona: TcxGridDBColumn
-          DataBinding.FieldName = 'IdPersona'
+        object tvMasterIdProducto: TcxGridDBColumn
+          DataBinding.FieldName = 'IdProducto'
           Visible = False
         end
         object tvMasterIdDocumento: TcxGridDBColumn
           DataBinding.FieldName = 'IdDocumento'
           Visible = False
         end
-        object tvMasterIdPersonaDocumentoTipo: TcxGridDBColumn
-          DataBinding.FieldName = 'IdPersonaDocumentoTipo'
+        object tvMasterIdProductoDocumentoTipo: TcxGridDBColumn
+          DataBinding.FieldName = 'IdProductoDocumentoTipo'
           Visible = False
         end
         object tvMasterDocumento: TcxGridDBColumn
           DataBinding.FieldName = 'Documento'
-          Width = 300
         end
         object tvMasterTipo: TcxGridDBColumn
           DataBinding.FieldName = 'Tipo'
@@ -49,14 +36,8 @@ inherited frmPersonasDocumentos: TfrmPersonasDocumentos
         object tvMasterFechaEmision: TcxGridDBColumn
           DataBinding.FieldName = 'FechaEmision'
         end
-        object tvMasterVigenciaMeses: TcxGridDBColumn
-          DataBinding.FieldName = 'VigenciaMeses'
-        end
       end
     end
-  end
-  inherited DataSource: TDataSource
-    DataSet = dmPersonasDocumentos.adodsMaster
   end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
@@ -73,8 +54,8 @@ inherited frmPersonasDocumentos: TfrmPersonasDocumentos
   end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
-      ReportDocument.CreationDate = 42667.548046261570000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
+      ReportDocument.CreationDate = 42752.734946527780000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

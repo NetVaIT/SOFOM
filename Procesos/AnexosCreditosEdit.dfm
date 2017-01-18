@@ -24,7 +24,7 @@ inherited frmAnexosCreditosEdit: TfrmAnexosCreditosEdit
       end
       object Label2: TLabel
         Left = 48
-        Top = 64
+        Top = 101
         Width = 89
         Height = 13
         Caption = 'Fecha vencimiento'
@@ -32,7 +32,7 @@ inherited frmAnexosCreditosEdit: TfrmAnexosCreditosEdit
       end
       object Label3: TLabel
         Left = 48
-        Top = 104
+        Top = 64
         Width = 57
         Height = 13
         Caption = 'Fecha corte'
@@ -113,18 +113,18 @@ inherited frmAnexosCreditosEdit: TfrmAnexosCreditosEdit
       end
       object cxDBDateEdit1: TcxDBDateEdit
         Left = 48
-        Top = 80
-        DataBinding.DataField = 'FechaInicial'
+        Top = 117
+        DataBinding.DataField = 'FechaVencimiento'
         DataBinding.DataSource = DataSource
-        TabOrder = 1
+        TabOrder = 2
         Width = 121
       end
       object cxDBDateEdit2: TcxDBDateEdit
         Left = 48
-        Top = 120
+        Top = 80
         DataBinding.DataField = 'FechaCorte'
         DataBinding.DataSource = DataSource
-        TabOrder = 2
+        TabOrder = 1
         Width = 121
       end
       object cxDBTextEdit1: TcxDBTextEdit

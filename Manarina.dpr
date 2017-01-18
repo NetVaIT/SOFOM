@@ -173,7 +173,12 @@ uses
   AplicacionesInternasCon in 'Procesos\AplicacionesInternasCon.pas' {frmConAplicacionesInternas},
   EstadosCuentaDM in 'Procesos\EstadosCuentaDM.pas' {dmEstadosCuenta: TDataModule},
   EstadosCuentaForm in 'Procesos\EstadosCuentaForm.pas' {FrmConEstadosCuenta},
-  EstadosCuentaDetalleForm in 'Procesos\EstadosCuentaDetalleForm.pas' {FrmConEstadoCtaDetalle};
+  EstadosCuentaDetalleForm in 'Procesos\EstadosCuentaDetalleForm.pas' {FrmConEstadoCtaDetalle},
+  ContratosDocumentosDM in 'Procesos\ContratosDocumentosDM.pas' {dmContratosDocumentos: TDataModule},
+  ContratosDocumentosForm in 'Procesos\ContratosDocumentosForm.pas' {frmContratosDocumentos},
+  ProductosDocumentosDM in 'Catalogos\ProductosDocumentosDM.pas' {dmProductosDocumentos: TDataModule},
+  ProductosDocumentosForm in 'Catalogos\ProductosDocumentosForm.pas' {frmProductosDocumentos},
+  ProductosDocumentosEdit in 'Catalogos\ProductosDocumentosEdit.pas' {frmProductosDocumentosEdit};
 
 {$R *.res}
 

@@ -1,4 +1,4 @@
-unit PersonasContactoForm;
+unit ProductosDocumentosForm;
 
 interface
 
@@ -30,32 +30,41 @@ uses
   Vcl.ExtCtrls;
 
 type
-  TfrmPersonasContacto = class(T_frmGrid)
-    tvMasterIdPersonaContacto: TcxGridDBColumn;
-    tvMasterIdPersona: TcxGridDBColumn;
-    tvMasterIdContacto: TcxGridDBColumn;
-    tvMasterContacto: TcxGridDBColumn;
-    tvMasterPuesto: TcxGridDBColumn;
-    tvMasterPrincipal: TcxGridDBColumn;
-    tvMasterApoderadoLegal: TcxGridDBColumn;
-    tvMasterRepresentanteLegal: TcxGridDBColumn;
+  TfrmProductosDocumentos = class(T_frmGrid)
+    tvMasterIdProductoDocumento: TcxGridDBColumn;
+    tvMasterIdProducto: TcxGridDBColumn;
+    tvMasterIdDocumento: TcxGridDBColumn;
+    tvMasterIdProductoDocumentoTipo: TcxGridDBColumn;
+    tvMasterDocumento: TcxGridDBColumn;
+    tvMasterTipo: TcxGridDBColumn;
+    tvMasterDescripcion: TcxGridDBColumn;
+    tvMasterFechaEmision: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
+    FUpdateFile: TBasicAction;
   public
     { Public declarations }
+    property UpdateFile: TBasicAction read FUpdateFile write FUpdateFile;
   end;
 
 implementation
 
 {$R *.dfm}
 
-uses PersonasContactoDM, PersonasContactoEdit;
+uses ProductosDocumentosDM, ProductosDocumentosEdit;
 
-procedure TfrmPersonasContacto.FormCreate(Sender: TObject);
+procedure TfrmProductosDocumentos.FormCreate(Sender: TObject);
 begin
   inherited;
-  gEditForm:= TfrmPersonasContactoEdit.Create(Self);
+  gEditForm:= TfrmProductosDocumentosEdit.Create(Self);
+end;
+
+procedure TfrmProductosDocumentos.FormShow(Sender: TObject);
+begin
+  inherited;
+  TfrmProductosDocumentosEdit(gEditForm).UpdateFile:= UpdateFile;
 end;
 
 end.

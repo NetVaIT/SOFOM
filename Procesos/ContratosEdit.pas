@@ -19,7 +19,8 @@ uses
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, Vcl.ImgList,
   System.Actions, Vcl.ActnList, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls, cxPC,
   cxContainer, cxEdit, cxCurrencyEdit, cxDBEdit, Vcl.DBCtrls, cxMaskEdit,
-  cxDropDownEdit, cxCalendar, cxTextEdit, cxSpinEdit;
+  cxDropDownEdit, cxCalendar, cxTextEdit, cxSpinEdit,
+  ContratosDocumentosDM;
 
 type
   TfrmContratosEdit = class(T_frmEdit)
@@ -39,8 +40,13 @@ type
     cxDBSpinEdit1: TcxDBSpinEdit;
     Label8: TLabel;
     cxDBSpinEdit2: TcxDBSpinEdit;
+    tsDocumentos: TcxTabSheet;
+    procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
+    dmContratosDocumentos: TdmContratosDocumentos;
   public
     { Public declarations }
   end;
@@ -50,5 +56,28 @@ implementation
 {$R *.dfm}
 
 uses ContratosDM;
+
+procedure TfrmContratosEdit.FormCreate(Sender: TObject);
+begin
+  inherited;
+  dmContratosDocumentos:= TdmContratosDocumentos.Create(nil);
+end;
+
+procedure TfrmContratosEdit.FormDestroy(Sender: TObject);
+begin
+  inherited;
+  FreeAndNil(dmContratosDocumentos);
+end;
+
+procedure TfrmContratosEdit.FormShow(Sender: TObject);
+var
+  IdPersona: Integer;
+begin
+  inherited;
+  IdPersona:= DataSource.DataSet.FieldByName('IdPersona').AsInteger;
+  dmContratosDocumentos.MasterSource:= DataSource;
+  TdmContratosDocumentos(dmContratosDocumentos).IdPersona := IdPersona;
+  dmContratosDocumentos.ShowModule(tsDocumentos);
+end;
 
 end.

@@ -14,6 +14,9 @@ type
     adodsMasterIdContacto: TIntegerField;
     adodsMasterPrincipal: TBooleanField;
     adodsMasterContacto: TStringField;
+    adodsMasterPuesto: TStringField;
+    adodsMasterApoderadoLegal: TBooleanField;
+    adodsMasterRepresentanteLegal: TBooleanField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }

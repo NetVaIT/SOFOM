@@ -20,24 +20,30 @@ uses
   cxEdit, cxTextEdit, cxMaskEdit, cxDropDownEdit, cxLookupEdit, cxDBLookupEdit,
   cxDBLookupComboBox, cxCheckBox, cxDBEdit, Vcl.StdCtrls, Vcl.ImgList,
   System.Actions, Vcl.ActnList, Data.DB, Vcl.ExtCtrls, cxPC, PersonasDomiciliosDM,
-  TelefonosDM, EmailsDM;
+  TelefonosDM, EmailsDM, PersonasDocumentosDM;
 
 type
   TfrmPersonasContactoEdit = class(T_frmEdit)
     Label1: TLabel;
-    cxDBCheckBox1: TcxDBCheckBox;
     cxDBLookupComboBox1: TcxDBLookupComboBox;
     tsDomicilio: TcxTabSheet;
     tsTelefono: TcxTabSheet;
     tsCorreo: TcxTabSheet;
+    tsDocumentos: TcxTabSheet;
+    Label2: TLabel;
+    cxDBTextEdit1: TcxDBTextEdit;
+    cxDBCheckBox1: TcxDBCheckBox;
+    cxDBCheckBox2: TcxDBCheckBox;
+    cxDBCheckBox3: TcxDBCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
     { Private declarations }
-    dmPersonasDomicilios : TdmPersonasDomicilios;
-    dmTelefonos : TdmTelefonos;
-    dmEmails : TdmEmails;
+    dmDomicilios: TdmPersonasDomicilios;
+    dmTelefonos: TdmTelefonos;
+    dmEmails: TdmEmails;
+    dmDocumentos: TdmPersonasDocumentos;
   public
     { Public declarations }
   end;
@@ -51,17 +57,19 @@ uses PersonasContactoDM;
 procedure TfrmPersonasContactoEdit.FormCreate(Sender: TObject);
 begin
   inherited;
-  dmPersonasDomicilios := TdmPersonasDomicilios.Create(nil);
+  dmDomicilios := TdmPersonasDomicilios.Create(nil);
   dmTelefonos := TdmTelefonos.Create(nil);
   dmEmails := TdmEmails.Create(nil);
+  dmDocumentos:= TdmPersonasDocumentos.Create(nil);
 end;
 
 procedure TfrmPersonasContactoEdit.FormDestroy(Sender: TObject);
 begin
   inherited;
-  FreeAndNil(dmPersonasDomicilios);
+  FreeAndNil(dmDomicilios);
   FreeAndNil(dmTelefonos);
   FreeAndNil(dmEmails);
+  FreeAndNil(dmDocumentos);
 end;
 
 procedure TfrmPersonasContactoEdit.FormShow(Sender: TObject);
@@ -70,12 +78,18 @@ var
 begin
   inherited;
   IdContacto := DataSource.DataSet.FieldByName('IdContacto').AsInteger;
-  dmPersonasDomicilios.adodsMaster.Parameters.ParamByName('IdPersona').Value := IdContacto;
-  dmPersonasDomicilios.ShowModule(tsDomicilio,'');
+  dmDomicilios.adodsMaster.Parameters.ParamByName('IdPersona').Value := IdContacto;
+  dmDomicilios.ShowModule(tsDomicilio,'');
   dmTelefonos.adodsMaster.Parameters.ParamByName('IdPersona').Value := IdContacto;
   dmTelefonos.ShowModule(tsTelefono,'');
   dmEmails.adodsMaster.Parameters.ParamByName('IdPersona').Value := IdContacto;
   dmEmails.ShowModule(tsCorreo,'');
+  dmDocumentos.adodsMaster.Parameters.ParamByName('IdPersona').Value := IdContacto;
+  dmDocumentos.ShowModule(tsDocumentos,'');
+//  dmDocumentos.MasterSource := DataSource;
+//  dmDocumentos.MasterFields := 'IdContacto';
+//  dmDocumentos.MasterIndexFieldnames := 'IdPersona';
+//  dmDocumentos.ShowModule(tsDocumentos,'');
 end;
 
 end.

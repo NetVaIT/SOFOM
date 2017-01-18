@@ -1,18 +1,23 @@
 inherited frmProductosEdit: TfrmProductosEdit
   Caption = 'frmProductosEdit'
   ClientHeight = 501
-  ExplicitWidth = 444
+  ClientWidth = 594
+  OnDestroy = FormDestroy
+  ExplicitWidth = 600
   ExplicitHeight = 530
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
+    Width = 594
     Height = 460
+    ExplicitHeight = 460
     ClientRectBottom = 458
+    ClientRectRight = 592
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 2
       ExplicitTop = 28
       ExplicitWidth = 434
-      ExplicitHeight = 295
+      ExplicitHeight = 430
       object Label1: TLabel
         Left = 24
         Top = 16
@@ -178,9 +183,22 @@ inherited frmProductosEdit: TfrmProductosEdit
         TabOrder = 9
       end
     end
+    object tsDocumentos: TcxTabSheet
+      Caption = 'Documentos'
+      ImageIndex = 1
+      ExplicitWidth = 434
+    end
   end
   inherited pmlMain: TPanel
     Top = 460
+    Width = 594
+    ExplicitTop = 460
+    inherited btnCancel: TButton
+      Left = 512
+    end
+    inherited btnOk: TButton
+      Left = 431
+    end
   end
   inherited cxImageList: TcxImageList
     FormatVersion = 1
