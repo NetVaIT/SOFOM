@@ -27,7 +27,7 @@ uses
   cxDrawTextUtils, dxPSPrVwStd, dxPSPrVwAdv, dxPSPrVwRibbon,
   dxPScxPageControlProducer, dxPScxGridLnk, dxPScxGridLayoutViewLnk,
   dxPScxEditorProducers, dxPScxExtEditorProducers, dxSkinsdxRibbonPainter,
-  dxPSCore, dxPScxCommon, Vcl.StdCtrls;
+  dxPSCore, dxPScxCommon, Vcl.StdCtrls, PersonasDM;
 
 type
   TfrmCuentasBancarias = class(T_frmGrid)
@@ -51,9 +51,12 @@ type
   private
     { Private declarations }
     FUpdateFile: TBasicAction;
+    FRolTipo: TRolTipo;
+    procedure SetRolTipo(const Value: TRolTipo);
   public
     { Public declarations }
     property UpdateFile: TBasicAction read FUpdateFile write FUpdateFile;
+    property RolTipo: TRolTipo read FRolTipo write SetRolTipo;
   end;
 
 implementation
@@ -72,6 +75,13 @@ procedure TfrmCuentasBancarias.FormShow(Sender: TObject);
 begin
   inherited;
   TfrmCuentasBancariasEdit(gEditForm).UpdateFile := FUpdateFile;
+end;
+
+procedure TfrmCuentasBancarias.SetRolTipo(const Value: TRolTipo);
+begin
+  FRolTipo := Value;
+  // Si es emisor muestra los tokens
+  pnlDetail1.Visible := (FRolTipo = rEmisor);
 end;
 
 end.

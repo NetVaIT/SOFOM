@@ -1,19 +1,19 @@
 inherited frmPersonaEdit: TfrmPersonaEdit
   Caption = 'Persona'
   ClientHeight = 566
-  ClientWidth = 629
+  ClientWidth = 654
   OnDestroy = FormDestroy
-  ExplicitWidth = 635
+  ExplicitWidth = 660
   ExplicitHeight = 595
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
-    Width = 629
+    Width = 654
     Height = 525
     ExplicitWidth = 629
     ExplicitHeight = 525
     ClientRectBottom = 523
-    ClientRectRight = 627
+    ClientRectRight = 652
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 2
       ExplicitTop = 28
@@ -22,11 +22,12 @@ inherited frmPersonaEdit: TfrmPersonaEdit
       object pnlPersona: TPanel
         Left = 0
         Top = 0
-        Width = 625
+        Width = 650
         Height = 49
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
+        ExplicitWidth = 625
         object Label1: TLabel
           Left = 195
           Top = 3
@@ -80,12 +81,13 @@ inherited frmPersonaEdit: TfrmPersonaEdit
       object pnlPersonaMoral: TPanel
         Left = 0
         Top = 49
-        Width = 625
+        Width = 650
         Height = 93
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 1
         Visible = False
+        ExplicitWidth = 625
         object Label3: TLabel
           Left = 16
           Top = 8
@@ -138,12 +140,13 @@ inherited frmPersonaEdit: TfrmPersonaEdit
       object pnlPersonaFisica: TPanel
         Left = 0
         Top = 142
-        Width = 625
+        Width = 650
         Height = 209
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 2
         Visible = False
+        ExplicitWidth = 625
         object Label5: TLabel
           Left = 16
           Top = 39
@@ -339,22 +342,24 @@ inherited frmPersonaEdit: TfrmPersonaEdit
       object pnlOrigen: TPanel
         Left = 0
         Top = 351
-        Width = 625
+        Width = 650
         Height = 144
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 3
         Visible = False
+        ExplicitWidth = 625
       end
       object PnlCliente: TPanel
         Left = 0
         Top = 351
-        Width = 625
+        Width = 650
         Height = 144
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 4
         Visible = False
+        ExplicitWidth = 625
         object Label17: TLabel
           Left = 16
           Top = 14
@@ -413,12 +418,13 @@ inherited frmPersonaEdit: TfrmPersonaEdit
       object PnlEmisor: TPanel
         Left = 0
         Top = 351
-        Width = 625
+        Width = 650
         Height = 144
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 5
         Visible = False
+        ExplicitWidth = 625
         object Label20: TLabel
           Left = 16
           Top = 4
@@ -441,43 +447,57 @@ inherited frmPersonaEdit: TfrmPersonaEdit
     object tsDomicilio: TcxTabSheet
       Caption = 'Domicilio'
       ImageIndex = 1
+      ExplicitLeft = 4
+      ExplicitTop = 30
+      ExplicitWidth = 625
     end
     object tsTelefono: TcxTabSheet
       Caption = 'Telefono'
       ImageIndex = 2
+      ExplicitWidth = 625
     end
     object tsCorreo: TcxTabSheet
       Caption = 'Correo Electronico'
       ImageIndex = 3
+      ExplicitWidth = 625
     end
     object tsContacto: TcxTabSheet
       Caption = 'Contactos'
       ImageIndex = 4
+      ExplicitWidth = 625
+    end
+    object tsPerfil: TcxTabSheet
+      Caption = 'Perfil'
+      ImageIndex = 8
+      ExplicitWidth = 625
     end
     object tsDocumentos: TcxTabSheet
       Caption = 'Documentos'
       ImageIndex = 7
+      ExplicitWidth = 625
     end
     object tsCuentasBancarias: TcxTabSheet
       Caption = 'Cuentas Bancarias'
       ImageIndex = 5
+      ExplicitWidth = 625
     end
     object tsCSD: TcxTabSheet
       Caption = 'Sello digital'
       ImageIndex = 6
+      ExplicitWidth = 625
     end
   end
   inherited pmlMain: TPanel
     Top = 525
-    Width = 629
+    Width = 654
     ExplicitTop = 525
     ExplicitWidth = 629
     inherited btnCancel: TButton
-      Left = 547
+      Left = 572
       ExplicitLeft = 547
     end
     inherited btnOk: TButton
-      Left = 466
+      Left = 491
       ExplicitLeft = 466
     end
     object btnNext: TButton

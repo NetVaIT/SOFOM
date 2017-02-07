@@ -178,7 +178,13 @@ uses
   ContratosDocumentosForm in 'Procesos\ContratosDocumentosForm.pas' {frmContratosDocumentos},
   ProductosDocumentosDM in 'Catalogos\ProductosDocumentosDM.pas' {dmProductosDocumentos: TDataModule},
   ProductosDocumentosForm in 'Catalogos\ProductosDocumentosForm.pas' {frmProductosDocumentos},
-  ProductosDocumentosEdit in 'Catalogos\ProductosDocumentosEdit.pas' {frmProductosDocumentosEdit};
+  ProductosDocumentosEdit in 'Catalogos\ProductosDocumentosEdit.pas' {frmProductosDocumentosEdit},
+  PersonasPerfilesDM in 'Catalogos\PersonasPerfilesDM.pas' {dmPersonasPerfiles: TDataModule},
+  PersonasPerfilesForm in 'Catalogos\PersonasPerfilesForm.pas' {frmPersonasPerfiles},
+  PersonasPerfilesEdit in 'Catalogos\PersonasPerfilesEdit.pas' {frmPersonasPerfilesEdit},
+  PersonasAccionistasDM in 'Catalogos\PersonasAccionistasDM.pas' {dmPersonasAccionistas: TDataModule},
+  PersonasAccionistasForm in 'Catalogos\PersonasAccionistasForm.pas' {frmPersonasAccionistas},
+  PersonasAccionistasEdit in 'Catalogos\PersonasAccionistasEdit.pas' {frmPersonasAccionistasEdit};
 
 {$R *.res}
 

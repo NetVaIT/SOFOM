@@ -1,31 +1,30 @@
 inherited frmCuentasBancarias: TfrmCuentasBancarias
   Caption = 'Cuentas Bancarias'
-  ClientWidth = 856
-  ExplicitWidth = 856
-  ExplicitHeight = 457
+  ClientWidth = 763
+  ExplicitWidth = 763
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Width = 856
+    Width = 763
     ExplicitWidth = 856
   end
   inherited splDetail1: TSplitter
     Top = 195
-    Width = 856
+    Width = 763
     ExplicitTop = 195
     ExplicitWidth = 856
   end
   inherited splDetail2: TSplitter
-    Width = 856
+    Width = 763
     ExplicitWidth = 856
   end
   inherited pnlMaster: TPanel
-    Width = 856
+    Width = 763
     Height = 164
     ExplicitWidth = 856
     ExplicitHeight = 164
     inherited cxGrid: TcxGrid
-      Width = 856
+      Width = 763
       Height = 164
       ExplicitWidth = 856
       ExplicitHeight = 164
@@ -99,24 +98,27 @@ inherited frmCuentasBancarias: TfrmCuentasBancarias
     end
   end
   inherited pnlDetail3: TPanel
-    Width = 856
+    Width = 763
     ExplicitWidth = 856
   end
   inherited pnlDetail2: TPanel
-    Width = 856
+    Width = 763
     ExplicitWidth = 856
   end
   inherited pnlDetail1: TPanel
     Top = 198
-    Width = 856
+    Width = 763
     Height = 130
-    ExplicitTop = 198
+    ExplicitTop = 195
     ExplicitWidth = 856
     ExplicitHeight = 130
   end
   inherited pnlClose: TPanel
-    Width = 856
+    Width = 763
     ExplicitWidth = 856
+    inherited btnClose: TButton
+      Left = 465
+    end
   end
   inherited DataSource: TDataSource
     DataSet = dmCuentasBancarias.adodsMaster
@@ -136,6 +138,7 @@ inherited frmCuentasBancarias: TfrmCuentasBancarias
   end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
+      ReportDocument.CreationDate = 42768.721785995370000000
       AssignedFormatValues = []
       BuiltInReportLink = True
     end

@@ -809,6 +809,32 @@
             <Form>frmProductosDocumentosEdit</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Catalogos\PersonasPerfilesDM.pas">
+            <Form>dmPersonasPerfiles</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Catalogos\PersonasPerfilesForm.pas">
+            <Form>frmPersonasPerfiles</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\PersonasPerfilesEdit.pas">
+            <Form>frmPersonasPerfilesEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\PersonasAccionistasDM.pas">
+            <Form>dmPersonasAccionistas</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Catalogos\PersonasAccionistasForm.pas">
+            <Form>frmPersonasAccionistas</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\PersonasAccionistasEdit.pas">
+            <Form>frmPersonasAccionistasEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

@@ -76,16 +76,12 @@ type
     dxBarLargeButton14: TdxBarLargeButton;
     dxBarLargeButton17: TdxBarLargeButton;
     dxBarLargeButton18: TdxBarLargeButton;
-    dxBarLargeButton19: TdxBarLargeButton;
-    dxBarLargeButton20: TdxBarLargeButton;
     actComisionistas: TAction;
     actSocios: TAction;
     dxBarButton8: TdxBarButton;
     actInstruccionesTipos: TAction;
     actPeriodos: TAction;
     dxBarLargeButton21: TdxBarLargeButton;
-    dxBarLargeButton22: TdxBarLargeButton;
-    actUsuarios: TAction;
     dxBarLargeButton23: TdxBarLargeButton;
     dxBarLargeButton24: TdxBarLargeButton;
     actCuentasContables: TAction;
@@ -138,7 +134,7 @@ type
     dxBrLrgBtnFacturas: TdxBarLargeButton;
     actFacturacion: TAction;
     dxBarLargeButton39: TdxBarLargeButton;
-    ActEmisor: TAction;
+    actEmisor: TAction;
     dxBrLrgBtnCuentasXCobrar: TdxBarLargeButton;
     ActCuentasXCobrar: TAction;
     dxBrLrgBtnPagos: TdxBarLargeButton;
@@ -248,7 +244,6 @@ begin
    51: gModulo := TdmEstadosCuenta.Create(Self);
 
 
-//   40: gModulo := TdmUsuarios.Create(Self);
 //   51: begin
 //         gModulo := TdmMovimientosD.Create(Self);
 //         TdmMovimientosD(gModulo).TipoReporte:= trDispercion;
@@ -329,7 +324,6 @@ begin
   actOutsourcing.Enabled        := Conected;
   actComisionistas.Enabled      := Conected;
   actSocios.Enabled             := Conected;
-  actUsuarios.Enabled           := Conected;
   actCuentasContables.Enabled   := Conected;
   actCuentasInternas.Enabled    := Conected;
   actCXCConceptos.Enabled       := Conected;

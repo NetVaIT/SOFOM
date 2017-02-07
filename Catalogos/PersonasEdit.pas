@@ -22,7 +22,7 @@ uses
   Vcl.DBCtrls, cxTextEdit, cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox,
   PersonasDM, TelefonosDM, EmailsDM, PersonasDomiciliosDM, PersonasContactoDM,
   CuentasBancariasDM, ShellApi, PersonasCSDDM, PersonasDocumentosDM, cxLabel,
-  cxDBLabel;
+  cxDBLabel, PersonasPerfilesDM;
 
 type
   TfrmPersonaEdit = class(T_frmEdit)
@@ -84,6 +84,7 @@ type
     lblCURP: TLabel;
     cxDBEditCURP: TcxDBMaskEdit;
     btnWeb: TButton;
+    tsPerfil: TcxTabSheet;
     procedure FormShow(Sender: TObject);
     procedure cxDBLookupComboBox1PropertiesChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -100,6 +101,7 @@ type
     dmCuentasBancarias: TdmCuentasBancarias;
     dmPersonasCSD: TdmPersonasCSD;
     dmDocumentos: TdmPersonasDocumentos;
+    dmPerfiles: TdmPersonasPerfiles;
     FRolTipo: TRolTipo;
     procedure MostrarPanel();
     procedure SetRolTipo(const Value: TRolTipo);
@@ -152,6 +154,8 @@ begin
   dmCuentasBancarias := TdmCuentasBancarias.Create(nil);
   dmPersonasCSD:= TdmPersonasCSD.Create(nil);
   dmDocumentos:= TdmPersonasDocumentos.Create(nil);
+  dmPerfiles:= TdmPersonasPerfiles.Create(nil);
+
 end;
 
 procedure TfrmPersonaEdit.FormDestroy(Sender: TObject);
@@ -164,6 +168,7 @@ begin
   FreeAndNil(dmCuentasBancarias);
   FreeAndNil(dmPersonasCSD);
   FreeAndNil(dmDocumentos);
+  FreeAndNil(dmPerfiles);
 end;
 
 procedure TfrmPersonaEdit.FormShow(Sender: TObject);
@@ -185,12 +190,16 @@ begin
   dmCuentasBancarias.MasterSource := DataSource;
   dmCuentasBancarias.MasterFields := 'IdPersona';
   dmCuentasBancarias.ShowModule(tsCuentasBancarias,'');
+  dmCuentasBancarias.RolTipo := RolTipo;
   dmPersonasCSD.MasterSource := DataSource;
   dmPersonasCSD.MasterFields := 'IdPersona';
   dmPersonasCSD.ShowModule(tsCSD,'');
   dmDocumentos.MasterSource := DataSource;
   dmDocumentos.MasterFields := 'IdPersona';
   dmDocumentos.ShowModule(tsDocumentos,'');
+  dmPerfiles.MasterSource := DataSource;
+  dmPerfiles.MasterFields := 'IdPersona';
+  dmPerfiles.ShowModule(tsPerfil,'');
 end;
 
 procedure TfrmPersonaEdit.MostrarPanel;

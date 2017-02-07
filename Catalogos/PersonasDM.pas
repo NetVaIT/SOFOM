@@ -80,9 +80,12 @@ type
     adodsMasterRegimenFiscal: TStringField;
     adodsMasterEstatusPersona: TStringField;
     adodsMasterExigeCta: TBooleanField;
+    actAccionistas: TAction;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsPersonaRolesNewRecord(DataSet: TDataSet);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
+    procedure actAccionistasExecute(Sender: TObject);
+    procedure actAccionistasUpdate(Sender: TObject);
   private
     { Private declarations }
     FRolTipo: TRolTipo;
@@ -99,9 +102,31 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses PersonasForm;//, PersonasRolesForm, PersonasSeleccionRolDmod;
+uses PersonasForm, PersonasAccionistasDM;//, PersonasRolesForm, PersonasSeleccionRolDmod;
 
 {$R *.dfm}
+
+procedure TdmPersona.actAccionistasExecute(Sender: TObject);
+var
+  dmPersonasAccionistas: TdmPersonasAccionistas;
+begin
+  inherited;
+  dmPersonasAccionistas := TdmPersonasAccionistas.Create(Self);
+  try
+//    dmPersonasAccionistas.TipoContrato:= TipoContrato;
+    dmPersonasAccionistas.MasterSource := dsMaster;
+    dmPersonasAccionistas.MasterFields := 'IdPersona';
+    dmPersonasAccionistas.ShowModule(nil, '');
+  finally
+    dmPersonasAccionistas.Free;
+  end;
+end;
+
+procedure TdmPersona.actAccionistasUpdate(Sender: TObject);
+begin
+  inherited;
+  actAccionistas.Enabled := (adodsMasterIdPersonaTipo.Value = 2); // Solo personas morales
+end;
 
 procedure TdmPersona.adodsMasterNewRecord(DataSet: TDataSet);
 begin
@@ -128,6 +153,7 @@ begin
   gGridForm := TfrmPersonas.Create(Self);
   gGridForm.DataSet := adodsMaster;
   TfrmPersonas(gGridForm).RolTipo := RolTipo;
+  TfrmPersonas(gGridForm).actAccionistas := actAccionistas;
   // Busqueda
   SQLSelect:= 'SELECT IdPersona, IdPersonaTipo, IdRolTipo, IdRazonSocialTipo, IdSexo, IdEstadoCivil, IdPais, IdPoblacion, RFC, CURP, ' +
   'RazonSocial, Nombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, LugarNacimiento, IdPersonaTitular, VigenciaFM34 ' +

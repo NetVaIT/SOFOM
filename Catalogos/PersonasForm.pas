@@ -56,15 +56,19 @@ type
     tvMasterVigenciaFM34: TcxGridDBColumn;
     tvMasterIdRolTipo: TcxGridDBColumn;
     tvMasterRolTipo: TcxGridDBColumn;
+    btnAccionistas: TdxBarButton;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
     { Private declarations }
     FRolTipo: TRolTipo;
+    FactAccionistas: TBasicAction;
     procedure SetRolTipo(const Value: TRolTipo);
+    procedure SetactAccionistas(const Value: TBasicAction);
   public
     { Public declarations }
     property RolTipo: TRolTipo read FRolTipo write SetRolTipo;
+    property actAccionistas: TBasicAction read FactAccionistas write SetactAccionistas;
   end;
 
 implementation
@@ -121,6 +125,12 @@ begin
 //      tvMaster.Columns[tvMasterTitular.Index].Visible := true;
     end;
   end;
+end;
+
+procedure TfrmPersonas.SetactAccionistas(const Value: TBasicAction);
+begin
+  FactAccionistas := Value;
+  btnAccionistas.Action := Value;
 end;
 
 procedure TfrmPersonas.SetRolTipo(const Value: TRolTipo);

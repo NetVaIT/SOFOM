@@ -222,6 +222,11 @@ inherited dmPersona: TdmPersona
   inherited ActionList: TActionList
     Left = 216
     Top = 80
+    object actAccionistas: TAction
+      Caption = 'Accionistas'
+      OnExecute = actAccionistasExecute
+      OnUpdate = actAccionistasUpdate
+    end
   end
   object adodsPersonaTipo: TADODataSet
     Active = True

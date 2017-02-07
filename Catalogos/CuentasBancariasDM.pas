@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, _StandarDMod, Data.DB, Data.Win.ADODB,
-  System.Actions, Vcl.ActnList;
+  System.Actions, Vcl.ActnList, PersonasDM;
 
 const
   IdMoneda_Predeterminado = 106;
@@ -69,11 +69,14 @@ type
     { Private declarations }
     fFiltroPersona:String; //Mar 25/15
     FRFC: String;
+    FRolTipo: TRolTipo;
     procedure SetRFC(const Value: string);
+    procedure SetRolTipo(const Value: TRolTipo);
   public
     { Public declarations }
     property FiltroPersona:String read ffiltroPersona write fFiltroPersona;
     property RFCAct:String read FRFC write SetRFC;
+    property RolTipo: TRolTipo read FRolTipo write SetRolTipo;
   end;
 
 implementation
@@ -122,23 +125,19 @@ begin
   inherited;
   //AdodsPersona.Parameters.ParamByName('XRFC').Value:=CRFCActual;
 //  AdoDSPersona.Open;
-
 //  if adodsUsuariosXCtaBan.CommandText <> EmptyStr then
     adodsUsuariosXCtaBan.Open;
 //  ADODSBanco.Open;
 //
 //  ADODSMoneda.Open;
 //  ADODSTipoCtaBancaria.Open;
-
-
   gGridForm:= TfrmCuentasBancarias.Create(Self);
   gGridForm.DataSet:= adodsMaster;
+  TfrmCuentasBancarias(gGridForm).UpdateFile := actUpdateFile;
   gFormDeatil1:= TfrmUsuariosXCuentaBancaria.Create(Self);
   gFormDeatil1.DataSet:= adodsUsuariosXCtaBan;
 //  TfrmUsuariosXCuentaBancaria(gFormDeatil1).Cuenta := adodsMasterCuentaBancaria.AsString; //JCRC 20/04/2015 Inhabilite
-  TfrmCuentasBancarias(gGridForm).UpdateFile := actUpdateFile;
 end;
-
 
 procedure TdmCuentasBancarias.SetRFC(const Value: string);
 //var
@@ -171,7 +170,11 @@ begin
   adodsMaster.Open;
 end;
 
-
-
+procedure TdmCuentasBancarias.SetRolTipo(const Value: TRolTipo);
+begin
+  FRolTipo := Value;
+  if Assigned(gGridForm) then
+    TfrmCuentasBancarias(gGridForm).RolTipo := RolTipo;
+end;
 
 end.
