@@ -1,5 +1,5 @@
 inherited frmPersonasAccionistas: TfrmPersonasAccionistas
-  Caption = 'frmPersonasAccionistas'
+  Caption = 'Accionistas'
   ExplicitWidth = 651
   ExplicitHeight = 457
   PixelsPerInch = 96
