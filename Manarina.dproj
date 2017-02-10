@@ -835,6 +835,19 @@
             <Form>frmPersonasAccionistasEdit</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Catalogos\ListasRestringidasDM.pas">
+            <Form>dmListasRestringidas</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Catalogos\ListasRestringidasForm.pas">
+            <Form>frmListasRestringidas</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\ListasRestringidasEdit.pas">
+            <Form>frmListasRestringidasEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

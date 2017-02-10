@@ -85,6 +85,8 @@ type
     cxDBEditCURP: TcxDBMaskEdit;
     btnWeb: TButton;
     tsPerfil: TcxTabSheet;
+    Label21: TLabel;
+    DBLookupComboBox4: TDBLookupComboBox;
     procedure FormShow(Sender: TObject);
     procedure cxDBLookupComboBox1PropertiesChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);

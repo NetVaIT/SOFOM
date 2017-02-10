@@ -60,9 +60,6 @@ type
     adodsPersonaRolesCalcular: TBooleanField;
     adodsPersonaRolesPorcentajeCalculo: TFMTBCDField;
     adodsPersonaRolesRegistroPatronalIMSS: TStringField;
-    adodsPersonaTitular: TADODataSet;
-    adodsMasterIdPersonaTitular: TIntegerField;
-    adodsMasterTitular: TStringField;
     adodsMasterVigenciaFM34: TDateTimeField;
     adodsPersonaRolesIdRolTipo: TIntegerField;
     adodsMasterIdRolTipo: TIntegerField;
@@ -81,6 +78,10 @@ type
     adodsMasterEstatusPersona: TStringField;
     adodsMasterExigeCta: TBooleanField;
     actAccionistas: TAction;
+    adodsMasterIdRiesgoTipo: TIntegerField;
+    adodsMasterIdentificador: TStringField;
+    adodsRiesgosTipos: TADODataSet;
+    adodsMasterRiesgo: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsPersonaRolesNewRecord(DataSet: TDataSet);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
@@ -102,7 +103,7 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses PersonasForm, PersonasAccionistasDM;//, PersonasRolesForm, PersonasSeleccionRolDmod;
+uses PersonasForm, PersonasAccionistasDM;
 
 {$R *.dfm}
 
@@ -131,8 +132,9 @@ end;
 procedure TdmPersona.adodsMasterNewRecord(DataSet: TDataSet);
 begin
   inherited;
-  DataSet.FieldByName('IdRolTipo').AsInteger :=Ord(RolTipo); //Nov 28/16
-  DataSet.FieldByName('IdPersonaEstatus').AsInteger :=1; //Nov 30/16
+  adodsMasterIdRolTipo.Value :=Ord(RolTipo);
+  adodsMasterIdPersonaEstatus.Value :=1;
+  adodsMasterIdRiesgoTipo.Value := 1;
 end;
 
 procedure TdmPersona.adodsPersonaRolesNewRecord(DataSet: TDataSet);
@@ -155,8 +157,8 @@ begin
   TfrmPersonas(gGridForm).RolTipo := RolTipo;
   TfrmPersonas(gGridForm).actAccionistas := actAccionistas;
   // Busqueda
-  SQLSelect:= 'SELECT IdPersona, IdPersonaTipo, IdRolTipo, IdRazonSocialTipo, IdSexo, IdEstadoCivil, IdPais, IdPoblacion, RFC, CURP, ' +
-  'RazonSocial, Nombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, LugarNacimiento, IdPersonaTitular, VigenciaFM34 ' +
+  SQLSelect:= 'SELECT IdPersona, IdPersonaTipo, IdRolTipo, IdRazonSocialTipo, IdSexo, IdEstadoCivil, IdPais, IdPoblacion, IdRiesgoTipo, RFC, CURP, ' +
+  'RazonSocial, Nombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, LugarNacimiento, VigenciaFM34 ' +
   ',IdMetodoPago, IdRegimenFiscal, IdDocumentoLogo, IdPersonaEstatus, Identificador, NumCtaPagoCliente, SaldoCliente '+ //Nov 28/16
   'FROM Personas ';
   SQLOrderBy:= 'ORDER BY RazonSocial';

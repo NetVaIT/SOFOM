@@ -184,7 +184,10 @@ uses
   PersonasPerfilesEdit in 'Catalogos\PersonasPerfilesEdit.pas' {frmPersonasPerfilesEdit},
   PersonasAccionistasDM in 'Catalogos\PersonasAccionistasDM.pas' {dmPersonasAccionistas: TDataModule},
   PersonasAccionistasForm in 'Catalogos\PersonasAccionistasForm.pas' {frmPersonasAccionistas},
-  PersonasAccionistasEdit in 'Catalogos\PersonasAccionistasEdit.pas' {frmPersonasAccionistasEdit};
+  PersonasAccionistasEdit in 'Catalogos\PersonasAccionistasEdit.pas' {frmPersonasAccionistasEdit},
+  ListasRestringidasDM in 'Catalogos\ListasRestringidasDM.pas' {dmListasRestringidas: TDataModule},
+  ListasRestringidasForm in 'Catalogos\ListasRestringidasForm.pas' {frmListasRestringidas},
+  ListasRestringidasEdit in 'Catalogos\ListasRestringidasEdit.pas' {frmListasRestringidasEdit};
 
 {$R *.res}
 

@@ -141,6 +141,10 @@ inherited frmMain: TfrmMain
         item
           Visible = True
           ItemName = 'dxBarLargeButton3'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton19'
         end>
       OneOnRow = False
       Row = 0
@@ -151,7 +155,7 @@ inherited frmMain: TfrmMain
     object dxbOrganizacion: TdxBar [3]
       Caption = 'Organizacion'
       CaptionButtons = <>
-      DockedLeft = 207
+      DockedLeft = 284
       DockedTop = 0
       FloatLeft = 759
       FloatTop = 8
@@ -183,7 +187,7 @@ inherited frmMain: TfrmMain
     object dxbPresonas: TdxBar [4]
       Caption = 'Personas'
       CaptionButtons = <>
-      DockedLeft = 590
+      DockedLeft = 613
       DockedTop = 0
       FloatLeft = 764
       FloatTop = 8
@@ -252,7 +256,7 @@ inherited frmMain: TfrmMain
     object dxbProductos: TdxBar [6]
       Caption = 'Productos'
       CaptionButtons = <>
-      DockedLeft = 388
+      DockedLeft = 465
       DockedTop = 0
       FloatLeft = 1133
       FloatTop = 8
@@ -270,10 +274,6 @@ inherited frmMain: TfrmMain
         item
           Visible = True
           ItemName = 'dxBarButton16'
-        end
-        item
-          Visible = True
-          ItemName = 'dxBarButton17'
         end>
       OneOnRow = False
       Row = 0
@@ -550,6 +550,10 @@ inherited frmMain: TfrmMain
     end
     object dxBrLrgBtnEstadoCuenta: TdxBarLargeButton
       Action = ActEstadoCuenta
+      Category = 0
+    end
+    object dxBarLargeButton19: TdxBarLargeButton
+      Action = actListasRestringidas
       Category = 0
     end
     object dxBarLargeButton31: TdxBarLargeButton
@@ -10415,6 +10419,7 @@ inherited frmMain: TfrmMain
       Category = 'Catalogos'
       Caption = 'Tipos de producto'
       ImageIndex = 34
+      OnExecute = actCatalogoExecute
     end
     object actAmortizaciones: TAction
       Tag = 31
@@ -10477,6 +10482,13 @@ inherited frmMain: TfrmMain
       Category = 'Reportes'
       Caption = 'Estados de Cuenta'
       ImageIndex = 51
+      OnExecute = actCatalogoExecute
+    end
+    object actListasRestringidas: TAction
+      Tag = 5
+      Category = 'Catalogos'
+      Caption = 'Listas restringidas'
+      ImageIndex = 7
       OnExecute = actCatalogoExecute
     end
   end

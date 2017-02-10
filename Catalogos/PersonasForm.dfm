@@ -69,8 +69,24 @@ inherited frmPersonas: TfrmPersonas
           DataBinding.FieldName = 'IdPoblacion'
           Visible = False
         end
-        object tvMasterIdPersonaTitular: TcxGridDBColumn
-          DataBinding.FieldName = 'IdPersonaTitular'
+        object tvMasterIdRiesgoTipo: TcxGridDBColumn
+          DataBinding.FieldName = 'IdRiesgoTipo'
+          Visible = False
+        end
+        object tvMasterIdMetodoPago: TcxGridDBColumn
+          DataBinding.FieldName = 'IdMetodoPago'
+          Visible = False
+        end
+        object tvMasterIdRegimenFiscal: TcxGridDBColumn
+          DataBinding.FieldName = 'IdRegimenFiscal'
+          Visible = False
+        end
+        object tvMasterIdPersonaEstatus: TcxGridDBColumn
+          DataBinding.FieldName = 'IdPersonaEstatus'
+          Visible = False
+        end
+        object tvMasterIdentificador: TcxGridDBColumn
+          DataBinding.FieldName = 'Identificador'
           Visible = False
         end
         object tvMasterRFC: TcxGridDBColumn
@@ -92,7 +108,7 @@ inherited frmPersonas: TfrmPersonas
         end
         object tvMasterRolTipo: TcxGridDBColumn
           DataBinding.FieldName = 'RolTipo'
-          Visible = False
+          Width = 100
         end
         object tvMasterRazonSocialTipo: TcxGridDBColumn
           DataBinding.FieldName = 'RazonSocialTipo'
@@ -137,6 +153,34 @@ inherited frmPersonas: TfrmPersonas
         object tvMasterVigenciaFM34: TcxGridDBColumn
           DataBinding.FieldName = 'VigenciaFM34'
           Visible = False
+        end
+        object tvMasterNumCtaPagoCliente: TcxGridDBColumn
+          DataBinding.FieldName = 'NumCtaPagoCliente'
+          Visible = False
+        end
+        object tvMasterExigeCta: TcxGridDBColumn
+          DataBinding.FieldName = 'ExigeCta'
+          Visible = False
+        end
+        object tvMasterSaldoCliente: TcxGridDBColumn
+          DataBinding.FieldName = 'SaldoCliente'
+          Visible = False
+        end
+        object tvMasterMetodoPago: TcxGridDBColumn
+          DataBinding.FieldName = 'MetodoPago'
+          Visible = False
+        end
+        object tvMasterRegimenFiscal: TcxGridDBColumn
+          DataBinding.FieldName = 'RegimenFiscal'
+          Visible = False
+        end
+        object tvMasterEstatusPersona: TcxGridDBColumn
+          DataBinding.FieldName = 'EstatusPersona'
+          Width = 100
+        end
+        object tvMasterRiesgo: TcxGridDBColumn
+          DataBinding.FieldName = 'Riesgo'
+          Width = 100
         end
       end
     end
@@ -205,7 +249,7 @@ inherited frmPersonas: TfrmPersonas
   end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
-      ReportDocument.CreationDate = 42664.566576585650000000
+      ReportDocument.CreationDate = 42664.566576585640000000
       AssignedFormatValues = []
       BuiltInReportLink = True
     end

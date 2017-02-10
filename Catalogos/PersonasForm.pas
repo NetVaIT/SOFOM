@@ -51,12 +51,23 @@ type
     tvMasterPais: TcxGridDBColumn;
     tvMasterCURP: TcxGridDBColumn;
     tvMasterLugarNacimiento: TcxGridDBColumn;
-    tvMasterIdPersonaTitular: TcxGridDBColumn;
     tvMasterTitular: TcxGridDBColumn;
     tvMasterVigenciaFM34: TcxGridDBColumn;
     tvMasterIdRolTipo: TcxGridDBColumn;
     tvMasterRolTipo: TcxGridDBColumn;
     btnAccionistas: TdxBarButton;
+    tvMasterIdRiesgoTipo: TcxGridDBColumn;
+    tvMasterIdMetodoPago: TcxGridDBColumn;
+    tvMasterIdRegimenFiscal: TcxGridDBColumn;
+    tvMasterIdPersonaEstatus: TcxGridDBColumn;
+    tvMasterIdentificador: TcxGridDBColumn;
+    tvMasterNumCtaPagoCliente: TcxGridDBColumn;
+    tvMasterExigeCta: TcxGridDBColumn;
+    tvMasterSaldoCliente: TcxGridDBColumn;
+    tvMasterMetodoPago: TcxGridDBColumn;
+    tvMasterRegimenFiscal: TcxGridDBColumn;
+    tvMasterEstatusPersona: TcxGridDBColumn;
+    tvMasterRiesgo: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private

@@ -148,6 +148,8 @@ type
     ActRptAntiguedadSaldos: TAction;
     dxBrLrgBtnEstadoCuenta: TdxBarLargeButton;
     ActEstadoCuenta: TAction;
+    actListasRestringidas: TAction;
+    dxBarLargeButton19: TdxBarLargeButton;
     procedure actCatalogoExecute(Sender: TObject);
     procedure actIntervaCXPExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -179,7 +181,7 @@ uses UbicacionesDM, BancosDM, MonedasDM, PuestosDM, PlazasTurnosDM,
   EstablecimientosDM,   CapacitacionDM, PersonasDM, RptPlazasDM, ProductosDM,
   MarcasDM, FamiliasDM, ContratosDM, AmortizacionesDM, FacturasDM,
   CuentasXCobrarDM, PagosDM, CotizacionesDM, rptAntiguedadSaldosDM,
-  AplicacionesConsultaDM, EstadosCuentaDM;
+  AplicacionesConsultaDM, EstadosCuentaDM, ListasRestringidasDM;
 //  EsquemaPagosDM, FormulasDM, ReglasNegocioDM,
 //  MovimientosTiposDM, RolesDM, InstruccionesDM,
 //  IncidenciasDM, InstruccionesTiposDM, PeriodosDM, MovimientosDM,
@@ -205,6 +207,7 @@ begin
     2: gModulo := TdmBancos.Create(Self);
     3: gModulo := TdmMonedas.Create(Self);
     4: gModulo := TdmPlazasTurnos.Create(Self);
+    5: gModulo := TdmListasRestringidas.Create(Self);
 //    5: gModulo := TdmPeriodos.Create(Self);
 //    6: gModulo := TdmFormulas.Create(Self);
 //    7: gModulo := TdmReglasNegocio.Create(Self);

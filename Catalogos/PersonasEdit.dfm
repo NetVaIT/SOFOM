@@ -10,14 +10,14 @@ inherited frmPersonaEdit: TfrmPersonaEdit
   inherited pcMain: TcxPageControl
     Width = 654
     Height = 525
-    ExplicitWidth = 629
+    ExplicitWidth = 654
     ExplicitHeight = 525
     ClientRectBottom = 523
     ClientRectRight = 652
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 2
       ExplicitTop = 28
-      ExplicitWidth = 625
+      ExplicitWidth = 650
       ExplicitHeight = 495
       object pnlPersona: TPanel
         Left = 0
@@ -27,10 +27,9 @@ inherited frmPersonaEdit: TfrmPersonaEdit
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 625
         object Label1: TLabel
-          Left = 195
-          Top = 3
+          Left = 183
+          Top = 8
           Width = 32
           Height = 13
           Caption = 'R.F.C.'
@@ -43,16 +42,24 @@ inherited frmPersonaEdit: TfrmPersonaEdit
           Caption = 'Tipo'
         end
         object Label16: TLabel
-          Left = 360
+          Left = 331
           Top = 6
           Width = 39
           Height = 13
           Caption = 'Estatus '
           FocusControl = DBLookupComboBox1
         end
+        object Label21: TLabel
+          Left = 472
+          Top = 6
+          Width = 32
+          Height = 13
+          Caption = 'Riesgo'
+          FocusControl = DBLookupComboBox4
+        end
         object cxDBTextEdit1: TcxDBTextEdit
-          Left = 195
-          Top = 22
+          Left = 183
+          Top = 24
           DataBinding.DataField = 'RFC'
           DataBinding.DataSource = DataSource
           TabOrder = 0
@@ -69,13 +76,22 @@ inherited frmPersonaEdit: TfrmPersonaEdit
           Width = 161
         end
         object DBLookupComboBox1: TDBLookupComboBox
-          Left = 360
-          Top = 22
-          Width = 177
+          Left = 331
+          Top = 24
+          Width = 130
           Height = 21
           DataField = 'EstatusPersona'
           DataSource = dmPersona.dsMaster
           TabOrder = 2
+        end
+        object DBLookupComboBox4: TDBLookupComboBox
+          Left = 472
+          Top = 22
+          Width = 130
+          Height = 21
+          DataField = 'Riesgo'
+          DataSource = DataSource
+          TabOrder = 3
         end
       end
       object pnlPersonaMoral: TPanel
@@ -87,7 +103,6 @@ inherited frmPersonaEdit: TfrmPersonaEdit
         BevelOuter = bvNone
         TabOrder = 1
         Visible = False
-        ExplicitWidth = 625
         object Label3: TLabel
           Left = 16
           Top = 8
@@ -146,7 +161,6 @@ inherited frmPersonaEdit: TfrmPersonaEdit
         BevelOuter = bvNone
         TabOrder = 2
         Visible = False
-        ExplicitWidth = 625
         object Label5: TLabel
           Left = 16
           Top = 39
@@ -348,7 +362,6 @@ inherited frmPersonaEdit: TfrmPersonaEdit
         BevelOuter = bvNone
         TabOrder = 3
         Visible = False
-        ExplicitWidth = 625
       end
       object PnlCliente: TPanel
         Left = 0
@@ -359,7 +372,6 @@ inherited frmPersonaEdit: TfrmPersonaEdit
         BevelOuter = bvNone
         TabOrder = 4
         Visible = False
-        ExplicitWidth = 625
         object Label17: TLabel
           Left = 16
           Top = 14
@@ -424,7 +436,6 @@ inherited frmPersonaEdit: TfrmPersonaEdit
         BevelOuter = bvNone
         TabOrder = 5
         Visible = False
-        ExplicitWidth = 625
         object Label20: TLabel
           Left = 16
           Top = 4
@@ -447,58 +458,48 @@ inherited frmPersonaEdit: TfrmPersonaEdit
     object tsDomicilio: TcxTabSheet
       Caption = 'Domicilio'
       ImageIndex = 1
-      ExplicitLeft = 4
-      ExplicitTop = 30
-      ExplicitWidth = 625
     end
     object tsTelefono: TcxTabSheet
       Caption = 'Telefono'
       ImageIndex = 2
-      ExplicitWidth = 625
     end
     object tsCorreo: TcxTabSheet
       Caption = 'Correo Electronico'
       ImageIndex = 3
-      ExplicitWidth = 625
     end
     object tsContacto: TcxTabSheet
       Caption = 'Contactos'
       ImageIndex = 4
-      ExplicitWidth = 625
     end
     object tsPerfil: TcxTabSheet
       Caption = 'Perfil'
       ImageIndex = 8
-      ExplicitWidth = 625
     end
     object tsDocumentos: TcxTabSheet
       Caption = 'Documentos'
       ImageIndex = 7
-      ExplicitWidth = 625
     end
     object tsCuentasBancarias: TcxTabSheet
       Caption = 'Cuentas Bancarias'
       ImageIndex = 5
-      ExplicitWidth = 625
     end
     object tsCSD: TcxTabSheet
       Caption = 'Sello digital'
       ImageIndex = 6
-      ExplicitWidth = 625
     end
   end
   inherited pmlMain: TPanel
     Top = 525
     Width = 654
     ExplicitTop = 525
-    ExplicitWidth = 629
+    ExplicitWidth = 654
     inherited btnCancel: TButton
       Left = 572
-      ExplicitLeft = 547
+      ExplicitLeft = 572
     end
     inherited btnOk: TButton
       Left = 491
-      ExplicitLeft = 466
+      ExplicitLeft = 491
     end
     object btnNext: TButton
       Left = 372
@@ -512,10 +513,16 @@ inherited frmPersonaEdit: TfrmPersonaEdit
       OnClick = btnNextClick
     end
   end
+  inherited DataSource: TDataSource
+    Left = 24
+    Top = 456
+  end
   inherited ActionList: TActionList
-    Left = 296
+    Left = 152
+    Top = 456
   end
   inherited cxImageList: TcxImageList
     FormatVersion = 1
+    DesignInfo = 29950048
   end
 end
