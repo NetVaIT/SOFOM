@@ -9,21 +9,31 @@ inherited FrmConEstadosCuenta: TFrmConEstadosCuenta
   inherited splDetail3: TSplitter
     Top = 485
     Width = 772
+    ExplicitTop = 485
+    ExplicitWidth = 772
   end
   inherited splDetail1: TSplitter
     Top = 229
     Width = 772
+    ExplicitTop = 229
+    ExplicitWidth = 772
   end
   inherited splDetail2: TSplitter
     Top = 469
     Width = 772
+    ExplicitTop = 469
+    ExplicitWidth = 772
   end
   inherited pnlMaster: TPanel
     Width = 772
     Height = 198
+    ExplicitWidth = 772
+    ExplicitHeight = 198
     inherited cxGrid: TcxGrid
       Width = 772
       Height = 198
+      ExplicitWidth = 772
+      ExplicitHeight = 198
       inherited tvMaster: TcxGridDBTableView
         object tvMasterCliente: TcxGridDBColumn
           DataBinding.FieldName = 'Cliente'
@@ -47,6 +57,7 @@ inherited FrmConEstadosCuenta: TFrmConEstadosCuenta
     Width = 772
     Height = 22
     ExplicitTop = 400
+    ExplicitWidth = 772
     ExplicitHeight = 22
   end
   inherited pnlDetail2: TPanel
@@ -54,6 +65,7 @@ inherited FrmConEstadosCuenta: TFrmConEstadosCuenta
     Width = 772
     Height = 13
     ExplicitTop = 384
+    ExplicitWidth = 772
     ExplicitHeight = 13
   end
   inherited pnlDetail1: TPanel
@@ -69,9 +81,11 @@ inherited FrmConEstadosCuenta: TFrmConEstadosCuenta
     Width = 772
     Height = 35
     ExplicitTop = 422
+    ExplicitWidth = 772
     ExplicitHeight = 35
     inherited btnClose: TButton
       Left = 687
+      ExplicitLeft = 687
     end
   end
   inherited DataSource: TDataSource
@@ -83,7 +97,11 @@ inherited FrmConEstadosCuenta: TFrmConEstadosCuenta
       0
       31
       0)
+    inherited dxbNavigator: TdxBar
+      DockedLeft = 107
+    end
     inherited dxbTools: TdxBar
+      DockedLeft = 238
       ItemLinks = <
         item
           Visible = True
@@ -904,6 +922,7 @@ inherited FrmConEstadosCuenta: TFrmConEstadosCuenta
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42744.390431400460000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

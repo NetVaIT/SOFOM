@@ -21,7 +21,7 @@ uses
   cxGridLevel, cxClasses, cxGridCustomView, cxGridCustomTableView,
   cxGridTableView, cxGridDBTableView, cxGrid, Vcl.ExtCtrls, cxContainer,
   cxLabel, cxDBLabel, Vcl.StdCtrls, Vcl.Buttons, cxTextEdit, cxDBEdit,
-  cxMaskEdit, cxDropDownEdit, cxCalendar;
+  cxMaskEdit, cxDropDownEdit, cxCalendar, Data.Win.ADODB;
 
 type
   TFrmAplicacionPago = class(TForm)
@@ -34,7 +34,7 @@ type
     DSAplicacion: TDataSource;
     Label3: TLabel;
     Label4: TLabel;
-    Label7: TLabel;
+    LblImpAplicaNormal: TLabel;
     cxDBTxtEdtImporteAplicar: TcxDBTextEdit;
     Label9: TLabel;
     cxDBLabel1: TcxDBLabel;
@@ -76,16 +76,60 @@ type
     cxGridDBTableView1Importe: TcxGridDBColumn;
     cxGridDBTableView1Saldo: TcxGridDBColumn;
     cxGridDBTableView1IdCuentaXCobrarDetalle: TcxGridDBColumn;
+    tvMasterIdEstadoCuenta: TcxGridDBColumn;
+    tvMasterSaldoFactoraje: TcxGridDBColumn;
+    cxGridDBTableView1acumulaACXC: TcxGridDBColumn;
+    cxGridDBTableView1IVAde: TcxGridDBColumn;
+    cxGridDBTableView1IdCFDI: TcxGridDBColumn;
+    cxGridDBTableView1IdCFDIConcepto: TcxGridDBColumn;
+    cxGridDBTableView1impconc: TcxGridDBColumn;
+    cxGridDBTableView1Fase: TcxGridDBColumn;
+    cxGridDBTableView1Temporalidad: TcxGridDBColumn;
+    cxGridDBTableView1OrdenAplica: TcxGridDBColumn;
+    cxGridDBTableView1IdTipoContrato: TcxGridDBColumn;
+    cxGridDBTableView1IDCFDIIVA: TcxGridDBColumn;
+    cxGridDBTableView1SaldoFactoraje: TcxGridDBColumn;
+    LblAplicandoFActoraje: TLabel;
+    DSAuxiliar: TDataSource;
+    DSP_CalcMoratorio: TDataSource;
+    tvMasterIdCFDINormal: TcxGridDBColumn;
+    tvMasterSaldoDocumento: TcxGridDBColumn;
+    tvMasterSaldoFactorajeCFDI: TcxGridDBColumn;
+    LblEtiquetaFacto: TLabel;
+    cxDBTxtEdtImporteAplicaFactoraje: TcxDBTextEdit;
+    cxGridDBTableView1PagosAplicados: TcxGridDBColumn;
+    cxGridDBTableView1PagosAplicadosFactoraje: TcxGridDBColumn;
+    cxGridDBTableView1Facturar: TcxGridDBColumn;
+    cxGridDBTableView1Acumula: TcxGridDBColumn;
+    cxGridDBTableView1AcumulaAQuien: TcxGridDBColumn;
+    cxGridDBTableView1EsIVA: TcxGridDBColumn;
+    cxGridDBTableView1BaseIVA: TcxGridDBColumn;
+    cxGridDBTableView1EstadoCuenta: TcxGridDBColumn;
+    cxGridDBTableView1BaseMoratorios: TcxGridDBColumn;
+    cxGridDBTableView1EsMoratorios: TcxGridDBColumn;
+    cxGridDBTableView1saldoDoc1: TcxGridDBColumn;
+    cxGridDBTableView1ivaCFDI2: TcxGridDBColumn;
+    cxGridDBTableView1SaldoDocumento: TcxGridDBColumn;
     procedure BtBtnAplicarClick(Sender: TObject);
     procedure DSAplicacionStateChange(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormDestroy(Sender: TObject);
     procedure BtBtnAgregarClick(Sender: TObject);
+    procedure tvMasterCellDblClick(Sender: TcxCustomGridTableView;
+      ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
+      AShift: TShiftState; var AHandled: Boolean);
   private
+    FActFacturaMora: TBasicAction;
     function Quitasignos(TextoPesos: String): String;
+    function EsCuentaXCobrarAntigua(IdCxCAct, IDPersona: integer): Boolean;
+    function ActualizaMoratorios(IdCxCAct: integer;FechaPago:TDateTime;var ValorMora:Double; var FechaAct:TDateTime): Boolean;
+    function CXCFacturada(IdCxCAct: integer): Boolean;
+    procedure SetFActFacturaMora(const Value: TBasicAction);
     { Private declarations }
   public
     { Public declarations }
+    EsFactoraje:Boolean;
+     property ActFacturaMora : TBasicAction read FActFacturaMora write SetFActFacturaMora;  //Feb 8/17
   end;
 
 var
@@ -95,7 +139,7 @@ implementation
 
 {$R *.dfm}
 
-uses PagosDM;
+uses PagosDM, _ConectionDmod;
 
 procedure TFrmAplicacionPago.BtBtnAgregarClick(Sender: TObject);
 begin
@@ -105,64 +149,216 @@ begin
 end;
 
 procedure TFrmAplicacionPago.BtBtnAplicarClick(Sender: TObject);
-var
-   valor, aux:Double;
-   f:String;
+var             //FEb 12/17
+   valor, aux, Mora:Double;
+   f, camposaldo,campoimporte:String;
    idActual:integer; //Dic14/16
+   ActMora, TieneMora, seguir:boolean; //Feb 12/17
+   FechaMora:TDAteTime;
 begin
-  f:= quitasignos(DSAplicacion.DataSet.FieldByName('Importe').ASString);  //Ago 15/16
-//  showmessage(f);
-  aux:=strtoFLoat(quitasignos(cxDBLblDisponible.Caption));
-                           //Ver si ya tiene el valor
-  Valor:= StrToFloat(f);//DSAplicacion.DataSet.FieldByName('Importe').ASFloat;//cxDBTxtEdtImporteAplicar.Field.Asfloat;
-  inherited;
-  if Valor > 0 then
-  begin
-    // Esta seguro de aplicar al Documento seleccionado del cliente?
-  //  if DSAplicacion.DataSet.FieldByName('Importe').Asfloat > Valor then    //Ajustar para evitar centavos perdidos   C. Ago 23/16 pendiente
-    if (Valor>aux)then //de otra forma siempre son iguales //Por ahora asi
-  //  if abs(DSAplicacion.DataSet.FieldByName('Importe').Asfloat - Valor)>0.001 then
+
+
+  //Verificar si se pone una transaccion  // SE movio aca.feb 14/17 Verificar que cambia && ene 13 /17
+    if EsFactoraje then      //Ene 13/17
     begin
-      ShowMessage('No es posible aplicar un valor mayor al disponible');
-      abort;
-    end;
-    f:=dsConCXCpendientes.DataSet.FieldByName('IdCuentaXCobrar').AsString;//+'-'+dsConCXCpendientes.DataSet.FieldByName('Folio').AsString;
-  //  if dsConFacturasPendientes.dataset.FieldByName('SaldoDocumento').Asfloat >= DSAplicacion.DataSet.FieldByName('Importe').Asfloat then
-    if (dsConCXCpendientes.dataset.FieldByName('Saldo').Asfloat >= DSAplicacion.DataSet.FieldByName('Importe').Asfloat)
-    or (abs(dsConCXCpendientes.dataset.FieldByName('Saldo').Asfloat - DSAplicacion.DataSet.FieldByName('Importe').Asfloat)<0.0001) then  //Ajustar para evitar centavos perdidos   C. Ago 23/16 pendiente
-    begin
-      if abs(dsConCXCpendientes.dataset.FieldByName('Saldo').Asfloat - DSAplicacion.DataSet.FieldByName('Importe').Asfloat)>0 then
-         showMessage('valor diferencia: '+ floattoStr(dsConCXCpendientes.dataset.FieldByName('Saldo').Asfloat - DSAplicacion.DataSet.FieldByName('Importe').Asfloat));
-      if Application.MessageBox(pChar('Esta seguro de aplicar el importe al documento '+f +' ?'),'Confirmación',MB_YESNO)=IDYES then
-      begin
-       with DSAplicacion.DataSet do
-        begin
-          fieldbyName('IdCuentaXCobrar').AsInteger:=dsConCXCpendientes.dataset.FieldByName('IdCuentaXCobrar').AsInteger;
-          fieldbyName('IDPersonacliente').AsInteger:=dsConCXCpendientes.dataset.FieldByName('IDPersona').AsInteger;
-          post;
-          // Proceso de Actualizaciones internas puede ser en el after post de la tabla deAplicaciones
-
-        end;
-        idActual:= dsConCXCpendientes.dataset.FieldByName('IdCuentaXCobrar').AsInteger; //Dic 14/16
-        dsConCXCpendientes.DataSet.Close;
-        dsConCXCpendientes.DataSet.Open;
-
-        dsConCXCpendientes.dataset.Locate('IdCuentaXCobrar', idActual,[]); //Dic 14/16
-
-        dsPago.dataset.Refresh;
-      end;
+      camposaldo:='SaldoFactoraje';
+      campoimporte:='ImporteFactoraje';
     end
     else
-      ShowMessage('No es posible aplicar un valor mayor al saldo. Diferencia:'+ floattoStr(DSAplicacion.DataSet.FieldByName('Importe').Asfloat-dsConCXCpendientes.dataset.FieldByName('Saldo').Asfloat ));
+    begin  //Normal
+      camposaldo:='Saldo';
+      campoimporte:='Importe';
+    end;
+   //VErificar sai la cuentaX cobrar es la más vieja
+  if EsCuentaXCobrarAntigua(dsConCXCpendientes.DataSet.FieldByName('IdCuentaXCobrar').AsInteger,dsPago.DataSet.FieldByName('IDPersonaCliente').asinteger)
+       and CXCFacturada(dsConCXCpendientes.DataSet.FieldByName('IdCuentaXCobrar').AsInteger)   then
+  begin
+    //Verificar si tendra moratorios para mandar facturar moratorios
+    //Moratorios no aplica para FActoraje
+     f:= quitasignos(DSAplicacion.DataSet.FieldByName(CampoImporte).ASString); //Copiado para verificar si alcanza para moratorios
+     Valor:= StrToFloat(f);
+
+    if (not esFActoraje) then
+    begin
+      ActMora:=ActualizaMoratorios(dsConCXCpendientes.DataSet.FieldByName('IdCuentaXCobrar').AsInteger,dsPago.DataSet.FieldByName('FechaPago').asDAtetime, Mora, FechaMora );
+      if ActMora then
+        showMessage( 'Los moratorios se actualizaron. Fecha: '+ datetimeToSTR(FechaMora)+' Monto:'+FloatToSTR(Mora));
+      TieneMora:= (Mora>0) ;
+      Seguir:= not TieneMora;
+       //Feb 13/17 VErificar si  el monto del pago alcanza al menos para los moratorios.. si no no se puede FActurar
+      if Mora>valor then
+      begin
+        showMessage( 'El monto del Pago no alcanza a cubrir  los moratorios ('+FloatToSTR(Mora)+')'); //VErificar si luego se puede aca poner ajuste para moratorios.. y  facturar con eses monto.. y el resto ponerlo en pagado.Registrando en PagosAuxiliares
+        SEguir:=False;
+      end ;
+
+      if (Mora<=valor) and TieneMora  and (Application.MessageBox(pChar('Moratorios: '+FloatToSTR(Mora)+ ' a Fecha'+datetimeToSTR(FechaMora)+'.  Facturar Moratorios?'),'Confirmacion',MB_YESNO )=idYEs) then
+      begin
+            //FActurar Moratorios y continuar
+        ActFacturaMora.Execute;
+        Seguir :=True;
+            //Se facturoMora
+      end;
+            //Solo avisar
+    end
+    else
+      Seguir :=True;
+
+    //  f:= quitasignos(DSAplicacion.DataSet.FieldByName('ImporteFactoraje').ASString)
+                                                     //  'Importe'  //Ene 13/17
+     f:= quitasignos(DSAplicacion.DataSet.FieldByName(CampoImporte).ASString);  //Ago 15/16
+  //  showmessage(f);
+    aux:=strtoFLoat(quitasignos(cxDBLblDisponible.Caption));   //Es el del pago no cambia
+                             //Ver si ya tiene el valor
+    Valor:= StrToFloat(f);//DSAplicacion.DataSet.FieldByName('Importe').ASFloat;//cxDBTxtEdtImporteAplicar.Field.Asfloat;
+    inherited;
+    if not Seguir then
+      ShowMessage('Proceso cancelado. El monto del pago al menos debe alcanzar para los moratorios  y debe generar facturas de moratorios.')
+    else
+    begin
+      if Valor > 0 then
+      begin
+        // Esta seguro de aplicar al Documento seleccionado del cliente?
+      //  if DSAplicacion.DataSet.FieldByName('Importe').Asfloat > Valor then    //Ajustar para evitar centavos perdidos   C. Ago 23/16 pendiente
+        if (Valor>aux)then //de otra forma siempre son iguales //Por ahora asi
+      //  if abs(DSAplicacion.DataSet.FieldByName('Importe').Asfloat - Valor)>0.001 then
+        begin
+          ShowMessage('No es posible aplicar un valor mayor al disponible');
+          abort;
+        end;
+        f:=dsConCXCpendientes.DataSet.FieldByName('IdCuentaXCobrar').AsString;//+'-'+dsConCXCpendientes.DataSet.FieldByName('Folio').AsString;
+
+                                                   // 'Saldo'                                               'Importe'   //Ene 13/17
+        if (dsConCXCpendientes.dataset.FieldByName(Camposaldo).Asfloat >= DSAplicacion.DataSet.FieldByName(Campoimporte).Asfloat)
+        or (abs(dsConCXCpendientes.dataset.FieldByName(Camposaldo).Asfloat - DSAplicacion.DataSet.FieldByName(Campoimporte).Asfloat)<0.0001) then  //Ajustar para evitar centavos perdidos   C. Ago 23/16 pendiente
+        begin                                       //  'Saldo'                                                 'Importe'   //Ene 13/17
+          if abs(dsConCXCpendientes.dataset.FieldByName(Camposaldo).Asfloat - DSAplicacion.DataSet.FieldByName(Campoimporte).Asfloat)>0 then
+             showMessage('Pago Parcial, valor de diferencia: '+ floattoStr(dsConCXCpendientes.dataset.FieldByName(Camposaldo).Asfloat - DSAplicacion.DataSet.FieldByName(Campoimporte).Asfloat));   //Ene 13/17
+          if (TieneMora and Seguir)or //FEb 14/17 Para evitar q pregunte si facturo moratorios  ya que debe aplicarlos
+            (Application.MessageBox(pChar('Esta seguro de aplicar el importe al documento '+f +' ?'),'Confirmación',MB_YESNO)=IDYES) then
+          begin
+            try
+              _dmConection.ADOConnection.BeginTrans; //Feb 14/17
+
+             with DSAplicacion.DataSet do
+              begin
+                fieldbyName('IdCuentaXCobrar').AsInteger:=dsConCXCpendientes.dataset.FieldByName('IdCuentaXCobrar').AsInteger;
+                fieldbyName('IDPersonacliente').AsInteger:=dsConCXCpendientes.dataset.FieldByName('IDPersona').AsInteger;
+                post;
+                // Proceso de Actualizaciones internas puede ser en el after post de la tabla deAplicaciones
+
+              end;
+              _dmConection.ADOConnection.CommitTrans;  //Feb 14/17
+              ShowMessage('Operacion completa');
+              except
+                 _dmConection.ADOConnection.RollbackTrans; //Feb 14/17
+                 ShowMessage('Operacion cancelada por errores');
+              end;
+            idActual:= dsConCXCpendientes.dataset.FieldByName('IdCuentaXCobrar').AsInteger; //Dic 14/16
+            dsConCXCpendientes.DataSet.Close;
+            dsConCXCpendientes.DataSet.Open;
+
+            dsConCXCpendientes.dataset.Locate('IdCuentaXCobrar', idActual,[]); //Dic 14/16
+
+            dsPago.dataset.Refresh;
+          end;
+        end
+        else                                                                                                           //Ene 13/17 'Importe'                                                  'Saldo'
+          ShowMessage('No es posible aplicar un valor mayor al saldo. Diferencia:'+ floattoStr(DSAplicacion.DataSet.FieldByName(Campoimporte).Asfloat-dsConCXCpendientes.dataset.FieldByName(Camposaldo).Asfloat ));
+      end
+      else
+        ShowMessage('No se puede aplicar un valor de 0');
+      //showmessage(quitasignos (cxDBLblDisponible.Caption) ); //Ago 15/16
+      BtBtnAplicar.Enabled:= (strtoFLoat(quitasignos(cxDBLblDisponible.Caption))>0) and (DSAplicacion.DataSet.state =dsInsert);
+      BtBtnAgregar.Enabled:= (strtoFLoat(quitasignos(cxDBLblDisponible.Caption))>0) and (DsAplicacion.state =dsBrowse)and (not dsConCXCpendientes.dataset.eof);
+      cxDBTxtEdtImporteAplicar.Enabled:= (DSAplicacion.DataSet.state =dsInsert);//Ago 15/16
+    {   }
+    end;// del seguir opor si se require facturar Moratorios //Feb 12/17
   end
   else
-    ShowMessage('No se puede aplicar un valor de 0');
-  //showmessage(quitasignos (cxDBLblDisponible.Caption) ); //Ago 15/16
-  BtBtnAplicar.Enabled:= (strtoFLoat(quitasignos(cxDBLblDisponible.Caption))>0) and (DSAplicacion.DataSet.state =dsInsert);
-  BtBtnAgregar.Enabled:= (strtoFLoat(quitasignos(cxDBLblDisponible.Caption))>0) and (DsAplicacion.state =dsBrowse)and (not dsConCXCpendientes.dataset.eof);
-  cxDBTxtEdtImporteAplicar.Enabled:= (DSAplicacion.DataSet.state =dsInsert);//Ago 15/16
-{   }
+  begin //HAy cuentas más antiguas...   //FEb 7/17
+    ShowMessage('Existen cuentas pendientes más antiguas...') ;
+  end;
+
+
 end;
+
+
+function TFrmAplicacionPago.EsCuentaXCobrarAntigua(IdCxCAct, IDPersona:integer):Boolean;     //FEb 7/16
+begin
+  Result:=FAlse;
+  dsAuxiliar.dataset.close;
+  TADOQuery(dsAuxiliar.dataset).SQL.clear;
+  TADOQuery(dsAuxiliar.dataset).SQL.Add('Select idcuentaXcobrar, Fecha, sAldo, idpersona from CuentasXCobrar where Saldo >0 '+
+                                        ' and IdPersona='+intToSTR(IDPErsona)+' Order by fecha ');
+  dsAuxiliar.dataset.Open;
+  if not dsAuxiliar.dataset.eof then
+  begin
+    Result:= IdCxCAct= dsAuxiliar.dataset.Fieldbyname('IdCuentaXCobrar').asinteger;
+  end;
+  dsAuxiliar.dataset.close;
+
+end;
+//Verificar si tendra moratorios para mandar facturar moratorios
+function TFrmAplicacionPago.ActualizaMoratorios(IdCxCAct:integer;FechaPago:TDateTime; var ValorMora:Double; var FechaAct:TDateTime):Boolean;
+var               //FEb 7/17
+   MoratorioAct:Double;
+begin
+  Result:=FAlse;
+  MoratorioAct:=0;
+  dsAuxiliar.dataset.close;
+  TADOQuery(dsAuxiliar.dataset).SQL.clear;
+
+  TADOQuery(dsAuxiliar.dataset).SQL.Add('Select Moratorio,MoratorioImpuesto,CXC.Saldo from AnexosAmortizaciones AA, CuentasXCobrar CXC '
+                                       +' where CXC.IdAnexosAmortizaciones=AA.IdAnexoAmortizacion and CXC.idcuentaXCobrar='+inttoSTR(IdCxCAct));
+
+  dsAuxiliar.dataset.Open;
+  if not dsAuxiliar.dataset.eof then
+  begin
+    MoratorioAct:= dsAuxiliar.dataset.Fieldbyname('Moratorio').asFloat;
+  end;
+
+  TADOStoredProc(DSP_CalcMoratorio.DataSet).Parameters.ParamByName('@IdCuentaXCobrar').value:=  IdCxCAct;
+  TADOStoredProc(DSP_CalcMoratorio.DataSet).Parameters.ParamByName('@Fecha').value:=  FechaPago;
+
+  TADOStoredProc(DSP_CalcMoratorio.DataSet).ExecProc;
+
+
+  dsAuxiliar.dataset.close;
+  TADOQuery(dsAuxiliar.dataset).SQL.clear;
+
+  TADOQuery(dsAuxiliar.dataset).SQL.Add('Select Moratorio,MoratorioImpuesto,CXC.Saldo, FechaMoratorio from AnexosAmortizaciones AA, CuentasXCobrar CXC '
+                                       +' where CXC.IdAnexosAmortizaciones=AA.IdAnexoAmortizacion and CXC.idcuentaXCobrar='+inttoSTR(IdCxCAct));
+
+  dsAuxiliar.dataset.Open;
+
+  ValorMora:= dsAuxiliar.dataset.Fieldbyname('Moratorio').asFloat;
+  FechaAct:= dsAuxiliar.dataset.Fieldbyname('FechaMoratorio').asDAteTime; //Feb 12/17
+  Result:= dsAuxiliar.dataset.Fieldbyname('Moratorio').asFloat<> MoratorioAct; //Se actualizó
+
+
+  dsAuxiliar.dataset.close;
+
+
+end;
+
+ //Verifica que este facturada la parte correspondiente , si se selecciona minimo deberia estar Programada??
+function TFrmAplicacionPago.CXCFacturada(IdCxCAct:integer):Boolean;  //FEb 7/17
+begin
+  dsAuxiliar.dataset.close;
+  TADOQuery(dsAuxiliar.dataset).SQL.clear;
+
+  TADOQuery(dsAuxiliar.dataset).SQL.Add('Select * from CFDI CI, CuentasXCobrar CO'
+  +' where Co.IdCuentaXcobrar='+inttoSTR(IdCxCAct) +' and CI.idcuentaXCobrar='+inttoSTR(IdCxCAct)
+  +' and Co.IdCFDINormal=Ci.IdCFDI');
+
+  dsAuxiliar.dataset.Open;
+  Result:=not dsAuxiliar.dataset.Eof;  //Existe y está al menos prefacturada..  //feb 10/17
+
+end;
+
+
+
 
 function TFrmAplicacionPago.Quitasignos(TextoPesos:String):String;//Ago 15/16
 var 
@@ -179,6 +375,36 @@ begin
     DElete(TextoPesos,i,1);
   end;
   Result:= TextoPesos;
+end;
+
+procedure TFrmAplicacionPago.SetFActFacturaMora(const Value: TBasicAction);
+begin
+  FActFacturaMora := Value;
+
+end;
+
+procedure TFrmAplicacionPago.tvMasterCellDblClick(
+  Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo;
+  AButton: TMouseButton; AShift: TShiftState; var AHandled: Boolean);
+begin
+  if dsAplicacion.state = dsInsert then  //Feb 10/17
+  begin
+    if EsFActoraje then
+    begin
+      if dsConCxCPendientes.DataSet.FieldByName('SaldoDocumento').asFloat<=dspago.DataSet.FieldByName('Saldo').asFloat  then
+        dsAplicacion.DataSet.FieldByName('ImporteFactoraje').asFloat:=dsConCxCPendientes.DataSet.FieldByName('SaldoDocumento').asFloat  //DEbe ser el de la Factura
+      else
+        dsAplicacion.DataSet.FieldByName('ImporteFactoraje').asFloat:=dspago.DataSet.FieldByName('Saldo').asFloat;
+    end
+    else
+    begin
+      if dsConCxCPendientes.DataSet.FieldByName('Saldo').asFloat<=dspago.DataSet.FieldByName('Saldo').asFloat  then
+        dsAplicacion.DataSet.FieldByName('Importe').asFloat:=dsConCxCPendientes.DataSet.FieldByName('Saldo').asFloat
+      else
+        dsAplicacion.DataSet.FieldByName('Importe').asFloat:= dspago.DataSet.FieldByName('Saldo').asFloat;
+    end;
+  end;
+
 end;
 
 procedure TFrmAplicacionPago.DSAplicacionStateChange(Sender: TObject);

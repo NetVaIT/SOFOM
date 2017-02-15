@@ -63,6 +63,7 @@ type
     cxDtEdtHasta: TcxDateEdit;
     ChckBxXFecha: TCheckBox;
     ChckBxConSaldo: TCheckBox;
+    ActFacturaMorato: TAction;
     procedure FormCreate(Sender: TObject);
     procedure dxBrBtnAplicaiconesClick(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
@@ -98,7 +99,7 @@ uses PagosDM, PagosEdit, AplicacionPagos;
 procedure TFrmConPagos.DataSourceDataChange(Sender: TObject; Field: TField);
 begin
   inherited;
-  dxBrBtnAplicaicones.Enabled:= DataSource.DataSet.FieldByName('Saldo').AsFloat>0;
+  dxBrBtnAplicaicones.Enabled:= DataSource.DataSet.FieldByName('Saldo').AsFloat>0;   //Verificar que cambia && ene 13 /17
 end;
 
 procedure TFrmConPagos.dxBrBtnAplicaiconesClick(Sender: TObject);
@@ -116,6 +117,15 @@ begin
   else
   begin
     FrmAplicacionPago:=TFrmAplicacionPago.create(self);
+    FrmAplicacionPago.ActFacturaMora:= ActFacturaMorato;
+    FrmAplicacionPago.EsFactoraje:= Datasource.DataSet.FieldByName('OrigenPago').AsInteger=1; //Ene 13/17
+    FrmAplicacionPago.LblaplicandoFactoraje.Visible:= Datasource.DataSet.FieldByName('OrigenPago').AsInteger=1; //Ene 13/17
+
+    FrmAplicacionPago.LblImpAplicaNormal.Visible:= Datasource.DataSet.FieldByName('OrigenPago').AsInteger=0;
+    FrmAplicacionPago.LblEtiquetaFacto.Visible:= Datasource.DataSet.FieldByName('OrigenPago').AsInteger=1;
+    FrmAplicacionPago.cxDBTxtEdtImporteAplicar.Visible:= Datasource.DataSet.FieldByName('OrigenPago').AsInteger=0;
+    FrmAplicacionPago.cxDBTxtEdtImporteAplicaFactoraje.Visible:= Datasource.DataSet.FieldByName('OrigenPago').AsInteger=1;
+
     FrmAplicacionPago.DSPago.DataSet:=Datasource.DataSet;
     FrmAplicacionPago.dsConCXCPendientes.DataSet:=dsConCXCPendientes.DataSet;
     FrmAplicacionPago.DSDetallesCXC.dataset:=DSDetallesCXC.DataSet;

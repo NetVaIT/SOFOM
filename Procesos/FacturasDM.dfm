@@ -28,11 +28,11 @@ inherited dmFacturas: TdmFacturas
     object adodsMasterIdCFDITipoDocumento: TIntegerField
       FieldName = 'IdCFDITipoDocumento'
     end
-    object adodsMasterIdCFDIFormaPago: TIntegerField
-      FieldName = 'IdCFDIFormaPago'
-    end
     object adodsMasterIdMetodoPago: TIntegerField
       FieldName = 'IdMetodoPago'
+    end
+    object adodsMasterIdCFDIFormaPago: TIntegerField
+      FieldName = 'IdCFDIFormaPago'
     end
     object adodsMasterIdMoneda: TIntegerField
       FieldName = 'IdMoneda'

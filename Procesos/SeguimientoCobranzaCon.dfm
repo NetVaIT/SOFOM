@@ -1,236 +1,11 @@
-inherited FrmConPagos: TFrmConPagos
-  Caption = 'FrmConPagos'
-  ClientWidth = 1107
-  ExplicitWidth = 1107
+inherited FrmSeguimientoCobranza: TFrmSeguimientoCobranza
+  Caption = 'FrmSeguimientoCobranza'
+  ExplicitWidth = 651
+  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
-  inherited splDetail3: TSplitter
-    Width = 1107
-    ExplicitWidth = 1107
-  end
-  inherited splDetail1: TSplitter
-    Width = 1107
-    ExplicitWidth = 1107
-  end
-  inherited splDetail2: TSplitter
-    Width = 1107
-    ExplicitWidth = 1107
-  end
-  inherited pnlMaster: TPanel
-    Top = 75
-    Width = 1107
-    Height = 209
-    ExplicitTop = 75
-    ExplicitWidth = 1107
-    ExplicitHeight = 209
-    inherited cxGrid: TcxGrid
-      Width = 1107
-      Height = 209
-      ExplicitWidth = 1107
-      ExplicitHeight = 209
-      inherited tvMaster: TcxGridDBTableView
-        object tvMasterIdPago: TcxGridDBColumn
-          DataBinding.FieldName = 'IdPago'
-          Visible = False
-        end
-        object tvMasterIdBanco: TcxGridDBColumn
-          DataBinding.FieldName = 'IdBanco'
-          Visible = False
-        end
-        object tvMasterIdPersonaCliente: TcxGridDBColumn
-          DataBinding.FieldName = 'IdPersonaCliente'
-          Visible = False
-        end
-        object tvMasterIdCuentaBancariaEstadoCuenta: TcxGridDBColumn
-          DataBinding.FieldName = 'IdCuentaBancariaEstadoCuenta'
-          Visible = False
-        end
-        object tvMasterFechaPago: TcxGridDBColumn
-          DataBinding.FieldName = 'FechaPago'
-        end
-        object tvMasterCliente: TcxGridDBColumn
-          DataBinding.FieldName = 'Cliente'
-          Width = 300
-        end
-        object tvMasterSeriePago: TcxGridDBColumn
-          DataBinding.FieldName = 'SeriePago'
-          Width = 105
-        end
-        object tvMasterFolioPago: TcxGridDBColumn
-          DataBinding.FieldName = 'FolioPago'
-          Width = 81
-        end
-        object tvMasterBanco: TcxGridDBColumn
-          DataBinding.FieldName = 'Banco'
-        end
-        object tvMasterImporte: TcxGridDBColumn
-          DataBinding.FieldName = 'Importe'
-        end
-        object tvMasterSaldo: TcxGridDBColumn
-          DataBinding.FieldName = 'Saldo'
-        end
-        object tvMasterReferencia: TcxGridDBColumn
-          DataBinding.FieldName = 'Referencia'
-          Width = 133
-        end
-        object tvMasterObservaciones: TcxGridDBColumn
-          DataBinding.FieldName = 'Observaciones'
-        end
-      end
-    end
-  end
-  inherited pnlDetail3: TPanel
-    Width = 1107
-    ExplicitWidth = 1107
-  end
-  inherited pnlDetail2: TPanel
-    Width = 1107
-    ExplicitWidth = 1107
-  end
   inherited pnlDetail1: TPanel
-    Width = 1107
-    ExplicitWidth = 1107
-  end
-  inherited pnlClose: TPanel
-    Width = 1107
-    ExplicitWidth = 1107
-    inherited btnClose: TButton
-      Left = 1022
-      ExplicitLeft = 1022
-    end
-  end
-  object PnlBusqueda: TPanel [8]
-    Left = 0
-    Top = 31
-    Width = 1107
-    Height = 44
-    Align = alTop
-    BevelOuter = bvNone
-    TabOrder = 9
-    DesignSize = (
-      1107
-      44)
-    object Button1: TButton
-      Left = 1024
-      Top = 6
-      Width = 75
-      Height = 25
-      Anchors = [akTop, akRight]
-      Cancel = True
-      Caption = 'Cerrar'
-      TabOrder = 0
-      OnClick = btnCloseClick
-    end
-    object Panel1: TPanel
-      Left = 0
-      Top = 0
-      Width = 199
-      Height = 44
-      Align = alLeft
-      BevelOuter = bvNone
-      ParentBackground = False
-      TabOrder = 1
-      object Label3: TLabel
-        Left = 16
-        Top = 2
-        Width = 90
-        Height = 13
-        Caption = 'Cliente parecido a:'
-      end
-      object EdtNombre: TEdit
-        Left = 15
-        Top = 17
-        Width = 163
-        Height = 21
-        TabOrder = 0
-        OnChange = EdtNombreChange
-      end
-    end
-    object PnlFechas: TPanel
-      Left = 199
-      Top = 0
-      Width = 908
-      Height = 44
-      Align = alClient
-      BevelOuter = bvNone
-      ParentBackground = False
-      TabOrder = 2
-      object Label1: TLabel
-        Left = 21
-        Top = 4
-        Width = 30
-        Height = 13
-        Caption = 'Desde'
-      end
-      object Label2: TLabel
-        Left = 181
-        Top = 4
-        Width = 28
-        Height = 13
-        Caption = 'Hasta'
-      end
-      object SpdBtnBuscar: TSpeedButton
-        Left = 331
-        Top = 13
-        Width = 25
-        Height = 25
-        Glyph.Data = {
-          76010000424D7601000000000000760000002800000020000000100000000100
-          04000000000000010000130B0000130B00001000000000000000000000000000
-          8000008000000080800080000000800080008080000080808000C0C0C0000000
-          FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
-          33033333333333333F7F3333333333333000333333333333F777333333333333
-          000333333333333F777333333333333000333333333333F77733333333333300
-          033333333FFF3F777333333700073B703333333F7773F77733333307777700B3
-          33333377333777733333307F8F8F7033333337F3333337F3333377F8F8F8F773
-          333337333333373F3333078F8F8F870333337F333333337F333307F8F8F8F703
-          33337F333333337F3333078F8F8F8703333373F333333373333377F8F8F8F773
-          333337F3333337F33333307F8F8F70333333373FF333F7333333330777770333
-          333333773FF77333333333370007333333333333777333333333}
-        NumGlyphs = 2
-        OnClick = SpdBtnBuscarClick
-      end
-      object cxDtEdtDesde: TcxDateEdit
-        Left = 16
-        Top = 17
-        TabOrder = 0
-        Width = 145
-      end
-      object cxDtEdtHasta: TcxDateEdit
-        Left = 176
-        Top = 17
-        TabOrder = 1
-        Width = 137
-      end
-      object ChckBxXFecha: TCheckBox
-        Left = 373
-        Top = 18
-        Width = 82
-        Height = 17
-        Caption = 'Usar Fecha'
-        Checked = True
-        State = cbChecked
-        TabOrder = 2
-      end
-      object ChckBxConSaldo: TCheckBox
-        Left = 461
-        Top = 10
-        Width = 74
-        Height = 33
-        Caption = 'Con Saldo'
-        TabOrder = 3
-        WordWrap = True
-      end
-    end
-  end
-  inherited ActionList: TActionList
-    object ActFacturaMorato: TAction
-      Caption = 'ActFacturaMorato'
-    end
-  end
-  inherited DataSource: TDataSource
-    DataSet = dmPagos.adodsMaster
-    OnDataChange = DataSourceDataChange
+    ExplicitTop = 281
   end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
@@ -238,11 +13,10 @@ inherited FrmConPagos: TFrmConPagos
       0
       31
       0)
-    inherited dxbNavigator: TdxBar
-      DockedLeft = 107
+    inherited dxbEdit: TdxBar
+      Visible = False
     end
     inherited dxbTools: TdxBar
-      DockedLeft = 238
       ItemLinks = <
         item
           Visible = True
@@ -254,17 +28,17 @@ inherited FrmConPagos: TFrmConPagos
         end
         item
           Visible = True
-          ItemName = 'dxBrBtnAplicaicones'
+          ItemName = 'dxBrBtnSeguimiento'
         end>
     end
-    object dxBrBtnAplicaicones: TdxBarButton
-      Caption = 'Aplicaciones'
+    object dxBrBtnSeguimiento: TdxBarButton
+      Caption = 'Seguimiento'
       Category = 0
-      Hint = 'Aplicaciones'
+      Hint = 'Seguimiento'
       Visible = ivAlways
       ImageIndex = 17
       PaintStyle = psCaptionGlyph
-      OnClick = dxBrBtnAplicaiconesClick
+      OnClick = dxBrBtnSeguimientoClick
     end
   end
   inherited cxStyleRepository: TcxStyleRepository
@@ -1007,66 +781,46 @@ inherited FrmConPagos: TFrmConPagos
       item
         Image.Data = {
           36040000424D3604000000000000360000002800000010000000100000000100
-          2000000000000004000000000000000000000000000000000000FFFFFF00FFFF
-          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00D5D5D500E5E5E500FFFF
-          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-          FF00FFFFFF00FFFFFF00FFFFFF00F9F9F900A4A4A400ECECEC00616161009D9D
-          9D00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-          FF00FFFFFF00FFFFFF00C1C1C100B2B2B200FDFDFD00FFFFFF00797979007373
-          730069696900C4C4C400FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-          FF00EEEEEE00A3A3A300DBDBDB00EEEEEE00E7E7E700FFFFFF00828282007373
-          73007B7B7B00686868007B7B7B00F0F0F000FFFFFF00FFFFFF00FFFFFF00F0F0
-          F000AAAAAA00E3E3E300DADADA00E1E1E100FFFFFF00E3E3E300F4F4F400CACA
-          CA0074747400737373007575750057575700EAEAEA00FFFFFF00FFFFFF00DFDF
-          DF00C2C2C200CFCFCF00F8F8F800F6F6F6009E9F9E008F828E0099959800B6B7
-          B600ECECEC00A7A7A7006D6D6D0064646400DEDEDE00FFFFFF00FFFFFF00D9D9
-          D900D7D7D700F9F9F900969696005D5D5D007967780046964D007E967A00E6D2
-          E600E3E4E300F5F5F500E8E8E8008A8A8A00D7D7D700FFFFFF00FFFFFF00F9F9
-          F900C7C7C700C4C4C400BEBEBE00908B8F00626F5E0029E6620011C6380064B2
-          6100FFEFFF00DDDEDD00ADADAD00BDBDBD00F9F9F900FFFFFF00FFFFFF00FFFF
-          FF00FFFFFF00FFFFFF00D7D8D800E5CBDF002DC54D0045E07D004EE7860033D6
-          5E001F922000E1CBDE00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-          FF00FFFFFF00FFFFFF00FFFFFF00AEE8B4002FD7660044DD780048E17B004AE9
-          820056EF870029B12F00FCFDFA00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-          FF00FFFFFF00FFFFFF00FFFFFF0023C8510047E27C0048E17B004EE580006DF3
-          9D0050E484001BC54B0065C76A00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-          FF00FFFFFF00FFFFFF0077DA91004AE7810052E784004AE57E006AF49D000095
-          00007BCF8500F8FBF400FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-          FF00FFFFFF00FFFFFF003FD2690040DB6D0045E0770050EA83006AF79C0004A4
-          1800CAEDD000FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF003DE16F0052EE86006BFC9E000DB0
-          2F00BCE8C300FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF002EE3690059F38E004DE17C0023C4
-          4D00C8EECD00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00C6ECD000ADE5BB00E0F4E300FFFF
-          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00}
-        MaskColor = clWhite
+          2000000000000004000000000000000000000000000000000000171717243A3A
+          3A5B4A4A4A73535353825A5B5B8E5B5C5C906364649C6465659E6465659E6364
+          649C5B5C5C905A5A5B8E535353824A4A4A743A3A3A5B171717240909090F1C1C
+          1C2D2F323556496482E44D6989EE506D8CF3506D8BF3506D8BF3506C8BF3506C
+          8BF3506C8BF34D6988EE496584E8343A406A1C1C1C2D0909090F000000000000
+          00000B15214F92A6BBFDDCDDDEFEDCDCDDFEDADADBFED8D8D9FED5D6D6FED3D4
+          D4FED1D2D2FECECECFFE9DACBAFD12283E730000000100000000000000000000
+          00000915214FA0B2C3FDE2E3E3FFE2E2E2FFDFDFDFFFDDDDDDFFDBDBDBFFD9D9
+          D9FFD7D7D7FFD4D4D4FFADB8C2FD12293F730000000100000000000000000000
+          00000A16214FA2B5C6FDE2E3E3FFEAEAEAFFDFDFDFFFD6D6D6FFD3D3D3FFD2D2
+          D2FFD0D0D0FFD5D5D5FFAFBBC5FD122A41730000000100000000000000000000
+          00000A17224FA3B7C8FDE4E5E5FFE5E5E5FFE2E2E2FFE2E2E2FFE0E0E0FFDEDE
+          DEFFDCDCDCFFDADADAFFB2BEC8FD122C43730000000100000000000000000000
+          00000A18234FA4B9CAFDE6E6E7FFE0E0E1FFE3E3E5FFE4E4E4FFE2E2E2FFE0E0
+          E0FFDEDEDEFFDDDDDDFFB4C0CBFD122E45730000000100000000000000000000
+          00000A18254FA5BCCDFDE6E6E7FF9898F0FF9F9FEBFFD9D9DAFFD7D7D7FFD6D6
+          D6FFD5D5D5FFDCDCDCFFB5C3CEFD122F46730000000100000000000000000000
+          00000A19254FA5BDCFFDE9E9EAFFE6E6E9FF9797EEFFD4D4E9FFE6E6E6FFE4E4
+          E4FFE3E3E3FFE1E1E1FFB7C5D1FD133148730000000100000000000000000000
+          00000A1A264FA6BED1FDE9E9EAFFD3D3E9FFD9D9E9FFDCDCDEFFDBDBDBFFDADA
+          DAFFD9D9D9FFE1E1E1FFB9C8D4FD13334A730000000100000000000000000000
+          00000A1B274FA6C0D2FDE9E9EAFFA5A5EBFF7A7AF0FFE0E0E7FFE5E5E5FFE4E4
+          E4FFE3E3E3FFE4E4E4FFBACAD6FD13354C730000000100000000000000000000
+          00000A1C284FA6C1D3FDE9EBECFFE9EAECFFCACCEDFFDCDDEBFFE8E9EAFFE7E8
+          E9FFE6E8E8FFE5E6E7FFBCCCD8FD13364E730000000100000000000000000000
+          00000A1D294E81AECBFCC5D7E1FE63AEDFFE62AEDFFE62AEDFFE62ADDFFE62AD
+          DFFE62ADDEFEAFCBDEFE91B7CFFC15384F720000000000000000000000000000
+          00000207091420506E98225879A2038CDDFC028EDFFD1083C7E0127DBDD4028E
+          DFFD028DDEFD1E638CB42254739E061118250000000000000000000000000000
+          0000000000000000000100010102084A6A740C6B97A30B4967720B31454D0A74
+          A5B20B587D880005070B00000001000000000000000000000000000000000000
+          000000000000000000000000000000000000000304070C83AEB40C8FC0C6010C
+          1116000000010000000000000000000000000000000000000000}
       end>
   end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
-      ReportDocument.CreationDate = 42712.575441516200000000
+      ReportDocument.CreationDate = 42775.416768854160000000
       AssignedFormatValues = []
       BuiltInReportLink = True
     end
-  end
-  object dsConCXCPendientes: TDataSource
-    DataSet = dmPagos.ADODtStCXCPendientes
-    Left = 460
-    Top = 65528
-  end
-  object DSDetallesCXC: TDataSource
-    DataSet = dmPagos.ADODtStCxCDetallePend
-    Left = 548
-    Top = 65533
-  end
-  object DSAplicacion: TDataSource
-    DataSet = dmPagos.ADODtStAplicacionesPagos
-    Left = 640
-  end
-  object DSPersonas: TDataSource
-    DataSet = dmPagos.ADOSPersonas
-    Left = 648
-    Top = 120
   end
 end

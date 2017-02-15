@@ -150,6 +150,8 @@ type
     ActEstadoCuenta: TAction;
     actListasRestringidas: TAction;
     dxBarLargeButton19: TdxBarLargeButton;
+    dxBrLrgBtnSeguimiento: TdxBarLargeButton;
+    ActSeguimiento: TAction;
     procedure actCatalogoExecute(Sender: TObject);
     procedure actIntervaCXPExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);

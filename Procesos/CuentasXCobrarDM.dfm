@@ -8,8 +8,8 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     CommandText = 
       'select IdCuentaXCobrar, IdCuentaXCobrarEstatus, IdPersona,'#13#10' IdA' +
       'nexosAmortizaciones, Fecha, Importe, Impuesto, Interes, '#13#10'Total,' +
-      ' Saldo, SaldoFactoraje from CuentasXCobrar '#13#10'--where idcuentaxco' +
-      'brarEstatus =-1 -- precargada'
+      ' Saldo, SaldoFactoraje, IdCFDINormal from CuentasXCobrar '#13#10'--whe' +
+      're idcuentaxcobrarEstatus =-1 -- precargada'
     Left = 48
     Top = 24
     object adodsMasterIdCuentaXCobrar: TAutoIncField
@@ -74,6 +74,14 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       Size = 150
       Lookup = True
     end
+    object adodsMasterSaldoFactoraje: TFMTBCDField
+      FieldName = 'SaldoFactoraje'
+      Precision = 18
+      Size = 6
+    end
+    object adodsMasterIdCFDINormal: TLargeintField
+      FieldName = 'IdCFDINormal'
+    end
   end
   inherited adodsUpdate: TADODataSet
     Left = 328
@@ -83,6 +91,10 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       Caption = 'Generar PreFacturas'
       OnExecute = actGeneraPreFacturasExecute
     end
+    object ActActualizaMoratorios: TAction
+      Caption = 'Actualiza Moratorios'
+      OnExecute = ActActualizaMoratoriosExecute
+    end
   end
   object ADOdsCXCDetalle: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -90,8 +102,8 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     CommandText = 
       'select IdCuentaXCobrarDetalle, IdCuentaXCobrar, '#13#10'IdCuentaXCobra' +
       'rTipo, Identificador, Descripcion, '#13#10'Importe, Saldo, SaldoFactor' +
-      'aje from CuentasXCobrarDetalle '#13#10'where IdCuentaXCobrar =:IDCuent' +
-      'aXCobrar'
+      'aje,'#13#10' PagosAplicados, PagosAplicadosFactoraje'#13#10' from CuentasXCo' +
+      'brarDetalle '#13#10'where IdCuentaXCobrar =:IDCuentaXCobrar'
     DataSource = DSMaster
     IndexFieldNames = 'IdCuentaXCobrar'
     MasterFields = 'IDCuentaXCobrar'
@@ -139,6 +151,16 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       Precision = 18
       Size = 6
     end
+    object ADOdsCXCDetallePagosAplicados: TFMTBCDField
+      FieldName = 'PagosAplicados'
+      Precision = 18
+      Size = 6
+    end
+    object ADOdsCXCDetallePagosAplicadosFactoraje: TFMTBCDField
+      FieldName = 'PagosAplicadosFactoraje'
+      Precision = 18
+      Size = 6
+    end
   end
   object ADODsCXCTiposConc: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -152,6 +174,7 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     Top = 176
   end
   object ADODSCXCEstatus: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -162,6 +185,7 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     Top = 96
   end
   object ADOSPersonas: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -185,10 +209,11 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       'select IdCuentaXCobrarDetalle, IdCuentaXCobrar, '#13#10'CXCD.IdCuentaX' +
       'CobrarTipo, CXCD.Identificador, CXCD.Descripcion, '#13#10'CXCD.Importe' +
       ', CXCD.Saldo,  CXCTC.Facturar,  CXCTC.IdTipoContrato,'#13#10'CXCTC.EsI' +
-      'VA,CXCTC.Temporalidad'#13#10'from CuentasXCobrarDetalle  CXCD '#13#10'inner ' +
-      'join CuentasXCobrarTiposConceptos CXCTC on CXCD.IdCuentaXCobrarT' +
-      'ipo=CXCTC.IdCuentaXCobrarTipo'#13#10' where  CXCTC.Facturar=1 and '#13#10'CX' +
-      'CTC.EsIVA =0 and CXCD.IdCuentaXCobrar =:IDCuentaXCobrar'
+      'VA,CXCTC.Temporalidad, CXCTC.EsMoratorios'#13#10'from CuentasXCobrarDe' +
+      'talle  CXCD '#13#10'inner join CuentasXCobrarTiposConceptos CXCTC on C' +
+      'XCD.IdCuentaXCobrarTipo=CXCTC.IdCuentaXCobrarTipo'#13#10' where  CXCTC' +
+      '.Facturar=1 and'#13#10'CXCTC.EsIVA =0 and CXCD.IdCuentaXCobrar =:IDCue' +
+      'ntaXCobrar'
     DataSource = DSMaster
     IndexFieldNames = 'IdCuentaXCobrar'
     MasterFields = 'IDCuentaXCobrar'
@@ -244,19 +269,20 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       FieldName = 'IdCuentaXCobrarDetalle'
       ReadOnly = True
     end
+    object DetallesCXCParaFacturarEsMoratorios: TBooleanField
+      FieldName = 'EsMoratorios'
+    end
   end
   object ADOSumaIVA: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'SElect SUM(CXCD.importe) from CuentasXCobrarDetalle  CXCD   -- p' +
-      'ara confirmar valor de IVA'#13#10'inner join CuentasXCobrarTiposConcep' +
-      'tos CXCTC on CXCD.IdCuentaXCobrarTipo=CXCTC.IdCuentaXCobrarTipo'#13 +
-      #10' where CXCTC.Facturar=1 and CXCTC.EsIVA =1 '#13#10'and CXCD.IdCuentaX' +
-      'Cobrar =:IDCuentaXCobrar'
-    DataSource = DSMaster
-    IndexFieldNames = 'IdCuentaXCobrar'
-    MasterFields = 'IdCuentaXCobrar'
+      'SElect SUM(CXCD.importe) as IVAReg  from CuentasXCobrarDetalle  ' +
+      'CXCD   -- para confirmar valor de IVA'#13#10'inner join CuentasXCobrar' +
+      'TiposConceptos CXCTC on CXCD.IdCuentaXCobrarTipo=CXCTC.IdCuentaX' +
+      'CobrarTipo'#13#10' where CXCTC.Facturar=1 and CXCTC.EsIVA =1 and CXCTC' +
+      '.EsMoratorios=0'#13#10'and CXCD.IdCuentaXCobrar =:IDCuentaXCobrar'
+    MasterFields = 'IDCuentaXCobrar'
     Parameters = <
       item
         Name = 'IDCuentaXCobrar'
@@ -430,6 +456,14 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     end
     object ADODtStPrefacturasCFDIFechaTimbrado_TB: TDateTimeField
       FieldName = 'FechaTimbrado_TB'
+    end
+    object ADODtStPrefacturasCFDIIdCuentaXCobrar: TIntegerField
+      FieldName = 'IdCuentaXCobrar'
+    end
+    object ADODtStPrefacturasCFDISaldoFactoraje: TFMTBCDField
+      FieldName = 'SaldoFactoraje'
+      Precision = 18
+      Size = 6
     end
   end
   object ADODtStCFDIConceptosPref: TADODataSet
@@ -736,5 +770,47 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     Parameters = <>
     Left = 628
     Top = 241
+  end
+  object adopSetCXCMoratorio: TADOStoredProc
+    Connection = _dmConection.ADOConnection
+    ProcedureName = 'p_GenMoratorio;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@IdCuentaXCobrar'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+      end
+      item
+        Name = '@Fecha'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+      end>
+    Left = 64
+    Top = 392
+  end
+  object ADOStrprcActGralMoratorios: TADOStoredProc
+    Connection = _dmConection.ADOConnection
+    ProcedureName = 'p_GenMoratorios;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@Fecha'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+      end>
+    Left = 240
+    Top = 400
   end
 end

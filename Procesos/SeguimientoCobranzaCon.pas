@@ -1,4 +1,4 @@
-unit CuentasXCobrarDetalleForm;
+unit SeguimientoCobranzaCon;
 
 interface
 
@@ -30,17 +30,9 @@ uses
   Vcl.ExtCtrls;
 
 type
-  TFrmCXCDetalle = class(T_frmGrid)
-    tvMasterIdCuentaXCobrar: TcxGridDBColumn;
-    tvMasterIdCuentaXCobrarTipo: TcxGridDBColumn;
-    tvMasterIdentificador: TcxGridDBColumn;
-    tvMasterDescripcion: TcxGridDBColumn;
-    tvMasterImporte: TcxGridDBColumn;
-    tvMasterSaldo: TcxGridDBColumn;
-    tvMasterIdCuentaXCobrarDetalle: TcxGridDBColumn;
-    tvMasterSaldoFactoraje: TcxGridDBColumn;
-    tvMasterPagosAplicados: TcxGridDBColumn;
-    tvMasterPagosAplicadosFactoraje: TcxGridDBColumn;
+  TFrmSeguimientoCobranza = class(T_frmGrid)
+    dxBrBtnSeguimiento: TdxBarButton;
+    procedure dxBrBtnSeguimientoClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -48,12 +40,21 @@ type
   end;
 
 var
-  FrmCXCDetalle: TFrmCXCDetalle;
+  FrmSeguimientoCobranza: TFrmSeguimientoCobranza;
 
 implementation
 
 {$R *.dfm}
 
-uses CuentasXCobrarDM;
+uses SeguimientoRegistroEd;
+
+procedure TFrmSeguimientoCobranza.dxBrBtnSeguimientoClick(Sender: TObject);
+begin
+  inherited;
+  FrmSeguimientoRegistro:=TFrmSeguimientoRegistro.create(self);
+  FrmSeguimientoRegistro.ShowModal;
+  FrmSeguimientoRegistro.Free;
+
+end;
 
 end.

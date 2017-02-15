@@ -45,15 +45,23 @@ type
     dxBarButton8: TdxBarButton;
     dxBtnPrefacturas: TdxBarButton;
     tvMasterIdCuentaXCobrar: TcxGridDBColumn;
+    dxBrBtnMoratorios: TdxBarButton;
+    dxBrBtnGenerarCXC: TdxBarButton;
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
     procedure FormCreate(Sender: TObject);
   private
     FActGeneraPrefactura: TBasicAction;
+    FActActualizaMoratorios: TBasicAction;
+    FActGeneraCXC: TBasicAction;
     procedure SetActGeneraPrefactura(const Value: TBasicAction);
+    procedure SetActActualizaMoratorios(const Value: TBasicAction);
+    procedure SetActGeneraCXC(const Value: TBasicAction);//Feb 8/17
     { Private declarations }
   public
     { Public declarations }
     property ActGenerarPrefactura : TBasicAction read FActGeneraPrefactura write SetActGeneraPrefactura;
+    property ActActualizaMoratorios : TBasicAction read FActActualizaMoratorios write SetActActualizaMoratorios;  //Feb 8/17
+    property ActGenerarCXCs : TBasicAction read FActGeneraCXC write SetActGeneraCXC;  //Feb 14/17
   end;
 
 var
@@ -78,6 +86,20 @@ procedure TFrmConCuentasXCobrar.FormCreate(Sender: TObject);
 begin
   inherited;
   gEditForm:= TFrmEdCuentasXCobrar.Create(Self);
+
+end;
+
+procedure TFrmConCuentasXCobrar.SetActActualizaMoratorios(   //Feb 8/17
+  const Value: TBasicAction);
+begin
+  FActActualizaMoratorios := Value;
+  dxBrBtnMoratorios.Action:=VAlue;
+  dxBrBtnMoratorios.ImageIndex:=18;
+end;
+
+procedure TFrmConCuentasXCobrar.SetActGeneraCXC(const Value: TBasicAction);
+begin
+  FActGeneraCXC := Value;
 
 end;
 
