@@ -99,7 +99,7 @@ uses PagosDM, PagosEdit, AplicacionPagos;
 procedure TFrmConPagos.DataSourceDataChange(Sender: TObject; Field: TField);
 begin
   inherited;
-  dxBrBtnAplicaicones.Enabled:= DataSource.DataSet.FieldByName('Saldo').AsFloat>0;   //Verificar que cambia && ene 13 /17
+  dxBrBtnAplicaicones.Enabled:= DataSource.DataSet.FieldByName('Saldo').AsFloat>0.0001;   //Verificar que cambia && ene 13 /17
 end;
 
 procedure TFrmConPagos.dxBrBtnAplicaiconesClick(Sender: TObject);
@@ -190,7 +190,7 @@ begin
     ffiltroFecha:='';
   Aux:=Aux+ffiltroFecha;
   if ChckBxConSaldo.Checked then
-    Ffiltro:=' Saldo > 0 '
+    Ffiltro:=' Saldo > 0.0001 '
   else
     Ffiltro:='';
 
@@ -210,7 +210,7 @@ procedure TFrmConPagos.SpdBtnBuscarClick(Sender: TObject);
 const  //Dic 20/16
    TxtSQL='select  IdPago, IdBanco, IdPersonaCliente, IdCuentaBancariaEstadoCuenta,'+
           'FechaPago, FolioPago, SeriePago, Referencia, Importe, Saldo, ' +
-          'Observaciones, PA.IdMetodoPago, CuentaPago from Pagos PA ';
+          'Observaciones, PA.IdMetodoPago, CuentaPago, OrigenPago from Pagos PA ';
 
 begin
   inherited;

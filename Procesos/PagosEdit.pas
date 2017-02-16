@@ -23,31 +23,34 @@ uses
 
 type
   TFrmEdPagos = class(T_frmEdit)
+    Label7: TLabel;
+    cxDBMemo1: TcxDBMemo;
+    DSPersonas: TDataSource;
+    PnlDatosBase: TPanel;
     Label1: TLabel;
-    cxDBDateEdit1: TcxDBDateEdit;
     Label2: TLabel;
     Label3: TLabel;
-    cxDBTextEdit1: TcxDBTextEdit;
     Label4: TLabel;
-    cxDBTextEdit2: TcxDBTextEdit;
     Label5: TLabel;
-    cxDBTextEdit3: TcxDBTextEdit;
     Label6: TLabel;
-    Label7: TLabel;
     Label8: TLabel;
-    DBLookupComboBox1: TDBLookupComboBox;
     Label9: TLabel;
+    Label10: TLabel;
+    Label11: TLabel;
+    cxDBDateEdit1: TcxDBDateEdit;
+    cxDBTextEdit1: TcxDBTextEdit;
+    cxDBTextEdit2: TcxDBTextEdit;
+    cxDBTextEdit3: TcxDBTextEdit;
+    DBLookupComboBox1: TDBLookupComboBox;
     DBLkpCmbBxCliente: TDBLookupComboBox;
-    cxDBMemo1: TcxDBMemo;
     cxDBTextEdit5: TcxDBTextEdit;
     cxDBLabel1: TcxDBLabel;
-    Label10: TLabel;
     DBLookupComboBox3: TDBLookupComboBox;
-    Label11: TLabel;
     cxDBTextEdit4: TcxDBTextEdit;
-    DSPersonas: TDataSource;
     cxDBRdGrpOrigenPago: TcxDBRadioGroup;
     procedure DBLkpCmbBxClienteClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure cxDBTextEdit3Exit(Sender: TObject);
   private
     { Private declarations }
   public
@@ -63,6 +66,13 @@ implementation
 
 uses PagosDM;
 
+procedure TFrmEdPagos.cxDBTextEdit3Exit(Sender: TObject);
+begin
+  inherited;
+  if datasource.State in [dsinsert,dsEdit] then //Feb 16/17
+    DataSource.DataSet.FieldByName('Saldo').AsFloat:= DataSource.DataSet.FieldByName('Importe').AsFloat;
+end;
+
 procedure TFrmEdPagos.DBLkpCmbBxClienteClick(Sender: TObject);
 begin//Dic 19/16
   inherited;
@@ -74,6 +84,12 @@ begin//Dic 19/16
        datasource.dataset.FieldByName('CuentaPago').AsString:=dsPersonas.dataset.Fieldbyname('NumCtaPagoCliente').AsString;
      end;
   end;
+end;
+
+procedure TFrmEdPagos.FormShow(Sender: TObject);
+begin
+  inherited;
+  PnlDatosBase.Enabled:=DataSource.DataSet.FieldByName('Saldo').AsFloat= DataSource.DataSet.FieldByName('Importe').AsFloat;
 end;
 
 end.

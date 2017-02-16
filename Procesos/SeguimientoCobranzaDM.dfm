@@ -1,87 +1,35 @@
 inherited dmSeguimientoCobranza: TdmSeguimientoCobranza
+  OldCreateOrder = True
   Height = 492
   Width = 586
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
-    OnNewRecord = adodsMasterNewRecord
     CommandText = 
-      'select IDIncidenciaCobranza, IDUsuario, IDPersonaCliente, '#13#10'IdIn' +
-      'cidenciaEstado, IdAnexo, FechaReg, FoliosAsoc, RegContacto, '#13#10'Ac' +
-      'uerdo, Proxcontacto, Condiciones, PromesaPago'#13#10' from Incidencias' +
-      'Cobranza where IdIncidenciaEstado=1'#13#10'order by FechaReg desc'
-    DataSource = dsSaldoCliente
-    IndexFieldNames = 'IDPersonaCliente'
-    MasterFields = 'IdPersona'
+      'select CxC.IdPersona,P.RazonSocial,Sum(CXC.Saldo) as Saldo , sum' +
+      '(CXC.Interes) as interes from CuentasXCobrar CXC, Personas P'#13#10'wh' +
+      'ere p.idpersona=Cxc.IdPersona'#13#10'Group by cxC.IdPersona, P.RazonSo' +
+      'cial'
     Left = 56
-    object adodsMasterIDIncidenciaCobranza: TAutoIncField
-      FieldName = 'IDIncidenciaCobranza'
-      ReadOnly = True
+    object adodsMasterIdPersona: TIntegerField
+      FieldName = 'IdPersona'
     end
-    object adodsMasterIDUsuario: TIntegerField
-      FieldName = 'IDUsuario'
-    end
-    object adodsMasterIDPersonaCliente: TIntegerField
-      FieldName = 'IDPersonaCliente'
-    end
-    object adodsMasterIdIncidenciaEstado: TIntegerField
-      FieldName = 'IdIncidenciaEstado'
-    end
-    object adodsMasterIdAnexo: TIntegerField
-      FieldName = 'IdAnexo'
-    end
-    object adodsMasterFechaReg: TDateTimeField
-      FieldName = 'FechaReg'
-    end
-    object adodsMasterFoliosAsoc: TStringField
-      FieldName = 'FoliosAsoc'
+    object adodsMasterRazonSocial: TStringField
+      FieldName = 'RazonSocial'
       Size = 300
     end
-    object adodsMasterRegContacto: TStringField
-      FieldName = 'RegContacto'
-      Size = 50
+    object adodsMasterSaldo: TFMTBCDField
+      FieldName = 'Saldo'
+      ReadOnly = True
+      currency = True
+      Precision = 38
+      Size = 6
     end
-    object adodsMasterAcuerdo: TStringField
-      FieldName = 'Acuerdo'
-      Size = 500
-    end
-    object adodsMasterProxcontacto: TDateTimeField
-      FieldName = 'Proxcontacto'
-    end
-    object adodsMasterCondiciones: TIntegerField
-      FieldName = 'Condiciones'
-    end
-    object adodsMasterPromesaPago: TStringField
-      FieldName = 'PromesaPago'
-      Size = 2
-    end
-    object adodsMasterEstadoIncidencia: TStringField
-      FieldKind = fkLookup
-      FieldName = 'EstadoIncidencia'
-      LookupDataSet = ADODtStIncidenciasEstados
-      LookupKeyFields = 'IdIncidenciaEstado'
-      LookupResultField = 'Descripcion'
-      KeyFields = 'IdIncidenciaEstado'
-      Lookup = True
-    end
-    object adodsMasterCliente: TStringField
-      FieldKind = fkLookup
-      FieldName = 'Cliente'
-      LookupDataSet = ADODtStPersonas
-      LookupKeyFields = 'IdPersona'
-      LookupResultField = 'RazonSocial'
-      KeyFields = 'IDPersonaCliente'
-      Size = 150
-      Lookup = True
-    end
-    object adodsMasterUsuarioReg: TStringField
-      FieldKind = fkLookup
-      FieldName = 'UsuarioReg'
-      LookupDataSet = ADODtStUsuarios
-      LookupKeyFields = 'IdUsuario'
-      LookupResultField = 'Usuario'
-      KeyFields = 'IDUsuario'
-      Size = 150
-      Lookup = True
+    object adodsMasterinteres: TFMTBCDField
+      FieldName = 'interes'
+      ReadOnly = True
+      currency = True
+      Precision = 38
+      Size = 6
     end
   end
   object ADODtStIncidenciasEstados: TADODataSet
@@ -107,36 +55,99 @@ inherited dmSeguimientoCobranza: TdmSeguimientoCobranza
     Left = 56
     Top = 168
   end
-  object ADODtStSaldoCliente: TADODataSet
+  object ADODtStIncidencias: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
+    OnNewRecord = ADODtStIncidenciasNewRecord
     CommandText = 
-      'select CxC.IdPersona,P.RazonSocial,Sum(CXC.Saldo) as Saldo , sum' +
-      '(CXC.Interes) as interes from CuentasXCobrar CXC, Personas P'#13#10'wh' +
-      'ere p.idpersona=Cxc.IdPersona'#13#10'Group by cxC.IdPersona, P.RazonSo' +
-      'cial'
-    Parameters = <>
+      'select IDIncidenciaCobranza, IDUsuario, IDPersonaCliente, '#13#10'IdIn' +
+      'cidenciaEstado, IdAnexo, FechaReg, FoliosAsoc, RegContacto, '#13#10'Ac' +
+      'uerdo, Proxcontacto, Condiciones, PromesaPago'#13#10' from Incidencias' +
+      'Cobranza where IdIncidenciaEstado=1 and IdPersonaCliente=:IDPers' +
+      'ona'#13#10'order by FechaReg desc'
+    DataSource = dsSaldoCliente
+    IndexFieldNames = 'IDPersonaCliente'
+    MasterFields = 'IdPersona'
+    Parameters = <
+      item
+        Name = 'IDPersona'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
     Left = 216
     Top = 88
-    object ADODtStSaldoClienteIdPersona: TIntegerField
-      FieldName = 'IdPersona'
-    end
-    object ADODtStSaldoClienteSaldo: TFMTBCDField
-      FieldName = 'Saldo'
+    object ADODtStIncidenciasIDIncidenciaCobranza: TAutoIncField
+      FieldName = 'IDIncidenciaCobranza'
       ReadOnly = True
-      Precision = 38
-      Size = 6
     end
-    object ADODtStSaldoClienteinteres: TFMTBCDField
-      FieldName = 'interes'
-      ReadOnly = True
-      Precision = 38
-      Size = 6
+    object ADODtStIncidenciasIDUsuario: TIntegerField
+      FieldName = 'IDUsuario'
     end
-    object ADODtStSaldoClienteRazonSocial: TStringField
-      DisplayLabel = 'Cliente'
-      FieldName = 'RazonSocial'
+    object ADODtStIncidenciasIDPersonaCliente: TIntegerField
+      FieldName = 'IDPersonaCliente'
+    end
+    object ADODtStIncidenciasIdIncidenciaEstado: TIntegerField
+      FieldName = 'IdIncidenciaEstado'
+    end
+    object ADODtStIncidenciasIdAnexo: TIntegerField
+      FieldName = 'IdAnexo'
+    end
+    object ADODtStIncidenciasFechaReg: TDateTimeField
+      FieldName = 'FechaReg'
+    end
+    object ADODtStIncidenciasFoliosAsoc: TStringField
+      FieldName = 'FoliosAsoc'
       Size = 300
+    end
+    object ADODtStIncidenciasRegContacto: TStringField
+      FieldName = 'RegContacto'
+      Size = 50
+    end
+    object ADODtStIncidenciasAcuerdo: TStringField
+      FieldName = 'Acuerdo'
+      Size = 500
+    end
+    object ADODtStIncidenciasProxcontacto: TDateTimeField
+      FieldName = 'Proxcontacto'
+    end
+    object ADODtStIncidenciasCondiciones: TIntegerField
+      FieldName = 'Condiciones'
+    end
+    object ADODtStIncidenciasPromesaPago: TStringField
+      FieldName = 'PromesaPago'
+      Size = 2
+    end
+    object ADODtStIncidenciasEstadoIncidencia: TStringField
+      FieldKind = fkLookup
+      FieldName = 'EstadoIncidencia'
+      LookupDataSet = ADODtStIncidenciasEstados
+      LookupKeyFields = 'IdIncidenciaEstado'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IdIncidenciaEstado'
+      Lookup = True
+    end
+    object ADODtStIncidenciasCliente: TStringField
+      FieldKind = fkLookup
+      FieldName = 'Cliente'
+      LookupDataSet = ADODtStPersonas
+      LookupKeyFields = 'IdPersona'
+      LookupResultField = 'RazonSocial'
+      KeyFields = 'IDPersonaCliente'
+      Size = 150
+      Lookup = True
+    end
+    object ADODtStIncidenciasUsuarioReg: TStringField
+      FieldKind = fkLookup
+      FieldName = 'UsuarioReg'
+      LookupDataSet = ADODtStUsuarios
+      LookupKeyFields = 'IdUsuario'
+      LookupResultField = 'Usuario'
+      KeyFields = 'IDUsuario'
+      Size = 150
+      Lookup = True
     end
   end
   object ADODtStUsuarios: TADODataSet
@@ -171,7 +182,7 @@ inherited dmSeguimientoCobranza: TdmSeguimientoCobranza
     CommandText = 
       'select CxC.IdPersona,CXC.Fecha,CXC.IdCuentaXCobrar,CXC.Saldo  ,C' +
       'XC.IdCFDINormal'#13#10'from CuentasXCobrar CXC'#13#10'where Cxc.IdPersona=:I' +
-      'DPersona'#13#10
+      'DPersona   and CXC.Saldo >0.00001'#13#10
     DataSource = dsSaldoCliente
     IndexFieldNames = 'IdPersona'
     MasterFields = 'IDPersona'
@@ -206,9 +217,9 @@ inherited dmSeguimientoCobranza: TdmSeguimientoCobranza
     end
   end
   object dsSaldoCliente: TDataSource
-    DataSet = ADODtStSaldoCliente
-    Left = 224
-    Top = 32
+    DataSet = adodsMaster
+    Left = 160
+    Top = 16
   end
   object ADODtStIncidenciaXFecha: TADODataSet
     Connection = _dmConection.ADOConnection

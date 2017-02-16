@@ -5,60 +5,22 @@ inherited FrmSeguimientoCobranza: TFrmSeguimientoCobranza
   inherited pnlMaster: TPanel
     inherited cxGrid: TcxGrid
       inherited tvMaster: TcxGridDBTableView
-        object tvMasterIDIncidenciaCobranza: TcxGridDBColumn
-          DataBinding.FieldName = 'IDIncidenciaCobranza'
+        object tvMasterIdPersona: TcxGridDBColumn
+          DataBinding.FieldName = 'IdPersona'
           Visible = False
         end
-        object tvMasterIDUsuario: TcxGridDBColumn
-          DataBinding.FieldName = 'IDUsuario'
-          Visible = False
+        object tvMasterRazonSocial: TcxGridDBColumn
+          DataBinding.FieldName = 'RazonSocial'
+          Width = 374
         end
-        object tvMasterIDPersonaCliente: TcxGridDBColumn
-          DataBinding.FieldName = 'IDPersonaCliente'
-          Visible = False
+        object tvMasterSaldo: TcxGridDBColumn
+          DataBinding.FieldName = 'Saldo'
+          Width = 160
         end
-        object tvMasterIdIncidenciaEstado: TcxGridDBColumn
-          DataBinding.FieldName = 'IdIncidenciaEstado'
-          Visible = False
-        end
-        object tvMasterIdAnexo: TcxGridDBColumn
-          DataBinding.FieldName = 'IdAnexo'
-          Visible = False
-        end
-        object tvMasterCliente: TcxGridDBColumn
-          DataBinding.FieldName = 'Cliente'
-          Width = 300
-        end
-        object tvMasterFechaReg: TcxGridDBColumn
-          Caption = 'Fecha Registro'
-          DataBinding.FieldName = 'FechaReg'
-        end
-        object tvMasterEstadoIncidencia: TcxGridDBColumn
-          Caption = 'Estado Incidencia'
-          DataBinding.FieldName = 'EstadoIncidencia'
-        end
-        object tvMasterFoliosAsoc: TcxGridDBColumn
-          Caption = 'CXC Asociadas'
-          DataBinding.FieldName = 'FoliosAsoc'
-        end
-        object tvMasterRegContacto: TcxGridDBColumn
-          DataBinding.FieldName = 'RegContacto'
-        end
-        object tvMasterAcuerdo: TcxGridDBColumn
-          DataBinding.FieldName = 'Acuerdo'
-        end
-        object tvMasterProxcontacto: TcxGridDBColumn
-          Caption = 'Fecha proximo contacto'
-          DataBinding.FieldName = 'Proxcontacto'
-        end
-        object tvMasterCondiciones: TcxGridDBColumn
-          DataBinding.FieldName = 'Condiciones'
-        end
-        object tvMasterPromesaPago: TcxGridDBColumn
-          DataBinding.FieldName = 'PromesaPago'
-        end
-        object tvMasterUsuarioReg: TcxGridDBColumn
-          DataBinding.FieldName = 'UsuarioReg'
+        object tvMasterinteres: TcxGridDBColumn
+          Caption = 'Intereses'
+          DataBinding.FieldName = 'interes'
+          Width = 160
         end
       end
     end
@@ -887,7 +849,7 @@ inherited FrmSeguimientoCobranza: TFrmSeguimientoCobranza
   end
   object DSIncidencias: TDataSource
     AutoEdit = False
-    DataSet = dmSeguimientoCobranza.adodsMaster
+    DataSet = dmSeguimientoCobranza.ADODtStIncidencias
     Left = 499
     Top = 149
   end
@@ -911,7 +873,7 @@ inherited FrmSeguimientoCobranza: TFrmSeguimientoCobranza
   end
   object dsConsulta: TDataSource
     AutoEdit = False
-    DataSet = dmSeguimientoCobranza.ADODtStSaldoCliente
+    DataSet = dmSeguimientoCobranza.adodsMaster
     Left = 403
     Top = 69
   end

@@ -9,34 +9,15 @@ uses
 type
   TdmSeguimientoCobranza = class(T_dmStandar)
     ADODtStIncidenciasEstados: TADODataSet;
-    adodsMasterIDIncidenciaCobranza: TAutoIncField;
-    adodsMasterIDUsuario: TIntegerField;
-    adodsMasterIDPersonaCliente: TIntegerField;
-    adodsMasterIdIncidenciaEstado: TIntegerField;
-    adodsMasterIdAnexo: TIntegerField;
-    adodsMasterFechaReg: TDateTimeField;
-    adodsMasterFoliosAsoc: TStringField;
-    adodsMasterRegContacto: TStringField;
-    adodsMasterAcuerdo: TStringField;
-    adodsMasterProxcontacto: TDateTimeField;
-    adodsMasterCondiciones: TIntegerField;
-    adodsMasterPromesaPago: TStringField;
-    adodsMasterEstadoIncidencia: TStringField;
     ADODtStPersonas: TADODataSet;
-    adodsMasterCliente: TStringField;
-    ADODtStSaldoCliente: TADODataSet;
-    ADODtStSaldoClienteIdPersona: TIntegerField;
-    ADODtStSaldoClienteSaldo: TFMTBCDField;
-    ADODtStSaldoClienteinteres: TFMTBCDField;
+    ADODtStIncidencias: TADODataSet;
     ADODtStUsuarios: TADODataSet;
     ADODtStUsuariosIdUsuario: TAutoIncField;
     ADODtStUsuariosIdPersona: TIntegerField;
     ADODtStUsuariosIdUsuarioEstatus: TIntegerField;
     ADODtStUsuariosUsuario: TStringField;
-    adodsMasterUsuarioReg: TStringField;
     ADODtSTCXCPend: TADODataSet;
     dsSaldoCliente: TDataSource;
-    ADODtStSaldoClienteRazonSocial: TStringField;
     ADODtSTCXCPendIdPersona: TIntegerField;
     ADODtSTCXCPendFecha: TDateTimeField;
     ADODtSTCXCPendIdCuentaXCobrar: TAutoIncField;
@@ -58,8 +39,27 @@ type
     StringField5: TStringField;
     StringField6: TStringField;
     StringField7: TStringField;
+    ADODtStIncidenciasIDIncidenciaCobranza: TAutoIncField;
+    ADODtStIncidenciasIDUsuario: TIntegerField;
+    ADODtStIncidenciasIDPersonaCliente: TIntegerField;
+    ADODtStIncidenciasIdIncidenciaEstado: TIntegerField;
+    ADODtStIncidenciasIdAnexo: TIntegerField;
+    ADODtStIncidenciasFechaReg: TDateTimeField;
+    ADODtStIncidenciasFoliosAsoc: TStringField;
+    ADODtStIncidenciasRegContacto: TStringField;
+    ADODtStIncidenciasAcuerdo: TStringField;
+    ADODtStIncidenciasProxcontacto: TDateTimeField;
+    ADODtStIncidenciasCondiciones: TIntegerField;
+    ADODtStIncidenciasPromesaPago: TStringField;
+    ADODtStIncidenciasEstadoIncidencia: TStringField;
+    ADODtStIncidenciasCliente: TStringField;
+    ADODtStIncidenciasUsuarioReg: TStringField;
+    adodsMasterIdPersona: TIntegerField;
+    adodsMasterRazonSocial: TStringField;
+    adodsMasterSaldo: TFMTBCDField;
+    adodsMasterinteres: TFMTBCDField;
     procedure DataModuleCreate(Sender: TObject);
-    procedure adodsMasterNewRecord(DataSet: TDataSet);
+    procedure ADODtStIncidenciasNewRecord(DataSet: TDataSet);
   private
     { Private declarations }
   public
@@ -77,13 +77,13 @@ uses SeguimientoCobranzaCon, _ConectionDmod;
 
 {$R *.dfm}
 
-procedure TdmSeguimientoCobranza.adodsMasterNewRecord(DataSet: TDataSet);
+procedure TdmSeguimientoCobranza.ADODtStIncidenciasNewRecord(DataSet: TDataSet);
 begin
   inherited;
   dataset.FieldByName('FEchareg').AsDateTime:=Now;
   dataset.FieldByName('IdUsuario').AsInteger:=_dmConection.IdUsuario;
-  dataset.FieldByName('IdPersonaCliente').AsInteger:= ADODtStSaldoCliente.FieldByName('IdPersona').AsInteger;
-   dataset.FieldByName('IdIncidenciaEstado').AsInteger:=1;
+  dataset.FieldByName('IdPersonaCliente').AsInteger:= ADODSMaster.FieldByName('IdPersona').AsInteger;
+  dataset.FieldByName('IdIncidenciaEstado').AsInteger:=1;
 end;
 
 procedure TdmSeguimientoCobranza.DataModuleCreate(Sender: TObject);
@@ -93,10 +93,10 @@ begin
 
   gGridForm.DataSet:= adodsMaster;
   TFrmSeguimientoCobranza(gGridForm).DSConIncidencias.DataSet:=ADODtStIncidenciaXFecha;
-  TFrmSeguimientoCobranza(gGridForm).DSIncidencias.DataSet:=adodsMaster;
+  TFrmSeguimientoCobranza(gGridForm).DSIncidencias.DataSet:=ADODtStIncidencias; //Va a cambiar nombre
   TFrmSeguimientoCobranza(gGridForm).DSCXCPendientes.DataSet:=ADODtSTCXCPend;
   TFrmSeguimientoCobranza(gGridForm).DSClientes.DataSet:=ADODtStPersonas;
-  TFrmSeguimientoCobranza(gGridForm).dsConsulta.DataSet:=ADODtStSaldoCliente;
+  TFrmSeguimientoCobranza(gGridForm).dsConsulta.DataSet:=adodsMaster; //Este era saldo cliente
 
 end;
 

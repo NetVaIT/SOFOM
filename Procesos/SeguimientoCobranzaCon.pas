@@ -37,21 +37,10 @@ type
     DSCXCPendientes: TDataSource;
     DSClientes: TDataSource;
     dsConsulta: TDataSource;
-    tvMasterIDIncidenciaCobranza: TcxGridDBColumn;
-    tvMasterIDUsuario: TcxGridDBColumn;
-    tvMasterIDPersonaCliente: TcxGridDBColumn;
-    tvMasterIdIncidenciaEstado: TcxGridDBColumn;
-    tvMasterIdAnexo: TcxGridDBColumn;
-    tvMasterFechaReg: TcxGridDBColumn;
-    tvMasterFoliosAsoc: TcxGridDBColumn;
-    tvMasterRegContacto: TcxGridDBColumn;
-    tvMasterAcuerdo: TcxGridDBColumn;
-    tvMasterProxcontacto: TcxGridDBColumn;
-    tvMasterCondiciones: TcxGridDBColumn;
-    tvMasterPromesaPago: TcxGridDBColumn;
-    tvMasterEstadoIncidencia: TcxGridDBColumn;
-    tvMasterCliente: TcxGridDBColumn;
-    tvMasterUsuarioReg: TcxGridDBColumn;
+    tvMasterIdPersona: TcxGridDBColumn;
+    tvMasterRazonSocial: TcxGridDBColumn;
+    tvMasterSaldo: TcxGridDBColumn;
+    tvMasterinteres: TcxGridDBColumn;
     procedure dxBrBtnSeguimientoClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
@@ -93,6 +82,7 @@ begin
   DSCXCPendientes.DataSet.open;
   //dsclientes.DataSet.open;
   DSConIncidencias.DataSet.open;
+  ApplyBestFit:=False;
 
 end;
 

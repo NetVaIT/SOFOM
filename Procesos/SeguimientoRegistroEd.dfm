@@ -12,6 +12,7 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
   Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object Splitter1: TSplitter
@@ -32,7 +33,6 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
     Height = 33
     Align = alTop
     TabOrder = 0
-    ExplicitWidth = 782
   end
   object PnlNav: TPanel
     Left = 0
@@ -41,9 +41,6 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
     Height = 80
     Align = alTop
     TabOrder = 1
-    ExplicitLeft = 2
-    ExplicitTop = 28
-    ExplicitWidth = 1228
     object Label2: TLabel
       Left = 9
       Top = 10
@@ -310,8 +307,6 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
     Height = 228
     Align = alClient
     TabOrder = 2
-    ExplicitWidth = 1241
-    ExplicitHeight = 260
     object PnlSoloIncidencias: TPanel
       Left = 1
       Top = 126
@@ -320,9 +315,6 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
       Align = alBottom
       TabOrder = 0
       Visible = False
-      ExplicitLeft = 0
-      ExplicitTop = 184
-      ExplicitWidth = 1068
       object DBGrid1: TDBGrid
         Left = 1
         Top = 30
@@ -330,7 +322,7 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
         Height = 70
         Align = alClient
         Color = clInfoBk
-        DataSource = DSConIncidencias
+        DataSource = DSIncidencias
         Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
         TabOrder = 0
         TitleFont.Charset = DEFAULT_CHARSET
@@ -366,19 +358,25 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
           end
           item
             Expanded = False
+            FieldName = 'FechaReg'
+            Title.Caption = 'Fecha Registro'
+            Visible = True
+          end
+          item
+            Expanded = False
             FieldName = 'Cliente'
             Width = 300
             Visible = True
           end
           item
             Expanded = False
-            FieldName = 'FechaReg'
+            FieldName = 'FoliosAsoc'
+            Width = 300
             Visible = True
           end
           item
             Expanded = False
-            FieldName = 'FoliosAsoc'
-            Width = 150
+            FieldName = 'Proxcontacto'
             Visible = True
           end
           item
@@ -389,11 +387,6 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
           item
             Expanded = False
             FieldName = 'Acuerdo'
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'Proxcontacto'
             Visible = True
           end
           item
@@ -410,6 +403,11 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
             Expanded = False
             FieldName = 'EstadoIncidencia'
             Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'UsuarioReg'
+            Visible = True
           end>
       end
       object PnlFechas: TPanel
@@ -420,8 +418,6 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 1
-        ExplicitTop = 0
-        ExplicitWidth = 721
         object Label26: TLabel
           Left = 13
           Top = 8
@@ -580,11 +576,13 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
         item
           Expanded = False
           FieldName = 'Saldo'
+          Width = 64
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'IdCFDINormal'
+          Width = 64
           Visible = True
         end>
     end
@@ -597,9 +595,7 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
     Align = alBottom
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 3
-    ExplicitWidth = 1241
-    ExplicitHeight = 278
-    object DBCtrlGrid3: TDBCtrlGrid
+    object DBCtrlGrdDatos: TDBCtrlGrid
       Left = 524
       Top = 35
       Width = 752
@@ -612,8 +608,7 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
       ParentColor = False
       TabOrder = 0
       RowCount = 4
-      OnPaintPanel = DBCtrlGrid3PaintPanel
-      ExplicitWidth = 716
+      OnPaintPanel = DBCtrlGrdDatosPaintPanel
       object Label9: TLabel
         Left = 10
         Top = 3
@@ -778,6 +773,7 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
       Width = 523
       Height = 319
       Align = alLeft
+      BevelOuter = bvNone
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
@@ -785,7 +781,8 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
       Font.Style = []
       ParentFont = False
       TabOrder = 1
-      ExplicitHeight = 202
+      ExplicitLeft = 5
+      ExplicitTop = 34
       object Label16: TLabel
         Left = 26
         Top = 11
@@ -1006,6 +1003,7 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
         Width = 89
         Height = 102
         ItemHeight = 13
+        PopupMenu = PpUpMnFolios
         TabOrder = 5
       end
       object LSTBxIDDocs: TListBox
@@ -1063,7 +1061,6 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
       Height = 34
       Align = alTop
       TabOrder = 2
-      ExplicitWidth = 1066
       object SpdBtnMostrartodo: TSpeedButton
         Left = 523
         Top = 5
@@ -1092,7 +1089,7 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
       end
       object DBNavIncidencia: TDBNavigator
         Left = 24
-        Top = 4
+        Top = 3
         Width = 228
         Height = 25
         DataSource = DSIncidencias
@@ -1116,17 +1113,17 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
   end
   object dsConsulta: TDataSource
     AutoEdit = False
-    DataSet = dmSeguimientoCobranza.ADODtStSaldoCliente
+    DataSet = dmSeguimientoCobranza.adodsMaster
     Left = 435
     Top = 21
   end
   object DSIncidencias: TDataSource
     AutoEdit = False
-    DataSet = dmSeguimientoCobranza.adodsMaster
+    DataSet = dmSeguimientoCobranza.ADODtStIncidencias
     OnStateChange = DSIncidenciasStateChange
     OnDataChange = DSIncidenciasDataChange
-    Left = 611
-    Top = 381
+    Left = 459
+    Top = 357
   end
   object DSCXCPendientes: TDataSource
     AutoEdit = False
@@ -1172,9 +1169,11 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
     Top = 480
     object CrearCopia1: TMenuItem
       Caption = 'Crear &Copia'
+      OnClick = CrearCopia1Click
     end
     object AgregaIncidencia1: TMenuItem
       Caption = '&Agrega Incidencia'
+      OnClick = AgregaIncidencia1Click
     end
   end
 end

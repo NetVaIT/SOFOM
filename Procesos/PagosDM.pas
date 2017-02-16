@@ -310,6 +310,8 @@ type
     ADODtStCXCDetalleDesctoMonto: TFMTBCDField;
     ADODtStCXCDetalleDesctoObservaciones: TStringField;
     DSCXCDetalle: TDataSource;
+    ADODtStCxCDetallePendEsCapital: TBooleanField;
+    ADODtStCxCDetallePendEsInteres: TBooleanField;
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsMasterAfterPost(DataSet: TDataSet);
     procedure adodsMasterBeforePost(DataSet: TDataSet);
@@ -393,7 +395,7 @@ procedure TdmPagos.adodsMasterBeforePost(DataSet: TDataSet);
 begin
   inherited;
   Inserto:=dataset.state=dsInsert;
-  if dataset.State=dsInsert then
+  if dataset.State = dsInsert then
   begin
     adodsMaster.FieldByName('Saldo').AsFloat:=adodsMaster.FieldByName('Importe').AsFloat;
   end;
@@ -507,10 +509,15 @@ begin
     ADODtStPagosAuxiliar.Post;
   end;
 
-  if (pos('_CAP',ADODtStCxCDetallePendIdentificador.asString)>0) or
-     (pos('_ABONOCAP',ADODtStCxCDetallePendIdentificador.asString)>0) then
-  begin
-    //Identificar campo respectivo y actualizar...en anexo.. verificar si es el colocado como Saldo insoluto ahi %%& feb 14/17
+  if ADODtStCxCDetallePendEsCapital.value then
+  begin   //Feb 16/17
+    //Identificar campo respectivo y actualizar...en anexo..
+    AdoQryAuxiliar.Close;
+    AdoQryAuxiliar.sql.Clear;                                       // que pasa si es factoraje .. ?????
+    AdoQryAuxiliar.sql.Add('Update ANEXOS SET SaldoInsoluto = SaldoInsoluto- '+DataSet.FieldByName('IMPORTE').asstring
+                          +', CapitalCobrado = CapitalCobrado + '+DataSet.FieldByName('IMPORTE').asstring
+                          +' Where idAnexo='+ADODtStCXCPendientesIdAnexo.AsString ); //DEbe estat en ele correspondiente
+    AdoQryAuxiliar.ExecSQL;
   end;
 
 

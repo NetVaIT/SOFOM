@@ -43,13 +43,14 @@ inherited dmPagos: TdmPagos
     end
     object adodsMasterImporte: TFMTBCDField
       FieldName = 'Importe'
-      currency = True
+      DisplayFormat = '$###,##0.00##'
+      EditFormat = '###.######'
       Precision = 18
       Size = 6
     end
     object adodsMasterSaldo: TFMTBCDField
       FieldName = 'Saldo'
-      currency = True
+      DisplayFormat = '$###,##0.00##'
       Precision = 18
       Size = 6
     end
@@ -442,6 +443,12 @@ inherited dmPagos: TdmPagos
       FieldName = 'SaldoDocumento'
       Precision = 18
       Size = 6
+    end
+    object ADODtStCxCDetallePendEsCapital: TBooleanField
+      FieldName = 'EsCapital'
+    end
+    object ADODtStCxCDetallePendEsInteres: TBooleanField
+      FieldName = 'EsInteres'
     end
   end
   object DSMaster: TDataSource
