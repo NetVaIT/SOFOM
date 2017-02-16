@@ -789,51 +789,40 @@
         </DCCReference>
         <DCCReference Include="Procesos\ContratosDocumentosDM.pas">
             <Form>dmContratosDocumentos</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Procesos\ContratosDocumentosForm.pas">
             <Form>frmContratosDocumentos</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Catalogos\ProductosDocumentosDM.pas">
             <Form>dmProductosDocumentos</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Catalogos\ProductosDocumentosForm.pas">
             <Form>frmProductosDocumentos</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Catalogos\ProductosDocumentosEdit.pas">
             <Form>frmProductosDocumentosEdit</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Catalogos\PersonasPerfilesDM.pas">
             <Form>dmPersonasPerfiles</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Catalogos\PersonasPerfilesForm.pas">
             <Form>frmPersonasPerfiles</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Catalogos\PersonasPerfilesEdit.pas">
             <Form>frmPersonasPerfilesEdit</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Catalogos\PersonasAccionistasDM.pas">
             <Form>dmPersonasAccionistas</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Catalogos\PersonasAccionistasForm.pas">
             <Form>frmPersonasAccionistas</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Catalogos\PersonasAccionistasEdit.pas">
             <Form>frmPersonasAccionistasEdit</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Catalogos\ListasRestringidasDM.pas">
             <Form>dmListasRestringidas</Form>
@@ -846,6 +835,19 @@
         </DCCReference>
         <DCCReference Include="Catalogos\ListasRestringidasEdit.pas">
             <Form>frmListasRestringidasEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Procesos\SeguimientoCobranzaCon.pas">
+            <Form>FrmSeguimientoCobranza</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Procesos\SeguimientoCobranzaDM.pas">
+            <Form>dmSeguimientoCobranza</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Procesos\SeguimientoRegistroEd.pas">
+            <Form>FrmSeguimientoRegistro</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Release">

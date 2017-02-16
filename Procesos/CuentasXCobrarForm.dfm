@@ -2,7 +2,6 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
   Caption = 'FrmConCuentasXCobrar'
   ClientWidth = 1078
   ExplicitWidth = 1078
-  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -115,11 +114,11 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
         end
         item
           Visible = True
-          ItemName = 'dxBtnPrefacturas'
+          ItemName = 'dxBrBtnMoratorios'
         end
         item
           Visible = True
-          ItemName = 'dxBrBtnMoratorios'
+          ItemName = 'dxBtnPrefacturas'
         end>
     end
     object dxBarButton8: TdxBarButton

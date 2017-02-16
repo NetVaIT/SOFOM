@@ -187,7 +187,10 @@ uses
   PersonasAccionistasEdit in 'Catalogos\PersonasAccionistasEdit.pas' {frmPersonasAccionistasEdit},
   ListasRestringidasDM in 'Catalogos\ListasRestringidasDM.pas' {dmListasRestringidas: TDataModule},
   ListasRestringidasForm in 'Catalogos\ListasRestringidasForm.pas' {frmListasRestringidas},
-  ListasRestringidasEdit in 'Catalogos\ListasRestringidasEdit.pas' {frmListasRestringidasEdit};
+  ListasRestringidasEdit in 'Catalogos\ListasRestringidasEdit.pas' {frmListasRestringidasEdit},
+  SeguimientoCobranzaCon in 'Procesos\SeguimientoCobranzaCon.pas' {FrmSeguimientoCobranza},
+  SeguimientoCobranzaDM in 'Procesos\SeguimientoCobranzaDM.pas' {dmSeguimientoCobranza: TDataModule},
+  SeguimientoRegistroEd in 'Procesos\SeguimientoRegistroEd.pas' {FrmSeguimientoRegistro};
 
 {$R *.res}
 
@@ -199,8 +202,5 @@ begin
   Application.CreateForm(T_frmMain, _frmMain);
   Application.CreateForm(T_frmMainRibbon, _frmMainRibbon);
   Application.CreateForm(T_frmProgress, _frmProgress);
-  Application.CreateForm(TdmEstadosCuenta, dmEstadosCuenta);
-  Application.CreateForm(TFrmConEstadosCuenta, FrmConEstadosCuenta);
-  Application.CreateForm(TFrmConEstadoCtaDetalle, FrmConEstadoCtaDetalle);
   Application.Run;
 end.

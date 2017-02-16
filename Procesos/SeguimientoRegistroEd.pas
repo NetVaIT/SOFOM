@@ -6,12 +6,13 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.DBCtrls, Vcl.StdCtrls,
   Vcl.CheckLst, RxDBCtrl, Vcl.DBCGrids, Vcl.Mask, RxToolEdit, Vcl.Grids,
-  Vcl.DBGrids, Vcl.Buttons, Data.DB;
+  Vcl.DBGrids, Vcl.Buttons, Data.DB,Data.Win.ADODB, Vcl.Menus, Math;
 
 type
+  TArrDinamico= array of integer;
   TFrmSeguimientoRegistro = class(TForm)
     Panel1: TPanel;
-    Panel2: TPanel;
+    PnlNav: TPanel;
     DBLkupCmbBxClientes: TDBLookupComboBox;
     Label2: TLabel;
     SpdBtnLimpiar: TSpeedButton;
@@ -74,11 +75,37 @@ type
     DBGrdFactPend: TDBGrid;
     DSCXCPendientes: TDataSource;
     DSClientes: TDataSource;
+    SpdBtncontactoHoy: TSpeedButton;
+    SpdBtnContacto: TSpeedButton;
+    DSConIncidencias: TDataSource;
+    PpUpMnFolios: TPopupMenu;
+    EliminarFolio1: TMenuItem;
+    PpUpMnCopia: TPopupMenu;
+    CrearCopia1: TMenuItem;
+    AgregaIncidencia1: TMenuItem;
     procedure SpdBtnConsultarxClick(Sender: TObject);
+    procedure SpdBtnLimpiarClick(Sender: TObject);
+    procedure SpdBtncontactoHoyClick(Sender: TObject);
+    procedure SpdBtnRegresoClick(Sender: TObject);
+    procedure SpdBtnMostrartodoClick(Sender: TObject);
+    procedure EliminarFolio1Click(Sender: TObject);
+    procedure DBGrdFactPendDblClick(Sender: TObject);
+    procedure SpdBtnFiltroDiasClick(Sender: TObject);
+    procedure DSIncidenciasStateChange(Sender: TObject);
+    procedure ChckLstBxCondicionesClick(Sender: TObject);
+    procedure DSIncidenciasDataChange(Sender: TObject; Field: TField);
+    procedure DBCtrlGrid3PaintPanel(DBCtrlGrid: TDBCtrlGrid; Index: Integer);
   private
     { Private declarations }
+    ArrOpciones :TarrDinamico;//Array of integer;
+    function PoneFolios(ListaID: TlistBox):String;
+    procedure CargaFolios(ListaF, ListaID: TlistBox);
+    procedure poneAutorizacion(Permisos: integer;
+      var ChckLstActual: TCheckListBox);
+     procedure convierteBinADec(Numero: integer; var B: TArrDinamico);
   public
     { Public declarations }
+
   end;
 
 var
@@ -90,9 +117,302 @@ implementation
 
 uses SeguimientoCobranzaDM;
 
-procedure TFrmSeguimientoRegistro.SpdBtnConsultarxClick(Sender: TObject);
+procedure TFrmSeguimientoRegistro.ChckLstBxCondicionesClick(Sender: TObject);
+var Total,i, val:integer;
+   num:String;
 begin
+  inherited;
+  if DSIncidencias.State in [dsinsert,dsedit] then
+  begin
+
+    Total:=0;
+    for i:=0 to  ChckLstBxCondiciones.Count -1  do
+    begin
+      if ChckLstBxCondiciones.Checked[i] then
+      begin
+         Val:=Round(Power(2,i));
+        Total:=Total + val;
+      end;
+    end;
+    //Debe estar en edicion
+    DSIncidencias.DataSet.FieldByName('Condiciones').ASinteger:=Total;
+  end;
+end;
+
+procedure TFrmSeguimientoRegistro.convierteBinADec(Numero: integer;
+  var B: TArrDinamico);
+var                                    //  Copiado desde Cobranza
+  aux,i:integer;
+  cadena:String;
+begin
+
+   i:=0;
+   while numero >1 do
+   begin
+     aux:=numero mod 2;
+     numero:= numero div 2;
+     SetLength(B,i+1);
+     B[i]:=aux;
+     inc(i);
+   end;
+   SetLength(B,i+1);
+   B[i]:=numero;
+
+   for i:= high(B) downto 0 do
+   begin
+     cadena:=Cadena + intTostr(B[i]);
+   end;
+ //  showmessage(Cadena);
+
+
+end;
+
+procedure TFrmSeguimientoRegistro.DBCtrlGrid3PaintPanel(DBCtrlGrid: TDBCtrlGrid;
+  Index: Integer);
+begin
+  if dsIncidencias.DataSet.FieldByName('EstadoIncidencia').asString='Abierta' then
+     DBTxtEstado.Font.Color:=clGreen
+  else if dsIncidencias.DataSet.FieldByName('EstadoIncidencia').asString='Cerrada' then
+     DBTxtEstado.font.Color:= clRed
+  else if dsIncidencias.DataSet.FieldByName('EstadoIncidencia').asString='Cancelada' then  //No debe existir feb 15/17
+     DBTxtEstado.Color:=clRed;
+end;
+
+procedure TFrmSeguimientoRegistro.DBGrdFactPendDblClick(Sender: TObject);
+begin
+  //Luego habilitar
+  if dsincidencias.dataset.State in [dsinsert, dsEdit] then
+  begin
+    if LSTBxIDDocs.Items.IndexOf(DSCXCPendientes.DataSet.FieldByName('IDCuentaXCobrar').AsString)=-1 then
+    begin
+      LSTBxIDDocs.Items.Add(DSCXCPendientes.DataSet.FieldByName('IDCuentaXCobrar').AsString);
+      LSTBxFolios.Items.Add(DSCXCPendientes.DataSet.FieldByName('IDCuentaXCobrar').AsString);// mientras Feb 15/17 DSCXCPendientes.DataSet.FieldByName('Serie').AsString+' '+DSCXCPendientes.DataSet.FieldByName('Folio').AsString );
+    end;
+
+    DsIncidencias.Dataset.FieldByName('FoliosAsoc').AsString:=PoneFolios(LSTBxIDDocs);
+  end;
+end;
+
+procedure TFrmSeguimientoRegistro.DSIncidenciasDataChange(Sender: TObject;
+  Field: TField);
+begin
+  if not (DsIncidencias.state in [dsedit,dsInsert])then
+    poneAutorizacion(DSIncidencias.DataSet.FieldByName('Condiciones').ASinteger, ChckLstBxCondiciones);
+end;
+
+procedure TFrmSeguimientoRegistro.poneAutorizacion(Permisos: integer;
+  var ChckLstActual: TCheckListBox);
+var
+  i:integer;
+begin
+  SetLength(ArrOpciones,0);   //Se colocaron aca locales
+  convierteBinADec(Permisos,ArrOpciones);
+
+  if (High(ArrOpciones) = -1) or((High(ArrOpciones) = 0)and (ArrOpciones[0]=0))then
+  begin
+    for i:=0 to  ChckLstActual.Count -1   do
+       ChckLstActual.Checked[i]:=False;
+  end
+  else
+  begin
+    for i:=0 to  ChckLstActual.Count -1   do
+       ChckLstActual.Checked[i]:=ArrOpciones[i]=1;
+  end;
+
+end;
+
+procedure TFrmSeguimientoRegistro.DSIncidenciasStateChange(Sender: TObject);
+begin
+  CargaFolios(LstBxFolios,LSTBxIDDocs);
+  if  PnlNav.Visible then
+   SpdBtncontactoHoy.Enabled:= DSIncidencias.State in [dsbrowse];
+  if PnlSoloIncidencias.Visible then
+   SpdBtnRegreso.Enabled := DSIncidencias.State in [dsbrowse];
+
+end;
+
+procedure TFrmSeguimientoRegistro.CargaFolios(ListaF,ListaID: TlistBox);
+var texto, Parte, SerFol :string;
+    i:integer;
+begin
+  ListaF.Clear;
+  ListaID.Clear;
+  Texto:=DsIncidencias.Dataset.FieldByName('FoliosAsoc').AsString;
+
+  while Length(Texto)>0 do
+  begin
+     i:=Pos('/',Texto);
+    Texto:= Copy(Texto,i+1,length(Texto)-i);//Siempre sera el primero
+    i:=Pos('/',Texto);
+    Parte:=Copy(Texto,1,i-1);
+    if Parte<>'' then
+    begin
+      ListaID.Items.Add(Parte);
+   //   SerFol:=Dmppal.SacaSerFol(StrToint(Parte));
+      ListaF.Items.Add(Parte);
+    end;
+
+
+    //Buscar en tabla sacar demastdatos y colocar en otra lista
+  end;
+end;
+
+procedure TFrmSeguimientoRegistro.EliminarFolio1Click(Sender: TObject);
+var I:Integer;
+begin
+  inherited;
+  //Luego habilitar
+  if DSConsulta.dataset.State in [dsinsert, dsEdit] then
+  begin
+    if LSTBxFolios.Items.Count >0 then
+    begin
+      i:= LSTBxFolios.ItemIndex;
+      LSTBxFolios.Items.Delete(i);
+      LSTBxIDDocs.Items.Delete(i);
+    end;
+  end;
+
+end;
+
+
+function TFrmSeguimientoRegistro.PoneFolios(ListaID: TlistBox): String;
+var
+   FoliosTxt:String;
+   i:Integer;
+begin
+  FoliosTxt:='/';
+  for i:=0 to ListaID.Count-1 do
+  begin
+    FoliosTxt:=FoliosTxt+ListaID.Items[i]+'/';
+  end;
+
+  if FoliosTxt='/' then
+     FoliosTxt:='';
+
+  Result:=FoliosTxt;
+
+end;
+
+procedure TFrmSeguimientoRegistro.SpdBtnConsultarxClick(Sender: TObject);
+var
+  Texto,BSuma,base1, base2, base3, Agrupacion, filtro,
+  XGrupo, XCliente, XPropCta,XAtiende:String;
+  i:integer;
+begin
+
+  inherited;
+
+  XCliente:='';
+
+  XAtiende:='';
+
+  Base1:= 'select CxC.IdPersona,P.RazonSocial,Sum(CXC.Saldo) as Saldo , sum(CXC.Interes) as interes from CuentasXCobrar CXC, Personas P'
+           +' where p.idpersona=Cxc.IdPersona  and Saldo>0' ;
+
+
+  if DBLkupCmbBxClientes.Text<>'' then
+    XCliente:=' and CxC.IdPersona ='+intToSTR(DBLkupCmbBxClientes.KeyValue);
+
+
+//  if DBLkupCBxAtiende.Text<>'' then
+//     XAtiende:=' and C.IDempleado='''+DBLkupCBxAtiende.KeyValue+'''';
+
+    Agrupacion:=' Group by cxC.IdPersona, P.RazonSocial';
+
+
+  Texto:='';
+  if EDtTextoCliente.Text <>'' then
+     Texto:=' and P.RazonSocial like ''%'+ EDtTextoCliente.Text+'%''';
+
+  dsconsulta.DataSet.close;
+  TAdoDataSet(dsconsulta.DataSet).CommandText:=  Base1+ XCliente+Texto + Agrupacion;
+ (* dmppal.SQLQrySaldosClientes.sql.Clear;
+  dmppal.SQLQrySaldosClientes.sql.Add(Base1);
+  dmppal.SQLQrySaldosClientes.sql.Add(Base2+XGrupo+XCliente+XPropCta+XAtiende);
+  dmppal.SQLQrySaldosClientes.sql.Add(Base3 +Texto+ Filtro);
+  dmppal.SQLQrySaldosClientes.sql.Add(Agrupacion);
+
+   *)
+
+  dsconsulta.DataSet.open;
   //
+end;
+
+procedure TFrmSeguimientoRegistro.SpdBtncontactoHoyClick(Sender: TObject);
+begin
+  PnlSoloIncidencias.Align:=alClient;
+  PnlSoloIncidencias.Visible:=True;
+  PnlNav.Visible:=not  PnlSoloIncidencias.Visible;
+  GridDatos.Visible:=not  PnlSoloIncidencias.Visible;
+  DBGrdFactPend.Visible:=not  PnlSoloIncidencias.Visible;
+
+  dsConIncidencias.DataSet.Close;
+  TAdoDAtaset(dsConIncidencias.DataSet).Parameters.ParamByName('FecIni').Value:=DtTmDesde.Date;
+  TAdoDAtaset(dsConIncidencias.DataSet).Parameters.ParamByName('FecFin').Value:=DtTmHasta.Date;
+  dsConIncidencias.DataSet.open;
+  DBNavIncidencia.VisibleButtons:=[nbDelete,nbEdit,nbPost,nbCancel,nbRefresh];
+  TAdoDAtaset(dsConsulta.DataSet).DataSource:=DSConIncidencias;
+  TAdoDAtaset(dsConsulta.DataSet).MasterFields:='IdIncidenciaCobranza';
+  agregaIncidencia1.Enabled:=False;
+  DSIncidenciasStateChange(DSIncidencias);
+end;
+
+procedure TFrmSeguimientoRegistro.SpdBtnFiltroDiasClick(Sender: TObject);
+begin
+  TAdoDAtaset(dsConIncidencias.DataSet).Close;
+  TAdoDAtaset(dsConIncidencias.DataSet).Parameters.ParamByName('FecIni').value:=DtTmDesde.Date;
+  TAdoDAtaset(dsConIncidencias.DataSet).Parameters.ParamByName('FecFin').VAlue:=DtTmHasta.Date;
+  TAdoDAtaset(dsConIncidencias.DataSet).open;
+
+end;
+
+procedure TFrmSeguimientoRegistro.SpdBtnLimpiarClick(Sender: TObject);
+begin
+  DBLkupCmbBxClientes.keyValue:='';
+end;
+
+procedure TFrmSeguimientoRegistro.SpdBtnMostrartodoClick(Sender: TObject);
+var
+   TXTSQL, Orden,where :String;
+   idREgAct:Integer;
+begin
+  idREgAct:=-1;
+  TXTSQL:='select IDIncidenciaCobranza, IDUsuario, IDPersonaCliente, IdIncidenciaEstado,'
+         +' IdAnexo, FechaReg, FoliosAsoc, RegContacto, Acuerdo, Proxcontacto, '
+         +' Condiciones, PromesaPago from IncidenciasCobranza ';
+  where:= ' where IdIncidenciaEstado=1 ';
+  orden :='order by FechaReg desc';
+  if not Dsincidencias.DataSet.eof then
+    idREgAct:= Dsincidencias.DataSet.fieldbyname('IDIncidenciaCobranza').asinteger;
+
+  Dsincidencias.DataSet.Close;
+  if not SpdBtnMostrartodo.Down then //Sin filtro
+  begin
+    TADoDAtaset(Dsincidencias.DataSet).CommandText:= TXTSQL +orden;
+    TADoDAtaset(Dsincidencias.DataSet).Open;
+  end
+  else
+  begin
+    TADoDAtaset(Dsincidencias.DataSet).CommandText:= TXTSQL +where +orden;
+    TADoDAtaset(Dsincidencias.DataSet).Open;
+  end;
+  if idREgAct<>-1 then
+     TADoDAtaset(Dsincidencias.DataSet).locate('IDIncidenciaCobranza',idregAct,[]);
+
+ // Dsincidencias.DataSet.Filtered:=not SpdBtnMostrartodo.Down;
+end;
+
+procedure TFrmSeguimientoRegistro.SpdBtnRegresoClick(Sender: TObject);
+begin
+  PnlSoloIncidencias.Visible:=False;
+  PnlNav.Visible:=not  PnlSoloIncidencias.Visible;
+  GridDatos.Visible:=not  PnlSoloIncidencias.Visible;
+  DBGrdFactPend.Visible:=not  PnlSoloIncidencias.Visible;
+  TAdoDAtaset(dsConsulta.DataSet).DataSource:=Nil; //??
+
+  DBNavIncidencia.VisibleButtons:=[nbInsert,nbDelete,nbEdit,nbPost,nbCancel,nbRefresh];
+  agregaIncidencia1.Enabled:=true;
+  DSIncidenciasStateChange(DSIncidencias);
 end;
 
 end.

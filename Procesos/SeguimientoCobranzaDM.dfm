@@ -3,11 +3,15 @@ inherited dmSeguimientoCobranza: TdmSeguimientoCobranza
   Width = 586
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
+    OnNewRecord = adodsMasterNewRecord
     CommandText = 
       'select IDIncidenciaCobranza, IDUsuario, IDPersonaCliente, '#13#10'IdIn' +
       'cidenciaEstado, IdAnexo, FechaReg, FoliosAsoc, RegContacto, '#13#10'Ac' +
       'uerdo, Proxcontacto, Condiciones, PromesaPago'#13#10' from Incidencias' +
-      'Cobranza'#13#10'order by FechaReg desc'
+      'Cobranza where IdIncidenciaEstado=1'#13#10'order by FechaReg desc'
+    DataSource = dsSaldoCliente
+    IndexFieldNames = 'IDPersonaCliente'
+    MasterFields = 'IdPersona'
     Left = 56
     object adodsMasterIDIncidenciaCobranza: TAutoIncField
       FieldName = 'IDIncidenciaCobranza'
@@ -112,8 +116,8 @@ inherited dmSeguimientoCobranza: TdmSeguimientoCobranza
       'ere p.idpersona=Cxc.IdPersona'#13#10'Group by cxC.IdPersona, P.RazonSo' +
       'cial'
     Parameters = <>
-    Left = 320
-    Top = 152
+    Left = 216
+    Top = 88
     object ADODtStSaldoClienteIdPersona: TIntegerField
       FieldName = 'IdPersona'
     end
@@ -136,6 +140,7 @@ inherited dmSeguimientoCobranza: TdmSeguimientoCobranza
     end
   end
   object ADODtStUsuarios: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -202,7 +207,108 @@ inherited dmSeguimientoCobranza: TdmSeguimientoCobranza
   end
   object dsSaldoCliente: TDataSource
     DataSet = ADODtStSaldoCliente
-    Left = 408
-    Top = 128
+    Left = 224
+    Top = 32
+  end
+  object ADODtStIncidenciaXFecha: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IDIncidenciaCobranza, IDUsuario, IDPersonaCliente, '#13#10'IdIn' +
+      'cidenciaEstado, IdAnexo, FechaReg, FoliosAsoc, RegContacto, '#13#10'Ac' +
+      'uerdo, Proxcontacto, Condiciones, PromesaPago'#13#10' from Incidencias' +
+      'Cobranza'#13#10'where Proxcontacto>=:FecIni  and ProxContacto<=:FecFin' +
+      #13#10'order by FechaReg desc'
+    Parameters = <
+      item
+        Name = 'FecIni'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        NumericScale = 3
+        Precision = 23
+        Size = 16
+        Value = Null
+      end
+      item
+        Name = 'FecFin'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        NumericScale = 3
+        Precision = 23
+        Size = 16
+        Value = Null
+      end>
+    Left = 64
+    Top = 248
+    object AutoIncField1: TAutoIncField
+      FieldName = 'IDIncidenciaCobranza'
+      ReadOnly = True
+    end
+    object IntegerField1: TIntegerField
+      FieldName = 'IDUsuario'
+    end
+    object IntegerField2: TIntegerField
+      FieldName = 'IDPersonaCliente'
+    end
+    object IntegerField3: TIntegerField
+      FieldName = 'IdIncidenciaEstado'
+    end
+    object IntegerField4: TIntegerField
+      FieldName = 'IdAnexo'
+    end
+    object DateTimeField1: TDateTimeField
+      FieldName = 'FechaReg'
+    end
+    object StringField1: TStringField
+      FieldName = 'FoliosAsoc'
+      Size = 300
+    end
+    object StringField2: TStringField
+      FieldName = 'RegContacto'
+      Size = 50
+    end
+    object StringField3: TStringField
+      FieldName = 'Acuerdo'
+      Size = 500
+    end
+    object DateTimeField2: TDateTimeField
+      FieldName = 'Proxcontacto'
+    end
+    object IntegerField5: TIntegerField
+      FieldName = 'Condiciones'
+    end
+    object StringField4: TStringField
+      FieldName = 'PromesaPago'
+      Size = 2
+    end
+    object StringField5: TStringField
+      FieldKind = fkLookup
+      FieldName = 'EstadoIncidencia'
+      LookupDataSet = ADODtStIncidenciasEstados
+      LookupKeyFields = 'IdIncidenciaEstado'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IdIncidenciaEstado'
+      Lookup = True
+    end
+    object StringField6: TStringField
+      FieldKind = fkLookup
+      FieldName = 'Cliente'
+      LookupDataSet = ADODtStPersonas
+      LookupKeyFields = 'IdPersona'
+      LookupResultField = 'RazonSocial'
+      KeyFields = 'IDPersonaCliente'
+      Size = 150
+      Lookup = True
+    end
+    object StringField7: TStringField
+      FieldKind = fkLookup
+      FieldName = 'UsuarioReg'
+      LookupDataSet = ADODtStUsuarios
+      LookupKeyFields = 'IdUsuario'
+      LookupResultField = 'Usuario'
+      KeyFields = 'IDUsuario'
+      Size = 150
+      Lookup = True
+    end
   end
 end

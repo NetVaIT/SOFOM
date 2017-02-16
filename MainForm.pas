@@ -183,7 +183,8 @@ uses UbicacionesDM, BancosDM, MonedasDM, PuestosDM, PlazasTurnosDM,
   EstablecimientosDM,   CapacitacionDM, PersonasDM, RptPlazasDM, ProductosDM,
   MarcasDM, FamiliasDM, ContratosDM, AmortizacionesDM, FacturasDM,
   CuentasXCobrarDM, PagosDM, CotizacionesDM, rptAntiguedadSaldosDM,
-  AplicacionesConsultaDM, EstadosCuentaDM, ListasRestringidasDM;
+  AplicacionesConsultaDM, EstadosCuentaDM, ListasRestringidasDM,
+  SeguimientoCobranzaDM;
 //  EsquemaPagosDM, FormulasDM, ReglasNegocioDM,
 //  MovimientosTiposDM, RolesDM, InstruccionesDM,
 //  IncidenciasDM, InstruccionesTiposDM, PeriodosDM, MovimientosDM,
@@ -244,6 +245,8 @@ begin
    34: gModulo := TdmPagos.Create(Self);
    35: gModulo := TdmAplicacionesConsulta.Create(Self); //Ene 5/17
    36: gModulo := TdmCotizaciones.Create(Self);
+
+   37: gModulo := TdmSeguimientoCobranza.Create(Self);  //Feb 15/17
 
    50: gModulo := TdmRptAntiguedadSaldos.Create(Self);
    51: gModulo := TdmEstadosCuenta.Create(Self);

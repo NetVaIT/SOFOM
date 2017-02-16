@@ -95,6 +95,10 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       Caption = 'Actualiza Moratorios'
       OnExecute = ActActualizaMoratoriosExecute
     end
+    object ActGeneraCuentasXCobrar: TAction
+      Caption = 'Generar CXC'
+      OnExecute = ActGeneraCuentasXCobrarExecute
+    end
   end
   object ADOdsCXCDetalle: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -811,6 +815,24 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
         DataType = ftDateTime
       end>
     Left = 240
+    Top = 400
+  end
+  object ADOStrdPrcGeneraCXC: TADOStoredProc
+    Connection = _dmConection.ADOConnection
+    ProcedureName = 'p_GenAmortizaciones;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@FechaCorte'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+      end>
+    Left = 456
     Top = 400
   end
 end

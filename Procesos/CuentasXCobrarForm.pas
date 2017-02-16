@@ -100,7 +100,8 @@ end;
 procedure TFrmConCuentasXCobrar.SetActGeneraCXC(const Value: TBasicAction);
 begin
   FActGeneraCXC := Value;
-
+  dxBrBtnGenerarCXC.Action:=Value;
+  dxBrBtnGenerarCXC.ImageIndex:=19;
 end;
 
 procedure TFrmConCuentasXCobrar.SetActGeneraPrefactura(

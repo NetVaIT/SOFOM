@@ -11,6 +11,7 @@ inherited frmMain: TfrmMain
     OnApplicationMenuClick = dxRibbon1ApplicationMenuClick
     ExplicitWidth = 1020
     inherited dxRibbon1Tab1: TdxRibbonTab
+      Active = False
       Index = 0
     end
     object dxRibbon1Tab2: TdxRibbonTab
@@ -35,6 +36,7 @@ inherited frmMain: TfrmMain
       Index = 1
     end
     object dxRibbon1Tab3: TdxRibbonTab
+      Active = True
       Caption = 'Procesos'
       Groups = <
         item
@@ -114,6 +116,8 @@ inherited frmMain: TfrmMain
         end>
     end
     inherited dxbArchivo: TdxBar
+      DockedDockControl = nil
+      DockedDockingStyle = dsNone
       FloatClientWidth = 51
       FloatClientHeight = 76
     end
@@ -558,11 +562,8 @@ inherited frmMain: TfrmMain
       Category = 0
     end
     object dxBrLrgBtnSeguimiento: TdxBarLargeButton
-      Caption = 'Seguimiento Cobranza'
+      Action = ActSeguimiento
       Category = 0
-      Hint = 'Seguimiento Cobranza'
-      Visible = ivAlways
-      LargeImageIndex = 52
       PaintStyle = psCaptionGlyph
       SyncImageIndex = False
       ImageIndex = 52
@@ -10674,9 +10675,11 @@ inherited frmMain: TfrmMain
       OnExecute = actCatalogoExecute
     end
     object ActSeguimiento: TAction
+      Tag = 37
       Category = 'Procesos'
       Caption = 'Seguimiento Cobros'
       ImageIndex = 52
+      OnExecute = actCatalogoExecute
     end
   end
   inherited dxBarScreenTipRepository: TdxBarScreenTipRepository

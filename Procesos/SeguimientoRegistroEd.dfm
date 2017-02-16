@@ -2,8 +2,8 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
   Left = 0
   Top = 0
   Caption = 'Registro Seguimiento '
-  ClientHeight = 614
-  ClientWidth = 1228
+  ClientHeight = 699
+  ClientWidth = 1277
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,12 +11,13 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poMainFormCenter
   PixelsPerInch = 96
   TextHeight = 13
   object Splitter1: TSplitter
     Left = 0
-    Top = 373
-    Width = 1228
+    Top = 341
+    Width = 1277
     Height = 3
     Cursor = crVSplit
     Align = alBottom
@@ -27,21 +28,22 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1228
+    Width = 1277
     Height = 33
     Align = alTop
     TabOrder = 0
     ExplicitWidth = 782
   end
-  object Panel2: TPanel
+  object PnlNav: TPanel
     Left = 0
     Top = 33
-    Width = 1228
+    Width = 1277
     Height = 80
     Align = alTop
     TabOrder = 1
-    ExplicitTop = 49
-    ExplicitWidth = 782
+    ExplicitLeft = 2
+    ExplicitTop = 28
+    ExplicitWidth = 1228
     object Label2: TLabel
       Left = 9
       Top = 10
@@ -77,6 +79,7 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
       NumGlyphs = 2
       ParentShowHint = False
       ShowHint = True
+      OnClick = SpdBtnLimpiarClick
     end
     object SpdBtnConsultarx: TSpeedButton
       Left = 379
@@ -226,6 +229,58 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
       NumGlyphs = 2
       OnClick = SpdBtnConsultarxClick
     end
+    object SpdBtncontactoHoy: TSpeedButton
+      Left = 464
+      Top = 52
+      Width = 121
+      Height = 22
+      Hint = 'Contactar Hoy'
+      Caption = 'Proximo contacto'
+      Glyph.Data = {
+        76010000424D7601000000000000760000002800000020000000100000000100
+        04000000000000010000130B0000130B00001000000000000000000000000000
+        800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+        FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00300000000000
+        003337777777777777F330FFFFFFFFFFF03337F3333FFF3337F330FFFF000FFF
+        F03337F33377733337F330FFFFF0FFFFF03337F33337F33337F330FFFF00FFFF
+        F03337F33377F33337F330FFFFF0FFFFF03337F33337333337F330FFFFFFFFFF
+        F03337FFF3F3F3F3F7F33000F0F0F0F0F0333777F7F7F7F7F7F330F0F000F070
+        F03337F7F777F777F7F330F0F0F0F070F03337F7F7373777F7F330F0FF0FF0F0
+        F03337F733733737F7F330FFFFFFFF00003337F33333337777F330FFFFFFFF0F
+        F03337FFFFFFFF7F373330999999990F033337777777777F733330FFFFFFFF00
+        333337FFFFFFFF77333330000000000333333777777777733333}
+      NumGlyphs = 2
+      ParentShowHint = False
+      ShowHint = True
+      OnClick = SpdBtncontactoHoyClick
+    end
+    object SpdBtnContacto: TSpeedButton
+      Left = 591
+      Top = 52
+      Width = 89
+      Height = 22
+      Hint = 'Datos Contacto'
+      AllowAllUp = True
+      GroupIndex = 1
+      Caption = 'Contactos'
+      Glyph.Data = {
+        76010000424D7601000000000000760000002800000020000000100000000100
+        04000000000000010000120B0000120B00001000000000000000000000000000
+        800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+        FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF003B3000000000
+        003B37F77777777777F73BB09111111110BB3777F3F3F3F3F777311098080808
+        10B33777F7373737377313309999999910337F373F3F3F3F3733133309808089
+        03337F3373737373733313333099999033337FFFF7FFFFF7FFFFB011B0000000
+        BBBB7777777777777777B01110BBBBB0BBBB77F37777777777773011108BB333
+        333337F337377F3FFFF33099111BB3010033373F33777F77773F331999100101
+        11033373FFF77773337F33300099991999033337773FFFF33373333BB7100199
+        113333377377773FF7F333BB333BB7011B33337733377F7777FF3BB3333BB333
+        3BB3377333377F33377FBB33333BB33333BB7733333773333377}
+      NumGlyphs = 2
+      ParentShowHint = False
+      ShowHint = True
+      Spacing = 2
+    end
     object DBLkupCmbBxClientes: TDBLookupComboBox
       Left = 54
       Top = 10
@@ -251,15 +306,16 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
   object PnlGrids: TPanel
     Left = 0
     Top = 113
-    Width = 1228
-    Height = 260
+    Width = 1277
+    Height = 228
     Align = alClient
     TabOrder = 2
-    ExplicitWidth = 1014
+    ExplicitWidth = 1241
+    ExplicitHeight = 260
     object PnlSoloIncidencias: TPanel
       Left = 1
-      Top = 158
-      Width = 1226
+      Top = 126
+      Width = 1275
       Height = 101
       Align = alBottom
       TabOrder = 0
@@ -270,11 +326,11 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
       object DBGrid1: TDBGrid
         Left = 1
         Top = 30
-        Width = 1224
+        Width = 1273
         Height = 70
         Align = alClient
         Color = clInfoBk
-        DataSource = DSIncidencias
+        DataSource = DSConIncidencias
         Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
         TabOrder = 0
         TitleFont.Charset = DEFAULT_CHARSET
@@ -359,7 +415,7 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
       object PnlFechas: TPanel
         Left = 1
         Top = 1
-        Width = 1224
+        Width = 1273
         Height = 29
         Align = alTop
         BevelOuter = bvNone
@@ -402,6 +458,7 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
           NumGlyphs = 2
           ParentShowHint = False
           ShowHint = True
+          OnClick = SpdBtnRegresoClick
         end
         object SpdBtnFiltroDias: TSpeedButton
           Left = 365
@@ -425,6 +482,7 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
           NumGlyphs = 2
           ParentShowHint = False
           ShowHint = True
+          OnClick = SpdBtnFiltroDiasClick
         end
         object DtTmDesde: TDateEdit
           Left = 49
@@ -448,7 +506,7 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
       Left = 1
       Top = 1
       Width = 528
-      Height = 157
+      Height = 125
       Align = alLeft
       Color = 14084566
       DataSource = dsConsulta
@@ -467,7 +525,7 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
         end
         item
           Expanded = False
-          FieldName = 'Cliente'
+          FieldName = 'RazonSocial'
           Width = 257
           Visible = True
         end
@@ -488,8 +546,8 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
     object DBGrdFactPend: TDBGrid
       Left = 529
       Top = 1
-      Width = 698
-      Height = 157
+      Width = 747
+      Height = 125
       Align = alClient
       Color = clInfoBk
       DataSource = DSCXCPendientes
@@ -500,6 +558,7 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
       TitleFont.Height = -11
       TitleFont.Name = 'Tahoma'
       TitleFont.Style = []
+      OnDblClick = DBGrdFactPendDblClick
       Columns = <
         item
           Expanded = False
@@ -532,29 +591,29 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
   end
   object Pnlinferior: TPanel
     Left = 0
-    Top = 376
-    Width = 1228
-    Height = 238
+    Top = 344
+    Width = 1277
+    Height = 355
     Align = alBottom
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 3
-    ExplicitWidth = 782
-    ExplicitHeight = 230
+    ExplicitWidth = 1241
+    ExplicitHeight = 278
     object DBCtrlGrid3: TDBCtrlGrid
       Left = 524
       Top = 35
-      Width = 703
-      Height = 202
+      Width = 752
+      Height = 319
       Align = alClient
       Color = 16776176
       DataSource = DSIncidencias
-      PanelHeight = 50
-      PanelWidth = 686
+      PanelHeight = 79
+      PanelWidth = 735
       ParentColor = False
       TabOrder = 0
       RowCount = 4
-      ExplicitLeft = 584
-      ExplicitWidth = 643
+      OnPaintPanel = DBCtrlGrid3PaintPanel
+      ExplicitWidth = 716
       object Label9: TLabel
         Left = 10
         Top = 3
@@ -573,15 +632,15 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
         Top = 19
         Width = 353
         Height = 17
-        DataField = 'ListaFolios'
+        DataField = 'FoliosAsoc'
         DataSource = DSIncidencias
       end
       object Label10: TLabel
         Left = 11
         Top = 19
-        Width = 99
+        Width = 90
         Height = 13
-        Caption = 'Folios asociados:'
+        Caption = 'CXC asociados:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clNavy
         Font.Height = -9
@@ -639,7 +698,7 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
       object DBText10: TDBText
         Left = 358
         Top = 35
-        Width = 115
+        Width = 112
         Height = 15
         DataField = 'RegContacto'
         DataSource = DSIncidencias
@@ -701,13 +760,13 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
         Width = 78
         Height = 15
         Alignment = taCenter
-        Color = clAqua
+        Color = clYellow
         DataField = 'EstadoIncidencia'
         DataSource = DSIncidencias
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
+        Font.Color = clGreen
         Font.Height = -11
-        Font.Name = 'MS Sans Serif'
+        Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
@@ -717,7 +776,7 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
       Left = 1
       Top = 35
       Width = 523
-      Height = 202
+      Height = 319
       Align = alLeft
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -726,6 +785,7 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
       Font.Style = []
       ParentFont = False
       TabOrder = 1
+      ExplicitHeight = 202
       object Label16: TLabel
         Left = 26
         Top = 11
@@ -772,9 +832,9 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
       object Label18: TLabel
         Left = 339
         Top = 113
-        Width = 99
+        Width = 90
         Height = 13
-        Caption = 'Folios asociados:'
+        Caption = 'CXC asociadas:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clNavy
         Font.Height = -9
@@ -881,8 +941,8 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
         Visible = False
       end
       object c5: TDBDateEdit
-        Left = 260
-        Top = 77
+        Left = 258
+        Top = 78
         Width = 104
         Height = 21
         Margins.Left = 1
@@ -898,7 +958,6 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
         NumGlyphs = 2
         ParentFont = False
         TabOrder = 0
-        Weekends = [Sun, Sat]
         WeekendColor = clBlue
         YearDigits = dyFour
       end
@@ -916,7 +975,7 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
         Top = 1
         Width = 90
         Height = 56
-        DataField = 'EstadoIncidencia'
+        DataField = 'IdIncidenciaEstado'
         DataSource = DSIncidencias
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clNavy
@@ -929,8 +988,8 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
         ParentFont = False
         TabOrder = 3
         Values.Strings = (
-          'Abierta'
-          'Cerrada')
+          '1'
+          '2')
       end
       object DBEdit1: TDBEdit
         Left = 25
@@ -982,6 +1041,7 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
           'Cobro Dif'#237'cil')
         ParentFont = False
         TabOrder = 6
+        OnClick = ChckLstBxCondicionesClick
       end
       object DBChckBxPtomPago: TDBCheckBox
         Left = 368
@@ -999,14 +1059,14 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
     object PnlNavIncid: TPanel
       Left = 1
       Top = 1
-      Width = 1226
+      Width = 1275
       Height = 34
       Align = alTop
       TabOrder = 2
       ExplicitWidth = 1066
       object SpdBtnMostrartodo: TSpeedButton
-        Left = 515
-        Top = 6
+        Left = 523
+        Top = 5
         Width = 23
         Height = 22
         Hint = 'MostrarTodo'
@@ -1028,6 +1088,7 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
         NumGlyphs = 2
         ParentShowHint = False
         ShowHint = True
+        OnClick = SpdBtnMostrartodoClick
       end
       object DBNavIncidencia: TDBNavigator
         Left = 24
@@ -1056,25 +1117,64 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
   object dsConsulta: TDataSource
     AutoEdit = False
     DataSet = dmSeguimientoCobranza.ADODtStSaldoCliente
-    Left = 451
-    Top = 69
+    Left = 435
+    Top = 21
   end
   object DSIncidencias: TDataSource
     AutoEdit = False
     DataSet = dmSeguimientoCobranza.adodsMaster
-    Left = 627
-    Top = 253
+    OnStateChange = DSIncidenciasStateChange
+    OnDataChange = DSIncidenciasDataChange
+    Left = 611
+    Top = 381
   end
   object DSCXCPendientes: TDataSource
     AutoEdit = False
     DataSet = dmSeguimientoCobranza.ADODtSTCXCPend
-    Left = 916
-    Top = 69
+    Left = 932
+    Top = 13
   end
   object DSClientes: TDataSource
     AutoEdit = False
     DataSet = dmSeguimientoCobranza.ADODtStPersonas
-    Left = 547
+    Left = 531
     Top = 21
+  end
+  object DSConIncidencias: TDataSource
+    AutoEdit = False
+    DataSet = dmSeguimientoCobranza.ADODtStIncidenciaXFecha
+    Left = 731
+    Top = 269
+  end
+  object PpUpMnFolios: TPopupMenu
+    Left = 456
+    Top = 520
+    object EliminarFolio1: TMenuItem
+      Bitmap.Data = {
+        76010000424D7601000000000000760000002800000020000000100000000100
+        04000000000000010000120B0000120B00001000000000000000000000000000
+        800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+        FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00555555555555
+        55555FFFFFFF5F55FFF5777777757559995777777775755777F7555555555550
+        305555555555FF57F7F555555550055BB0555555555775F777F55555550FB000
+        005555555575577777F5555550FB0BF0F05555555755755757F555550FBFBF0F
+        B05555557F55557557F555550BFBF0FB005555557F55575577F555500FBFBFB0
+        B05555577F555557F7F5550E0BFBFB00B055557575F55577F7F550EEE0BFB0B0
+        B05557FF575F5757F7F5000EEE0BFBF0B055777FF575FFF7F7F50000EEE00000
+        B0557777FF577777F7F500000E055550805577777F7555575755500000555555
+        05555777775555557F5555000555555505555577755555557555}
+      Caption = 'Eliminar Folio'
+      OnClick = EliminarFolio1Click
+    end
+  end
+  object PpUpMnCopia: TPopupMenu
+    Left = 584
+    Top = 480
+    object CrearCopia1: TMenuItem
+      Caption = 'Crear &Copia'
+    end
+    object AgregaIncidencia1: TMenuItem
+      Caption = '&Agrega Incidencia'
+    end
   end
 end

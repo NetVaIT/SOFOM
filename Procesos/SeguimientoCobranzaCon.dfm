@@ -1,11 +1,73 @@
 inherited FrmSeguimientoCobranza: TFrmSeguimientoCobranza
   Caption = 'FrmSeguimientoCobranza'
-  ExplicitWidth = 651
-  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
+  inherited pnlMaster: TPanel
+    inherited cxGrid: TcxGrid
+      inherited tvMaster: TcxGridDBTableView
+        object tvMasterIDIncidenciaCobranza: TcxGridDBColumn
+          DataBinding.FieldName = 'IDIncidenciaCobranza'
+          Visible = False
+        end
+        object tvMasterIDUsuario: TcxGridDBColumn
+          DataBinding.FieldName = 'IDUsuario'
+          Visible = False
+        end
+        object tvMasterIDPersonaCliente: TcxGridDBColumn
+          DataBinding.FieldName = 'IDPersonaCliente'
+          Visible = False
+        end
+        object tvMasterIdIncidenciaEstado: TcxGridDBColumn
+          DataBinding.FieldName = 'IdIncidenciaEstado'
+          Visible = False
+        end
+        object tvMasterIdAnexo: TcxGridDBColumn
+          DataBinding.FieldName = 'IdAnexo'
+          Visible = False
+        end
+        object tvMasterCliente: TcxGridDBColumn
+          DataBinding.FieldName = 'Cliente'
+          Width = 300
+        end
+        object tvMasterFechaReg: TcxGridDBColumn
+          Caption = 'Fecha Registro'
+          DataBinding.FieldName = 'FechaReg'
+        end
+        object tvMasterEstadoIncidencia: TcxGridDBColumn
+          Caption = 'Estado Incidencia'
+          DataBinding.FieldName = 'EstadoIncidencia'
+        end
+        object tvMasterFoliosAsoc: TcxGridDBColumn
+          Caption = 'CXC Asociadas'
+          DataBinding.FieldName = 'FoliosAsoc'
+        end
+        object tvMasterRegContacto: TcxGridDBColumn
+          DataBinding.FieldName = 'RegContacto'
+        end
+        object tvMasterAcuerdo: TcxGridDBColumn
+          DataBinding.FieldName = 'Acuerdo'
+        end
+        object tvMasterProxcontacto: TcxGridDBColumn
+          Caption = 'Fecha proximo contacto'
+          DataBinding.FieldName = 'Proxcontacto'
+        end
+        object tvMasterCondiciones: TcxGridDBColumn
+          DataBinding.FieldName = 'Condiciones'
+        end
+        object tvMasterPromesaPago: TcxGridDBColumn
+          DataBinding.FieldName = 'PromesaPago'
+        end
+        object tvMasterUsuarioReg: TcxGridDBColumn
+          DataBinding.FieldName = 'UsuarioReg'
+        end
+      end
+    end
+  end
   inherited pnlDetail1: TPanel
     ExplicitTop = 281
+  end
+  inherited DataSource: TDataSource
+    DataSet = dmSeguimientoCobranza.adodsMaster
   end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
@@ -822,5 +884,35 @@ inherited FrmSeguimientoCobranza: TFrmSeguimientoCobranza
       AssignedFormatValues = []
       BuiltInReportLink = True
     end
+  end
+  object DSIncidencias: TDataSource
+    AutoEdit = False
+    DataSet = dmSeguimientoCobranza.adodsMaster
+    Left = 499
+    Top = 149
+  end
+  object DSConIncidencias: TDataSource
+    AutoEdit = False
+    DataSet = dmSeguimientoCobranza.ADODtStIncidenciaXFecha
+    Left = 591
+    Top = 141
+  end
+  object DSCXCPendientes: TDataSource
+    AutoEdit = False
+    DataSet = dmSeguimientoCobranza.ADODtSTCXCPend
+    Left = 591
+    Top = 61
+  end
+  object DSClientes: TDataSource
+    AutoEdit = False
+    DataSet = dmSeguimientoCobranza.ADODtStPersonas
+    Left = 499
+    Top = 69
+  end
+  object dsConsulta: TDataSource
+    AutoEdit = False
+    DataSet = dmSeguimientoCobranza.ADODtStSaldoCliente
+    Left = 403
+    Top = 69
   end
 end

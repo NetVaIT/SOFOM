@@ -156,6 +156,8 @@ type
     adodsMasterIdCFDINormal: TLargeintField;
     ADOdsCXCDetallePagosAplicados: TFMTBCDField;
     ADOdsCXCDetallePagosAplicadosFactoraje: TFMTBCDField;
+    ActGeneraCuentasXCobrar: TAction;
+    ADOStrdPrcGeneraCXC: TADOStoredProc;
     procedure DataModuleCreate(Sender: TObject);
     procedure actGeneraPreFacturasExecute(Sender: TObject);
     procedure ADODtStPrefacturasCFDINewRecord(DataSet: TDataSet);
@@ -164,6 +166,7 @@ type
     procedure ADODtStPrefacturasCFDIBeforeOpen(DataSet: TDataSet);
     procedure adodsMasterAfterOpen(DataSet: TDataSet);
     procedure ActActualizaMoratoriosExecute(Sender: TObject);
+    procedure ActGeneraCuentasXCobrarExecute(Sender: TObject);
   private
     function SacaTipoComp(TipoDoc: Integer): String;
     function SacaDireccion(IDCliente: Integer): Integer;
@@ -191,6 +194,27 @@ begin
   ADOStrprcActGralMoratorios.ExecProc;
 
   adodsMaster.Refresh;
+end;
+
+procedure TdmCuentasXCobrar.ActGeneraCuentasXCobrarExecute(Sender: TObject);
+var
+    res:integer;     //Feb 15/17
+begin
+  inherited;
+
+  { feb 15/17 %%& SELECT    IdAnexoAmortizacion, IdAnexoCredito, IdAnexoSegmento, Periodo, FechaCorte, FechaVencimiento, TasaAnual, SaldoInicial, Pago, Capital, CapitalImpuesto, CapitalTotal, Interes,
+                      InteresImpuesto, InteresTotal, ImpactoISR, PagoTotal, SaldoFinal, FechaMoratorio, MoratorioBase, Moratorio, MoratorioImpuesto
+FROM         AnexosAmortizaciones AA
+where FechaCorte <='2017-15-02' and not Exists(Select * from CuentasXCobrar CXC where CXC.IdAnexosAmortizaciones=AA.IdAnexoAmortizacion and CXC.Fecha=AA.FechaCorte)
+
+  //SAca lo penbndiente al dia para poder usar las fechas de corte pendientes y generar
+  }
+
+  ADOStrdPrcGeneraCXC.Parameters.ParamByName('@FechaCorte').Value:=date; //Se calculamn a al dìa de hoy
+  ADOStrdPrcGeneraCXC.ExecProc;
+  res:=ADOStrdPrcGeneraCXC.Parameters.ParamByName('@RETURN_Value').Value;
+  ShowMessage('Ejecutó proceso con fecha '+dateTimeToSTR(date)+'. Regresa '+ intToSTR(res));
+  adoDSMaster.Refresh;
 end;
 
 procedure TdmCuentasXCobrar.actGeneraPreFacturasExecute(Sender: TObject);
@@ -393,6 +417,7 @@ begin
   gGridForm.DataSet:= adodsMaster;
   TFrmConCuentasXCobrar(gGridForm).ActGenerarPrefactura := actGeneraPreFacturas; //Dic 7/16
   TFrmConCuentasXCobrar(gGridForm).ActActualizaMoratorios:= ActActualizaMoratorios;//Feb 8/17
+  TFrmConCuentasXCobrar(gGridForm).ActGenerarCXCs:=ActGeneraCuentasXCobrar;//Feb 15/17
 end;
 
 function TdmCuentasXCobrar.SacaTipoComp (TipoDoc:Integer) :String;

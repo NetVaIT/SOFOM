@@ -32,7 +32,28 @@ uses
 type
   TFrmSeguimientoCobranza = class(T_frmGrid)
     dxBrBtnSeguimiento: TdxBarButton;
+    DSIncidencias: TDataSource;
+    DSConIncidencias: TDataSource;
+    DSCXCPendientes: TDataSource;
+    DSClientes: TDataSource;
+    dsConsulta: TDataSource;
+    tvMasterIDIncidenciaCobranza: TcxGridDBColumn;
+    tvMasterIDUsuario: TcxGridDBColumn;
+    tvMasterIDPersonaCliente: TcxGridDBColumn;
+    tvMasterIdIncidenciaEstado: TcxGridDBColumn;
+    tvMasterIdAnexo: TcxGridDBColumn;
+    tvMasterFechaReg: TcxGridDBColumn;
+    tvMasterFoliosAsoc: TcxGridDBColumn;
+    tvMasterRegContacto: TcxGridDBColumn;
+    tvMasterAcuerdo: TcxGridDBColumn;
+    tvMasterProxcontacto: TcxGridDBColumn;
+    tvMasterCondiciones: TcxGridDBColumn;
+    tvMasterPromesaPago: TcxGridDBColumn;
+    tvMasterEstadoIncidencia: TcxGridDBColumn;
+    tvMasterCliente: TcxGridDBColumn;
+    tvMasterUsuarioReg: TcxGridDBColumn;
     procedure dxBrBtnSeguimientoClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -46,14 +67,32 @@ implementation
 
 {$R *.dfm}
 
-uses SeguimientoRegistroEd;
+uses SeguimientoRegistroEd, SeguimientoCobranzaDM;
 
 procedure TFrmSeguimientoCobranza.dxBrBtnSeguimientoClick(Sender: TObject);
 begin
   inherited;
   FrmSeguimientoRegistro:=TFrmSeguimientoRegistro.create(self);
+  FrmSeguimientoRegistro.dsConsulta:=dsConsulta;
+  FrmSeguimientoRegistro.DSIncidencias:=dsincidencias;
+  FrmSeguimientoRegistro.DSCXCPendientes:=DSCXCPendientes;
+  FrmSeguimientoRegistro.DSClientes:=dsclientes;
+  FrmSeguimientoRegistro.DSConIncidencias:=DSConIncidencias;
+
   FrmSeguimientoRegistro.ShowModal;
   FrmSeguimientoRegistro.Free;
+
+end;
+
+procedure TFrmSeguimientoCobranza.FormCreate(Sender: TObject);
+begin
+  inherited;
+ // gEditForm:= TfrmEdSeguimiento.Create(Self);
+  dsConsulta.DataSet.open;
+  dsincidencias.DataSet.open;
+  DSCXCPendientes.DataSet.open;
+  //dsclientes.DataSet.open;
+  DSConIncidencias.DataSet.open;
 
 end;
 
