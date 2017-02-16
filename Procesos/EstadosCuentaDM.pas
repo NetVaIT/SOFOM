@@ -133,8 +133,8 @@ begin
       AdoDtStEstadoCtaDetalle.FieldByName('IdAnexo').AsInteger:=ADODtStDatosCXCIdAnexo.AsInteger; 
       AdoDtStEstadoCtaDetalle.FieldByName('IdCuentaXCobrar').AsInteger:=ADODtStDatosCXCIdCuentaXCobrar.AsInteger; 
       AdoDtStEstadoCtaDetalle.FieldByName('IdCuentaXCobrarDetalle').AsInteger:=ADODtStDatosCXCIdCuentaXCobrarDetalle.AsInteger; 
-      AdoDtStEstadoCtaDetalle.FieldByName('FechaMovto').ASDAteTime:=ADODtStDatosCXCFecha.AsDateTime; //FEcha de la CXC (Corte)
-      AdoDtStEstadoCtaDetalle.FieldByName('TipoMovto').AsInteger:=1; //Cargo
+      AdoDtStEstadoCtaDetalle.FieldByName('FechaMovimiento').ASDAteTime:=ADODtStDatosCXCFecha.AsDateTime; //FEcha de la CXC (Corte)
+      AdoDtStEstadoCtaDetalle.FieldByName('TipoMovimiento').AsInteger:=1; //Cargo
       AdoDtStEstadoCtaDetalle.FieldByName('Importe').AsFloat:=ADODtStDatosCXCImporte.asFloat; // Importe del detalle 
       AdoDtStEstadoCtaDetalle.FieldByName('Concepto').AsString:=ADODtStDatosCXCDescripcion.AsString;
       AdoDtStEstadoCtaDetalle.FieldByName('TipoContrato').AsString:=ADODtStDatosCXCTipoContrato.AsString;
@@ -165,10 +165,10 @@ begin
       AdoDtStEstadoCtaDetalle.Insert;
 
       AdoDtStEstadoCtaDetalle.FieldByName('IDPago').AsInteger:=ADODtStDatosPagosidpago.AsInteger; 
-      AdoDtStEstadoCtaDetalle.FieldByName('FechaMovto').ASDAteTime:=ADODtStDatosPagosFEchaPago.AsDateTime; //FEcha de la CXC (Corte)
-      AdoDtStEstadoCtaDetalle.FieldByName('Importe').AsFloat:=ADODtStDatosPagosImporte.asFloat; // Importe del detalle 
+      AdoDtStEstadoCtaDetalle.FieldByName('FechaMovimiento').ASDAteTime:=ADODtStDatosPagosFEchaPago.AsDateTime; //FEcha de la CXC (Corte)
+      AdoDtStEstadoCtaDetalle.FieldByName('Importe').AsFloat:=ADODtStDatosPagosImporte.asFloat; // Importe del detalle
       AdoDtStEstadoCtaDetalle.FieldByName('Concepto').AsString:='PAGO: '+ADODtStDatosPagosSeriePago.AsString+'-'+ ADODtStDatosPagosFolioPago.AsString;
-      AdoDtStEstadoCtaDetalle.FieldByName('TipoMovto').ASInteger:=0;  //Abono
+      AdoDtStEstadoCtaDetalle.FieldByName('TipoMovimiento').ASInteger:=0;  //Abono
       AdoDtStEstadoCtaDetalle.Post;
     end;
   

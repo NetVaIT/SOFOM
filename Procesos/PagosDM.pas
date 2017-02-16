@@ -312,6 +312,17 @@ type
     DSCXCDetalle: TDataSource;
     ADODtStCxCDetallePendEsCapital: TBooleanField;
     ADODtStCxCDetallePendEsInteres: TBooleanField;
+    ADODtStDetalleCXCMostrar: TADODataSet;
+    ADODtStDetalleCXCMostrarIdCuentaXCobrarDetalle: TAutoIncField;
+    ADODtStDetalleCXCMostrarIdCuentaXCobrar: TIntegerField;
+    ADODtStDetalleCXCMostrarIdCuentaXCobrarTipo: TIntegerField;
+    ADODtStDetalleCXCMostrarIdentificador: TStringField;
+    ADODtStDetalleCXCMostrarDescripcion: TStringField;
+    ADODtStDetalleCXCMostrarImporte: TFMTBCDField;
+    ADODtStDetalleCXCMostrarPagosAplicados: TFMTBCDField;
+    ADODtStDetalleCXCMostrarSaldo: TFMTBCDField;
+    ADODtStDetalleCXCMostrarPagosAplicadosFactoraje: TFMTBCDField;
+    ADODtStDetalleCXCMostrarSaldoFactoraje: TFMTBCDField;
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsMasterAfterPost(DataSet: TDataSet);
     procedure adodsMasterBeforePost(DataSet: TDataSet);
@@ -1194,7 +1205,14 @@ begin
   TFrmConPagos(gGridForm).DSAplicacion.DataSet:=ADODtStAplicacionesPagos;
   TFrmConPagos(gGridForm).ActFacturaMorato:=ActGeneraPrefMoratorios;
   gGridForm.DataSet:= adodsMaster;
-   TFrmConPagos(gGridForm).dsPersonas.dataset:=adosPersonas;
+  TFrmConPagos(gGridForm).dsPersonas.dataset:=adosPersonas;
+
+    //Agregado Feb 16/17
+   TFrmConPagos(gGridForm).DSDetallesCXC.dataset:= ADODtStCxCDetallePend;
+   TFrmConPagos(gGridForm).dsConCXCPendientes.DataSet:=ADODtStCXCPendientes;
+   TFrmConPagos(gGridForm).DSDetalleMostrar.DataSet:=ADODtStDetalleCXCMostrar;
+   TFrmConPagos(gGridForm).DSAplicacion.DataSet :=ADODtStAplicacionesPagos;
+   // hasta Agregado Feb 16/17
 
  //  TfrmFacturasGrid(gGridForm).ActGenerarCFDI := actProcesaFactura;  //Nov29/16
 end;

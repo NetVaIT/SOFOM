@@ -73,7 +73,7 @@ begin
   inherited;
   dxBarDtCmbFechaCorte.Date:=DAte; //Verificar si dispara evento
 
-//  fFechaCorte:= dxBarDtCmbFechaCorte.Date;
+  fFechaCorte:= dxBarDtCmbFechaCorte.Date;
 end;
 
 function TFrmConEstadosCuenta.GetfFechaCorte: TDAteTime;

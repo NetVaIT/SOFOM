@@ -1069,4 +1069,9 @@ inherited FrmConPagos: TFrmConPagos
     Left = 648
     Top = 120
   end
+  object DSDetalleMostrar: TDataSource
+    DataSet = dmPagos.ADODtStDetalleCXCMostrar
+    Left = 788
+    Top = 5
+  end
 end

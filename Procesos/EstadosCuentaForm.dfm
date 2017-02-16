@@ -48,6 +48,7 @@ inherited FrmConEstadosCuenta: TFrmConEstadosCuenta
         end
         object tvMasterSaldoInsoluto: TcxGridDBColumn
           DataBinding.FieldName = 'SaldoInsoluto'
+          Width = 98
         end
       end
     end
@@ -56,7 +57,7 @@ inherited FrmConEstadosCuenta: TFrmConEstadosCuenta
     Top = 488
     Width = 772
     Height = 22
-    ExplicitTop = 400
+    ExplicitTop = 488
     ExplicitWidth = 772
     ExplicitHeight = 22
   end
@@ -64,7 +65,7 @@ inherited FrmConEstadosCuenta: TFrmConEstadosCuenta
     Top = 472
     Width = 772
     Height = 13
-    ExplicitTop = 384
+    ExplicitTop = 472
     ExplicitWidth = 772
     ExplicitHeight = 13
   end
@@ -72,7 +73,7 @@ inherited FrmConEstadosCuenta: TFrmConEstadosCuenta
     Top = 232
     Width = 772
     Height = 237
-    ExplicitTop = 229
+    ExplicitTop = 232
     ExplicitWidth = 772
     ExplicitHeight = 237
   end
@@ -80,7 +81,7 @@ inherited FrmConEstadosCuenta: TFrmConEstadosCuenta
     Top = 510
     Width = 772
     Height = 35
-    ExplicitTop = 422
+    ExplicitTop = 510
     ExplicitWidth = 772
     ExplicitHeight = 35
     inherited btnClose: TButton

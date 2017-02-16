@@ -64,6 +64,7 @@ type
     ChckBxXFecha: TCheckBox;
     ChckBxConSaldo: TCheckBox;
     ActFacturaMorato: TAction;
+    DSDetalleMostrar: TDataSource;
     procedure FormCreate(Sender: TObject);
     procedure dxBrBtnAplicaiconesClick(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
@@ -129,8 +130,11 @@ begin
     FrmAplicacionPago.DSPago.DataSet:=Datasource.DataSet;
     FrmAplicacionPago.dsConCXCPendientes.DataSet:=dsConCXCPendientes.DataSet;
     FrmAplicacionPago.DSDetallesCXC.dataset:=DSDetallesCXC.DataSet;
+    FrmAplicacionPago.DSDetalleMostrar.dataset:=DSDetalleMostrar.DataSet;   //Agregado Feb 16/17
+
     FrmAplicacionPago.DSAplicacion.DataSet:=DSAplicacion.DataSet;
     FrmAplicacionPago.dsConCXCPendientes.DataSet.Open;
+    FrmAplicacionPago.DSDetalleMostrar.dataset.Open;   //Agregado Feb 16/17
     FrmAplicacionPago.DSDetallesCXC.DataSet.Open;
     FrmAplicacionPago.DSAplicacion.DataSet.Open;
     FrmAplicacionPago.DSAplicacion.DataSet.insert;

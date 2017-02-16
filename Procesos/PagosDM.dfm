@@ -1570,4 +1570,68 @@ inherited dmPagos: TdmPagos
     Left = 652
     Top = 464
   end
+  object ADODtStDetalleCXCMostrar: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'Select * From CuentasxcobrarDetalle'#13#10'where Saldo >0'#13#10'and IdCuent' +
+      'aXCobrar=:IdCuentaXCobrar'#13#10
+    DataSource = DSCXCPendientes
+    IndexFieldNames = 'IdCuentaXCobrar'
+    MasterFields = 'IdCuentaXCobrar'
+    Parameters = <
+      item
+        Name = 'IdCuentaXCobrar'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = 8
+      end>
+    Left = 724
+    Top = 187
+    object ADODtStDetalleCXCMostrarIdCuentaXCobrarDetalle: TAutoIncField
+      FieldName = 'IdCuentaXCobrarDetalle'
+      ReadOnly = True
+    end
+    object ADODtStDetalleCXCMostrarIdCuentaXCobrar: TIntegerField
+      FieldName = 'IdCuentaXCobrar'
+    end
+    object ADODtStDetalleCXCMostrarIdCuentaXCobrarTipo: TIntegerField
+      FieldName = 'IdCuentaXCobrarTipo'
+    end
+    object ADODtStDetalleCXCMostrarIdentificador: TStringField
+      FieldName = 'Identificador'
+      Size = 10
+    end
+    object ADODtStDetalleCXCMostrarDescripcion: TStringField
+      FieldName = 'Descripcion'
+      Size = 100
+    end
+    object ADODtStDetalleCXCMostrarImporte: TFMTBCDField
+      FieldName = 'Importe'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStDetalleCXCMostrarPagosAplicados: TFMTBCDField
+      FieldName = 'PagosAplicados'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStDetalleCXCMostrarSaldo: TFMTBCDField
+      FieldName = 'Saldo'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStDetalleCXCMostrarPagosAplicadosFactoraje: TFMTBCDField
+      FieldName = 'PagosAplicadosFactoraje'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStDetalleCXCMostrarSaldoFactoraje: TFMTBCDField
+      FieldName = 'SaldoFactoraje'
+      Precision = 18
+      Size = 6
+    end
+  end
 end

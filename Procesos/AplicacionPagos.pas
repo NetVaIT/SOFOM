@@ -69,26 +69,8 @@ type
     cxGridDBTableView1: TcxGridDBTableView;
     cxGridLevel2: TcxGridLevel;
     DSDetallesCXC: TDataSource;
-    cxGridDBTableView1IdCuentaXCobrar: TcxGridDBColumn;
-    cxGridDBTableView1IdCuentaXCobrarTipo: TcxGridDBColumn;
-    cxGridDBTableView1Identificador: TcxGridDBColumn;
-    cxGridDBTableView1Descripcion: TcxGridDBColumn;
-    cxGridDBTableView1Importe: TcxGridDBColumn;
-    cxGridDBTableView1Saldo: TcxGridDBColumn;
-    cxGridDBTableView1IdCuentaXCobrarDetalle: TcxGridDBColumn;
     tvMasterIdEstadoCuenta: TcxGridDBColumn;
     tvMasterSaldoFactoraje: TcxGridDBColumn;
-    cxGridDBTableView1acumulaACXC: TcxGridDBColumn;
-    cxGridDBTableView1IVAde: TcxGridDBColumn;
-    cxGridDBTableView1IdCFDI: TcxGridDBColumn;
-    cxGridDBTableView1IdCFDIConcepto: TcxGridDBColumn;
-    cxGridDBTableView1impconc: TcxGridDBColumn;
-    cxGridDBTableView1Fase: TcxGridDBColumn;
-    cxGridDBTableView1Temporalidad: TcxGridDBColumn;
-    cxGridDBTableView1OrdenAplica: TcxGridDBColumn;
-    cxGridDBTableView1IdTipoContrato: TcxGridDBColumn;
-    cxGridDBTableView1IDCFDIIVA: TcxGridDBColumn;
-    cxGridDBTableView1SaldoFactoraje: TcxGridDBColumn;
     LblAplicandoFActoraje: TLabel;
     DSAuxiliar: TDataSource;
     DSP_CalcMoratorio: TDataSource;
@@ -97,19 +79,17 @@ type
     tvMasterSaldoFactorajeCFDI: TcxGridDBColumn;
     LblEtiquetaFacto: TLabel;
     cxDBTxtEdtImporteAplicaFactoraje: TcxDBTextEdit;
+    DSDetalleMostrar: TDataSource;
+    cxGridDBTableView1IdCuentaXCobrarDetalle: TcxGridDBColumn;
+    cxGridDBTableView1IdCuentaXCobrar: TcxGridDBColumn;
+    cxGridDBTableView1IdCuentaXCobrarTipo: TcxGridDBColumn;
+    cxGridDBTableView1Identificador: TcxGridDBColumn;
+    cxGridDBTableView1Descripcion: TcxGridDBColumn;
+    cxGridDBTableView1Importe: TcxGridDBColumn;
     cxGridDBTableView1PagosAplicados: TcxGridDBColumn;
+    cxGridDBTableView1Saldo: TcxGridDBColumn;
     cxGridDBTableView1PagosAplicadosFactoraje: TcxGridDBColumn;
-    cxGridDBTableView1Facturar: TcxGridDBColumn;
-    cxGridDBTableView1Acumula: TcxGridDBColumn;
-    cxGridDBTableView1AcumulaAQuien: TcxGridDBColumn;
-    cxGridDBTableView1EsIVA: TcxGridDBColumn;
-    cxGridDBTableView1BaseIVA: TcxGridDBColumn;
-    cxGridDBTableView1EstadoCuenta: TcxGridDBColumn;
-    cxGridDBTableView1BaseMoratorios: TcxGridDBColumn;
-    cxGridDBTableView1EsMoratorios: TcxGridDBColumn;
-    cxGridDBTableView1saldoDoc1: TcxGridDBColumn;
-    cxGridDBTableView1ivaCFDI2: TcxGridDBColumn;
-    cxGridDBTableView1SaldoDocumento: TcxGridDBColumn;
+    cxGridDBTableView1SaldoFactoraje: TcxGridDBColumn;
     procedure BtBtnAplicarClick(Sender: TObject);
     procedure DSAplicacionStateChange(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -125,6 +105,7 @@ type
     function ActualizaMoratorios(IdCxCAct: integer;FechaPago:TDateTime;var ValorMora:Double; var FechaAct:TDateTime): Boolean;
     function CXCFacturada(IdCxCAct: integer): Boolean;
     procedure SetFActFacturaMora(const Value: TBasicAction);
+    function SacarMoraPagado(idCXC: Integer): Double;
     { Private declarations }
   public
     { Public declarations }
@@ -150,14 +131,14 @@ end;
 
 procedure TFrmAplicacionPago.BtBtnAplicarClick(Sender: TObject);
 var             //FEb 12/17
-   valor, aux, Mora:Double;
+   valor, aux, Mora, moraPagado:Double;
    f, camposaldo,campoimporte:String;
    idActual:integer; //Dic14/16
    ActMora, TieneMora, seguir:boolean; //Feb 12/17
    FechaMora:TDAteTime;
 begin
 
-
+        //Comparar antes de facturar para que el valor no sea mayor qu eel que se necesita...
   //Verificar si se pone una transaccion  // SE movio aca.feb 14/17 Verificar que cambia && ene 13 /17
     if EsFactoraje then      //Ene 13/17
     begin
@@ -181,18 +162,21 @@ begin
     if (not esFActoraje) then
     begin
       ActMora:=ActualizaMoratorios(dsConCXCpendientes.DataSet.FieldByName('IdCuentaXCobrar').AsInteger,dsPago.DataSet.FieldByName('FechaPago').asDAtetime, Mora, FechaMora );
+      //Identificar cuanto es lo que se ha pagado
+      if Mora>0 then  //FEb 16/17
+         moraPagado:=SacarMoraPagado(dsConCXCpendientes.DataSet.FieldByName('IdCuentaXCobrar').AsInteger);
       if ActMora then
-        showMessage( 'Los moratorios se actualizaron. Fecha: '+ datetimeToSTR(FechaMora)+' Monto:'+FloatToSTR(Mora));
-      TieneMora:= (Mora>0) ;
+        showMessage( 'Los moratorios se actualizaron. Fecha: '+ datetimeToSTR(FechaMora)+' Monto:'+FloatToSTR(Mora)+ 'Pendientes de Pago: '+FloatToSTR(Mora-MoraPagado));
+      TieneMora:= (Mora-MoraPagado>0) ;
       Seguir:= not TieneMora;
        //Feb 13/17 VErificar si  el monto del pago alcanza al menos para los moratorios.. si no no se puede FActurar
-      if Mora>valor then
+      if (Mora-MoraPagado)>valor then
       begin
-        showMessage( 'El monto del Pago no alcanza a cubrir  los moratorios ('+FloatToSTR(Mora)+')'); //VErificar si luego se puede aca poner ajuste para moratorios.. y  facturar con eses monto.. y el resto ponerlo en pagado.Registrando en PagosAuxiliares
+        showMessage( 'El monto del Pago no alcanza a cubrir  los moratorios ('+FloatToSTR(Mora-MoraPagado)+')'); //VErificar si luego se puede aca poner ajuste para moratorios.. y  facturar con eses monto.. y el resto ponerlo en pagado.Registrando en PagosAuxiliares
         SEguir:=False;
       end ;
 
-      if (Mora<=valor) and TieneMora  and (Application.MessageBox(pChar('Moratorios: '+FloatToSTR(Mora)+ ' a Fecha'+datetimeToSTR(FechaMora)+'.  Facturar Moratorios?'),'Confirmacion',MB_YESNO )=idYEs) then
+      if ((Mora-MoraPagado)<=valor) and TieneMora  and (Application.MessageBox(pChar('Moratorios: '+FloatToSTR(Mora-MoraPagado)+ ' a Fecha'+datetimeToSTR(FechaMora)+'.  Facturar Moratorios?'),'Confirmacion',MB_YESNO )=idYEs) then
       begin
             //FActurar Moratorios y continuar
         ActFacturaMora.Execute;
@@ -280,6 +264,21 @@ begin
     ShowMessage('Existen cuentas pendientes más antiguas...') ;
   end;
 
+
+end;
+
+function TFrmAplicacionPago.SacarMoraPagado(idCXC:Integer):Double;
+begin                                                  //Feb 16/17
+  Result:=0;
+  dsAuxiliar.DataSet.Close;
+
+  TADOQuery(dsAuxiliar.dataset).SQL.clear;
+  TADOQuery(dsAuxiliar.dataset).SQL.Add('Select cxcd.*, cxcT.EsMoratorios, cxct.esiva from CuentasXCobrarDetalle cxcd, ' +
+                                        'CuentasXCobrarTiposConceptos cxcT where CXCD.IdCuentaXCobrarTipo=cxcT.IdCuentaXCobrarTipo '+
+                                        'and cxct.EsMoratorios =1 and ESIVA =0 and idCuentaXCobrar= '+intTostr(idcxc) );
+  dsAuxiliar.dataset.Open;
+  if not dsAuxiliar.dataset.eof then
+    Result:=  dsAuxiliar.dataset.fieldbyname('PagosAplicados').AsFloat; //DEbe ser igual que el saldo  //Solo a nivel concepto sin IVA
 
 end;
 

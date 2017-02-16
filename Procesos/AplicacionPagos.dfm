@@ -213,7 +213,6 @@ object FrmAplicacionPago: TFrmAplicacionPago
     Align = alClient
     TabOrder = 1
     LookAndFeel.Kind = lfStandard
-    ExplicitTop = 248
     object tvMaster: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       OnCellDblClick = tvMasterCellDblClick
@@ -425,7 +424,7 @@ object FrmAplicacionPago: TFrmAplicacionPago
     LookAndFeel.Kind = lfStandard
     object cxGridDBTableView1: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
-      DataController.DataSource = DSDetallesCXC
+      DataController.DataSource = DSDetalleMostrar
       DataController.Summary.DefaultGroupSummaryItems = <>
       DataController.Summary.FooterSummaryItems = <>
       DataController.Summary.SummaryGroups = <>
@@ -436,6 +435,10 @@ object FrmAplicacionPago: TFrmAplicacionPago
       OptionsData.Inserting = False
       OptionsView.NoDataToDisplayInfoText = ' '
       OptionsView.GroupByBox = False
+      object cxGridDBTableView1IdCuentaXCobrarDetalle: TcxGridDBColumn
+        DataBinding.FieldName = 'IdCuentaXCobrarDetalle'
+        Visible = False
+      end
       object cxGridDBTableView1IdCuentaXCobrar: TcxGridDBColumn
         DataBinding.FieldName = 'IdCuentaXCobrar'
         Visible = False
@@ -446,116 +449,27 @@ object FrmAplicacionPago: TFrmAplicacionPago
       end
       object cxGridDBTableView1Identificador: TcxGridDBColumn
         DataBinding.FieldName = 'Identificador'
-        Width = 72
+        Width = 75
       end
       object cxGridDBTableView1Descripcion: TcxGridDBColumn
-        Caption = 'Descripci'#243'n'
-        DataBinding.FieldName = 'DescripCXC'
-        Width = 300
+        DataBinding.FieldName = 'Descripcion'
+        Width = 321
       end
       object cxGridDBTableView1Importe: TcxGridDBColumn
         DataBinding.FieldName = 'Importe'
       end
-      object cxGridDBTableView1Saldo: TcxGridDBColumn
-        DataBinding.FieldName = 'Saldo'
-      end
-      object cxGridDBTableView1IdCuentaXCobrarDetalle: TcxGridDBColumn
-        DataBinding.FieldName = 'IdCuentaXCobrarDetalle'
-        Visible = False
-      end
-      object cxGridDBTableView1acumulaACXC: TcxGridDBColumn
-        DataBinding.FieldName = 'acumulaACXC'
-        Visible = False
-      end
-      object cxGridDBTableView1IVAde: TcxGridDBColumn
-        DataBinding.FieldName = 'IVAde'
-        Visible = False
-      end
-      object cxGridDBTableView1IdCFDI: TcxGridDBColumn
-        DataBinding.FieldName = 'IdCFDI'
-        Visible = False
-      end
-      object cxGridDBTableView1IdCFDIConcepto: TcxGridDBColumn
-        DataBinding.FieldName = 'IdCFDIConcepto'
-        Visible = False
-      end
-      object cxGridDBTableView1impconc: TcxGridDBColumn
-        DataBinding.FieldName = 'impconc'
-        Visible = False
-      end
-      object cxGridDBTableView1Fase: TcxGridDBColumn
-        DataBinding.FieldName = 'Fase'
-        Visible = False
-      end
-      object cxGridDBTableView1Temporalidad: TcxGridDBColumn
-        DataBinding.FieldName = 'Temporalidad'
-        Visible = False
-      end
-      object cxGridDBTableView1OrdenAplica: TcxGridDBColumn
-        DataBinding.FieldName = 'OrdenAplica'
-        Visible = False
-      end
-      object cxGridDBTableView1IdTipoContrato: TcxGridDBColumn
-        DataBinding.FieldName = 'IdTipoContrato'
-        Visible = False
-      end
-      object cxGridDBTableView1IDCFDIIVA: TcxGridDBColumn
-        DataBinding.FieldName = 'IDCFDIIVA'
-        Visible = False
-      end
-      object cxGridDBTableView1SaldoFactoraje: TcxGridDBColumn
-        Caption = 'Saldo Factoraje'
-        DataBinding.FieldName = 'SaldoFactoraje'
-      end
       object cxGridDBTableView1PagosAplicados: TcxGridDBColumn
         DataBinding.FieldName = 'PagosAplicados'
+      end
+      object cxGridDBTableView1Saldo: TcxGridDBColumn
+        DataBinding.FieldName = 'Saldo'
       end
       object cxGridDBTableView1PagosAplicadosFactoraje: TcxGridDBColumn
         DataBinding.FieldName = 'PagosAplicadosFactoraje'
         Visible = False
       end
-      object cxGridDBTableView1Facturar: TcxGridDBColumn
-        DataBinding.FieldName = 'Facturar'
-        Visible = False
-      end
-      object cxGridDBTableView1Acumula: TcxGridDBColumn
-        DataBinding.FieldName = 'Acumula'
-        Visible = False
-      end
-      object cxGridDBTableView1AcumulaAQuien: TcxGridDBColumn
-        DataBinding.FieldName = 'AcumulaAQuien'
-        Visible = False
-      end
-      object cxGridDBTableView1EsIVA: TcxGridDBColumn
-        DataBinding.FieldName = 'EsIVA'
-        Visible = False
-      end
-      object cxGridDBTableView1BaseIVA: TcxGridDBColumn
-        DataBinding.FieldName = 'BaseIVA'
-        Visible = False
-      end
-      object cxGridDBTableView1EstadoCuenta: TcxGridDBColumn
-        DataBinding.FieldName = 'EstadoCuenta'
-        Visible = False
-      end
-      object cxGridDBTableView1BaseMoratorios: TcxGridDBColumn
-        DataBinding.FieldName = 'BaseMoratorios'
-        Visible = False
-      end
-      object cxGridDBTableView1EsMoratorios: TcxGridDBColumn
-        DataBinding.FieldName = 'EsMoratorios'
-        Visible = False
-      end
-      object cxGridDBTableView1saldoDoc1: TcxGridDBColumn
-        DataBinding.FieldName = 'saldoDoc1'
-        Visible = False
-      end
-      object cxGridDBTableView1ivaCFDI2: TcxGridDBColumn
-        DataBinding.FieldName = 'ivaCFDI2'
-        Visible = False
-      end
-      object cxGridDBTableView1SaldoDocumento: TcxGridDBColumn
-        DataBinding.FieldName = 'SaldoDocumento'
+      object cxGridDBTableView1SaldoFactoraje: TcxGridDBColumn
+        DataBinding.FieldName = 'SaldoFactoraje'
         Visible = False
       end
     end
@@ -593,5 +507,10 @@ object FrmAplicacionPago: TFrmAplicacionPago
     DataSet = dmPagos.adopSetCXCMoratorio
     Left = 940
     Top = 200
+  end
+  object DSDetalleMostrar: TDataSource
+    DataSet = dmPagos.ADODtStDetalleCXCMostrar
+    Left = 772
+    Top = 528
   end
 end
