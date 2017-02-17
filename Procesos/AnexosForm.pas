@@ -70,17 +70,21 @@ type
     dxbbCrearPagoInicial: TdxBarButton;
     tvMasterPagoInicialCreado: TcxGridDBColumn;
     tvMasterFechaVencimiento: TcxGridDBColumn;
+    dxbbAbonar: TdxBarButton;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
     FactProductos: TBasicAction;
     FactCrearPagoinicial: TBasicAction;
+    FactAbonar: TBasicAction;
     procedure SetactProductos(const Value: TBasicAction);
     procedure SetactCrearPagoinicial(const Value: TBasicAction);
+    procedure SetactAbonar(const Value: TBasicAction);
   public
     { Public declarations }
     property actProductos: TBasicAction read FactProductos write SetactProductos;
     property actCrearPagoinicial: TBasicAction read FactCrearPagoinicial write SetactCrearPagoinicial;
+    property actAbonar: TBasicAction read FactAbonar write SetactAbonar;
   end;
 
 implementation
@@ -93,6 +97,12 @@ procedure TfrmAnexos.FormCreate(Sender: TObject);
 begin
   inherited;
   gEditForm:= TfrmAnexosEdit.Create(Self);
+end;
+
+procedure TfrmAnexos.SetactAbonar(const Value: TBasicAction);
+begin
+  FactAbonar := Value;
+  dxbbAbonar.Action:= Value;
 end;
 
 procedure TfrmAnexos.SetactCrearPagoinicial(const Value: TBasicAction);

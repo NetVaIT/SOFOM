@@ -149,6 +149,10 @@ inherited frmAnexos: TfrmAnexos
         item
           Visible = True
           ItemName = 'dxbbCrearPagoInicial'
+        end
+        item
+          Visible = True
+          ItemName = 'dxbbAbonar'
         end>
     end
     object dxbbProductos: TdxBarButton
@@ -160,6 +164,12 @@ inherited frmAnexos: TfrmAnexos
     object dxbbCrearPagoInicial: TdxBarButton
       Action = dmContratos.actCrearPagoInicial
       Category = 0
+    end
+    object dxbbAbonar: TdxBarButton
+      Caption = 'New Button'
+      Category = 0
+      Hint = 'New Button'
+      Visible = ivAlways
     end
   end
   inherited cxStyleRepository: TcxStyleRepository
@@ -202,6 +212,7 @@ inherited frmAnexos: TfrmAnexos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42683.688746423620000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

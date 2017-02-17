@@ -107,6 +107,10 @@ inherited dmContratos: TdmContratos
       OnExecute = actCrearPagoInicialExecute
       OnUpdate = actCrearPagoInicialUpdate
     end
+    object actAbonarCapital: TAction
+      Caption = 'Abono a capital'
+      OnExecute = actAbonarCapitalExecute
+    end
   end
   object dsMaster: TDataSource
     AutoEdit = False

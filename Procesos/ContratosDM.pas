@@ -136,6 +136,7 @@ type
     adodsAmortizacionesMoratorioBase: TFMTBCDField;
     adodsAmortizacionesMoratorio: TFMTBCDField;
     adodsAmortizacionesMoratorioImpuesto: TFMTBCDField;
+    actAbonarCapital: TAction;
     procedure DataModuleCreate(Sender: TObject);
     procedure actProductosExecute(Sender: TObject);
     procedure adodsAnexosPrecioMonedaChange(Sender: TField);
@@ -152,6 +153,7 @@ type
     procedure actCrearPagoInicialExecute(Sender: TObject);
     procedure actCrearPagoInicialUpdate(Sender: TObject);
     procedure adodsAnexosFechaChange(Sender: TField);
+    procedure actAbonarCapitalExecute(Sender: TObject);
   private
     { Private declarations }
     FPaymentTime: TPaymentTime;
@@ -169,6 +171,7 @@ type
     property PaymentTime: TPaymentTime read FPaymentTime write SetPaymentTime;
     property TipoContrato: TCTipoContrato read GetTipoContrato;
     property IdAnexo: Integer read GetIdAnexo;
+//    function AbonarCapital(IdAnexo: Integer): Boolean;
   end;
 
 implementation
@@ -176,7 +179,8 @@ implementation
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
 uses ContratosForm, AnexosForm, AnexosProductosForm, AnexosAmortizacionesForm,
-  AnexosCreditosForm, _ConectionDmod, CotizacionesSeleccionarForm, _Utils;
+  AnexosCreditosForm, _ConectionDmod, CotizacionesSeleccionarForm, _Utils,
+  AbonarCapitalDM;
 
 {$R *.dfm}
 
@@ -205,6 +209,20 @@ begin
   begin
     adodsAmortizaciones.Close;
     adodsAmortizaciones.Open;
+  end;
+end;
+
+procedure TdmContratos.actAbonarCapitalExecute(Sender: TObject);
+var
+  dmAbonarCapital: TdmAbonarCapital;
+begin
+  inherited;
+  dmAbonarCapital := TdmAbonarCapital.Create(Self);
+  try
+    dmAbonarCapital.TipoContrato:= TipoContrato;
+    dmAbonarCapital.Execute(IdAnexo);
+  finally
+    dmAbonarCapital.Free;
   end;
 end;
 
@@ -442,6 +460,7 @@ begin
   gFormDeatil1.DataSet:= adodsAnexos;
   TfrmAnexos(gFormDeatil1).actProductos := actProductos;
   TfrmAnexos(gFormDeatil1).actCrearPagoinicial := actCrearPagoInicial;
+  TfrmAnexos(gFormDeatil1).actAbonar:= actAbonarCapital;
   if adodsCreditos.CommandText <> EmptyStr then adodsCreditos.Open;
   gFormDeatil2:= TfrmAnexosCreditos.Create(Self);
  // gFormDeatil2.ApplyBestFit := False;

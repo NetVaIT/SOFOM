@@ -190,7 +190,9 @@ uses
   ListasRestringidasEdit in 'Catalogos\ListasRestringidasEdit.pas' {frmListasRestringidasEdit},
   SeguimientoCobranzaCon in 'Procesos\SeguimientoCobranzaCon.pas' {FrmSeguimientoCobranza},
   SeguimientoCobranzaDM in 'Procesos\SeguimientoCobranzaDM.pas' {dmSeguimientoCobranza: TDataModule},
-  SeguimientoRegistroEd in 'Procesos\SeguimientoRegistroEd.pas' {FrmSeguimientoRegistro};
+  SeguimientoRegistroEd in 'Procesos\SeguimientoRegistroEd.pas' {FrmSeguimientoRegistro},
+  AbonarCapitalDM in 'Procesos\AbonarCapitalDM.pas' {dmAbonarCapital: TDataModule},
+  AbonarCapitalEdit in 'Procesos\AbonarCapitalEdit.pas' {frmAbonarCapitalEdit};
 
 {$R *.res}
 

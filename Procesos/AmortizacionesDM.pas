@@ -33,9 +33,63 @@ type
     dxmSegmentosPlazoIni: TIntegerField;
     dxmSegmentosPlazoFin: TIntegerField;
     adocInsAnexosAmrtizaciones: TADOCommand;
-    adoqAnexosAmortizaciones: TADOQuery;
-    adoqAnexosAmortizacionesTotal: TIntegerField;
+    adoqCountAmortizaciones: TADOQuery;
+    adoqCountAmortizacionesTotal: TIntegerField;
     dxmAmortizacionesImpactoISR: TFloatField;
+    adoqAnexosAmortizaciones: TADOQuery;
+    adoqAnexosAmortizacionesIdAnexoAmortizacion: TAutoIncField;
+    adoqAnexosAmortizacionesIdAnexoCredito: TIntegerField;
+    adoqAnexosAmortizacionesIdAnexoSegmento: TIntegerField;
+    adoqAnexosAmortizacionesPeriodo: TIntegerField;
+    adoqAnexosAmortizacionesFechaCorte: TDateTimeField;
+    adoqAnexosAmortizacionesFechaVencimiento: TDateTimeField;
+    adoqAnexosAmortizacionesTasaAnual: TBCDField;
+    adoqAnexosAmortizacionesSaldoInicial: TFMTBCDField;
+    adoqAnexosAmortizacionesPago: TFMTBCDField;
+    adoqAnexosAmortizacionesCapital: TFMTBCDField;
+    adoqAnexosAmortizacionesCapitalImpuesto: TFMTBCDField;
+    adoqAnexosAmortizacionesCapitalTotal: TFMTBCDField;
+    adoqAnexosAmortizacionesInteres: TFMTBCDField;
+    adoqAnexosAmortizacionesInteresImpuesto: TFMTBCDField;
+    adoqAnexosAmortizacionesInteresTotal: TFMTBCDField;
+    adoqAnexosAmortizacionesImpactoISR: TFMTBCDField;
+    adoqAnexosAmortizacionesPagoTotal: TFMTBCDField;
+    adoqAnexosAmortizacionesSaldoFinal: TFMTBCDField;
+    adoqAnexosAmortizacionesFechaMoratorio: TDateTimeField;
+    adoqAnexosAmortizacionesMoratorioBase: TFMTBCDField;
+    adoqAnexosAmortizacionesMoratorio: TFMTBCDField;
+    adoqAnexosAmortizacionesMoratorioImpuesto: TFMTBCDField;
+    dxmAnexosAmortizaciones: TdxMemData;
+    dxmAnexosAmortizacionesIdAnexoAmortizacion: TAutoIncField;
+    dxmAnexosAmortizacionesIdAnexoCredito: TIntegerField;
+    dxmAnexosAmortizacionesIdAnexoSegmento: TIntegerField;
+    dxmAnexosAmortizacionesPeriodo: TIntegerField;
+    dxmAnexosAmortizacionesFechaCorte: TDateTimeField;
+    dxmAnexosAmortizacionesFechaVencimiento: TDateTimeField;
+    dxmAnexosAmortizacionesTasaAnual: TBCDField;
+    dxmAnexosAmortizacionesSaldoInicial: TFMTBCDField;
+    dxmAnexosAmortizacionesPago: TFMTBCDField;
+    dxmAnexosAmortizacionesCapital: TFMTBCDField;
+    dxmAnexosAmortizacionesCapitalImpuesto: TFMTBCDField;
+    dxmAnexosAmortizacionesCapitalTotal: TFMTBCDField;
+    dxmAnexosAmortizacionesInteres: TFMTBCDField;
+    dxmAnexosAmortizacionesInteresImpuesto: TFMTBCDField;
+    dxmAnexosAmortizacionesInteresTotal: TFMTBCDField;
+    dxmAnexosAmortizacionesImpactoISR: TFMTBCDField;
+    dxmAnexosAmortizacionesPagoTotal: TFMTBCDField;
+    dxmAnexosAmortizacionesSaldoFinal: TFMTBCDField;
+    dxmAnexosAmortizacionesFechaMoratorio: TDateTimeField;
+    dxmAnexosAmortizacionesMoratorioBase: TFMTBCDField;
+    dxmAnexosAmortizacionesMoratorio: TFMTBCDField;
+    dxmAnexosAmortizacionesMoratorioImpuesto: TFMTBCDField;
+    adoqCredito: TADOQuery;
+    adoqCreditoIdAnexoCredito: TAutoIncField;
+    adoqCreditoFechaCorte: TDateTimeField;
+    adoqCreditoFechaVencimiento: TDateTimeField;
+    adoqCreditoPlazo: TIntegerField;
+    adoqCreditoTasaAnual: TBCDField;
+    adoqCreditoValorResidual: TFMTBCDField;
+    adoqCreditoImpactoISR: TFMTBCDField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actCalcularExecute(Sender: TObject);
   private
@@ -53,6 +107,10 @@ type
       ValorFuturo: Extended; PaymentTime: TPaymentTime);
     procedure IniSegmentos(TasaAnual: Extended; Plazo: Integer; ValorPresente,
       ValorFuturo: Extended);
+    function GetAmortizacion(FechaCorte, FechaVencimiento: TDateTime;
+      TasaAnual: Extended; Periodo, NPeriodo: Integer; SaldoInicial,
+      ValorPresente, ValorFuturo, ImpactoISR: Extended;
+      PaymentTime: TPaymentTime): TAmortizacion;
   public
     { Public declarations }
     property PaymentTime: TPaymentTime read FPaymentTime write SetPaymentTime;
@@ -63,6 +121,7 @@ type
     function GenAnexosAmortizaciones(IdAnexoCredito: Integer;
       FechaInicial: TDateTime; TasaAnual: Extended; NPeriodo: Integer;
       ValorPresente, ValorFuturo, ImpactoISR: Extended): Boolean;
+    function SetAmortizaciones(IdAnexo: Integer; Importe: Extended; Tipo: TAbonoCapital): Boolean;
   end;
 
 implementation
@@ -112,6 +171,52 @@ begin
   GenAmortizaciones(FechaInicial, TasaAnual, Plazo, ValorPresente, ValorFuturo, ImpactoISR, PaymentTime);
 //  IniSegmentos(TasaAnual, Plazo, ValorPresente, ValorFuturo);
 //  GenAmortizacionesSegmento(FechaInicial, ValorPresente, ValorFuturo, PaymentTime);
+end;
+
+function TdmAmortizaciones.GetAmortizacion(FechaCorte, FechaVencimiento: TDateTime;
+  TasaAnual: Extended; Periodo, NPeriodo: Integer; SaldoInicial, ValorPresente, ValorFuturo,
+  ImpactoISR: Extended; PaymentTime: TPaymentTime): TAmortizacion;
+var
+  Tasa: Extended;
+  Pago: Extended;
+  Capital: Extended;
+  CapitalSinImpuesto: Extended;
+  Interes: Extended;
+  InteresImpuesto: Extended;
+  Futuro: Extended;
+  SaldoFinal: Extended;
+begin
+  Futuro := -1*ValorFuturo;
+
+  Tasa := (TasaAnual / 100) / 12;
+  Capital := -1*PeriodPayment(Tasa, Periodo, NPeriodo, ValorPresente, Futuro, PaymentTime);
+  CapitalSinImpuesto := Capital / (1+(_IMPUESTOS_IVA/100));
+  Interes := -1*InterestPayment(Tasa, Periodo, NPeriodo, ValorPresente, Futuro, PaymentTime);
+  Pago := Capital + Interes;
+  case TipoContrato of
+    tcNone: InteresImpuesto := 0;
+    tcCreditoSimple: InteresImpuesto := Interes * (_IMPUESTOS_IVA/100);
+    tcArrendamientoFinasnciero: InteresImpuesto := Interes * (_IMPUESTOS_IVA/100);
+    tcArrendamientoPuro: InteresImpuesto := 0;
+    else InteresImpuesto := 0;
+  end;
+  SaldoFinal := SaldoInicial - Capital;
+
+  Result.Periodo := Periodo;
+  Result.FechaCorte := IncMonth(FechaCorte, Periodo);
+  Result.FechaVencimiento := IncMonth(FechaVencimiento, Periodo);
+  Result.TasaAnual := TasaAnual;
+  Result.SaldoInicial := SaldoInicial;
+  Result.Capital := CapitalSinImpuesto;
+  Result.CapitalImpuesto := Capital - CapitalSinImpuesto;
+  Result.CapitalTotal := Capital;
+  Result.Interes := Interes;
+  Result.InteresImpuesto := InteresImpuesto;
+  Result.InteresTotal := Interes + InteresImpuesto;
+  Result.ImpactoISR := ImpactoISR;
+  Result.Pago := Pago;
+  Result.PagoTotal := Pago + InteresImpuesto + ImpactoISR;;
+  Result.SaldoFinal := SaldoFinal;
 end;
 
 procedure TdmAmortizaciones.GenAmortizaciones(FechaInicial: TDateTime; TasaAnual: Extended;
@@ -267,11 +372,11 @@ function TdmAmortizaciones.GenAnexosAmortizaciones(IdAnexoCredito: Integer;
   ValorPresente, ValorFuturo, ImpactoISR: Extended): Boolean;
   function GetTotalAmortizaciones: Integer;
   begin
-    adoqAnexosAmortizaciones.Close;
-    adoqAnexosAmortizaciones.Parameters.ParamByName('IdAnexoCredito').Value := IdAnexoCredito;
-    adoqAnexosAmortizaciones.Open;
-    Result := adoqAnexosAmortizacionesTotal.Value;
-    adoqAnexosAmortizaciones.Close;
+    adoqCountAmortizaciones.Close;
+    adoqCountAmortizaciones.Parameters.ParamByName('IdAnexoCredito').Value := IdAnexoCredito;
+    adoqCountAmortizaciones.Open;
+    Result := adoqCountAmortizacionesTotal.Value;
+    adoqCountAmortizaciones.Close;
   end;
 begin
   Result:= False;
@@ -366,6 +471,86 @@ begin
     Result := 0
   else
     Result := -1*Payment(Tasa, Plazo, ValorPresente, Futuro, PaymentTime);
+end;
+
+function TdmAmortizaciones.SetAmortizaciones(IdAnexo: Integer;
+  Importe: Extended; Tipo: TAbonoCapital): Boolean;
+var
+  PeriodoInicial: Integer;
+  NPeriodoSegmento: Integer;
+  PeriodoSegmento: Integer;
+  IdAnexoCredito: Integer;
+  FechaCorte, FechaVencimiento: TDateTime;
+  NPeriodo: Integer;
+  TasaAnual: Extended;
+  ValorPresente: Extended;
+  ValorFuturo: Extended;
+  ImpactoISR: Extended;
+  SaldoInicial: Extended;
+  Amortizacion: TAmortizacion;
+
+  procedure CargarCredito;
+  begin
+    adoqCredito.Close;
+    adoqCredito.Parameters.ParamByName('IdAnexo').Value:= IdAnexo;
+    adoqCredito.Open;
+    try
+      IdAnexoCredito:= adoqCreditoIdAnexoCredito.Value;
+      FechaCorte := adoqCreditoFechaCorte.Value;
+      FechaVencimiento := adoqCreditoFechaVencimiento.Value;
+      NPeriodo:= adoqCreditoPlazo.Value;
+      TasaAnual := adoqCreditoTasaAnual.Value;
+      ValorFuturo := adoqCreditoValorResidual.AsFloat;
+      ImpactoISR := adoqCreditoImpactoISR.AsFloat;
+    finally
+      adoqCredito.Close;
+    end;
+  end;
+
+  procedure CargaAmortizaciones;
+  begin
+    adoqAnexosAmortizaciones.Close;
+    adoqAnexosAmortizaciones.Parameters.ParamByName('IdAnexo').Value:= IdAnexo;
+    adoqAnexosAmortizaciones.Parameters.ParamByName('Periodo').Value:= PeriodoInicial;
+    adoqAnexosAmortizaciones.Open;
+    try
+      dxmAnexosAmortizaciones.Close;
+      dxmAnexosAmortizaciones.LoadFromDataSet(adoqAnexosAmortizaciones);
+    finally
+      adoqAnexosAmortizaciones.Close;
+    end;
+    dxmAnexosAmortizaciones.First;
+  end;
+
+begin
+  PeriodoInicial := 6;
+  CargarCredito;
+  CargaAmortizaciones;
+  ValorPresente := dxmAnexosAmortizacionesSaldoInicial.AsFloat - Importe;
+  SaldoInicial:= ValorPresente;
+  PeriodoSegmento:= 1;
+  NPeriodoSegmento:= NPeriodo - (PeriodoInicial-1);
+  while not dxmAnexosAmortizaciones.Eof do
+  begin
+    Amortizacion := GetAmortizacion(FechaCorte, FechaVencimiento, TasaAnual, PeriodoSegmento, NPeriodoSegmento,
+    SaldoInicial, ValorPresente, ValorFuturo, ImpactoISR, PaymentTime);
+    dxmAnexosAmortizaciones.Edit;
+    dxmAnexosAmortizacionesSaldoInicial.Value := Amortizacion.SaldoInicial;
+    dxmAnexosAmortizacionesPago.Value := Amortizacion.Pago;
+    dxmAnexosAmortizacionesCapital.Value := Amortizacion.Capital;
+    dxmAnexosAmortizacionesCapitalImpuesto.Value := Amortizacion.CapitalImpuesto;
+    dxmAnexosAmortizacionesCapitalTotal.Value := Amortizacion.CapitalTotal;
+    dxmAnexosAmortizacionesInteres.Value := Amortizacion.Interes;
+    dxmAnexosAmortizacionesInteresImpuesto.Value := Amortizacion.InteresImpuesto;
+    dxmAnexosAmortizacionesInteresTotal.Value := Amortizacion.InteresTotal;
+    dxmAnexosAmortizacionesImpactoISR.Value := Amortizacion.ImpactoISR;
+    dxmAnexosAmortizacionesPagoTotal.Value := Amortizacion.PagoTotal;
+    dxmAnexosAmortizacionesSaldoFinal.Value := Amortizacion.SaldoFinal;
+    dxmAnexosAmortizaciones.Post;
+    SaldoInicial := Amortizacion.SaldoFinal;
+    Inc(PeriodoSegmento);
+    dxmAnexosAmortizaciones.Next;
+  end;
 end;
 
 procedure TdmAmortizaciones.SetPaymentTime(const Value: TPaymentTime);

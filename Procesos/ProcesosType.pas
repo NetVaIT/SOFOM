@@ -11,6 +11,26 @@ type
   TCTipoContrato = (tcNone, tcCreditoSimple, tcArrendamientoFinasnciero, tcArrendamientoPuro);
   TCotizacionEstatus = (aeNone, aeAbierto, aeContratado, aeCerrado);
 
+  TAbonoCapital = (acReducirCuota, acReducirPlazo);
+
+  TAmortizacion = record
+  Periodo: Integer;
+  FechaCorte: TDateTime;
+  FechaVencimiento: TDateTime;
+  TasaAnual: Extended;
+  SaldoInicial: Extended;
+  Capital: Extended;
+  CapitalImpuesto: Extended;
+  CapitalTotal: Extended;
+  Interes: Extended;
+  InteresImpuesto: Extended;
+  InteresTotal: Extended;
+  ImpactoISR: Extended;
+  Pago: Extended;
+  PagoTotal: Extended;
+  SaldoFinal: Extended;
+  end;
+
 implementation
 
 end.
