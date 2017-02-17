@@ -198,23 +198,47 @@ end;
 
 procedure TdmCuentasXCobrar.ActGeneraCuentasXCobrarExecute(Sender: TObject);
 var
-    res:integer;     //Feb 15/17
+  res:integer;     //Feb 15/17
+  FechaAux:TDateTime;
 begin
   inherited;
-
-  { feb 15/17 %%& SELECT    IdAnexoAmortizacion, IdAnexoCredito, IdAnexoSegmento, Periodo, FechaCorte, FechaVencimiento, TasaAnual, SaldoInicial, Pago, Capital, CapitalImpuesto, CapitalTotal, Interes,
-                      InteresImpuesto, InteresTotal, ImpactoISR, PagoTotal, SaldoFinal, FechaMoratorio, MoratorioBase, Moratorio, MoratorioImpuesto
-FROM         AnexosAmortizaciones AA
-where FechaCorte <='2017-15-02' and not Exists(Select * from CuentasXCobrar CXC where CXC.IdAnexosAmortizaciones=AA.IdAnexoAmortizacion and CXC.Fecha=AA.FechaCorte)
-
+  REs:=0;
+  ShowMessage('Calcula Cuentas X Cobrar pendientes de generar al dia de hoy '+dateTimeToSTR(date));
+  { feb 15/17
   //SAca lo penbndiente al dia para poder usar las fechas de corte pendientes y generar
   }
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.SQL.Clear;
+  ADOQryAuxiliar.SQL.Add('SELECT    IdAnexoAmortizacion, IdAnexoCredito, IdAnexoSegmento, Periodo, FechaCorte, FechaVencimiento, '+
+                         ' TasaAnual, SaldoInicial, Pago, Capital, CapitalImpuesto, CapitalTotal, Interes, InteresImpuesto,'+
+                         ' InteresTotal, ImpactoISR, PagoTotal, SaldoFinal, FechaMoratorio, MoratorioBase, Moratorio,'+
+                         ' MoratorioImpuesto FROM  AnexosAmortizaciones AA where FechaCorte <=:FEchaCorte and '+
+                         ' not Exists(Select * from CuentasXCobrar CXC where CXC.IdAnexosAmortizaciones=AA.IdAnexoAmortizacion '+
+                         '            and CXC.Fecha=AA.FechaCorte)'+
+                         ' order by FechaCorte');
 
-  ADOStrdPrcGeneraCXC.Parameters.ParamByName('@FechaCorte').Value:=date; //Se calculamn a al dìa de hoy
-  ADOStrdPrcGeneraCXC.ExecProc;
-  res:=ADOStrdPrcGeneraCXC.Parameters.ParamByName('@RETURN_Value').Value;
-  ShowMessage('Ejecutó proceso con fecha '+dateTimeToSTR(date)+'. Regresa '+ intToSTR(res));
-  adoDSMaster.Refresh;
+  ADOQryAuxiliar.Parameters.ParamByName('FechaCorte').value:= date;      //Se buscan a al dìa de hoy
+
+  ADOQryAuxiliar.Open;
+  while not ADOQryAuxiliar.eof do
+  begin
+
+    FechaAux:= ADOQryAuxiliar.FieldByName('FechaCorte').AsDateTime;
+
+    ADOStrdPrcGeneraCXC.Parameters.ParamByName('@FechaCorte').Value:=FechaAux;
+    ADOStrdPrcGeneraCXC.ExecProc;
+    ADOStrdPrcGeneraCXC.Parameters.ParamByName('@RETURN_Value').Value;
+    ShowMessage('Ejecutó proceso con fecha '+dateTimeToSTR(FechaAux));
+    Res:=Res+1;
+    ADOQryAuxiliar.Next;
+  end;
+  ADOQryAuxiliar.Close;
+  adoDSMaster.Close;
+  adoDSMaster.Open;
+  if res=0  then
+     Showmessage('No existian Cuentas X Cobrar pendientes de generar')
+  else
+     Showmessage('Actualizó '+intToStr(res)+' Cuentas X Cobrar');
 end;
 
 procedure TdmCuentasXCobrar.actGeneraPreFacturasExecute(Sender: TObject);
