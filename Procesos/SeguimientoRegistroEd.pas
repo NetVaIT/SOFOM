@@ -98,6 +98,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure CrearCopia1Click(Sender: TObject);
     procedure AgregaIncidencia1Click(Sender: TObject);
+    procedure DSCXCPendientesDataChange(Sender: TObject; Field: TField);
   private
     { Private declarations }
     ArrOpciones :TarrDinamico;//Array of integer;
@@ -199,6 +200,13 @@ begin
 
     DsIncidencias.Dataset.FieldByName('FoliosAsoc').AsString:=PoneFolios(LSTBxIDDocs);
   end;
+end;
+
+procedure TFrmSeguimientoRegistro.DSCXCPendientesDataChange(Sender: TObject;
+  Field: TField);
+begin
+  DBGrdFactPend.Hint:='Capital Cobrado: '+DSCXCPendientes.DataSet.FieldByName('CapitalCobrado').asString+' Saldo Insoluto: '+DSCXCPendientes.DataSet.FieldByName('SaldoInsoluto').asString;
+
 end;
 
 procedure TFrmSeguimientoRegistro.DSIncidenciasDataChange(Sender: TObject;

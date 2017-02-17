@@ -138,19 +138,20 @@ var             //FEb 12/17
    FechaMora:TDAteTime;
 begin
 
-        //Comparar antes de facturar para que el valor no sea mayor qu eel que se necesita...
+        //Comparar antes de facturar para que el valor no sea mayor que el que se necesita...
   //Verificar si se pone una transaccion  // SE movio aca.feb 14/17 Verificar que cambia && ene 13 /17
-    if EsFactoraje then      //Ene 13/17
-    begin
-      camposaldo:='SaldoFactoraje';
-      campoimporte:='ImporteFactoraje';
-    end
-    else
-    begin  //Normal
-      camposaldo:='Saldo';
-      campoimporte:='Importe';
-    end;
-   //VErificar sai la cuentaX cobrar es la más vieja
+  if EsFactoraje then      //Ene 13/17
+  begin
+    camposaldo:='SaldoFactoraje';
+    campoimporte:='ImporteFactoraje';
+  end
+  else
+  begin  //Normal
+    camposaldo:='Saldo';
+    campoimporte:='Importe';
+  end;
+
+ //VErificar sai la cuentaX cobrar es la más vieja
   if EsCuentaXCobrarAntigua(dsConCXCpendientes.DataSet.FieldByName('IdCuentaXCobrar').AsInteger,dsPago.DataSet.FieldByName('IDPersonaCliente').asinteger)
        and CXCFacturada(dsConCXCpendientes.DataSet.FieldByName('IdCuentaXCobrar').AsInteger)   then
   begin
@@ -175,29 +176,42 @@ begin
         showMessage( 'El monto del Pago no alcanza a cubrir  los moratorios ('+FloatToSTR(Mora-MoraPagado)+')'); //VErificar si luego se puede aca poner ajuste para moratorios.. y  facturar con eses monto.. y el resto ponerlo en pagado.Registrando en PagosAuxiliares
         SEguir:=False;
       end ;
+      idActual:= dsConCXCpendientes.DataSet.FieldByName('IdCuentaXCobrar').AsInteger;
+      dsConCXCpendientes.DataSet.Refresh;    //Por si cambiaron klos moratorios cambia tambien el saldo
+      dsConCXCpendientes.DataSet.locate('IdCuentaXCobrar', idActual,[]);
 
-      if ((Mora-MoraPagado)<=valor) and TieneMora  and (Application.MessageBox(pChar('Moratorios: '+FloatToSTR(Mora-MoraPagado)+ ' a Fecha'+datetimeToSTR(FechaMora)+'.  Facturar Moratorios?'),'Confirmacion',MB_YESNO )=idYEs) then
+      if ( DSAplicacion.DataSet.FieldByName(Campoimporte).ASExtended>dsConCXCpendientes.dataset.FieldByName(Camposaldo).ASExtended ) then
+      begin   //Feb 16/17
+        showMessage('El monto a aplicar es mayor que el saldo de la cuenta X Cobrar. Diferencia:'+ floattoStr(dsConCXCpendientes.dataset.FieldByName(Camposaldo).Asfloat - DSAplicacion.DataSet.FieldByName(Campoimporte).Asfloat));
+        Seguir:=FAlse;
+      end
+      else
       begin
-            //FActurar Moratorios y continuar
-        ActFacturaMora.Execute;
-        Seguir :=True;
-            //Se facturoMora
-      end;
-            //Solo avisar
+      if ((Mora-MoraPagado)<=valor) and TieneMora  and (Application.MessageBox(pChar('Moratorios: '+FloatToSTR(Mora-MoraPagado)+ ' a Fecha'+datetimeToSTR(FechaMora)+'.  Facturar Moratorios?'),'Confirmacion',MB_YESNO )=idYEs) then
+        begin
+              //FActurar Moratorios y continuar
+          ActFacturaMora.Execute;
+          Seguir :=True;
+              //Se facturoMora
+        end;
+      end;      //Solo avisar
     end
     else
       Seguir :=True;
 
     //  f:= quitasignos(DSAplicacion.DataSet.FieldByName('ImporteFactoraje').ASString)
                                                      //  'Importe'  //Ene 13/17
-     f:= quitasignos(DSAplicacion.DataSet.FieldByName(CampoImporte).ASString);  //Ago 15/16
+    f:= quitasignos(DSAplicacion.DataSet.FieldByName(CampoImporte).ASString);  //Ago 15/16
   //  showmessage(f);
     aux:=strtoFLoat(quitasignos(cxDBLblDisponible.Caption));   //Es el del pago no cambia
                              //Ver si ya tiene el valor
     Valor:= StrToFloat(f);//DSAplicacion.DataSet.FieldByName('Importe').ASFloat;//cxDBTxtEdtImporteAplicar.Field.Asfloat;
     inherited;
     if not Seguir then
-      ShowMessage('Proceso cancelado. El monto del pago al menos debe alcanzar para los moratorios  y debe generar facturas de moratorios.')
+      ShowMessage('Proceso cancelado por alguna de las siguietes razones: '+#13
+                 +'1. El monto del pago debe corresponder al menos al valor de moratorios'+#13
+                 +'2. El valor a aplicar no debe ser mayor que el valor de la CXC '+#13
+                 +'3. Debe generar la factura de moratorios.')
     else
     begin
       if Valor > 0 then
@@ -263,8 +277,6 @@ begin
   begin //HAy cuentas más antiguas...   //FEb 7/17
     ShowMessage('Existen cuentas pendientes más antiguas...') ;
   end;
-
-
 end;
 
 function TFrmAplicacionPago.SacarMoraPagado(idCXC:Integer):Double;
@@ -385,22 +397,23 @@ end;
 procedure TFrmAplicacionPago.tvMasterCellDblClick(
   Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo;
   AButton: TMouseButton; AShift: TShiftState; var AHandled: Boolean);
+
 begin
   if dsAplicacion.state = dsInsert then  //Feb 10/17
   begin
     if EsFActoraje then
     begin
-      if dsConCxCPendientes.DataSet.FieldByName('SaldoDocumento').asFloat<=dspago.DataSet.FieldByName('Saldo').asFloat  then
-        dsAplicacion.DataSet.FieldByName('ImporteFactoraje').asFloat:=dsConCxCPendientes.DataSet.FieldByName('SaldoDocumento').asFloat  //DEbe ser el de la Factura
+      if dsConCxCPendientes.DataSet.FieldByName('SaldoDocumento').AsExtended<=dspago.DataSet.FieldByName('Saldo').AsExtended  then
+        dsAplicacion.DataSet.FieldByName('ImporteFactoraje').value:=dsConCxCPendientes.DataSet.FieldByName('SaldoDocumento').asFloat  //DEbe ser el de la Factura
       else
-        dsAplicacion.DataSet.FieldByName('ImporteFactoraje').asFloat:=dspago.DataSet.FieldByName('Saldo').asFloat;
+        dsAplicacion.DataSet.FieldByName('ImporteFactoraje').Value:=dspago.DataSet.FieldByName('Saldo').asFloat;
     end
     else
     begin
-      if dsConCxCPendientes.DataSet.FieldByName('Saldo').asFloat<=dspago.DataSet.FieldByName('Saldo').asFloat  then
-        dsAplicacion.DataSet.FieldByName('Importe').asFloat:=dsConCxCPendientes.DataSet.FieldByName('Saldo').asFloat
+      if dsConCxCPendientes.DataSet.FieldByName('Saldo').AsExtended<=dspago.DataSet.FieldByName('Saldo').AsExtended  then
+        dsAplicacion.DataSet.FieldByName('Importe').Value:=dsConCxCPendientes.DataSet.FieldByName('Saldo').AsExtended
       else
-        dsAplicacion.DataSet.FieldByName('Importe').asFloat:= dspago.DataSet.FieldByName('Saldo').asFloat;
+        dsAplicacion.DataSet.FieldByName('Importe').Value:= dspago.DataSet.FieldByName('Saldo').AsExtended;
     end;
   end;
 

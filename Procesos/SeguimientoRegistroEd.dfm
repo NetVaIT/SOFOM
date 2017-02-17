@@ -277,6 +277,7 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
       ParentShowHint = False
       ShowHint = True
       Spacing = 2
+      Visible = False
     end
     object DBLkupCmbBxClientes: TDBLookupComboBox
       Left = 54
@@ -548,6 +549,8 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
       Color = clInfoBk
       DataSource = DSCXCPendientes
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
+      ParentShowHint = False
+      ShowHint = True
       TabOrder = 2
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = clWindowText
@@ -576,13 +579,55 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
         item
           Expanded = False
           FieldName = 'Saldo'
-          Width = 64
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'IdCFDINormal'
-          Width = 64
+          Width = 75
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'Serie'
+          Width = 48
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'Folio'
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'Total'
+          Visible = False
+        end
+        item
+          Expanded = False
+          FieldName = 'SaldoDocumento'
+          Width = 111
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'IdAnexo'
+          Visible = False
+        end
+        item
+          Expanded = False
+          FieldName = 'Descripcion'
+          Width = 200
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'CapitalCobrado'
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'SaldoInsoluto'
           Visible = True
         end>
     end
@@ -781,8 +826,6 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
       Font.Style = []
       ParentFont = False
       TabOrder = 1
-      ExplicitLeft = 5
-      ExplicitTop = 34
       object Label16: TLabel
         Left = 26
         Top = 11
@@ -1128,6 +1171,7 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
   object DSCXCPendientes: TDataSource
     AutoEdit = False
     DataSet = dmSeguimientoCobranza.ADODtSTCXCPend
+    OnDataChange = DSCXCPendientesDataChange
     Left = 932
     Top = 13
   end

@@ -58,6 +58,14 @@ type
     adodsMasterRazonSocial: TStringField;
     adodsMasterSaldo: TFMTBCDField;
     adodsMasterinteres: TFMTBCDField;
+    ADODtSTCXCPendSerie: TStringField;
+    ADODtSTCXCPendFolio: TLargeintField;
+    ADODtSTCXCPendTotal: TFMTBCDField;
+    ADODtSTCXCPendSaldoDocumento: TFMTBCDField;
+    ADODtSTCXCPendIdAnexo: TIntegerField;
+    ADODtSTCXCPendDescripcion: TStringField;
+    ADODtSTCXCPendCapitalCobrado: TFMTBCDField;
+    ADODtSTCXCPendSaldoInsoluto: TFMTBCDField;
     procedure DataModuleCreate(Sender: TObject);
     procedure ADODtStIncidenciasNewRecord(DataSet: TDataSet);
   private

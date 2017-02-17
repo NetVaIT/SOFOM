@@ -133,16 +133,20 @@ inherited dmEstadosCuenta: TdmEstadosCuenta
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'select A.IdContrato,CT.Identificador AS TipoContrato, C.IdPerson' +
-      'a,  c.Fecha, c.Total,c.IdAnexo, '#13#10'CCD.*, T.Acumula, t.AcumulaAQu' +
-      'ien, T.BaseIVA,'#13#10' T.EsIVA, T.Fase, t.IdTipoContrato from Cuentas' +
-      'XCobrarDetalle CCD '#13#10'inner join CuentasXCobrarTiposConceptos T  ' +
-      'on t.IdCuentaXCobrarTipo=CCD.IdCuentaXCobrarTipo'#13#10'inner join Con' +
-      'tratosTipos CT on CT.IdContratoTipo=T.IdTipoContrato'#13#10'inner join' +
-      ' CuentasXCobrar C on c.IdCuentaXCobrar=CCD.IdCuentaXCobrar'#13#10'inne' +
-      'r join Anexos A on A.idAnexo=C.IdAnexo '#13#10'and  t.EstadoCuenta=1 '#13 +
-      #10'and  C.idCuentaXCobrarEstatus=0 -- Pendiente'#13#10'and c.Fecha<=:Fec' +
-      'haCorte'#13#10'Order by C.IdPersona, c.Fecha,  C.IdCuentaXCobrar'#13#10
+      'select A.IdContrato,A.SaldoInsoluto,A.CapitalCobrado,  '#13#10'CT.Iden' +
+      'tificador AS TipoContrato, '#13#10'C.IdPersona,  c.Fecha, c.Total as t' +
+      'otalCXC, c.IdAnexo, c.idcuentaXCobrar'#13#10',CCD.* , '#13#10'T.Acumula, t.A' +
+      'cumulaAQuien, T.BaseIVA, T.EsIVA, T.Fase, t.IdTipoContrato '#13#10',co' +
+      'n.IdPersona idpercontrato'#13#10' from Contratos con'#13#10'inner join Anexo' +
+      's A on A.IdContrato=con.IdContrato'#13#10'inner join CuentasXCobrar C ' +
+      'on c.IdAnexo=A.IdAnexo'#13#10'inner join CuentasXCobrarDetalle CCD  on' +
+      ' c.IdCuentaXCobrar= CCD.IdCuentaXCobrar'#13#10'inner join  ContratosTi' +
+      'pos CT on CT.IdContratoTipo=con.IdContratoTipo'#13#10'inner join Cuent' +
+      'asXCobrarTiposConceptos T  on t.IdCuentaXCobrarTipo=CT.IdContrat' +
+      'oTipo'#13#10' and  t.EstadoCuenta=1 '#13#10'and  C.idCuentaXCobrarEstatus=0 ' +
+      '-- Pendiente'#13#10'and c.Fecha<=:FechaCorte and c.IdCuentaXCobrar not' +
+      ' in (2,3,4)'#13#10'Order by C.IdPersona, A.idContrato,A.IdAnexo, c.Fec' +
+      'ha,  C.IdCuentaXCobrar'#13#10
     Parameters = <
       item
         Name = 'FechaCorte'
@@ -157,11 +161,6 @@ inherited dmEstadosCuenta: TdmEstadosCuenta
     end
     object ADODtStDatosCXCFecha: TDateTimeField
       FieldName = 'Fecha'
-    end
-    object ADODtStDatosCXCTotal: TFMTBCDField
-      FieldName = 'Total'
-      Precision = 18
-      Size = 6
     end
     object ADODtStDatosCXCIdAnexo: TIntegerField
       FieldName = 'IdAnexo'
@@ -223,6 +222,21 @@ inherited dmEstadosCuenta: TdmEstadosCuenta
     object ADODtStDatosCXCTipoContrato: TStringField
       FieldName = 'TipoContrato'
       Size = 5
+    end
+    object ADODtStDatosCXCSaldoInsoluto: TFMTBCDField
+      FieldName = 'SaldoInsoluto'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStDatosCXCCapitalCobrado: TFMTBCDField
+      FieldName = 'CapitalCobrado'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStDatosCXCtotalCXC: TFMTBCDField
+      FieldName = 'totalCXC'
+      Precision = 18
+      Size = 6
     end
   end
   object ADODtStDatosPagos: TADODataSet

@@ -37,6 +37,9 @@ inherited FrmSeguimientoCobranza: TFrmSeguimientoCobranza
       0
       31
       0)
+    inherited dxbNavigator: TdxBar
+      DockedLeft = 102
+    end
     inherited dxbEdit: TdxBar
       Visible = False
     end
@@ -843,7 +846,6 @@ inherited FrmSeguimientoCobranza: TFrmSeguimientoCobranza
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42775.416768854160000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

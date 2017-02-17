@@ -178,7 +178,6 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     Top = 176
   end
   object ADODSCXCEstatus: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -189,7 +188,6 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     Top = 96
   end
   object ADOSPersonas: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -766,7 +764,7 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     Parameters = <>
-    Left = 728
+    Left = 736
     Top = 232
   end
   object ADOQryAuxiliar: TADOQuery
@@ -784,17 +782,20 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@IdCuentaXCobrar'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end
       item
         Name = '@Fecha'
         Attributes = [paNullable]
         DataType = ftDateTime
+        Value = Null
       end>
     Left = 64
     Top = 392
@@ -808,11 +809,13 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@Fecha'
         Attributes = [paNullable]
         DataType = ftDateTime
+        Value = Null
       end>
     Left = 240
     Top = 400
@@ -826,11 +829,13 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@FechaCorte'
         Attributes = [paNullable]
         DataType = ftDateTime
+        Value = Null
       end>
     Left = 456
     Top = 400

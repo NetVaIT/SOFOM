@@ -39,7 +39,6 @@ type
     ADODtStDatosPagosAplicado: TFMTBCDField;
     ADODtStDatosCXCIdPersona: TIntegerField;
     ADODtStDatosCXCFecha: TDateTimeField;
-    ADODtStDatosCXCTotal: TFMTBCDField;
     ADODtStDatosCXCIdAnexo: TIntegerField;
     ADODtStDatosCXCIdCuentaXCobrarDetalle: TAutoIncField;
     ADODtStDatosCXCIdCuentaXCobrar: TIntegerField;
@@ -72,6 +71,9 @@ type
     AdoDtStEstadoCtaDetalleTipoMovimiento: TIntegerField;
     ADODtStDatosCXCTipoContrato: TStringField;
     ADODtStDatosPagosOrigenPago: TIntegerField;
+    ADODtStDatosCXCSaldoInsoluto: TFMTBCDField;
+    ADODtStDatosCXCCapitalCobrado: TFMTBCDField;
+    ADODtStDatosCXCtotalCXC: TFMTBCDField;
     procedure ActActualizaEstadoCtaExecute(Sender: TObject);
     procedure AdoDtStEstadoCtaDetalleNewRecord(DataSet: TDataSet);
     procedure DataModuleCreate(Sender: TObject);
@@ -79,7 +81,7 @@ type
   private
     
 
-    function VerificaEstadoCta(idPersona: Integer;var IdEstadoCta:Integer): Boolean;
+    function VerificaEstadoCta(idPersona: Integer;var IdEstadoCta:Integer; fechaC:TdateTime): Boolean;
     function VerificaDetalle(IdCtaXCobrarDet: Integer; Tipo:Integer): Boolean;
 
     { Private declarations }
@@ -113,16 +115,18 @@ begin
   adoDtstDatosCXC.Parameters.ParamByName('FechaCorte').Value:= FechaCorte;
   adoDtstDatosCXC.Open; //verificar que no existan en Estado_Cuenta
   while not adoDtstDatosCXC.Eof do
-  begin                                                                                 //Va a requerir agregar FEcha, prpceso perndiente por ajuste FActoraje  Ene 12/17
-    if not VerificaEstadoCta(adoDtstDatosCXC.FieldByName('IdPersona').asinteger,IdEstadoCta) then
+  begin                                                                                 //Va a requerir agregar FEcha, prpceso pendiente por ajuste FActoraje  Ene 12/17
+    if not VerificaEstadoCta(adoDtstDatosCXC.FieldByName('IdPersona').asinteger,IdEstadoCta,FechaCorte) then
     begin
      //Crear
       AdoDSMaster.Insert;
       AdoDSMaster.FieldByName('IdPersona').asInteger:=adoDtstDatosCXC.FieldByName('IdPersona').asinteger;
-//      AdoDSMaster.FieldByName('SaldoInsoluto').AsFloat:= CAlcularSaldoInsoluto(adoDtstDatosCXC.FieldByName('IdPersona').asinteger);
+      AdoDSMaster.FieldByName('SaldoInsoluto').asExtended:=ADODtStDatosCXCSaldoInsoluto.AsExtended; // feb 17]/17 verificar como se pasa
+       adodsMasterFechaCorte.asdateTime:=ADODtStDatosCXCFecha.AsDateTime; //feb17/17
+      //      AdoDSMaster.FieldByName('SaldoInsoluto').AsFloat:= CAlcularSaldoInsoluto(adoDtstDatosCXC.FieldByName('IdPersona').asinteger);
       AdoDSMaster.post;
       IdEstadoCta:= AdoDSMaster.FieldByName('IdEstadoCuenta').AsInteger;
-    end;
+    end;   //Actualiza??
     if AdoDSMaster.FieldByName('IdEstadoCuenta').AsInteger <> IdEstadoCta then
       AdoDSMaster.Locate('IdEstadoCuenta', IdEstadoCta, []);
     if not VerificaDetalle(ADODtStDatosCXCIdCuentaXCobrarDetalle.asInteger, 1)   then
@@ -149,7 +153,7 @@ begin
   while not adoDtstDatosPagos.Eof do
   begin 
     IdEstadoCta:=-1;
-    if not VerificaEstadoCta(adoDtstDatosPagos.FieldByName('IdPersonaCliente').asinteger,IdEstadoCta) then  //Solo hay un estado de cuenta por cliente
+    if not VerificaEstadoCta(adoDtstDatosPagos.FieldByName('IdPersonaCliente').asinteger,IdEstadoCta,fechacorte) then  //Solo hay un estado de cuenta por cliente
     begin
      //Crear    //No deberia crear por aca.. // verificar
       AdoDSMaster.Insert;
@@ -208,7 +212,7 @@ begin
   gFormDeatil1:=TFrmConEstadoCtaDetalle.Create(self);
   gFormDeatil1.DataSet:=AdoDtStEstadoCtaDetalle;
   gFormDeatil1.DataSet.Open;
-  
+
 end;
 
 
@@ -228,7 +232,7 @@ begin
   REsult:=  not ADOQryAuxiliar.eof; 
 end;
 
-function TdmEstadosCuenta.VerificaEstadoCta(idPersona:Integer; var IdEstadoCta:Integer):Boolean; //Ene 9/16
+function TdmEstadosCuenta.VerificaEstadoCta(idPersona:Integer; var IdEstadoCta:Integer; fechaC:TdateTime):Boolean; //Ene 9/16
 begin
   IdEstadoCta:=-1; //Porsi no encunetra
   ADOQryAuxiliar.Close;

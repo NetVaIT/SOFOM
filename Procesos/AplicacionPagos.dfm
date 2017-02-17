@@ -210,6 +210,8 @@ object FrmAplicacionPago: TFrmAplicacionPago
     Top = 242
     Width = 1034
     Height = 210
+    Hint = 'Dobleclic sobre el registro para pasar el saldo a pagar'
+    ParentCustomHint = False
     Align = alClient
     TabOrder = 1
     LookAndFeel.Kind = lfStandard
@@ -389,6 +391,9 @@ object FrmAplicacionPago: TFrmAplicacionPago
     Top = 203
     Width = 1034
     Height = 39
+    Hint = 
+      'Con doble clic sobre el regitro puede copiar el saldo para aplic' +
+      'ar, siempre y cuando sea menor que el valor del pago'
     Align = alTop
     Caption = 'Cuentas X Cobrar pendientes del cliente'
     Font.Charset = ANSI_CHARSET
@@ -397,6 +402,8 @@ object FrmAplicacionPago: TFrmAplicacionPago
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
+    ParentShowHint = False
+    ShowHint = True
     TabOrder = 3
   end
   object Panel1: TPanel

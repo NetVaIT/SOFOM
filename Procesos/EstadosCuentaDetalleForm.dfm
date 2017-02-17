@@ -2,22 +2,26 @@ inherited FrmConEstadoCtaDetalle: TFrmConEstadoCtaDetalle
   Caption = 'FrmConEstadoCtaDetalle'
   ClientWidth = 782
   ExplicitWidth = 782
-  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
     Width = 782
+    ExplicitWidth = 782
   end
   inherited splDetail1: TSplitter
     Width = 782
+    ExplicitWidth = 782
   end
   inherited splDetail2: TSplitter
     Width = 782
+    ExplicitWidth = 782
   end
   inherited pnlMaster: TPanel
     Width = 782
+    ExplicitWidth = 782
     inherited cxGrid: TcxGrid
       Width = 782
+      ExplicitWidth = 782
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdEstadoCuentaDetalle: TcxGridDBColumn
           DataBinding.FieldName = 'IdEstadoCuentaDetalle'
@@ -73,17 +77,22 @@ inherited FrmConEstadoCtaDetalle: TFrmConEstadoCtaDetalle
   end
   inherited pnlDetail3: TPanel
     Width = 782
+    ExplicitWidth = 782
   end
   inherited pnlDetail2: TPanel
     Width = 782
+    ExplicitWidth = 782
   end
   inherited pnlDetail1: TPanel
     Width = 782
+    ExplicitWidth = 782
   end
   inherited pnlClose: TPanel
     Width = 782
+    ExplicitWidth = 782
     inherited btnClose: TButton
       Left = 697
+      ExplicitLeft = 697
     end
   end
   inherited DataSource: TDataSource
@@ -95,6 +104,12 @@ inherited FrmConEstadoCtaDetalle: TFrmConEstadoCtaDetalle
       0
       31
       0)
+    inherited dxbNavigator: TdxBar
+      DockedLeft = 107
+    end
+    inherited dxbTools: TdxBar
+      DockedLeft = 238
+    end
   end
   inherited cxStyleRepository: TcxStyleRepository
     PixelsPerInch = 96
@@ -105,7 +120,7 @@ inherited FrmConEstadoCtaDetalle: TFrmConEstadoCtaDetalle
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42744.402549120370000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

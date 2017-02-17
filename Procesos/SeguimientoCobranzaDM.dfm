@@ -33,7 +33,6 @@ inherited dmSeguimientoCobranza: TdmSeguimientoCobranza
     end
   end
   object ADODtStIncidenciasEstados: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -44,7 +43,6 @@ inherited dmSeguimientoCobranza: TdmSeguimientoCobranza
     Top = 96
   end
   object ADODtStPersonas: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -151,7 +149,6 @@ inherited dmSeguimientoCobranza: TdmSeguimientoCobranza
     end
   end
   object ADODtStUsuarios: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -181,8 +178,11 @@ inherited dmSeguimientoCobranza: TdmSeguimientoCobranza
     CursorType = ctStatic
     CommandText = 
       'select CxC.IdPersona,CXC.Fecha,CXC.IdCuentaXCobrar,CXC.Saldo  ,C' +
-      'XC.IdCFDINormal'#13#10'from CuentasXCobrar CXC'#13#10'where Cxc.IdPersona=:I' +
-      'DPersona   and CXC.Saldo >0.00001'#13#10
+      'XC.IdCFDINormal,Ci.Serie,CI.Folio,  Ci.Total, Ci.SaldoDocumento,' +
+      ' '#13#10'CXC.IdAnexo, A.Descripcion, A.CapitalCobrado, A.SaldoInsoluto' +
+      #13#10'from CuentasXCobrar CXC '#13#10'inner join Anexos A on A.IdAnexo=CXC' +
+      '.IdAnexo'#13#10'Left Join CFDI CI on CI.IdCFDI= CXC.IdCFDINormal'#13#10'wher' +
+      'e Cxc.IdPersona=:IDPersona   and CXC.Saldo >0.00001'#13#10
     DataSource = dsSaldoCliente
     IndexFieldNames = 'IdPersona'
     MasterFields = 'IDPersona'
@@ -195,7 +195,7 @@ inherited dmSeguimientoCobranza: TdmSeguimientoCobranza
         Size = 4
         Value = Null
       end>
-    Left = 464
+    Left = 472
     Top = 152
     object ADODtSTCXCPendIdPersona: TIntegerField
       FieldName = 'IdPersona'
@@ -214,6 +214,41 @@ inherited dmSeguimientoCobranza: TdmSeguimientoCobranza
     end
     object ADODtSTCXCPendIdCFDINormal: TLargeintField
       FieldName = 'IdCFDINormal'
+    end
+    object ADODtSTCXCPendSerie: TStringField
+      FieldName = 'Serie'
+    end
+    object ADODtSTCXCPendFolio: TLargeintField
+      FieldName = 'Folio'
+    end
+    object ADODtSTCXCPendTotal: TFMTBCDField
+      FieldName = 'Total'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtSTCXCPendSaldoDocumento: TFMTBCDField
+      FieldName = 'SaldoDocumento'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtSTCXCPendIdAnexo: TIntegerField
+      FieldName = 'IdAnexo'
+    end
+    object ADODtSTCXCPendDescripcion: TStringField
+      DisplayLabel = 'Descripci'#243'n'
+      FieldName = 'Descripcion'
+      Size = 100
+    end
+    object ADODtSTCXCPendCapitalCobrado: TFMTBCDField
+      DisplayLabel = 'Capital Cobrado'
+      FieldName = 'CapitalCobrado'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtSTCXCPendSaldoInsoluto: TFMTBCDField
+      FieldName = 'SaldoInsoluto'
+      Precision = 18
+      Size = 6
     end
   end
   object dsSaldoCliente: TDataSource
