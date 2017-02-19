@@ -70,7 +70,7 @@ procedure TFrmEdPagos.cxDBTextEdit3Exit(Sender: TObject);
 begin
   inherited;
   if datasource.State in [dsinsert,dsEdit] then //Feb 16/17
-    DataSource.DataSet.FieldByName('Saldo').AsFloat:= DataSource.DataSet.FieldByName('Importe').AsFloat;
+    DataSource.DataSet.FieldByName('Saldo').Value:= DataSource.DataSet.FieldByName('Importe').Value;//VAlue  feb 19/17
 end;
 
 procedure TFrmEdPagos.DBLkpCmbBxClienteClick(Sender: TObject);

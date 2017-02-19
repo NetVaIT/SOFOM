@@ -268,9 +268,9 @@ begin
       ADODtStCFDIConceptosPref.Insert;
       ADODtStCFDIConceptosPrefDescripcion.AsString:= DetallesCXCParaFacturar.fieldbyname('Descripcion').asString;
       ADODtStCFDIConceptosPrefIdCuentaXCobrarDetalle.AsInteger:=DetallesCXCParaFacturar.fieldbyname('IDCuentaXCobrarDEtalle').AsInteger;  //Sin a Dic 7/16
-      ADODtStCFDIConceptosPrefValorUnitario.AsFloat:= DetallesCXCParaFacturar.fieldbyname('Importe').asFloat;
-
-      ADODtStCFDIConceptosPrefImporte.AsFloat:= DetallesCXCParaFacturar.fieldbyname('Importe').AsFloat;
+      ADODtStCFDIConceptosPrefValorUnitario.Value:= DetallesCXCParaFacturar.fieldbyname('Importe').asFloat;
+                                            //Value Feb 19/17
+      ADODtStCFDIConceptosPrefImporte.value:= DetallesCXCParaFacturar.fieldbyname('Importe').AsFloat;
 
       ADODtStCFDIConceptosPref.Post;
      end;

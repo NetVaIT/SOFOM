@@ -144,9 +144,9 @@ inherited dmEstadosCuenta: TdmEstadosCuenta
       'pos CT on CT.IdContratoTipo=con.IdContratoTipo'#13#10'inner join Cuent' +
       'asXCobrarTiposConceptos T  on t.IdCuentaXCobrarTipo=CT.IdContrat' +
       'oTipo'#13#10' and  t.EstadoCuenta=1 '#13#10'and  C.idCuentaXCobrarEstatus=0 ' +
-      '-- Pendiente'#13#10'and c.Fecha<=:FechaCorte and c.IdCuentaXCobrar not' +
-      ' in (2,3,4)'#13#10'Order by C.IdPersona, A.idContrato,A.IdAnexo, c.Fec' +
-      'ha,  C.IdCuentaXCobrar'#13#10
+      '-- Pendiente'#13#10'and c.Fecha<=:FechaCorte -- and c.IdCuentaXCobrar ' +
+      'not in (2,3,4)'#13#10'Order by C.IdPersona, A.idContrato,A.IdAnexo, c.' +
+      'Fecha,  C.IdCuentaXCobrar'#13#10
     Parameters = <
       item
         Name = 'FechaCorte'

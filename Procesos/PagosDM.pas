@@ -408,7 +408,7 @@ begin
   Inserto:=dataset.state=dsInsert;
   if dataset.State = dsInsert then
   begin
-    adodsMaster.FieldByName('Saldo').AsFloat:=adodsMaster.FieldByName('Importe').AsFloat;
+    adodsMaster.FieldByName('Saldo').Value:=adodsMaster.FieldByName('Importe').Value;  //Se debe usar value cuando tiene mas de 4 decimales para que no lo redondee.. sino no quedan iguales
   end;
 end;
 
@@ -514,7 +514,7 @@ begin
        ADODtStPagosAuxiliarIDCFDI.asinteger:= DAtaSEt.FieldByName('IDCFDI').AsInteger; //este tiene el CFDI ya sea de Concepto ao IVA
     if not DAtaSEt.FieldByName('IDCFDIConcepto').IsNull then
        ADODtStPagosAuxiliarIdCFDIConcepto.AsInteger:=  DAtaSEt.FieldByName('IDCFDIConcepto').AsInteger;
-    ADODtStPagosAuxiliarImporte.AsFloat:=DataSet.FieldByName('IMPORTE').AsFloat;
+    ADODtStPagosAuxiliarImporte.value:=DataSet.FieldByName('IMPORTE').AsFloat;
 
 
     ADODtStPagosAuxiliar.Post;
@@ -588,7 +588,7 @@ begin
   //Se usa siempre en registrado
 
   ADOQryAuxiliar.Close;                                                                                       //   subtotal*0.16
-  ADOQryAuxiliar.SQL.Clear;                                                                                                                  //  subtotal*1.16                      //  subtotal*1.16
+  ADOQryAuxiliar.SQL.Clear;                                                                                   //Tiene lo  mismo que IVAReg                               //  subtotal*1.16                      //  subtotal*1.16
   ADOQryAuxiliar.SQL.Add('UPDATE CFDI SET Subtotal='+FloattoSTR(subtotal)+' , TotalImpuestoTrasladado='+FloatToSTR(IVACal)+', Total='+FloatToSTR(TotalCal) +', SaldoDocumento='+FloatToSTR(TotalCal)
                           +', SaldoFactoraje='+FloatToSTR(TotalCal)+' where IDCFDI ='+IntToStr(idDocCFDI));
                           //Feb 9/17   No deberia tener saldo Factoraje
@@ -1020,7 +1020,7 @@ begin        //FEb 10/17                 //No requerido aca
             ADODtstAplicacionesInternas.Insert;
             ADODtstAplicacionesInternas.FieldByName('IDCuentaXCobrarDetalle').AsInteger:=ADODtStCxCDetallePendIdCuentaXCobrarDetalle.AsInteger;
                                                     // 'Importe' Ene 13/16
-            ADODtstAplicacionesInternas.FieldByName(campoimporte).AsFloat:=valreg;
+            ADODtstAplicacionesInternas.FieldByName(campoimporte).value:=valreg;  //Value Feb 19/17
             //Verificar si esta asociado a concepto o se facturo==>Aplicar a Factura
             if (not ADODtStCxCDetallePendIdCFDI.isnull) or (not ADODtStCxCDetallePendIDCFDIIVA.isnull)  then
             begin
@@ -1061,7 +1061,7 @@ begin        //FEb 10/17                 //No requerido aca
              //Aplicar interno el valor de registro y restar
             ADODtstAplicacionesInternas.Insert;
             ADODtstAplicacionesInternas.FieldByName('IDCuentaXCobrarDetalle').AsInteger:=ADODtStCxCDetallePendIdCuentaXCobrarDetalle.AsInteger;
-            ADODtstAplicacionesInternas.FieldByName('Importe').AsFloat:=valreg;         //Falta actualizar saldos de cxcdetalle
+            ADODtstAplicacionesInternas.FieldByName('Importe').value:=valreg;         //Falta actualizar saldos de cxcdetalle
             //Verificar si esta asociado a concepto o se facturo==>Aplicar a Factura
             if (not ADODtStCxCDetallePendIdCFDI.isnull) or (not ADODtStCxCDetallePendIDCFDIIVA.isnull) then
             begin
@@ -1094,7 +1094,8 @@ begin        //FEb 10/17                 //No requerido aca
         //Aplicar interno el valor de registro y restar
         ADODtstAplicacionesInternas.Insert;
         ADODtstAplicacionesInternas.FieldByName('IDCuentaXCobrarDetalle').AsInteger:=ADODtStCxCDetallePendIdCuentaXCobrarDetalle.AsInteger;
-        ADODtstAplicacionesInternas.FieldByName('Importe').AsFloat:=valreg;         //Falta actualizar saldos de cxcdetalle
+                                                                  //Value Feb 19/17
+        ADODtstAplicacionesInternas.FieldByName('Importe').value:=valreg;         //Falta actualizar saldos de cxcdetalle
             //Verificar si esta asociado a concepto o se facturo==>Aplicar a Factura
         if (not ADODtStCxCDetallePendIdCFDI.isnull) or (not ADODtStCxCDetallePendIDCFDIIVA.isnull) then
         begin
@@ -1191,9 +1192,9 @@ begin                   //Dic 9/16
   ADODtStAplicacionesPagos.FieldByName('FechaAplicacion').asDAteTime:=now;
   ADODtStAplicacionesPagos.FieldByName('IDPago').asInteger:=adodsMaster.Fieldbyname('IDPago').AsInteger;
   if adodsMaster.FieldByName('OrigenPago').AsInteger=1 then //Ene 13/17
-    ADODtStAplicacionesPagos.FieldByName('ImporteFactoraje').asFLoat:=adodsMaster.FieldByName('Saldo').AsFloat // ene13/17
+    ADODtStAplicacionesPagos.FieldByName('ImporteFactoraje').Value:=adodsMaster.FieldByName('Saldo').Value // ene13/17   //Value feb 19/17
   else
-    ADODtStAplicacionesPagos.FieldByName('Importe').asFLoat:=adodsMaster.FieldByName('Saldo').AsFloat; //Este se debe actualizar
+    ADODtStAplicacionesPagos.FieldByName('Importe').Value:=adodsMaster.FieldByName('Saldo').Value; //Este se debe actualizar  //Value feb 19/17
 
 end;
 

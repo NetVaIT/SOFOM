@@ -404,14 +404,14 @@ begin
     if EsFActoraje then
     begin
       if dsConCxCPendientes.DataSet.FieldByName('SaldoDocumento').AsExtended<=dspago.DataSet.FieldByName('Saldo').AsExtended  then
-        dsAplicacion.DataSet.FieldByName('ImporteFactoraje').value:=dsConCxCPendientes.DataSet.FieldByName('SaldoDocumento').asFloat  //DEbe ser el de la Factura
+        dsAplicacion.DataSet.FieldByName('ImporteFactoraje').value:=dsConCxCPendientes.DataSet.FieldByName('SaldoDocumento').AsExtended  //DEbe ser el de la Factura
       else
-        dsAplicacion.DataSet.FieldByName('ImporteFactoraje').Value:=dspago.DataSet.FieldByName('Saldo').asFloat;
+        dsAplicacion.DataSet.FieldByName('ImporteFactoraje').Value:=dspago.DataSet.FieldByName('Saldo').AsExtended;
     end
     else
     begin
       if dsConCxCPendientes.DataSet.FieldByName('Saldo').AsExtended<=dspago.DataSet.FieldByName('Saldo').AsExtended  then
-        dsAplicacion.DataSet.FieldByName('Importe').Value:=dsConCxCPendientes.DataSet.FieldByName('Saldo').AsExtended
+        dsAplicacion.DataSet.FieldByName('Importe').Value:=dsConCxCPendientes.DataSet.FieldByName('Saldo').AsExtended       //value para que lo pase bien  feb 19/17
       else
         dsAplicacion.DataSet.FieldByName('Importe').Value:= dspago.DataSet.FieldByName('Saldo').AsExtended;
     end;

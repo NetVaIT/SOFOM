@@ -110,7 +110,8 @@ begin
   inherited;
   FechaCorte:=TFrmConEstadosCuenta(gGridForm).AFechaCorte; //ene 10/17
   //REcorrer lo que haya de cxc y luego de Pagos e ir revisando que la cuenta IDCXC y el pago no esten registrados
-  
+  //CAlcular fechas de corte e ir generando  la siguiente
+
   adoDtstDatosCXC.Close;
   adoDtstDatosCXC.Parameters.ParamByName('FechaCorte').Value:= FechaCorte;
   adoDtstDatosCXC.Open; //verificar que no existan en Estado_Cuenta
@@ -121,7 +122,7 @@ begin
      //Crear
       AdoDSMaster.Insert;
       AdoDSMaster.FieldByName('IdPersona').asInteger:=adoDtstDatosCXC.FieldByName('IdPersona').asinteger;
-      AdoDSMaster.FieldByName('SaldoInsoluto').asExtended:=ADODtStDatosCXCSaldoInsoluto.AsExtended; // feb 17]/17 verificar como se pasa
+      AdoDSMaster.FieldByName('SaldoInsoluto').value:=ADODtStDatosCXCSaldoInsoluto.AsExtended; // feb 17]/17 verificar como se pasa
        adodsMasterFechaCorte.asdateTime:=ADODtStDatosCXCFecha.AsDateTime; //feb17/17
       //      AdoDSMaster.FieldByName('SaldoInsoluto').AsFloat:= CAlcularSaldoInsoluto(adoDtstDatosCXC.FieldByName('IdPersona').asinteger);
       AdoDSMaster.post;
@@ -139,7 +140,8 @@ begin
       AdoDtStEstadoCtaDetalle.FieldByName('IdCuentaXCobrarDetalle').AsInteger:=ADODtStDatosCXCIdCuentaXCobrarDetalle.AsInteger; 
       AdoDtStEstadoCtaDetalle.FieldByName('FechaMovimiento').ASDAteTime:=ADODtStDatosCXCFecha.AsDateTime; //FEcha de la CXC (Corte)
       AdoDtStEstadoCtaDetalle.FieldByName('TipoMovimiento').AsInteger:=1; //Cargo
-      AdoDtStEstadoCtaDetalle.FieldByName('Importe').AsFloat:=ADODtStDatosCXCImporte.asFloat; // Importe del detalle 
+                                                     //Value Feb 19/17
+      AdoDtStEstadoCtaDetalle.FieldByName('Importe').Value:=ADODtStDatosCXCImporte.asFloat; // Importe del detalle
       AdoDtStEstadoCtaDetalle.FieldByName('Concepto').AsString:=ADODtStDatosCXCDescripcion.AsString;
       AdoDtStEstadoCtaDetalle.FieldByName('TipoContrato').AsString:=ADODtStDatosCXCTipoContrato.AsString;
       AdoDtStEstadoCtaDetalle.Post;
@@ -170,7 +172,8 @@ begin
 
       AdoDtStEstadoCtaDetalle.FieldByName('IDPago').AsInteger:=ADODtStDatosPagosidpago.AsInteger; 
       AdoDtStEstadoCtaDetalle.FieldByName('FechaMovimiento').ASDAteTime:=ADODtStDatosPagosFEchaPago.AsDateTime; //FEcha de la CXC (Corte)
-      AdoDtStEstadoCtaDetalle.FieldByName('Importe').AsFloat:=ADODtStDatosPagosImporte.asFloat; // Importe del detalle
+                                          //Value Feb 19/17
+      AdoDtStEstadoCtaDetalle.FieldByName('Importe').value:=ADODtStDatosPagosImporte.asFloat; // Importe del detalle
       AdoDtStEstadoCtaDetalle.FieldByName('Concepto').AsString:='PAGO: '+ADODtStDatosPagosSeriePago.AsString+'-'+ ADODtStDatosPagosFolioPago.AsString;
       AdoDtStEstadoCtaDetalle.FieldByName('TipoMovimiento').ASInteger:=0;  //Abono
       AdoDtStEstadoCtaDetalle.Post;

@@ -998,8 +998,8 @@ procedure TdmFacturas.ADODtStCFDIConceptosValorUnitarioChange(Sender: TField);
 begin
   inherited;
   if (ADODtStCFDIConceptos.State in [dsEdit,dsInsert]) and (ADODtStCFDIConceptos.FieldByName('ValorUnitario').AsFloat <>0) and (ADODtStCFDIConceptos.FieldByName('Cantidad').AsFloat<>0) then
-  begin
-    ADODtStCFDIConceptos.FieldByName('Importe').AsFloat:=ADODtStCFDIConceptos.FieldByName('ValorUnitario').AsFloat* ADODtStCFDIConceptos.FieldByName('CAntidad').AsFloat;
+  begin                                      //Value Feb 19/17
+    ADODtStCFDIConceptos.FieldByName('Importe').Value:=ADODtStCFDIConceptos.FieldByName('ValorUnitario').AsFloat* ADODtStCFDIConceptos.FieldByName('CAntidad').AsFloat;
   end;
 
 end;
