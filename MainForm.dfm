@@ -3,6 +3,7 @@ inherited frmMain: TfrmMain
   ClientWidth = 1020
   OnDestroy = FormDestroy
   ExplicitWidth = 1036
+  ExplicitHeight = 519
   PixelsPerInch = 96
   TextHeight = 13
   inherited dxRibbon1: TdxRibbon
@@ -35,7 +36,6 @@ inherited frmMain: TfrmMain
       Index = 1
     end
     object dxRibbon1Tab3: TdxRibbonTab
-      Active = True
       Caption = 'Procesos'
       Groups = <
         item
@@ -44,6 +44,7 @@ inherited frmMain: TfrmMain
       Index = 2
     end
     object dxRibbon1Tab5: TdxRibbonTab
+      Active = True
       Caption = 'Reportes'
       Groups = <
         item
@@ -74,12 +75,10 @@ inherited frmMain: TfrmMain
   end
   inherited dxRibbonStatusBar1: TdxRibbonStatusBar
     Width = 1020
-    ExplicitTop = 32000
     ExplicitWidth = 1020
   end
   inherited pnlMain: TPanel
     Width = 1020
-    ExplicitTop = 149
     ExplicitWidth = 1020
   end
   inherited dxBarManager: TdxBarManager

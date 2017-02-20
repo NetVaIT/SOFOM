@@ -40,19 +40,7 @@ type
     ADODtStDatosCXCIdPersona: TIntegerField;
     ADODtStDatosCXCFecha: TDateTimeField;
     ADODtStDatosCXCIdAnexo: TIntegerField;
-    ADODtStDatosCXCIdCuentaXCobrarDetalle: TAutoIncField;
     ADODtStDatosCXCIdCuentaXCobrar: TIntegerField;
-    ADODtStDatosCXCIdCuentaXCobrarTipo: TIntegerField;
-    ADODtStDatosCXCIdentificador: TStringField;
-    ADODtStDatosCXCDescripcion: TStringField;
-    ADODtStDatosCXCImporte: TFMTBCDField;
-    ADODtStDatosCXCSaldo: TFMTBCDField;
-    ADODtStDatosCXCAcumula: TBooleanField;
-    ADODtStDatosCXCAcumulaAQuien: TIntegerField;
-    ADODtStDatosCXCBaseIVA: TIntegerField;
-    ADODtStDatosCXCEsIVA: TBooleanField;
-    ADODtStDatosCXCFase: TIntegerField;
-    ADODtStDatosCXCIdTipoContrato: TIntegerField;
     AdoDtStEstadoCtaDetalleConcepto: TStringField;
     AdoDtStEstadoCtaDetalleTipoContrato: TStringField;
     ADODtStDatosCXCIdContrato: TIntegerField;
@@ -64,7 +52,6 @@ type
     adodsMasterSaldoAnterior: TFMTBCDField;
     adodsMasterSaldoAPagar: TFMTBCDField;
     adodsMasterSaldoVencido: TFMTBCDField;
-    ADODtStDatosCXCSaldoFactoraje: TFMTBCDField;
     AdoDtStEstadoCtaDetalleIdCuentaXCobrar: TIntegerField;
     AdoDtStEstadoCtaDetalleIdCuentaXCobrarDetalle: TIntegerField;
     AdoDtStEstadoCtaDetalleFechaMovimiento: TDateTimeField;
@@ -74,6 +61,47 @@ type
     ADODtStDatosCXCSaldoInsoluto: TFMTBCDField;
     ADODtStDatosCXCCapitalCobrado: TFMTBCDField;
     ADODtStDatosCXCtotalCXC: TFMTBCDField;
+    adodsMasterIdContrato: TIntegerField;
+    adodsMasterFechaVencimiento: TDateTimeField;
+    ADODtStContratosVig: TADODataSet;
+    ADODtStContratosVigIdContrato: TAutoIncField;
+    ADODtStContratosVigIdPersona: TIntegerField;
+    ADODtStContratosVigIdContratoTipo: TIntegerField;
+    ADODtStContratosVigIdContratoEstatus: TIntegerField;
+    ADODtStContratosVigIdentificador: TStringField;
+    ADODtStContratosVigFecha: TDateTimeField;
+    ADODtStContratosVigMontoAutorizado: TBCDField;
+    ADODtStContratosVigDiaCorte: TIntegerField;
+    ADODtStContratosVigDiaVencimiento: TIntegerField;
+    ADODataSet1: TADODataSet;
+    ADODtStDetalleCXC: TADODataSet;
+    ADODtStDetalleCXCIdCuentaXCobrarDetalle: TAutoIncField;
+    ADODtStDetalleCXCIdCuentaXCobrar: TIntegerField;
+    ADODtStDetalleCXCIdentificador: TStringField;
+    ADODtStDetalleCXCDescripcion: TStringField;
+    ADODtStDetalleCXCImporte: TFMTBCDField;
+    ADODtStDetalleCXCPagosAplicados: TFMTBCDField;
+    ADODtStDetalleCXCSaldo: TFMTBCDField;
+    ADODtStDetalleCXCPagosAplicadosFactoraje: TFMTBCDField;
+    ADODtStDetalleCXCSaldoFactoraje: TFMTBCDField;
+    ADODtStDetalleCXCIdTipoContrato: TIntegerField;
+    ADODtStDetalleCXCFacturar: TBooleanField;
+    ADODtStDetalleCXCAcumula: TBooleanField;
+    ADODtStDetalleCXCAcumulaAQuien: TIntegerField;
+    ADODtStDetalleCXCEsIVA: TBooleanField;
+    ADODtStDetalleCXCBaseIVA: TIntegerField;
+    ADODtStDetalleCXCEstadoCuenta: TBooleanField;
+    ADODtStDetalleCXCFase: TIntegerField;
+    ADODtStDetalleCXCTemporalidad: TStringField;
+    ADODtStDetalleCXCOrdenAplica: TIntegerField;
+    ADODtStDetalleCXCBaseMoratorios: TBooleanField;
+    ADODtStDetalleCXCEsMoratorios: TBooleanField;
+    ADODtStDetalleCXCEsCapital: TBooleanField;
+    ADODtStDetalleCXCEsInteres: TBooleanField;
+    DSDatosCXC: TDataSource;
+    ADODtStDetalleCXCIdCuentaXCobrarTipo: TIntegerField;
+    ADODtStDatosCXCidpercontrato: TIntegerField;
+    ADODtStDatosCXCIdTipoContrato: TIntegerField;
     procedure ActActualizaEstadoCtaExecute(Sender: TObject);
     procedure AdoDtStEstadoCtaDetalleNewRecord(DataSet: TDataSet);
     procedure DataModuleCreate(Sender: TObject);
@@ -81,14 +109,16 @@ type
   private
     
 
-    function VerificaEstadoCta(idPersona: Integer;var IdEstadoCta:Integer; fechaC:TdateTime): Boolean;
+    function VerificaEstadoCta(idPersona, IDContrato: Integer;var IdEstadoCta:Integer; fechaC:TdateTime): Boolean;
     function VerificaDetalle(IdCtaXCobrarDet: Integer; Tipo:Integer): Boolean;
-
+    function SacaUltimaFechaCorteEC(idcontrato:Integer;var FechaUltCorte:TDAteTime):Boolean; //Feb 19/17
+    function SacarFechaCorteAct(IdContrato:Integer;FecUltCorteEC:TDateTime):TDAteTime;   //Feb 19/17
+    function SacarFechasCorteInicial(IdContrato:Integer;Var FecContrato, FecPrimerCorte:TDateTime):Boolean; //FEb 20/17
     { Private declarations }
   public
     { Public declarations }
-   
-  
+
+
   end;
 
 var
@@ -105,9 +135,114 @@ uses EstadosCuentaForm, EstadosCuentaDetalleForm;
 procedure TdmEstadosCuenta.ActActualizaEstadoCtaExecute(Sender: TObject);
 var
   IdEstadoCta:integer;
-  FechaCorte: TDAteTime;
+  FechaCorte, UltFecCorteEC: TDAteTime;
+
+  IDContratoAct:Integer; //Feb 19/17
+  SaldoAnterior,SaldoAPagar:Double;//Feb 20/17
 begin
   inherited;
+  //Feb 19/17
+  ADODtStContratosVig.Open;
+
+  while not ADODtStContratosVig.eof do
+  begin
+    IDContratoAct:= ADODtStContratosVigIdContrato.AsInteger;
+    if SacaUltimaFechaCorteEC(IDContratoAct, UltFecCorteEC) then
+    begin// Existía alguno
+      FechaCorte:=SacarFechaCorteAct(IDContratoAct,UltFecCorteEC);   //    , SaldoAnterior
+      adoDtstDatosCXC.Close;
+      adoDtstDatosCXC.Parameters.ParamByName('FechaCorteUlt').Value:= UltFecCorteEC;
+      adoDtstDatosCXC.Parameters.ParamByName('FechaCorte').Value:= FechaCorte;
+      adoDtstDatosCXC.Open;
+
+    end
+    else // es el primer Estado deCuenta
+    begin
+      SAldoAnterior:=0;
+      SacarFechasCorteInicial(IDContratoAct, UltFecCorteEC,FechaCorte); //Sacar fecha de contrato y primera fecha corte, Feb 20/17
+      adoDtstDatosCXC.Close;
+      adoDtstDatosCXC.Parameters.ParamByName('FechaCorteUlt').Value:= UltFecCorteEC;
+      adoDtstDatosCXC.Parameters.ParamByName('FechaCorte').value:= FechaCorte;
+      adoDtstDatosCXC.Open;
+    end;
+    while not adoDtstDatosCXC.Eof do
+    begin  //Crear
+      AdoDSMaster.Insert;
+      AdoDSMaster.FieldByName('IdPersona').asInteger:=adoDtstDatosCXC.FieldByName('IdPersona').asinteger;
+      AdoDSMaster.FieldByName('IdContrato').asInteger:=adoDtstDatosCXC.FieldByName('IdContrato').asinteger;//FEb 19/17
+      AdoDSMaster.FieldByName('FechaCorte').asdateTime:=FechaCorte;
+
+      AdoDSMaster.FieldByName('SaldoInsoluto').value:=ADODtStDatosCXCSaldoInsoluto.AsExtended; // feb 17/17 verificar como se pasa
+   //   AdoDSMaster.FieldByName('SaldoAnterior').value:=// CAlcular .AsExtended;
+      //AdoDSMaster.FieldByName('SaldoAPagar').value:= CAlcularSaldoAPagar(adoDtstDatosCXC.FieldByName('IdPersona').asinteger);
+
+      AdoDSMaster.post;
+      IdEstadoCta:= AdoDSMaster.FieldByName('IdEstadoCuenta').AsInteger;
+
+      //
+      adodtstDEtalleCXC.Open; //Verificar
+      while not adodtstDEtalleCXC.eof do
+      begin  //Actualizar...                                                //Cargo
+        AdoDtStEstadoCtaDetalle.Insert;
+        AdoDtStEstadoCtaDetalle.FieldByName('IdEstadoCuenta').AsInteger:=AdoDSMaster.FieldByName('IdEstadoCuenta').AsInteger;
+        AdoDtStEstadoCtaDetalle.FieldByName('IDContrato').AsInteger:=ADODtStDatosCXCIdContrato.AsInteger;    //DEsde maestroCXC
+        AdoDtStEstadoCtaDetalle.FieldByName('IdAnexo').AsInteger:=ADODtStDatosCXCIdAnexo.AsInteger;  //DEsde maestroCXC
+        AdoDtStEstadoCtaDetalle.FieldByName('IdCuentaXCobrar').AsInteger:=adodtstDEtalleCXCIdCuentaXCobrar.AsInteger;
+        AdoDtStEstadoCtaDetalle.FieldByName('IdCuentaXCobrarDetalle').AsInteger:=adodtstDEtalleCXCIdCuentaXCobrarDetalle.AsInteger;
+        AdoDtStEstadoCtaDetalle.FieldByName('FechaMovimiento').ASDAteTime:=ADODtStDatosCXCFecha.AsDateTime; //FEcha de la CXC (Corte)
+        AdoDtStEstadoCtaDetalle.FieldByName('TipoMovimiento').AsInteger:=1; //Cargo
+                                                       //Value Feb 19/17
+        AdoDtStEstadoCtaDetalle.FieldByName('Importe').Value:=adodtstDEtalleCXCImporte.asFloat; // Importe del detalle
+        AdoDtStEstadoCtaDetalle.FieldByName('Concepto').AsString:=adodtstDEtalleCXCDescripcion.AsString;
+        AdoDtStEstadoCtaDetalle.FieldByName('TipoContrato').AsString:=ADODtStDatosCXCTipoContrato.AsString;  //DEsde maestroCXC
+        AdoDtStEstadoCtaDetalle.Post;
+        adodtstDEtalleCXC.Next;
+      end;
+
+      ADODtStDatosCXC.Next;
+    end;
+    adoDtstDatosPagos.Close;
+    adoDtstDatosPagos.Parameters.ParamByName('FechaInicial').Value:=UltFecCorteEC;     //Add FEb 20/17
+    adoDtstDatosPagos.Parameters.ParamByName('FechaFin').Value:=FechaCorte;
+
+    adoDtstDatosPagos.open;
+    while not adoDtstDatosPagos.Eof do
+    begin
+    {  IdEstadoCta:=-1;
+      if not VerificaEstadoCta(adoDtstDatosPagos.FieldByName('IdPersonaCliente').asinteger,IdEstadoCta,fechacorte) then  //Solo hay un estado de cuenta por cliente
+      begin
+       //Crear    //No deberia crear por aca.. // verificar
+        AdoDSMaster.Insert;
+        AdoDSMaster.FieldByName('IdPersona').asInteger:=adoDtstDatosPagos.FieldByName('IdPersonaCliente').asinteger;
+  //      AdoDSMaster.FieldByName('SaldoInsoluto').AsFloat:= CAlcularSaldoInsoluto(adoDtstDatosCXC.FieldByName('IdPersona').asinteger);
+        AdoDSMaster.post;
+        IdEstadoCta:= AdoDSMaster.FieldByName('IdEstadoCuenta').AsInteger;
+      end;
+      if AdoDSMaster.FieldByName('IdEstadoCuenta').AsInteger <> IdEstadoCta then
+        AdoDSMaster.Locate('IdEstadoCuenta', IdEstadoCta, []);   }                                                 //Abono
+   //   if not VerificaDetalle(ADODtStDatosPagosidpago.asInteger, 0)   then
+      begin  //Actualizar...
+        AdoDtStEstadoCtaDetalle.Insert;
+
+        AdoDtStEstadoCtaDetalle.FieldByName('IDPago').AsInteger:=ADODtStDatosPagosidpago.AsInteger;
+        AdoDtStEstadoCtaDetalle.FieldByName('FechaMovimiento').ASDAteTime:=ADODtStDatosPagosFEchaPago.AsDateTime; //FEcha de la CXC (Corte)
+                                            //Value Feb 19/17
+        AdoDtStEstadoCtaDetalle.FieldByName('Importe').value:=ADODtStDatosPagosImporte.asFloat; // Importe del detalle
+        AdoDtStEstadoCtaDetalle.FieldByName('Concepto').AsString:='PAGO: '+ADODtStDatosPagosSeriePago.AsString+'-'+ ADODtStDatosPagosFolioPago.AsString;
+        AdoDtStEstadoCtaDetalle.FieldByName('TipoMovimiento').ASInteger:=0;  //Abono
+        AdoDtStEstadoCtaDetalle.Post;
+      end;
+
+
+      adoDtstDatosPagos.Next;
+    end;
+     ADODtStContratosVig.Next;   //FAlta probar
+  end;
+
+  //HAsata aca feb 19/17
+
+  {  //Version anterior deshabilitada FEb 19/17
+
   FechaCorte:=TFrmConEstadosCuenta(gGridForm).AFechaCorte; //ene 10/17
   //REcorrer lo que haya de cxc y luego de Pagos e ir revisando que la cuenta IDCXC y el pago no esten registrados
   //CAlcular fechas de corte e ir generando  la siguiente
@@ -117,27 +252,34 @@ begin
   adoDtstDatosCXC.Open; //verificar que no existan en Estado_Cuenta
   while not adoDtstDatosCXC.Eof do
   begin                                                                                 //Va a requerir agregar FEcha, prpceso pendiente por ajuste FActoraje  Ene 12/17
-    if not VerificaEstadoCta(adoDtstDatosCXC.FieldByName('IdPersona').asinteger,IdEstadoCta,FechaCorte) then
+    if not VerificaEstadoCta(adoDtstDatosCXC.FieldByName('IdPersona').asinteger,
+           adoDtstDatosCXC.FieldByName('IdContrato').asinteger,  IdEstadoCta,FechaCorte) then
     begin
      //Crear
       AdoDSMaster.Insert;
       AdoDSMaster.FieldByName('IdPersona').asInteger:=adoDtstDatosCXC.FieldByName('IdPersona').asinteger;
-      AdoDSMaster.FieldByName('SaldoInsoluto').value:=ADODtStDatosCXCSaldoInsoluto.AsExtended; // feb 17]/17 verificar como se pasa
-       adodsMasterFechaCorte.asdateTime:=ADODtStDatosCXCFecha.AsDateTime; //feb17/17
+      AdoDSMaster.FieldByName('IdContrato').asInteger:=adoDtstDatosCXC.FieldByName('IdContrato').asinteger;//FEb 19/17
+      AdoDSMaster.FieldByName('FechaCorte').asInteger:=FechaCorte;
+
+      AdoDSMaster.FieldByName('SaldoInsoluto').value:=ADODtStDatosCXCSaldoInsoluto.AsExtended; // feb 17/17 verificar como se pasa
+
+
+
+      adodsMasterFechaCorte.asdateTime:=FechaCorte;//ADODtStDatosCXCFecha.AsDateTime; //feb17/17
       //      AdoDSMaster.FieldByName('SaldoInsoluto').AsFloat:= CAlcularSaldoInsoluto(adoDtstDatosCXC.FieldByName('IdPersona').asinteger);
       AdoDSMaster.post;
       IdEstadoCta:= AdoDSMaster.FieldByName('IdEstadoCuenta').AsInteger;
     end;   //Actualiza??
-    if AdoDSMaster.FieldByName('IdEstadoCuenta').AsInteger <> IdEstadoCta then
-      AdoDSMaster.Locate('IdEstadoCuenta', IdEstadoCta, []);
+   // if AdoDSMaster.FieldByName('IdEstadoCuenta').AsInteger <> IdEstadoCta then  //Deshab Feb 19/17
+   //   AdoDSMaster.Locate('IdEstadoCuenta', IdEstadoCta, []);
     if not VerificaDetalle(ADODtStDatosCXCIdCuentaXCobrarDetalle.asInteger, 1)   then
     begin  //Actualizar...                                                //Cargo
       AdoDtStEstadoCtaDetalle.Insert;
       AdoDtStEstadoCtaDetalle.FieldByName('IdEstadoCuenta').AsInteger:=AdoDSMaster.FieldByName('IdEstadoCuenta').AsInteger;
-      AdoDtStEstadoCtaDetalle.FieldByName('IDContrato').AsInteger:=ADODtStDatosCXCIdContrato.AsInteger;      
-      AdoDtStEstadoCtaDetalle.FieldByName('IdAnexo').AsInteger:=ADODtStDatosCXCIdAnexo.AsInteger; 
-      AdoDtStEstadoCtaDetalle.FieldByName('IdCuentaXCobrar').AsInteger:=ADODtStDatosCXCIdCuentaXCobrar.AsInteger; 
-      AdoDtStEstadoCtaDetalle.FieldByName('IdCuentaXCobrarDetalle').AsInteger:=ADODtStDatosCXCIdCuentaXCobrarDetalle.AsInteger; 
+      AdoDtStEstadoCtaDetalle.FieldByName('IDContrato').AsInteger:=ADODtStDatosCXCIdContrato.AsInteger;
+      AdoDtStEstadoCtaDetalle.FieldByName('IdAnexo').AsInteger:=ADODtStDatosCXCIdAnexo.AsInteger;
+      AdoDtStEstadoCtaDetalle.FieldByName('IdCuentaXCobrar').AsInteger:=ADODtStDatosCXCIdCuentaXCobrar.AsInteger;
+      AdoDtStEstadoCtaDetalle.FieldByName('IdCuentaXCobrarDetalle').AsInteger:=ADODtStDatosCXCIdCuentaXCobrarDetalle.AsInteger;
       AdoDtStEstadoCtaDetalle.FieldByName('FechaMovimiento').ASDAteTime:=ADODtStDatosCXCFecha.AsDateTime; //FEcha de la CXC (Corte)
       AdoDtStEstadoCtaDetalle.FieldByName('TipoMovimiento').AsInteger:=1; //Cargo
                                                      //Value Feb 19/17
@@ -146,14 +288,14 @@ begin
       AdoDtStEstadoCtaDetalle.FieldByName('TipoContrato').AsString:=ADODtStDatosCXCTipoContrato.AsString;
       AdoDtStEstadoCtaDetalle.Post;
     end;
-  
+
 
     adoDtstDatosCXC.Next;
   end;
   adoDtstDatosPagos.open;
-  
+
   while not adoDtstDatosPagos.Eof do
-  begin 
+  begin
     IdEstadoCta:=-1;
     if not VerificaEstadoCta(adoDtstDatosPagos.FieldByName('IdPersonaCliente').asinteger,IdEstadoCta,fechacorte) then  //Solo hay un estado de cuenta por cliente
     begin
@@ -163,14 +305,14 @@ begin
 //      AdoDSMaster.FieldByName('SaldoInsoluto').AsFloat:= CAlcularSaldoInsoluto(adoDtstDatosCXC.FieldByName('IdPersona').asinteger);
       AdoDSMaster.post;
       IdEstadoCta:= AdoDSMaster.FieldByName('IdEstadoCuenta').AsInteger;
-    end; 
+    end;
     if AdoDSMaster.FieldByName('IdEstadoCuenta').AsInteger <> IdEstadoCta then
       AdoDSMaster.Locate('IdEstadoCuenta', IdEstadoCta, []);                                                    //Abono
     if not VerificaDetalle(ADODtStDatosPagosidpago.asInteger, 0)   then
     begin  //Actualizar...
       AdoDtStEstadoCtaDetalle.Insert;
 
-      AdoDtStEstadoCtaDetalle.FieldByName('IDPago').AsInteger:=ADODtStDatosPagosidpago.AsInteger; 
+      AdoDtStEstadoCtaDetalle.FieldByName('IDPago').AsInteger:=ADODtStDatosPagosidpago.AsInteger;
       AdoDtStEstadoCtaDetalle.FieldByName('FechaMovimiento').ASDAteTime:=ADODtStDatosPagosFEchaPago.AsDateTime; //FEcha de la CXC (Corte)
                                           //Value Feb 19/17
       AdoDtStEstadoCtaDetalle.FieldByName('Importe').value:=ADODtStDatosPagosImporte.asFloat; // Importe del detalle
@@ -178,14 +320,14 @@ begin
       AdoDtStEstadoCtaDetalle.FieldByName('TipoMovimiento').ASInteger:=0;  //Abono
       AdoDtStEstadoCtaDetalle.Post;
     end;
-  
+
 
     adoDtstDatosPagos.Next;
   end;
+  }
 
 
 
-  
 
 
   //   AdodsMaster.    Tiene Cliente y Saldo Insoluto, que hay qyue actualizar..
@@ -220,6 +362,72 @@ end;
 
 
 
+function TdmEstadosCuenta.SacarFechaCorteAct(IdContrato: Integer;
+  FecUltCorteEC: TDateTime): TDAteTime;
+var dias:integer;
+begin
+  FecUltCorteEC:=FecUltCorteEC+1; //Para que tome desde el siguiente día
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.Sql.Clear;
+  ADOQryAuxiliar.Sql.Add('Select DiaCorte from Contratos where idcontrato ='+intToStr(IDContrato));
+  ADOQryAuxiliar.Open;
+
+  dias:=  ADOQryAuxiliar.FieldByName('DiaCorte').asInteger;
+
+
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.Sql.Clear;
+  ADOQryAuxiliar.Sql.Add('Select dbo.GetFechaDia(:Fecha,:Dias)as FechaCorte ');
+  ADOQryAuxiliar.Parameters.ParamByName('Fecha').Value:= FecUltCorteEC;
+  ADOQryAuxiliar.Parameters.ParamByName('Dias').Value:= Dias;
+  ADOQryAuxiliar.Open;
+
+  REsult:= ADOQryAuxiliar.FieldByName('FechaCorte').asDateTime;
+
+
+end;
+
+function TdmEstadosCuenta.SacarFechasCorteInicial(IdContrato: Integer;
+  var FecContrato, FecPrimerCorte: TDateTime): Boolean;        //Feb 20/17
+var dias:Integer;
+begin
+  Result:=False;
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.Sql.Clear;
+  ADOQryAuxiliar.Sql.Add('Select Fecha,DiaCorte from Contratos where idcontrato ='+intToStr(IDContrato));
+  ADOQryAuxiliar.Open;
+//Debe existir
+  dias:=  ADOQryAuxiliar.FieldByName('DiaCorte').asInteger;
+  FecContrato:=  ADOQryAuxiliar.FieldByName('Fecha').asDateTime;
+
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.Sql.Clear;
+  ADOQryAuxiliar.Sql.Add('Select dbo.GetFechaDia(:Fecha,:Dias)as FechaCorte ');
+  ADOQryAuxiliar.Parameters.ParamByName('Fecha').Value:= FecContrato;
+  ADOQryAuxiliar.Parameters.ParamByName('Dias').Value:= Dias;
+  ADOQryAuxiliar.Open;
+
+  FecPrimerCorte:= ADOQryAuxiliar.FieldByName('FechaCorte').asDateTime;
+  REsult:=True;
+end;
+
+function TdmEstadosCuenta.SacaUltimaFechaCorteEC(idcontrato: Integer;
+  var FechaUltCorte: TDAteTime): Boolean;           //Feb 19/17
+begin
+  Result:=False;
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.Sql.Clear;
+  ADOQryAuxiliar.Sql.Add('Select max(FechaCorte) as FechaCorteEC  from EstadosCuenta '+
+                         'where IdContrato= '+intToStr(idcontrato));
+  ADOQryAuxiliar.Open;
+  if (not ADOQryAuxiliar.Eof) and (not ADOQryAuxiliar.FieldByName('FechaCorteEC').isnull) then
+  begin
+    FechaUltCorte:=ADOQryAuxiliar.FieldByName('FechaCorteEC').AsDateTime;
+    REsult:=True;
+  end;
+
+end;
+
 function TdmEstadosCuenta.VerificaDetalle(IdCtaXCobrarDet:Integer; Tipo:Integer):Boolean;  //Ene 9/17
 var 
    CAmpo: String;
@@ -235,16 +443,18 @@ begin
   REsult:=  not ADOQryAuxiliar.eof; 
 end;
 
-function TdmEstadosCuenta.VerificaEstadoCta(idPersona:Integer; var IdEstadoCta:Integer; fechaC:TdateTime):Boolean; //Ene 9/16
+function TdmEstadosCuenta.VerificaEstadoCta(idPersona, IDContrato:Integer; var IdEstadoCta:Integer; fechaC:TdateTime):Boolean; //Ene 9/16
 begin
-  IdEstadoCta:=-1; //Porsi no encunetra
+  IdEstadoCta:=-1; //Porsi no encuentra
   ADOQryAuxiliar.Close;
   ADOQryAuxiliar.sql.Clear;
-  ADOQryAuxiliar.Sql.Add('Select * From EstadosCuenta where IdPersona='+ IntToStr(idpersona));
+  ADOQryAuxiliar.Sql.Add('Select * From EstadosCuenta where IdPersona='+ IntToStr(idpersona)
+                       + ' and IdContrato= '+ IntToStr(IDContrato)+ 'FechaCorte=:FechaCorte ');
+  ADOQryAuxiliar.Parameters.ParamByName('FechaCorte').Value:=fechaC;
   ADOQryAuxiliar.Open;
   if not ADOQryAuxiliar.eof then
      IdEstadoCta:=ADOQryAuxiliar.fieldbyname('IdEstadoCuenta') .asInteger;
-  REsult:=  not ADOQryAuxiliar.eof; 
+  REsult:=  not ADOQryAuxiliar.eof;
   
 end;
 end.

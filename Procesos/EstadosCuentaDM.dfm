@@ -6,8 +6,9 @@ inherited dmEstadosCuenta: TdmEstadosCuenta
     CursorType = ctStatic
     AfterOpen = adodsMasterAfterOpen
     CommandText = 
-      'select IdEstadoCuenta, IdPersona, FechaCorte, SaldoInsoluto, Sal' +
-      'doAnterior, SaldoAPagar, SaldoVencido'#13#10'from EstadosCuenta '#13#10
+      'select IdEstadoCuenta, IdPersona,  IdContrato , FechaVencimiento' +
+      ',FechaCorte, SaldoInsoluto, SaldoAnterior, SaldoAPagar, SaldoVen' +
+      'cido'#13#10'from EstadosCuenta '#13#10
     Left = 64
     object adodsMasterCliente: TStringField
       FieldKind = fkLookup
@@ -48,6 +49,12 @@ inherited dmEstadosCuenta: TdmEstadosCuenta
       FieldName = 'SaldoVencido'
       Precision = 18
       Size = 6
+    end
+    object adodsMasterIdContrato: TIntegerField
+      FieldName = 'IdContrato'
+    end
+    object adodsMasterFechaVencimiento: TDateTimeField
+      FieldName = 'FechaVencimiento'
     end
   end
   inherited adodsUpdate: TADODataSet
@@ -134,20 +141,25 @@ inherited dmEstadosCuenta: TdmEstadosCuenta
     CursorType = ctStatic
     CommandText = 
       'select A.IdContrato,A.SaldoInsoluto,A.CapitalCobrado,  '#13#10'CT.Iden' +
-      'tificador AS TipoContrato, '#13#10'C.IdPersona,  c.Fecha, c.Total as t' +
-      'otalCXC, c.IdAnexo, c.idcuentaXCobrar'#13#10',CCD.* , '#13#10'T.Acumula, t.A' +
-      'cumulaAQuien, T.BaseIVA, T.EsIVA, T.Fase, t.IdTipoContrato '#13#10',co' +
-      'n.IdPersona idpercontrato'#13#10' from Contratos con'#13#10'inner join Anexo' +
-      's A on A.IdContrato=con.IdContrato'#13#10'inner join CuentasXCobrar C ' +
-      'on c.IdAnexo=A.IdAnexo'#13#10'inner join CuentasXCobrarDetalle CCD  on' +
-      ' c.IdCuentaXCobrar= CCD.IdCuentaXCobrar'#13#10'inner join  ContratosTi' +
-      'pos CT on CT.IdContratoTipo=con.IdContratoTipo'#13#10'inner join Cuent' +
-      'asXCobrarTiposConceptos T  on t.IdCuentaXCobrarTipo=CT.IdContrat' +
-      'oTipo'#13#10' and  t.EstadoCuenta=1 '#13#10'and  C.idCuentaXCobrarEstatus=0 ' +
-      '-- Pendiente'#13#10'and c.Fecha<=:FechaCorte -- and c.IdCuentaXCobrar ' +
-      'not in (2,3,4)'#13#10'Order by C.IdPersona, A.idContrato,A.IdAnexo, c.' +
-      'Fecha,  C.IdCuentaXCobrar'#13#10
+      'tificador AS TipoContrato,'#13#10'C.IdPersona,  c.Fecha, c.Total as to' +
+      'talCXC, c.IdAnexo,'#13#10' c.idcuentaXCobrar'#13#10', T.Acumula, t.AcumulaAQ' +
+      'uien, T.BaseIVA, T.EsIVA, T.Fase,'#13#10' t.IdTipoContrato '#13#10',con.IdPe' +
+      'rsona idpercontrato'#13#10' from Contratos con'#13#10'inner join Anexos A on' +
+      ' A.IdContrato=con.IdContrato'#13#10'inner join CuentasXCobrar C on c.I' +
+      'dAnexo=A.IdAnexo'#13#10'inner join  ContratosTipos CT on CT.IdContrato' +
+      'Tipo=con.IdContratoTipo'#13#10'inner join CuentasXCobrarTiposConceptos' +
+      ' T  on t.IdCuentaXCobrarTipo=CT.IdContratoTipo'#13#10' and  t.EstadoCu' +
+      'enta=1 '#13#10'and  C.idCuentaXCobrarEstatus=0 -- Pendiente'#13#10'and c.Fec' +
+      'ha>=:FechaCorteUlt  and c.Fecha <=:FechaCorte -- and c.IdCuentaX' +
+      'Cobrar not in (2,3,4)'#13#10'Order by C.IdPersona, A.idContrato,A.IdAn' +
+      'exo, c.Fecha,  C.IdCuentaXCobrar'#13#10
     Parameters = <
+      item
+        Name = 'FechaCorteUlt'
+        DataType = ftDateTime
+        Size = -1
+        Value = Null
+      end
       item
         Name = 'FechaCorte'
         DataType = ftDateTime
@@ -165,59 +177,11 @@ inherited dmEstadosCuenta: TdmEstadosCuenta
     object ADODtStDatosCXCIdAnexo: TIntegerField
       FieldName = 'IdAnexo'
     end
-    object ADODtStDatosCXCIdCuentaXCobrarDetalle: TAutoIncField
-      FieldName = 'IdCuentaXCobrarDetalle'
-      ReadOnly = True
-    end
     object ADODtStDatosCXCIdCuentaXCobrar: TIntegerField
       FieldName = 'IdCuentaXCobrar'
     end
-    object ADODtStDatosCXCIdCuentaXCobrarTipo: TIntegerField
-      FieldName = 'IdCuentaXCobrarTipo'
-    end
-    object ADODtStDatosCXCIdentificador: TStringField
-      FieldName = 'Identificador'
-      Size = 10
-    end
-    object ADODtStDatosCXCDescripcion: TStringField
-      FieldName = 'Descripcion'
-      Size = 100
-    end
-    object ADODtStDatosCXCImporte: TFMTBCDField
-      FieldName = 'Importe'
-      Precision = 18
-      Size = 6
-    end
-    object ADODtStDatosCXCSaldo: TFMTBCDField
-      FieldName = 'Saldo'
-      Precision = 18
-      Size = 6
-    end
-    object ADODtStDatosCXCAcumula: TBooleanField
-      FieldName = 'Acumula'
-    end
-    object ADODtStDatosCXCAcumulaAQuien: TIntegerField
-      FieldName = 'AcumulaAQuien'
-    end
-    object ADODtStDatosCXCBaseIVA: TIntegerField
-      FieldName = 'BaseIVA'
-    end
-    object ADODtStDatosCXCEsIVA: TBooleanField
-      FieldName = 'EsIVA'
-    end
-    object ADODtStDatosCXCFase: TIntegerField
-      FieldName = 'Fase'
-    end
-    object ADODtStDatosCXCIdTipoContrato: TIntegerField
-      FieldName = 'IdTipoContrato'
-    end
     object ADODtStDatosCXCIdContrato: TIntegerField
       FieldName = 'IdContrato'
-    end
-    object ADODtStDatosCXCSaldoFactoraje: TFMTBCDField
-      FieldName = 'SaldoFactoraje'
-      Precision = 18
-      Size = 6
     end
     object ADODtStDatosCXCTipoContrato: TStringField
       FieldName = 'TipoContrato'
@@ -238,6 +202,12 @@ inherited dmEstadosCuenta: TdmEstadosCuenta
       Precision = 18
       Size = 6
     end
+    object ADODtStDatosCXCidpercontrato: TIntegerField
+      FieldName = 'idpercontrato'
+    end
+    object ADODtStDatosCXCIdTipoContrato: TIntegerField
+      FieldName = 'IdTipoContrato'
+    end
   end
   object ADODtStDatosPagos: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -246,10 +216,29 @@ inherited dmEstadosCuenta: TdmEstadosCuenta
       '  Select P.idpago, P.IdPersonaCliente, P.FEchaPago, P.FolioPago,' +
       ' P. SeriePago,'#13#10'P.Importe, Pa.IdCuentaXCobrar,  Pa.Importe Aplic' +
       'ado , OrigenPago'#13#10'from Pagos P '#13#10'  inner join PagosAplicaciones ' +
-      'Pa '#13#10'  on Pa.IdPago=P.IdPago'#13#10'  '
-    Parameters = <>
-    Left = 320
-    Top = 248
+      'Pa '#13#10'  on Pa.IdPago=P.IdPago'#13#10'  where P.FechaPago>=:FechaInicial' +
+      ' and P.FechaPago<=:FechaFin'
+    Parameters = <
+      item
+        Name = 'FechaInicial'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        NumericScale = 3
+        Precision = 23
+        Size = 16
+        Value = Null
+      end
+      item
+        Name = 'FechaFin'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        NumericScale = 3
+        Precision = 23
+        Size = 16
+        Value = Null
+      end>
+    Left = 328
+    Top = 304
     object ADODtStDatosPagosIdPersonaCliente: TIntegerField
       FieldName = 'IdPersonaCliente'
     end
@@ -330,5 +319,162 @@ inherited dmEstadosCuenta: TdmEstadosCuenta
       Precision = 18
       Size = 6
     end
+  end
+  object ADODtStContratosVig: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 'select *  from Contratos where  IdContratoEstatus=1'
+    Parameters = <>
+    Left = 64
+    Top = 248
+    object ADODtStContratosVigIdContrato: TAutoIncField
+      FieldName = 'IdContrato'
+      ReadOnly = True
+    end
+    object ADODtStContratosVigIdPersona: TIntegerField
+      FieldName = 'IdPersona'
+    end
+    object ADODtStContratosVigIdContratoTipo: TIntegerField
+      FieldName = 'IdContratoTipo'
+    end
+    object ADODtStContratosVigIdContratoEstatus: TIntegerField
+      FieldName = 'IdContratoEstatus'
+    end
+    object ADODtStContratosVigIdentificador: TStringField
+      FieldName = 'Identificador'
+    end
+    object ADODtStContratosVigFecha: TDateTimeField
+      FieldName = 'Fecha'
+    end
+    object ADODtStContratosVigMontoAutorizado: TBCDField
+      FieldName = 'MontoAutorizado'
+      Precision = 19
+    end
+    object ADODtStContratosVigDiaCorte: TIntegerField
+      FieldName = 'DiaCorte'
+    end
+    object ADODtStContratosVigDiaVencimiento: TIntegerField
+      FieldName = 'DiaVencimiento'
+    end
+  end
+  object ADODataSet1: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 'select *  from Contratos where  IdContratoEstatus=1'
+    Parameters = <>
+    Left = 80
+    Top = 328
+  end
+  object ADODtStDetalleCXC: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select CCD.* , CT.* from CuentasXCobrarDetalle CCD, '#13#10' CuentasXC' +
+      'obrarTiposConceptos CT where CCD.IdCuentaXCobrarTipo=ct.IdCuenta' +
+      'XCobrarTipo '#13#10'and  CCD.IdCuentaXCobrar=:IdCuentaXCobrar'
+    DataSource = DSDatosCXC
+    MasterFields = 'IdCuentaXCobrar'
+    Parameters = <
+      item
+        Name = 'IdCuentaXCobrar'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 320
+    Top = 224
+    object ADODtStDetalleCXCIdCuentaXCobrarDetalle: TAutoIncField
+      FieldName = 'IdCuentaXCobrarDetalle'
+      ReadOnly = True
+    end
+    object ADODtStDetalleCXCIdCuentaXCobrar: TIntegerField
+      FieldName = 'IdCuentaXCobrar'
+    end
+    object ADODtStDetalleCXCIdentificador: TStringField
+      FieldName = 'Identificador'
+      Size = 10
+    end
+    object ADODtStDetalleCXCDescripcion: TStringField
+      FieldName = 'Descripcion'
+      Size = 100
+    end
+    object ADODtStDetalleCXCImporte: TFMTBCDField
+      FieldName = 'Importe'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStDetalleCXCPagosAplicados: TFMTBCDField
+      FieldName = 'PagosAplicados'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStDetalleCXCSaldo: TFMTBCDField
+      FieldName = 'Saldo'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStDetalleCXCPagosAplicadosFactoraje: TFMTBCDField
+      FieldName = 'PagosAplicadosFactoraje'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStDetalleCXCSaldoFactoraje: TFMTBCDField
+      FieldName = 'SaldoFactoraje'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStDetalleCXCIdTipoContrato: TIntegerField
+      FieldName = 'IdTipoContrato'
+    end
+    object ADODtStDetalleCXCFacturar: TBooleanField
+      FieldName = 'Facturar'
+    end
+    object ADODtStDetalleCXCAcumula: TBooleanField
+      FieldName = 'Acumula'
+    end
+    object ADODtStDetalleCXCAcumulaAQuien: TIntegerField
+      FieldName = 'AcumulaAQuien'
+    end
+    object ADODtStDetalleCXCEsIVA: TBooleanField
+      FieldName = 'EsIVA'
+    end
+    object ADODtStDetalleCXCBaseIVA: TIntegerField
+      FieldName = 'BaseIVA'
+    end
+    object ADODtStDetalleCXCEstadoCuenta: TBooleanField
+      FieldName = 'EstadoCuenta'
+    end
+    object ADODtStDetalleCXCFase: TIntegerField
+      FieldName = 'Fase'
+    end
+    object ADODtStDetalleCXCTemporalidad: TStringField
+      FieldName = 'Temporalidad'
+      Size = 15
+    end
+    object ADODtStDetalleCXCOrdenAplica: TIntegerField
+      FieldName = 'OrdenAplica'
+    end
+    object ADODtStDetalleCXCBaseMoratorios: TBooleanField
+      FieldName = 'BaseMoratorios'
+    end
+    object ADODtStDetalleCXCEsMoratorios: TBooleanField
+      FieldName = 'EsMoratorios'
+    end
+    object ADODtStDetalleCXCEsCapital: TBooleanField
+      FieldName = 'EsCapital'
+    end
+    object ADODtStDetalleCXCEsInteres: TBooleanField
+      FieldName = 'EsInteres'
+    end
+    object ADODtStDetalleCXCIdCuentaXCobrarTipo: TIntegerField
+      FieldName = 'IdCuentaXCobrarTipo'
+    end
+  end
+  object DSDatosCXC: TDataSource
+    DataSet = ADODtStDatosCXC
+    Left = 404
+    Top = 168
   end
 end

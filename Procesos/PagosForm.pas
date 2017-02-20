@@ -109,6 +109,7 @@ begin
   inherited;
   if datasource.State in [dsEdit, DSInsert] then
      datasource.DataSet.Post;
+
   dsConCXCPendientes.DataSet.Close;
   dsConCXCPendientes.DataSet.Open;
   if dsConCXCPendientes.DataSet.Eof then

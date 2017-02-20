@@ -141,6 +141,9 @@ inherited dmProductos: TdmProductos
       Precision = 19
     end
   end
+  inherited adodsUpdate: TADODataSet
+    Left = 304
+  end
   inherited ActionList: TActionList
     object actActualizarDepreciacion: TAction
       Caption = 'Actualizar depreciaci'#243'n'

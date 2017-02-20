@@ -114,7 +114,8 @@ inherited dmPagos: TdmPagos
       'select IdPersona, IdPersonaTipo, IdRolTipo, IdRazonSocialTipo,'#13#10 +
       ' IdSexo, IdEstadoCivil, IdPais, IdPoblacion, RFC, CURP,'#13#10' RazonS' +
       'ocial, Nombre, ApellidoPaterno, ApellidoMaterno,'#13#10'IdMetodoPago,I' +
-      'dPersonaEstatus,NumCtaPagoCliente '#13#10'from Personas'
+      'dPersonaEstatus,NumCtaPagoCliente '#13#10'from Personas where idRolTip' +
+      'o=3'
     Parameters = <>
     Left = 152
     Top = 72
