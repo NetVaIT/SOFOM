@@ -115,29 +115,36 @@ inherited dmProductos: TdmProductos
     end
     object adodsMasterPrecio: TBCDField
       FieldName = 'Precio'
+      currency = True
       Precision = 19
     end
     object adodsMasterImpuesto: TBCDField
       FieldName = 'Impuesto'
+      currency = True
       Precision = 19
     end
     object adodsMasterTotal: TBCDField
       FieldName = 'Total'
+      currency = True
       Precision = 19
     end
     object adodsMasterPorcentajeDepreciacion: TBCDField
       DisplayLabel = 'Porcentaje depreciaci'#243'n'
       FieldName = 'PorcentajeDepreciacion'
+      DisplayFormat = '0.00 %'
+      EditFormat = '0.00'
       Precision = 19
     end
     object adodsMasterDepreciacion: TBCDField
       DisplayLabel = 'Depreciaci'#243'n acumulada'
       FieldName = 'Depreciacion'
+      currency = True
       Precision = 19
     end
     object adodsMasterValorContable: TBCDField
       DisplayLabel = 'Valor contable'
       FieldName = 'ValorContable'
+      currency = True
       Precision = 19
     end
   end
@@ -152,7 +159,6 @@ inherited dmProductos: TdmProductos
     end
   end
   object adodsTipos: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdProductoTipo, Descripcion from ProductosTipos'
@@ -161,7 +167,6 @@ inherited dmProductos: TdmProductos
     Top = 80
   end
   object adodsMarcas: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdMarca, Descripcion from Marcas'
@@ -170,7 +175,6 @@ inherited dmProductos: TdmProductos
     Top = 136
   end
   object adodsFamilias: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdFamila, Descripcion from Familias'
@@ -179,7 +183,6 @@ inherited dmProductos: TdmProductos
     Top = 184
   end
   object adodsEstatus: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdProductoEstatus, Descripcion from ProductosEstatus'
