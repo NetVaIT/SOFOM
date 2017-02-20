@@ -46,11 +46,26 @@ type
     tvMasterNumeroSerie: TcxGridDBColumn;
     tvMasterNumeroEconomico: TcxGridDBColumn;
     tvMasterEstatus: TcxGridDBColumn;
+    tvMasterIdAnexo: TcxGridDBColumn;
+    tvMasterFechaImportacion: TcxGridDBColumn;
+    tvMasterPedimento: TcxGridDBColumn;
+    tvMasterAduana: TcxGridDBColumn;
+    tvMasterFechaCompra: TcxGridDBColumn;
+    tvMasterPrecio: TcxGridDBColumn;
+    tvMasterImpuesto: TcxGridDBColumn;
+    tvMasterTotal: TcxGridDBColumn;
+    tvMasterPorcentajeDepreciacion: TcxGridDBColumn;
+    tvMasterDepreciacion: TcxGridDBColumn;
+    tvMasterValorContable: TcxGridDBColumn;
+    dxbbActualizarDeprecicion: TdxBarButton;
     procedure FormCreate(Sender: TObject);
   private
+    FactActualizarDepreciacion: TBasicAction;
+    procedure SetactActualizarDepreciacion(const Value: TBasicAction);
     { Private declarations }
   public
     { Public declarations }
+    property actActualizarDepreciacion: TBasicAction read FactActualizarDepreciacion write SetactActualizarDepreciacion;
   end;
 
 implementation
@@ -63,6 +78,12 @@ procedure TfrmProductos.FormCreate(Sender: TObject);
 begin
   inherited;
   gEditForm:= TfrmProductosEdit.Create(Self);
+end;
+
+procedure TfrmProductos.SetactActualizarDepreciacion(const Value: TBasicAction);
+begin
+  FactActualizarDepreciacion := Value;
+  dxbbActualizarDeprecicion.Action := Value;
 end;
 
 end.

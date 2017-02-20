@@ -1,11 +1,42 @@
 inherited frmCotizaciones: TfrmCotizaciones
-  Caption = 'frmCotizaciones'
+  BorderStyle = bsToolWindow
+  Caption = 'Cotizaciones'
+  ClientHeight = 428
+  ClientWidth = 645
   ExplicitWidth = 651
   ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
+  inherited splDetail3: TSplitter
+    Top = 343
+    Width = 645
+    ExplicitTop = 343
+    ExplicitWidth = 645
+  end
+  inherited splDetail1: TSplitter
+    Top = 255
+    Width = 645
+    Align = alTop
+    ExplicitTop = 255
+    ExplicitWidth = 645
+  end
+  inherited splDetail2: TSplitter
+    Top = 299
+    Width = 645
+    ExplicitTop = 299
+    ExplicitWidth = 645
+  end
   inherited pnlMaster: TPanel
+    Width = 645
+    Height = 224
+    Align = alTop
+    ExplicitWidth = 645
+    ExplicitHeight = 224
     inherited cxGrid: TcxGrid
+      Width = 645
+      Height = 224
+      ExplicitWidth = 645
+      ExplicitHeight = 224
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdCotizacion: TcxGridDBColumn
           DataBinding.FieldName = 'IdCotizacion'
@@ -140,6 +171,35 @@ inherited frmCotizaciones: TfrmCotizaciones
       end
     end
   end
+  inherited pnlDetail3: TPanel
+    Top = 346
+    Width = 645
+    ExplicitTop = 346
+    ExplicitWidth = 645
+  end
+  inherited pnlDetail2: TPanel
+    Top = 302
+    Width = 645
+    ExplicitTop = 302
+    ExplicitWidth = 645
+  end
+  inherited pnlDetail1: TPanel
+    Top = 258
+    Width = 645
+    Align = alClient
+    ExplicitTop = 258
+    ExplicitWidth = 645
+  end
+  inherited pnlClose: TPanel
+    Top = 387
+    Width = 645
+    ExplicitTop = 387
+    ExplicitWidth = 645
+    inherited btnClose: TButton
+      Left = 560
+      ExplicitLeft = 560
+    end
+  end
   inherited DataSource: TDataSource
     DataSet = dmCotizaciones.adodsMaster
   end
@@ -168,6 +228,8 @@ inherited frmCotizaciones: TfrmCotizaciones
       Caption = 'Amortizaciones'
       Category = 0
       Visible = ivAlways
+      ImageIndex = 11
+      PaintStyle = psCaptionGlyph
     end
     object dxbbCambiarEstatus: TdxBarButton
       Caption = 'actCambiarEstatus'
@@ -216,6 +278,7 @@ inherited frmCotizaciones: TfrmCotizaciones
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42711.658349664350000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

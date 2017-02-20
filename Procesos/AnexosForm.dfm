@@ -1,11 +1,30 @@
 inherited frmAnexos: TfrmAnexos
-  Caption = 'frmAnexos'
+  BorderStyle = bsToolWindow
+  Caption = 'Anexos'
+  ClientHeight = 428
+  ClientWidth = 645
   ExplicitWidth = 651
   ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
+  inherited splDetail3: TSplitter
+    Top = 343
+    Width = 645
+  end
+  inherited splDetail1: TSplitter
+    Top = 255
+    Width = 645
+  end
+  inherited splDetail2: TSplitter
+    Top = 299
+    Width = 645
+  end
   inherited pnlMaster: TPanel
+    Width = 645
+    Height = 224
     inherited cxGrid: TcxGrid
+      Width = 645
+      Height = 224
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdAnexo: TcxGridDBColumn
           DataBinding.FieldName = 'IdAnexo'
@@ -130,6 +149,25 @@ inherited frmAnexos: TfrmAnexos
       end
     end
   end
+  inherited pnlDetail3: TPanel
+    Top = 346
+    Width = 645
+  end
+  inherited pnlDetail2: TPanel
+    Top = 302
+    Width = 645
+  end
+  inherited pnlDetail1: TPanel
+    Top = 258
+    Width = 645
+  end
+  inherited pnlClose: TPanel
+    Top = 387
+    Width = 645
+    inherited btnClose: TButton
+      Left = 560
+    end
+  end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
       0
@@ -148,28 +186,15 @@ inherited frmAnexos: TfrmAnexos
         end
         item
           Visible = True
-          ItemName = 'dxbbCrearPagoInicial'
-        end
-        item
-          Visible = True
-          ItemName = 'dxbbAbonar'
+          ItemName = 'dxbbGenerar'
         end>
     end
-    object dxbbProductos: TdxBarButton
-      Caption = 'Productos'
+    object dxbbGenerar: TdxBarButton
+      Caption = 'Generar'
       Category = 0
       Visible = ivAlways
-      ImageIndex = 13
-    end
-    object dxbbCrearPagoInicial: TdxBarButton
-      Action = dmContratos.actCrearPagoInicial
-      Category = 0
-    end
-    object dxbbAbonar: TdxBarButton
-      Caption = 'New Button'
-      Category = 0
-      Hint = 'New Button'
-      Visible = ivAlways
+      ImageIndex = 10
+      PaintStyle = psCaptionGlyph
     end
   end
   inherited cxStyleRepository: TcxStyleRepository
@@ -178,41 +203,9 @@ inherited frmAnexos: TfrmAnexos
   inherited cxImageList: TcxImageList
     FormatVersion = 1
   end
-  inherited PopupMenu: TdxBarPopupMenu
-    ItemLinks = <
-      item
-        Visible = True
-        ItemName = 'Insert1'
-      end
-      item
-        Visible = True
-        ItemName = 'Edit1'
-      end
-      item
-        Visible = True
-        ItemName = 'Delete1'
-      end
-      item
-        Visible = True
-        ItemName = 'dxbbProductos'
-      end
-      item
-        Visible = True
-        ItemName = 'dxBarButton7'
-      end
-      item
-        Visible = True
-        ItemName = 'dxBarSeparator1'
-      end
-      item
-        Visible = True
-        ItemName = 'dxBarButton5'
-      end>
-  end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42683.688746423620000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

@@ -162,6 +162,7 @@ end;
 procedure TdmAmortizaciones.Execute(FechaInicial: TDateTime;
   TasaAnual: Extended; Plazo: Integer; ValorPresente, ValorFuturo, ImpactoISR: Extended);
 begin
+  TfrmSegmentos(gGridForm).VerValores := False;
   TfrmSegmentos(gGridForm).Monto := ValorPresente;
   TfrmSegmentos(gGridForm).TasaAnual := TasaAnual;
   TfrmSegmentos(gGridForm).Plazo := Plazo;

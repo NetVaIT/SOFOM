@@ -5,7 +5,7 @@ interface
 uses
   System.SysUtils, System.Classes, _StandarDMod, System.Actions, Vcl.ActnList,
   Data.DB, Data.Win.ADODB, System.Math, ProcesosType, Vcl.Dialogs, System.UITypes,
-  AmortizacionesDM;
+  AmortizacionesDM, ProductosDM;
 
 resourcestring
   strAllowGenAnexo = '¿Deseas crear el anexo en base a la cotización %s?';
@@ -58,7 +58,6 @@ type
     adodsAnexosPagoMensual: TFMTBCDField;
     adodsAnexosMoneda: TStringField;
     adodsAnexosEstatus2: TStringField;
-    actProductos: TAction;
     adodsAnexosProductos: TADODataSet;
     adodsProductos: TADODataSet;
     adodsAnexosProductosIdAnexoProducto: TIntegerField;
@@ -137,8 +136,8 @@ type
     adodsAmortizacionesMoratorio: TFMTBCDField;
     adodsAmortizacionesMoratorioImpuesto: TFMTBCDField;
     actAbonarCapital: TAction;
+    actGenerar: TAction;
     procedure DataModuleCreate(Sender: TObject);
-    procedure actProductosExecute(Sender: TObject);
     procedure adodsAnexosPrecioMonedaChange(Sender: TField);
     procedure adodsAnexosNewRecord(DataSet: TDataSet);
     procedure adodsCreditosNewRecord(DataSet: TDataSet);
@@ -148,16 +147,19 @@ type
     procedure adodsAnexosEnganchePorcentajeChange(Sender: TField);
     procedure adodsAnexosEngancheChange(Sender: TField);
     procedure actPreAmortizacionesExecute(Sender: TObject);
-    procedure actGenAmortizacionesExecute(Sender: TObject);
     procedure actCrearAnexoExecute(Sender: TObject);
-    procedure actCrearPagoInicialExecute(Sender: TObject);
     procedure actCrearPagoInicialUpdate(Sender: TObject);
     procedure adodsAnexosFechaChange(Sender: TField);
     procedure actAbonarCapitalExecute(Sender: TObject);
+    procedure actGenerarExecute(Sender: TObject);
+    procedure actGenAmortizacionesExecute(Sender: TObject);
+    procedure actCrearPagoInicialExecute(Sender: TObject);
+    procedure actGenerarUpdate(Sender: TObject);
   private
     { Private declarations }
     FPaymentTime: TPaymentTime;
     dmAmortizaciones: TdmAmortizaciones;
+    dmProductos: TdmProductos;
     procedure SetPaymentTime(const Value: TPaymentTime);
     function GetTipoContrato: TCTipoContrato;
     function GetIdAnexo: Integer;
@@ -178,7 +180,7 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses ContratosForm, AnexosForm, AnexosProductosForm, AnexosAmortizacionesForm,
+uses ContratosForm, AnexosForm, AnexosAmortizacionesForm,
   AnexosCreditosForm, _ConectionDmod, CotizacionesSeleccionarForm, _Utils,
   AbonarCapitalDM;
 
@@ -210,6 +212,34 @@ begin
     adodsAmortizaciones.Close;
     adodsAmortizaciones.Open;
   end;
+end;
+
+procedure TdmContratos.actGenerarExecute(Sender: TObject);
+begin
+  inherited;
+  // Generar Credito
+  adodsCreditos.Insert;
+  adodsCreditos.Post;
+  // Generar Amortizaciones
+  dmAmortizaciones.TipoContrato := TipoContrato;
+  if dmAmortizaciones.GenAnexosAmortizaciones(adodsCreditosIdAnexoCredito.Value,
+  adodsCreditosFechaVencimiento.Value, adodsCreditosTasaAnual.Value, adodsCreditosPlazo.Value,
+  adodsCreditosMontoFiananciar.AsExtended,
+    adodsCreditosValorResidual.AsExtended,
+    adodsCreditosImpactoISR.AsExtended) then
+  begin
+    adodsAmortizaciones.Close;
+    adodsAmortizaciones.Open;
+  end;
+  // Generar Pago Inicial
+  if CrearPagoInicial then
+    RefreshADODS(adodsAnexos, adodsAnexosIdAnexo);
+end;
+
+procedure TdmContratos.actGenerarUpdate(Sender: TObject);
+begin
+  inherited;
+  TAction(Sender).Enabled := not adodsAnexosPagoInicialCreado.Value;
 end;
 
 procedure TdmContratos.actAbonarCapitalExecute(Sender: TObject);
@@ -280,23 +310,6 @@ begin
     Amortizaciones.ShowModule(nil, '');
   finally
     Amortizaciones.Free;
-  end;
-end;
-
-procedure TdmContratos.actProductosExecute(Sender: TObject);
-var
-  frmAnexosProductos: TfrmAnexosProductos;
-begin
-  inherited;
-  frmAnexosProductos := TfrmAnexosProductos.Create(Self);
-  try
-    frmAnexosProductos.DataSet:= adodsAnexosProductos;
-    frmAnexosProductos.View:= True;
-    adodsAnexosProductos.Open;
-    frmAnexosProductos.ShowModal;
-  finally
-    adodsAnexosProductos.Close;
-    frmAnexosProductos.Free;
   end;
 end;
 
@@ -433,15 +446,15 @@ begin
   Result:= False;
   if IdAnexo <> 0 then
   begin
-    if MessageDlg(strGenPagoIncial, mtConfirmation, mbYesNo, 0) = mrYes then
-    begin
+//    if MessageDlg(strGenPagoIncial, mtConfirmation, mbYesNo, 0) = mrYes then
+//    begin
       ScreenCursorProc(crSQLWait);
       try
         adopSetCXCPorAnexo.Parameters.ParamByName('@IdAnexo').Value:= IdAnexo;
         adopSetCXCPorAnexo.ExecProc;
       finally
         ScreenCursorProc(crDefault);
-      end;
+//      end;
       Result:= True;
     end;
   end;
@@ -458,9 +471,7 @@ begin
   gFormDeatil1:= TfrmAnexos.Create(Self);
 //  gFormDeatil1.ApplyBestFit := False;
   gFormDeatil1.DataSet:= adodsAnexos;
-  TfrmAnexos(gFormDeatil1).actProductos := actProductos;
-  TfrmAnexos(gFormDeatil1).actCrearPagoinicial := actCrearPagoInicial;
-  TfrmAnexos(gFormDeatil1).actAbonar:= actAbonarCapital;
+  TfrmAnexos(gFormDeatil1).actGenerar := actGenerar;
   if adodsCreditos.CommandText <> EmptyStr then adodsCreditos.Open;
   gFormDeatil2:= TfrmAnexosCreditos.Create(Self);
  // gFormDeatil2.ApplyBestFit := False;
@@ -474,12 +485,14 @@ begin
   gFormDeatil3.DataSet:= adodsAmortizaciones;
   dmAmortizaciones := TdmAmortizaciones.Create(Self);
   dmAmortizaciones.PaymentTime := PaymentTime;
+  dmProductos := TdmProductos.Create(Self);
 end;
 
 procedure TdmContratos.DataModuleDestroy(Sender: TObject);
 begin
   inherited;
   FreeAndNil(dmAmortizaciones);
+  FreeAndNil(dmProductos);
 end;
 
 function TdmContratos.GetFechaDia(Fecha: TDateTime; Dia: Integer): TDateTime;

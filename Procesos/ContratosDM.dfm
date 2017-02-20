@@ -83,32 +83,40 @@ inherited dmContratos: TdmContratos
   inherited ActionList: TActionList
     Left = 416
     Top = 80
-    object actProductos: TAction
-      Caption = 'Productos'
-      OnExecute = actProductosExecute
+    object actCrearAnexo: TAction
+      Caption = 'Crear anexo'
+      Hint = 'Crea anexo de una cotizacion'
+      ImageIndex = 10
+      OnExecute = actCrearAnexoExecute
+    end
+    object actGenerar: TAction
+      Caption = 'Generar'
+      Hint = 'Generar amortizaciones y pagos iniciales'
+      ImageIndex = 10
+      OnExecute = actGenerarExecute
+      OnUpdate = actGenerarUpdate
     end
     object actPreAmortizaciones: TAction
       Caption = 'Prever'
       Hint = 'Prever amortizaciones'
+      Visible = False
       OnExecute = actPreAmortizacionesExecute
     end
     object actGenAmortizaciones: TAction
       Caption = 'Generar'
       Hint = 'Generar amortizaciones'
+      Visible = False
       OnExecute = actGenAmortizacionesExecute
-    end
-    object actCrearAnexo: TAction
-      Caption = 'Crear anexo'
-      Hint = 'Crea anexo de una cotizacion'
-      OnExecute = actCrearAnexoExecute
     end
     object actCrearPagoInicial: TAction
       Caption = 'Crear pago inicial'
+      Visible = False
       OnExecute = actCrearPagoInicialExecute
       OnUpdate = actCrearPagoInicialUpdate
     end
     object actAbonarCapital: TAction
       Caption = 'Abono a capital'
+      Visible = False
       OnExecute = actAbonarCapitalExecute
     end
   end
@@ -446,8 +454,8 @@ inherited dmContratos: TdmContratos
         Precision = 10
         Value = 1
       end>
-    Left = 416
-    Top = 168
+    Left = 616
+    Top = 176
     object adodsAnexosProductosIdAnexoProducto: TIntegerField
       FieldName = 'IdAnexoProducto'
       Visible = False
@@ -476,8 +484,8 @@ inherited dmContratos: TdmContratos
     CursorType = ctStatic
     CommandText = 'select IdProducto, Identificador, Descripcion from Productos'
     Parameters = <>
-    Left = 416
-    Top = 224
+    Left = 616
+    Top = 232
   end
   object dsAnexos: TDataSource
     AutoEdit = False

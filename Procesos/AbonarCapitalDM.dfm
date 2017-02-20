@@ -1,4 +1,5 @@
 inherited dmAbonarCapital: TdmAbonarCapital
+  OldCreateOrder = True
   inherited ActionList: TActionList
     object Action1: TAction
       Caption = 'Action1'

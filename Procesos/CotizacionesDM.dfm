@@ -287,13 +287,15 @@ inherited dmCotizaciones: TdmCotizaciones
     end
   end
   inherited ActionList: TActionList
-    object actProductos: TAction
-      Caption = 'actProductos'
-      OnExecute = actProductosExecute
-    end
     object actAmortizaciones: TAction
       Caption = 'Amortizaciones'
+      ImageIndex = 11
       OnExecute = actAmortizacionesExecute
+    end
+    object actAmortizacionesC: TAction
+      Caption = 'Amortizaciones'
+      ImageIndex = 11
+      OnExecute = actAmortizacionesCExecute
     end
     object actCambiarEstatus: TAction
       Caption = 'actCambiarEstatus'

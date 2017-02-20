@@ -289,7 +289,7 @@ procedure T_frmGrid.SetView(const Value: Boolean);
 begin
   FView := Value;
   if Value then
-    BorderStyle:= bsToolWindow
+    BorderStyle:= bsSizeToolWin
   else
     BorderStyle:= bsNone;
   pnlClose.Visible:= Value;

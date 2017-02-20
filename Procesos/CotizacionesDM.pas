@@ -52,7 +52,6 @@ type
     adodsMasterCliente: TStringField;
     adodsMasterTipoContrato: TStringField;
     adodsMasterMoneda: TStringField;
-    actProductos: TAction;
     adodsMasterImpactoISR: TFMTBCDField;
     daMaster: TDataSource;
     adodsCreditos: TADODataSet;
@@ -77,16 +76,17 @@ type
     actAmortizaciones: TAction;
     actCambiarEstatus: TAction;
     adospUpdCotizacionesEstatus: TADOStoredProc;
+    actAmortizacionesC: TAction;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
-    procedure actProductosExecute(Sender: TObject);
     procedure adodsMasterPrecioMonedaChange(Sender: TField);
     procedure adodsCreditosNewRecord(DataSet: TDataSet);
     procedure adodsCreditosMontoFinanciarChange(Sender: TField);
     procedure actAmortizacionesExecute(Sender: TObject);
     procedure actCambiarEstatusExecute(Sender: TObject);
     procedure actCambiarEstatusUpdate(Sender: TObject);
+    procedure actAmortizacionesCExecute(Sender: TObject);
   private
     { Private declarations }
     dmAmortizaciones: TdmAmortizaciones;
@@ -114,6 +114,25 @@ uses CotizacionesForm, _ConectionDmod, CotizacionesCreditosForm, _Utils;
 
 {$R *.dfm}
 
+procedure TdmCotizaciones.actAmortizacionesCExecute(Sender: TObject);
+var
+  Amortizaciones: TdmAmortizaciones;
+begin
+  inherited;
+  Amortizaciones := TdmAmortizaciones.Create(Self);
+  try
+    Amortizaciones.TipoContrato:= TipoContrato;
+    Amortizaciones.Execute(adodsMasterElaboracion.Value,
+    adodsCreditosTasaAnual.Value, adodsCreditosPlazo.Value,
+    adodsCreditosMontoFinanciar.AsExtended,
+    adodsCreditosValorResidual.AsExtended,
+    adodsCreditosImpactoISR.AsExtended);
+    Amortizaciones.ShowModule(nil, '');
+  finally
+    Amortizaciones.Free;
+  end;
+end;
+
 procedure TdmCotizaciones.actAmortizacionesExecute(Sender: TObject);
 var
   Amortizaciones: TdmAmortizaciones;
@@ -127,12 +146,6 @@ begin
     adodsMasterMontoFinanciar.AsExtended,
     adodsMasterValorResidual.AsExtended,
     adodsmasterImpactoISR.AsExtended);
-
-//    Amortizaciones.Execute(adodsCreditosFecha.Value,
-//    adodsCreditosTasaAnual.Value, adodsCreditosPlazo.Value,
-//    adodsCreditosMontoFiananciar.AsExtended,
-//    adodsCreditosValorResidual.AsExtended,
-//    adodsCreditosImpactoISR.AsExtended);
     Amortizaciones.ShowModule(nil, '');
   finally
     Amortizaciones.Free;
@@ -167,23 +180,6 @@ begin
   end;
 end;
 
-procedure TdmCotizaciones.actProductosExecute(Sender: TObject);
-//var
-//  frmAnexosProductos: TfrmAnexosProductos;
-begin
-  inherited;
-//  frmAnexosProductos := TfrmAnexosProductos.Create(Self);
-//  try
-//    frmAnexosProductos.DataSet:= adodsAnexosProductos;
-//    frmAnexosProductos.View:= True;
-//    adodsAnexosProductos.Open;
-//    frmAnexosProductos.ShowModal;
-//  finally
-//    adodsAnexosProductos.Close;
-//    frmAnexosProductos.Free;
-//  end;
-end;
-
 procedure TdmCotizaciones.adodsCreditosMontoFinanciarChange(Sender: TField);
 begin
   inherited;
@@ -199,6 +195,8 @@ begin
   adodsCreditosMontoFinanciar.Value := adodsMasterMontoFinanciar.Value;
   adodsCreditosValorResidual.Value := adodsMasterValorResidual.Value;
   adodsCreditosImpactoISR.Value := adodsMasterImpactoISR.Value;
+  adodsCreditosTasaAnual.Value := adodsMasterTasaAnual.Value;
+  adodsCreditosPlazo.Value := adodsMasterPlazo.Value;
 end;
 
 procedure TdmCotizaciones.adodsMasterNewRecord(DataSet: TDataSet);
@@ -287,10 +285,10 @@ begin
   gGridForm.DataSet:= adodsMaster;
   TfrmCotizaciones(gGridForm).actAmortizaciones := actAmortizaciones;
   TfrmCotizaciones(gGridForm).actCambiarEstatus := actCambiarEstatus;
-//  if adodsCreditos.CommandText <> EmptyStr then adodsCreditos.Open;
-//  gFormDeatil1:= TfrmCotizacionesCreditos.Create(Self);
-//  gFormDeatil1.DataSet:= adodsCreditos;
-//  TfrmCotizacionesCreditos(gFormDeatil1).actAmortizaciones := actAmortizaciones;
+  if adodsCreditos.CommandText <> EmptyStr then adodsCreditos.Open;
+  gFormDeatil1:= TfrmCotizacionesCreditos.Create(Self);
+  gFormDeatil1.DataSet:= adodsCreditos;
+  TfrmCotizacionesCreditos(gFormDeatil1).actAmortizaciones := actAmortizacionesC;
 //  Calculo de las amortizaciones del modulo
   dmAmortizaciones := TdmAmortizaciones.Create(Self);
   dmAmortizaciones.PaymentTime := PaymentTime;

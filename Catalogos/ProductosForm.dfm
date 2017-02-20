@@ -1,14 +1,49 @@
 inherited frmProductos: TfrmProductos
-  Caption = 'frmProductos'
+  BorderStyle = bsToolWindow
+  Caption = 'Productos'
+  ClientHeight = 428
+  ClientWidth = 645
   ExplicitWidth = 651
   ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
+  inherited splDetail3: TSplitter
+    Top = 343
+    Width = 645
+    ExplicitTop = 343
+    ExplicitWidth = 645
+  end
+  inherited splDetail1: TSplitter
+    Top = 255
+    Width = 645
+    ExplicitTop = 255
+    ExplicitWidth = 645
+  end
+  inherited splDetail2: TSplitter
+    Top = 299
+    Width = 645
+    ExplicitTop = 299
+    ExplicitWidth = 645
+  end
   inherited pnlMaster: TPanel
+    Width = 645
+    Height = 224
+    ExplicitWidth = 645
+    ExplicitHeight = 224
     inherited cxGrid: TcxGrid
+      Width = 645
+      Height = 224
+      ExplicitLeft = 8
+      ExplicitTop = -3
+      ExplicitWidth = 645
+      ExplicitHeight = 224
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdProducto: TcxGridDBColumn
           DataBinding.FieldName = 'IdProducto'
+          Visible = False
+        end
+        object tvMasterIdAnexo: TcxGridDBColumn
+          DataBinding.FieldName = 'IdAnexo'
           Visible = False
         end
         object tvMasterIdProductoTipo: TcxGridDBColumn
@@ -63,7 +98,67 @@ inherited frmProductos: TfrmProductos
           DataBinding.FieldName = 'Estatus'
           Width = 100
         end
+        object tvMasterFechaImportacion: TcxGridDBColumn
+          DataBinding.FieldName = 'FechaImportacion'
+        end
+        object tvMasterPedimento: TcxGridDBColumn
+          DataBinding.FieldName = 'Pedimento'
+          Width = 200
+        end
+        object tvMasterAduana: TcxGridDBColumn
+          DataBinding.FieldName = 'Aduana'
+          Width = 200
+        end
+        object tvMasterFechaCompra: TcxGridDBColumn
+          DataBinding.FieldName = 'FechaCompra'
+        end
+        object tvMasterPrecio: TcxGridDBColumn
+          DataBinding.FieldName = 'Precio'
+        end
+        object tvMasterImpuesto: TcxGridDBColumn
+          DataBinding.FieldName = 'Impuesto'
+        end
+        object tvMasterTotal: TcxGridDBColumn
+          DataBinding.FieldName = 'Total'
+        end
+        object tvMasterPorcentajeDepreciacion: TcxGridDBColumn
+          DataBinding.FieldName = 'PorcentajeDepreciacion'
+        end
+        object tvMasterDepreciacion: TcxGridDBColumn
+          DataBinding.FieldName = 'Depreciacion'
+        end
+        object tvMasterValorContable: TcxGridDBColumn
+          DataBinding.FieldName = 'ValorContable'
+        end
       end
+    end
+  end
+  inherited pnlDetail3: TPanel
+    Top = 346
+    Width = 645
+    ExplicitTop = 346
+    ExplicitWidth = 645
+  end
+  inherited pnlDetail2: TPanel
+    Top = 302
+    Width = 645
+    ExplicitTop = 302
+    ExplicitWidth = 645
+  end
+  inherited pnlDetail1: TPanel
+    Top = 258
+    Width = 645
+    ExplicitTop = 258
+    ExplicitWidth = 645
+  end
+  inherited pnlClose: TPanel
+    Top = 387
+    Width = 645
+    ExplicitTop = 387
+    ExplicitWidth = 645
+    inherited btnClose: TButton
+      Left = 560
+      ExplicitLeft = 560
     end
   end
   inherited dxBarManager: TdxBarManager
@@ -72,6 +167,28 @@ inherited frmProductos: TfrmProductos
       0
       31
       0)
+    inherited dxbTools: TdxBar
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'dxBarButton6'
+        end
+        item
+          Visible = True
+          ItemName = 'dxbbPreview'
+        end
+        item
+          Visible = True
+          ItemName = 'dxbbActualizarDeprecicion'
+        end>
+    end
+    object dxbbActualizarDeprecicion: TdxBarButton
+      Caption = 'Actualizar depreciaci'#243'n'
+      Category = 0
+      Visible = ivAlways
+      ImageIndex = 9
+      PaintStyle = psCaptionGlyph
+    end
   end
   inherited cxStyleRepository: TcxStyleRepository
     PixelsPerInch = 96

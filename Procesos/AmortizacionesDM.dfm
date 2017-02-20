@@ -6,6 +6,7 @@ inherited dmAmortizaciones: TdmAmortizaciones
   inherited ActionList: TActionList
     object actCalcular: TAction
       Caption = 'Calcular'
+      ImageIndex = 13
       OnExecute = actCalcularExecute
     end
   end

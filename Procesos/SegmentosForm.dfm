@@ -1,39 +1,41 @@
 inherited frmSegmentos: TfrmSegmentos
   Caption = 'Amortizaciones'
   ClientHeight = 600
-  ClientWidth = 930
-  ExplicitWidth = 930
+  ClientWidth = 1000
+  ExplicitWidth = 1000
   ExplicitHeight = 600
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
     Top = 515
-    Width = 930
+    Width = 1000
+    ExplicitTop = 515
     ExplicitWidth = 878
   end
   inherited splDetail1: TSplitter
     Top = 406
-    Width = 930
+    Width = 1000
     ExplicitTop = 263
     ExplicitWidth = 878
   end
   inherited splDetail2: TSplitter
     Top = 471
-    Width = 930
+    Width = 1000
+    ExplicitTop = 471
     ExplicitWidth = 878
   end
   inherited pnlMaster: TPanel
     Top = 63
-    Width = 930
+    Width = 1000
     Height = 343
     ExplicitTop = 63
-    ExplicitWidth = 931
-    ExplicitHeight = 200
+    ExplicitWidth = 930
+    ExplicitHeight = 343
     inherited cxGrid: TcxGrid
-      Width = 930
+      Width = 1000
       Height = 343
-      ExplicitWidth = 878
-      ExplicitHeight = 200
+      ExplicitWidth = 930
+      ExplicitHeight = 343
       inherited tvMaster: TcxGridDBTableView
         OptionsData.Editing = True
         OptionsData.Inserting = True
@@ -93,53 +95,41 @@ inherited frmSegmentos: TfrmSegmentos
   end
   inherited pnlDetail3: TPanel
     Top = 518
-    Width = 930
-    ExplicitWidth = 878
+    Width = 1000
+    ExplicitTop = 518
+    ExplicitWidth = 930
   end
   inherited pnlDetail2: TPanel
     Top = 474
-    Width = 930
-    ExplicitWidth = 878
+    Width = 1000
+    ExplicitTop = 474
+    ExplicitWidth = 930
   end
   inherited pnlDetail1: TPanel
     Top = 409
-    Width = 930
+    Width = 1000
     Height = 62
-    ExplicitTop = 269
-    ExplicitWidth = 878
+    ExplicitTop = 409
+    ExplicitWidth = 930
     ExplicitHeight = 62
   end
   inherited pnlClose: TPanel
     Top = 559
-    Width = 930
-    ExplicitWidth = 878
+    Width = 1000
+    ExplicitTop = 559
+    ExplicitWidth = 930
     inherited btnClose: TButton
-      Left = 845
-      ExplicitLeft = 793
+      Left = 915
+      ExplicitLeft = 845
     end
   end
-  inherited dxBarManager: TdxBarManager [9]
+  inherited dxBarManager: TdxBarManager
     DockControlHeights = (
       0
       0
       63
       0)
-    inherited dxbTools: TdxBar
-      ItemLinks = <
-        item
-          Visible = True
-          ItemName = 'dxBarButton6'
-        end
-        item
-          Visible = True
-          ItemName = 'dxbbPreview'
-        end
-        item
-          Visible = True
-          ItemName = 'dxbbCalcular'
-        end>
-    end
-    object dxBarManagerBar1: TdxBar [4]
+    object dxbValores: TdxBar [4]
       Caption = 'Valores'
       CaptionButtons = <>
       DockedDockingStyle = dsTop
@@ -178,6 +168,10 @@ inherited frmSegmentos: TfrmSegmentos
         end
         item
           Visible = True
+          ItemName = 'dxbbCalcular'
+        end
+        item
+          Visible = True
           ItemName = 'EdtSegmentos'
         end>
       OneOnRow = True
@@ -190,6 +184,7 @@ inherited frmSegmentos: TfrmSegmentos
       Caption = 'Calcular'
       Category = 0
       Visible = ivAlways
+      PaintStyle = psCaptionGlyph
     end
     object dxBarEdit1: TdxBarEdit
       Caption = 'Monto a financiar'
@@ -268,17 +263,15 @@ inherited frmSegmentos: TfrmSegmentos
       InternalEditValue = '0'
     end
   end
-  inherited cxStyleRepository: TcxStyleRepository [10]
+  inherited cxStyleRepository: TcxStyleRepository
     PixelsPerInch = 96
-  end
-  inherited DataSource: TDataSource [11]
   end
   inherited cxImageList: TcxImageList
     FormatVersion = 1
   end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
-      ReportDocument.CreationDate = 42684.503633287040000000
+      ReportDocument.CreationDate = 42684.503633287030000000
       AssignedFormatValues = []
       BuiltInReportLink = True
     end

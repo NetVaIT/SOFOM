@@ -59,7 +59,6 @@ type
     tvMasterPlazo: TcxGridDBColumn;
     tvMasterPagoMensual: TcxGridDBColumn;
     tvMasterEstatus: TcxGridDBColumn;
-    dxbbProductos: TdxBarButton;
     tvMasterFechaCorte: TcxGridDBColumn;
     tvMasterOpcionCompraPorcentaje: TcxGridDBColumn;
     tvMasterOpcionCompra: TcxGridDBColumn;
@@ -67,24 +66,17 @@ type
     tvMasterValorResidual: TcxGridDBColumn;
     tvMasterImpactoISR: TcxGridDBColumn;
     tvMasterIdCotizacion: TcxGridDBColumn;
-    dxbbCrearPagoInicial: TdxBarButton;
     tvMasterPagoInicialCreado: TcxGridDBColumn;
     tvMasterFechaVencimiento: TcxGridDBColumn;
-    dxbbAbonar: TdxBarButton;
+    dxbbGenerar: TdxBarButton;
     procedure FormCreate(Sender: TObject);
   private
+    FactGenerar: TBasicAction;
+    procedure SetactGenerar(const Value: TBasicAction);
     { Private declarations }
-    FactProductos: TBasicAction;
-    FactCrearPagoinicial: TBasicAction;
-    FactAbonar: TBasicAction;
-    procedure SetactProductos(const Value: TBasicAction);
-    procedure SetactCrearPagoinicial(const Value: TBasicAction);
-    procedure SetactAbonar(const Value: TBasicAction);
   public
     { Public declarations }
-    property actProductos: TBasicAction read FactProductos write SetactProductos;
-    property actCrearPagoinicial: TBasicAction read FactCrearPagoinicial write SetactCrearPagoinicial;
-    property actAbonar: TBasicAction read FactAbonar write SetactAbonar;
+    property actGenerar: TBasicAction read FactGenerar write SetactGenerar;
   end;
 
 implementation
@@ -99,22 +91,10 @@ begin
   gEditForm:= TfrmAnexosEdit.Create(Self);
 end;
 
-procedure TfrmAnexos.SetactAbonar(const Value: TBasicAction);
+procedure TfrmAnexos.SetactGenerar(const Value: TBasicAction);
 begin
-  FactAbonar := Value;
-  dxbbAbonar.Action:= Value;
-end;
-
-procedure TfrmAnexos.SetactCrearPagoinicial(const Value: TBasicAction);
-begin
-  FactCrearPagoinicial := Value;
-  dxbbCrearPagoInicial.Action := Value;
-end;
-
-procedure TfrmAnexos.SetactProductos(const Value: TBasicAction);
-begin
-  FactProductos := Value;
-  dxbbProductos.Action := Value;
+  FactGenerar := Value;
+  dxbbGenerar.Action := Value;
 end;
 
 end.

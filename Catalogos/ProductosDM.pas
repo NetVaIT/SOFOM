@@ -27,6 +27,18 @@ type
     adodsMasterMarca: TStringField;
     adodsMasterFamilia: TStringField;
     adodsMasterEstatus: TStringField;
+    adodsMasterIdAnexo: TIntegerField;
+    adodsMasterFechaImportacion: TDateTimeField;
+    adodsMasterPedimento: TStringField;
+    adodsMasterAduana: TStringField;
+    adodsMasterFechaCompra: TDateTimeField;
+    adodsMasterPrecio: TBCDField;
+    adodsMasterImpuesto: TBCDField;
+    adodsMasterTotal: TBCDField;
+    adodsMasterPorcentajeDepreciacion: TBCDField;
+    adodsMasterDepreciacion: TBCDField;
+    adodsMasterValorContable: TBCDField;
+    actActualizarDepreciacion: TAction;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
@@ -47,6 +59,7 @@ begin
   inherited;
   gGridForm:= TfrmProductos.Create(Self);
   gGridForm.DataSet:= adodsMaster;
+  TfrmProductos(gGridForm).actActualizarDepreciacion:= actActualizarDepreciacion;
 end;
 
 end.

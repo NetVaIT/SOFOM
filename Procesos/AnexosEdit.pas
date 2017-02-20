@@ -20,7 +20,7 @@ uses
   System.Actions, Vcl.ActnList, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls, cxPC,
   cxContainer, cxEdit, cxSpinEdit, cxDBEdit, cxCurrencyEdit, Vcl.DBCtrls,
   cxMaskEdit, cxDropDownEdit, cxCalendar, cxTextEdit,
-  AmortizacionesDM, AnexosSegmentosDM, cxGroupBox;
+  AmortizacionesDM, AnexosSegmentosDM, cxGroupBox, ProductosDM;
 
 type
   TfrmAnexosEdit = class(T_frmEdit)
@@ -88,8 +88,13 @@ type
     cxDBTextEdit21: TcxDBTextEdit;
     Label10: TLabel;
     DBLookupComboBox2: TDBLookupComboBox;
+    tsProductos: TcxTabSheet;
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
+    dmProductos: TdmProductos;
   public
     { Public declarations }
   end;
@@ -99,5 +104,25 @@ implementation
 {$R *.dfm}
 
 uses ContratosDM;
+
+procedure TfrmAnexosEdit.FormCreate(Sender: TObject);
+begin
+  inherited;
+  dmProductos:= TdmProductos.Create(Self);
+end;
+
+procedure TfrmAnexosEdit.FormDestroy(Sender: TObject);
+begin
+  inherited;
+  FreeAndNil(dmProductos);
+end;
+
+procedure TfrmAnexosEdit.FormShow(Sender: TObject);
+begin
+  inherited;
+  dmProductos.MasterSource := DataSource;
+  dmProductos.MasterFields := 'IdAnexo';
+  dmProductos.ShowModule(tsProductos,'');
+end;
 
 end.

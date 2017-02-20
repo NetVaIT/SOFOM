@@ -8,7 +8,7 @@ uses
   AbonarCapitalEdit, AmortizacionesDM;
 
 resourcestring
-  strMontoVencido = 'El anexo tiene un monto vencido, fabvor de liquidarlo antes de realizar esta operación.';
+  strMontoVencido = 'El anexo tiene un monto vencido, favor de liquidarlo antes de realizar esta operación.';
 
 type
   TdmAbonarCapital = class(T_dmStandar)

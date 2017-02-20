@@ -1,13 +1,20 @@
 inherited dmProductos: TdmProductos
+  OldCreateOrder = True
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     CommandText = 
-      'select IdProducto, IdProductoTipo, IdMarca, IdFamilia, IdProduct' +
-      'oEstatus, Identificador, Descripcion, Modelo, Anio, NumeroSerie,' +
-      ' NumeroEconomico from Productos'
+      'select IdProducto, IdAnexo, IdProductoTipo, IdMarca, IdFamilia, ' +
+      'IdProductoEstatus, Identificador, Descripcion, Modelo, Anio, Num' +
+      'eroSerie, NumeroEconomico, FechaImportacion, Pedimento, Aduana, ' +
+      'FechaCompra, Precio, Impuesto, Total, PorcentajeDepreciacion, De' +
+      'preciacion, ValorContable from Productos'
     object adodsMasterIdProducto: TAutoIncField
       FieldName = 'IdProducto'
       ReadOnly = True
+      Visible = False
+    end
+    object adodsMasterIdAnexo: TIntegerField
+      FieldName = 'IdAnexo'
       Visible = False
     end
     object adodsMasterIdProductoTipo: TIntegerField
@@ -90,8 +97,59 @@ inherited dmProductos: TdmProductos
       Size = 50
       Lookup = True
     end
+    object adodsMasterFechaImportacion: TDateTimeField
+      DisplayLabel = 'Fecha importaci'#243'n'
+      FieldName = 'FechaImportacion'
+    end
+    object adodsMasterPedimento: TStringField
+      FieldName = 'Pedimento'
+      Size = 50
+    end
+    object adodsMasterAduana: TStringField
+      FieldName = 'Aduana'
+      Size = 50
+    end
+    object adodsMasterFechaCompra: TDateTimeField
+      DisplayLabel = 'Fecha compra'
+      FieldName = 'FechaCompra'
+    end
+    object adodsMasterPrecio: TBCDField
+      FieldName = 'Precio'
+      Precision = 19
+    end
+    object adodsMasterImpuesto: TBCDField
+      FieldName = 'Impuesto'
+      Precision = 19
+    end
+    object adodsMasterTotal: TBCDField
+      FieldName = 'Total'
+      Precision = 19
+    end
+    object adodsMasterPorcentajeDepreciacion: TBCDField
+      DisplayLabel = 'Porcentaje depreciaci'#243'n'
+      FieldName = 'PorcentajeDepreciacion'
+      Precision = 19
+    end
+    object adodsMasterDepreciacion: TBCDField
+      DisplayLabel = 'Depreciaci'#243'n acumulada'
+      FieldName = 'Depreciacion'
+      Precision = 19
+    end
+    object adodsMasterValorContable: TBCDField
+      DisplayLabel = 'Valor contable'
+      FieldName = 'ValorContable'
+      Precision = 19
+    end
+  end
+  inherited ActionList: TActionList
+    object actActualizarDepreciacion: TAction
+      Caption = 'Actualizar depreciaci'#243'n'
+      ImageIndex = 9
+      Visible = False
+    end
   end
   object adodsTipos: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdProductoTipo, Descripcion from ProductosTipos'
@@ -100,6 +158,7 @@ inherited dmProductos: TdmProductos
     Top = 80
   end
   object adodsMarcas: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdMarca, Descripcion from Marcas'
@@ -108,6 +167,7 @@ inherited dmProductos: TdmProductos
     Top = 136
   end
   object adodsFamilias: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdFamila, Descripcion from Familias'
@@ -116,6 +176,7 @@ inherited dmProductos: TdmProductos
     Top = 184
   end
   object adodsEstatus: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdProductoEstatus, Descripcion from ProductosEstatus'

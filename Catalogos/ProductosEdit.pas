@@ -19,7 +19,7 @@ uses
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, Vcl.ImgList,
   System.Actions, Vcl.ActnList, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls, cxPC,
   cxContainer, cxEdit, cxMaskEdit, cxSpinEdit, cxDBEdit, Vcl.DBCtrls, cxTextEdit,
-  ProductosDocumentosDM;
+  ProductosDocumentosDM, cxCurrencyEdit, cxDropDownEdit, cxCalendar, cxGroupBox;
 
 type
   TfrmProductosEdit = class(T_frmEdit)
@@ -27,23 +27,47 @@ type
     cxDBTextEdit1: TcxDBTextEdit;
     Label2: TLabel;
     cxDBTextEdit2: TcxDBTextEdit;
-    Label3: TLabel;
-    DBLookupComboBox1: TDBLookupComboBox;
-    Label4: TLabel;
-    DBLookupComboBox2: TDBLookupComboBox;
-    Label5: TLabel;
-    DBLookupComboBox3: TDBLookupComboBox;
-    Label6: TLabel;
-    cxDBTextEdit3: TcxDBTextEdit;
-    Label7: TLabel;
-    cxDBSpinEdit1: TcxDBSpinEdit;
-    Label8: TLabel;
-    cxDBTextEdit4: TcxDBTextEdit;
-    Label9: TLabel;
-    cxDBTextEdit5: TcxDBTextEdit;
-    Label10: TLabel;
-    DBLookupComboBox4: TDBLookupComboBox;
     tsDocumentos: TcxTabSheet;
+    cxGroupBox1: TcxGroupBox;
+    cxGroupBox2: TcxGroupBox;
+    cxGroupBox3: TcxGroupBox;
+    Label11: TLabel;
+    cxDBDateEdit1: TcxDBDateEdit;
+    Label12: TLabel;
+    cxDBTextEdit6: TcxDBTextEdit;
+    Label13: TLabel;
+    cxDBTextEdit7: TcxDBTextEdit;
+    Label14: TLabel;
+    cxDBDateEdit2: TcxDBDateEdit;
+    Label15: TLabel;
+    cxDBCurrencyEdit1: TcxDBCurrencyEdit;
+    Label16: TLabel;
+    cxDBCurrencyEdit2: TcxDBCurrencyEdit;
+    Label17: TLabel;
+    cxDBCurrencyEdit3: TcxDBCurrencyEdit;
+    Label18: TLabel;
+    cxDBCurrencyEdit4: TcxDBCurrencyEdit;
+    Label19: TLabel;
+    cxDBCurrencyEdit5: TcxDBCurrencyEdit;
+    Label20: TLabel;
+    cxDBCurrencyEdit6: TcxDBCurrencyEdit;
+    cxGroupBox4: TcxGroupBox;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
+    Label9: TLabel;
+    Label10: TLabel;
+    DBLookupComboBox1: TDBLookupComboBox;
+    DBLookupComboBox2: TDBLookupComboBox;
+    DBLookupComboBox3: TDBLookupComboBox;
+    cxDBTextEdit3: TcxDBTextEdit;
+    cxDBSpinEdit1: TcxDBSpinEdit;
+    cxDBTextEdit4: TcxDBTextEdit;
+    cxDBTextEdit5: TcxDBTextEdit;
+    DBLookupComboBox4: TDBLookupComboBox;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);

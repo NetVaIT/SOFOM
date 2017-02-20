@@ -32,7 +32,7 @@ uses
 type
   TfrmSegmentos = class(T_frmGrid)
     dxbbCalcular: TdxBarButton;
-    dxBarManagerBar1: TdxBar;
+    dxbValores: TdxBar;
     dxBarEdit1: TdxBarEdit;
     edtMonto: TcxBarEditItem;
     edtTasaAnual: TcxBarEditItem;
@@ -61,6 +61,7 @@ type
   private
     { Private declarations }
     FactCalcular: TBasicAction;
+    FVerValores: Boolean;
     procedure SetactCalcular(const Value: TBasicAction);
     function GetMonto: Extended;
     procedure SetMonto(const Value: Extended);
@@ -76,6 +77,7 @@ type
     function GetImpactoISR: Extended;
     procedure SetFuturo(const Value: Extended);
     procedure SetImpactoISR(const Value: Extended);
+    procedure SetVerValores(const Value: Boolean);
   public
     { Public declarations }
     property actCalcular: TBasicAction read FactCalcular write SetactCalcular;
@@ -86,6 +88,7 @@ type
     property ImpactoISR: Extended read GetImpactoISR write SetImpactoISR;
     property Segmentos: Integer read GetSegmentos write SetSegmentos;
     property FechaInicial: TDateTime read GetFechaInicial write SetFechaInicial;
+    property VerValores: Boolean read FVerValores write SetVerValores default True;
   end;
 
 implementation
@@ -170,6 +173,12 @@ end;
 procedure TfrmSegmentos.SetTasaAnual(const Value: Extended);
 begin
   edtTasaAnual.EditValue := Value;
+end;
+
+procedure TfrmSegmentos.SetVerValores(const Value: Boolean);
+begin
+  FVerValores := Value;
+  dxbValores.Visible := Value;
 end;
 
 end.

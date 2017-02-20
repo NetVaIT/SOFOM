@@ -2,6 +2,7 @@ inherited frmAnexosEdit: TfrmAnexosEdit
   Caption = 'frmAnexosEdit'
   ClientHeight = 612
   ClientWidth = 719
+  OnDestroy = FormDestroy
   ExplicitWidth = 725
   ExplicitHeight = 641
   PixelsPerInch = 96
@@ -542,6 +543,10 @@ inherited frmAnexosEdit: TfrmAnexosEdit
       Caption = 'Segmentos'
       ImageIndex = 2
       TabVisible = False
+    end
+    object tsProductos: TcxTabSheet
+      Caption = 'Productos'
+      ImageIndex = 1
     end
   end
   inherited pmlMain: TPanel

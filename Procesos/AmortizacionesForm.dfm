@@ -1,11 +1,25 @@
 inherited frmAmortizaciones: TfrmAmortizaciones
-  Caption = 'frmAmortizaciones'
-  ExplicitWidth = 651
-  ExplicitHeight = 457
+  Caption = 'Amortizaciones'
   PixelsPerInch = 96
   TextHeight = 13
+  inherited splDetail3: TSplitter
+    ExplicitTop = 333
+    ExplicitWidth = 635
+  end
+  inherited splDetail1: TSplitter
+    ExplicitTop = 245
+    ExplicitWidth = 635
+  end
+  inherited splDetail2: TSplitter
+    ExplicitTop = 289
+    ExplicitWidth = 635
+  end
   inherited pnlMaster: TPanel
+    ExplicitWidth = 635
+    ExplicitHeight = 214
     inherited cxGrid: TcxGrid
+      ExplicitWidth = 635
+      ExplicitHeight = 214
       inherited tvMaster: TcxGridDBTableView
         object tvMasterRecId: TcxGridDBColumn
           DataBinding.FieldName = 'RecId'
@@ -67,6 +81,25 @@ inherited frmAmortizaciones: TfrmAmortizaciones
       end
     end
   end
+  inherited pnlDetail3: TPanel
+    ExplicitTop = 336
+    ExplicitWidth = 635
+  end
+  inherited pnlDetail2: TPanel
+    ExplicitTop = 292
+    ExplicitWidth = 635
+  end
+  inherited pnlDetail1: TPanel
+    ExplicitTop = 248
+    ExplicitWidth = 635
+  end
+  inherited pnlClose: TPanel
+    ExplicitTop = 377
+    ExplicitWidth = 635
+    inherited btnClose: TButton
+      ExplicitLeft = 550
+    end
+  end
   inherited DataSource: TDataSource
     DataSet = dmAmortizaciones.dxmAmortizaciones
   end
@@ -85,7 +118,7 @@ inherited frmAmortizaciones: TfrmAmortizaciones
   end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
-      ReportDocument.CreationDate = 42688.699287557870000000
+      ReportDocument.CreationDate = 42688.699287557880000000
       AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
