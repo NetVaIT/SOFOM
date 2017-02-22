@@ -35,20 +35,43 @@ inherited FrmConEstadosCuenta: TFrmConEstadosCuenta
       ExplicitWidth = 772
       ExplicitHeight = 198
       inherited tvMaster: TcxGridDBTableView
-        object tvMasterCliente: TcxGridDBColumn
-          DataBinding.FieldName = 'Cliente'
-          Width = 350
-        end
         object tvMasterIdEstadoCuenta: TcxGridDBColumn
           DataBinding.FieldName = 'IdEstadoCuenta'
+          Visible = False
           Width = 112
+        end
+        object tvMasterCliente: TcxGridDBColumn
+          DataBinding.FieldName = 'Cliente'
+          Width = 336
+        end
+        object tvMasterIdContrato: TcxGridDBColumn
+          DataBinding.FieldName = 'IdContrato'
+        end
+        object tvMasterFechaCorte: TcxGridDBColumn
+          DataBinding.FieldName = 'FechaCorte'
+        end
+        object tvMasterFechaVencimiento: TcxGridDBColumn
+          DataBinding.FieldName = 'FechaVencimiento'
         end
         object tvMasterIdPersona: TcxGridDBColumn
           DataBinding.FieldName = 'IdPersona'
+          Visible = False
         end
         object tvMasterSaldoInsoluto: TcxGridDBColumn
           DataBinding.FieldName = 'SaldoInsoluto'
           Width = 98
+        end
+        object tvMasterSaldoAnterior: TcxGridDBColumn
+          DataBinding.FieldName = 'SaldoAnterior'
+          Visible = False
+        end
+        object tvMasterSaldoAPagar: TcxGridDBColumn
+          DataBinding.FieldName = 'SaldoAPagar'
+          Visible = False
+        end
+        object tvMasterSaldoVencido: TcxGridDBColumn
+          DataBinding.FieldName = 'SaldoVencido'
+          Visible = False
         end
       end
     end

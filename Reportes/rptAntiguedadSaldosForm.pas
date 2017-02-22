@@ -57,10 +57,14 @@ type
     tvMasterIdCuentaXCobrar: TcxGridDBColumn;
     tvMasterIdPersona: TcxGridDBColumn;
     tvMasterIdCuentaXCobrarEstatus: TcxGridDBColumn;
+    tvMasterIDAnexo: TcxGridDBColumn;
+    tvMasterTotal: TcxGridDBColumn;
+    tvMasterSaldo: TcxGridDBColumn;
     procedure SpdBtnConsultaClick(Sender: TObject);
     procedure EdtNombreKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -109,9 +113,15 @@ begin
 
 end;
 
+procedure TfrmRptAntiguedadSaldos.FormShow(Sender: TObject);
+begin
+  inherited;
+  actFullColapseGroup.Execute; //Feb 22/17
+end;
+
 procedure TfrmRptAntiguedadSaldos.SpdBtnConsultaClick(Sender: TObject);
 const
-   TxtSQL=' SELECT     Cc.IdCuentaXCobrar, Cc.Fecha, Cc.IdPersona, cc.IdCuentaXCobrarEstatus, Cc.Total, CC.Saldo,'
+   TxtSQL=' SELECT     Cc.IdCuentaXCobrar, cc.IDAnexo, Cc.Fecha, Cc.IdPersona, cc.IdCuentaXCobrarEstatus, Cc.Total, CC.Saldo,'
          +' PR.RazonSocial AS Cliente, CASE WHEN getdate() - Cc.Fecha < 30 THEN Cc.Saldo END AS ''Vigentes'','
          +' CASE WHEN (getdate() - Cc.Fecha < 60 ) AND (getdate() - Cc.Fecha >= 30 )'
          +' THEN Cc.Saldo END AS ''Vencidos a 30 días'', CASE WHEN (getdate() - Cc.Fecha < 90 ) AND (getdate()'

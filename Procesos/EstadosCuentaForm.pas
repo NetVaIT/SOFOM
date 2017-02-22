@@ -37,6 +37,12 @@ type
     tvMasterIdPersona: TcxGridDBColumn;
     tvMasterSaldoInsoluto: TcxGridDBColumn;
     dxBarDtCmbFechaCorte: TdxBarDateCombo;
+    tvMasterFechaCorte: TcxGridDBColumn;
+    tvMasterSaldoAnterior: TcxGridDBColumn;
+    tvMasterSaldoAPagar: TcxGridDBColumn;
+    tvMasterSaldoVencido: TcxGridDBColumn;
+    tvMasterIdContrato: TcxGridDBColumn;
+    tvMasterFechaVencimiento: TcxGridDBColumn;
     procedure dxBarDtCmbFechaCorteChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private

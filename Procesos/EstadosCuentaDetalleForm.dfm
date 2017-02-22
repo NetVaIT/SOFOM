@@ -38,10 +38,6 @@ inherited FrmConEstadoCtaDetalle: TFrmConEstadoCtaDetalle
         object tvMasterIdAnexo: TcxGridDBColumn
           DataBinding.FieldName = 'IdAnexo'
         end
-        object tvMasterIdPago: TcxGridDBColumn
-          DataBinding.FieldName = 'IdPago'
-          Visible = False
-        end
         object tvMasterIdAplicacionIntena: TcxGridDBColumn
           DataBinding.FieldName = 'IdAplicacionIntena'
           Visible = False
@@ -71,6 +67,9 @@ inherited FrmConEstadoCtaDetalle: TFrmConEstadoCtaDetalle
         object tvMasterIdCuentaXCobrarDetalle: TcxGridDBColumn
           DataBinding.FieldName = 'IdCuentaXCobrarDetalle'
           Visible = False
+        end
+        object tvMasterIdPagoAplicacion: TcxGridDBColumn
+          DataBinding.FieldName = 'IdPagoAplicacion'
         end
       end
     end

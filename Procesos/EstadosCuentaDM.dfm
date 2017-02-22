@@ -29,6 +29,7 @@ inherited dmEstadosCuenta: TdmEstadosCuenta
     end
     object adodsMasterSaldoInsoluto: TFMTBCDField
       FieldName = 'SaldoInsoluto'
+      currency = True
       Precision = 18
       Size = 6
     end
@@ -37,20 +38,24 @@ inherited dmEstadosCuenta: TdmEstadosCuenta
     end
     object adodsMasterSaldoAnterior: TFMTBCDField
       FieldName = 'SaldoAnterior'
+      currency = True
       Precision = 18
       Size = 6
     end
     object adodsMasterSaldoAPagar: TFMTBCDField
       FieldName = 'SaldoAPagar'
+      currency = True
       Precision = 18
       Size = 6
     end
     object adodsMasterSaldoVencido: TFMTBCDField
       FieldName = 'SaldoVencido'
+      currency = True
       Precision = 18
       Size = 6
     end
     object adodsMasterIdContrato: TIntegerField
+      DisplayLabel = 'Contrato No.'
       FieldName = 'IdContrato'
     end
     object adodsMasterFechaVencimiento: TDateTimeField
@@ -72,10 +77,10 @@ inherited dmEstadosCuenta: TdmEstadosCuenta
     OnNewRecord = AdoDtStEstadoCtaDetalleNewRecord
     CommandText = 
       'select IdEstadoCuentaDetalle, IdEstadoCuenta, IdContrato, '#13#10'IdAn' +
-      'exo, IdCuentaXCobrar, IdCuentaXCobrarDetalle, IdPago,  Concepto,' +
-      ' TipoContrato,'#13#10' FechaMovimiento, TipoMovimiento, Importe '#13#10'from' +
-      ' EstadosCuentaDetalle ECD'#13#10'where idEstadoCuenta=:IdEstadoCuenta'#13 +
-      #10'order by TipoMovimiento DEsc,FechaMovimiento'
+      'exo, IdCuentaXCobrar, IdCuentaXCobrarDetalle, IdPagoAplicacion, ' +
+      ' Concepto, TipoContrato,'#13#10' FechaMovimiento, TipoMovimiento, Impo' +
+      'rte '#13#10'from EstadosCuentaDetalle ECD'#13#10'where idEstadoCuenta=:IdEst' +
+      'adoCuenta'#13#10'order by TipoMovimiento DEsc,FechaMovimiento'
     DataSource = DSMaster
     IndexFieldNames = 'IdEstadoCuenta'
     MasterFields = 'IdEstadoCuenta'
@@ -102,11 +107,9 @@ inherited dmEstadosCuenta: TdmEstadosCuenta
     object AdoDtStEstadoCtaDetalleIdAnexo: TIntegerField
       FieldName = 'IdAnexo'
     end
-    object AdoDtStEstadoCtaDetalleIdPago: TIntegerField
-      FieldName = 'IdPago'
-    end
     object AdoDtStEstadoCtaDetalleImporte: TFMTBCDField
       FieldName = 'Importe'
+      currency = True
       Precision = 18
       Size = 6
     end
@@ -130,6 +133,9 @@ inherited dmEstadosCuenta: TdmEstadosCuenta
     object AdoDtStEstadoCtaDetalleTipoMovimiento: TIntegerField
       FieldName = 'TipoMovimiento'
     end
+    object AdoDtStEstadoCtaDetalleIdPagoAplicacion: TIntegerField
+      FieldName = 'IdPagoAplicacion'
+    end
   end
   object DSMaster: TDataSource
     DataSet = adodsMaster
@@ -142,18 +148,26 @@ inherited dmEstadosCuenta: TdmEstadosCuenta
     CommandText = 
       'select A.IdContrato,A.SaldoInsoluto,A.CapitalCobrado,  '#13#10'CT.Iden' +
       'tificador AS TipoContrato,'#13#10'C.IdPersona,  c.Fecha, c.Total as to' +
-      'talCXC, c.IdAnexo,'#13#10' c.idcuentaXCobrar'#13#10', T.Acumula, t.AcumulaAQ' +
-      'uien, T.BaseIVA, T.EsIVA, T.Fase,'#13#10' t.IdTipoContrato '#13#10',con.IdPe' +
-      'rsona idpercontrato'#13#10' from Contratos con'#13#10'inner join Anexos A on' +
-      ' A.IdContrato=con.IdContrato'#13#10'inner join CuentasXCobrar C on c.I' +
-      'dAnexo=A.IdAnexo'#13#10'inner join  ContratosTipos CT on CT.IdContrato' +
-      'Tipo=con.IdContratoTipo'#13#10'inner join CuentasXCobrarTiposConceptos' +
-      ' T  on t.IdCuentaXCobrarTipo=CT.IdContratoTipo'#13#10' and  t.EstadoCu' +
-      'enta=1 '#13#10'and  C.idCuentaXCobrarEstatus=0 -- Pendiente'#13#10'and c.Fec' +
-      'ha>=:FechaCorteUlt  and c.Fecha <=:FechaCorte -- and c.IdCuentaX' +
-      'Cobrar not in (2,3,4)'#13#10'Order by C.IdPersona, A.idContrato,A.IdAn' +
-      'exo, c.Fecha,  C.IdCuentaXCobrar'#13#10
+      'talCXC, c.IdAnexo,'#13#10' c.idcuentaXCobrar'#13#10'--, T.Acumula, t.Acumula' +
+      'AQuien, T.BaseIVA, T.EsIVA, T.Fase,'#13#10'-- t.IdTipoContrato '#13#10',con.' +
+      'IdPersona idpercontrato'#13#10' from Contratos con'#13#10'inner join Anexos ' +
+      'A on A.IdContrato=con.IdContrato'#13#10'inner join CuentasXCobrar C on' +
+      ' c.IdAnexo=A.IdAnexo'#13#10'inner join  ContratosTipos CT on CT.IdCont' +
+      'ratoTipo=con.IdContratoTipo'#13#10'--inner join CuentasXCobrarTiposCon' +
+      'ceptos T  on t.IdCuentaXCobrarTipo=CT.IdContratoTipo'#13#10'-- and  t.' +
+      'EstadoCuenta=1 '#13#10'and  C.idCuentaXCobrarEstatus=0 -- Pendiente'#13#10'a' +
+      'nd A.IDContrato=:IDContrato -- feb 20/17'#13#10'and c.Fecha>=:FechaCor' +
+      'teUlt  and c.Fecha <=:FechaCorte '#13#10'-- and c.IdCuentaXCobrar not ' +
+      'in (2,3,4)'#13#10'Order by C.IdPersona, A.idContrato,A.IdAnexo, c.Fech' +
+      'a,  C.IdCuentaXCobrar'#13#10
+    MasterFields = 'IDContrato'
     Parameters = <
+      item
+        Name = 'IDContrato'
+        DataType = ftInteger
+        Size = -1
+        Value = Null
+      end
       item
         Name = 'FechaCorteUlt'
         DataType = ftDateTime
@@ -205,20 +219,29 @@ inherited dmEstadosCuenta: TdmEstadosCuenta
     object ADODtStDatosCXCidpercontrato: TIntegerField
       FieldName = 'idpercontrato'
     end
-    object ADODtStDatosCXCIdTipoContrato: TIntegerField
-      FieldName = 'IdTipoContrato'
-    end
   end
   object ADODtStDatosPagos: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
       '  Select P.idpago, P.IdPersonaCliente, P.FEchaPago, P.FolioPago,' +
-      ' P. SeriePago,'#13#10'P.Importe, Pa.IdCuentaXCobrar,  Pa.Importe Aplic' +
-      'ado , OrigenPago'#13#10'from Pagos P '#13#10'  inner join PagosAplicaciones ' +
-      'Pa '#13#10'  on Pa.IdPago=P.IdPago'#13#10'  where P.FechaPago>=:FechaInicial' +
-      ' and P.FechaPago<=:FechaFin'
+      ' P. SeriePago,'#13#10'P.Importe, Pa.IdCuentaXCobrar,Pa.IdPagoAplicacio' +
+      'n,  Pa.Importe Aplicado , OrigenPago'#13#10'from Pagos P '#13#10'  inner joi' +
+      'n PagosAplicaciones Pa '#13#10'  on Pa.IdPago=P.IdPago'#13#10'  where  IdCue' +
+      'ntaXCobrar=:IDCuentaXCobrar'#13#10'and  P.FechaPago>=:FechaInicial and' +
+      ' P.FechaPago<=:FechaFin'#13#10
+    DataSource = DSDatosCXC
+    IndexFieldNames = 'IdCuentaXCobrar'
+    MasterFields = 'IDCuentaXCobrar'
     Parameters = <
+      item
+        Name = 'IDCuentaXCobrar'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end
       item
         Name = 'FechaInicial'
         Attributes = [paNullable]
@@ -270,6 +293,10 @@ inherited dmEstadosCuenta: TdmEstadosCuenta
     end
     object ADODtStDatosPagosOrigenPago: TIntegerField
       FieldName = 'OrigenPago'
+    end
+    object ADODtStDatosPagosIdPagoAplicacion: TAutoIncField
+      FieldName = 'IdPagoAplicacion'
+      ReadOnly = True
     end
   end
   object ADOQryAuxiliar: TADOQuery
@@ -371,7 +398,8 @@ inherited dmEstadosCuenta: TdmEstadosCuenta
     CommandText = 
       'select CCD.* , CT.* from CuentasXCobrarDetalle CCD, '#13#10' CuentasXC' +
       'obrarTiposConceptos CT where CCD.IdCuentaXCobrarTipo=ct.IdCuenta' +
-      'XCobrarTipo '#13#10'and  CCD.IdCuentaXCobrar=:IdCuentaXCobrar'
+      'XCobrarTipo '#13#10'and  CCD.IdCuentaXCobrar=:IdCuentaXCobrar'#13#10'and Ct.' +
+      'EstadoCuenta=1 '
     DataSource = DSDatosCXC
     MasterFields = 'IdCuentaXCobrar'
     Parameters = <

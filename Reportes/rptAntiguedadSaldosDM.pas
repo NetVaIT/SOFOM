@@ -20,6 +20,7 @@ type
     adodsMasterVencidosa60días: TFMTBCDField;
     adodsMasterVencidosa90días: TFMTBCDField;
     adodsMasterVencidosmásde90días: TFMTBCDField;
+    adodsMasterIDAnexo: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }

@@ -35,7 +35,6 @@ type
     tvMasterIdEstadoCuenta: TcxGridDBColumn;
     tvMasterIdContrato: TcxGridDBColumn;
     tvMasterIdAnexo: TcxGridDBColumn;
-    tvMasterIdPago: TcxGridDBColumn;
     tvMasterIdAplicacionIntena: TcxGridDBColumn;
     tvMasterImporte: TcxGridDBColumn;
     tvMasterConcepto: TcxGridDBColumn;
@@ -44,6 +43,7 @@ type
     tvMasterIdCuentaXCobrarDetalle: TcxGridDBColumn;
     tvMasterFechaMovimiento: TcxGridDBColumn;
     tvMasterTipoMovimiento: TcxGridDBColumn;
+    tvMasterIdPagoAplicacion: TcxGridDBColumn;
   private
     { Private declarations }
   public
