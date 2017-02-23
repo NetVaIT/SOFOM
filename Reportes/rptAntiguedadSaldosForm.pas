@@ -60,6 +60,9 @@ type
     tvMasterIDAnexo: TcxGridDBColumn;
     tvMasterTotal: TcxGridDBColumn;
     tvMasterSaldo: TcxGridDBColumn;
+    tvMasterIDContrato: TcxGridDBColumn;
+    tvMasterTipoContrato: TcxGridDBColumn;
+    tvMasterIdContratoTipo: TcxGridDBColumn;
     procedure SpdBtnConsultaClick(Sender: TObject);
     procedure EdtNombreKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);

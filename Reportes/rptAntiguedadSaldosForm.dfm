@@ -110,33 +110,42 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
         object tvMasterFecha: TcxGridDBColumn
           DataBinding.FieldName = 'Fecha'
         end
-        object tvMasterIdCuentaXCobrar: TcxGridDBColumn
-          DataBinding.FieldName = 'IdCuentaXCobrar'
-          Width = 99
+        object tvMasterIDContrato: TcxGridDBColumn
+          Caption = 'No.Contrato'
+          DataBinding.FieldName = 'IDContrato'
+          Width = 67
+        end
+        object tvMasterTipoContrato: TcxGridDBColumn
+          DataBinding.FieldName = 'TipoContrato'
+          Width = 199
         end
         object tvMasterIDAnexo: TcxGridDBColumn
           DataBinding.FieldName = 'IDAnexo'
         end
+        object tvMasterIdCuentaXCobrar: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCuentaXCobrar'
+          Width = 99
+        end
         object tvMasterVigentes: TcxGridDBColumn
           DataBinding.FieldName = 'Vigentes'
-          Width = 75
+          Width = 120
         end
         object tvMasterVencidosa30das: TcxGridDBColumn
           DataBinding.FieldName = 'Vencidos a 30 d'#237'as'
-          Width = 93
+          Width = 127
         end
         object tvMasterVencidosa60das: TcxGridDBColumn
           DataBinding.FieldName = 'Vencidos a 60 d'#237'as'
-          Width = 95
+          Width = 110
         end
         object tvMasterVencidosa90das: TcxGridDBColumn
           DataBinding.FieldName = 'Vencidos a 90 d'#237'as'
-          Width = 93
+          Width = 121
         end
         object tvMasterVencidosmsde90das: TcxGridDBColumn
           DataBinding.FieldName = 'Vencidos m'#225's de 90 d'#237'as'
           Options.Editing = False
-          Width = 124
+          Width = 137
         end
         object tvMasterIdPersona: TcxGridDBColumn
           DataBinding.FieldName = 'IdPersona'
@@ -152,6 +161,10 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
         end
         object tvMasterSaldo: TcxGridDBColumn
           DataBinding.FieldName = 'Saldo'
+          Visible = False
+        end
+        object tvMasterIdContratoTipo: TcxGridDBColumn
+          DataBinding.FieldName = 'IdContratoTipo'
           Visible = False
         end
       end

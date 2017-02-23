@@ -314,6 +314,7 @@ begin
     IVAReg:= ADOSumaIVA.fieldbyname('IVAREG').asFloat;
   end;
   //Siempre actualizar
+  IVACal:=IVAReg;  //  feb 23/17
 
   ADOQryAuxiliar.Close;
   ADOQryAuxiliar.SQL.Clear;
@@ -322,6 +323,8 @@ begin
 
   Subtotal:= ADOQryAuxiliar.FieldByName('ValorST').AsFloat;
 
+  TotalCal:= Subtotal+IVACal;   //feb 23/17
+  {  deshabilitado feb 23/17
   IVACal:= subtotal*0.16;
   TotalCal:= Subtotal+IVACal; //subtotal*1.16 ;    //Ago 25/16
 
@@ -336,7 +339,7 @@ begin
     else
       Showmessage('El total de IVA registrado es 0 o negativo' + floatToStr(IVAREG));
     Showmessage('El total de IVA calculado no coincide con el registrado !') ;
-  end;
+  end;   }
 
   //Se usa siempre en registrado
 

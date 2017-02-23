@@ -21,6 +21,9 @@ type
     adodsMasterVencidosa90días: TFMTBCDField;
     adodsMasterVencidosmásde90días: TFMTBCDField;
     adodsMasterIDAnexo: TIntegerField;
+    adodsMasterIDContrato: TIntegerField;
+    adodsMasterIdContratoTipo: TIntegerField;
+    adodsMasterTipoContrato: TStringField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
