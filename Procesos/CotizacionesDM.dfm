@@ -303,6 +303,11 @@ inherited dmCotizaciones: TdmCotizaciones
       OnExecute = actCambiarEstatusExecute
       OnUpdate = actCambiarEstatusUpdate
     end
+    object actGetTipoCambio: TAction
+      Caption = '...'
+      Hint = 'Obtiene la '#250'ltima cotizaci'#243'n de la moneda'
+      OnExecute = actGetTipoCambioExecute
+    end
   end
   object adodsPersonas: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -325,7 +330,7 @@ inherited dmCotizaciones: TdmCotizaciones
   object adodsMonedas: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
-    CommandText = 'select IdMoneda, Descripcion from Monedas'
+    CommandText = 'select IdMoneda, Descripcion from Monedas'#13#10'order by Descripcion'
     Parameters = <>
     Left = 40
     Top = 184

@@ -20,7 +20,7 @@ uses
   System.Actions, Vcl.ActnList, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls, cxPC,
   cxContainer, cxEdit, cxSpinEdit, cxDBEdit, cxCurrencyEdit, Vcl.DBCtrls,
   cxMaskEdit, cxDropDownEdit, cxCalendar, cxTextEdit,
-  AmortizacionesDM, AnexosSegmentosDM, cxGroupBox;
+  AmortizacionesDM, AnexosSegmentosDM, cxGroupBox, cxButtonEdit;
 
 type
   TfrmCotizacionesEdit = class(T_frmEdit)
@@ -44,7 +44,6 @@ type
     Label9: TLabel;
     cxDBTextEdit3: TcxDBTextEdit;
     DBLookupComboBox1: TDBLookupComboBox;
-    cxDBTextEdit4: TcxDBTextEdit;
     cxDBTextEdit5: TcxDBTextEdit;
     cxDBTextEdit6: TcxDBTextEdit;
     cxDBTextEdit7: TcxDBTextEdit;
@@ -93,6 +92,7 @@ type
     DBLookupComboBox2: TDBLookupComboBox;
     Label31: TLabel;
     cxDBTextEdit22: TcxDBTextEdit;
+    edtTipoCambio: TcxDBButtonEdit;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -100,8 +100,11 @@ type
   private
     { Private declarations }
     dmAmortizaciones: TdmAmortizaciones;
+    FactGetTipoCambio: TBasicAction;
+    procedure SetactGetTipoCambio(const Value: TBasicAction);
   public
     { Public declarations }
+    property actGetTipoCambio: TBasicAction read FactGetTipoCambio write SetactGetTipoCambio;
   end;
 
 implementation
@@ -139,6 +142,12 @@ begin
   DataSource.DataSet.FieldByName('MontoFinanciar').AsExtended,
   DataSource.DataSet.FieldByName('ValorResidual').AsExtended,
   DataSource.DataSet.FieldByName('ImpactoISR').AsExtended);
+end;
+
+procedure TfrmCotizacionesEdit.SetactGetTipoCambio(const Value: TBasicAction);
+begin
+  FactGetTipoCambio := Value;
+  edtTipoCambio.Properties.Buttons[0].Action:= Value;
 end;
 
 end.

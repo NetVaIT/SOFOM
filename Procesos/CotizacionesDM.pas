@@ -77,6 +77,7 @@ type
     actCambiarEstatus: TAction;
     adospUpdCotizacionesEstatus: TADOStoredProc;
     actAmortizacionesC: TAction;
+    actGetTipoCambio: TAction;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
@@ -87,6 +88,7 @@ type
     procedure actCambiarEstatusExecute(Sender: TObject);
     procedure actCambiarEstatusUpdate(Sender: TObject);
     procedure actAmortizacionesCExecute(Sender: TObject);
+    procedure actGetTipoCambioExecute(Sender: TObject);
   private
     { Private declarations }
     dmAmortizaciones: TdmAmortizaciones;
@@ -110,7 +112,8 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses CotizacionesForm, _ConectionDmod, CotizacionesCreditosForm, _Utils;
+uses CotizacionesForm, _ConectionDmod, CotizacionesCreditosForm, _Utils,
+  ConfiguracionDM;
 
 {$R *.dfm}
 
@@ -177,6 +180,15 @@ begin
     end;
     else
       actCambiarEstatus.Enabled:= False;
+  end;
+end;
+
+procedure TdmCotizaciones.actGetTipoCambioExecute(Sender: TObject);
+begin
+  inherited;
+  if adodsMaster.State in [dsEdit,dsInsert] then
+  begin
+    adodsMasterTipoCambio.Value := dmConfiguracion.GetTipoCambio(adodsMasterIdMoneda.Value)
   end;
 end;
 
@@ -285,6 +297,7 @@ begin
   gGridForm.DataSet:= adodsMaster;
   TfrmCotizaciones(gGridForm).actAmortizaciones := actAmortizaciones;
   TfrmCotizaciones(gGridForm).actCambiarEstatus := actCambiarEstatus;
+  TfrmCotizaciones(gGridForm).actGetTipoCambio := actGetTipoCambio;
   if adodsCreditos.CommandText <> EmptyStr then adodsCreditos.Open;
   gFormDeatil1:= TfrmCotizacionesCreditos.Create(Self);
   gFormDeatil1.DataSet:= adodsCreditos;

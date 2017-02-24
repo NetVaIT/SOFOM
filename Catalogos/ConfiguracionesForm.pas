@@ -33,30 +33,12 @@ type
   TfrmConfiguraciones = class(T_frmGrid)
     tvMasterIdPais: TcxGridDBColumn;
     tvMasterIdMoneda: TcxGridDBColumn;
-    tvMasterIdMovimientoTipoNomina: TcxGridDBColumn;
-    tvMasterIdMovimientoTipoRetencion: TcxGridDBColumn;
-    tvMasterIdMovimientoTipoPrestamo: TcxGridDBColumn;
-    tvMasterIdMetodoPagoCuentasXPagar: TcxGridDBColumn;
-    tvMasterIdMetodoPagoFactura: TcxGridDBColumn;
     tvMasterPais: TcxGridDBColumn;
     tvMasterMoneda: TcxGridDBColumn;
-    tvMasterMovimientoTipoNomina: TcxGridDBColumn;
-    tvMasterMovimientoTipoRetencion: TcxGridDBColumn;
-    tvMasterMovimientoTipoPrestamo: TcxGridDBColumn;
-    tvMasterMetodoPagoCuentasXPagar: TcxGridDBColumn;
-    tvMasterMetodoPagoFactura: TcxGridDBColumn;
     tvMasterRutaBaseFacturas: TcxGridDBColumn;
-    tvMasterIdRolDescuento: TcxGridDBColumn;
-    tvMasterIdMovimientoTipoDescuento: TcxGridDBColumn;
-    tvMasterIdMetodoPagoCuentasXPagarSAT: TcxGridDBColumn;
-    tvMasterRolDescuento: TcxGridDBColumn;
-    tvMasterMovimientoTipoDescuento: TcxGridDBColumn;
-    tvMasterMetodoPagoCuentasXPagarSAT: TcxGridDBColumn;
-    tvMasterIdMovimientoTipoTransporte: TcxGridDBColumn;
-    tvMasterIdMovimientoTipoAportacion: TcxGridDBColumn;
-    tvMasterMovimientoTipoTransporte: TcxGridDBColumn;
-    tvMasterMovimientoTipoAportacion: TcxGridDBColumn;
     tvMasterRutaBasePagos: TcxGridDBColumn;
+    tvMasterUltimoFolioPago: TcxGridDBColumn;
+    tvMasterUltimaSeriePago: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }

@@ -70,13 +70,16 @@ type
     tvMasterFechaVencimiento: TcxGridDBColumn;
     dxbbGenerar: TdxBarButton;
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
-    FactGenerar: TBasicAction;
-    procedure SetactGenerar(const Value: TBasicAction);
     { Private declarations }
+    FactGenerar: TBasicAction;
+    FactGetTipoCambio: TBasicAction;
+    procedure SetactGenerar(const Value: TBasicAction);
   public
     { Public declarations }
     property actGenerar: TBasicAction read FactGenerar write SetactGenerar;
+    property actGetTipoCambio: TBasicAction read FactGetTipoCambio write FactGetTipoCambio;
   end;
 
 implementation
@@ -89,6 +92,12 @@ procedure TfrmAnexos.FormCreate(Sender: TObject);
 begin
   inherited;
   gEditForm:= TfrmAnexosEdit.Create(Self);
+end;
+
+procedure TfrmAnexos.FormShow(Sender: TObject);
+begin
+  inherited;
+  TfrmAnexosEdit(gEditForm).actGetTipoCambio := actGetTipoCambio;
 end;
 
 procedure TfrmAnexos.SetactGenerar(const Value: TBasicAction);

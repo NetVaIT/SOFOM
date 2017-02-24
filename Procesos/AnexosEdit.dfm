@@ -64,7 +64,6 @@ inherited frmAnexosEdit: TfrmAnexosEdit
           Width = 71
           Height = 13
           Caption = 'Tipo de cambio'
-          FocusControl = cxDBTextEdit4
         end
         object Label7: TLabel
           Left = 84
@@ -139,14 +138,6 @@ inherited frmAnexosEdit: TfrmAnexosEdit
           DataSource = DataSource
           TabOrder = 5
         end
-        object cxDBTextEdit4: TcxDBTextEdit
-          Left = 184
-          Top = 97
-          DataBinding.DataField = 'TipoCambio'
-          DataBinding.DataSource = DataSource
-          TabOrder = 6
-          Width = 121
-        end
         object cxDBTextEdit5: TcxDBTextEdit
           Left = 184
           Top = 124
@@ -182,6 +173,19 @@ inherited frmAnexosEdit: TfrmAnexosEdit
           DataField = 'Estatus'
           DataSource = DataSource
           TabOrder = 2
+        end
+        object edtTipoCambio: TcxDBButtonEdit
+          Left = 184
+          Top = 97
+          DataBinding.DataField = 'TipoCambio'
+          DataBinding.DataSource = DataSource
+          Properties.Buttons = <
+            item
+              Default = True
+              Kind = bkEllipsis
+            end>
+          TabOrder = 6
+          Width = 121
         end
       end
       object cxGroupBox4: TcxGroupBox

@@ -18,7 +18,7 @@ uses
   dxSkinWhiteprint, dxSkinXmas2008Blue, dxSkinscxPCPainter, cxPCdxBarPopupMenu,
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, Vcl.ImgList,
   System.Actions, Vcl.ActnList, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls, cxPC,
-  Vcl.DBCtrls, cxContainer, cxEdit, cxTextEdit, cxDBEdit;
+  Vcl.DBCtrls, cxContainer, cxEdit, cxTextEdit, cxDBEdit, cxMaskEdit, cxSpinEdit;
 
 type
   TfrmConfiguracionesEdit = class(T_frmEdit)
@@ -26,31 +26,14 @@ type
     DBLookupComboBox1: TDBLookupComboBox;
     Label2: TLabel;
     DBLookupComboBox2: TDBLookupComboBox;
-    Label6: TLabel;
-    DBLookupComboBox6: TDBLookupComboBox;
-    Label7: TLabel;
-    DBLookupComboBox7: TDBLookupComboBox;
     Label8: TLabel;
     cxDBTextEdit1: TcxDBTextEdit;
-    Label11: TLabel;
-    DBLookupComboBox10: TDBLookupComboBox;
-    cxTabSheet1: TcxTabSheet;
-    Label3: TLabel;
-    Label4: TLabel;
-    Label5: TLabel;
-    DBLookupComboBox3: TDBLookupComboBox;
-    DBLookupComboBox4: TDBLookupComboBox;
-    DBLookupComboBox5: TDBLookupComboBox;
-    Label9: TLabel;
-    Label10: TLabel;
-    DBLookupComboBox8: TDBLookupComboBox;
-    DBLookupComboBox9: TDBLookupComboBox;
     Label12: TLabel;
     cxDBTextEdit2: TcxDBTextEdit;
-    Label13: TLabel;
-    DBLookupComboBox11: TDBLookupComboBox;
-    Label14: TLabel;
-    DBLookupComboBox12: TDBLookupComboBox;
+    Label3: TLabel;
+    cxDBSpinEdit1: TcxDBSpinEdit;
+    Label4: TLabel;
+    cxDBTextEdit3: TcxDBTextEdit;
   private
     { Private declarations }
   public

@@ -20,7 +20,7 @@ uses
   System.Actions, Vcl.ActnList, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls, cxPC,
   cxContainer, cxEdit, cxSpinEdit, cxDBEdit, cxCurrencyEdit, Vcl.DBCtrls,
   cxMaskEdit, cxDropDownEdit, cxCalendar, cxTextEdit,
-  AmortizacionesDM, AnexosSegmentosDM, cxGroupBox, ProductosDM;
+  AmortizacionesDM, AnexosSegmentosDM, cxGroupBox, ProductosDM, cxButtonEdit;
 
 type
   TfrmAnexosEdit = class(T_frmEdit)
@@ -39,7 +39,6 @@ type
     cxDBDateEdit1: TcxDBDateEdit;
     cxDBTextEdit3: TcxDBTextEdit;
     DBLookupComboBox1: TDBLookupComboBox;
-    cxDBTextEdit4: TcxDBTextEdit;
     cxDBTextEdit5: TcxDBTextEdit;
     cxDBTextEdit6: TcxDBTextEdit;
     cxDBTextEdit7: TcxDBTextEdit;
@@ -89,14 +88,18 @@ type
     Label10: TLabel;
     DBLookupComboBox2: TDBLookupComboBox;
     tsProductos: TcxTabSheet;
+    edtTipoCambio: TcxDBButtonEdit;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
     { Private declarations }
     dmProductos: TdmProductos;
+    FactGetTipoCambio: TBasicAction;
+    procedure SetactGetTipoCambio(const Value: TBasicAction);
   public
     { Public declarations }
+    property actGetTipoCambio: TBasicAction read FactGetTipoCambio write SetactGetTipoCambio;
   end;
 
 implementation
@@ -123,6 +126,12 @@ begin
   dmProductos.MasterSource := DataSource;
   dmProductos.MasterFields := 'IdAnexo';
   dmProductos.ShowModule(tsProductos,'');
+end;
+
+procedure TfrmAnexosEdit.SetactGetTipoCambio(const Value: TBasicAction);
+begin
+  FactGetTipoCambio := Value;
+  edtTipoCambio.Properties.Buttons[0].Action:= Value;
 end;
 
 end.

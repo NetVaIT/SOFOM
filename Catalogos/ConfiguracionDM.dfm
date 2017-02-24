@@ -1,62 +1,18 @@
 inherited dmConfiguracion: TdmConfiguracion
   OldCreateOrder = True
   Height = 468
-  Width = 699
+  Width = 449
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     CommandText = 
-      'SELECT IdPais, IdMoneda, IdMovimientoTipoNomina, IdMovimientoTip' +
-      'oRetencion, IdMovimientoTipoPrestamo, IdMovimientoTipoTransporte' +
-      ', IdMovimientoTipoAportacion, '#13#10'IdMetodoPagoCuentasXPagar, IdMet' +
-      'odoPagoFactura, IdMetodoPagoCuentasXPagarSAT, RutaBaseFacturas, ' +
-      'RutaBasePagos, IdMovimientoTipoDescuento, IdRolDescuento'#13#10'FROM C' +
-      'onfiguraciones'
+      'SELECT IdPais, IdMoneda, RutaBaseFacturas, RutaBasePagos, Ultimo' +
+      'FolioPago, UltimaSeriePago FROM Configuraciones'
     object adodsMasterIdPais: TIntegerField
       FieldName = 'IdPais'
       Visible = False
     end
     object adodsMasterIdMoneda: TIntegerField
       FieldName = 'IdMoneda'
-      Visible = False
-    end
-    object adodsMasterIdMovimientoTipoNomina: TIntegerField
-      FieldName = 'IdMovimientoTipoNomina'
-      Visible = False
-    end
-    object adodsMasterIdMovimientoTipoRetencion: TIntegerField
-      FieldName = 'IdMovimientoTipoRetencion'
-      Visible = False
-    end
-    object adodsMasterIdMovimientoTipoPrestamo: TIntegerField
-      FieldName = 'IdMovimientoTipoPrestamo'
-      Visible = False
-    end
-    object adodsMasterIdMovimientoTipoTransporte: TIntegerField
-      FieldName = 'IdMovimientoTipoTransporte'
-      Visible = False
-    end
-    object adodsMasterIdMovimientoTipoAportacion: TIntegerField
-      FieldName = 'IdMovimientoTipoAportacion'
-      Visible = False
-    end
-    object adodsMasterIdRolDescuento: TIntegerField
-      FieldName = 'IdRolDescuento'
-      Visible = False
-    end
-    object adodsMasterIdMovimientoTipoDescuento: TIntegerField
-      FieldName = 'IdMovimientoTipoDescuento'
-      Visible = False
-    end
-    object adodsMasterIdMetodoPagoCuentasXPagar: TIntegerField
-      FieldName = 'IdMetodoPagoCuentasXPagar'
-      Visible = False
-    end
-    object adodsMasterIdMetodoPagoCuentasXPagarSAT: TIntegerField
-      FieldName = 'IdMetodoPagoCuentasXPagarSAT'
-      Visible = False
-    end
-    object adodsMasterIdMetodoPagoFactura: TIntegerField
-      FieldName = 'IdMetodoPagoFactura'
       Visible = False
     end
     object adodsMasterPais: TStringField
@@ -80,116 +36,6 @@ inherited dmConfiguracion: TdmConfiguracion
       Size = 80
       Lookup = True
     end
-    object adodsMasterMovimientoTipoNomina: TStringField
-      DisplayLabel = 'Tipo movimiento para nomina'
-      FieldKind = fkLookup
-      FieldName = 'MovimientoTipoNomina'
-      LookupDataSet = adodsMovimientosTipo1
-      LookupKeyFields = 'IdMovimientoTipo'
-      LookupResultField = 'Descripcion'
-      KeyFields = 'IdMovimientoTipoNomina'
-      Size = 100
-      Lookup = True
-    end
-    object adodsMasterMovimientoTipoRetencion: TStringField
-      DisplayLabel = 'Tipo movimiento para retenci'#243'n'
-      FieldKind = fkLookup
-      FieldName = 'MovimientoTipoRetencion'
-      LookupDataSet = adodsMovimientosTipo2
-      LookupKeyFields = 'IdMovimientoTipo'
-      LookupResultField = 'Descripcion'
-      KeyFields = 'IdMovimientoTipoRetencion'
-      Size = 100
-      Lookup = True
-    end
-    object adodsMasterMovimientoTipoPrestamo: TStringField
-      DisplayLabel = 'Tipo movimiento para prestamo'
-      FieldKind = fkLookup
-      FieldName = 'MovimientoTipoPrestamo'
-      LookupDataSet = adodsMovimientosTipo3
-      LookupKeyFields = 'IdMovimientoTipo'
-      LookupResultField = 'Descripcion'
-      KeyFields = 'IdMovimientoTipoPrestamo'
-      Size = 100
-      Lookup = True
-    end
-    object adodsMasterRolDescuento: TStringField
-      DisplayLabel = 'Rol de descuento'
-      FieldKind = fkLookup
-      FieldName = 'RolDescuento'
-      LookupDataSet = adodsRol1
-      LookupKeyFields = 'IdRol'
-      LookupResultField = 'Descripcion'
-      KeyFields = 'IdRolDescuento'
-      Size = 50
-      Lookup = True
-    end
-    object adodsMasterMovimientoTipoDescuento: TStringField
-      DisplayLabel = 'Tipo movimiento para descuento'
-      FieldKind = fkLookup
-      FieldName = 'MovimientoTipoDescuento'
-      LookupDataSet = adodsMovimientosTipo4
-      LookupKeyFields = 'IdMovimientoTipo'
-      LookupResultField = 'Descripcion'
-      KeyFields = 'IdMovimientoTipoDescuento'
-      Size = 100
-      Lookup = True
-    end
-    object adodsMasterMovimientoTipoTransporte: TStringField
-      DisplayLabel = 'Tipo movimiento para ingreso por transporte'
-      FieldKind = fkLookup
-      FieldName = 'MovimientoTipoTransporte'
-      LookupDataSet = adodsMovimientosTipo5
-      LookupKeyFields = 'IdMovimientoTipo'
-      LookupResultField = 'Descripcion'
-      KeyFields = 'IdMovimientoTipoTransporte'
-      Size = 100
-      Lookup = True
-    end
-    object adodsMasterMovimientoTipoAportacion: TStringField
-      DisplayLabel = 'Tipo movimiento para ingreso por aportaci'#243'n'
-      FieldKind = fkLookup
-      FieldName = 'MovimientoTipoAportacion'
-      LookupDataSet = adodsMovimientosTipo6
-      LookupKeyFields = 'IdMovimientoTipo'
-      LookupResultField = 'Descripcion'
-      KeyFields = 'IdMovimientoTipoAportacion'
-      Size = 100
-      Lookup = True
-    end
-    object adodsMasterMetodoPagoCuentasXPagar: TStringField
-      DisplayLabel = 'Metodo de pago para cuentas por pagar'
-      FieldKind = fkLookup
-      FieldName = 'MetodoPagoCuentasXPagar'
-      LookupDataSet = adodsMetodosPago1
-      LookupKeyFields = 'IdMetodoPago'
-      LookupResultField = 'Descripcion'
-      KeyFields = 'IdMetodoPagoCuentasXPagar'
-      Size = 100
-      Lookup = True
-    end
-    object adodsMasterMetodoPagoCuentasXPagarSAT: TStringField
-      DisplayLabel = 'Metodo de pago para cuentas por pagar SAT'
-      FieldKind = fkLookup
-      FieldName = 'MetodoPagoCuentasXPagarSAT'
-      LookupDataSet = adodsMetodosPago3
-      LookupKeyFields = 'IdMetodoPago'
-      LookupResultField = 'Descripcion'
-      KeyFields = 'IdMetodoPagoCuentasXPagarSAT'
-      Size = 100
-      Lookup = True
-    end
-    object adodsMasterMetodoPagoFactura: TStringField
-      DisplayLabel = 'Metodo de pago para facturar'
-      FieldKind = fkLookup
-      FieldName = 'MetodoPagoFactura'
-      LookupDataSet = adodsMetodosPago2
-      LookupKeyFields = 'IdMetodoPago'
-      LookupResultField = 'Descripcion'
-      KeyFields = 'IdMetodoPagoFactura'
-      Size = 100
-      Lookup = True
-    end
     object adodsMasterRutaBaseFacturas: TStringField
       DisplayLabel = 'Ruta Base para Facturas'
       FieldName = 'RutaBaseFacturas'
@@ -200,43 +46,44 @@ inherited dmConfiguracion: TdmConfiguracion
       FieldName = 'RutaBasePagos'
       Size = 250
     end
+    object adodsMasterUltimoFolioPago: TIntegerField
+      DisplayLabel = #218'ltimo folio de pago'
+      FieldName = 'UltimoFolioPago'
+    end
+    object adodsMasterUltimaSeriePago: TStringField
+      DisplayLabel = #218'ltima serie de pago'
+      FieldName = 'UltimaSeriePago'
+    end
   end
-  inherited adodsUpdate: TADODataSet
-    Left = 592
-    Top = 24
-  end
-  inherited ActionList: TActionList
-    Left = 592
-    Top = 96
-  end
-  object adoqGetIdPeriodoActual: TADOQuery
+  object adoqGetIdPeriodoActual: TADOQuery [1]
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     Parameters = <>
     SQL.Strings = (
       'SELECT dbo.GetIdPeriodoActual() AS Valor')
-    Left = 584
-    Top = 184
+    Left = 320
+    Top = 160
     object adoqGetIdPeriodoActualValor: TIntegerField
       FieldName = 'Valor'
       ReadOnly = True
     end
   end
-  object adoqGetRutaBaseFacturas: TADOQuery
+  object adoqGetRutaBaseFacturas: TADOQuery [2]
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     Parameters = <>
     SQL.Strings = (
       'SELECT dbo.GetRutaBaseFacturas() AS Valor')
-    Left = 584
-    Top = 248
+    Left = 320
+    Top = 224
     object adoqGetRutaBaseFacturasValor: TStringField
       FieldName = 'Valor'
       ReadOnly = True
       Size = 250
     end
   end
-  object adodsPaises: TADODataSet
+  object adodsPaises: TADODataSet [3]
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdPais, Descripcion from Paises'
@@ -244,7 +91,8 @@ inherited dmConfiguracion: TdmConfiguracion
     Left = 104
     Top = 16
   end
-  object adodsMonedas: TADODataSet
+  object adodsMonedas: TADODataSet [4]
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdMoneda, Descripcion from Monedas'
@@ -252,85 +100,21 @@ inherited dmConfiguracion: TdmConfiguracion
     Left = 104
     Top = 64
   end
-  object adodsMovimientosTipo1: TADODataSet
-    Connection = _dmConection.ADOConnection
-    CursorType = ctStatic
-    CommandText = 'select IdMovimientoTipo, Descripcion from MovimientosTipos'
-    Parameters = <>
-    Left = 216
-    Top = 16
-  end
-  object adodsMovimientosTipo2: TADODataSet
-    Connection = _dmConection.ADOConnection
-    CursorType = ctStatic
-    CommandText = 'select IdMovimientoTipo, Descripcion from MovimientosTipos'
-    Parameters = <>
-    Left = 216
-    Top = 72
-  end
-  object adodsMovimientosTipo3: TADODataSet
-    Connection = _dmConection.ADOConnection
-    CursorType = ctStatic
-    CommandText = 'select IdMovimientoTipo, Descripcion from MovimientosTipos'
-    Parameters = <>
-    Left = 216
-    Top = 128
-  end
-  object adodsMetodosPago1: TADODataSet
-    Connection = _dmConection.ADOConnection
-    CursorType = ctStatic
-    CommandText = 'select IdMetodoPago, Descripcion from MetodosPago'
-    Parameters = <>
-    Left = 368
-    Top = 32
-  end
-  object adodsMetodosPago2: TADODataSet
-    Connection = _dmConection.ADOConnection
-    CursorType = ctStatic
-    CommandText = 'select IdMetodoPago, Descripcion from MetodosPago'
-    Parameters = <>
-    Left = 368
-    Top = 88
-  end
-  object adoqGetRutaBasePagos: TADOQuery
+  object adoqGetRutaBasePagos: TADOQuery [5]
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     Parameters = <>
     SQL.Strings = (
       'SELECT dbo.GetRutaBasePagos() AS Valor')
-    Left = 584
-    Top = 312
+    Left = 320
+    Top = 288
     object adoqGetRutaBasePagosValor: TStringField
       FieldName = 'Valor'
       ReadOnly = True
       Size = 250
     end
   end
-  object adodsMovimientosTipo4: TADODataSet
-    Connection = _dmConection.ADOConnection
-    CursorType = ctStatic
-    CommandText = 'select IdMovimientoTipo, Descripcion from MovimientosTipos'
-    Parameters = <>
-    Left = 224
-    Top = 192
-  end
-  object adodsMetodosPago3: TADODataSet
-    Connection = _dmConection.ADOConnection
-    CursorType = ctStatic
-    CommandText = 'select IdMetodoPago, Descripcion from MetodosPago'
-    Parameters = <>
-    Left = 376
-    Top = 144
-  end
-  object adodsRol1: TADODataSet
-    Connection = _dmConection.ADOConnection
-    CursorType = ctStatic
-    CommandText = 'select IdRol, Descripcion from Roles'
-    Parameters = <>
-    Left = 456
-    Top = 24
-  end
-  object adoqGetDiaPagoActual: TADOQuery
+  object adoqGetDiaPagoActual: TADOQuery [6]
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     Parameters = <>
@@ -338,27 +122,31 @@ inherited dmConfiguracion: TdmConfiguracion
       
         'SELECT CAST(DATEADD(day, 4,FechaInicio) AS DATETIME) AS Valor FR' +
         'OM Periodos WHERE IdPeriodo = dbo.GetIdPeriodoActual();')
-    Left = 592
-    Top = 384
+    Left = 328
+    Top = 360
     object adoqGetDiaPagoActualValor: TDateTimeField
       FieldName = 'Valor'
       ReadOnly = True
     end
   end
-  object adodsMovimientosTipo5: TADODataSet
+  object adoqTipoCambio: TADOQuery [7]
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
-    CommandText = 'select IdMovimientoTipo, Descripcion from MovimientosTipos'
-    Parameters = <>
+    Parameters = <
+      item
+        Name = 'IdMoneda'
+        DataType = ftFloat
+        Size = -1
+        Value = Null
+      end>
+    SQL.Strings = (
+      'SELECT dbo.GetCotizacionMoneda(:IdMoneda) AS Valor')
     Left = 216
-    Top = 248
-  end
-  object adodsMovimientosTipo6: TADODataSet
-    Connection = _dmConection.ADOConnection
-    CursorType = ctStatic
-    CommandText = 'select IdMovimientoTipo, Descripcion from MovimientosTipos'
-    Parameters = <>
-    Left = 216
-    Top = 304
+    Top = 24
+    object adoqTipoCambioValor: TFMTBCDField
+      FieldName = 'Valor'
+      ReadOnly = True
+      Precision = 16
+    end
   end
 end

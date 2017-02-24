@@ -51,13 +51,20 @@ type
     tvMasterPedimento: TcxGridDBColumn;
     tvMasterAduana: TcxGridDBColumn;
     tvMasterFechaCompra: TcxGridDBColumn;
+    dxbbActualizarDeprecicion: TdxBarButton;
+    tvMasterIdMoneda: TcxGridDBColumn;
+    tvMasterPrecioMoneda: TcxGridDBColumn;
+    tvMasterMoneda: TcxGridDBColumn;
+    tvMasterTipoCambio: TcxGridDBColumn;
     tvMasterPrecio: TcxGridDBColumn;
     tvMasterImpuesto: TcxGridDBColumn;
-    tvMasterTotal: TcxGridDBColumn;
-    tvMasterPorcentajeDepreciacion: TcxGridDBColumn;
-    tvMasterDepreciacion: TcxGridDBColumn;
+    tvMasterPrecioTotal: TcxGridDBColumn;
+    tvMasterPorcentajeContable: TcxGridDBColumn;
+    tvMasterDepreciacionContable: TcxGridDBColumn;
     tvMasterValorContable: TcxGridDBColumn;
-    dxbbActualizarDeprecicion: TdxBarButton;
+    tvMasterPorcentajeComercial: TcxGridDBColumn;
+    tvMasterDepreciacionComercial: TcxGridDBColumn;
+    tvMasterValorComercial: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
   private
     FactActualizarDepreciacion: TBasicAction;

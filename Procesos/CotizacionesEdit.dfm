@@ -80,7 +80,6 @@ inherited frmCotizacionesEdit: TfrmCotizacionesEdit
           Width = 71
           Height = 13
           Caption = 'Tipo de cambio'
-          FocusControl = cxDBTextEdit4
         end
         object Label7: TLabel
           Left = 84
@@ -189,14 +188,6 @@ inherited frmCotizacionesEdit: TfrmCotizacionesEdit
           DataSource = DataSource
           TabOrder = 8
         end
-        object cxDBTextEdit4: TcxDBTextEdit
-          Left = 184
-          Top = 146
-          DataBinding.DataField = 'TipoCambio'
-          DataBinding.DataSource = DataSource
-          TabOrder = 9
-          Width = 121
-        end
         object cxDBTextEdit5: TcxDBTextEdit
           Left = 184
           Top = 173
@@ -250,6 +241,19 @@ inherited frmCotizacionesEdit: TfrmCotizacionesEdit
           DataBinding.DataSource = DataSource
           Enabled = False
           TabOrder = 13
+          Width = 121
+        end
+        object edtTipoCambio: TcxDBButtonEdit
+          Left = 184
+          Top = 146
+          DataBinding.DataField = 'TipoCambio'
+          DataBinding.DataSource = DataSource
+          Properties.Buttons = <
+            item
+              Default = True
+              Kind = bkEllipsis
+            end>
+          TabOrder = 9
           Width = 121
         end
       end

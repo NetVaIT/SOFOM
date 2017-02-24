@@ -14,46 +14,20 @@ type
     adoqGetRutaBaseFacturasValor: TStringField;
     adodsMasterIdPais: TIntegerField;
     adodsMasterIdMoneda: TIntegerField;
-    adodsMasterIdMovimientoTipoNomina: TIntegerField;
-    adodsMasterIdMovimientoTipoRetencion: TIntegerField;
-    adodsMasterIdMovimientoTipoPrestamo: TIntegerField;
-    adodsMasterIdMetodoPagoCuentasXPagar: TIntegerField;
-    adodsMasterIdMetodoPagoFactura: TIntegerField;
     adodsPaises: TADODataSet;
     adodsMonedas: TADODataSet;
-    adodsMovimientosTipo1: TADODataSet;
-    adodsMovimientosTipo2: TADODataSet;
-    adodsMovimientosTipo3: TADODataSet;
-    adodsMetodosPago1: TADODataSet;
-    adodsMetodosPago2: TADODataSet;
     adodsMasterPais: TStringField;
     adodsMasterMoneda: TStringField;
-    adodsMasterMovimientoTipoNomina: TStringField;
-    adodsMasterMovimientoTipoRetencion: TStringField;
-    adodsMasterMovimientoTipoPrestamo: TStringField;
-    adodsMasterMetodoPagoCuentasXPagar: TStringField;
-    adodsMasterMetodoPagoFactura: TStringField;
     adodsMasterRutaBaseFacturas: TStringField;
     adoqGetRutaBasePagos: TADOQuery;
     adoqGetRutaBasePagosValor: TStringField;
-    adodsMasterIdMovimientoTipoDescuento: TIntegerField;
-    adodsMasterIdRolDescuento: TIntegerField;
-    adodsMasterIdMetodoPagoCuentasXPagarSAT: TIntegerField;
-    adodsMovimientosTipo4: TADODataSet;
-    adodsMetodosPago3: TADODataSet;
-    adodsRol1: TADODataSet;
-    adodsMasterMovimientoTipoDescuento: TStringField;
-    adodsMasterMetodoPagoCuentasXPagarSAT: TStringField;
-    adodsMasterRolDescuento: TStringField;
     adoqGetDiaPagoActual: TADOQuery;
     adoqGetDiaPagoActualValor: TDateTimeField;
-    adodsMasterIdMovimientoTipoTransporte: TIntegerField;
-    adodsMasterIdMovimientoTipoAportacion: TIntegerField;
     adodsMasterRutaBasePagos: TStringField;
-    adodsMasterMovimientoTipoTransporte: TStringField;
-    adodsMovimientosTipo5: TADODataSet;
-    adodsMovimientosTipo6: TADODataSet;
-    adodsMasterMovimientoTipoAportacion: TStringField;
+    adodsMasterUltimoFolioPago: TIntegerField;
+    adodsMasterUltimaSeriePago: TStringField;
+    adoqTipoCambio: TADOQuery;
+    adoqTipoCambioValor: TFMTBCDField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
@@ -61,12 +35,13 @@ type
     function GetRutaFactura: string;
     function GetRutaPago: string;
     function GetDiaPagoActual: TDateTime;
-  public
-    { Public declarations }
     property IdPeridoActual: Integer read GetIdPeridoActual;
     property DiaPagoActual: TDateTime read GetDiaPagoActual;
+  public
+    { Public declarations }
     property RutaFacturas: string read GetRutaFactura;
     property RutaPagos: string read GetRutaPago;
+    function GetTipoCambio(IdMoneda: Integer): Currency;
   end;
 
 var
@@ -130,6 +105,18 @@ begin
     Result := adoqGetRutaBasePagosValor.AsString;
   finally
     adoqGetRutaBasePagos.Close;
+  end;
+end;
+
+function TdmConfiguracion.GetTipoCambio(IdMoneda: Integer): Currency;
+begin
+  adoqTipoCambio.Close;
+  try
+    adoqTipoCambio.Parameters.ParamByName('IdMoneda').Value:= IdMoneda;
+    adoqTipoCambio.Open;
+    Result := adoqTipoCambioValor.AsCurrency;
+  finally
+    adoqTipoCambio.Close;
   end;
 end;
 

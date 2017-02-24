@@ -1,22 +1,22 @@
 inherited frmProductosEdit: TfrmProductosEdit
   Caption = 'frmProductosEdit'
   ClientHeight = 501
-  ClientWidth = 594
+  ClientWidth = 750
   OnDestroy = FormDestroy
-  ExplicitWidth = 600
+  ExplicitWidth = 756
   ExplicitHeight = 530
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
-    Width = 594
+    Width = 750
     Height = 460
     ExplicitWidth = 594
     ExplicitHeight = 460
     ClientRectBottom = 458
-    ClientRectRight = 592
+    ClientRectRight = 748
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 27
+      ExplicitLeft = 2
+      ExplicitTop = 28
       ExplicitWidth = 590
       ExplicitHeight = 430
       object Label1: TLabel
@@ -51,84 +51,12 @@ inherited frmProductosEdit: TfrmProductosEdit
         TabOrder = 1
         Width = 426
       end
-      object cxGroupBox1: TcxGroupBox
-        Left = 255
-        Top = 59
-        Caption = 'Datos de compra'
-        TabOrder = 3
-        Height = 362
-        Width = 162
-        object Label14: TLabel
-          Left = 24
-          Top = 16
-          Width = 67
-          Height = 13
-          Caption = 'Fecha compra'
-          FocusControl = cxDBDateEdit2
-        end
-        object Label15: TLabel
-          Left = 24
-          Top = 56
-          Width = 29
-          Height = 13
-          Caption = 'Precio'
-          FocusControl = cxDBCurrencyEdit1
-        end
-        object Label16: TLabel
-          Left = 24
-          Top = 96
-          Width = 45
-          Height = 13
-          Caption = 'Impuesto'
-          FocusControl = cxDBCurrencyEdit2
-        end
-        object Label17: TLabel
-          Left = 24
-          Top = 136
-          Width = 24
-          Height = 13
-          Caption = 'Total'
-          FocusControl = cxDBCurrencyEdit3
-        end
-        object cxDBDateEdit2: TcxDBDateEdit
-          Left = 24
-          Top = 32
-          DataBinding.DataField = 'FechaCompra'
-          DataBinding.DataSource = DataSource
-          TabOrder = 0
-          Width = 121
-        end
-        object cxDBCurrencyEdit1: TcxDBCurrencyEdit
-          Left = 24
-          Top = 72
-          DataBinding.DataField = 'Precio'
-          DataBinding.DataSource = DataSource
-          TabOrder = 1
-          Width = 121
-        end
-        object cxDBCurrencyEdit2: TcxDBCurrencyEdit
-          Left = 24
-          Top = 112
-          DataBinding.DataField = 'Impuesto'
-          DataBinding.DataSource = DataSource
-          TabOrder = 2
-          Width = 121
-        end
-        object cxDBCurrencyEdit3: TcxDBCurrencyEdit
-          Left = 24
-          Top = 152
-          DataBinding.DataField = 'Total'
-          DataBinding.DataSource = DataSource
-          TabOrder = 3
-          Width = 121
-        end
-      end
       object cxGroupBox2: TcxGroupBox
-        Left = 423
+        Left = 583
         Top = 59
         Caption = 'Datos de importaci'#243'n'
-        TabOrder = 4
-        Height = 181
+        TabOrder = 3
+        Height = 148
         Width = 154
         object Label11: TLabel
           Left = 16
@@ -181,30 +109,30 @@ inherited frmProductosEdit: TfrmProductosEdit
       end
       object cxGroupBox3: TcxGroupBox
         Left = 423
-        Top = 242
+        Top = 59
         Caption = 'Depreciaci'#243'n contable'
-        TabOrder = 5
+        TabOrder = 4
         Height = 181
         Width = 154
         object Label18: TLabel
           Left = 16
-          Top = 16
-          Width = 115
+          Top = 24
+          Width = 118
           Height = 13
-          Caption = 'Porcentaje depreciaci'#243'n'
+          Caption = '% depreciaci'#243'n contable'
           FocusControl = cxDBCurrencyEdit4
         end
         object Label19: TLabel
           Left = 16
-          Top = 56
-          Width = 115
+          Top = 64
+          Width = 105
           Height = 13
-          Caption = 'Depreciaci'#243'n acumulada'
+          Caption = 'Depreciaci'#243'n contable'
           FocusControl = cxDBCurrencyEdit5
         end
         object Label20: TLabel
           Left = 16
-          Top = 96
+          Top = 104
           Width = 68
           Height = 13
           Caption = 'Valor contable'
@@ -212,25 +140,27 @@ inherited frmProductosEdit: TfrmProductosEdit
         end
         object cxDBCurrencyEdit4: TcxDBCurrencyEdit
           Left = 16
-          Top = 32
-          DataBinding.DataField = 'PorcentajeDepreciacion'
+          Top = 40
+          DataBinding.DataField = 'PorcentajeContable'
           DataBinding.DataSource = DataSource
           TabOrder = 0
           Width = 121
         end
         object cxDBCurrencyEdit5: TcxDBCurrencyEdit
           Left = 16
-          Top = 72
-          DataBinding.DataField = 'Depreciacion'
+          Top = 80
+          DataBinding.DataField = 'DepreciacionContable'
           DataBinding.DataSource = DataSource
+          Enabled = False
           TabOrder = 1
           Width = 121
         end
         object cxDBCurrencyEdit6: TcxDBCurrencyEdit
           Left = 16
-          Top = 112
+          Top = 120
           DataBinding.DataField = 'ValorContable'
           DataBinding.DataSource = DataSource
+          Enabled = False
           TabOrder = 2
           Width = 121
         end
@@ -375,28 +305,208 @@ inherited frmProductosEdit: TfrmProductosEdit
           TabOrder = 7
         end
       end
+      object cxGroupBox1: TcxGroupBox
+        Left = 255
+        Top = 59
+        Caption = 'Datos de compra'
+        TabOrder = 5
+        Height = 362
+        Width = 162
+        object Label14: TLabel
+          Left = 16
+          Top = 24
+          Width = 67
+          Height = 13
+          Caption = 'Fecha compra'
+          FocusControl = cxDBDateEdit2
+        end
+        object Label15: TLabel
+          Left = 16
+          Top = 64
+          Width = 29
+          Height = 13
+          Caption = 'Precio'
+          FocusControl = cxDBCurrencyEdit1
+        end
+        object Label16: TLabel
+          Left = 16
+          Top = 104
+          Width = 38
+          Height = 13
+          Caption = 'Moneda'
+          FocusControl = DBLookupComboBox5
+        end
+        object Label17: TLabel
+          Left = 16
+          Top = 144
+          Width = 71
+          Height = 13
+          Caption = 'Tipo de cambio'
+          FocusControl = cxDBCurrencyEdit2
+        end
+        object Label21: TLabel
+          Left = 16
+          Top = 184
+          Width = 94
+          Height = 13
+          Caption = 'Precio moneda local'
+          FocusControl = cxDBCurrencyEdit3
+        end
+        object Label22: TLabel
+          Left = 16
+          Top = 224
+          Width = 17
+          Height = 13
+          Caption = 'IVA'
+          FocusControl = cxDBCurrencyEdit7
+        end
+        object Label23: TLabel
+          Left = 16
+          Top = 264
+          Width = 54
+          Height = 13
+          Caption = 'Precio total'
+          FocusControl = cxDBCurrencyEdit8
+        end
+        object cxDBDateEdit2: TcxDBDateEdit
+          Left = 16
+          Top = 40
+          DataBinding.DataField = 'FechaCompra'
+          DataBinding.DataSource = DataSource
+          TabOrder = 0
+          Width = 121
+        end
+        object cxDBCurrencyEdit1: TcxDBCurrencyEdit
+          Left = 16
+          Top = 80
+          DataBinding.DataField = 'PrecioMoneda'
+          DataBinding.DataSource = DataSource
+          TabOrder = 1
+          Width = 121
+        end
+        object DBLookupComboBox5: TDBLookupComboBox
+          Left = 16
+          Top = 120
+          Width = 121
+          Height = 21
+          DataField = 'Moneda'
+          DataSource = DataSource
+          TabOrder = 2
+        end
+        object cxDBCurrencyEdit2: TcxDBCurrencyEdit
+          Left = 16
+          Top = 160
+          DataBinding.DataField = 'TipoCambio'
+          DataBinding.DataSource = DataSource
+          TabOrder = 3
+          Width = 121
+        end
+        object cxDBCurrencyEdit3: TcxDBCurrencyEdit
+          Left = 16
+          Top = 200
+          DataBinding.DataField = 'Precio'
+          DataBinding.DataSource = DataSource
+          Enabled = False
+          TabOrder = 4
+          Width = 121
+        end
+        object cxDBCurrencyEdit7: TcxDBCurrencyEdit
+          Left = 16
+          Top = 240
+          DataBinding.DataField = 'Impuesto'
+          DataBinding.DataSource = DataSource
+          Enabled = False
+          TabOrder = 5
+          Width = 121
+        end
+        object cxDBCurrencyEdit8: TcxDBCurrencyEdit
+          Left = 16
+          Top = 280
+          DataBinding.DataField = 'PrecioTotal'
+          DataBinding.DataSource = DataSource
+          Enabled = False
+          TabOrder = 6
+          Width = 121
+        end
+      end
+      object cxGroupBox5: TcxGroupBox
+        Left = 423
+        Top = 240
+        Caption = 'Depreciaci'#243'n comercial'
+        TabOrder = 6
+        Height = 181
+        Width = 154
+        object Label24: TLabel
+          Left = 16
+          Top = 24
+          Width = 121
+          Height = 13
+          Caption = '% depreciaci'#243'n comercial'
+          FocusControl = cxDBCurrencyEdit9
+        end
+        object Label25: TLabel
+          Left = 16
+          Top = 64
+          Width = 108
+          Height = 13
+          Caption = 'Depreciaci'#243'n comercial'
+          FocusControl = cxDBCurrencyEdit10
+        end
+        object Label26: TLabel
+          Left = 16
+          Top = 104
+          Width = 71
+          Height = 13
+          Caption = 'Valor comercial'
+          FocusControl = cxDBCurrencyEdit11
+        end
+        object cxDBCurrencyEdit9: TcxDBCurrencyEdit
+          Left = 16
+          Top = 40
+          DataBinding.DataField = 'PorcentajeComercial'
+          DataBinding.DataSource = DataSource
+          TabOrder = 0
+          Width = 121
+        end
+        object cxDBCurrencyEdit10: TcxDBCurrencyEdit
+          Left = 16
+          Top = 80
+          DataBinding.DataField = 'DepreciacionComercial'
+          DataBinding.DataSource = DataSource
+          Enabled = False
+          TabOrder = 1
+          Width = 121
+        end
+        object cxDBCurrencyEdit11: TcxDBCurrencyEdit
+          Left = 16
+          Top = 120
+          DataBinding.DataField = 'ValorComercial'
+          DataBinding.DataSource = DataSource
+          Enabled = False
+          TabOrder = 2
+          Width = 121
+        end
+      end
     end
     object tsDocumentos: TcxTabSheet
       Caption = 'Documentos'
       ImageIndex = 1
+      ExplicitWidth = 590
     end
   end
   inherited pmlMain: TPanel
     Top = 460
-    Width = 594
+    Width = 750
     ExplicitTop = 460
     ExplicitWidth = 594
     inherited btnCancel: TButton
-      Left = 512
+      Left = 668
       ExplicitLeft = 512
     end
     inherited btnOk: TButton
-      Left = 431
+      Left = 587
       ExplicitLeft = 431
     end
-  end
-  inherited DataSource: TDataSource
-    DataSet = dmProductos.adodsMaster
   end
   inherited cxImageList: TcxImageList
     FormatVersion = 1

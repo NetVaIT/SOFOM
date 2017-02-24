@@ -137,6 +137,7 @@ type
     adodsAmortizacionesMoratorioImpuesto: TFMTBCDField;
     actAbonarCapital: TAction;
     actGenerar: TAction;
+    actGetTipoCambio: TAction;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsAnexosPrecioMonedaChange(Sender: TField);
     procedure adodsAnexosNewRecord(DataSet: TDataSet);
@@ -155,6 +156,7 @@ type
     procedure actGenAmortizacionesExecute(Sender: TObject);
     procedure actCrearPagoInicialExecute(Sender: TObject);
     procedure actGenerarUpdate(Sender: TObject);
+    procedure actGetTipoCambioExecute(Sender: TObject);
   private
     { Private declarations }
     FPaymentTime: TPaymentTime;
@@ -182,7 +184,7 @@ implementation
 
 uses ContratosForm, AnexosForm, AnexosAmortizacionesForm,
   AnexosCreditosForm, _ConectionDmod, CotizacionesSeleccionarForm, _Utils,
-  AbonarCapitalDM;
+  AbonarCapitalDM, ConfiguracionDM;
 
 {$R *.dfm}
 
@@ -240,6 +242,15 @@ procedure TdmContratos.actGenerarUpdate(Sender: TObject);
 begin
   inherited;
   TAction(Sender).Enabled := not adodsAnexosPagoInicialCreado.Value;
+end;
+
+procedure TdmContratos.actGetTipoCambioExecute(Sender: TObject);
+begin
+  inherited;
+  if adodsAnexos.State in [dsEdit,dsInsert] then
+  begin
+    adodsAnexosTipoCambio.Value := dmConfiguracion.GetTipoCambio(adodsAnexosIdMoneda.Value)
+  end;
 end;
 
 procedure TdmContratos.actAbonarCapitalExecute(Sender: TObject);
@@ -472,6 +483,7 @@ begin
 //  gFormDeatil1.ApplyBestFit := False;
   gFormDeatil1.DataSet:= adodsAnexos;
   TfrmAnexos(gFormDeatil1).actGenerar := actGenerar;
+  TfrmAnexos(gFormDeatil1).actGetTipoCambio := actGetTipoCambio;
   if adodsCreditos.CommandText <> EmptyStr then adodsCreditos.Open;
   gFormDeatil2:= TfrmAnexosCreditos.Create(Self);
  // gFormDeatil2.ApplyBestFit := False;

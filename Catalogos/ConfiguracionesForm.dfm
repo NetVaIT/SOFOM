@@ -15,97 +15,28 @@ inherited frmConfiguraciones: TfrmConfiguraciones
           DataBinding.FieldName = 'IdMoneda'
           Visible = False
         end
-        object tvMasterIdMovimientoTipoNomina: TcxGridDBColumn
-          DataBinding.FieldName = 'IdMovimientoTipoNomina'
-          Visible = False
-        end
-        object tvMasterIdMovimientoTipoRetencion: TcxGridDBColumn
-          DataBinding.FieldName = 'IdMovimientoTipoRetencion'
-          Visible = False
-        end
-        object tvMasterIdMovimientoTipoPrestamo: TcxGridDBColumn
-          DataBinding.FieldName = 'IdMovimientoTipoPrestamo'
-          Visible = False
-        end
-        object tvMasterIdRolDescuento: TcxGridDBColumn
-          DataBinding.FieldName = 'IdRolDescuento'
-          Visible = False
-        end
-        object tvMasterIdMovimientoTipoDescuento: TcxGridDBColumn
-          DataBinding.FieldName = 'IdMovimientoTipoDescuento'
-          Visible = False
-        end
-        object tvMasterIdMetodoPagoCuentasXPagar: TcxGridDBColumn
-          DataBinding.FieldName = 'IdMetodoPagoCuentasXPagar'
-          Visible = False
-        end
-        object tvMasterIdMetodoPagoCuentasXPagarSAT: TcxGridDBColumn
-          DataBinding.FieldName = 'IdMetodoPagoCuentasXPagarSAT'
-          Visible = False
-        end
-        object tvMasterIdMetodoPagoFactura: TcxGridDBColumn
-          DataBinding.FieldName = 'IdMetodoPagoFactura'
-          Visible = False
-        end
-        object tvMasterIdMovimientoTipoTransporte: TcxGridDBColumn
-          DataBinding.FieldName = 'IdMovimientoTipoTransporte'
-          Visible = False
-        end
-        object tvMasterIdMovimientoTipoAportacion: TcxGridDBColumn
-          DataBinding.FieldName = 'IdMovimientoTipoAportacion'
-          Visible = False
-        end
         object tvMasterPais: TcxGridDBColumn
           DataBinding.FieldName = 'Pais'
-          Width = 250
+          Width = 200
         end
         object tvMasterMoneda: TcxGridDBColumn
           DataBinding.FieldName = 'Moneda'
-          Width = 250
-        end
-        object tvMasterMovimientoTipoNomina: TcxGridDBColumn
-          DataBinding.FieldName = 'MovimientoTipoNomina'
-          Width = 250
-        end
-        object tvMasterMovimientoTipoRetencion: TcxGridDBColumn
-          DataBinding.FieldName = 'MovimientoTipoRetencion'
-          Width = 250
-        end
-        object tvMasterMovimientoTipoPrestamo: TcxGridDBColumn
-          DataBinding.FieldName = 'MovimientoTipoPrestamo'
-          Width = 250
-        end
-        object tvMasterRolDescuento: TcxGridDBColumn
-          DataBinding.FieldName = 'RolDescuento'
-          Width = 250
-        end
-        object tvMasterMovimientoTipoDescuento: TcxGridDBColumn
-          DataBinding.FieldName = 'MovimientoTipoDescuento'
-          Width = 250
-        end
-        object tvMasterMovimientoTipoTransporte: TcxGridDBColumn
-          DataBinding.FieldName = 'MovimientoTipoTransporte'
-        end
-        object tvMasterMovimientoTipoAportacion: TcxGridDBColumn
-          DataBinding.FieldName = 'MovimientoTipoAportacion'
-        end
-        object tvMasterMetodoPagoCuentasXPagar: TcxGridDBColumn
-          DataBinding.FieldName = 'MetodoPagoCuentasXPagar'
-          Width = 250
-        end
-        object tvMasterMetodoPagoCuentasXPagarSAT: TcxGridDBColumn
-          DataBinding.FieldName = 'MetodoPagoCuentasXPagarSAT'
-          Width = 250
-        end
-        object tvMasterMetodoPagoFactura: TcxGridDBColumn
-          DataBinding.FieldName = 'MetodoPagoFactura'
-          Width = 250
+          Width = 200
         end
         object tvMasterRutaBaseFacturas: TcxGridDBColumn
           DataBinding.FieldName = 'RutaBaseFacturas'
+          Width = 200
         end
         object tvMasterRutaBasePagos: TcxGridDBColumn
           DataBinding.FieldName = 'RutaBasePagos'
+          Width = 200
+        end
+        object tvMasterUltimoFolioPago: TcxGridDBColumn
+          DataBinding.FieldName = 'UltimoFolioPago'
+          Width = 124
+        end
+        object tvMasterUltimaSeriePago: TcxGridDBColumn
+          DataBinding.FieldName = 'UltimaSeriePago'
         end
       end
     end
@@ -133,6 +64,7 @@ inherited frmConfiguraciones: TfrmConfiguraciones
   end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
+      ReportDocument.CreationDate = 42790.505809502310000000
       AssignedFormatValues = []
       BuiltInReportLink = True
     end

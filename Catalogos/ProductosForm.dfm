@@ -33,8 +33,7 @@ inherited frmProductos: TfrmProductos
     inherited cxGrid: TcxGrid
       Width = 645
       Height = 224
-      ExplicitLeft = 8
-      ExplicitTop = -3
+      ExplicitLeft = 56
       ExplicitWidth = 645
       ExplicitHeight = 224
       inherited tvMaster: TcxGridDBTableView
@@ -60,6 +59,10 @@ inherited frmProductos: TfrmProductos
         end
         object tvMasterIdProductoEstatus: TcxGridDBColumn
           DataBinding.FieldName = 'IdProductoEstatus'
+          Visible = False
+        end
+        object tvMasterIdMoneda: TcxGridDBColumn
+          DataBinding.FieldName = 'IdMoneda'
           Visible = False
         end
         object tvMasterIdentificador: TcxGridDBColumn
@@ -112,23 +115,42 @@ inherited frmProductos: TfrmProductos
         object tvMasterFechaCompra: TcxGridDBColumn
           DataBinding.FieldName = 'FechaCompra'
         end
+        object tvMasterPrecioMoneda: TcxGridDBColumn
+          DataBinding.FieldName = 'PrecioMoneda'
+        end
+        object tvMasterMoneda: TcxGridDBColumn
+          DataBinding.FieldName = 'Moneda'
+          Width = 121
+        end
+        object tvMasterTipoCambio: TcxGridDBColumn
+          DataBinding.FieldName = 'TipoCambio'
+        end
         object tvMasterPrecio: TcxGridDBColumn
           DataBinding.FieldName = 'Precio'
         end
         object tvMasterImpuesto: TcxGridDBColumn
           DataBinding.FieldName = 'Impuesto'
         end
-        object tvMasterTotal: TcxGridDBColumn
-          DataBinding.FieldName = 'Total'
+        object tvMasterPrecioTotal: TcxGridDBColumn
+          DataBinding.FieldName = 'PrecioTotal'
         end
-        object tvMasterPorcentajeDepreciacion: TcxGridDBColumn
-          DataBinding.FieldName = 'PorcentajeDepreciacion'
+        object tvMasterPorcentajeContable: TcxGridDBColumn
+          DataBinding.FieldName = 'PorcentajeContable'
         end
-        object tvMasterDepreciacion: TcxGridDBColumn
-          DataBinding.FieldName = 'Depreciacion'
+        object tvMasterDepreciacionContable: TcxGridDBColumn
+          DataBinding.FieldName = 'DepreciacionContable'
         end
         object tvMasterValorContable: TcxGridDBColumn
           DataBinding.FieldName = 'ValorContable'
+        end
+        object tvMasterPorcentajeComercial: TcxGridDBColumn
+          DataBinding.FieldName = 'PorcentajeComercial'
+        end
+        object tvMasterDepreciacionComercial: TcxGridDBColumn
+          DataBinding.FieldName = 'DepreciacionComercial'
+        end
+        object tvMasterValorComercial: TcxGridDBColumn
+          DataBinding.FieldName = 'ValorComercial'
         end
       end
     end
@@ -199,7 +221,7 @@ inherited frmProductos: TfrmProductos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42681.569967037040000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

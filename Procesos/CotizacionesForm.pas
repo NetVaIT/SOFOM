@@ -73,17 +73,19 @@ type
     dxbbAmortizaciones: TdxBarButton;
     dxbbCambiarEstatus: TdxBarButton;
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
+    { Private declarations }
     FactAmortizaciones: TBasicAction;
     FactCambiarEstatus: TBasicAction;
+    FactGetTipoCambio: TBasicAction;
     procedure SetactAmortizaciones(const Value: TBasicAction);
     procedure SetactCambiarEstatus(const Value: TBasicAction);
-    { Private declarations }
   public
     { Public declarations }
     property actAmortizaciones: TBasicAction read FactAmortizaciones write SetactAmortizaciones;
     property actCambiarEstatus: TBasicAction read FactCambiarEstatus write SetactCambiarEstatus;
-
+    property actGetTipoCambio: TBasicAction read FactGetTipoCambio write FactGetTipoCambio;
   end;
 
 implementation
@@ -98,6 +100,12 @@ procedure TfrmCotizaciones.FormCreate(Sender: TObject);
 begin
   inherited;
   gEditForm:= TfrmCotizacionesEdit.Create(Self);
+end;
+
+procedure TfrmCotizaciones.FormShow(Sender: TObject);
+begin
+  inherited;
+  TfrmCotizacionesEdit(gEditForm).actGetTipoCambio := actGetTipoCambio;
 end;
 
 procedure TfrmCotizaciones.SetactAmortizaciones(const Value: TBasicAction);
