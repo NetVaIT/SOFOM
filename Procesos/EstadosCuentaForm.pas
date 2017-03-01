@@ -43,18 +43,23 @@ type
     tvMasterSaldoVencido: TcxGridDBColumn;
     tvMasterIdContrato: TcxGridDBColumn;
     tvMasterFechaVencimiento: TcxGridDBColumn;
+    dxBrBtnPDFEstCta: TdxBarButton;
     procedure dxBarDtCmbFechaCorteChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
     FActEstadoCta: TBasicAction;
     fFechaCorte: TDAteTime;
+    FPDFEstadoCta: TBasicAction;
     procedure SetActEstadoCta(const Value: TBasicAction);
     function GetfFechaCorte: TDAteTime;
+    procedure SetPDFEstadoCta(const Value: TBasicAction);
     { Private declarations }
   public
     { Public declarations }
    property ActEstadoCta : TBasicAction read FActEstadoCta write SetActEstadoCta;
    Property AFechaCorte:TDAteTime read GetfFechaCorte write fFechaCorte;//Ene 10/17
+
+    property ActPDFEstadoCta : TBasicAction read FPDFEstadoCta write SetPDFEstadoCta;
   end;
 
 var
@@ -92,6 +97,13 @@ begin
   FActEstadoCta := Value;
   dxBrBtnActEstadoCTA.Action:=Value;
   dxBrBtnActEstadoCTA.ImageIndex:=17;
+end;
+
+procedure TFrmConEstadosCuenta.SetPDFEstadoCta(const Value: TBasicAction);
+begin
+  FPDFEstadoCta := Value;
+  dxBrBtnPDFEstCta.Action:=Value;
+  dxBrBtnPDFEstCta.ImageIndex:=18;
 end;
 
 end.

@@ -859,6 +859,21 @@
             <Form>frmAbonarCapitalEdit</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Standard\_ReportSOFOMDM.pas">
+            <Form>_dmReportSOFOM</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Reportes\PDFAntiguedadSaldosDM.pas">
+            <Form>dmAntiguedadSaldosPDF</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Reportes\PDFEStadoCuentaDM.pas">
+            <Form>dmRepEstadoCta</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

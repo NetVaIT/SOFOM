@@ -192,7 +192,10 @@ uses
   SeguimientoCobranzaDM in 'Procesos\SeguimientoCobranzaDM.pas' {dmSeguimientoCobranza: TDataModule},
   SeguimientoRegistroEd in 'Procesos\SeguimientoRegistroEd.pas' {FrmSeguimientoRegistro},
   AbonarCapitalDM in 'Procesos\AbonarCapitalDM.pas' {dmAbonarCapital: TDataModule},
-  AbonarCapitalEdit in 'Procesos\AbonarCapitalEdit.pas' {frmAbonarCapitalEdit};
+  AbonarCapitalEdit in 'Procesos\AbonarCapitalEdit.pas' {frmAbonarCapitalEdit},
+  _ReportSOFOMDM in 'Standard\_ReportSOFOMDM.pas' {_dmReportSOFOM: TDataModule},
+  PDFAntiguedadSaldosDM in 'Reportes\PDFAntiguedadSaldosDM.pas' {dmAntiguedadSaldosPDF: TDataModule},
+  PDFEStadoCuentaDM in 'Reportes\PDFEStadoCuentaDM.pas' {dmRepEstadoCta: TDataModule};
 
 {$R *.res}
 
@@ -204,5 +207,6 @@ begin
   Application.CreateForm(T_frmMain, _frmMain);
   Application.CreateForm(T_frmMainRibbon, _frmMainRibbon);
   Application.CreateForm(T_frmProgress, _frmProgress);
+  Application.CreateForm(T_dmReportSOFOM, _dmReportSOFOM);
   Application.Run;
 end.

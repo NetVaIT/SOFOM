@@ -1,7 +1,7 @@
 inherited dmEstadosCuenta: TdmEstadosCuenta
   OldCreateOrder = True
   Height = 432
-  Width = 465
+  Width = 668
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     AfterOpen = adodsMasterAfterOpen
@@ -69,6 +69,10 @@ inherited dmEstadosCuenta: TdmEstadosCuenta
     object ActActualizaEstadoCta: TAction
       Caption = 'ActActualizaEstadoCta'
       OnExecute = ActActualizaEstadoCtaExecute
+    end
+    object ActPDFEstadoCuenta: TAction
+      Caption = 'Impresi'#243'n Estado Cuenta'
+      OnExecute = ActPDFEstadoCuentaExecute
     end
   end
   object AdoDtStEstadoCtaDetalle: TADODataSet

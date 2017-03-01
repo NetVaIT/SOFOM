@@ -63,15 +63,25 @@ type
     tvMasterIDContrato: TcxGridDBColumn;
     tvMasterTipoContrato: TcxGridDBColumn;
     tvMasterIdContratoTipo: TcxGridDBColumn;
+    dxBrBtnPDF: TdxBarButton;
     procedure SpdBtnConsultaClick(Sender: TObject);
     procedure EdtNombreKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
-    { Private declarations }
+    FAFecIni: TDateTime;
+    FAFecFin: TDateTime;
+    FPDFAntigSaldos: TBasicAction;
+    function GetFAFecIni: TDateTime;
+    function GetFAFecFin: TDateTime;
+    procedure SetPDFAntigSaldos(const Value: TBasicAction);
+       { Private declarations }
   public
     { Public declarations }
+     property AFecIni :TDateTime read GetFAFecIni write FAFecIni;
+     property AFecFin :TDateTime read GetFAFecFin write FAFecFin;
+     Property ActPDFAntSaldos: TBasicAction read FPDFAntigSaldos write SetPDFAntigSaldos;
   end;
 
 var
@@ -122,9 +132,29 @@ begin
   actFullColapseGroup.Execute; //Feb 22/17
 end;
 
+function TfrmRptAntiguedadSaldos.GetFAFecFin: TDateTime;
+begin                         //Mar1/17
+  FAFecFin:= cxDtEdtFin.Date+1;
+  Result := FAFecFin;
+end;
+
+function TfrmRptAntiguedadSaldos.GetFAFecIni: TDateTime;
+begin                           //Mar1/17
+  FAFecIni:=cxDtEdtInicio.Date;
+  Result := FAFecIni;
+end;
+
+
+procedure TfrmRptAntiguedadSaldos.SetPDFAntigSaldos(const Value: TBasicAction);
+begin
+  FPDFAntigSaldos := Value;
+  dxBrBtnPDF.Action:=Value;
+  dxBrBtnPDF.ImageIndex:=17;
+end;
+
 procedure TfrmRptAntiguedadSaldos.SpdBtnConsultaClick(Sender: TObject);
 const
-   TxtSQL=' SELECT     Cc.IdCuentaXCobrar, cc.IDAnexo, Cc.Fecha, Cc.IdPersona, cc.IdCuentaXCobrarEstatus, Cc.Total, CC.Saldo,'
+   TxtSQL=' SELECT     Cc.IdCuentaXCobrar, cc.IDAnexo, A.IdContrato, Con.IdContratoTipo, CT.Identificador as TC, ct.Descripcion as TipoContrato,Cc.Fecha, Cc.IdPersona, cc.IdCuentaXCobrarEstatus, Cc.Total, CC.Saldo,'
          +' PR.RazonSocial AS Cliente, CASE WHEN getdate() - Cc.Fecha < 30 THEN Cc.Saldo END AS ''Vigentes'','
          +' CASE WHEN (getdate() - Cc.Fecha < 60 ) AND (getdate() - Cc.Fecha >= 30 )'
          +' THEN Cc.Saldo END AS ''Vencidos a 30 días'', CASE WHEN (getdate() - Cc.Fecha < 90 ) AND (getdate()'
@@ -133,6 +163,9 @@ const
          +'  - Cc.Fecha >= 120 THEN Cc.Saldo END AS ''Vencidos más de 90 días'''
 
          +' FROM         CuentasXCobrar AS Cc INNER JOIN  Personas AS PR ON Cc.IdPersona = PR.IdPersona '
+         +'             left join  Anexos As A ON Cc.IdAnexo=A.IdAnexo      '
+         +'             inner join Contratos as Con ON A.IdContrato=Con.IdContrato'
+         +'             inner join ContratosTipos as CT On Con.IdContratoTipo =CT.IdContratoTipo '
          +' WHERE   (Cc.Saldo > 0)  '; //deshabilitado mientras dic 28/16    AND
 
 

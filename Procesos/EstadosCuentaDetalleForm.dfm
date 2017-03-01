@@ -119,7 +119,6 @@ inherited FrmConEstadoCtaDetalle: TFrmConEstadoCtaDetalle
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42744.402549120370000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end
