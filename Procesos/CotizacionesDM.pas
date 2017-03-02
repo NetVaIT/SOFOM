@@ -113,7 +113,7 @@ implementation
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
 uses CotizacionesForm, _ConectionDmod, CotizacionesCreditosForm, _Utils,
-  ConfiguracionDM;
+ ConfiguracionDM;
 
 {$R *.dfm}
 

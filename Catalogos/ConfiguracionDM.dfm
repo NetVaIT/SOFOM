@@ -55,7 +55,7 @@ inherited dmConfiguracion: TdmConfiguracion
       FieldName = 'UltimaSeriePago'
     end
   end
-  object adoqGetIdPeriodoActual: TADOQuery [1]
+  object adoqGetIdPeriodoActual: TADOQuery
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     Parameters = <>
@@ -68,7 +68,7 @@ inherited dmConfiguracion: TdmConfiguracion
       ReadOnly = True
     end
   end
-  object adoqGetRutaBaseFacturas: TADOQuery [2]
+  object adoqGetRutaBaseFacturas: TADOQuery
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     Parameters = <>
@@ -82,8 +82,7 @@ inherited dmConfiguracion: TdmConfiguracion
       Size = 250
     end
   end
-  object adodsPaises: TADODataSet [3]
-    Active = True
+  object adodsPaises: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdPais, Descripcion from Paises'
@@ -91,16 +90,15 @@ inherited dmConfiguracion: TdmConfiguracion
     Left = 104
     Top = 16
   end
-  object adodsMonedas: TADODataSet [4]
-    Active = True
+  object adodsMonedas: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdMoneda, Descripcion from Monedas'
     Parameters = <>
-    Left = 104
+    Left = 112
     Top = 64
   end
-  object adoqGetRutaBasePagos: TADOQuery [5]
+  object adoqGetRutaBasePagos: TADOQuery
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     Parameters = <>
@@ -114,7 +112,7 @@ inherited dmConfiguracion: TdmConfiguracion
       Size = 250
     end
   end
-  object adoqGetDiaPagoActual: TADOQuery [6]
+  object adoqGetDiaPagoActual: TADOQuery
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     Parameters = <>
@@ -129,7 +127,7 @@ inherited dmConfiguracion: TdmConfiguracion
       ReadOnly = True
     end
   end
-  object adoqTipoCambio: TADOQuery [7]
+  object adoqTipoCambio: TADOQuery
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     Parameters = <

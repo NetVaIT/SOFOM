@@ -17,6 +17,7 @@ inherited dmRepEstadoCta: TdmRepEstadoCta
         Size = 4
         Value = Null
       end>
+    Top = 16
     object adodsReportIdEstadoCuenta: TAutoIncField
       FieldName = 'IdEstadoCuenta'
       ReadOnly = True
@@ -681,7 +682,6 @@ inherited dmRepEstadoCta: TdmRepEstadoCta
     Top = 96
   end
   object ADORepDetalle: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -751,93 +751,6 @@ inherited dmRepEstadoCta: TdmRepEstadoCta
     Left = 168
     Top = 88
     MasterDataPipelineName = 'dbpReport'
-    object ppDBPplnDetalleppField1: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdEstadoCuentaDetalle'
-      FieldName = 'IdEstadoCuentaDetalle'
-      FieldLength = 0
-      DataType = dtLongint
-      DisplayWidth = 0
-      Position = 0
-    end
-    object ppDBPplnDetalleppField2: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdEstadoCuenta'
-      FieldName = 'IdEstadoCuenta'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 1
-    end
-    object ppDBPplnDetalleppField3: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdAnexo'
-      FieldName = 'IdAnexo'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 2
-    end
-    object ppDBPplnDetalleppField4: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdCuentaXCobrar'
-      FieldName = 'IdCuentaXCobrar'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 3
-    end
-    object ppDBPplnDetalleppField5: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdCuentaXCobrarDetalle'
-      FieldName = 'IdCuentaXCobrarDetalle'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 4
-    end
-    object ppDBPplnDetalleppField6: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdPagoAplicacion'
-      FieldName = 'IdPagoAplicacion'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 5
-    end
-    object ppDBPplnDetalleppField7: TppField
-      FieldAlias = 'FechaMovimiento'
-      FieldName = 'FechaMovimiento'
-      FieldLength = 0
-      DataType = dtDateTime
-      DisplayWidth = 18
-      Position = 6
-    end
-    object ppDBPplnDetalleppField8: TppField
-      FieldAlias = 'Concepto'
-      FieldName = 'Concepto'
-      FieldLength = 150
-      DisplayWidth = 150
-      Position = 7
-    end
-    object ppDBPplnDetalleppField9: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'Cargos'
-      FieldName = 'Cargos'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 19
-      Position = 8
-    end
-    object ppDBPplnDetalleppField10: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'Abonos'
-      FieldName = 'Abonos'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 19
-      Position = 9
-    end
   end
   object dsDetalle: TDataSource
     DataSet = ADORepDetalle

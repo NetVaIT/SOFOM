@@ -195,7 +195,10 @@ uses
   AbonarCapitalEdit in 'Procesos\AbonarCapitalEdit.pas' {frmAbonarCapitalEdit},
   _ReportSOFOMDM in 'Standard\_ReportSOFOMDM.pas' {_dmReportSOFOM: TDataModule},
   PDFAntiguedadSaldosDM in 'Reportes\PDFAntiguedadSaldosDM.pas' {dmAntiguedadSaldosPDF: TDataModule},
-  PDFEStadoCuentaDM in 'Reportes\PDFEStadoCuentaDM.pas' {dmRepEstadoCta: TDataModule};
+  PDFEStadoCuentaDM in 'Reportes\PDFEStadoCuentaDM.pas' {dmRepEstadoCta: TDataModule},
+  ConfiguracionDM in 'Catalogos\ConfiguracionDM.pas' {dmConfiguracion: TDataModule},
+  ConfiguracionesEdit in 'Catalogos\ConfiguracionesEdit.pas' {frmConfiguracionesEdit},
+  ConfiguracionesForm in 'Catalogos\ConfiguracionesForm.pas' {frmConfiguraciones};
 
 {$R *.res}
 

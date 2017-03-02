@@ -56,6 +56,16 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
             Kind = skSum
             Position = spFooter
             Column = tvMasterVencidosmsde90das
+          end
+          item
+            Kind = skSum
+            Position = spFooter
+            Column = tvMasterIDContrato
+          end
+          item
+            Kind = skSum
+            Position = spFooter
+            Column = tvMasterIDAnexo
           end>
         DataController.Summary.FooterSummaryItems = <
           item
@@ -113,6 +123,8 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
         object tvMasterIDContrato: TcxGridDBColumn
           Caption = 'No.Contrato'
           DataBinding.FieldName = 'IDContrato'
+          Visible = False
+          GroupIndex = 1
           Width = 67
         end
         object tvMasterTipoContrato: TcxGridDBColumn
@@ -121,6 +133,8 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
         end
         object tvMasterIDAnexo: TcxGridDBColumn
           DataBinding.FieldName = 'IDAnexo'
+          Visible = False
+          GroupIndex = 2
         end
         object tvMasterIdCuentaXCobrar: TcxGridDBColumn
           DataBinding.FieldName = 'IdCuentaXCobrar'
