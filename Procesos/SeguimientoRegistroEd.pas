@@ -5,8 +5,22 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.DBCtrls, Vcl.StdCtrls,
-  Vcl.CheckLst, RxDBCtrl, Vcl.DBCGrids, Vcl.Mask, RxToolEdit, Vcl.Grids,
-  Vcl.DBGrids, Vcl.Buttons, Data.DB,Data.Win.ADODB, Vcl.Menus, Math;
+  Vcl.CheckLst, RxDBCtrl, Vcl.DBCGrids, Vcl.Mask,  Vcl.Grids,
+  Vcl.DBGrids, Vcl.Buttons, Data.DB,Data.Win.ADODB, Vcl.Menus, Math, cxGraphics,
+  cxControls, cxLookAndFeels, cxLookAndFeelPainters, cxContainer, cxEdit,
+  dxSkinsCore, dxSkinBlack, dxSkinBlue, dxSkinBlueprint, dxSkinCaramel,
+  dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide, dxSkinDevExpressDarkStyle,
+  dxSkinDevExpressStyle, dxSkinFoggy, dxSkinGlassOceans, dxSkinHighContrast,
+  dxSkiniMaginary, dxSkinLilian, dxSkinLiquidSky, dxSkinLondonLiquidSky,
+  dxSkinMcSkin, dxSkinMoneyTwins, dxSkinOffice2007Black, dxSkinOffice2007Blue,
+  dxSkinOffice2007Green, dxSkinOffice2007Pink, dxSkinOffice2007Silver,
+  dxSkinOffice2010Black, dxSkinOffice2010Blue, dxSkinOffice2010Silver,
+  dxSkinOffice2013White, dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic,
+  dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringTime, dxSkinStardust,
+  dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
+  dxSkinValentine, dxSkinVS2010, dxSkinWhiteprint, dxSkinXmas2008Blue,
+  cxTextEdit, cxMaskEdit, cxDropDownEdit, cxCalendar, cxDBEdit, Vcl.ComCtrls,
+  dxCore, cxDateUtils;
 
 type
   TArrDinamico= array of integer;
@@ -26,8 +40,6 @@ type
     Label27: TLabel;
     SpdBtnRegreso: TSpeedButton;
     SpdBtnFiltroDias: TSpeedButton;
-    DtTmDesde: TDateEdit;
-    DtTmHasta: TDateEdit;
     GridDatos: TDBGrid;
     Pnlinferior: TPanel;
     DBCtrlGrdDatos: TDBCtrlGrid;
@@ -58,7 +70,6 @@ type
     Label22: TLabel;
     Label23: TLabel;
     DBText17: TDBText;
-    c5: TDBDateEdit;
     DBMemo1: TDBMemo;
     DBRdGrpEstado: TDBRadioGroup;
     DBEdit1: TDBEdit;
@@ -83,6 +94,9 @@ type
     PpUpMnCopia: TPopupMenu;
     CrearCopia1: TMenuItem;
     AgregaIncidencia1: TMenuItem;
+    C5: TcxDBDateEdit;
+    DtTmDesde: TcxDateEdit;
+    DtTmHasta: TcxDateEdit;
     procedure SpdBtnConsultarxClick(Sender: TObject);
     procedure SpdBtnLimpiarClick(Sender: TObject);
     procedure SpdBtncontactoHoyClick(Sender: TObject);

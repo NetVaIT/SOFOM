@@ -378,16 +378,19 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
           item
             Expanded = False
             FieldName = 'Proxcontacto'
+            Width = 64
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'RegContacto'
+            Width = 64
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'Acuerdo'
+            Width = 64
             Visible = True
           end
           item
@@ -398,16 +401,19 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
           item
             Expanded = False
             FieldName = 'PromesaPago'
+            Width = 64
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'EstadoIncidencia'
+            Width = 64
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'UsuarioReg'
+            Width = 64
             Visible = True
           end>
       end
@@ -481,21 +487,17 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
           ShowHint = True
           OnClick = SpdBtnFiltroDiasClick
         end
-        object DtTmDesde: TDateEdit
-          Left = 49
+        object DtTmDesde: TcxDateEdit
+          Left = 52
           Top = 2
-          Width = 121
-          Height = 21
-          NumGlyphs = 2
           TabOrder = 0
+          Width = 130
         end
-        object DtTmHasta: TDateEdit
-          Left = 224
+        object DtTmHasta: TcxDateEdit
+          Left = 222
           Top = 2
-          Width = 121
-          Height = 21
-          NumGlyphs = 2
           TabOrder = 1
+          Width = 123
         end
       end
     end
@@ -579,6 +581,7 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
         item
           Expanded = False
           FieldName = 'Saldo'
+          Width = 64
           Visible = True
         end
         item
@@ -596,6 +599,7 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
         item
           Expanded = False
           FieldName = 'Folio'
+          Width = 64
           Visible = True
         end
         item
@@ -623,11 +627,13 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
         item
           Expanded = False
           FieldName = 'CapitalCobrado'
+          Width = 64
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'SaldoInsoluto'
+          Width = 64
           Visible = True
         end>
     end
@@ -980,27 +986,6 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
         DataField = 'Condiciones'
         Visible = False
       end
-      object c5: TDBDateEdit
-        Left = 258
-        Top = 78
-        Width = 104
-        Height = 21
-        Margins.Left = 1
-        Margins.Top = 1
-        DataField = 'Proxcontacto'
-        DataSource = DSIncidencias
-        DialogTitle = 'Seleccione una fecha'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Height = -11
-        Font.Name = 'MS Sans Serif'
-        Font.Style = [fsBold]
-        NumGlyphs = 2
-        ParentFont = False
-        TabOrder = 0
-        WeekendColor = clBlue
-        YearDigits = dyFour
-      end
       object DBMemo1: TDBMemo
         Left = 26
         Top = 128
@@ -1008,7 +993,7 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
         Height = 102
         DataField = 'Acuerdo'
         DataSource = DSIncidencias
-        TabOrder = 2
+        TabOrder = 1
       end
       object DBRdGrpEstado: TDBRadioGroup
         Left = 367
@@ -1026,7 +1011,7 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
           'Abierta'
           'Cerrada')
         ParentFont = False
-        TabOrder = 3
+        TabOrder = 2
         Values.Strings = (
           '1'
           '2')
@@ -1038,7 +1023,7 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
         Height = 21
         DataField = 'RegContacto'
         DataSource = DSIncidencias
-        TabOrder = 4
+        TabOrder = 3
       end
       object LstBxFolios: TListBox
         Left = 336
@@ -1047,7 +1032,7 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
         Height = 102
         ItemHeight = 13
         PopupMenu = PpUpMnFolios
-        TabOrder = 5
+        TabOrder = 4
       end
       object LSTBxIDDocs: TListBox
         Left = 243
@@ -1055,7 +1040,7 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
         Width = 87
         Height = 102
         ItemHeight = 13
-        TabOrder = 1
+        TabOrder = 0
         Visible = False
       end
       object ChckLstBxCondiciones: TCheckListBox
@@ -1081,20 +1066,28 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
           'Falta Autorizaci'#243'n'
           'Cobro Dif'#237'cil')
         ParentFont = False
-        TabOrder = 6
+        TabOrder = 5
         OnClick = ChckLstBxCondicionesClick
       end
       object DBChckBxPtomPago: TDBCheckBox
-        Left = 368
-        Top = 80
+        Left = 385
+        Top = 79
         Width = 97
         Height = 17
         Caption = 'Promesa Pago'
         DataField = 'PromesaPago'
         DataSource = DSIncidencias
-        TabOrder = 7
+        TabOrder = 6
         ValueChecked = 'Si'
         ValueUnchecked = 'No'
+      end
+      object C5: TcxDBDateEdit
+        Left = 258
+        Top = 79
+        DataBinding.DataField = 'Proxcontacto'
+        DataBinding.DataSource = DSIncidencias
+        TabOrder = 7
+        Width = 121
       end
     end
     object PnlNavIncid: TPanel
