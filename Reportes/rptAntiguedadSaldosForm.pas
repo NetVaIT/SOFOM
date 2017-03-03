@@ -64,6 +64,7 @@ type
     tvMasterTipoContrato: TcxGridDBColumn;
     tvMasterIdContratoTipo: TcxGridDBColumn;
     dxBrBtnPDF: TdxBarButton;
+    dxBrBtnAntXCliente: TdxBarButton;
     procedure SpdBtnConsultaClick(Sender: TObject);
     procedure EdtNombreKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
@@ -73,15 +74,18 @@ type
     FAFecIni: TDateTime;
     FAFecFin: TDateTime;
     FPDFAntigSaldos: TBasicAction;
+    FPDFAntiXcliente: TBasicAction;
     function GetFAFecIni: TDateTime;
     function GetFAFecFin: TDateTime;
     procedure SetPDFAntigSaldos(const Value: TBasicAction);
+    procedure SetPDFAntXCliente(const Value: TBasicAction);
        { Private declarations }
   public
     { Public declarations }
      property AFecIni :TDateTime read GetFAFecIni write FAFecIni;
      property AFecFin :TDateTime read GetFAFecFin write FAFecFin;
      Property ActPDFAntSaldos: TBasicAction read FPDFAntigSaldos write SetPDFAntigSaldos;
+     Property ActPDFAntXCliente: TBasicAction read FPDFAntiXcliente write SetPDFAntXCliente;
   end;
 
 var
@@ -150,6 +154,13 @@ begin
   FPDFAntigSaldos := Value;
   dxBrBtnPDF.Action:=Value;
   dxBrBtnPDF.ImageIndex:=17;
+end;
+
+procedure TfrmRptAntiguedadSaldos.SetPDFAntXCliente(const Value: TBasicAction);
+begin
+  FPDFAntiXcliente := Value;
+  dxBrBtnAntXCliente.Action:=Value;
+  dxBrBtnAntXCliente.ImageIndex:=18;
 end;
 
 procedure TfrmRptAntiguedadSaldos.SpdBtnConsultaClick(Sender: TObject);

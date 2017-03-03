@@ -114,5 +114,9 @@
       Caption = 'Antiguedad Saldos PDF'
       OnExecute = ActGenPDFAntigSaldosExecute
     end
+    object ActPDFAntiguedadXCliente: TAction
+      Caption = 'ActPDFAntiguedadXCliente'
+      OnExecute = ActPDFAntiguedadXClienteExecute
+    end
   end
 end

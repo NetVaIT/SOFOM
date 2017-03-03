@@ -67,6 +67,44 @@ type
     ppDBCalc10: TppDBCalc;
     ppLine4: TppLine;
     ppLabel12: TppLabel;
+    ADODtStAntXCliente: TADODataSet;
+    DSAntXCliente: TDataSource;
+    ppDBAntXCliente: TppDBPipeline;
+    ppRprtAntXCliente: TppReport;
+    ppTitleBand2: TppTitleBand;
+    ppLblTitulo2: TppLabel;
+    ppImage2: TppImage;
+    ppHeaderBand2: TppHeaderBand;
+    ppLabel14: TppLabel;
+    ppDBText11: TppDBText;
+    ppLabel19: TppLabel;
+    ppLabel20: TppLabel;
+    ppLabel21: TppLabel;
+    ppLabel22: TppLabel;
+    ppLabel23: TppLabel;
+    ppLine5: TppLine;
+    ppLine6: TppLine;
+    ppDetailBand2: TppDetailBand;
+    ppDBText16: TppDBText;
+    ppDBText17: TppDBText;
+    ppDBText18: TppDBText;
+    ppDBText19: TppDBText;
+    ppDBText20: TppDBText;
+    ppFooterBand2: TppFooterBand;
+    ppLine7: TppLine;
+    ppSystemVariable1: TppSystemVariable;
+    ppSystemVariable2: TppSystemVariable;
+    ppSummaryBand2: TppSummaryBand;
+    ppDBCalc11: TppDBCalc;
+    ppDBCalc12: TppDBCalc;
+    ppDBCalc13: TppDBCalc;
+    ppDBCalc14: TppDBCalc;
+    ppDBCalc15: TppDBCalc;
+    ppLine8: TppLine;
+    ppLabel24: TppLabel;
+    ppDesignLayers2: TppDesignLayers;
+    ppDesignLayer2: TppDesignLayer;
+    ppParameterList2: TppParameterList;
   private
     { Private declarations }
   public

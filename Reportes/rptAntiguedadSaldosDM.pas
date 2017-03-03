@@ -26,8 +26,10 @@ type
     adodsMasterTipoContrato: TStringField;
     ActGenPDFAntigSaldos: TAction;
     adodsMasterTC: TStringField;
+    ActPDFAntiguedadXCliente: TAction;
     procedure DataModuleCreate(Sender: TObject);
     procedure ActGenPDFAntigSaldosExecute(Sender: TObject);
+    procedure ActPDFAntiguedadXClienteExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -52,7 +54,6 @@ var
   ArchiPDF:TFileName;
   Texto,TxtSQL:String;
   FechaIni, FechaFin:TDAteTime;
-  IDEstadoCta:Integer;
 begin
   inherited;
   TxtSQL:= adodsMaster.CommandText;
@@ -90,6 +91,62 @@ end;
 
 
 
+procedure TdmRptAntiguedadSaldos.ActPDFAntiguedadXClienteExecute(
+  Sender: TObject);
+var
+  dmAntiguedadSaldosPDF:TdmAntiguedadSaldosPDF;
+  ArchiPDF:TFileName;
+  Texto,TxtSQL, GrupoSQL, Fecha:String;
+  FechaIni, FechaFin:TDAteTime;
+begin
+  inherited;
+  TxtSQL:= 'SElect Cliente, Sum (vigentes)as TotalVigentes, SUM ("vencidos a 30 días") as Total30Dias,'
+          +' SUM ("vencidos a 60 días") as Total60Dias, SUM ("vencidos a 90 días") as Total90Dias ,'
+          +'SUM ("vencidos más de 90 días") as TotalMas90Dias  from Vw_AntiguedadSaldosCXC ';
+  Fecha:= ' where fecha>=:Fini and fecha<=:Ffin ';
+  GrupoSQL:=' Group BY Cliente'; //adodsMaster.CommandText; ver si se le coloca Fecha
+
+  FechaIni:=  TfrmrptantiguedadSaldos(gGridForm).AFecIni;
+  FechaFin:=  TfrmrptantiguedadSaldos(gGridForm).AFecFin;
+  TExto:= adodsMaster.CommandText;
+  if pos(':FIni',Texto)>0 then   //REvisa si hizo consulta por fecha Mar 2/17
+     TxtSQL:=TxtSQL+Fecha;
+  TxtSQL:=TxtSQL +GrupoSQL;
+
+  TExto:= '_' +FormatDateTime('ddmmmyyyy',Date);
+  ArchiPDF:='AntiguedadXCliente'+Texto+'.PDF';
+  dmAntiguedadSaldosPDF:= TdmAntiguedadSaldosPDF.Create(Self);
+  try
+     dmAntiguedadSaldosPDF.DSAntXCliente.DataSet.Close;
+     TAdoDAtaset(dmAntiguedadSaldosPDF.DSAntXCliente.DataSet).CommandText:=  TxtSQL;
+    if pos(':FIni',TxtSQL)>0 then
+    begin
+      TADoDAtaset(dmAntiguedadSaldosPDF.DSAntXCliente.DataSet).Parameters.ParamByName('Fini').Value:= FechaIni;
+      TADoDAtaset(dmAntiguedadSaldosPDF.DSAntXCliente.DataSet).Parameters.ParamByName('FFin').Value:= FechaFin;
+      TExto:= ' DEL ' + DAteToSTR(FEchaIni) + ' AL '+ DAteToSTR(FEchaFin);//+FormatDateTime('mmm-dd-yyyy',FechaIni)+ ' AL: '+FormatDateTime('dd mmm del aaaa',FechaFin);
+    end
+    else
+      TExto:=  'AL '+upperCASE(FormatDateTime('dd ''de'' mmmm ''del'' yyyy',Date));
+
+    dmAntiguedadSaldosPDF.DSAntXCliente.DataSet.Open;
+
+    dmAntiguedadSaldosPDF.ppRprtAntXCliente.ShowPrintDialog:= False;
+    dmAntiguedadSaldosPDF.ppRprtAntXCliente.ShowCancelDialog:= False;
+    dmAntiguedadSaldosPDF.ppRprtAntXCliente.PrinterSetup.DocumentName:=  'ANTIGUEDAD DE SALDOS POR CLIENTE '+#13 +Texto;
+
+    dmAntiguedadSaldosPDF.ppRprtAntXCliente.DeviceType:= 'PDF';
+    dmAntiguedadSaldosPDF.ppRprtAntXCliente.TextFileName:= ArchiPDF;
+    dmAntiguedadSaldosPDF.ppLblTitulo2.caption:= 'ANTIGUEDAD DE SALDOS POR CLIENTE '+#13 +Texto;
+    dmAntiguedadSaldosPDF.ppRprtAntXCliente.print;
+
+     dmAntiguedadSaldosPDF.DSAntXCliente.DataSet.Close;
+  finally
+    dmAntiguedadSaldosPDF.Free;
+  end;
+  if FileExists(ArchiPDF) then
+      ShellExecute(application.Handle, 'open', PChar(ArchiPDF), nil, nil, SW_SHOWNORMAL);
+end;
+
 procedure TdmRptAntiguedadSaldos.DataModuleCreate(Sender: TObject);
 begin
   inherited;
@@ -97,7 +154,7 @@ begin
   gGridForm.DataSet:= adodsMaster;
   gGridForm.ReadOnlyGrid:= True;
   TfrmrptantiguedadSaldos(gGridForm).ActPDFAntSaldos:=ActGenPDFAntigSaldos;
-
+  TfrmrptantiguedadSaldos(gGridForm).ActPDFAntXCliente:=ActPDFAntiguedadXCliente;
 end;
 
 
