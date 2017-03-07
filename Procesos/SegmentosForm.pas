@@ -42,7 +42,6 @@ type
     tvMasterRecId: TcxGridDBColumn;
     tvMasterSegmento: TcxGridDBColumn;
     tvMasterPeriodo: TcxGridDBColumn;
-    tvMasterFecha: TcxGridDBColumn;
     tvMasterSaldoInicial: TcxGridDBColumn;
     tvMasterTasaAnual: TcxGridDBColumn;
     tvMasterPago: TcxGridDBColumn;
@@ -58,6 +57,8 @@ type
     cxBarEditItem2: TcxBarEditItem;
     edtImpactoISR: TcxBarEditItem;
     tvMasterImpactoISR: TcxGridDBColumn;
+    tvMasterFechaCorte: TcxGridDBColumn;
+    tvMasterFechaVencimiento: TcxGridDBColumn;
   private
     { Private declarations }
     FactCalcular: TBasicAction;

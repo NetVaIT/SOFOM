@@ -323,6 +323,7 @@ type
     ADODtStDetalleCXCMostrarSaldo: TFMTBCDField;
     ADODtStDetalleCXCMostrarPagosAplicadosFactoraje: TFMTBCDField;
     ADODtStDetalleCXCMostrarSaldoFactoraje: TFMTBCDField;
+    actAbonarCapital: TAction;
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsMasterAfterPost(DataSet: TDataSet);
     procedure adodsMasterBeforePost(DataSet: TDataSet);
@@ -338,6 +339,7 @@ type
     procedure ADODtStPrefacturasCFDIAfterOpen(DataSet: TDataSet);
     procedure ADODtStCFDIConceptosPrefNewRecord(DataSet: TDataSet);
     procedure ADODtStPagosAuxiliarNewRecord(DataSet: TDataSet);
+    procedure actAbonarCapitalExecute(Sender: TObject);
   private
     { Private declarations }
     Inserto:Boolean;
@@ -366,7 +368,7 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses PagosForm, FacturasDM, _ConectionDmod;
+uses PagosForm, FacturasDM, _ConectionDmod, AbonarCapitalDM;
 
 {$R *.dfm}
 
@@ -685,6 +687,19 @@ begin
 
   Except
     Raise;
+  end;
+end;
+
+procedure TdmPagos.actAbonarCapitalExecute(Sender: TObject);
+var
+  dmAbonarCapital: TdmAbonarCapital;
+begin
+  inherited;
+  dmAbonarCapital := TdmAbonarCapital.Create(Self);
+  try
+    dmAbonarCapital.Execute;
+  finally
+    dmAbonarCapital.Free;
   end;
 end;
 
@@ -1203,18 +1218,17 @@ begin
   inherited;
 //  if ADODtStCFDIConceptos.CommandText <> EmptyStr then ADODtStCFDIConceptos.Open;
   gGridForm:= TFrmConPagos.Create(Self);
+  gGridForm.DataSet:= adodsMaster;
   TFrmConPagos(gGridForm).DSAplicacion.DataSet:=ADODtStAplicacionesPagos;
   TFrmConPagos(gGridForm).ActFacturaMorato:=ActGeneraPrefMoratorios;
-  gGridForm.DataSet:= adodsMaster;
+  TFrmConPagos(gGridForm).actAbonarCapital := actAbonarCapital;
   TFrmConPagos(gGridForm).dsPersonas.dataset:=adosPersonas;
-
     //Agregado Feb 16/17
    TFrmConPagos(gGridForm).DSDetallesCXC.dataset:= ADODtStCxCDetallePend;
    TFrmConPagos(gGridForm).dsConCXCPendientes.DataSet:=ADODtStCXCPendientes;
    TFrmConPagos(gGridForm).DSDetalleMostrar.DataSet:=ADODtStDetalleCXCMostrar;
    TFrmConPagos(gGridForm).DSAplicacion.DataSet :=ADODtStAplicacionesPagos;
    // hasta Agregado Feb 16/17
-
  //  TfrmFacturasGrid(gGridForm).ActGenerarCFDI := actProcesaFactura;  //Nov29/16
 end;
 

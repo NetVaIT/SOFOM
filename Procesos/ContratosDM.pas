@@ -138,6 +138,9 @@ type
     actAbonarCapital: TAction;
     actGenerar: TAction;
     actGetTipoCambio: TAction;
+    adodsAnexosCapitalCobrado: TFMTBCDField;
+    adodsAnexosSaldoInsoluto: TFMTBCDField;
+    adodsAnexosMontoVencido: TFMTBCDField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsAnexosPrecioMonedaChange(Sender: TField);
     procedure adodsAnexosNewRecord(DataSet: TDataSet);
@@ -151,12 +154,12 @@ type
     procedure actCrearAnexoExecute(Sender: TObject);
     procedure actCrearPagoInicialUpdate(Sender: TObject);
     procedure adodsAnexosFechaChange(Sender: TField);
-    procedure actAbonarCapitalExecute(Sender: TObject);
     procedure actGenerarExecute(Sender: TObject);
     procedure actGenAmortizacionesExecute(Sender: TObject);
     procedure actCrearPagoInicialExecute(Sender: TObject);
     procedure actGenerarUpdate(Sender: TObject);
     procedure actGetTipoCambioExecute(Sender: TObject);
+    procedure actAbonarCapitalExecute(Sender: TObject);
   private
     { Private declarations }
     FPaymentTime: TPaymentTime;
@@ -206,10 +209,10 @@ begin
   inherited;
   dmAmortizaciones.TipoContrato := TipoContrato;
   if dmAmortizaciones.GenAnexosAmortizaciones(adodsCreditosIdAnexoCredito.Value,
-  adodsCreditosFechaVencimiento.Value, adodsCreditosTasaAnual.Value, adodsCreditosPlazo.Value,
-  adodsCreditosMontoFiananciar.AsExtended,
-    adodsCreditosValorResidual.AsExtended,
-    adodsCreditosImpactoISR.AsExtended) then
+  adodsCreditosFechaCorte.Value, adodsCreditosFechaVencimiento.Value,
+  adodsCreditosTasaAnual.Value, adodsCreditosPlazo.Value,
+  adodsCreditosMontoFiananciar.AsExtended, adodsCreditosValorResidual.AsExtended,
+  adodsCreditosImpactoISR.AsExtended) then
   begin
     adodsAmortizaciones.Close;
     adodsAmortizaciones.Open;
@@ -225,10 +228,10 @@ begin
   // Generar Amortizaciones
   dmAmortizaciones.TipoContrato := TipoContrato;
   if dmAmortizaciones.GenAnexosAmortizaciones(adodsCreditosIdAnexoCredito.Value,
-  adodsCreditosFechaVencimiento.Value, adodsCreditosTasaAnual.Value, adodsCreditosPlazo.Value,
-  adodsCreditosMontoFiananciar.AsExtended,
-    adodsCreditosValorResidual.AsExtended,
-    adodsCreditosImpactoISR.AsExtended) then
+  adodsCreditosFechaCorte.Value, adodsCreditosFechaVencimiento.Value,
+  adodsCreditosTasaAnual.Value, adodsCreditosPlazo.Value,
+  adodsCreditosMontoFiananciar.AsExtended, adodsCreditosValorResidual.AsExtended,
+  adodsCreditosImpactoISR.AsExtended) then
   begin
     adodsAmortizaciones.Close;
     adodsAmortizaciones.Open;
@@ -260,8 +263,7 @@ begin
   inherited;
   dmAbonarCapital := TdmAbonarCapital.Create(Self);
   try
-    dmAbonarCapital.TipoContrato:= TipoContrato;
-    dmAbonarCapital.Execute(IdAnexo);
+    dmAbonarCapital.Execute;
   finally
     dmAbonarCapital.Free;
   end;
@@ -436,6 +438,8 @@ begin
     adodsAnexosOpcionCompra.Value := adodsAnexosPrecioTotal.Value * (adodsAnexosOpcionCompraPorcentaje.Value/100);
     adodsAnexosValorResidual.Value := adodsAnexosPrecioTotal.Value * (adodsAnexosValorResidualPorcentaje.Value/100);
     adodsAnexosMontoFinanciar.Value:= adodsAnexosPrecioTotal.Value-adodsAnexosEnganche.Value;
+    adodsAnexosSaldoInsoluto.Value := adodsAnexosMontoFinanciar.Value - adodsAnexosCapitalCobrado.Value;
+//    adodsAnexosMontoVencido.Value:=
     adodsAnexosPagoMensual.Value := dmAmortizaciones.Pago(adodsAnexosTasaAnual.Value,
     adodsAnexosPlazo.Value, adodsAnexosMontoFinanciar.AsExtended,
     adodsAnexosValorResidual.AsExtended)+ adodsAnexosImpactoISR.AsExtended;
@@ -484,6 +488,7 @@ begin
   gFormDeatil1.DataSet:= adodsAnexos;
   TfrmAnexos(gFormDeatil1).actGenerar := actGenerar;
   TfrmAnexos(gFormDeatil1).actGetTipoCambio := actGetTipoCambio;
+  TfrmAnexos(gFormDeatil1).actAbonar := actAbonarCapital;
   if adodsCreditos.CommandText <> EmptyStr then adodsCreditos.Open;
   gFormDeatil2:= TfrmAnexosCreditos.Create(Self);
  // gFormDeatil2.ApplyBestFit := False;

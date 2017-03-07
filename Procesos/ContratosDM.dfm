@@ -169,8 +169,9 @@ inherited dmContratos: TdmContratos
       'estos, DespositosNumero, Depositos, PagoIncial, OpcionCompraPorc' +
       'entaje, OpcionCompra, ValorResidualPorcentaje, ValorResidual, Mo' +
       'ntoFinanciar, TasaAnual, Plazo, PagoMensual, ImpactoISR, FechaCo' +
-      'rte, FechaVencimiento, PagoInicialCreado from Anexos'#13#10'where IdCo' +
-      'ntrato = :IdContrato'
+      'rte, FechaVencimiento, PagoInicialCreado, CapitalCobrado, SaldoI' +
+      'nsoluto, MontoVencido from Anexos'#13#10'where IdContrato = :IdContrat' +
+      'o'
     DataSource = dsMaster
     MasterFields = 'IdContrato'
     Parameters = <
@@ -426,8 +427,30 @@ inherited dmContratos: TdmContratos
     object adodsAnexosPagoInicialCreado: TBooleanField
       FieldName = 'PagoInicialCreado'
     end
+    object adodsAnexosCapitalCobrado: TFMTBCDField
+      DisplayLabel = 'Capital cobrado'
+      FieldName = 'CapitalCobrado'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object adodsAnexosSaldoInsoluto: TFMTBCDField
+      DisplayLabel = 'Saldo insoluto'
+      FieldName = 'SaldoInsoluto'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object adodsAnexosMontoVencido: TFMTBCDField
+      DisplayLabel = 'Monto vencido'
+      FieldName = 'MontoVencido'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
   end
   object adodsMonedas: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdMoneda, Descripcion from Monedas'#13#10'order by Descripcion'
@@ -436,6 +459,7 @@ inherited dmContratos: TdmContratos
     Top = 144
   end
   object adodsAnexosEstatus: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdAnexoEstatus, Descripcion from AnexosEstatus'

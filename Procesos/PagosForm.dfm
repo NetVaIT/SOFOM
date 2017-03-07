@@ -2,6 +2,7 @@ inherited FrmConPagos: TFrmConPagos
   Caption = 'FrmConPagos'
   ClientWidth = 1107
   ExplicitWidth = 1107
+  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -254,6 +255,10 @@ inherited FrmConPagos: TFrmConPagos
         end
         item
           Visible = True
+          ItemName = 'dxbbAbonarCapital'
+        end
+        item
+          Visible = True
           ItemName = 'dxBrBtnAplicaicones'
         end>
     end
@@ -265,6 +270,13 @@ inherited FrmConPagos: TFrmConPagos
       ImageIndex = 17
       PaintStyle = psCaptionGlyph
       OnClick = dxBrBtnAplicaiconesClick
+    end
+    object dxbbAbonarCapital: TdxBarButton
+      Caption = 'Abonar capital'
+      Category = 0
+      Visible = ivAlways
+      ImageIndex = 13
+      PaintStyle = psCaptionGlyph
     end
   end
   inherited cxStyleRepository: TcxStyleRepository
@@ -1046,7 +1058,6 @@ inherited FrmConPagos: TFrmConPagos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42712.575441516200000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

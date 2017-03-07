@@ -8,7 +8,7 @@ const
   _MONEDAS_ID_DOLAR_USA = 51;
   _CONFIGURACION_DIAS_VIGENCIA = 30;
 type
-  TCTipoContrato = (tcNone, tcCreditoSimple, tcArrendamientoFinasnciero, tcArrendamientoPuro);
+  TCTipoContrato = (tcNone, tcCreditoSimple, tcArrendamientoFinanciero, tcArrendamientoPuro);
   TCotizacionEstatus = (aeNone, aeAbierto, aeContratado, aeCerrado);
 
   TAbonoCapital = (acReducirCuota, acReducirPlazo);

@@ -156,6 +156,15 @@ inherited frmAnexos: TfrmAnexos
         object tvMasterPagoInicialCreado: TcxGridDBColumn
           DataBinding.FieldName = 'PagoInicialCreado'
         end
+        object tvMasterCapitalCobrado: TcxGridDBColumn
+          DataBinding.FieldName = 'CapitalCobrado'
+        end
+        object tvMasterSaldoInsoluto: TcxGridDBColumn
+          DataBinding.FieldName = 'SaldoInsoluto'
+        end
+        object tvMasterMontoVencido: TcxGridDBColumn
+          DataBinding.FieldName = 'MontoVencido'
+        end
       end
     end
   end
@@ -206,6 +215,10 @@ inherited frmAnexos: TfrmAnexos
         item
           Visible = True
           ItemName = 'dxbbGenerar'
+        end
+        item
+          Visible = True
+          ItemName = 'dxbbAbonar'
         end>
     end
     object dxbbGenerar: TdxBarButton
@@ -214,6 +227,11 @@ inherited frmAnexos: TfrmAnexos
       Visible = ivAlways
       ImageIndex = 10
       PaintStyle = psCaptionGlyph
+    end
+    object dxbbAbonar: TdxBarButton
+      Caption = 'Abono a capital'
+      Category = 0
+      Visible = ivNever
     end
   end
   inherited cxStyleRepository: TcxStyleRepository
@@ -225,7 +243,7 @@ inherited frmAnexos: TfrmAnexos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42683.688746423620000000
-      AssignedFormatValues = []
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

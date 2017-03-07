@@ -65,6 +65,7 @@ type
     ChckBxConSaldo: TCheckBox;
     ActFacturaMorato: TAction;
     DSDetalleMostrar: TDataSource;
+    dxbbAbonarCapital: TdxBarButton;
     procedure FormCreate(Sender: TObject);
     procedure dxBrBtnAplicaiconesClick(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
@@ -74,18 +75,18 @@ type
     ffiltroNombre: String;
     ffiltroFecha: String;
     ffiltro: String;
+    FactAbonarCapital: TBasicAction;
     function GetFFiltroNombre: String;
 
     procedure PoneFiltro;
+    procedure SetactAbonarCapital(const Value: TBasicAction);
     { Private declarations }
   public
     { Public declarations }
-         //Dic 20/16
     property FiltroCon:String read ffiltro write ffiltro;
     property FiltroFecha: String read ffiltroFecha write ffiltroFecha;
     property FiltroNombre:String read GetFFiltroNombre write ffiltroNombre;
-     //Dic 20/16 hasta aca
-
+    property actAbonarCapital: TBasicAction read FactAbonarCapital write SetactAbonarCapital;
   end;
 
 var
@@ -209,6 +210,12 @@ begin
   else
     if Aux<>'where'then
       ffiltro:=Aux;
+end;
+
+procedure TFrmConPagos.SetactAbonarCapital(const Value: TBasicAction);
+begin
+  FactAbonarCapital := Value;
+  dxbbAbonarCapital.Action := Value;
 end;
 
 procedure TFrmConPagos.SpdBtnBuscarClick(Sender: TObject);

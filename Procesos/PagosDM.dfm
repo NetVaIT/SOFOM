@@ -106,6 +106,11 @@ inherited dmPagos: TdmPagos
       Caption = 'ActGeneraPrefMoratorios'
       OnExecute = ActGeneraPrefMoratoriosExecute
     end
+    object actAbonarCapital: TAction
+      Caption = 'Abonar capital'
+      ImageIndex = 13
+      OnExecute = actAbonarCapitalExecute
+    end
   end
   object ADOSPersonas: TADODataSet
     Connection = _dmConection.ADOConnection

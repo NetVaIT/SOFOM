@@ -12,26 +12,32 @@ resourcestring
 
 type
   TdmAbonarCapital = class(T_dmStandar)
-    Action1: TAction;
     adoqAnexo: TADOQuery;
     adoqAnexoSaldoInsoluto: TFMTBCDField;
     adoqAnexoMontoVencido: TFMTBCDField;
+    adopCXCAbonarCapital: TADOStoredProc;
+    adoqAnexosSel: TADOQuery;
+    adoqAnexosSelIdContrato: TAutoIncField;
+    adoqAnexosSelIdPersona: TIntegerField;
+    adoqAnexosSelIdContratoTipo: TIntegerField;
+    adoqAnexosSelIdAnexo: TAutoIncField;
+    adoqAnexosSelContrato: TStringField;
+    adoqAnexosSelAnexo: TStringField;
+    adoqAnexosSelCliente: TStringField;
+    adoqAnexosSelSaldoInsoluto: TFMTBCDField;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
-    procedure Action1Execute(Sender: TObject);
   private
     { Private declarations }
-    dmAmortizaciones: TdmAmortizaciones;
     frmAbonarCapitalEdit: TfrmAbonarCapitalEdit;
     FPaymentTime: TPaymentTime;
-    FTipoContrato: TCTipoContrato;
     procedure SetPaymentTime(const Value: TPaymentTime);
-    procedure SetTipoContrato(const Value: TCTipoContrato);
+    function AbonarCapital(IdAnexo, IdTipoContrato: Integer; Fecha: TDateTime; Importe: Extended;
+    Tipo: TAbonoCapital): Boolean;
     property PaymentTime: TPaymentTime read FPaymentTime write SetPaymentTime;
   public
     { Public declarations }
-    property TipoContrato: TCTipoContrato read FTipoContrato write SetTipoContrato;
-    function Execute(IdAnexo: Integer): Boolean;
+    function Execute: Boolean;
   end;
 
 implementation
@@ -42,83 +48,77 @@ implementation
 
 { TdmAbonarCapital }
 
-procedure TdmAbonarCapital.Action1Execute(Sender: TObject);
+function TdmAbonarCapital.AbonarCapital(IdAnexo, IdTipoContrato: Integer; Fecha: TDateTime;
+  Importe: Extended; Tipo: TAbonoCapital): Boolean;
+var
+  dmAmortizaciones: TdmAmortizaciones;
+  IdCuentaXCobrar: Integer;
 begin
-  inherited;
-  dmAmortizaciones.PaymentTime := PaymentTime;
-  dmAmortizaciones.TipoContrato:= TipoContrato;
-  dmAmortizaciones.SetAmortizaciones(frmAbonarCapitalEdit.IdAnexo, frmAbonarCapitalEdit.Importe, TAbonoCapital(frmAbonarCapitalEdit.Tipo) )
+  Result := False;
+//  // Crear CXC
+//  adopCXCAbonarCapital.Parameters.ParamByName('@IdAnexo').Value := IdAnexo;
+//  adopCXCAbonarCapital.Parameters.ParamByName('@Fecha').Value := Fecha;
+//  adopCXCAbonarCapital.Parameters.ParamByName('@ImporteCapital').Value := Importe;
+//  adopCXCAbonarCapital.ExecProc;
+//  IdCuentaXCobrar := adopCXCAbonarCapital.Parameters.ParamByName('@IdCuentaXCobrar').Value;
+IdCuentaXCobrar :=  10;
+  // Ajustar amortizaciones
+  if IdCuentaXCobrar > 0 then
+  begin
+    dmAmortizaciones := TdmAmortizaciones.Create(Self);
+    try
+      dmAmortizaciones.PaymentTime := PaymentTime;
+      dmAmortizaciones.TipoContrato:= TCTipoContrato(IdTipoContrato);
+      Result := dmAmortizaciones.SetAmortizaciones(IdAnexo, Importe, Tipo);
+    finally
+      dmAmortizaciones.Free;
+    end;
+  end;
 end;
 
 procedure TdmAbonarCapital.DataModuleCreate(Sender: TObject);
 begin
   inherited;
   PaymentTime := ptEndOfPeriod;
-  dmAmortizaciones := TdmAmortizaciones.Create(Self);
-  dmAmortizaciones.PaymentTime := PaymentTime;
   frmAbonarCapitalEdit := TfrmAbonarCapitalEdit.Create(Self);
 end;
 
 procedure TdmAbonarCapital.DataModuleDestroy(Sender: TObject);
 begin
   inherited;
-  FreeAndNil(dmAmortizaciones);
   FreeAndNil(frmAbonarCapitalEdit);
 end;
 
-function TdmAbonarCapital.Execute(IdAnexo: Integer): Boolean;
+function TdmAbonarCapital.Execute: Boolean;
 var
-//  frmAbonarCapitalEdit: TfrmAbonarCapitalEdit;
-  SaldoInsoluto: Extended;
-  MontoVencido: Extended;
+  frmAbonarCapitalEdit: TfrmAbonarCapitalEdit;
+  IdAnexo: Integer;
+  IdTipoContrato: Integer;
 begin
   Result:= False;
-  // Obtene datos del Anexo
-  adoqAnexo.Close;
-  adoqAnexo.Parameters.ParamByName('IdAnexo').Value:= IdAnexo;
-  adoqAnexo.Open;
+  adoqAnexosSel.Open;
+  frmAbonarCapitalEdit := TfrmAbonarCapitalEdit.Create(Self);
   try
-    SaldoInsoluto := adoqAnexoSaldoInsoluto.AsFloat;
-    MontoVencido := adoqAnexoMontoVencido.AsFloat;
-  finally
-    adoqAnexo.Close;
-  end;
-  // Validar que no existan vencimiento
-  if MontoVencido = 0 then
-  begin
-//    frmAbonarCapitalEdit := TfrmAbonarCapitalEdit.Create(Self);
-    try
-      frmAbonarCapitalEdit.SaldoInsoluto := SaldoInsoluto;
-      frmAbonarCapitalEdit.MontoVencido := MontoVencido;
-      frmAbonarCapitalEdit.Fecha := Date;
-      frmAbonarCapitalEdit.Importe := 0;
-      frmAbonarCapitalEdit.Tipo:= Ord(acReducirCuota);
-      frmAbonarCapitalEdit.DataSet:= dmAmortizaciones.dxmAnexosAmortizaciones;
-      frmAbonarCapitalEdit.actCD:= Action1;
-      frmAbonarCapitalEdit.IdAnexo:= IdAnexo;
-      frmAbonarCapitalEdit.Execute;
-//      if frmAbonarCapitalEdit.Execute then
-//      begin
-//        dmAmortizaciones.SetAmortizaciones(IdAnexo, frmAbonarCapitalEdit.Importe, TAbonoCapital(frmAbonarCapitalEdit.Tipo) )
-//      end;
-    finally
-//      frmAbonarCapitalEdit.Free;
+    frmAbonarCapitalEdit.DataSet:= adoqAnexosSel;
+    frmAbonarCapitalEdit.Fecha := Date;
+    frmAbonarCapitalEdit.Importe := 0;
+    frmAbonarCapitalEdit.Tipo:= Ord(acReducirCuota);
+    if frmAbonarCapitalEdit.Execute then
+    begin
+      IdAnexo := adoqAnexosSelIdAnexo.Value;
+      IdTipoContrato := adoqAnexosSelIdContratoTipo.Value;
+      Result := AbonarCapital(IdAnexo, IdTipoContrato, frmAbonarCapitalEdit.Fecha,
+      frmAbonarCapitalEdit.Importe, TAbonoCapital(frmAbonarCapitalEdit.Tipo));
     end;
-  end
-  else
-  begin
-    MessageDlg(Format(strMontoVencido, []), mtInformation, [mbOK], 0);
+  finally
+    frmAbonarCapitalEdit.Free;
+    adoqAnexosSel.Close;
   end;
 end;
 
 procedure TdmAbonarCapital.SetPaymentTime(const Value: TPaymentTime);
 begin
   FPaymentTime := Value;
-end;
-
-procedure TdmAbonarCapital.SetTipoContrato(const Value: TCTipoContrato);
-begin
-  FTipoContrato := Value;
 end;
 
 end.

@@ -1,131 +1,146 @@
 inherited frmAbonarCapitalEdit: TfrmAbonarCapitalEdit
   Caption = 'Abonar al capital'
-  ClientHeight = 676
-  ClientWidth = 1059
-  ExplicitWidth = 1065
-  ExplicitHeight = 705
+  ClientHeight = 380
+  ClientWidth = 694
+  ExplicitWidth = 700
+  ExplicitHeight = 409
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
-    Width = 1059
-    Height = 635
-    ExplicitWidth = 253
-    ExplicitHeight = 212
-    ClientRectBottom = 633
-    ClientRectRight = 1057
+    Width = 694
+    Height = 339
+    ExplicitWidth = 694
+    ExplicitHeight = 339
+    ClientRectBottom = 337
+    ClientRectRight = 692
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 2
       ExplicitTop = 28
-      ExplicitWidth = 249
-      ExplicitHeight = 182
-      object cxLabel1: TcxLabel
-        Left = 16
-        Top = 16
-        Caption = 'Saldo insoluto'
-      end
-      object cxLabel2: TcxLabel
-        Left = 16
-        Top = 42
-        Caption = 'Monto vencido'
-        FocusControl = edtMontoVencido
-      end
+      ExplicitWidth = 690
+      ExplicitHeight = 309
       object cxLabel3: TcxLabel
-        Left = 16
-        Top = 90
+        Left = 453
+        Top = 218
         Caption = 'Fecha'
         FocusControl = edtFecha
       end
-      object edtSaldoInsoluto: TcxCalcEdit
-        Left = 92
-        Top = 15
-        EditValue = 0.000000000000000000
+      object edtFecha: TcxDateEdit
+        Left = 529
+        Top = 217
         Enabled = False
-        Properties.DisplayFormat = '$ ,0.00'
-        TabOrder = 3
+        TabOrder = 2
         Width = 121
       end
-      object edtMontoVencido: TcxCalcEdit
-        Left = 92
-        Top = 42
+      object cxLabel4: TcxLabel
+        Left = 453
+        Top = 245
+        Caption = 'Importe'
+      end
+      object edtImporte: TcxCalcEdit
+        Left = 529
+        Top = 244
         EditValue = 0.000000000000000000
-        Enabled = False
         Properties.DisplayFormat = '$ ,0.00'
         TabOrder = 4
         Width = 121
       end
-      object edtFecha: TcxDateEdit
-        Left = 92
-        Top = 89
-        TabOrder = 5
-        Width = 121
-      end
-      object cxLabel4: TcxLabel
-        Left = 16
-        Top = 117
-        Caption = 'Importe'
-      end
-      object edtImporte: TcxCalcEdit
-        Left = 92
-        Top = 116
-        EditValue = 0.000000000000000000
-        Properties.DisplayFormat = '$ ,0.00'
-        TabOrder = 7
-        Width = 121
-      end
       object cxLabel5: TcxLabel
-        Left = 16
-        Top = 144
+        Left = 453
+        Top = 272
         Caption = 'Tipo'
       end
       object cbxTipo: TcxComboBox
-        Left = 92
-        Top = 143
+        Left = 529
+        Top = 271
         Properties.Items.Strings = (
           'Reducir cuota'
           'Reducir plazo')
-        TabOrder = 9
+        TabOrder = 6
         Text = 'Reducir cuota'
         Width = 121
       end
-      object DBGrid1: TDBGrid
-        Left = 3
-        Top = 192
-        Width = 1014
-        Height = 361
-        DataSource = DataSource
-        TabOrder = 10
-        TitleFont.Charset = DEFAULT_CHARSET
-        TitleFont.Color = clWindowText
-        TitleFont.Height = -11
-        TitleFont.Name = 'Tahoma'
-        TitleFont.Style = []
-      end
-      object Button1: TButton
-        Left = 336
-        Top = 32
-        Width = 75
-        Height = 25
-        Caption = 'Button1'
-        TabOrder = 11
+      object pnlMaster: TPanel
+        Left = 0
+        Top = 0
+        Width = 690
+        Height = 209
+        Align = alTop
+        BevelOuter = bvNone
+        TabOrder = 0
+        object cxGrid: TcxGrid
+          Left = 0
+          Top = 0
+          Width = 690
+          Height = 209
+          Align = alClient
+          TabOrder = 0
+          LookAndFeel.Kind = lfStandard
+          object tvMaster: TcxGridDBTableView
+            Navigator.Buttons.CustomButtons = <>
+            DataController.DataSource = DataSource
+            DataController.Summary.DefaultGroupSummaryItems = <>
+            DataController.Summary.FooterSummaryItems = <>
+            DataController.Summary.SummaryGroups = <>
+            OptionsBehavior.IncSearch = True
+            OptionsCustomize.ColumnsQuickCustomization = True
+            OptionsData.Deleting = False
+            OptionsData.Editing = False
+            OptionsData.Inserting = False
+            OptionsSelection.CellSelect = False
+            OptionsView.NoDataToDisplayInfoText = ' '
+            OptionsView.GroupByBox = False
+            OptionsView.HeaderEndEllipsis = True
+            object tvMasterIdContrato: TcxGridDBColumn
+              DataBinding.FieldName = 'IdContrato'
+              Visible = False
+            end
+            object tvMasterIdPersona: TcxGridDBColumn
+              DataBinding.FieldName = 'IdPersona'
+              Visible = False
+            end
+            object tvMasterIdContratoTipo: TcxGridDBColumn
+              DataBinding.FieldName = 'IdContratoTipo'
+              Visible = False
+            end
+            object tvMasterIdAnexo: TcxGridDBColumn
+              DataBinding.FieldName = 'IdAnexo'
+              Visible = False
+            end
+            object tvMasterContrato: TcxGridDBColumn
+              DataBinding.FieldName = 'Contrato'
+            end
+            object tvMasterAnexo: TcxGridDBColumn
+              DataBinding.FieldName = 'Anexo'
+              Width = 124
+            end
+            object tvMasterCliente: TcxGridDBColumn
+              DataBinding.FieldName = 'Cliente'
+              Width = 282
+            end
+            object tvMasterSaldoInsoluto: TcxGridDBColumn
+              DataBinding.FieldName = 'SaldoInsoluto'
+            end
+          end
+          object cxGridLevel1: TcxGridLevel
+            GridView = tvMaster
+          end
+        end
       end
     end
   end
   inherited pmlMain: TPanel
-    Top = 635
-    Width = 1059
-    ExplicitTop = 212
-    ExplicitWidth = 253
+    Top = 339
+    Width = 694
+    ExplicitTop = 339
+    ExplicitWidth = 694
     inherited btnCancel: TButton
-      Left = 977
-      ExplicitLeft = 171
+      Left = 612
+      ExplicitLeft = 612
     end
     inherited btnOk: TButton
-      Left = 896
-      ExplicitLeft = 90
+      Left = 531
+      ExplicitLeft = 531
     end
-  end
-  inherited DataSource: TDataSource
-    DataSet = dmAmortizaciones.dxmAnexosAmortizaciones
   end
   inherited cxImageList: TcxImageList
     FormatVersion = 1

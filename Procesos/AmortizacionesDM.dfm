@@ -1,5 +1,6 @@
 inherited dmAmortizaciones: TdmAmortizaciones
   OldCreateOrder = True
+  Width = 474
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
   end
@@ -72,8 +73,11 @@ inherited dmAmortizaciones: TdmAmortizaciones
     object dxmAmortizacionesPeriodo: TIntegerField
       FieldName = 'Periodo'
     end
-    object dxmAmortizacionesFecha: TDateTimeField
-      FieldName = 'Fecha'
+    object dxmAmortizacionesFechaCorte: TDateTimeField
+      FieldName = 'FechaCorte'
+    end
+    object dxmAmortizacionesFechaVencimiento: TDateTimeField
+      FieldName = 'FechaVencimiento'
     end
     object dxmAmortizacionesTasaAnual: TFloatField
       DisplayLabel = 'Tasa anual'
@@ -329,14 +333,6 @@ inherited dmAmortizaciones: TdmAmortizaciones
         Precision = 10
         Size = 4
         Value = Null
-      end
-      item
-        Name = 'Periodo'
-        Attributes = [paSigned]
-        DataType = ftInteger
-        Precision = 10
-        Size = 4
-        Value = Null
       end>
     SQL.Strings = (
       
@@ -367,9 +363,9 @@ inherited dmAmortizaciones: TdmAmortizaciones
         ' = AnexosCreditos.IdAnexoCredito'
       'WHERE AnexosCreditos.IdAnexoCreditoEstatus = 1 '
       'AND AnexosCreditos.IdAnexo = :IdAnexo'
-      'AND AnexosAmortizaciones.Periodo >= :Periodo')
-    Left = 288
-    Top = 168
+      'AND AnexosAmortizaciones.FechaVencimiento >= GETDATE()')
+    Left = 232
+    Top = 152
     object adoqAnexosAmortizacionesIdAnexoAmortizacion: TAutoIncField
       FieldName = 'IdAnexoAmortizacion'
       ReadOnly = True
@@ -486,8 +482,8 @@ inherited dmAmortizaciones: TdmAmortizaciones
       6F72696F42617365002200000018000A004D6F7261746F72696F002200000018
       0012004D6F7261746F72696F496D70756573746F00}
     SortOptions = []
-    Left = 288
-    Top = 224
+    Left = 232
+    Top = 208
     object dxmAnexosAmortizacionesIdAnexoAmortizacion: TAutoIncField
       DisplayWidth = 10
       FieldName = 'IdAnexoAmortizacion'
@@ -595,8 +591,8 @@ inherited dmAmortizaciones: TdmAmortizaciones
         'Anual, ValorResidual, ImpactoISR'
       'FROM AnexosCreditos'
       'WHERE IdAnexo = :IdAnexo')
-    Left = 280
-    Top = 288
+    Left = 224
+    Top = 272
     object adoqCreditoIdAnexoCredito: TAutoIncField
       FieldName = 'IdAnexoCredito'
       ReadOnly = True
@@ -624,5 +620,126 @@ inherited dmAmortizaciones: TdmAmortizaciones
       Precision = 18
       Size = 6
     end
+  end
+  object adocUptAnexosAmrtizaciones: TADOCommand
+    CommandText = 
+      'UPDATE AnexosAmortizaciones'#13#10'   SET '#13#10'SaldoInicial = :SaldoInici' +
+      'al,'#13#10'Pago = :Pago,'#13#10'Capital = :Capital,'#13#10'CapitalImpuesto = :Capi' +
+      'talImpuesto,'#13#10'CapitalTotal = :CapitalTotal,'#13#10'Interes = :Interes,' +
+      #13#10'InteresImpuesto = :InteresImpuesto,'#13#10'InteresTotal = :InteresTo' +
+      'tal,'#13#10'ImpactoISR = :ImpactoISR,'#13#10'PagoTotal = :PagoTotal,'#13#10'SaldoF' +
+      'inal = :SaldoFinal'#13#10'WHERE IdAnexoAmortizacion = :IdAnexoAmortiza' +
+      'cion'
+    Connection = _dmConection.ADOConnection
+    Parameters = <
+      item
+        Name = 'SaldoInicial'
+        Attributes = [paSigned]
+        DataType = ftBCD
+        NumericScale = 6
+        Precision = 18
+        Size = 19
+        Value = Null
+      end
+      item
+        Name = 'Pago'
+        Attributes = [paSigned]
+        DataType = ftBCD
+        NumericScale = 6
+        Precision = 18
+        Size = 19
+        Value = Null
+      end
+      item
+        Name = 'Capital'
+        Attributes = [paSigned]
+        DataType = ftBCD
+        NumericScale = 6
+        Precision = 18
+        Size = 19
+        Value = Null
+      end
+      item
+        Name = 'CapitalImpuesto'
+        Attributes = [paSigned]
+        DataType = ftBCD
+        NumericScale = 6
+        Precision = 18
+        Size = 19
+        Value = Null
+      end
+      item
+        Name = 'CapitalTotal'
+        Attributes = [paSigned]
+        DataType = ftBCD
+        NumericScale = 6
+        Precision = 18
+        Size = 19
+        Value = Null
+      end
+      item
+        Name = 'Interes'
+        Attributes = [paSigned]
+        DataType = ftBCD
+        NumericScale = 6
+        Precision = 18
+        Size = 19
+        Value = Null
+      end
+      item
+        Name = 'InteresImpuesto'
+        Attributes = [paSigned]
+        DataType = ftBCD
+        NumericScale = 6
+        Precision = 18
+        Size = 19
+        Value = Null
+      end
+      item
+        Name = 'InteresTotal'
+        Attributes = [paSigned]
+        DataType = ftBCD
+        NumericScale = 6
+        Precision = 18
+        Size = 19
+        Value = Null
+      end
+      item
+        Name = 'ImpactoISR'
+        Attributes = [paSigned]
+        DataType = ftBCD
+        NumericScale = 6
+        Precision = 18
+        Size = 19
+        Value = Null
+      end
+      item
+        Name = 'PagoTotal'
+        Attributes = [paSigned]
+        DataType = ftBCD
+        NumericScale = 6
+        Precision = 18
+        Size = 19
+        Value = Null
+      end
+      item
+        Name = 'SaldoFinal'
+        Attributes = [paSigned]
+        DataType = ftBCD
+        NumericScale = 6
+        Precision = 18
+        Size = 19
+        Value = Null
+      end
+      item
+        Name = 'IdAnexoAmortizacion'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 376
+    Top = 208
   end
 end
