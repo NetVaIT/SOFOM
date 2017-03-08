@@ -66,6 +66,8 @@ type
     ADODtSTCXCPendDescripcion: TStringField;
     ADODtSTCXCPendCapitalCobrado: TFMTBCDField;
     ADODtSTCXCPendSaldoInsoluto: TFMTBCDField;
+    ADODtstTelefonoCliente: TADODataSet;
+    ADODtStTelContacto: TADODataSet;
     procedure DataModuleCreate(Sender: TObject);
     procedure ADODtStIncidenciasNewRecord(DataSet: TDataSet);
   private

@@ -28,6 +28,7 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     end
     object adodsMasterImporte: TFMTBCDField
       FieldName = 'Importe'
+      currency = True
       Precision = 18
       Size = 6
     end
@@ -36,21 +37,25 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     end
     object adodsMasterImpuesto: TFMTBCDField
       FieldName = 'Impuesto'
+      currency = True
       Precision = 18
       Size = 6
     end
     object adodsMasterInteres: TFMTBCDField
       FieldName = 'Interes'
+      currency = True
       Precision = 18
       Size = 6
     end
     object adodsMasterTotal: TFMTBCDField
       FieldName = 'Total'
+      currency = True
       Precision = 18
       Size = 6
     end
     object adodsMasterSaldo: TFMTBCDField
       FieldName = 'Saldo'
+      currency = True
       Precision = 18
       Size = 6
     end
@@ -76,6 +81,7 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     end
     object adodsMasterSaldoFactoraje: TFMTBCDField
       FieldName = 'SaldoFactoraje'
+      currency = True
       Precision = 18
       Size = 6
     end
@@ -138,11 +144,13 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     end
     object ADOdsCXCDetalleImporte: TFMTBCDField
       FieldName = 'Importe'
+      currency = True
       Precision = 18
       Size = 6
     end
     object ADOdsCXCDetalleSaldo: TFMTBCDField
       FieldName = 'Saldo'
+      currency = True
       Precision = 18
       Size = 6
     end
@@ -152,16 +160,19 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     end
     object ADOdsCXCDetalleSaldoFactoraje: TFMTBCDField
       FieldName = 'SaldoFactoraje'
+      currency = True
       Precision = 18
       Size = 6
     end
     object ADOdsCXCDetallePagosAplicados: TFMTBCDField
       FieldName = 'PagosAplicados'
+      currency = True
       Precision = 18
       Size = 6
     end
     object ADOdsCXCDetallePagosAplicadosFactoraje: TFMTBCDField
       FieldName = 'PagosAplicadosFactoraje'
+      currency = True
       Precision = 18
       Size = 6
     end
@@ -246,11 +257,13 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     end
     object DetallesCXCParaFacturarImporte: TFMTBCDField
       FieldName = 'Importe'
+      currency = True
       Precision = 18
       Size = 6
     end
     object DetallesCXCParaFacturarSaldo: TFMTBCDField
       FieldName = 'Saldo'
+      currency = True
       Precision = 18
       Size = 6
     end

@@ -233,7 +233,7 @@ inherited dmEstadosCuenta: TdmEstadosCuenta
       'n,  Pa.Importe Aplicado , OrigenPago'#13#10'from Pagos P '#13#10'  inner joi' +
       'n PagosAplicaciones Pa '#13#10'  on Pa.IdPago=P.IdPago'#13#10'  where  IdCue' +
       'ntaXCobrar=:IDCuentaXCobrar'#13#10'and  P.FechaPago>=:FechaInicial and' +
-      ' P.FechaPago<=:FechaFin'#13#10
+      ' P.FechaPago<:FechaFin   -- se quito = por las horas'
     DataSource = DSDatosCXC
     IndexFieldNames = 'IdCuentaXCobrar'
     MasterFields = 'IDCuentaXCobrar'

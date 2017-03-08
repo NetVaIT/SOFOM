@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.DBCtrls, Vcl.StdCtrls,
-  Vcl.CheckLst, RxDBCtrl, Vcl.DBCGrids, Vcl.Mask,  Vcl.Grids,
+  Vcl.CheckLst,  Vcl.DBCGrids, Vcl.Mask,  Vcl.Grids,
   Vcl.DBGrids, Vcl.Buttons, Data.DB,Data.Win.ADODB, Vcl.Menus, Math, cxGraphics,
   cxControls, cxLookAndFeels, cxLookAndFeelPainters, cxContainer, cxEdit,
   dxSkinsCore, dxSkinBlack, dxSkinBlue, dxSkinBlueprint, dxSkinCaramel,
@@ -97,6 +97,27 @@ type
     C5: TcxDBDateEdit;
     DtTmDesde: TcxDateEdit;
     DtTmHasta: TcxDateEdit;
+    PnlSuc: TPanel;
+    DBCtrlGrdContacto: TDBCtrlGrid;
+    Label3: TLabel;
+    DBText1: TDBText;
+    Label4: TLabel;
+    DBText2: TDBText;
+    ImgFuncE: TImage;
+    ImgFunG: TImage;
+    ImgCancFun: TImage;
+    DBEdtTelCont1: TDBEdit;
+    DBEdtContacto: TDBEdit;
+    DBCtrlGrid2: TDBCtrlGrid;
+    Label5: TLabel;
+    Label6: TLabel;
+    DBText4: TDBText;
+    ImgEditar: TImage;
+    ImgAcepta: TImage;
+    ImgCanSuc: TImage;
+    DBEdTel1: TDBEdit;
+    DSFuncXCli: TDataSource;
+    DSDatosSuc: TDataSource;
     procedure SpdBtnConsultarxClick(Sender: TObject);
     procedure SpdBtnLimpiarClick(Sender: TObject);
     procedure SpdBtncontactoHoyClick(Sender: TObject);
@@ -113,6 +134,14 @@ type
     procedure CrearCopia1Click(Sender: TObject);
     procedure AgregaIncidencia1Click(Sender: TObject);
     procedure DSCXCPendientesDataChange(Sender: TObject; Field: TField);
+    procedure SpdBtnContactoClick(Sender: TObject);
+    procedure ImgAceptaClick(Sender: TObject);
+    procedure ImgCanSucClick(Sender: TObject);
+    procedure ImgFunGClick(Sender: TObject);
+    procedure ImgCancFunClick(Sender: TObject);
+    procedure DBCtrlGrdContactoPaintPanel(DBCtrlGrid: TDBCtrlGrid;
+      Index: Integer);
+    procedure ImgFuncEClick(Sender: TObject);
   private
     { Private declarations }
     ArrOpciones :TarrDinamico;//Array of integer;
@@ -137,7 +166,6 @@ uses SeguimientoCobranzaDM;
 
 procedure TFrmSeguimientoRegistro.ChckLstBxCondicionesClick(Sender: TObject);
 var Total,i, val:integer;
-   num:String;
 begin
   inherited;
   if DSIncidencias.State in [dsinsert,dsedit] then
@@ -188,6 +216,16 @@ end;
 procedure TFrmSeguimientoRegistro.CrearCopia1Click(Sender: TObject);
 begin
   //Pendiente
+end;
+
+procedure TFrmSeguimientoRegistro.DBCtrlGrdContactoPaintPanel(
+  DBCtrlGrid: TDBCtrlGrid; Index: Integer);
+begin
+(*  if DBCtrlGrdContacto.PanelIndex=index then
+
+    ImgFuncE.Visible:= (DSFuncXCli.dataset.fieldbyName('Contacto').asString<>'') or
+                     (DSFuncXCli.dataset.fieldbyName('telContacto').asString<>'') ;*)
+
 end;
 
 procedure TFrmSeguimientoRegistro.DBCtrlGrdDatosPaintPanel(DBCtrlGrid: TDBCtrlGrid;
@@ -268,7 +306,7 @@ begin
 end;
 
 procedure TFrmSeguimientoRegistro.CargaFolios(ListaF,ListaID: TlistBox);
-var texto, Parte, SerFol :string;
+var texto, Parte :string;   // , SerFol
     i:integer;
 begin
   ListaF.Clear;
@@ -317,6 +355,56 @@ procedure TFrmSeguimientoRegistro.FormCreate(Sender: TObject);
 begin
   DtTmDesde.Date:=Date;
   DtTmHasta.Date:=date+1;
+  dsDatossuc.DataSet.open;
+  DSFuncXCli.DataSet.open;
+end;
+
+procedure TFrmSeguimientoRegistro.ImgAceptaClick(Sender: TObject);
+begin
+  dsDatossuc.DataSet.post;
+  ImgAcepta.Visible:=False;
+  ImgEditar.Visible:=True;
+  DBEdTel1.Visible:=false;
+   ImgCanSuc.Visible:=False;
+end;
+
+procedure TFrmSeguimientoRegistro.ImgCancFunClick(Sender: TObject);
+begin
+  DSFuncXCli.DataSet.Cancel;
+  DBEdtContacto.Visible:=False;
+  DBEdtTelCont1.Visible:=False;
+  ImgFuncE.Visible:=true;
+  ImgCancFun.Visible:=False;
+  ImgFunG.Visible:=False;
+end;
+
+procedure TFrmSeguimientoRegistro.ImgCanSucClick(Sender: TObject);
+begin
+  dsDatossuc.DataSet.Cancel;
+  ImgAcepta.Visible:=False;
+  ImgCanSuc.Visible:=False;
+  ImgEditar.Visible:=True;
+  DBEdTel1.Visible:=false;
+end;
+
+procedure TFrmSeguimientoRegistro.ImgFuncEClick(Sender: TObject);
+begin
+{ DSFuncXCli.DataSet.Edit;
+  DBEdtContacto.Visible:=True;
+  DBEdtTelCont1.Visible:=true;
+  ImgFuncE.Visible:=False;
+  ImgCancFun.Visible:=true;
+  ImgFunG.Visible:=true;  //Mientras mar 3/17}
+end;
+
+procedure TFrmSeguimientoRegistro.ImgFunGClick(Sender: TObject);
+begin
+  DSFuncXCli.DataSet.Post;
+  DBEdtContacto.Visible:=False;
+  DBEdtTelCont1.Visible:=False;
+  ImgFuncE.Visible:=true;
+  ImgCancFun.Visible:=False;
+  ImgFunG.Visible:=False;
 end;
 
 function TFrmSeguimientoRegistro.PoneFolios(ListaID: TlistBox): String;
@@ -339,9 +427,8 @@ end;
 
 procedure TFrmSeguimientoRegistro.SpdBtnConsultarxClick(Sender: TObject);
 var
-  Texto,BSuma,base1, base2, base3, Agrupacion, filtro,
-  XGrupo, XCliente, XPropCta,XAtiende:String;
-  i:integer;
+  Texto,base1,Agrupacion, XCliente,XAtiende:String;//   XPropCta,BSuma,
+ // i:integer;
 begin
 
   inherited;
@@ -380,6 +467,20 @@ begin
 
   dsconsulta.DataSet.open;
   //
+end;
+
+procedure TFrmSeguimientoRegistro.SpdBtnContactoClick(Sender: TObject);
+begin
+   pnlSuc.Visible:= SpdBtnContacto.Down;
+  if DSDatosSuc.State=dsEdit then
+  begin
+    ImgCanSucClick(ImgCanSuc);
+    //DSDatosSuc.dataset.Cancel;
+  end;
+  if DSFuncXCli.State=dsEdit then
+     ImgCancFunClick(ImgCancFun);
+//    DSFuncXCli.dataset.Cancel;
+
 end;
 
 procedure TFrmSeguimientoRegistro.SpdBtncontactoHoyClick(Sender: TObject);

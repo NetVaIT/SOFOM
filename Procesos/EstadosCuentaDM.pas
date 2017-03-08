@@ -244,7 +244,7 @@ begin
         adoDtstDatosPagos.Close;
    ////Debe ser por Cuenta XCobrar  //Movido aca feb 21/17
         adoDtstDatosPagos.Parameters.ParamByName('FechaInicial').Value:=UltFecCorteEC;     //Add FEb 20/17
-        adoDtstDatosPagos.Parameters.ParamByName('FechaFin').Value:=FechaCorte;
+        adoDtstDatosPagos.Parameters.ParamByName('FechaFin').Value:=FechaCorte+1; //se agrego uno mas pero dentro se puso solo > por las horas mar 8/17
         adoDtstDatosPagos.open;
         while not adoDtstDatosPagos.Eof do
         begin
@@ -497,6 +497,17 @@ begin
 //Debe existir
   dias:=  ADOQryAuxiliar.FieldByName('DiaCorte').asInteger;
   FecContrato:=  ADOQryAuxiliar.FieldByName('Fecha').asDateTime;
+
+  //Mar 8/17
+
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.Sql.Clear;
+  ADOQryAuxiliar.Sql.Add('Select min(Fecha) as Fecha from Anexos where idcontrato ='+intToStr(IDContrato)+' and fecha>=:FechaC');
+  ADOQryAuxiliar.Parameters.ParamByName('FechaC').Value:= FecContrato;
+  ADOQryAuxiliar.Open;
+
+  FecContrato:= ADOQryAuxiliar.FieldByName('Fecha').asDateTime;  //SEria la del ANEXO
+
 
   ADOQryAuxiliar.Close;
   ADOQryAuxiliar.Sql.Clear;

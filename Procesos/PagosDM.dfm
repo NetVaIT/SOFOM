@@ -215,11 +215,13 @@ inherited dmPagos: TdmPagos
     end
     object ADODtStAplicacionesPagosImporte: TFMTBCDField
       FieldName = 'Importe'
+      currency = True
       Precision = 18
       Size = 6
     end
     object ADODtStAplicacionesPagosImporteFactoraje: TFMTBCDField
       FieldName = 'ImporteFactoraje'
+      currency = True
       Precision = 18
       Size = 6
     end
@@ -268,26 +270,31 @@ inherited dmPagos: TdmPagos
     end
     object ADODtStCXCPendientesImporte: TFMTBCDField
       FieldName = 'Importe'
+      currency = True
       Precision = 18
       Size = 6
     end
     object ADODtStCXCPendientesImpuesto: TFMTBCDField
       FieldName = 'Impuesto'
+      currency = True
       Precision = 18
       Size = 6
     end
     object ADODtStCXCPendientesInteres: TFMTBCDField
       FieldName = 'Interes'
+      currency = True
       Precision = 18
       Size = 6
     end
     object ADODtStCXCPendientesTotal: TFMTBCDField
       FieldName = 'Total'
+      currency = True
       Precision = 18
       Size = 6
     end
     object ADODtStCXCPendientesSaldo: TFMTBCDField
       FieldName = 'Saldo'
+      currency = True
       Precision = 18
       Size = 6
     end
@@ -296,6 +303,7 @@ inherited dmPagos: TdmPagos
     end
     object ADODtStCXCPendientesSaldoFactoraje: TFMTBCDField
       FieldName = 'SaldoFactoraje'
+      currency = True
       Precision = 18
       Size = 6
     end
@@ -352,11 +360,13 @@ inherited dmPagos: TdmPagos
     end
     object ADODtStCxCDetallePendImporte: TFMTBCDField
       FieldName = 'Importe'
+      currency = True
       Precision = 18
       Size = 6
     end
     object ADODtStCxCDetallePendSaldo: TFMTBCDField
       FieldName = 'Saldo'
+      currency = True
       Precision = 18
       Size = 6
     end
@@ -369,6 +379,7 @@ inherited dmPagos: TdmPagos
     end
     object ADODtStCxCDetallePendimpconc: TFMTBCDField
       FieldName = 'impconc'
+      currency = True
       Precision = 18
       Size = 6
     end
@@ -391,16 +402,19 @@ inherited dmPagos: TdmPagos
     end
     object ADODtStCxCDetallePendSaldoFactoraje: TFMTBCDField
       FieldName = 'SaldoFactoraje'
+      currency = True
       Precision = 18
       Size = 6
     end
     object ADODtStCxCDetallePendPagosAplicados: TFMTBCDField
       FieldName = 'PagosAplicados'
+      currency = True
       Precision = 18
       Size = 6
     end
     object ADODtStCxCDetallePendPagosAplicadosFactoraje: TFMTBCDField
       FieldName = 'PagosAplicadosFactoraje'
+      currency = True
       Precision = 18
       Size = 6
     end
@@ -439,6 +453,7 @@ inherited dmPagos: TdmPagos
     end
     object ADODtStCxCDetallePendsaldoDoc1: TFMTBCDField
       FieldName = 'saldoDoc1'
+      currency = True
       Precision = 18
       Size = 6
     end
@@ -447,6 +462,7 @@ inherited dmPagos: TdmPagos
     end
     object ADODtStCxCDetallePendSaldoDocumento: TFMTBCDField
       FieldName = 'SaldoDocumento'
+      currency = True
       Precision = 18
       Size = 6
     end
@@ -507,11 +523,13 @@ inherited dmPagos: TdmPagos
     end
     object ADODtstAplicacionesInternasImporte: TFMTBCDField
       FieldName = 'Importe'
+      currency = True
       Precision = 18
       Size = 6
     end
     object ADODtstAplicacionesInternasImporteFactoraje: TFMTBCDField
       FieldName = 'ImporteFactoraje'
+      currency = True
       Precision = 18
       Size = 6
     end
@@ -1616,26 +1634,31 @@ inherited dmPagos: TdmPagos
     end
     object ADODtStDetalleCXCMostrarImporte: TFMTBCDField
       FieldName = 'Importe'
+      currency = True
       Precision = 18
       Size = 6
     end
     object ADODtStDetalleCXCMostrarPagosAplicados: TFMTBCDField
       FieldName = 'PagosAplicados'
+      currency = True
       Precision = 18
       Size = 6
     end
     object ADODtStDetalleCXCMostrarSaldo: TFMTBCDField
       FieldName = 'Saldo'
+      currency = True
       Precision = 18
       Size = 6
     end
     object ADODtStDetalleCXCMostrarPagosAplicadosFactoraje: TFMTBCDField
       FieldName = 'PagosAplicadosFactoraje'
+      currency = True
       Precision = 18
       Size = 6
     end
     object ADODtStDetalleCXCMostrarSaldoFactoraje: TFMTBCDField
       FieldName = 'SaldoFactoraje'
+      currency = True
       Precision = 18
       Size = 6
     end

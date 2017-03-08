@@ -357,4 +357,50 @@ inherited dmSeguimientoCobranza: TdmSeguimientoCobranza
       Lookup = True
     end
   end
+  object ADODtstTelefonoCliente: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'Select p.IdPersona ,p.RFC,P.RazonSocial as Cliente, TP.Telefono ' +
+      'as TelCliente '#13#10'from Personas P'#13#10'Left join Telefonos TP on P.IdP' +
+      'ersona=TP.IdPersona'#13#10'where p.IdRolTipo=3'#13#10'and P.idPersona=:IdPer' +
+      'sona'
+    DataSource = dsSaldoCliente
+    IndexFieldNames = 'IdPersona'
+    MasterFields = 'IdPersona'
+    Parameters = <
+      item
+        Name = 'IdPersona'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 256
+    Top = 304
+  end
+  object ADODtStTelContacto: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'Select PC.idpersona, Con.RazonSocial AS Contacto, T.Telefono tel' +
+      'Contacto'#13#10'from PersonasContactos PC'#13#10'Left join Personas Con on P' +
+      'C.IdContacto=Con.IdPersona'#13#10'Left join Telefonos T on Con.IdPerso' +
+      'na=T.IdPersona'#13#10'where PC.idpersona=:IdPersona'
+    DataSource = dsSaldoCliente
+    IndexFieldNames = 'idpersona'
+    MasterFields = 'IdPersona'
+    Parameters = <
+      item
+        Name = 'IdPersona'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 400
+    Top = 304
+  end
 end
