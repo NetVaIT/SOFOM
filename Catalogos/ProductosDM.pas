@@ -51,6 +51,7 @@ type
     adodsMasterPrecio: TBCDField;
     adodsMasterPrecioTotal: TBCDField;
     adospUpdProductosDepreciacion: TADOStoredProc;
+    adocGetCountProductos: TADOCommand;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterPrecioMonedaChange(Sender: TField);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
@@ -60,6 +61,7 @@ type
     procedure CalcularImportes;
   public
     { Public declarations }
+    function GetCountProductos(IdAnexo: Integer): Integer;
   end;
 
 implementation
@@ -76,6 +78,13 @@ begin
   gGridForm:= TfrmProductos.Create(Self);
   gGridForm.DataSet:= adodsMaster;
   TfrmProductos(gGridForm).actActualizarDepreciacion:= actActualizarDepreciacion;
+end;
+
+function TdmProductos.GetCountProductos(IdAnexo: Integer): Integer;
+begin
+  adocGetCountProductos.Parameters.ParamByName('IdAnexo').Value := IdAnexo;
+  adocGetCountProductos.Execute;
+  Result := adocGetCountProductos.Parameters.ParamByName('Total').Value
 end;
 
 procedure TdmProductos.actActualizarDepreciacionExecute(Sender: TObject);

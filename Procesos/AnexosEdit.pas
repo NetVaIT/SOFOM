@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, _EditForm, dxSkinsCore, dxSkinBlack,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, System.UITypes, _EditForm, dxSkinsCore, dxSkinBlack,
   dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom,
   dxSkinDarkSide, dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
   dxSkinGlassOceans, dxSkinHighContrast, dxSkiniMaginary, dxSkinLilian,
@@ -19,9 +19,11 @@ uses
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, Vcl.ImgList,
   System.Actions, Vcl.ActnList, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls, cxPC,
   cxContainer, cxEdit, cxSpinEdit, cxDBEdit, cxCurrencyEdit, Vcl.DBCtrls,
-  cxMaskEdit, cxDropDownEdit, cxCalendar, cxTextEdit,
-  AmortizacionesDM, AnexosSegmentosDM, cxGroupBox, ProductosDM, cxButtonEdit;
+  cxMaskEdit, cxDropDownEdit, cxCalendar, cxTextEdit, cxGroupBox, cxButtonEdit,
+  ProductosDM;
 
+resourcestring
+  strNeedProduct = 'Necesita agregar uno o más productos al anexo';
 type
   TfrmAnexosEdit = class(T_frmEdit)
     tsSegmentos: TcxTabSheet;
@@ -89,9 +91,12 @@ type
     DBLookupComboBox2: TDBLookupComboBox;
     tsProductos: TcxTabSheet;
     edtTipoCambio: TcxDBButtonEdit;
+    Label12: TLabel;
+    cxDBCurrencyEdit4: TcxDBCurrencyEdit;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure actPostExecute(Sender: TObject);
   private
     { Private declarations }
     dmProductos: TdmProductos;
@@ -107,6 +112,17 @@ implementation
 {$R *.dfm}
 
 uses ContratosDM;
+
+procedure TfrmAnexosEdit.actPostExecute(Sender: TObject);
+var
+  IdAnexo: Integer;
+begin
+  IdAnexo := DataSource.DataSet.FieldByName('IdAnexo').Value;
+  if dmProductos.GetCountProductos(IdAnexo) = 0 then
+    MessageDlg(strNeedProduct, mtInformation, [mbOK], 0)
+  else
+    inherited;
+end;
 
 procedure TfrmAnexosEdit.FormCreate(Sender: TObject);
 begin

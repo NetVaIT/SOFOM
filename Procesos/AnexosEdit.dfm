@@ -1,24 +1,25 @@
 inherited frmAnexosEdit: TfrmAnexosEdit
   Caption = 'frmAnexosEdit'
-  ClientHeight = 612
+  ClientHeight = 638
   ClientWidth = 719
   OnDestroy = FormDestroy
+  ExplicitTop = -83
   ExplicitWidth = 725
-  ExplicitHeight = 641
+  ExplicitHeight = 667
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
     Width = 719
-    Height = 571
+    Height = 597
     ExplicitWidth = 719
-    ExplicitHeight = 571
-    ClientRectBottom = 569
+    ExplicitHeight = 597
+    ClientRectBottom = 595
     ClientRectRight = 717
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 2
       ExplicitTop = 28
       ExplicitWidth = 715
-      ExplicitHeight = 541
+      ExplicitHeight = 567
       object cxGroupBox1: TcxGroupBox
         Left = 3
         Top = -1
@@ -35,11 +36,11 @@ inherited frmAnexosEdit: TfrmAnexosEdit
           FocusControl = cxDBTextEdit1
         end
         object Label2: TLabel
-          Left = 135
+          Left = 122
           Top = 46
-          Width = 43
+          Width = 54
           Height = 13
-          Caption = 'Producto'
+          Caption = 'Descripci'#243'n'
           FocusControl = cxDBTextEdit2
         end
         object Label3: TLabel
@@ -275,7 +276,7 @@ inherited frmAnexosEdit: TfrmAnexosEdit
         Top = 312
         Caption = 'Pagos iniciales'
         TabOrder = 3
-        Height = 218
+        Height = 241
         Width = 350
         object Label11: TLabel
           Left = 65
@@ -425,7 +426,7 @@ inherited frmAnexosEdit: TfrmAnexosEdit
         Top = 312
         Caption = 'Pagos mensuales'
         TabOrder = 4
-        Height = 218
+        Height = 241
         Width = 350
         object Label20: TLabel
           Left = 95
@@ -482,6 +483,14 @@ inherited frmAnexosEdit: TfrmAnexosEdit
           Height = 13
           Caption = 'Impacto ISR'
           FocusControl = cxDBTextEdit21
+        end
+        object Label12: TLabel
+          Left = 77
+          Top = 207
+          Width = 101
+          Height = 13
+          Caption = 'Tasa moratoria anual'
+          FocusControl = cxDBCurrencyEdit4
         end
         object cxDBTextEdit15: TcxDBTextEdit
           Left = 184
@@ -541,6 +550,14 @@ inherited frmAnexosEdit: TfrmAnexosEdit
           TabOrder = 1
           Width = 121
         end
+        object cxDBCurrencyEdit4: TcxDBCurrencyEdit
+          Left = 184
+          Top = 204
+          DataBinding.DataField = 'TasaMoratoriaAnual'
+          DataBinding.DataSource = DataSource
+          TabOrder = 7
+          Width = 121
+        end
       end
     end
     object tsSegmentos: TcxTabSheet
@@ -554,9 +571,9 @@ inherited frmAnexosEdit: TfrmAnexosEdit
     end
   end
   inherited pmlMain: TPanel
-    Top = 571
+    Top = 597
     Width = 719
-    ExplicitTop = 571
+    ExplicitTop = 597
     ExplicitWidth = 719
     inherited btnCancel: TButton
       Left = 637

@@ -4,6 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, _StandarDMod, System.Actions, Vcl.ActnList,
+  System.DateUtils,
   Data.DB, Data.Win.ADODB, System.Math, dxmdaset, ProcesosType;
 
 type
@@ -92,6 +93,7 @@ type
     dxmAmortizacionesFechaCorte: TDateTimeField;
     dxmAmortizacionesFechaVencimiento: TDateTimeField;
     adocUptAnexosAmrtizaciones: TADOCommand;
+    adoqCreditoFechaPrestamo: TDateTimeField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actCalcularExecute(Sender: TObject);
   private
@@ -102,26 +104,29 @@ type
     procedure SetTipoContrato(const Value: TCTipoContrato);
 //    procedure GenSegmentos(NPeriodo: Integer; ValorPresente,
 //      ValorFuturo: Extended; PaymentTime: TPaymentTime);
-    procedure GenAmortizaciones(FechaCorte, FechaVencimiento: TDateTime;
+//    procedure GenAmortizacionesSegmento(FechaInicial: TDateTime; ValorPresente,
+//      ValorFuturo: Extended; PaymentTime: TPaymentTime);
+//    procedure IniSegmentos(TasaAnual: Extended; Plazo: Integer; ValorPresente,
+//      ValorFuturo: Extended);
+    procedure GenAmortizaciones(FechaPrestamo, FechaCorte, FechaVencimiento: TDateTime;
       TasaAnual: Extended; NPeriodo: Integer; ValorPresente, ValorFuturo,
       ImpactoISR: Extended; PaymentTime: TPaymentTime);
-    procedure GenAmortizacionesSegmento(FechaInicial: TDateTime; ValorPresente,
-      ValorFuturo: Extended; PaymentTime: TPaymentTime);
-    procedure IniSegmentos(TasaAnual: Extended; Plazo: Integer; ValorPresente,
-      ValorFuturo: Extended);
     function GetAmortizacion(FechaCorte, FechaVencimiento: TDateTime;
       TasaAnual: Extended; Periodo, NPeriodo: Integer; SaldoInicial,
       ValorPresente, ValorFuturo, ImpactoISR: Extended;
       PaymentTime: TPaymentTime): TAmortizacion;
+    procedure AjustePrimeraMensualidad(FechaPrestamo: TDateTime;
+      var Amortizacion: TAmortizacion);
+    function GetInteresImpuesto(Interes: Extended): Extended;
   public
     { Public declarations }
     property PaymentTime: TPaymentTime read FPaymentTime write SetPaymentTime;
     property TipoContrato: TCTipoContrato read FTipoContrato write SetTipoContrato;
-    procedure Execute(FechaVencimiento: TDateTime; TasaAnual: Extended;
-      Plazo: Integer; ValorPresente, ValorFuturo, ImpactoISR: Extended);
+    procedure Execute(FechaPrestamo, FechaCorte, FechaVencimiento: TDateTime;
+      TasaAnual: Extended; Plazo: Integer; ValorPresente, ValorFuturo, ImpactoISR: Extended);
     function Pago(TasaAnual: Extended; Plazo: Integer; ValorPresente,ValorFuturo: Extended): Extended;
     function GenAnexosAmortizaciones(IdAnexoCredito: Integer;
-      FechaCorte, FechaVencimiento: TDateTime; TasaAnual: Extended; NPeriodo: Integer;
+      FechaPrestamo, FechaCorte, FechaVencimiento: TDateTime; TasaAnual: Extended; NPeriodo: Integer;
       ValorPresente, ValorFuturo, ImpactoISR: Extended): Boolean;
     function SetAmortizaciones(IdAnexo: Integer; Importe: Extended; Tipo: TAbonoCapital): Boolean;
   end;
@@ -135,12 +140,44 @@ uses SegmentosForm, AmortizacionesForm;
 {$R *.dfm}
 
 procedure TdmAmortizaciones.actCalcularExecute(Sender: TObject);
+var
+  FechaInicial: TDateTime;
 begin
   inherited;
-  GenAmortizaciones(TfrmSegmentos(gGridForm).FechaInicial, TfrmSegmentos(gGridForm).FechaInicial, TfrmSegmentos(gGridForm).TasaAnual,
+  FechaInicial := TfrmSegmentos(gGridForm).FechaInicial;
+  GenAmortizaciones(FechaInicial, FechaInicial, FechaInicial, TfrmSegmentos(gGridForm).TasaAnual,
   TfrmSegmentos(gGridForm).Plazo, TfrmSegmentos(gGridForm).Monto,
   TfrmSegmentos(gGridForm).Futuro, TfrmSegmentos(gGridForm).ImpactoISR, PaymentTime);
 //  GenAmortizacionesSegmento(TfrmSegmentos(gGridForm).FechaInicial,TfrmSegmentos(gGridForm).Monto, 0, PaymentTime);
+end;
+
+procedure TdmAmortizaciones.AjustePrimeraMensualidad(FechaPrestamo: TDateTime;
+  var Amortizacion: TAmortizacion);
+var
+  TasaDiaria: Extended;
+  Tasa: Extended;
+  Dias: Integer;
+  Interes: Extended;
+  InteresImpuesto: Extended;
+  Pago: Extended;
+begin
+  if Amortizacion.Periodo <> 1 then exit;
+  case TipoContrato of
+    tcCreditoSimple, tcArrendamientoFinanciero:
+    begin
+      TasaDiaria := (Amortizacion.TasaAnual / 100) / 360;
+      Dias := DaysBetween(FechaPrestamo, Amortizacion.FechaVencimiento);
+      Tasa := TasaDiaria * Dias;
+      Interes := Amortizacion.SaldoInicial * Tasa;
+      InteresImpuesto := GetInteresImpuesto(Interes);
+      Pago := Amortizacion.Capital + Interes;
+      Amortizacion.Interes := Interes;
+      Amortizacion.InteresImpuesto := InteresImpuesto;
+      Amortizacion.InteresTotal := Interes + InteresImpuesto;
+      Amortizacion.Pago := Pago;
+      Amortizacion.PagoTotal := Pago + InteresImpuesto + Amortizacion.ImpactoISR;;
+    end;
+  end;
 end;
 
 procedure TdmAmortizaciones.DataModuleCreate(Sender: TObject);
@@ -161,7 +198,7 @@ begin
 //  gFormDeatil1.DataSet := dxmAmortizaciones;
 end;
 
-procedure TdmAmortizaciones.Execute(FechaVencimiento: TDateTime;
+procedure TdmAmortizaciones.Execute(FechaPrestamo, FechaCorte, FechaVencimiento: TDateTime;
   TasaAnual: Extended; Plazo: Integer; ValorPresente, ValorFuturo, ImpactoISR: Extended);
 begin
   TfrmSegmentos(gGridForm).VerValores := False;
@@ -171,7 +208,8 @@ begin
   TfrmSegmentos(gGridForm).Futuro := ValorFuturo;
   TfrmSegmentos(gGridForm).ImpactoISR := ImpactoISR;
   TfrmSegmentos(gGridForm).FechaInicial := FechaVencimiento;
-  GenAmortizaciones(FechaVencimiento, FechaVencimiento, TasaAnual, Plazo, ValorPresente, ValorFuturo, ImpactoISR, PaymentTime);
+  GenAmortizaciones(FechaPrestamo, FechaCorte, FechaVencimiento,
+  TasaAnual, Plazo, ValorPresente, ValorFuturo, ImpactoISR, PaymentTime);
 //  IniSegmentos(TasaAnual, Plazo, ValorPresente, ValorFuturo);
 //  GenAmortizacionesSegmento(FechaInicial, ValorPresente, ValorFuturo, PaymentTime);
 end;
@@ -190,21 +228,13 @@ var
   SaldoFinal: Extended;
 begin
   Futuro := -1*ValorFuturo;
-
   Tasa := (TasaAnual / 100) / 12;
   Capital := -1*PeriodPayment(Tasa, Periodo, NPeriodo, ValorPresente, Futuro, PaymentTime);
   CapitalSinImpuesto := Capital / (1+(_IMPUESTOS_IVA/100));
   Interes := -1*InterestPayment(Tasa, Periodo, NPeriodo, ValorPresente, Futuro, PaymentTime);
+  InteresImpuesto := GetInteresImpuesto(Interes);
   Pago := Capital + Interes;
-  case TipoContrato of
-    tcNone: InteresImpuesto := 0;
-    tcCreditoSimple: InteresImpuesto := Interes * (_IMPUESTOS_IVA/100);
-    tcArrendamientoFinanciero: InteresImpuesto := Interes * (_IMPUESTOS_IVA/100);
-    tcArrendamientoPuro: InteresImpuesto := 0;
-    else InteresImpuesto := 0;
-  end;
   SaldoFinal := SaldoInicial - Capital;
-
   Result.Periodo := Periodo;
   Result.FechaCorte := IncMonth(FechaCorte, Periodo-1);
   Result.FechaVencimiento := IncMonth(FechaVencimiento, Periodo-1);
@@ -222,159 +252,187 @@ begin
   Result.SaldoFinal := SaldoFinal;
 end;
 
-procedure TdmAmortizaciones.GenAmortizaciones(FechaCorte, FechaVencimiento: TDateTime;
+function TdmAmortizaciones.GetInteresImpuesto(Interes: Extended): Extended;
+begin
+  case TipoContrato of
+    tcNone: Result := 0;
+    tcCreditoSimple: Result := Interes * (_IMPUESTOS_IVA/100);
+    tcArrendamientoFinanciero: Result := Interes * (_IMPUESTOS_IVA/100);
+    tcArrendamientoPuro: Result := 0;
+    else Result := 0;
+  end;
+end;
+
+procedure TdmAmortizaciones.GenAmortizaciones(FechaPrestamo, FechaCorte, FechaVencimiento: TDateTime;
   TasaAnual: Extended; NPeriodo: Integer; ValorPresente,ValorFuturo, ImpactoISR: Extended;
   PaymentTime: TPaymentTime);
 var
   Periodo: Integer;
-  Tasa: Extended;
-  Pago: Extended;
-  Capital: Extended;
-  CapitalSinImpuesto: Extended;
-  Interes: Extended;
-  InteresImpuesto: Extended;
-  Futuro: Extended;
+//  Tasa: Extended;
+//  Pago: Extended;
+//  Capital: Extended;
+//  CapitalSinImpuesto: Extended;
+//  Interes: Extended;
+//  InteresImpuesto: Extended;
+//  Futuro: Extended;
   SaldoInicial: Extended;
-  SaldoFinal: Extended;
+//  SaldoFinal: Extended;
+  Amortizacion: TAmortizacion;
 begin
 //  if (Rate <= -1.0) or (Period < 1) or (Period > NPeriods) then ArgError('PeriodPayment');
   if NPeriodo < 1 then exit;
   dxmAmortizaciones.Close;
   dxmAmortizaciones.Open;
   SaldoInicial:= ValorPresente;
-  Futuro := -1*ValorFuturo;
   for Periodo := 1 to NPeriodo do
   begin
-    Tasa := (TasaAnual / 100) / 12;
-    Capital := -1*PeriodPayment(Tasa, Periodo, NPeriodo, ValorPresente, Futuro, PaymentTime);
-    CapitalSinImpuesto := Capital / (1+(_IMPUESTOS_IVA/100));
-    Interes := -1*InterestPayment(Tasa, Periodo, NPeriodo, ValorPresente, Futuro, PaymentTime);
-    Pago := Capital + Interes;
-//    Pago := PeriodPayment(Tasa, Periodo, NPeriodo, ValorPresente, ValorFuturo, PaymentTime)*-1;
-//    Capital := Pago / (1+(_IMPUESTOS_IVA/100));
-//    Interes := InterestPayment(Tasa, Periodo, NPeriodo, ValorPresente, ValorFuturo, PaymentTime)*-1;
-    case TipoContrato of
-      tcNone: InteresImpuesto := 0;
-      tcCreditoSimple: InteresImpuesto := Interes * (_IMPUESTOS_IVA/100);
-      tcArrendamientoFinanciero: InteresImpuesto := Interes * (_IMPUESTOS_IVA/100);
-      tcArrendamientoPuro: InteresImpuesto := 0;
-      else InteresImpuesto := 0;
+    Amortizacion := GetAmortizacion(FechaCorte, FechaVencimiento, TasaAnual, Periodo, NPeriodo,
+    SaldoInicial, ValorPresente, ValorFuturo, ImpactoISR, PaymentTime);
+    if Amortizacion.Periodo = 1 then
+    begin
+      AjustePrimeraMensualidad(FechaPrestamo, Amortizacion);
     end;
-    SaldoFinal := SaldoInicial - Capital;
     dxmAmortizaciones.Append;
     dxmAmortizacionesSegmento.Value := 0;
-    dxmAmortizacionesFechaCorte.Value := IncMonth(FechaCorte, Periodo-1);
-    dxmAmortizacionesFechaVencimiento.Value := IncMonth(FechaVencimiento, Periodo-1);
-    dxmAmortizacionesPeriodo.Value := Periodo;
-    dxmAmortizacionesTasaAnual.Value := TasaAnual;
-    dxmAmortizacionesSaldoInicial.Value := SaldoInicial;
-    dxmAmortizacionesCapital.Value := CapitalSinImpuesto;
-    dxmAmortizacionesCapitalImpuesto.Value := Capital - CapitalSinImpuesto;
-    dxmAmortizacionesCapitalTotal.Value := Capital;
-    dxmAmortizacionesInteres.Value := Interes;
-    dxmAmortizacionesInteresImpuesto.Value := InteresImpuesto;
-    dxmAmortizacionesInteresTotal.Value := Interes + InteresImpuesto;
-    dxmAmortizacionesImpactoISR.Value := ImpactoISR;
-    dxmAmortizacionesPago.Value := Pago;
-    dxmAmortizacionesPagoTotal.Value := Pago + InteresImpuesto + ImpactoISR;
-//    case TipoContrato of
-//      tcNone: InteresImpuesto := 0;
-//      tcCreditoSimple: dxmAmortizacionesPagoTotal.Value := Pago;
-//      tcArrendamientoFinasnciero: dxmAmortizacionesPagoTotal.Value := Pago + InteresImpuesto;
-//      tcArrendamientoPuro: dxmAmortizacionesPagoTotal.Value := Pago + ImpactoISR;
-//    end;
-    dxmAmortizacionesSaldoFinal.Value := SaldoFinal;
+    dxmAmortizacionesFechaCorte.Value := Amortizacion.FechaCorte;
+    dxmAmortizacionesFechaVencimiento.Value := Amortizacion.FechaVencimiento;
+    dxmAmortizacionesPeriodo.Value := Amortizacion.Periodo;
+    dxmAmortizacionesTasaAnual.Value := Amortizacion.TasaAnual;
+    dxmAmortizacionesSaldoInicial.Value := Amortizacion.SaldoInicial;
+    dxmAmortizacionesCapital.Value := Amortizacion.Capital;
+    dxmAmortizacionesCapitalImpuesto.Value := Amortizacion.CapitalImpuesto;
+    dxmAmortizacionesCapitalTotal.Value := Amortizacion.CapitalTotal;
+    dxmAmortizacionesInteres.Value := Amortizacion.Interes;
+    dxmAmortizacionesInteresImpuesto.Value := Amortizacion.InteresImpuesto;
+    dxmAmortizacionesInteresTotal.Value := Amortizacion.InteresTotal;
+    dxmAmortizacionesImpactoISR.Value := Amortizacion.ImpactoISR;
+    dxmAmortizacionesPago.Value := Amortizacion.Pago;
+    dxmAmortizacionesPagoTotal.Value := Amortizacion.PagoTotal;
+    dxmAmortizacionesSaldoFinal.Value := Amortizacion.SaldoFinal;
     dxmAmortizaciones.Post;
-    SaldoInicial := SaldoFinal
+    SaldoInicial := Amortizacion.SaldoFinal;
   end;
+
+//  SaldoInicial:= ValorPresente;
+//  Futuro := -1*ValorFuturo;
+//  for Periodo := 1 to NPeriodo do
+//  begin
+//    Tasa := (TasaAnual / 100) / 12;
+//    Capital := -1*PeriodPayment(Tasa, Periodo, NPeriodo, ValorPresente, Futuro, PaymentTime);
+//    CapitalSinImpuesto := Capital / (1+(_IMPUESTOS_IVA/100));
+//    Interes := -1*InterestPayment(Tasa, Periodo, NPeriodo, ValorPresente, Futuro, PaymentTime);
+//    InteresImpuesto := GetInteresImpuesto(Interes);
+//    Pago := Capital + Interes;
+//    SaldoFinal := SaldoInicial - Capital;
+//    dxmAmortizaciones.Append;
+//    dxmAmortizacionesSegmento.Value := 0;
+//    dxmAmortizacionesFechaCorte.Value := IncMonth(FechaCorte, Periodo-1);
+//    dxmAmortizacionesFechaVencimiento.Value := IncMonth(FechaVencimiento, Periodo-1);
+//    dxmAmortizacionesPeriodo.Value := Periodo;
+//    dxmAmortizacionesTasaAnual.Value := TasaAnual;
+//    dxmAmortizacionesSaldoInicial.Value := SaldoInicial;
+//    dxmAmortizacionesCapital.Value := CapitalSinImpuesto;
+//    dxmAmortizacionesCapitalImpuesto.Value := Capital - CapitalSinImpuesto;
+//    dxmAmortizacionesCapitalTotal.Value := Capital;
+//    dxmAmortizacionesInteres.Value := Interes;
+//    dxmAmortizacionesInteresImpuesto.Value := InteresImpuesto;
+//    dxmAmortizacionesInteresTotal.Value := Interes + InteresImpuesto;
+//    dxmAmortizacionesImpactoISR.Value := ImpactoISR;
+//    dxmAmortizacionesPago.Value := Pago;
+//    dxmAmortizacionesPagoTotal.Value := Pago + InteresImpuesto + ImpactoISR;
+//    dxmAmortizacionesSaldoFinal.Value := SaldoFinal;
+//    dxmAmortizaciones.Post;
+//    SaldoInicial := SaldoFinal
+//  end;
   dxmAmortizaciones.First;
 end;
 
-procedure TdmAmortizaciones.GenAmortizacionesSegmento(FechaInicial: TDateTime;
-  ValorPresente,ValorFuturo: Extended; PaymentTime: TPaymentTime);
-var
-  NPeriodo: Integer;
-  NPeriodoSegmento: Integer;
-  Periodo: Integer;
-  PeriodoSegmento: Integer;
-  Tasa: Extended;
-  Pago: Extended;
-  Capital: Extended;
-  Interes: Extended;
-  InteresImpuesto: Extended;
-  SaldoInicial: Extended;
-  SaldoFinal: Extended;
-  TasaAnual: Double;
-  SaldoInicialSegmento: Extended;
-  function GetNPeriodo: Integer;
-  begin
-    dxmSegmentos.Last;
-    Result := dxmSegmentosPlazoFin.Value;
-  end;
-begin
-//  if (Rate <= -1.0) or (Period < 1) or (Period > NPeriods) then ArgError('PeriodPayment');
-  NPeriodo := GetNPeriodo;
-  if NPeriodo < 1 then exit;
-  dxmAmortizaciones.Close;
-  dxmAmortizaciones.Open;
-  SaldoInicial:= ValorPresente;
-  SaldoInicialSegmento:= ValorPresente;
-  NPeriodoSegmento := NPeriodo;
-  Pago:= 0;
-  Interes:= 0;
-  SaldoFinal := ValorFuturo;
-  dxmSegmentos.First;
-  while not dxmSegmentos.Eof do
-  begin
-    PeriodoSegmento:= 1;
-    for Periodo := dxmSegmentosPlazoIni.Value to dxmSegmentosPlazoFin.Value do
-    begin
-      TasaAnual:= dxmSegmentosTasaAnual.Value;
-      Tasa := (TasaAnual / 100) / 12;
-      Pago := PeriodPayment(Tasa, PeriodoSegmento, NPeriodoSegmento, SaldoInicialSegmento, ValorFuturo, PaymentTime)*-1;
-      Capital := Pago / (1+(_IMPUESTOS_IVA/100));
-      Interes := InterestPayment(Tasa, PeriodoSegmento, NPeriodoSegmento, SaldoInicialSegmento, ValorFuturo, PaymentTime)*-1;
-    case TipoContrato of
-      tcNone: InteresImpuesto := 0;
-      tcCreditoSimple: InteresImpuesto := 0;
-      tcArrendamientoFinanciero: InteresImpuesto := Interes * (_IMPUESTOS_IVA/100);
-      tcArrendamientoPuro: InteresImpuesto := 0;
-      else InteresImpuesto := 0;
-    end;
-      SaldoFinal := SaldoInicial - Pago;
-      dxmAmortizaciones.Append;
-      dxmAmortizacionesSegmento.Value := dxmSegmentosSegmento.Value;
-      dxmAmortizacionesFechaVencimiento.Value := IncMonth(FechaInicial, Periodo-1);
-      dxmAmortizacionesPeriodo.Value := Periodo;
-      dxmAmortizacionesSaldoInicial.Value := SaldoInicial;
-      dxmAmortizacionesTasaAnual.Value := TasaAnual;
-      dxmAmortizacionesPago.Value := Pago + Interes;
-      dxmAmortizacionesCapital.Value := Capital;
-      dxmAmortizacionesCapitalImpuesto.Value := Pago - Capital;
-      dxmAmortizacionesCapitalTotal.Value := Pago;
-      dxmAmortizacionesInteres.Value := Interes;
-      dxmAmortizacionesInteresImpuesto.Value := InteresImpuesto;
-      dxmAmortizacionesInteresTotal.Value := Interes + InteresImpuesto;
-      dxmAmortizacionesSaldoFinal.Value := SaldoFinal;
-      dxmAmortizacionesPagoTotal.Value := Pago + Interes + InteresImpuesto;
-      dxmAmortizaciones.Post;
-      Inc(PeriodoSegmento);
-      SaldoInicial := SaldoFinal;
-    end;
-    dxmSegmentos.Edit;
-    dxmSegmentosValorPresente.Value := SaldoInicialSegmento;
-    dxmSegmentosPagoMensual.Value := Pago + Interes;
-    dxmSegmentosValorFuturo.Value := SaldoFinal;
-    dxmSegmentos.Post;
-    NPeriodoSegmento := NPeriodo - dxmSegmentosPlazoFin.Value;
-    SaldoInicialSegmento := SaldoFinal;
-    dxmSegmentos.Next;
-  end;
-end;
+//procedure TdmAmortizaciones.GenAmortizacionesSegmento(FechaInicial: TDateTime;
+//  ValorPresente,ValorFuturo: Extended; PaymentTime: TPaymentTime);
+//var
+//  NPeriodo: Integer;
+//  NPeriodoSegmento: Integer;
+//  Periodo: Integer;
+//  PeriodoSegmento: Integer;
+//  Tasa: Extended;
+//  Pago: Extended;
+//  Capital: Extended;
+//  Interes: Extended;
+//  InteresImpuesto: Extended;
+//  SaldoInicial: Extended;
+//  SaldoFinal: Extended;
+//  TasaAnual: Double;
+//  SaldoInicialSegmento: Extended;
+//  function GetNPeriodo: Integer;
+//  begin
+//    dxmSegmentos.Last;
+//    Result := dxmSegmentosPlazoFin.Value;
+//  end;
+//begin
+////  if (Rate <= -1.0) or (Period < 1) or (Period > NPeriods) then ArgError('PeriodPayment');
+//  NPeriodo := GetNPeriodo;
+//  if NPeriodo < 1 then exit;
+//  dxmAmortizaciones.Close;
+//  dxmAmortizaciones.Open;
+//  SaldoInicial:= ValorPresente;
+//  SaldoInicialSegmento:= ValorPresente;
+//  NPeriodoSegmento := NPeriodo;
+//  Pago:= 0;
+//  Interes:= 0;
+//  SaldoFinal := ValorFuturo;
+//  dxmSegmentos.First;
+//  while not dxmSegmentos.Eof do
+//  begin
+//    PeriodoSegmento:= 1;
+//    for Periodo := dxmSegmentosPlazoIni.Value to dxmSegmentosPlazoFin.Value do
+//    begin
+//      TasaAnual:= dxmSegmentosTasaAnual.Value;
+//      Tasa := (TasaAnual / 100) / 12;
+//      Pago := PeriodPayment(Tasa, PeriodoSegmento, NPeriodoSegmento, SaldoInicialSegmento, ValorFuturo, PaymentTime)*-1;
+//      Capital := Pago / (1+(_IMPUESTOS_IVA/100));
+//      Interes := InterestPayment(Tasa, PeriodoSegmento, NPeriodoSegmento, SaldoInicialSegmento, ValorFuturo, PaymentTime)*-1;
+//    case TipoContrato of
+//      tcNone: InteresImpuesto := 0;
+//      tcCreditoSimple: InteresImpuesto := 0;
+//      tcArrendamientoFinanciero: InteresImpuesto := Interes * (_IMPUESTOS_IVA/100);
+//      tcArrendamientoPuro: InteresImpuesto := 0;
+//      else InteresImpuesto := 0;
+//    end;
+//      SaldoFinal := SaldoInicial - Pago;
+//      dxmAmortizaciones.Append;
+//      dxmAmortizacionesSegmento.Value := dxmSegmentosSegmento.Value;
+//      dxmAmortizacionesFechaVencimiento.Value := IncMonth(FechaInicial, Periodo-1);
+//      dxmAmortizacionesPeriodo.Value := Periodo;
+//      dxmAmortizacionesSaldoInicial.Value := SaldoInicial;
+//      dxmAmortizacionesTasaAnual.Value := TasaAnual;
+//      dxmAmortizacionesPago.Value := Pago + Interes;
+//      dxmAmortizacionesCapital.Value := Capital;
+//      dxmAmortizacionesCapitalImpuesto.Value := Pago - Capital;
+//      dxmAmortizacionesCapitalTotal.Value := Pago;
+//      dxmAmortizacionesInteres.Value := Interes;
+//      dxmAmortizacionesInteresImpuesto.Value := InteresImpuesto;
+//      dxmAmortizacionesInteresTotal.Value := Interes + InteresImpuesto;
+//      dxmAmortizacionesSaldoFinal.Value := SaldoFinal;
+//      dxmAmortizacionesPagoTotal.Value := Pago + Interes + InteresImpuesto;
+//      dxmAmortizaciones.Post;
+//      Inc(PeriodoSegmento);
+//      SaldoInicial := SaldoFinal;
+//    end;
+//    dxmSegmentos.Edit;
+//    dxmSegmentosValorPresente.Value := SaldoInicialSegmento;
+//    dxmSegmentosPagoMensual.Value := Pago + Interes;
+//    dxmSegmentosValorFuturo.Value := SaldoFinal;
+//    dxmSegmentos.Post;
+//    NPeriodoSegmento := NPeriodo - dxmSegmentosPlazoFin.Value;
+//    SaldoInicialSegmento := SaldoFinal;
+//    dxmSegmentos.Next;
+//  end;
+//end;
 
 function TdmAmortizaciones.GenAnexosAmortizaciones(IdAnexoCredito: Integer;
-  FechaCorte, FechaVencimiento: TDateTime; TasaAnual: Extended; NPeriodo: Integer;
+  FechaPrestamo, FechaCorte, FechaVencimiento: TDateTime; TasaAnual: Extended; NPeriodo: Integer;
   ValorPresente, ValorFuturo, ImpactoISR: Extended): Boolean;
+
   function GetTotalAmortizaciones: Integer;
   begin
     adoqCountAmortizaciones.Close;
@@ -384,13 +442,10 @@ function TdmAmortizaciones.GenAnexosAmortizaciones(IdAnexoCredito: Integer;
     adoqCountAmortizaciones.Close;
   end;
 
-//  function AjustePrimeraMensualidad:
-//  begin
-//  end;
 begin
   Result:= False;
   if GetTotalAmortizaciones > 0 then exit;
-  GenAmortizaciones(FechaCorte, FechaVencimiento, TasaAnual, NPeriodo, ValorPresente, ValorFuturo, ImpactoISR, PaymentTime);
+  GenAmortizaciones(FechaPrestamo, FechaCorte, FechaVencimiento, TasaAnual, NPeriodo, ValorPresente, ValorFuturo, ImpactoISR, PaymentTime);
   // Guardar en BD
   dxmAmortizaciones.First;
   while not dxmAmortizaciones.Eof do
@@ -444,34 +499,33 @@ end;
 //  end;
 //end;
 
-procedure TdmAmortizaciones.IniSegmentos(TasaAnual: Extended; Plazo: Integer;
-  ValorPresente,ValorFuturo: Extended);
-var
-  Tasa: Extended;
-  Pago: Extended;
-begin
-  if Plazo < 1 then exit;
-  Tasa := (TasaAnual / 100) / 12;
-  Pago := Payment(Tasa, Plazo, ValorPresente, ValorFuturo, PaymentTime);
-  dxmSegmentos.Close;
-  dxmSegmentos.Open;
-  dxmSegmentos.Append;
-  dxmSegmentosSegmento.Value := 1;
-  dxmSegmentosValorPresente.Value := ValorPresente;
-  dxmSegmentosPlazoIni.Value := 1;
-  dxmSegmentosPlazoFin.Value := Plazo;
-  dxmSegmentosTasaAnual.Value := TasaAnual;
-  dxmSegmentosPagoMensual.Value := Pago;
-  dxmSegmentosValorFuturo.Value := ValorFuturo;
-  dxmSegmentos.Post;
-end;
+//procedure TdmAmortizaciones.IniSegmentos(TasaAnual: Extended; Plazo: Integer;
+//  ValorPresente,ValorFuturo: Extended);
+//var
+//  Tasa: Extended;
+//  Pago: Extended;
+//begin
+//  if Plazo < 1 then exit;
+//  Tasa := (TasaAnual / 100) / 12;
+//  Pago := Payment(Tasa, Plazo, ValorPresente, ValorFuturo, PaymentTime);
+//  dxmSegmentos.Close;
+//  dxmSegmentos.Open;
+//  dxmSegmentos.Append;
+//  dxmSegmentosSegmento.Value := 1;
+//  dxmSegmentosValorPresente.Value := ValorPresente;
+//  dxmSegmentosPlazoIni.Value := 1;
+//  dxmSegmentosPlazoFin.Value := Plazo;
+//  dxmSegmentosTasaAnual.Value := TasaAnual;
+//  dxmSegmentosPagoMensual.Value := Pago;
+//  dxmSegmentosValorFuturo.Value := ValorFuturo;
+//  dxmSegmentos.Post;
+//end;
 
 function TdmAmortizaciones.Pago(TasaAnual: Extended; Plazo: Integer;
   ValorPresente, ValorFuturo: Extended): Extended;
 var
   Tasa: Extended;
   Futuro: Extended;
-
 begin
 //  if Plazo < 1 then exit;
   Tasa := (TasaAnual / 100) / 12;
@@ -489,7 +543,7 @@ var
   NPeriodoSegmento: Integer;
   PeriodoSegmento: Integer;
   IdAnexoCredito: Integer;
-  FechaCorte, FechaVencimiento: TDateTime;
+  FechaPrestamo, FechaCorte, FechaVencimiento: TDateTime;
   NPeriodo: Integer;
   TasaAnual: Extended;
   ValorPresente: Extended;
@@ -505,6 +559,7 @@ var
     adoqCredito.Open;
     try
       IdAnexoCredito:= adoqCreditoIdAnexoCredito.Value;
+      FechaPrestamo := adoqCreditoFechaPrestamo.Value;
       FechaCorte := adoqCreditoFechaCorte.Value;
       FechaVencimiento := adoqCreditoFechaVencimiento.Value;
       NPeriodo:= adoqCreditoPlazo.Value;
@@ -533,7 +588,8 @@ var
 begin
 //  try
     case Tipo of
-      acReducirCuota: begin
+      acReducirCuota:
+      begin
         CargarCredito;
         CargaAmortizaciones;
         PeriodoInicial := dxmAnexosAmortizacionesPeriodo.Value;
@@ -547,6 +603,10 @@ begin
         begin
           Amortizacion := GetAmortizacion(FechaCorte, FechaVencimiento, TasaAnual, PeriodoSegmento, NPeriodoSegmento,
           SaldoInicial, ValorPresente, ValorFuturo, ImpactoISR, PaymentTime);
+          if dxmAnexosAmortizacionesPeriodo.Value = 1 then
+          begin
+            AjustePrimeraMensualidad(FechaPrestamo, Amortizacion);
+          end;
           dxmAnexosAmortizaciones.Edit;
           dxmAnexosAmortizacionesSaldoInicial.Value := Amortizacion.SaldoInicial;
           dxmAnexosAmortizacionesPago.Value := Amortizacion.Pago;

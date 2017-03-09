@@ -166,12 +166,12 @@ inherited dmContratos: TdmContratos
       'us, Identificador, Descripcion, Fecha, PrecioMoneda, TipoCambio,' +
       ' Precio, Impuesto, PrecioTotal, EnganchePorcentaje, Enganche, Co' +
       'misionPorcentaje, Comision, ComisionImpuesto, Gastos, GastosImpu' +
-      'estos, DespositosNumero, Depositos, PagoIncial, OpcionCompraPorc' +
-      'entaje, OpcionCompra, ValorResidualPorcentaje, ValorResidual, Mo' +
-      'ntoFinanciar, TasaAnual, Plazo, PagoMensual, ImpactoISR, FechaCo' +
-      'rte, FechaVencimiento, PagoInicialCreado, CapitalCobrado, SaldoI' +
-      'nsoluto, MontoVencido from Anexos'#13#10'where IdContrato = :IdContrat' +
-      'o'
+      'estos, '#13#10'DespositosNumero, Depositos, PagoIncial, OpcionCompraPo' +
+      'rcentaje, OpcionCompra, ValorResidualPorcentaje, ValorResidual, ' +
+      'MontoFinanciar, TasaAnual, Plazo, PagoMensual, ImpactoISR, '#13#10'Fec' +
+      'haCorte, FechaVencimiento, TasaMoratoriaAnual, PagoInicialCreado' +
+      ', CapitalCobrado, SaldoInsoluto, MontoVencido from Anexos'#13#10'where' +
+      ' IdContrato = :IdContrato'
     DataSource = dsMaster
     MasterFields = 'IdContrato'
     Parameters = <
@@ -212,7 +212,7 @@ inherited dmContratos: TdmContratos
       Size = 5
     end
     object adodsAnexosDescripcion: TStringField
-      DisplayLabel = 'Producto'
+      DisplayLabel = 'Descripci'#243'n'
       FieldName = 'Descripcion'
       Size = 100
     end
@@ -414,6 +414,13 @@ inherited dmContratos: TdmContratos
       DisplayLabel = 'Fecha corte'
       FieldName = 'FechaCorte'
     end
+    object adodsAnexosTasaMoratoriaAnual: TBCDField
+      DisplayLabel = 'Tasa moratoria anual'
+      FieldName = 'TasaMoratoriaAnual'
+      DisplayFormat = '0.00 %'
+      EditFormat = '0.00'
+      Precision = 19
+    end
     object adodsAnexosEstatus2: TStringField
       FieldKind = fkLookup
       FieldName = 'Estatus'
@@ -450,7 +457,6 @@ inherited dmContratos: TdmContratos
     end
   end
   object adodsMonedas: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdMoneda, Descripcion from Monedas'#13#10'order by Descripcion'
@@ -459,7 +465,6 @@ inherited dmContratos: TdmContratos
     Top = 144
   end
   object adodsAnexosEstatus: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdAnexoEstatus, Descripcion from AnexosEstatus'

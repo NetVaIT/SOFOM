@@ -73,6 +73,7 @@ type
     tvMasterCapitalCobrado: TcxGridDBColumn;
     tvMasterSaldoInsoluto: TcxGridDBColumn;
     tvMasterMontoVencido: TcxGridDBColumn;
+    tvMasterTasaMoratoriaAnual: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private

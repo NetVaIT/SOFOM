@@ -256,4 +256,28 @@ inherited dmProductos: TdmProductos
     Left = 296
     Top = 280
   end
+  object adocGetCountProductos: TADOCommand
+    CommandText = 
+      'SELECT :Total = COUNT(*)  FROM Productos WHERE IdAnexo = :IdAnex' +
+      'o'
+    Connection = _dmConection.ADOConnection
+    Parameters = <
+      item
+        Name = 'Total'
+        DataType = ftInteger
+        Direction = pdOutput
+        Size = -1
+        Value = Null
+      end
+      item
+        Name = 'IdAnexo'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 296
+    Top = 232
+  end
 end

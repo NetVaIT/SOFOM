@@ -584,11 +584,19 @@ inherited frmCotizacionesEdit: TfrmCotizacionesEdit
       Caption = 'Segmentos'
       ImageIndex = 2
       TabVisible = False
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
     object tsAmortizaciones: TcxTabSheet
       Caption = 'Amortizaciones'
       ImageIndex = 1
       TabVisible = False
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
   end
   inherited pmlMain: TPanel

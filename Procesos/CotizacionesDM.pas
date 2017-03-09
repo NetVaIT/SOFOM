@@ -126,6 +126,7 @@ begin
   try
     Amortizaciones.TipoContrato:= TipoContrato;
     Amortizaciones.Execute(adodsMasterElaboracion.Value,
+    adodsMasterElaboracion.Value,adodsMasterElaboracion.Value,
     adodsCreditosTasaAnual.Value, adodsCreditosPlazo.Value,
     adodsCreditosMontoFinanciar.AsExtended,
     adodsCreditosValorResidual.AsExtended,
@@ -145,6 +146,7 @@ begin
   try
     Amortizaciones.TipoContrato:= TipoContrato;
     Amortizaciones.Execute(adodsMasterElaboracion.Value,
+    adodsMasterElaboracion.Value, adodsMasterElaboracion.Value,
     adodsmasterTasaAnual.Value, adodsmasterPlazo.Value,
     adodsMasterMontoFinanciar.AsExtended,
     adodsMasterValorResidual.AsExtended,

@@ -133,10 +133,13 @@ begin
 end;
 
 procedure TfrmCotizacionesEdit.pcMainChange(Sender: TObject);
+var
+  FechaInicial: TDateTime;
 begin
   inherited;
+  FechaInicial := DataSource.DataSet.FieldByName('FechaInicial').AsDateTime;
   dmAmortizaciones.TipoContrato:= TCTipoContrato(DataSource.DataSet.FieldByName('IdContratoTipo').AsInteger);
-  dmAmortizaciones.Execute(DataSource.DataSet.FieldByName('FechaInicial').AsDateTime,
+  dmAmortizaciones.Execute(FechaInicial,FechaInicial,FechaInicial,
   DataSource.DataSet.FieldByName('TasaAnual').AsExtended,
   DataSource.DataSet.FieldByName('Plazo').AsInteger,
   DataSource.DataSet.FieldByName('MontoFinanciar').AsExtended,

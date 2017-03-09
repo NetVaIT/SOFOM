@@ -364,8 +364,8 @@ inherited dmAmortizaciones: TdmAmortizaciones
       'WHERE AnexosCreditos.IdAnexoCreditoEstatus = 1 '
       'AND AnexosCreditos.IdAnexo = :IdAnexo'
       'AND AnexosAmortizaciones.FechaVencimiento >= GETDATE()')
-    Left = 232
-    Top = 152
+    Left = 216
+    Top = 88
     object adoqAnexosAmortizacionesIdAnexoAmortizacion: TAutoIncField
       FieldName = 'IdAnexoAmortizacion'
       ReadOnly = True
@@ -482,8 +482,8 @@ inherited dmAmortizaciones: TdmAmortizaciones
       6F72696F42617365002200000018000A004D6F7261746F72696F002200000018
       0012004D6F7261746F72696F496D70756573746F00}
     SortOptions = []
-    Left = 232
-    Top = 208
+    Left = 216
+    Top = 144
     object dxmAnexosAmortizacionesIdAnexoAmortizacion: TAutoIncField
       DisplayWidth = 10
       FieldName = 'IdAnexoAmortizacion'
@@ -587,15 +587,22 @@ inherited dmAmortizaciones: TdmAmortizaciones
       end>
     SQL.Strings = (
       
-        'SELECT IdAnexoCredito, FechaCorte, FechaVencimiento, Plazo, Tasa' +
-        'Anual, ValorResidual, ImpactoISR'
+        'SELECT Anexos.Fecha AS FechaPrestamo, AnexosCreditos.IdAnexoCred' +
+        'ito, AnexosCreditos.FechaCorte, AnexosCreditos.FechaVencimiento,' +
+        ' AnexosCreditos.Plazo, AnexosCreditos.TasaAnual, AnexosCreditos.' +
+        'ValorResidual, AnexosCreditos.ImpactoISR'
       'FROM AnexosCreditos'
-      'WHERE IdAnexo = :IdAnexo')
-    Left = 224
+      'INNER JOIN Anexos ON AnexosCreditos.IdAnexo = Anexos.IdAnexo'
+      'WHERE AnexosCreditos.IdAnexoCreditoEstatus = 1'
+      'AND Anexos.IdAnexo = :IdAnexo')
+    Left = 216
     Top = 272
     object adoqCreditoIdAnexoCredito: TAutoIncField
       FieldName = 'IdAnexoCredito'
       ReadOnly = True
+    end
+    object adoqCreditoFechaPrestamo: TDateTimeField
+      FieldName = 'FechaPrestamo'
     end
     object adoqCreditoFechaCorte: TDateTimeField
       FieldName = 'FechaCorte'
@@ -739,7 +746,7 @@ inherited dmAmortizaciones: TdmAmortizaciones
         Size = 4
         Value = Null
       end>
-    Left = 376
+    Left = 224
     Top = 208
   end
 end

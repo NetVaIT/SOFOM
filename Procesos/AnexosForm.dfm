@@ -153,6 +153,9 @@ inherited frmAnexos: TfrmAnexos
         object tvMasterFechaVencimiento: TcxGridDBColumn
           DataBinding.FieldName = 'FechaVencimiento'
         end
+        object tvMasterTasaMoratoriaAnual: TcxGridDBColumn
+          DataBinding.FieldName = 'TasaMoratoriaAnual'
+        end
         object tvMasterPagoInicialCreado: TcxGridDBColumn
           DataBinding.FieldName = 'PagoInicialCreado'
         end
@@ -243,7 +246,6 @@ inherited frmAnexos: TfrmAnexos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42683.688746423620000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

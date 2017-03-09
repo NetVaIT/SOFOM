@@ -141,6 +141,7 @@ type
     adodsAnexosCapitalCobrado: TFMTBCDField;
     adodsAnexosSaldoInsoluto: TFMTBCDField;
     adodsAnexosMontoVencido: TFMTBCDField;
+    adodsAnexosTasaMoratoriaAnual: TBCDField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsAnexosPrecioMonedaChange(Sender: TField);
     procedure adodsAnexosNewRecord(DataSet: TDataSet);
@@ -209,7 +210,7 @@ begin
   inherited;
   dmAmortizaciones.TipoContrato := TipoContrato;
   if dmAmortizaciones.GenAnexosAmortizaciones(adodsCreditosIdAnexoCredito.Value,
-  adodsCreditosFechaCorte.Value, adodsCreditosFechaVencimiento.Value,
+  adodsAnexosFecha.Value, adodsCreditosFechaCorte.Value, adodsCreditosFechaVencimiento.Value,
   adodsCreditosTasaAnual.Value, adodsCreditosPlazo.Value,
   adodsCreditosMontoFiananciar.AsExtended, adodsCreditosValorResidual.AsExtended,
   adodsCreditosImpactoISR.AsExtended) then
@@ -228,7 +229,7 @@ begin
   // Generar Amortizaciones
   dmAmortizaciones.TipoContrato := TipoContrato;
   if dmAmortizaciones.GenAnexosAmortizaciones(adodsCreditosIdAnexoCredito.Value,
-  adodsCreditosFechaCorte.Value, adodsCreditosFechaVencimiento.Value,
+  adodsAnexosFecha.Value, adodsCreditosFechaCorte.Value, adodsCreditosFechaVencimiento.Value,
   adodsCreditosTasaAnual.Value, adodsCreditosPlazo.Value,
   adodsCreditosMontoFiananciar.AsExtended, adodsCreditosValorResidual.AsExtended,
   adodsCreditosImpactoISR.AsExtended) then
@@ -315,7 +316,8 @@ begin
   Amortizaciones := TdmAmortizaciones.Create(Self);
   try
     Amortizaciones.TipoContrato:= TipoContrato;
-    Amortizaciones.Execute(adodsCreditosFechavencimiento.Value,
+    Amortizaciones.Execute(adodsAnexosFecha.Value,
+    adodsCreditosFechaCorte.Value, adodsCreditosFechavencimiento.Value,
     adodsCreditosTasaAnual.Value, adodsCreditosPlazo.Value,
     adodsCreditosMontoFiananciar.AsExtended,
     adodsCreditosValorResidual.AsExtended,
@@ -487,8 +489,8 @@ begin
 //  gFormDeatil1.ApplyBestFit := False;
   gFormDeatil1.DataSet:= adodsAnexos;
   TfrmAnexos(gFormDeatil1).actGenerar := actGenerar;
-  TfrmAnexos(gFormDeatil1).actGetTipoCambio := actGetTipoCambio;
   TfrmAnexos(gFormDeatil1).actAbonar := actAbonarCapital;
+  TfrmAnexos(gFormDeatil1).actGetTipoCambio := actGetTipoCambio;
   if adodsCreditos.CommandText <> EmptyStr then adodsCreditos.Open;
   gFormDeatil2:= TfrmAnexosCreditos.Create(Self);
  // gFormDeatil2.ApplyBestFit := False;
@@ -503,6 +505,16 @@ begin
   dmAmortizaciones := TdmAmortizaciones.Create(Self);
   dmAmortizaciones.PaymentTime := PaymentTime;
   dmProductos := TdmProductos.Create(Self);
+  {$IFDEF DEBUG}
+    actAbonarCapital.Visible := True;
+    actPreAmortizaciones.Visible := True;
+    actGenAmortizaciones.Visible := True;
+  {$ELSE}
+    actAbonarCapital.Visible := False;
+    actPreAmortizaciones.Visible := False;
+    actGenAmortizaciones.Visible := False;
+  {$ENDIF}
+
 end;
 
 procedure TdmContratos.DataModuleDestroy(Sender: TObject);
