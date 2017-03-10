@@ -142,6 +142,8 @@ type
     adodsAnexosSaldoInsoluto: TFMTBCDField;
     adodsAnexosMontoVencido: TFMTBCDField;
     adodsAnexosTasaMoratoriaAnual: TBCDField;
+    actMoratorios: TAction;
+    dsAmortizaciones: TDataSource;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsAnexosPrecioMonedaChange(Sender: TField);
     procedure adodsAnexosNewRecord(DataSet: TDataSet);
@@ -161,6 +163,7 @@ type
     procedure actGenerarUpdate(Sender: TObject);
     procedure actGetTipoCambioExecute(Sender: TObject);
     procedure actAbonarCapitalExecute(Sender: TObject);
+    procedure actMoratoriosExecute(Sender: TObject);
   private
     { Private declarations }
     FPaymentTime: TPaymentTime;
@@ -188,7 +191,7 @@ implementation
 
 uses ContratosForm, AnexosForm, AnexosAmortizacionesForm,
   AnexosCreditosForm, _ConectionDmod, CotizacionesSeleccionarForm, _Utils,
-  AbonarCapitalDM, ConfiguracionDM;
+  AbonarCapitalDM, ConfiguracionDM, AnexosMoratoriosDM;
 
 {$R *.dfm}
 
@@ -254,6 +257,21 @@ begin
   if adodsAnexos.State in [dsEdit,dsInsert] then
   begin
     adodsAnexosTipoCambio.Value := dmConfiguracion.GetTipoCambio(adodsAnexosIdMoneda.Value)
+  end;
+end;
+
+procedure TdmContratos.actMoratoriosExecute(Sender: TObject);
+var
+  dmAnexosMoratorios: TdmAnexosMoratorios;
+begin
+  inherited;
+  dmAnexosMoratorios := TdmAnexosMoratorios.Create(Self);
+  try
+    dmAnexosMoratorios.MasterSource := dsAmortizaciones;
+    dmAnexosMoratorios.MasterFields:= 'IdAnexoAmortizacion';
+    dmAnexosMoratorios.ShowModule(nil,'');
+  finally
+    dmAnexosMoratorios.Free;
   end;
 end;
 
@@ -502,6 +520,7 @@ begin
 //  gFormDeatil3.ApplyBestFit := False;
   gFormDeatil3.ReadOnlyGrid := True;
   gFormDeatil3.DataSet:= adodsAmortizaciones;
+  TfrmAnexosAmortizaciones(gFormDeatil3).actMoratorios := actMoratorios;
   dmAmortizaciones := TdmAmortizaciones.Create(Self);
   dmAmortizaciones.PaymentTime := PaymentTime;
   dmProductos := TdmProductos.Create(Self);

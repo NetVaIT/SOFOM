@@ -198,7 +198,10 @@ uses
   PDFEStadoCuentaDM in 'Reportes\PDFEStadoCuentaDM.pas' {dmRepEstadoCta: TDataModule},
   ConfiguracionDM in 'Catalogos\ConfiguracionDM.pas' {dmConfiguracion: TDataModule},
   ConfiguracionesEdit in 'Catalogos\ConfiguracionesEdit.pas' {frmConfiguracionesEdit},
-  ConfiguracionesForm in 'Catalogos\ConfiguracionesForm.pas' {frmConfiguraciones};
+  ConfiguracionesForm in 'Catalogos\ConfiguracionesForm.pas' {frmConfiguraciones},
+  AnexosMoratoriosDM in 'Procesos\AnexosMoratoriosDM.pas' {dmAnexosMoratorios: TDataModule},
+  AnexosMoratoriosForm in 'Procesos\AnexosMoratoriosForm.pas' {frmAnexosMoratorios},
+  AnexosMoratoriosEdit in 'Procesos\AnexosMoratoriosEdit.pas' {frmAnexosMoratoriosEdit};
 
 {$R *.res}
 

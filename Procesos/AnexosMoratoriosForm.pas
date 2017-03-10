@@ -1,4 +1,4 @@
-unit AnexosAmortizacionesForm;
+unit AnexosMoratoriosForm;
 
 interface
 
@@ -30,52 +30,33 @@ uses
   Vcl.ExtCtrls;
 
 type
-  TfrmAnexosAmortizaciones = class(T_frmGrid)
+  TfrmAnexosMoratorios = class(T_frmGrid)
+    tvMasterIdAnexoMoratorio: TcxGridDBColumn;
     tvMasterIdAnexoAmortizacion: TcxGridDBColumn;
-    tvMasterIdAnexoSegmento: TcxGridDBColumn;
-    tvMasterPeriodo: TcxGridDBColumn;
-    tvMasterSaldoInicial: TcxGridDBColumn;
-    tvMasterPago: TcxGridDBColumn;
-    tvMasterCapital: TcxGridDBColumn;
-    tvMasterCapitalImpuesto: TcxGridDBColumn;
-    tvMasterCapitalTotal: TcxGridDBColumn;
-    tvMasterInteres: TcxGridDBColumn;
-    tvMasterInteresImpuesto: TcxGridDBColumn;
-    tvMasterInteresTotal: TcxGridDBColumn;
-    tvMasterSaldoFinal: TcxGridDBColumn;
-    tvMasterPagoTotal: TcxGridDBColumn;
-    tvMasterIdAnexoCredito: TcxGridDBColumn;
-    tvMasterTasaAnual: TcxGridDBColumn;
-    tvMasterImpactoISR: TcxGridDBColumn;
-    tvMasterFechaCorte: TcxGridDBColumn;
-    tvMasterFechaVencimiento: TcxGridDBColumn;
-    tvMasterFechaMoratorio: TcxGridDBColumn;
-    tvMasterDiasVencimiento: TcxGridDBColumn;
-    tvMasterMoratorioBase: TcxGridDBColumn;
-    tvMasterMoratorio: TcxGridDBColumn;
-    tvMasterMoratorioImpuesto: TcxGridDBColumn;
-    dxbbMoratorios: TdxBarButton;
+    tvMasterIdAnexoMoratorioEstatus: TcxGridDBColumn;
+    tvMasterEstatus: TcxGridDBColumn;
+    tvMasterFecha: TcxGridDBColumn;
+    tvMasterImporteBase: TcxGridDBColumn;
+    tvMasterImporte: TcxGridDBColumn;
+    tvMasterDescuento: TcxGridDBColumn;
+    tvMasterImpuesto: TcxGridDBColumn;
+    procedure FormCreate(Sender: TObject);
   private
-    FactMoratorios: TBasicAction;
-    procedure SetactMoratorios(const Value: TBasicAction);
     { Private declarations }
   public
     { Public declarations }
-    property actMoratorios: TBasicAction read FactMoratorios write SetactMoratorios;
   end;
 
 implementation
 
 {$R *.dfm}
 
-uses ContratosDM;
+uses AnexosMoratoriosDM, AnexosMoratoriosEdit;
 
-{ TfrmAnexosAmortizaciones }
-
-procedure TfrmAnexosAmortizaciones.SetactMoratorios(const Value: TBasicAction);
+procedure TfrmAnexosMoratorios.FormCreate(Sender: TObject);
 begin
-  FactMoratorios := Value;
-  dxbbMoratorios.Action := Value;
+  inherited;
+  gEditForm := TfrmAnexosMoratoriosEdit.Create(Self);
 end;
 
 end.

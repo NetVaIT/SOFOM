@@ -124,6 +124,11 @@ inherited dmContratos: TdmContratos
       Hint = 'Obtiene la '#250'ltima cotizaci'#243'n de la moneda'
       OnExecute = actGetTipoCambioExecute
     end
+    object actMoratorios: TAction
+      Caption = 'Moratorios'
+      ImageIndex = 13
+      OnExecute = actMoratoriosExecute
+    end
   end
   object dsMaster: TDataSource
     AutoEdit = False
@@ -977,5 +982,11 @@ inherited dmContratos: TdmContratos
       FieldName = 'FechaNueva'
       ReadOnly = True
     end
+  end
+  object dsAmortizaciones: TDataSource
+    AutoEdit = False
+    DataSet = adodsAmortizaciones
+    Left = 392
+    Top = 208
   end
 end
