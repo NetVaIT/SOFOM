@@ -242,6 +242,8 @@ begin
 //  tvMaster.ViewData.Expand(True);
   dxbNavigator.DockedLeft:= 82;
   dxbTools.DockedLeft:= 210;
+
+ // pnlTitulo.Caption:='    '+Caption; //Mar 9/17
 end;
 
 procedure T_frmGrid.SetactSearch(const Value: TBasicAction);

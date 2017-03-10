@@ -1,37 +1,38 @@
 inherited FrmConEstadosCuenta: TFrmConEstadosCuenta
-  Caption = 'FrmConEstadosCuenta'
-  ClientHeight = 545
-  ClientWidth = 772
+  BorderStyle = bsToolWindow
+  Caption = 'Estados de Cuenta'
+  ClientHeight = 516
+  ClientWidth = 766
   ExplicitWidth = 772
   ExplicitHeight = 545
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Top = 485
-    Width = 772
+    Top = 456
+    Width = 766
     ExplicitTop = 485
     ExplicitWidth = 772
   end
   inherited splDetail1: TSplitter
-    Top = 229
-    Width = 772
+    Top = 200
+    Width = 766
     ExplicitTop = 229
     ExplicitWidth = 772
   end
   inherited splDetail2: TSplitter
-    Top = 469
-    Width = 772
+    Top = 440
+    Width = 766
     ExplicitTop = 469
     ExplicitWidth = 772
   end
   inherited pnlMaster: TPanel
-    Width = 772
-    Height = 198
+    Width = 766
+    Height = 169
     ExplicitWidth = 772
     ExplicitHeight = 198
     inherited cxGrid: TcxGrid
-      Width = 772
-      Height = 198
+      Width = 766
+      Height = 169
       ExplicitWidth = 772
       ExplicitHeight = 198
       inherited tvMaster: TcxGridDBTableView
@@ -77,38 +78,38 @@ inherited FrmConEstadosCuenta: TFrmConEstadosCuenta
     end
   end
   inherited pnlDetail3: TPanel
-    Top = 488
-    Width = 772
+    Top = 459
+    Width = 766
     Height = 22
     ExplicitTop = 488
     ExplicitWidth = 772
     ExplicitHeight = 22
   end
   inherited pnlDetail2: TPanel
-    Top = 472
-    Width = 772
+    Top = 443
+    Width = 766
     Height = 13
     ExplicitTop = 472
     ExplicitWidth = 772
     ExplicitHeight = 13
   end
   inherited pnlDetail1: TPanel
-    Top = 232
-    Width = 772
+    Top = 203
+    Width = 766
     Height = 237
     ExplicitTop = 232
     ExplicitWidth = 772
     ExplicitHeight = 237
   end
   inherited pnlClose: TPanel
-    Top = 510
-    Width = 772
+    Top = 481
+    Width = 766
     Height = 35
     ExplicitTop = 510
     ExplicitWidth = 772
     ExplicitHeight = 35
     inherited btnClose: TButton
-      Left = 687
+      Left = 681
       ExplicitLeft = 687
     end
   end
@@ -159,7 +160,7 @@ inherited FrmConEstadosCuenta: TFrmConEstadosCuenta
       Caption = 'Fecha Corte'
       Category = 0
       Hint = 'Fecha Corte'
-      Visible = ivAlways
+      Visible = ivNever
       OnChange = dxBarDtCmbFechaCorteChange
       Glyph.Data = {
         F6000000424DF600000000000000760000002800000010000000100000000100

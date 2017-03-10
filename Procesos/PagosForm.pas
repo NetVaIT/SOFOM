@@ -66,6 +66,14 @@ type
     ActFacturaMorato: TAction;
     DSDetalleMostrar: TDataSource;
     dxbbAbonarCapital: TdxBarButton;
+    DSAnexos: TDataSource;
+    tvMasterIdMetodoPago: TcxGridDBColumn;
+    tvMasterCuentaPago: TcxGridDBColumn;
+    tvMasterMetodoPago: TcxGridDBColumn;
+    tvMasterOrigenPago: TcxGridDBColumn;
+    tvMasterIdContrato: TcxGridDBColumn;
+    tvMasterIdAnexo: TcxGridDBColumn;
+    tvMasterAnexo: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure dxBrBtnAplicaiconesClick(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
@@ -165,6 +173,7 @@ begin
   inherited;
   gEditForm:= TfrmEdPagos.Create(Self);
   TfrmEdPagos(gEditForm).DSPersonas.DataSet:=DSPersonas.DataSet;
+  TfrmEdPagos(gEditForm).DSAnexos.DataSet:=DSAnexos.DataSet;  //Mar 9/17
 
   DEcodeDate(Date,a,m,d);
   cxDtEdtDesde.Date:=EncodeDate(a,m,1);
@@ -221,8 +230,8 @@ end;
 procedure TFrmConPagos.SpdBtnBuscarClick(Sender: TObject);
 const  //Dic 20/16
    TxtSQL='select  IdPago, IdBanco, IdPersonaCliente, IdCuentaBancariaEstadoCuenta,'+
-          'FechaPago, FolioPago, SeriePago, Referencia, Importe, Saldo, ' +
-          'Observaciones, PA.IdMetodoPago, CuentaPago, OrigenPago from Pagos PA ';
+          'FechaPago, FolioPago, SeriePago, Referencia, Importe, Saldo, Observaciones,' +
+          'PA.IdMetodoPago, CuentaPago, OrigenPago, IDContrato, IDAnexo from Pagos PA ';
 
 begin
   inherited;

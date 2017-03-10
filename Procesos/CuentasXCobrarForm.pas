@@ -27,7 +27,8 @@ uses
   cxGridCustomPopupMenu, cxGridPopupMenu, cxClasses, Vcl.StdActns, Vcl.DBActns,
   System.Actions, Vcl.ActnList, Vcl.StdCtrls, cxGridLevel, cxGridCustomView,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
-  Vcl.ExtCtrls;
+  Vcl.ExtCtrls, cxContainer, Vcl.ComCtrls, dxCore, cxDateUtils, cxTextEdit,
+  cxMaskEdit, cxDropDownEdit, cxCalendar, Vcl.Buttons,Data.Win.ADODB;
 
 type
   TFrmConCuentasXCobrar = class(T_frmGrid)
@@ -47,21 +48,45 @@ type
     tvMasterIdCuentaXCobrar: TcxGridDBColumn;
     dxBrBtnMoratorios: TdxBarButton;
     dxBrBtnGenerarCXC: TdxBarButton;
+    PnlBusqueda: TPanel;
+    Button1: TButton;
+    Panel1: TPanel;
+    Label3: TLabel;
+    EdtNombre: TEdit;
+    PnlFechas: TPanel;
+    Label1: TLabel;
+    Label2: TLabel;
+    SpdBtnBuscar: TSpeedButton;
+    cxDtEdtDesde: TcxDateEdit;
+    cxDtEdtHasta: TcxDateEdit;
+    ChckBxXFecha: TCheckBox;
+    ChckBxConSaldo: TCheckBox;
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
     procedure FormCreate(Sender: TObject);
+    procedure SpdBtnBuscarClick(Sender: TObject);
+    procedure EdtNombreChange(Sender: TObject);
   private
     FActGeneraPrefactura: TBasicAction;
     FActActualizaMoratorios: TBasicAction;
     FActGeneraCXC: TBasicAction;
+    ffiltroNombre: String;
+    ffiltroFecha: String;
+    ffiltro: String;
     procedure SetActGeneraPrefactura(const Value: TBasicAction);
     procedure SetActActualizaMoratorios(const Value: TBasicAction);
-    procedure SetActGeneraCXC(const Value: TBasicAction);//Feb 8/17
+    procedure SetActGeneraCXC(const Value: TBasicAction);
+    function GetFFiltroNombre: String;//Feb 8/17
+    procedure PoneFiltro; //Mar 9/17
     { Private declarations }
   public
     { Public declarations }
     property ActGenerarPrefactura : TBasicAction read FActGeneraPrefactura write SetActGeneraPrefactura;
     property ActActualizaMoratorios : TBasicAction read FActActualizaMoratorios write SetActActualizaMoratorios;  //Feb 8/17
     property ActGenerarCXCs : TBasicAction read FActGeneraCXC write SetActGeneraCXC;  //Feb 14/17
+
+    property FiltroFecha: String read ffiltroFecha write ffiltroFecha; //Mar 9/17
+    property FiltroNombre:String read GetFFiltroNombre write ffiltroNombre;
+    property FiltroCon:String read ffiltro write ffiltro;
   end;
 
 var
@@ -82,10 +107,68 @@ begin
   dxBtnPrefacturas.Enabled:=datasource.DataSet.FieldByName('IDCuentaXCobrarEstatus').AsInteger=-1;  //Dic 7/16 Precargada
 end;
 
+procedure TFrmConCuentasXCobrar.EdtNombreChange(Sender: TObject);
+begin
+  inherited;
+  if  edtNombre.Text<>'' then
+  begin
+    FfiltroNombre:=' inner join Personas P On P.IdPersona=CXC.IdPersona and P.RazonSocial Like ''%'+edtNombre.Text+'%''';
+  end
+  else
+    FfiltroNombre:='';
+end;
+
 procedure TFrmConCuentasXCobrar.FormCreate(Sender: TObject);
+var         //mar 9/17
+  a,m,d:Word;
+  FechaAux:TDAteTime;
 begin
   inherited;
   gEditForm:= TFrmEdCuentasXCobrar.Create(Self);
+  //Desde aca Mar 9/17
+  DEcodeDate(Date,a,m,d);
+  cxDtEdtDesde.Date:=EncodeDate(a,m,1);
+  m:=m+1;
+  if m=13 then
+  begin
+    m:=1;
+    a:=a+1;
+  end;
+  FechaAux:=EncodeDate(a,m,1);
+  FechaAux:=FechaAux-1;  //Día anterior
+  cxDtEdtHasta.Date:=FechaAux;
+end;
+
+function TFrmConCuentasXCobrar.GetFFiltroNombre: String;
+begin
+  Result := ffiltroNombre;
+end;
+
+procedure TFrmConCuentasXCobrar.PoneFiltro; //Mar 9/17
+var
+  Aux:string;
+begin
+  Aux:='where';
+  if ChckBxXFecha.Checked then
+    ffiltroFecha:=' Fecha >:Fini and Fecha<:FFin '
+  else
+    ffiltroFecha:='';
+  Aux:=Aux+ffiltroFecha;
+  if ChckBxConSaldo.Checked then
+    Ffiltro:=' Saldo > 0.0001 '
+  else
+    Ffiltro:='';
+
+  if ffiltro<>'' then
+  begin
+    if Aux='where'then
+     FFiltro:=Aux+FFiltro
+    else
+      FFiltro:= Aux+ 'and'+FFiltro;
+  end
+  else
+    if Aux<>'where'then
+      ffiltro:=Aux;
 
 end;
 
@@ -110,6 +193,27 @@ begin
   FActGeneraPrefactura := Value;
   dxBtnPrefacturas.Action:=Value;
   dxBtnPrefacturas.ImageIndex:=17;
+end;
+
+procedure TFrmConCuentasXCobrar.SpdBtnBuscarClick(Sender: TObject);
+const  //Mar 9/17
+   TxtSQL='select IdCuentaXCobrar, IdCuentaXCobrarEstatus, CXC.IdPersona,'+
+          'IdAnexosAmortizaciones, Fecha, Importe, Impuesto, Interes,' +
+          'Total, CXC.Saldo, SaldoFactoraje, IdCFDINormal from CuentasXCobrar CXC ';
+begin
+  inherited;
+  PoneFiltro;
+  Tadodataset(datasource.DataSet).Close;
+  Tadodataset(datasource.DataSet).CommandText:=TxtSQL+ ffiltroNombre+ffiltro;
+ // ShowMessage(TxtSQL+ ffiltroNombre+ffiltro);
+  if ffiltroFecha <>''then
+  begin
+    Tadodataset(datasource.DataSet).Parameters.ParamByName('FIni').Value:=cxDtEdtDesde.Date;
+    Tadodataset(datasource.DataSet).Parameters.ParamByName('FFin').Value:=cxDtEdtHasta.Date+1;
+
+  end;
+
+  Tadodataset(datasource.DataSet).open;
 end;
 
 end.

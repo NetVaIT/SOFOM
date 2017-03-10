@@ -19,7 +19,7 @@ uses
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, cxContainer,
   cxEdit, cxMemo, cxDBEdit, Vcl.DBCtrls, cxTextEdit, cxMaskEdit, cxDropDownEdit,
   cxCalendar, Vcl.StdCtrls, Vcl.ImgList, System.Actions, Vcl.ActnList, Data.DB,
-  Vcl.ExtCtrls, cxPC, cxLabel, cxDBLabel, cxGroupBox, cxRadioGroup;
+  Vcl.ExtCtrls, cxPC, cxLabel, cxDBLabel, cxGroupBox, cxRadioGroup, Data.Win.ADODB;
 
 type
   TFrmEdPagos = class(T_frmEdit)
@@ -48,9 +48,16 @@ type
     DBLookupComboBox3: TDBLookupComboBox;
     cxDBTextEdit4: TcxDBTextEdit;
     cxDBRdGrpOrigenPago: TcxDBRadioGroup;
+    Label12: TLabel;
+    DBLkpCmbBxAnexos: TDBLookupComboBox;
+    DSAnexos: TDataSource;
+    cxDBLblAnexo: TcxDBLabel;
     procedure DBLkpCmbBxClienteClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure cxDBTextEdit3Exit(Sender: TObject);
+    procedure DBLkpCmbBxAnexosClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure cxDBLblAnexoClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -66,11 +73,30 @@ implementation
 
 uses PagosDM;
 
+procedure TFrmEdPagos.cxDBLblAnexoClick(Sender: TObject);
+begin            //Mar 9/17 Siempre esta editando.
+  inherited;
+  dsAnexos.DataSet.Close;
+  TadoDAtaset(dsAnexos.DataSet).Parameters.ParamByName('IDPersona').Value:= datasource.dataset.FieldByName('IdPersonaCliente').AsInteger;
+  dsAnexos.DataSet.Open;
+  DBLkpCmbBxAnexos.visible:=True;//Mar 9/17
+  cxDBLblAnexo.Visible:=FAlse;
+end;
+
 procedure TFrmEdPagos.cxDBTextEdit3Exit(Sender: TObject);
 begin
   inherited;
   if datasource.State in [dsinsert,dsEdit] then //Feb 16/17
     DataSource.DataSet.FieldByName('Saldo').Value:= DataSource.DataSet.FieldByName('Importe').Value;//VAlue  feb 19/17
+end;
+
+procedure TFrmEdPagos.DBLkpCmbBxAnexosClick(Sender: TObject);
+begin
+  inherited;
+  if datasource.state in[dsEdit,dsInsert]  then
+  begin
+    datasource.dataset.FieldByName('IdContrato').AsInteger:= dsAnexos.dataset.Fieldbyname('IdContrato').AsInteger;
+  end;
 end;
 
 procedure TFrmEdPagos.DBLkpCmbBxClienteClick(Sender: TObject);
@@ -83,13 +109,26 @@ begin//Dic 19/16
        datasource.dataset.FieldByName('IdMetodoPago').AsInteger:= dsPersonas.dataset.Fieldbyname('IdMetodoPago').AsInteger;
        datasource.dataset.FieldByName('CuentaPago').AsString:=dsPersonas.dataset.Fieldbyname('NumCtaPagoCliente').AsString;
      end;
+    //Visualizar lookup.
+    dsAnexos.DataSet.Close;
+    TadoDAtaset(dsAnexos.DataSet).Parameters.ParamByName('IDPersona').Value:= datasource.dataset.FieldByName('IdPersonaCliente').AsInteger;
+    dsAnexos.DataSet.Open;
+    DBLkpCmbBxAnexos.visible:=True;//Mar 9/17
+    cxDBLblAnexo.Visible:=FAlse; //Mar 9/17
   end;
+end;
+
+procedure TFrmEdPagos.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  inherited;
+  DBLkpCmbBxAnexos.Visible:=False;
+   cxDBLblAnexo.Visible:=True;;
 end;
 
 procedure TFrmEdPagos.FormShow(Sender: TObject);
 begin
-  inherited;
-  PnlDatosBase.Enabled:=DataSource.DataSet.FieldByName('Saldo').AsFloat= DataSource.DataSet.FieldByName('Importe').AsFloat;
+  inherited;             //SE cambio por si son diferntes a mas de 3 decimales
+  PnlDatosBase.Enabled:=abs(DataSource.DataSet.FieldByName('Saldo').AsFloat- DataSource.DataSet.FieldByName('Importe').AsFloat)<0.001;
 end;
 
 end.

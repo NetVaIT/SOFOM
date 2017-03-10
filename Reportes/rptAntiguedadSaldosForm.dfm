@@ -1,34 +1,38 @@
 inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
-  Caption = 'frmRptAntiguedadSaldos'
-  ClientWidth = 1198
+  BorderStyle = bsToolWindow
+  Caption = 'Antig'#252'edad de Saldos'
+  ClientHeight = 428
+  ClientWidth = 1192
   ExplicitWidth = 1198
-  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Width = 1198
-    ExplicitWidth = 1166
+    Top = 343
+    Width = 1192
+    ExplicitWidth = 1198
   end
   inherited splDetail1: TSplitter
-    Width = 1198
-    ExplicitWidth = 1166
+    Top = 255
+    Width = 1192
+    ExplicitWidth = 1198
   end
   inherited splDetail2: TSplitter
-    Width = 1198
-    ExplicitWidth = 1166
+    Top = 299
+    Width = 1192
+    ExplicitWidth = 1198
   end
   inherited pnlMaster: TPanel
-    Top = 100
-    Width = 1198
-    Height = 184
-    ExplicitTop = 100
+    Top = 78
+    Width = 1192
+    Height = 177
+    ExplicitTop = 133
     ExplicitWidth = 1198
-    ExplicitHeight = 184
+    ExplicitHeight = 151
     inherited cxGrid: TcxGrid
-      Width = 1198
-      Height = 184
+      Width = 1192
+      Height = 177
       ExplicitWidth = 1198
-      ExplicitHeight = 184
+      ExplicitHeight = 151
       inherited tvMaster: TcxGridDBTableView
         DataController.Options = [dcoAssignGroupingValues, dcoAssignMasterDetailKeys]
         DataController.Summary.DefaultGroupSummaryItems = <
@@ -185,54 +189,42 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
     end
   end
   inherited pnlDetail3: TPanel
-    Width = 1198
+    Top = 346
+    Width = 1192
     ExplicitWidth = 1198
   end
   inherited pnlDetail2: TPanel
-    Width = 1198
+    Top = 302
+    Width = 1192
     ExplicitWidth = 1198
   end
   inherited pnlDetail1: TPanel
-    Width = 1198
+    Top = 258
+    Width = 1192
     ExplicitWidth = 1198
   end
   inherited pnlClose: TPanel
-    Width = 1198
+    Top = 387
+    Width = 1192
     ExplicitWidth = 1198
     DesignSize = (
-      1198
+      1192
       41)
     inherited btnClose: TButton
-      Left = 1113
+      Left = 1107
       ExplicitLeft = 1113
     end
   end
-  object PnlTitulo: TPanel [8]
+  object PnlFiltros: TPanel [8]
     Left = 0
-    Top = 0
-    Width = 1198
-    Height = 22
-    Align = alTop
-    Alignment = taLeftJustify
-    Caption = '     Antiguedad de Saldos'
-    Color = 5553385
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWhite
-    Font.Height = -13
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentBackground = False
-    ParentFont = False
-    TabOrder = 9
-  end
-  object PnlFiltros: TPanel [9]
-    Left = 0
-    Top = 53
-    Width = 1198
+    Top = 31
+    Width = 1192
     Height = 47
     Align = alTop
     ParentBackground = False
-    TabOrder = 10
+    TabOrder = 9
+    ExplicitTop = 53
+    ExplicitWidth = 1198
     object PnlBusqueda: TPanel
       Left = 202
       Top = 1
@@ -1220,7 +1212,6 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42585.483476608800000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

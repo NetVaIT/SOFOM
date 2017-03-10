@@ -90,6 +90,8 @@ type
     cxGridDBTableView1Saldo: TcxGridDBColumn;
     cxGridDBTableView1PagosAplicadosFactoraje: TcxGridDBColumn;
     cxGridDBTableView1SaldoFactoraje: TcxGridDBColumn;
+    Label7: TLabel;
+    cxDBLabel4: TcxDBLabel;
     procedure BtBtnAplicarClick(Sender: TObject);
     procedure DSAplicacionStateChange(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -101,7 +103,7 @@ type
   private
     FActFacturaMora: TBasicAction;
     function Quitasignos(TextoPesos: String): String;
-    function EsCuentaXCobrarAntigua(IdCxCAct, IDPersona: integer): Boolean;
+    function EsCuentaXCobrarAntigua(IdCxCAct, IDPersona, IDAnexo: integer): Boolean;    //Ajuste anexo mar 9/17
     function ActualizaMoratorios(IdCxCAct: integer;FechaPago:TDateTime;var ValorMora:Double; var FechaAct:TDateTime): Boolean;
     function CXCFacturada(IdCxCAct: integer): Boolean;
     procedure SetFActFacturaMora(const Value: TBasicAction);
@@ -151,8 +153,8 @@ begin
     campoimporte:='Importe';
   end;
 
- //VErificar sai la cuentaX cobrar es la más vieja
-  if EsCuentaXCobrarAntigua(dsConCXCpendientes.DataSet.FieldByName('IdCuentaXCobrar').AsInteger,dsPago.DataSet.FieldByName('IDPersonaCliente').asinteger)
+ //VErificar sai la cuentaX cobrar es la más vieja                                                                                                        //Mar 9/17
+  if EsCuentaXCobrarAntigua(dsConCXCpendientes.DataSet.FieldByName('IdCuentaXCobrar').AsInteger,dsPago.DataSet.FieldByName('IDPersonaCliente').asinteger, dsPago.DataSet.FieldByName('IDAnexo').asinteger)
        and CXCFacturada(dsConCXCpendientes.DataSet.FieldByName('IdCuentaXCobrar').AsInteger)   then
   begin
     //Verificar si tendra moratorios para mandar facturar moratorios
@@ -295,13 +297,13 @@ begin                                                  //Feb 16/17
 end;
 
 
-function TFrmAplicacionPago.EsCuentaXCobrarAntigua(IdCxCAct, IDPersona:integer):Boolean;     //FEb 7/16
+function TFrmAplicacionPago.EsCuentaXCobrarAntigua(IdCxCAct, IDPersona, IDAnexo:integer):Boolean;     //FEb 7/16    //Mar 9/17 Ajuste Anexo
 begin
   Result:=FAlse;
   dsAuxiliar.dataset.close;
   TADOQuery(dsAuxiliar.dataset).SQL.clear;
   TADOQuery(dsAuxiliar.dataset).SQL.Add('Select idcuentaXcobrar, Fecha, sAldo, idpersona from CuentasXCobrar where Saldo >0 '+
-                                        ' and IdPersona='+intToSTR(IDPErsona)+' Order by fecha ');
+                                        ' and IdPersona='+intToSTR(IDPErsona)+' and IdAnexo = '+intToSTR(IDAnexo)+' Order by fecha ');
   dsAuxiliar.dataset.Open;
   if not dsAuxiliar.dataset.eof then
   begin
@@ -314,6 +316,7 @@ end;
 function TFrmAplicacionPago.ActualizaMoratorios(IdCxCAct:integer;FechaPago:TDateTime; var ValorMora:Double; var FechaAct:TDateTime):Boolean;
 var               //FEb 7/17
    MoratorioAct:Double;
+   Faux:TDate;
 begin
   Result:=FAlse;
   MoratorioAct:=0;

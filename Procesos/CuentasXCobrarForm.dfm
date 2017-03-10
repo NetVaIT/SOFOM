@@ -1,26 +1,34 @@
 inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
-  Caption = 'FrmConCuentasXCobrar'
-  ClientWidth = 1078
+  BorderStyle = bsToolWindow
+  Caption = 'Cuentas X Cobrar'
+  ClientHeight = 428
+  ClientWidth = 1072
   ExplicitWidth = 1078
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Width = 1078
+    Top = 343
+    Width = 1072
     ExplicitWidth = 1078
   end
   inherited splDetail1: TSplitter
-    Width = 1078
+    Top = 255
+    Width = 1072
     ExplicitWidth = 1078
   end
   inherited splDetail2: TSplitter
-    Width = 1078
+    Top = 299
+    Width = 1072
     ExplicitWidth = 1078
   end
   inherited pnlMaster: TPanel
-    Width = 1078
+    Top = 75
+    Width = 1072
+    Height = 180
     ExplicitWidth = 1078
     inherited cxGrid: TcxGrid
-      Width = 1078
+      Width = 1072
+      Height = 180
       ExplicitWidth = 1078
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdCuentaXCobrar: TcxGridDBColumn
@@ -69,23 +77,155 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
     end
   end
   inherited pnlDetail3: TPanel
-    Width = 1078
+    Top = 346
+    Width = 1072
     ExplicitWidth = 1078
   end
   inherited pnlDetail2: TPanel
-    Width = 1078
+    Top = 302
+    Width = 1072
     ExplicitWidth = 1078
   end
   inherited pnlDetail1: TPanel
-    Width = 1078
+    Top = 258
+    Width = 1072
     ExplicitWidth = 1078
   end
   inherited pnlClose: TPanel
-    Width = 1078
+    Top = 387
+    Width = 1072
     ExplicitWidth = 1078
     inherited btnClose: TButton
-      Left = 993
+      Left = 987
       ExplicitLeft = 993
+    end
+  end
+  object PnlBusqueda: TPanel [8]
+    Left = 0
+    Top = 31
+    Width = 1072
+    Height = 44
+    Align = alTop
+    BevelOuter = bvNone
+    TabOrder = 9
+    ExplicitLeft = -29
+    ExplicitWidth = 1107
+    DesignSize = (
+      1072
+      44)
+    object Button1: TButton
+      Left = 989
+      Top = 6
+      Width = 75
+      Height = 25
+      Anchors = [akTop, akRight]
+      Cancel = True
+      Caption = 'Cerrar'
+      TabOrder = 0
+      OnClick = btnCloseClick
+      ExplicitLeft = 1024
+    end
+    object Panel1: TPanel
+      Left = 0
+      Top = 0
+      Width = 199
+      Height = 44
+      Align = alLeft
+      BevelOuter = bvNone
+      ParentBackground = False
+      TabOrder = 1
+      object Label3: TLabel
+        Left = 16
+        Top = 2
+        Width = 90
+        Height = 13
+        Caption = 'Cliente parecido a:'
+      end
+      object EdtNombre: TEdit
+        Left = 15
+        Top = 17
+        Width = 163
+        Height = 21
+        TabOrder = 0
+        OnChange = EdtNombreChange
+      end
+    end
+    object PnlFechas: TPanel
+      Left = 199
+      Top = 0
+      Width = 873
+      Height = 44
+      Align = alClient
+      BevelOuter = bvNone
+      ParentBackground = False
+      TabOrder = 2
+      ExplicitWidth = 908
+      object Label1: TLabel
+        Left = 21
+        Top = 4
+        Width = 30
+        Height = 13
+        Caption = 'Desde'
+      end
+      object Label2: TLabel
+        Left = 181
+        Top = 4
+        Width = 28
+        Height = 13
+        Caption = 'Hasta'
+      end
+      object SpdBtnBuscar: TSpeedButton
+        Left = 331
+        Top = 13
+        Width = 25
+        Height = 25
+        Glyph.Data = {
+          76010000424D7601000000000000760000002800000020000000100000000100
+          04000000000000010000130B0000130B00001000000000000000000000000000
+          8000008000000080800080000000800080008080000080808000C0C0C0000000
+          FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+          33033333333333333F7F3333333333333000333333333333F777333333333333
+          000333333333333F777333333333333000333333333333F77733333333333300
+          033333333FFF3F777333333700073B703333333F7773F77733333307777700B3
+          33333377333777733333307F8F8F7033333337F3333337F3333377F8F8F8F773
+          333337333333373F3333078F8F8F870333337F333333337F333307F8F8F8F703
+          33337F333333337F3333078F8F8F8703333373F333333373333377F8F8F8F773
+          333337F3333337F33333307F8F8F70333333373FF333F7333333330777770333
+          333333773FF77333333333370007333333333333777333333333}
+        NumGlyphs = 2
+        OnClick = SpdBtnBuscarClick
+      end
+      object cxDtEdtDesde: TcxDateEdit
+        Left = 16
+        Top = 17
+        TabOrder = 0
+        Width = 145
+      end
+      object cxDtEdtHasta: TcxDateEdit
+        Left = 176
+        Top = 17
+        TabOrder = 1
+        Width = 137
+      end
+      object ChckBxXFecha: TCheckBox
+        Left = 373
+        Top = 18
+        Width = 82
+        Height = 17
+        Caption = 'Usar Fecha'
+        Checked = True
+        State = cbChecked
+        TabOrder = 2
+      end
+      object ChckBxConSaldo: TCheckBox
+        Left = 461
+        Top = 10
+        Width = 74
+        Height = 33
+        Caption = 'Con Saldo'
+        TabOrder = 3
+        WordWrap = True
+      end
     end
   end
   inherited DataSource: TDataSource
@@ -1006,7 +1146,6 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42709.621321724540000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

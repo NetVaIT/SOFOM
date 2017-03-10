@@ -40,7 +40,6 @@ type
     tvMasterVencidosa60das: TcxGridDBColumn;
     tvMasterVencidosa90das: TcxGridDBColumn;
     tvMasterVencidosmsde90das: TcxGridDBColumn;
-    PnlTitulo: TPanel;
     PnlFiltros: TPanel;
     PnlBusqueda: TPanel;
     Label3: TLabel;

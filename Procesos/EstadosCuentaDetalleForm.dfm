@@ -1,27 +1,37 @@
 inherited FrmConEstadoCtaDetalle: TFrmConEstadoCtaDetalle
-  Caption = 'FrmConEstadoCtaDetalle'
-  ClientWidth = 782
+  BorderStyle = bsToolWindow
+  Caption = 'Detalles Estado de Cuenta'
+  ClientHeight = 428
+  ClientWidth = 776
   ExplicitWidth = 782
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Width = 782
+    Top = 343
+    Width = 776
     ExplicitWidth = 782
   end
   inherited splDetail1: TSplitter
-    Width = 782
+    Top = 255
+    Width = 776
     ExplicitWidth = 782
   end
   inherited splDetail2: TSplitter
-    Width = 782
+    Top = 299
+    Width = 776
     ExplicitWidth = 782
   end
   inherited pnlMaster: TPanel
-    Width = 782
+    Width = 776
+    Height = 224
+    ExplicitTop = 53
     ExplicitWidth = 782
+    ExplicitHeight = 231
     inherited cxGrid: TcxGrid
-      Width = 782
+      Width = 776
+      Height = 224
       ExplicitWidth = 782
+      ExplicitHeight = 231
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdEstadoCuentaDetalle: TcxGridDBColumn
           DataBinding.FieldName = 'IdEstadoCuentaDetalle'
@@ -75,22 +85,26 @@ inherited FrmConEstadoCtaDetalle: TFrmConEstadoCtaDetalle
     end
   end
   inherited pnlDetail3: TPanel
-    Width = 782
+    Top = 346
+    Width = 776
     ExplicitWidth = 782
   end
   inherited pnlDetail2: TPanel
-    Width = 782
+    Top = 302
+    Width = 776
     ExplicitWidth = 782
   end
   inherited pnlDetail1: TPanel
-    Width = 782
+    Top = 258
+    Width = 776
     ExplicitWidth = 782
   end
   inherited pnlClose: TPanel
-    Width = 782
+    Top = 387
+    Width = 776
     ExplicitWidth = 782
     inherited btnClose: TButton
-      Left = 697
+      Left = 691
       ExplicitLeft = 697
     end
   end
@@ -119,6 +133,7 @@ inherited FrmConEstadoCtaDetalle: TFrmConEstadoCtaDetalle
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42744.402549120370000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

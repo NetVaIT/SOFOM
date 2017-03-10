@@ -12,8 +12,8 @@ inherited dmPagos: TdmPagos
     CommandText = 
       'select  IdPago, IdBanco, IdPersonaCliente, IdCuentaBancariaEstad' +
       'oCuenta, '#13#10'FechaPago, FolioPago, SeriePago, Referencia, Importe,' +
-      ' Saldo, '#13#10'Observaciones, IdMetodoPago, CuentaPago, OrigenPago fr' +
-      'om Pagos'
+      ' Saldo, '#13#10'Observaciones, IdMetodoPago, CuentaPago, OrigenPago ,'#13 +
+      #10' IdContrato, IdAnexo '#13#10'from Pagos'
     Left = 48
     object adodsMasterIdPago: TAutoIncField
       FieldName = 'IdPago'
@@ -96,6 +96,22 @@ inherited dmPagos: TdmPagos
     object adodsMasterOrigenPago: TIntegerField
       FieldName = 'OrigenPago'
     end
+    object adodsMasterIdContrato: TIntegerField
+      FieldName = 'IdContrato'
+    end
+    object adodsMasterIdAnexo: TIntegerField
+      FieldName = 'IdAnexo'
+    end
+    object adodsMasterAnexo: TStringField
+      FieldKind = fkLookup
+      FieldName = 'Anexo'
+      LookupDataSet = ADODtStAnexos
+      LookupKeyFields = 'IdAnexo'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IdAnexo'
+      Size = 150
+      Lookup = True
+    end
   end
   inherited adodsUpdate: TADODataSet
     Left = 328
@@ -140,6 +156,7 @@ inherited dmPagos: TdmPagos
     end
   end
   object ADoDtStBancos: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -233,14 +250,23 @@ inherited dmPagos: TdmPagos
       'Select cxc.*, CI.SaldoDocumento, Ci.SaldoFactoraje as SaldoFacto' +
       'rajeCFDI'#13#10' from CuentasXCobrar CXC  '#13#10'left Join CFDI CI on CI.Id' +
       'CFDI= CXC.IdCFDINormal where '#13#10' Saldo >0 and IDPersona=:IdPerson' +
-      'aCliente'#13#10'and IdCuentaXCobrarEstatus=0'#13#10
+      'aCliente '#13#10'and IdCuentaXCobrarEstatus=0 and CXC.IDAnexo=:IdAnexo' +
+      #13#10
     DataSource = DSMaster
-    IndexFieldNames = 'IdPersona'
-    MasterFields = 'IdPersonaCliente'
+    IndexFieldNames = 'IdPersona;IdAnexo'
+    MasterFields = 'IdPersonaCliente;IdAnexo'
     Parameters = <
       item
         Name = 'IdPersonaCliente'
         Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end
+      item
+        Name = 'IdAnexo'
+        Attributes = [paSigned, paNullable]
         DataType = ftInteger
         Precision = 10
         Size = 4
@@ -312,11 +338,13 @@ inherited dmPagos: TdmPagos
     end
     object ADODtStCXCPendientesSaldoDocumento: TFMTBCDField
       FieldName = 'SaldoDocumento'
+      currency = True
       Precision = 18
       Size = 6
     end
     object ADODtStCXCPendientesSaldoFactorajeCFDI: TFMTBCDField
       FieldName = 'SaldoFactorajeCFDI'
+      currency = True
       Precision = 18
       Size = 6
     end
@@ -692,6 +720,7 @@ inherited dmPagos: TdmPagos
     end
   end
   object ADODtstMetodoPago: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -1661,6 +1690,90 @@ inherited dmPagos: TdmPagos
       currency = True
       Precision = 18
       Size = 6
+    end
+  end
+  object ADODtStAnexos: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select a.IdAnexo, A.IdContrato,A.IdAnexoEstatus, A.Identificador' +
+      ','#13#10' A.Descripcion, A.Fecha, C.IdPersona from Anexos A , Contrato' +
+      's C '#13#10'where a.idcontrato=C.idcontrato and A.idanexoEstatus=1'#13#10
+    Parameters = <>
+    Left = 52
+    Top = 131
+    object ADODtStAnexosIdAnexo: TAutoIncField
+      FieldName = 'IdAnexo'
+      ReadOnly = True
+    end
+    object ADODtStAnexosIdContrato: TIntegerField
+      FieldName = 'IdContrato'
+    end
+    object ADODtStAnexosIdAnexoEstatus: TIntegerField
+      FieldName = 'IdAnexoEstatus'
+    end
+    object ADODtStAnexosIdentificador: TStringField
+      FieldName = 'Identificador'
+      Size = 5
+    end
+    object ADODtStAnexosDescripcion: TStringField
+      FieldName = 'Descripcion'
+      Size = 100
+    end
+    object ADODtStAnexosFecha: TDateTimeField
+      FieldName = 'Fecha'
+    end
+    object ADODtStAnexosIdPersona: TIntegerField
+      FieldName = 'IdPersona'
+    end
+  end
+  object DSPersonas: TDataSource
+    DataSet = ADOSPersonas
+    Left = 48
+    Top = 80
+  end
+  object ADODtStAnexoSeleccion: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select a.IdAnexo, A.IdContrato,A.IdAnexoEstatus, A.Identificador' +
+      ','#13#10' A.Descripcion, A.Fecha, C.IdPersona from Anexos A , Contrato' +
+      's C '#13#10'where a.idcontrato=C.idcontrato and A.idanexoEstatus=1'#13#10'an' +
+      'd C.idPersona=:IdPersona'
+    Parameters = <
+      item
+        Name = 'IdPersona'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 52
+    Top = 187
+    object AutoIncField5: TAutoIncField
+      FieldName = 'IdAnexo'
+      ReadOnly = True
+    end
+    object IntegerField11: TIntegerField
+      FieldName = 'IdContrato'
+    end
+    object IntegerField12: TIntegerField
+      FieldName = 'IdAnexoEstatus'
+    end
+    object StringField4: TStringField
+      FieldName = 'Identificador'
+      Size = 5
+    end
+    object StringField5: TStringField
+      FieldName = 'Descripcion'
+      Size = 100
+    end
+    object DateTimeField2: TDateTimeField
+      FieldName = 'Fecha'
+    end
+    object IntegerField13: TIntegerField
+      FieldName = 'IdPersona'
     end
   end
 end

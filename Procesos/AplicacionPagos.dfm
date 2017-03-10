@@ -20,12 +20,13 @@ object FrmAplicacionPago: TFrmAplicacionPago
     Left = 0
     Top = 57
     Width = 1034
-    Height = 146
+    Height = 201
     Align = alTop
     TabOrder = 0
+    ExplicitTop = 51
     object Label3: TLabel
       Left = 174
-      Top = 52
+      Top = 98
       Width = 63
       Height = 14
       Caption = 'Folio Pago'
@@ -38,7 +39,7 @@ object FrmAplicacionPago: TFrmAplicacionPago
     end
     object Label4: TLabel
       Left = 24
-      Top = 52
+      Top = 98
       Width = 65
       Height = 14
       Caption = 'Serie Pago'
@@ -51,7 +52,7 @@ object FrmAplicacionPago: TFrmAplicacionPago
     end
     object LblImpAplicaNormal: TLabel
       Left = 376
-      Top = 54
+      Top = 98
       Width = 104
       Height = 14
       Caption = 'Importe a aplicar'
@@ -65,7 +66,7 @@ object FrmAplicacionPago: TFrmAplicacionPago
     end
     object Label9: TLabel
       Left = 174
-      Top = 5
+      Top = 4
       Width = 93
       Height = 14
       Caption = 'Nombre Cliente'
@@ -77,8 +78,8 @@ object FrmAplicacionPago: TFrmAplicacionPago
       ParentFont = False
     end
     object Label2: TLabel
-      Left = 24
-      Top = 98
+      Left = 21
+      Top = 152
       Width = 125
       Height = 14
       Caption = 'No. Cuenta X Cobrar'
@@ -90,8 +91,8 @@ object FrmAplicacionPago: TFrmAplicacionPago
       ParentFont = False
     end
     object Label5: TLabel
-      Left = 536
-      Top = 99
+      Left = 512
+      Top = 148
       Width = 77
       Height = 14
       Caption = 'Folio Factura'
@@ -104,7 +105,7 @@ object FrmAplicacionPago: TFrmAplicacionPago
       Visible = False
     end
     object Label6: TLabel
-      Left = 24
+      Left = 21
       Top = 6
       Width = 33
       Height = 13
@@ -119,7 +120,7 @@ object FrmAplicacionPago: TFrmAplicacionPago
     end
     object LblEtiquetaFacto: TLabel
       Left = 512
-      Top = 56
+      Top = 98
       Width = 164
       Height = 14
       Caption = 'Importe a aplicar Factoraje'
@@ -131,9 +132,22 @@ object FrmAplicacionPago: TFrmAplicacionPago
       Font.Style = [fsBold]
       ParentFont = False
     end
+    object Label7: TLabel
+      Left = 21
+      Top = 50
+      Width = 39
+      Height = 14
+      Caption = 'Anexo'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
     object cxDBTxtEdtImporteAplicar: TcxDBTextEdit
       Left = 376
-      Top = 70
+      Top = 114
       DataBinding.DataField = 'Importe'
       DataBinding.DataSource = DSAplicacion
       TabOrder = 0
@@ -149,7 +163,7 @@ object FrmAplicacionPago: TFrmAplicacionPago
     end
     object cxDBLabel2: TcxDBLabel
       Left = 174
-      Top = 71
+      Top = 117
       DataBinding.DataField = 'FolioPago'
       DataBinding.DataSource = DSPago
       Height = 21
@@ -157,31 +171,31 @@ object FrmAplicacionPago: TFrmAplicacionPago
     end
     object cxDBLabel3: TcxDBLabel
       Left = 24
-      Top = 72
+      Top = 118
       DataBinding.DataField = 'SeriePago'
       DataBinding.DataSource = DSPago
       Height = 21
       Width = 129
     end
     object cxDBLabel5: TcxDBLabel
-      Left = 24
-      Top = 117
+      Left = 21
+      Top = 171
       DataBinding.DataField = 'IdCuentaXCobrar'
       DataBinding.DataSource = DSAplicacion
       Height = 21
       Width = 129
     end
     object cxDBLabel6: TcxDBLabel
-      Left = 536
-      Top = 119
+      Left = 512
+      Top = 163
       DataBinding.DataSource = DSAplicacion
       Visible = False
       Height = 21
       Width = 129
     end
     object cxDBLabel7: TcxDBLabel
-      Left = 376
-      Top = 117
+      Left = 377
+      Top = 163
       DataBinding.DataField = 'IdCFDI'
       DataBinding.DataSource = DSAplicacion
       Visible = False
@@ -198,23 +212,33 @@ object FrmAplicacionPago: TFrmAplicacionPago
     end
     object cxDBTxtEdtImporteAplicaFactoraje: TcxDBTextEdit
       Left = 512
-      Top = 72
+      Top = 114
       DataBinding.DataField = 'ImporteFactoraje'
       DataBinding.DataSource = DSAplicacion
       TabOrder = 8
       Width = 164
     end
+    object cxDBLabel4: TcxDBLabel
+      Left = 21
+      Top = 65
+      DataBinding.DataField = 'Anexo'
+      DataBinding.DataSource = DSPago
+      Height = 27
+      Width = 655
+    end
   end
   object cxGrid: TcxGrid
     Left = 0
-    Top = 242
+    Top = 297
     Width = 1034
-    Height = 210
+    Height = 155
     Hint = 'Dobleclic sobre el registro para pasar el saldo a pagar'
     ParentCustomHint = False
     Align = alClient
     TabOrder = 1
     LookAndFeel.Kind = lfStandard
+    ExplicitTop = 242
+    ExplicitHeight = 210
     object tvMaster: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       OnCellDblClick = tvMasterCellDblClick
@@ -388,7 +412,7 @@ object FrmAplicacionPago: TFrmAplicacionPago
   end
   object Panel2: TPanel
     Left = 0
-    Top = 203
+    Top = 258
     Width = 1034
     Height = 39
     Hint = 
@@ -405,6 +429,7 @@ object FrmAplicacionPago: TFrmAplicacionPago
     ParentShowHint = False
     ShowHint = True
     TabOrder = 3
+    ExplicitTop = 203
   end
   object Panel1: TPanel
     Left = 0

@@ -324,6 +324,26 @@ type
     ADODtStDetalleCXCMostrarPagosAplicadosFactoraje: TFMTBCDField;
     ADODtStDetalleCXCMostrarSaldoFactoraje: TFMTBCDField;
     actAbonarCapital: TAction;
+    adodsMasterIdContrato: TIntegerField;
+    adodsMasterIdAnexo: TIntegerField;
+    ADODtStAnexos: TADODataSet;
+    adodsMasterAnexo: TStringField;
+    ADODtStAnexosIdAnexo: TAutoIncField;
+    ADODtStAnexosIdContrato: TIntegerField;
+    ADODtStAnexosIdAnexoEstatus: TIntegerField;
+    ADODtStAnexosIdentificador: TStringField;
+    ADODtStAnexosDescripcion: TStringField;
+    ADODtStAnexosFecha: TDateTimeField;
+    ADODtStAnexosIdPersona: TIntegerField;
+    DSPersonas: TDataSource;
+    ADODtStAnexoSeleccion: TADODataSet;
+    AutoIncField5: TAutoIncField;
+    IntegerField11: TIntegerField;
+    IntegerField12: TIntegerField;
+    StringField4: TStringField;
+    StringField5: TStringField;
+    DateTimeField2: TDateTimeField;
+    IntegerField13: TIntegerField;
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsMasterAfterPost(DataSet: TDataSet);
     procedure adodsMasterBeforePost(DataSet: TDataSet);
@@ -1219,10 +1239,14 @@ begin
 //  if ADODtStCFDIConceptos.CommandText <> EmptyStr then ADODtStCFDIConceptos.Open;
   gGridForm:= TFrmConPagos.Create(Self);
   gGridForm.DataSet:= adodsMaster;
+  adodtstAnexos.Open;  //Mar 9/17
+  adodtstAnexoSeleccion.Open;  //Mar 9/17
   TFrmConPagos(gGridForm).DSAplicacion.DataSet:=ADODtStAplicacionesPagos;
   TFrmConPagos(gGridForm).ActFacturaMorato:=ActGeneraPrefMoratorios;
   TFrmConPagos(gGridForm).actAbonarCapital := actAbonarCapital;
   TFrmConPagos(gGridForm).dsPersonas.dataset:=adosPersonas;
+  TFrmConPagos(gGridForm).dsanexos.dataset:=adodtstAnexoSeleccion;  //Mar 9/17
+
     //Agregado Feb 16/17
    TFrmConPagos(gGridForm).DSDetallesCXC.dataset:= ADODtStCxCDetallePend;
    TFrmConPagos(gGridForm).dsConCXCPendientes.DataSet:=ADODtStCXCPendientes;

@@ -1,32 +1,36 @@
 inherited FrmConPagos: TFrmConPagos
-  Caption = 'FrmConPagos'
-  ClientWidth = 1107
+  BorderStyle = bsToolWindow
+  Caption = 'Pagos'
+  ClientHeight = 428
+  ClientWidth = 1101
   ExplicitWidth = 1107
-  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Width = 1107
+    Top = 343
+    Width = 1101
     ExplicitWidth = 1107
   end
   inherited splDetail1: TSplitter
-    Width = 1107
+    Top = 255
+    Width = 1101
     ExplicitWidth = 1107
   end
   inherited splDetail2: TSplitter
-    Width = 1107
+    Top = 299
+    Width = 1101
     ExplicitWidth = 1107
   end
   inherited pnlMaster: TPanel
     Top = 75
-    Width = 1107
-    Height = 209
+    Width = 1101
+    Height = 180
     ExplicitTop = 75
     ExplicitWidth = 1107
     ExplicitHeight = 209
     inherited cxGrid: TcxGrid
-      Width = 1107
-      Height = 209
+      Width = 1101
+      Height = 180
       ExplicitWidth = 1107
       ExplicitHeight = 209
       inherited tvMaster: TcxGridDBTableView
@@ -77,42 +81,74 @@ inherited FrmConPagos: TFrmConPagos
         object tvMasterObservaciones: TcxGridDBColumn
           DataBinding.FieldName = 'Observaciones'
         end
+        object tvMasterIdMetodoPago: TcxGridDBColumn
+          DataBinding.FieldName = 'IdMetodoPago'
+          Visible = False
+        end
+        object tvMasterCuentaPago: TcxGridDBColumn
+          DataBinding.FieldName = 'CuentaPago'
+          Visible = False
+        end
+        object tvMasterMetodoPago: TcxGridDBColumn
+          DataBinding.FieldName = 'MetodoPago'
+          Visible = False
+        end
+        object tvMasterOrigenPago: TcxGridDBColumn
+          DataBinding.FieldName = 'OrigenPago'
+          Visible = False
+        end
+        object tvMasterIdContrato: TcxGridDBColumn
+          DataBinding.FieldName = 'IdContrato'
+          Visible = False
+        end
+        object tvMasterIdAnexo: TcxGridDBColumn
+          DataBinding.FieldName = 'IdAnexo'
+        end
+        object tvMasterAnexo: TcxGridDBColumn
+          DataBinding.FieldName = 'Anexo'
+          Visible = False
+        end
       end
     end
   end
   inherited pnlDetail3: TPanel
-    Width = 1107
+    Top = 346
+    Width = 1101
     ExplicitWidth = 1107
   end
   inherited pnlDetail2: TPanel
-    Width = 1107
+    Top = 302
+    Width = 1101
     ExplicitWidth = 1107
   end
   inherited pnlDetail1: TPanel
-    Width = 1107
+    Top = 258
+    Width = 1101
     ExplicitWidth = 1107
   end
   inherited pnlClose: TPanel
-    Width = 1107
+    Top = 387
+    Width = 1101
     ExplicitWidth = 1107
     inherited btnClose: TButton
-      Left = 1022
+      Left = 1016
       ExplicitLeft = 1022
     end
   end
   object PnlBusqueda: TPanel [8]
     Left = 0
     Top = 31
-    Width = 1107
+    Width = 1101
     Height = 44
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 9
+    ExplicitWidth = 1107
     DesignSize = (
-      1107
+      1101
       44)
     object Button1: TButton
-      Left = 1024
+      Left = 1018
       Top = 6
       Width = 75
       Height = 25
@@ -121,6 +157,7 @@ inherited FrmConPagos: TFrmConPagos
       Caption = 'Cerrar'
       TabOrder = 0
       OnClick = btnCloseClick
+      ExplicitLeft = 1024
     end
     object Panel1: TPanel
       Left = 0
@@ -150,12 +187,13 @@ inherited FrmConPagos: TFrmConPagos
     object PnlFechas: TPanel
       Left = 199
       Top = 0
-      Width = 908
+      Width = 902
       Height = 44
       Align = alClient
       BevelOuter = bvNone
       ParentBackground = False
       TabOrder = 2
+      ExplicitWidth = 908
       object Label1: TLabel
         Left = 21
         Top = 4
@@ -1058,6 +1096,7 @@ inherited FrmConPagos: TFrmConPagos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42712.575441516200000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end
@@ -1084,5 +1123,11 @@ inherited FrmConPagos: TFrmConPagos
     DataSet = dmPagos.ADODtStDetalleCXCMostrar
     Left = 788
     Top = 5
+  end
+  object DSAnexos: TDataSource
+    AutoEdit = False
+    DataSet = dmPagos.ADODtStAnexoSeleccion
+    Left = 640
+    Top = 176
   end
 end

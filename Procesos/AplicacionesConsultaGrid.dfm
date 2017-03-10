@@ -1,40 +1,41 @@
 inherited frmConaplicaciones: TfrmConaplicaciones
+  BorderStyle = bsToolWindow
   Caption = 'Consulta Aplicaciones'
-  ClientHeight = 609
-  ClientWidth = 1025
+  ClientHeight = 580
+  ClientWidth = 1019
   ExplicitWidth = 1025
   ExplicitHeight = 609
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Top = 536
-    Width = 1025
+    Top = 507
+    Width = 1019
     ExplicitTop = 536
     ExplicitWidth = 1025
   end
   inherited splDetail1: TSplitter
-    Top = 293
-    Width = 1025
+    Top = 264
+    Width = 1019
     ExplicitTop = 293
     ExplicitWidth = 1025
   end
   inherited splDetail2: TSplitter
-    Top = 498
-    Width = 1025
+    Top = 469
+    Width = 1019
     ExplicitLeft = -10
     ExplicitTop = 337
     ExplicitWidth = 1025
   end
   inherited pnlMaster: TPanel
-    Top = 72
-    Width = 1025
-    Height = 221
+    Top = 73
+    Width = 1019
+    Height = 191
     ExplicitTop = 72
     ExplicitWidth = 1025
     ExplicitHeight = 221
     inherited cxGrid: TcxGrid
-      Width = 1025
-      Height = 221
+      Width = 1019
+      Height = 191
       ExplicitWidth = 1025
       ExplicitHeight = 221
       inherited tvMaster: TcxGridDBTableView
@@ -94,46 +95,46 @@ inherited frmConaplicaciones: TfrmConaplicaciones
     end
   end
   inherited pnlDetail3: TPanel
-    Top = 539
-    Width = 1025
+    Top = 510
+    Width = 1019
     Height = 35
     ExplicitTop = 539
     ExplicitWidth = 1025
     ExplicitHeight = 35
   end
   inherited pnlDetail2: TPanel
-    Top = 501
-    Width = 1025
+    Top = 472
+    Width = 1019
     Height = 35
     ExplicitTop = 501
     ExplicitWidth = 1025
     ExplicitHeight = 35
   end
   inherited pnlDetail1: TPanel
-    Top = 296
-    Width = 1025
+    Top = 267
+    Width = 1019
     Height = 202
     ExplicitTop = 296
     ExplicitWidth = 1025
     ExplicitHeight = 202
   end
   inherited pnlClose: TPanel
-    Top = 574
-    Width = 1025
+    Top = 545
+    Width = 1019
     Height = 35
     ExplicitTop = 574
     ExplicitWidth = 1025
     ExplicitHeight = 35
     inherited btnClose: TButton
-      Left = 940
+      Left = 934
       ExplicitLeft = 940
     end
   end
   object Panel1: TPanel [8]
     Left = 0
     Top = 31
-    Width = 1025
-    Height = 41
+    Width = 1019
+    Height = 42
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 9
@@ -141,7 +142,7 @@ inherited frmConaplicaciones: TfrmConaplicaciones
       Left = 0
       Top = 0
       Width = 305
-      Height = 41
+      Height = 42
       Align = alLeft
       Caption = 'Filtrar por Fecha de:'
       Columns = 4
@@ -153,17 +154,19 @@ inherited frmConaplicaciones: TfrmConaplicaciones
         'Sin Filtro')
       TabOrder = 0
       OnClick = RdGrpSeleccionClick
+      ExplicitHeight = 41
     end
     object PnlBusqueda: TPanel
       Left = 305
       Top = 0
       Width = 201
-      Height = 41
+      Height = 42
       Align = alLeft
-      BevelInner = bvLowered
+      BevelOuter = bvNone
       ParentBackground = False
       ParentColor = True
       TabOrder = 1
+      ExplicitHeight = 41
       object Label3: TLabel
         Left = 16
         Top = 2
@@ -183,11 +186,12 @@ inherited frmConaplicaciones: TfrmConaplicaciones
       Left = 506
       Top = 0
       Width = 447
-      Height = 41
+      Height = 42
       Align = alLeft
-      BevelInner = bvLowered
+      BevelOuter = bvNone
       ParentBackground = False
       TabOrder = 2
+      ExplicitHeight = 41
       object Label4: TLabel
         Left = 21
         Top = 4
@@ -264,7 +268,6 @@ inherited frmConaplicaciones: TfrmConaplicaciones
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42738.400515763890000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end
