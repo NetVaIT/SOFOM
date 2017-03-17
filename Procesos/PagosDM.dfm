@@ -5,6 +5,7 @@ inherited dmPagos: TdmPagos
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     AfterOpen = adodsMasterAfterOpen
+    BeforeInsert = adodsMasterBeforeInsert
     BeforePost = adodsMasterBeforePost
     AfterPost = adodsMasterAfterPost
     AfterCancel = adodsMasterAfterCancel
@@ -156,7 +157,6 @@ inherited dmPagos: TdmPagos
     end
   end
   object ADoDtStBancos: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -720,7 +720,6 @@ inherited dmPagos: TdmPagos
     end
   end
   object ADODtstMetodoPago: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 

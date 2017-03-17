@@ -3,8 +3,6 @@ inherited frmCotizaciones: TfrmCotizaciones
   Caption = 'Cotizaciones'
   ClientHeight = 428
   ClientWidth = 645
-  ExplicitWidth = 651
-  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -209,7 +207,11 @@ inherited frmCotizaciones: TfrmCotizaciones
       0
       31
       0)
+    inherited dxbNavigator: TdxBar
+      DockedLeft = 107
+    end
     inherited dxbTools: TdxBar
+      DockedLeft = 238
       ItemLinks = <
         item
           Visible = True

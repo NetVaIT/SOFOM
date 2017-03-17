@@ -9,27 +9,33 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
   inherited splDetail3: TSplitter
     Top = 343
     Width = 1072
+    ExplicitTop = 343
     ExplicitWidth = 1078
   end
   inherited splDetail1: TSplitter
     Top = 255
     Width = 1072
+    ExplicitTop = 255
     ExplicitWidth = 1078
   end
   inherited splDetail2: TSplitter
     Top = 299
     Width = 1072
+    ExplicitTop = 299
     ExplicitWidth = 1078
   end
   inherited pnlMaster: TPanel
     Top = 75
     Width = 1072
     Height = 180
+    ExplicitTop = 75
     ExplicitWidth = 1078
+    ExplicitHeight = 180
     inherited cxGrid: TcxGrid
       Width = 1072
       Height = 180
       ExplicitWidth = 1078
+      ExplicitHeight = 180
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdCuentaXCobrar: TcxGridDBColumn
           DataBinding.FieldName = 'IdCuentaXCobrar'
@@ -79,21 +85,25 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
   inherited pnlDetail3: TPanel
     Top = 346
     Width = 1072
+    ExplicitTop = 346
     ExplicitWidth = 1078
   end
   inherited pnlDetail2: TPanel
     Top = 302
     Width = 1072
+    ExplicitTop = 302
     ExplicitWidth = 1078
   end
   inherited pnlDetail1: TPanel
     Top = 258
     Width = 1072
+    ExplicitTop = 258
     ExplicitWidth = 1078
   end
   inherited pnlClose: TPanel
     Top = 387
     Width = 1072
+    ExplicitTop = 387
     ExplicitWidth = 1078
     inherited btnClose: TButton
       Left = 987
@@ -238,7 +248,11 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
       0
       31
       0)
+    inherited dxbNavigator: TdxBar
+      DockedLeft = 107
+    end
     inherited dxbTools: TdxBar
+      DockedLeft = 238
       ItemLinks = <
         item
           Visible = True

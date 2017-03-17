@@ -30,14 +30,14 @@ inherited frmConaplicaciones: TfrmConaplicaciones
     Top = 73
     Width = 1019
     Height = 191
-    ExplicitTop = 72
-    ExplicitWidth = 1025
-    ExplicitHeight = 221
+    ExplicitTop = 73
+    ExplicitWidth = 1019
+    ExplicitHeight = 191
     inherited cxGrid: TcxGrid
       Width = 1019
       Height = 191
-      ExplicitWidth = 1025
-      ExplicitHeight = 221
+      ExplicitWidth = 1019
+      ExplicitHeight = 191
       inherited tvMaster: TcxGridDBTableView
         object tvMasterCliente: TcxGridDBColumn
           DataBinding.FieldName = 'Cliente'
@@ -98,36 +98,36 @@ inherited frmConaplicaciones: TfrmConaplicaciones
     Top = 510
     Width = 1019
     Height = 35
-    ExplicitTop = 539
-    ExplicitWidth = 1025
+    ExplicitTop = 510
+    ExplicitWidth = 1019
     ExplicitHeight = 35
   end
   inherited pnlDetail2: TPanel
     Top = 472
     Width = 1019
     Height = 35
-    ExplicitTop = 501
-    ExplicitWidth = 1025
+    ExplicitTop = 472
+    ExplicitWidth = 1019
     ExplicitHeight = 35
   end
   inherited pnlDetail1: TPanel
     Top = 267
     Width = 1019
     Height = 202
-    ExplicitTop = 296
-    ExplicitWidth = 1025
+    ExplicitTop = 267
+    ExplicitWidth = 1019
     ExplicitHeight = 202
   end
   inherited pnlClose: TPanel
     Top = 545
     Width = 1019
     Height = 35
-    ExplicitTop = 574
-    ExplicitWidth = 1025
+    ExplicitTop = 545
+    ExplicitWidth = 1019
     ExplicitHeight = 35
     inherited btnClose: TButton
       Left = 934
-      ExplicitLeft = 940
+      ExplicitLeft = 934
     end
   end
   object Panel1: TPanel [8]
@@ -146,7 +146,7 @@ inherited frmConaplicaciones: TfrmConaplicaciones
       Align = alLeft
       Caption = 'Filtrar por Fecha de:'
       Columns = 4
-      ItemIndex = 3
+      ItemIndex = 0
       Items.Strings = (
         'Aplicaci'#243'n'
         'Pago'
@@ -154,7 +154,6 @@ inherited frmConaplicaciones: TfrmConaplicaciones
         'Sin Filtro')
       TabOrder = 0
       OnClick = RdGrpSeleccionClick
-      ExplicitHeight = 41
     end
     object PnlBusqueda: TPanel
       Left = 305
@@ -166,7 +165,6 @@ inherited frmConaplicaciones: TfrmConaplicaciones
       ParentBackground = False
       ParentColor = True
       TabOrder = 1
-      ExplicitHeight = 41
       object Label3: TLabel
         Left = 16
         Top = 2
@@ -191,7 +189,6 @@ inherited frmConaplicaciones: TfrmConaplicaciones
       BevelOuter = bvNone
       ParentBackground = False
       TabOrder = 2
-      ExplicitHeight = 41
       object Label4: TLabel
         Left = 21
         Top = 4
@@ -268,6 +265,7 @@ inherited frmConaplicaciones: TfrmConaplicaciones
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42738.400515763890000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

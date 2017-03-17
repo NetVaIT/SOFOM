@@ -9,16 +9,19 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
   inherited splDetail3: TSplitter
     Top = 343
     Width = 1192
+    ExplicitTop = 343
     ExplicitWidth = 1198
   end
   inherited splDetail1: TSplitter
     Top = 255
     Width = 1192
+    ExplicitTop = 255
     ExplicitWidth = 1198
   end
   inherited splDetail2: TSplitter
     Top = 299
     Width = 1192
+    ExplicitTop = 299
     ExplicitWidth = 1198
   end
   inherited pnlMaster: TPanel
@@ -191,21 +194,25 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
   inherited pnlDetail3: TPanel
     Top = 346
     Width = 1192
+    ExplicitTop = 346
     ExplicitWidth = 1198
   end
   inherited pnlDetail2: TPanel
     Top = 302
     Width = 1192
+    ExplicitTop = 302
     ExplicitWidth = 1198
   end
   inherited pnlDetail1: TPanel
     Top = 258
     Width = 1192
+    ExplicitTop = 258
     ExplicitWidth = 1198
   end
   inherited pnlClose: TPanel
     Top = 387
     Width = 1192
+    ExplicitTop = 387
     ExplicitWidth = 1198
     DesignSize = (
       1192
@@ -1212,6 +1219,7 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42585.483476608800000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

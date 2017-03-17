@@ -9,16 +9,19 @@ inherited FrmConEstadoCtaDetalle: TFrmConEstadoCtaDetalle
   inherited splDetail3: TSplitter
     Top = 343
     Width = 776
+    ExplicitTop = 343
     ExplicitWidth = 782
   end
   inherited splDetail1: TSplitter
     Top = 255
     Width = 776
+    ExplicitTop = 255
     ExplicitWidth = 782
   end
   inherited splDetail2: TSplitter
     Top = 299
     Width = 776
+    ExplicitTop = 299
     ExplicitWidth = 782
   end
   inherited pnlMaster: TPanel
@@ -87,21 +90,25 @@ inherited FrmConEstadoCtaDetalle: TFrmConEstadoCtaDetalle
   inherited pnlDetail3: TPanel
     Top = 346
     Width = 776
+    ExplicitTop = 346
     ExplicitWidth = 782
   end
   inherited pnlDetail2: TPanel
     Top = 302
     Width = 776
+    ExplicitTop = 302
     ExplicitWidth = 782
   end
   inherited pnlDetail1: TPanel
     Top = 258
     Width = 776
+    ExplicitTop = 258
     ExplicitWidth = 782
   end
   inherited pnlClose: TPanel
     Top = 387
     Width = 776
+    ExplicitTop = 387
     ExplicitWidth = 782
     inherited btnClose: TButton
       Left = 691
@@ -133,7 +140,7 @@ inherited FrmConEstadoCtaDetalle: TFrmConEstadoCtaDetalle
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42744.402549120370000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

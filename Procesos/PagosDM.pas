@@ -360,6 +360,7 @@ type
     procedure ADODtStCFDIConceptosPrefNewRecord(DataSet: TDataSet);
     procedure ADODtStPagosAuxiliarNewRecord(DataSet: TDataSet);
     procedure actAbonarCapitalExecute(Sender: TObject);
+    procedure adodsMasterBeforeInsert(DataSet: TDataSet);
   private
     { Private declarations }
     Inserto:Boolean;
@@ -424,6 +425,25 @@ begin
     ADODtStConfiguraciones.Post;
   end;
 end;
+procedure TdmPagos.adodsMasterBeforeInsert(DataSet: TDataSet);
+const      // mar 10/17
+   TxtSQL='select  IdPago, IdBanco, IdPersonaCliente, IdCuentaBancariaEstadoCuenta, '+
+   'FechaPago, FolioPago, SeriePago, Referencia, Importe, Saldo,Observaciones,'+
+   'IdMetodoPago, CuentaPago, OrigenPago,IdContrato, IdAnexo from Pagos';
+
+var Txt:String;
+begin
+  Txt:=   Tadodataset(adodsMaster).CommandText;
+  if pos('inner ',Txt)>0 then
+  begin
+    Tadodataset(adodsMaster).Close;
+    Tadodataset(adodsMaster).CommandText:=TxtSQL;
+    Tadodataset(adodsMaster).open;
+  end;
+  inherited;
+
+end;
+
 procedure TdmPagos.adodsMasterBeforePost(DataSet: TDataSet);
 begin
   inherited;

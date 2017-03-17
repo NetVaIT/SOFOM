@@ -9,16 +9,19 @@ inherited FrmConPagos: TFrmConPagos
   inherited splDetail3: TSplitter
     Top = 343
     Width = 1101
+    ExplicitTop = 343
     ExplicitWidth = 1107
   end
   inherited splDetail1: TSplitter
     Top = 255
     Width = 1101
+    ExplicitTop = 255
     ExplicitWidth = 1107
   end
   inherited splDetail2: TSplitter
     Top = 299
     Width = 1101
+    ExplicitTop = 299
     ExplicitWidth = 1107
   end
   inherited pnlMaster: TPanel
@@ -114,21 +117,25 @@ inherited FrmConPagos: TFrmConPagos
   inherited pnlDetail3: TPanel
     Top = 346
     Width = 1101
+    ExplicitTop = 346
     ExplicitWidth = 1107
   end
   inherited pnlDetail2: TPanel
     Top = 302
     Width = 1101
+    ExplicitTop = 302
     ExplicitWidth = 1107
   end
   inherited pnlDetail1: TPanel
     Top = 258
     Width = 1101
+    ExplicitTop = 258
     ExplicitWidth = 1107
   end
   inherited pnlClose: TPanel
     Top = 387
     Width = 1101
+    ExplicitTop = 387
     ExplicitWidth = 1107
     inherited btnClose: TButton
       Left = 1016
@@ -1096,7 +1103,6 @@ inherited FrmConPagos: TFrmConPagos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42712.575441516200000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

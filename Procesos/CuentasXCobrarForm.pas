@@ -137,6 +137,8 @@ begin
   FechaAux:=EncodeDate(a,m,1);
   FechaAux:=FechaAux-1;  //Día anterior
   cxDtEdtHasta.Date:=FechaAux;
+
+  SpdBtnBuscarClick(SpdBtnBuscar); //Mar 10/17
 end;
 
 function TFrmConCuentasXCobrar.GetFFiltroNombre: String;

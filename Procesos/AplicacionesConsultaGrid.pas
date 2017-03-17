@@ -96,6 +96,8 @@ begin
   FechaAux:=FechaAux-1;  //Día anterior
   cxDtEdtFin.Date:=FechaAux;
  // TlBtnDesaplicaPago.Visible:=pos('autoriza',_dmConection.PerFuncion)>0 ; //Jun 2/16
+  ffiltroFec:=' where PA.FechaAplicacion >=:Fini and PA.FechaAplicacion<= :FFin';  //Mar 14/17
+  SpdBtnConsultaClick(SpdBtnConsulta); //Mar 14/17
 end;
 
 procedure TfrmConaplicaciones.RdGrpSeleccionClick(Sender: TObject);
@@ -143,11 +145,7 @@ begin
 
   end;
 
-
   Tadodataset(datasource.DataSet).open;
-
-
-
 
 end;
 

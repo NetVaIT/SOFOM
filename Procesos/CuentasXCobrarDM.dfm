@@ -5,6 +5,7 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     AfterOpen = adodsMasterAfterOpen
+    BeforeInsert = adodsMasterBeforeInsert
     CommandText = 
       'select IdCuentaXCobrar, IdCuentaXCobrarEstatus, IdPersona,'#13#10' IdA' +
       'nexosAmortizaciones, Fecha, Importe, Impuesto, Interes, '#13#10'Total,' +

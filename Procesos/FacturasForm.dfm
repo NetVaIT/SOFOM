@@ -9,16 +9,19 @@ inherited frmFacturasGrid: TfrmFacturasGrid
   inherited splDetail3: TSplitter
     Top = 343
     Width = 809
+    ExplicitTop = 343
     ExplicitWidth = 815
   end
   inherited splDetail1: TSplitter
     Top = 255
     Width = 809
+    ExplicitTop = 255
     ExplicitWidth = 815
   end
   inherited splDetail2: TSplitter
     Top = 299
     Width = 809
+    ExplicitTop = 299
     ExplicitWidth = 815
   end
   inherited pnlMaster: TPanel
@@ -26,13 +29,13 @@ inherited frmFacturasGrid: TfrmFacturasGrid
     Width = 809
     Height = 180
     ExplicitTop = 75
-    ExplicitWidth = 815
-    ExplicitHeight = 209
+    ExplicitWidth = 809
+    ExplicitHeight = 180
     inherited cxGrid: TcxGrid
       Width = 809
       Height = 180
-      ExplicitWidth = 815
-      ExplicitHeight = 209
+      ExplicitWidth = 809
+      ExplicitHeight = 180
       inherited tvMaster: TcxGridDBTableView
         OptionsCustomize.ColumnFiltering = False
         object tvMasterCliente: TcxGridDBColumn
@@ -206,28 +209,32 @@ inherited frmFacturasGrid: TfrmFacturasGrid
   inherited pnlDetail3: TPanel
     Top = 346
     Width = 809
-    ExplicitWidth = 815
+    ExplicitTop = 346
+    ExplicitWidth = 809
   end
   inherited pnlDetail2: TPanel
     Top = 302
     Width = 809
-    ExplicitWidth = 815
+    ExplicitTop = 302
+    ExplicitWidth = 809
   end
   inherited pnlDetail1: TPanel
     Top = 258
     Width = 809
-    ExplicitWidth = 815
+    ExplicitTop = 258
+    ExplicitWidth = 809
   end
   inherited pnlClose: TPanel
     Top = 387
     Width = 809
-    ExplicitWidth = 815
+    ExplicitTop = 387
+    ExplicitWidth = 809
     DesignSize = (
       809
       41)
     inherited btnClose: TButton
       Left = 724
-      ExplicitLeft = 730
+      ExplicitLeft = 724
     end
   end
   object PnlBusqueda: TPanel [8]
@@ -238,7 +245,6 @@ inherited frmFacturasGrid: TfrmFacturasGrid
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 9
-    ExplicitWidth = 815
     DesignSize = (
       809
       44)
@@ -252,7 +258,6 @@ inherited frmFacturasGrid: TfrmFacturasGrid
       Caption = 'Cerrar'
       TabOrder = 0
       OnClick = btnCloseClick
-      ExplicitLeft = 732
     end
     object Panel1: TPanel
       Left = 0
@@ -288,7 +293,6 @@ inherited frmFacturasGrid: TfrmFacturasGrid
       BevelOuter = bvNone
       ParentBackground = False
       TabOrder = 2
-      ExplicitWidth = 616
       object Label1: TLabel
         Left = 21
         Top = 4
@@ -1213,6 +1217,7 @@ inherited frmFacturasGrid: TfrmFacturasGrid
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42699.643536909720000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

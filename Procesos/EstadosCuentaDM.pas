@@ -392,7 +392,7 @@ begin
   inherited;
   FechaCorte:=adodsMasterFechaCorte.AsDateTime;
   IdEstadoCta:=adodsMasterIdEstadoCuenta.AsInteger;
-  TExto:= adodsMasterIdContrato.AsString+'_' +FormatDateTime('mmm-dd-aaaa',fechaCorte);
+  TExto:= adodsMasterIdContrato.AsString+'_' +FormatDateTime('mmm-dd-yyyy',fechaCorte);
   ArchiPDF:='EstadoCta_NoCto_'+Texto+'.PDF';
   rptEstadoCtaPDF:= TdmRepEstadoCta.Create(Self);
   try

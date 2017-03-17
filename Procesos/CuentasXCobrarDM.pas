@@ -167,6 +167,7 @@ type
     procedure adodsMasterAfterOpen(DataSet: TDataSet);
     procedure ActActualizaMoratoriosExecute(Sender: TObject);
     procedure ActGeneraCuentasXCobrarExecute(Sender: TObject);
+    procedure adodsMasterBeforeInsert(DataSet: TDataSet);
   private
     function SacaTipoComp(TipoDoc: Integer): String;
     function SacaDireccion(IDCliente: Integer): Integer;
@@ -289,6 +290,25 @@ procedure TdmCuentasXCobrar.adodsMasterAfterOpen(DataSet: TDataSet);
 begin
   inherited;
   adodsCxcDetalle.Open;
+end;
+
+procedure TdmCuentasXCobrar.adodsMasterBeforeInsert(DataSet: TDataSet);
+const      //Ajustado por si hay que dar de alta CXC manual mar 10/17
+   TxtSQL=' select IdCuentaXCobrar, IdCuentaXCobrarEstatus, IdPersona, '+
+   'IdAnexosAmortizaciones, Fecha, Importe, Impuesto, Interes,'+
+   'Total, Saldo, SaldoFactoraje, IdCFDINormal from CuentasXCobrar';
+
+var Txt:String;
+begin
+  Txt:=   Tadodataset(adodsMaster).CommandText;
+  if pos('inner ',Txt)>0 then
+  begin
+    Tadodataset(adodsMaster).Close;
+    Tadodataset(adodsMaster).CommandText:=TxtSQL;
+    Tadodataset(adodsMaster).open;
+  end;
+  inherited;
+
 end;
 
 procedure TdmCuentasXCobrar.ADODtStCFDIConceptosPrefAfterPost(

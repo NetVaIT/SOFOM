@@ -165,7 +165,7 @@ begin
   fechaAux:=encodedate(a,m,1);
   cxDtEdtHasta.date :=fechaAux-1;
 
-
+  SpdBtnBuscarClick(SpdBtnBuscar); //Mar 14/17
 end;
 
 function TfrmFacturasGrid.GetFFiltroNombre: String;
@@ -193,7 +193,7 @@ const TxtSQL='select  IdCFDI, IdCFDITipoDocumento, IdCFDIFormaPago, C.IdMetodoPa
 'CuentaCte, TipoCambio, TipoComp, Serie, Folio, Fecha, LugarExpedicion, Sello, CondPago, NoCertificado, Certificado,'+
 'SubTotal, Descto, MotivoDescto, Total,  C.NumCtaPago,CadenaOriginal, TotalImpuestoRetenido, TotalImpuestoTrasladado,'+
 'SaldoDocumento, FechaCancelacion, Observaciones,PorcentajeIVA, EmailCliente, UUID_TB,'+
-'SelloCFD_TB, SelloSAT_TB,CertificadoSAT_TB,FechaTimbrado_TB, IdCuentaXCobrar   from CFDI C ';
+'SelloCFD_TB, SelloSAT_TB,CertificadoSAT_TB,FechaTimbrado_TB, IdCuentaXCobrar, SaldoFactoraje from CFDI C '; //Mar 14/17 SF
 var AuxFiltro:String;     //Pendiente de programar   Dic 17/16    //Ene 12/17  era cxc
 begin
   inherited;
