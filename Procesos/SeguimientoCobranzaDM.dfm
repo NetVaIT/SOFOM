@@ -10,6 +10,7 @@ inherited dmSeguimientoCobranza: TdmSeguimientoCobranza
       'ere p.idpersona=Cxc.IdPersona'#13#10'Group by cxC.IdPersona, P.RazonSo' +
       'cial'
     Left = 56
+    Top = 24
     object adodsMasterIdPersona: TIntegerField
       FieldName = 'IdPersona'
     end
@@ -178,11 +179,11 @@ inherited dmSeguimientoCobranza: TdmSeguimientoCobranza
     CursorType = ctStatic
     CommandText = 
       'select CxC.IdPersona,CXC.Fecha,CXC.IdCuentaXCobrar,CXC.Saldo  ,C' +
-      'XC.IdCFDINormal,Ci.Serie,CI.Folio,  Ci.Total, Ci.SaldoDocumento,' +
-      ' '#13#10'CXC.IdAnexo, A.Descripcion, A.CapitalCobrado, A.SaldoInsoluto' +
-      #13#10'from CuentasXCobrar CXC '#13#10'inner join Anexos A on A.IdAnexo=CXC' +
-      '.IdAnexo'#13#10'Left Join CFDI CI on CI.IdCFDI= CXC.IdCFDINormal'#13#10'wher' +
-      'e Cxc.IdPersona=:IDPersona   and CXC.Saldo >0.00001'#13#10
+      'XC.IdCFDI,Ci.Serie,CI.Folio,  Ci.Total, Ci.SaldoDocumento, '#13#10'CXC' +
+      '.IdAnexo, A.Descripcion, A.CapitalCobrado, A.SaldoInsoluto'#13#10'from' +
+      ' CuentasXCobrar CXC '#13#10'inner join Anexos A on A.IdAnexo=CXC.IdAne' +
+      'xo'#13#10'Left Join CFDI CI on CI.IdCFDI= CXC.IdCFDI'#13#10'where Cxc.IdPers' +
+      'ona=:IDPersona   and CXC.Saldo >0.00001'#13#10
     DataSource = dsSaldoCliente
     IndexFieldNames = 'IdPersona'
     MasterFields = 'IDPersona'
@@ -211,9 +212,6 @@ inherited dmSeguimientoCobranza: TdmSeguimientoCobranza
       FieldName = 'Saldo'
       Precision = 18
       Size = 6
-    end
-    object ADODtSTCXCPendIdCFDINormal: TLargeintField
-      FieldName = 'IdCFDINormal'
     end
     object ADODtSTCXCPendSerie: TStringField
       FieldName = 'Serie'
@@ -249,6 +247,9 @@ inherited dmSeguimientoCobranza: TdmSeguimientoCobranza
       FieldName = 'SaldoInsoluto'
       Precision = 18
       Size = 6
+    end
+    object ADODtSTCXCPendIdCFDI: TLargeintField
+      FieldName = 'IdCFDI'
     end
   end
   object dsSaldoCliente: TDataSource

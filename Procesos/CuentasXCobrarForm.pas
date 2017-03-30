@@ -61,6 +61,11 @@ type
     cxDtEdtHasta: TcxDateEdit;
     ChckBxXFecha: TCheckBox;
     ChckBxConSaldo: TCheckBox;
+    tvMasterSaldoFactoraje: TcxGridDBColumn;
+    tvMasterIdAnexo: TcxGridDBColumn;
+    ChckBxMostrarMoratorios: TCheckBox;
+    tvMasterIdCFDI: TcxGridDBColumn;
+    tvMasterIdCuentaXCobrarBase: TcxGridDBColumn;
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
     procedure FormCreate(Sender: TObject);
     procedure SpdBtnBuscarClick(Sender: TObject);
@@ -201,12 +206,35 @@ procedure TFrmConCuentasXCobrar.SpdBtnBuscarClick(Sender: TObject);
 const  //Mar 9/17
    TxtSQL='select IdCuentaXCobrar, IdCuentaXCobrarEstatus, CXC.IdPersona,'+
           'IdAnexosAmortizaciones, Fecha, Importe, Impuesto, Interes,' +
-          'Total, CXC.Saldo, SaldoFactoraje, IdCFDINormal from CuentasXCobrar CXC ';
+          'Total, CXC.Saldo, SaldoFactoraje, IdCFDI, IDAnexo, CXC.IdCuentaXCobrarBase, '
+          +' ''Interés Moratorio'' as Descripcion from CuentasXCobrar CXC ';
+   whereNoMora=' EsMoratorio=0';
+   whereMora=' EsMoratorio=1';
+
+   orden=' order by   IdAnexo, IDAnexosAmortizaciones'; //Mar 27/17
 begin
   inherited;
+
   PoneFiltro;
+   //Mar 30/17 Desde
+  if ChckBxMostrarMoratorios.Checked then
+  begin
+    if ffiltro<>'' then
+       Ffiltro:=Ffiltro +' and '+WhereMora
+    else
+      FFiltro:=' where '+WhereMora;
+  end
+  else
+  begin
+    if ffiltro<>'' then
+       Ffiltro:=Ffiltro +' and '+WhereNoMora
+    else
+      FFiltro:=' where '+WhereNoMora;
+  end;
+     //Mar 30/17 hasta
+
   Tadodataset(datasource.DataSet).Close;
-  Tadodataset(datasource.DataSet).CommandText:=TxtSQL+ ffiltroNombre+ffiltro;
+  Tadodataset(datasource.DataSet).CommandText:=TxtSQL+ ffiltroNombre+ffiltro+ orden; //Mar 27/17
  // ShowMessage(TxtSQL+ ffiltroNombre+ffiltro);
   if ffiltroFecha <>''then
   begin

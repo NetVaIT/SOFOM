@@ -263,6 +263,10 @@ inherited dmFacturas: TdmFacturas
       Caption = 'ActImprimeFactura'
       OnExecute = ActImprimeFacturaExecute
     end
+    object ActCancelarCFDI: TAction
+      Caption = 'Cancelar CFDI'
+      OnExecute = ActCancelarCFDIExecute
+    end
   end
   object ADODtStCFDIConceptos: TADODataSet
     Connection = _dmConection.ADOConnection

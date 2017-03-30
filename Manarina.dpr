@@ -201,7 +201,8 @@ uses
   ConfiguracionesForm in 'Catalogos\ConfiguracionesForm.pas' {frmConfiguraciones},
   AnexosMoratoriosDM in 'Procesos\AnexosMoratoriosDM.pas' {dmAnexosMoratorios: TDataModule},
   AnexosMoratoriosForm in 'Procesos\AnexosMoratoriosForm.pas' {frmAnexosMoratorios},
-  AnexosMoratoriosEdit in 'Procesos\AnexosMoratoriosEdit.pas' {frmAnexosMoratoriosEdit};
+  AnexosMoratoriosEdit in 'Procesos\AnexosMoratoriosEdit.pas' {frmAnexosMoratoriosEdit},
+  CuentasXCobrarMoratoriosForm in 'Procesos\CuentasXCobrarMoratoriosForm.pas' {frmConCXCMoratorios};
 
 {$R *.res}
 

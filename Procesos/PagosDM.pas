@@ -280,7 +280,6 @@ type
     CXCMoratoriosParaFacturarEsMoratorios: TBooleanField;
     ActGeneraPrefMoratorios: TAction;
     ADOSumaIVAMora: TADODataSet;
-    ADODtStCXCPendientesIdCFDINormal: TLargeintField;
     ADODtStCXCPendientesSaldoDocumento: TFMTBCDField;
     ADODtStCXCPendientesSaldoFactorajeCFDI: TFMTBCDField;
     CXCMoratoriosParaFacturarPagosAplicados: TFMTBCDField;
@@ -344,6 +343,9 @@ type
     StringField5: TStringField;
     DateTimeField2: TDateTimeField;
     IntegerField13: TIntegerField;
+    ADODtStCXCPendientesIdCuentaXCobrarBase: TIntegerField;
+    ADODtStCXCPendientesIdCFDI: TLargeintField;
+    ADODtStCXCPendientesEsMoratorio: TBooleanField;
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsMasterAfterPost(DataSet: TDataSet);
     procedure adodsMasterBeforePost(DataSet: TDataSet);

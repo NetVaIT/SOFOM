@@ -74,7 +74,6 @@ type
     LblAplicandoFActoraje: TLabel;
     DSAuxiliar: TDataSource;
     DSP_CalcMoratorio: TDataSource;
-    tvMasterIdCFDINormal: TcxGridDBColumn;
     tvMasterSaldoDocumento: TcxGridDBColumn;
     tvMasterSaldoFactorajeCFDI: TcxGridDBColumn;
     LblEtiquetaFacto: TLabel;
@@ -92,6 +91,9 @@ type
     cxGridDBTableView1SaldoFactoraje: TcxGridDBColumn;
     Label7: TLabel;
     cxDBLabel4: TcxDBLabel;
+    tvMasterIdCuentaXCobrarBase: TcxGridDBColumn;
+    tvMasterIdCFDI: TcxGridDBColumn;
+    tvMasterEsMoratorio: TcxGridDBColumn;
     procedure BtBtnAplicarClick(Sender: TObject);
     procedure DSAplicacionStateChange(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -364,7 +366,7 @@ begin
 
   TADOQuery(dsAuxiliar.dataset).SQL.Add('Select * from CFDI CI, CuentasXCobrar CO'
   +' where Co.IdCuentaXcobrar='+inttoSTR(IdCxCAct) +' and CI.idcuentaXCobrar='+inttoSTR(IdCxCAct)
-  +' and Co.IdCFDINormal=Ci.IdCFDI');
+  +' and Co.IdCFDI=Ci.IdCFDI');  // mar 30/17   Normal
 
   dsAuxiliar.dataset.Open;
   Result:=not dsAuxiliar.dataset.Eof;  //Existe y está al menos prefacturada..  //feb 10/17

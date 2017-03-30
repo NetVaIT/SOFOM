@@ -81,12 +81,12 @@ inherited dmAplicacionesConsulta: TdmAplicacionesConsulta
     CommandText = 
       'select IDPagoAplicacionInterna, PAI.IDPagoAplicacion,'#13#10'PAI.IdCue' +
       'ntaXCobrarDetalle,  CXC.Fecha fechaCXC, CCd.Descripcion as ItemC' +
-      'XC , ccd.Saldo saldoCXC,'#13#10' IDCFDI, IDCFDIConcepto,'#13#10'PAI.Importe ' +
-      'ImportePagado'#13#10#13#10' from PagosAplicacionesInternas PAI'#13#10' inner joi' +
-      'n CuentasXCobrarDetalle CCD '#13#10'          on ccd.IdCuentaXCobrarDE' +
-      'talle=PAI.IdCuentaXCobrarDEtalle'#13#10' inner join CuentasXCobrar CXC' +
-      '  '#13#10'          on CXC.IdCuentaXCobrar=CCD.IdCuentaXCobrar'#13#10' where' +
-      #13#10' IDPagoAplicacion=:IDPagoAplicacion'
+      'XC , ccd.Saldo saldoCXC,'#13#10' PAI.IDCFDI, IDCFDIConcepto,'#13#10'PAI.Impo' +
+      'rte ImportePagado'#13#10#13#10' from PagosAplicacionesInternas PAI'#13#10' inner' +
+      ' join CuentasXCobrarDetalle CCD '#13#10'          on ccd.IdCuentaXCobr' +
+      'arDEtalle=PAI.IdCuentaXCobrarDEtalle'#13#10' inner join CuentasXCobrar' +
+      ' CXC  '#13#10'          on CXC.IdCuentaXCobrar=CCD.IdCuentaXCobrar'#13#10' w' +
+      'here'#13#10' IDPagoAplicacion=:IDPagoAplicacion'
     DataSource = DSMaster
     IndexFieldNames = 'IDPagoAplicacion'
     MasterFields = 'IDPagoAplicacion'

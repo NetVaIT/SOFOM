@@ -2,37 +2,37 @@ inherited frmFacturasGrid: TfrmFacturasGrid
   BorderStyle = bsToolWindow
   Caption = 'Facturas '
   ClientHeight = 428
-  ClientWidth = 809
-  ExplicitWidth = 815
+  ClientWidth = 935
+  ExplicitWidth = 941
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
     Top = 343
-    Width = 809
+    Width = 935
     ExplicitTop = 343
     ExplicitWidth = 815
   end
   inherited splDetail1: TSplitter
     Top = 255
-    Width = 809
+    Width = 935
     ExplicitTop = 255
     ExplicitWidth = 815
   end
   inherited splDetail2: TSplitter
     Top = 299
-    Width = 809
+    Width = 935
     ExplicitTop = 299
     ExplicitWidth = 815
   end
   inherited pnlMaster: TPanel
     Top = 75
-    Width = 809
+    Width = 935
     Height = 180
     ExplicitTop = 75
     ExplicitWidth = 809
     ExplicitHeight = 180
     inherited cxGrid: TcxGrid
-      Width = 809
+      Width = 935
       Height = 180
       ExplicitWidth = 809
       ExplicitHeight = 180
@@ -208,48 +208,49 @@ inherited frmFacturasGrid: TfrmFacturasGrid
   end
   inherited pnlDetail3: TPanel
     Top = 346
-    Width = 809
+    Width = 935
     ExplicitTop = 346
     ExplicitWidth = 809
   end
   inherited pnlDetail2: TPanel
     Top = 302
-    Width = 809
+    Width = 935
     ExplicitTop = 302
     ExplicitWidth = 809
   end
   inherited pnlDetail1: TPanel
     Top = 258
-    Width = 809
+    Width = 935
     ExplicitTop = 258
     ExplicitWidth = 809
   end
   inherited pnlClose: TPanel
     Top = 387
-    Width = 809
+    Width = 935
     ExplicitTop = 387
     ExplicitWidth = 809
     DesignSize = (
-      809
+      935
       41)
     inherited btnClose: TButton
-      Left = 724
+      Left = 850
       ExplicitLeft = 724
     end
   end
   object PnlBusqueda: TPanel [8]
     Left = 0
     Top = 31
-    Width = 809
+    Width = 935
     Height = 44
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 9
+    ExplicitWidth = 809
     DesignSize = (
-      809
+      935
       44)
     object Button1: TButton
-      Left = 726
+      Left = 852
       Top = 6
       Width = 75
       Height = 25
@@ -258,6 +259,7 @@ inherited frmFacturasGrid: TfrmFacturasGrid
       Caption = 'Cerrar'
       TabOrder = 0
       OnClick = btnCloseClick
+      ExplicitLeft = 726
     end
     object Panel1: TPanel
       Left = 0
@@ -287,12 +289,14 @@ inherited frmFacturasGrid: TfrmFacturasGrid
     object PnlFechas: TPanel
       Left = 199
       Top = 0
-      Width = 610
+      Width = 736
       Height = 44
       Align = alClient
       BevelOuter = bvNone
       ParentBackground = False
       TabOrder = 2
+      ExplicitTop = -6
+      ExplicitWidth = 610
       object Label1: TLabel
         Left = 21
         Top = 4
@@ -350,6 +354,14 @@ inherited frmFacturasGrid: TfrmFacturasGrid
         State = cbChecked
         TabOrder = 2
       end
+      object ChckBxFactVivas: TCheckBox
+        Left = 461
+        Top = 19
+        Width = 116
+        Height = 17
+        Caption = 'Facturas con Saldo'
+        TabOrder = 3
+      end
     end
   end
   inherited DataSource: TDataSource
@@ -383,6 +395,10 @@ inherited frmFacturasGrid: TfrmFacturasGrid
         item
           Visible = True
           ItemName = 'dxBrBtnImprimePDF'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBrBtnCancelaCFDI'
         end>
     end
     object dxBrBtnCFDI: TdxBarButton
@@ -398,6 +414,13 @@ inherited frmFacturasGrid: TfrmFacturasGrid
       Hint = 'Imprime PDF'
       Visible = ivAlways
       ImageIndex = 18
+    end
+    object dxBrBtnCancelaCFDI: TdxBarButton
+      Caption = 'Cancelar CFDI'
+      Category = 0
+      Hint = 'Cancelar CFDI'
+      Visible = ivAlways
+      ImageIndex = 19
     end
   end
   inherited cxStyleRepository: TcxStyleRepository
@@ -1212,12 +1235,50 @@ inherited frmFacturasGrid: TfrmFacturasGrid
           0000000000000000000000000000000000000000000000000000000000000000
           0000000000000000000000000000000000000000000000000000}
         MaskColor = clBlack
+      end
+      item
+        Image.Data = {
+          36040000424D3604000000000000360000002800000010000000100000000100
+          2000000000000004000000000000000000000000000000000000008080000080
+          8000008080000080800000808000008080000080800000808000008080000080
+          8000008080000080800000808000008080000080800000808000008080000080
+          80000000000000000000000000000000FF000000FF000000FF000000FF000000
+          FF00000000000000000000000000008080000080800000808000008080000080
+          8000000000000000FF000000FF000000FF000000FF000000FF000000FF000000
+          FF000000FF000000FF0000000000008080000080800000808000008080000080
+          80000000FF000000FF00EAD99900EAD999000000000000000000EAD999000000
+          00000000FF000000FF000000FF00008080000080800000808000008080000000
+          FF000000FF000000FF000000FF00EAD99900EAD9990000000000EAD999000000
+          0000C0C0C0000000FF000000FF000000FF000080800000808000008080000000
+          FF00000000000000FF000000FF000000FF000000000000000000EAD99900EAD9
+          990000000000EAD999000000FF000000FF0000808000008080000000FF000000
+          FF0000000000EAD999000000FF000000FF000000FF0000000000EAD999000000
+          000000000000EAD99900000000000000FF000000FF00008080000000FF000000
+          FF0000000000EAD99900EAD999000000FF000000FF000000FF00EAD99900EAD9
+          9900EAD99900EAD99900000000000000FF000000FF00008080000000FF000000
+          FF0000000000EAD99900EAD99900EAD999000000FF000000FF000000FF00EAD9
+          9900EAD99900EAD99900000000000000FF000000FF00008080000000FF000000
+          FF0000000000000000000000000000000000000000000000FF000000FF000000
+          FF00EAD99900EAD99900000000000000FF000000FF00008080000000FF000000
+          FF000000000000000000EAD99900EAD9990000000000EAD999000000FF000000
+          FF000000FF00EAD99900000000000000FF000000FF0000808000008080000000
+          FF000000FF0000000000EAD99900EAD999000000000000000000000000000000
+          FF000000FF000000FF00000000000000FF000080800000808000008080000000
+          FF000000FF000000FF000000000000000000EAD99900EAD99900EAD99900EAD9
+          99000000FF000000FF000000FF000000FF000080800000808000008080000080
+          80000000FF000000FF000000FF00EAD99900EAD99900EAD99900EAD99900EAD9
+          9900EAD999000000FF000000FF00008080000080800000808000008080000080
+          8000000000000000FF000000FF000000FF000000FF000000FF000000FF000000
+          FF000000FF000000FF0000000000008080000080800000808000008080000080
+          80000080800000808000008080000000FF000000FF000000FF000000FF000000
+          FF00008080000080800000808000008080000080800000808000}
+        MaskColor = clOlive
       end>
   end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42699.643536909720000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

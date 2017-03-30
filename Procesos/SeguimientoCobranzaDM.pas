@@ -22,7 +22,6 @@ type
     ADODtSTCXCPendFecha: TDateTimeField;
     ADODtSTCXCPendIdCuentaXCobrar: TAutoIncField;
     ADODtSTCXCPendSaldo: TFMTBCDField;
-    ADODtSTCXCPendIdCFDINormal: TLargeintField;
     ADODtStIncidenciaXFecha: TADODataSet;
     AutoIncField1: TAutoIncField;
     IntegerField1: TIntegerField;
@@ -68,6 +67,7 @@ type
     ADODtSTCXCPendSaldoInsoluto: TFMTBCDField;
     ADODtstTelefonoCliente: TADODataSet;
     ADODtStTelContacto: TADODataSet;
+    ADODtSTCXCPendIdCFDI: TLargeintField;
     procedure DataModuleCreate(Sender: TObject);
     procedure ADODtStIncidenciasNewRecord(DataSet: TDataSet);
   private

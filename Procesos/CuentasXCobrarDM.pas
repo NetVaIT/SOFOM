@@ -153,11 +153,29 @@ type
     ADOStrprcActGralMoratorios: TADOStoredProc;
     ActActualizaMoratorios: TAction;
     adodsMasterSaldoFactoraje: TFMTBCDField;
-    adodsMasterIdCFDINormal: TLargeintField;
     ADOdsCXCDetallePagosAplicados: TFMTBCDField;
     ADOdsCXCDetallePagosAplicadosFactoraje: TFMTBCDField;
     ActGeneraCuentasXCobrar: TAction;
     ADOStrdPrcGeneraCXC: TADOStoredProc;
+    adodsMasterIdAnexo: TIntegerField;
+    ADODTSTCXCMoratorios: TADODataSet;
+    ADODTSTCXCMoratoriosIdCuentaXCobrar: TAutoIncField;
+    ADODTSTCXCMoratoriosIdCuentaXCobrarEstatus: TIntegerField;
+    ADODTSTCXCMoratoriosIdPersona: TIntegerField;
+    ADODTSTCXCMoratoriosIdAnexosAmortizaciones: TIntegerField;
+    ADODTSTCXCMoratoriosFecha: TDateTimeField;
+    ADODTSTCXCMoratoriosImporte: TFMTBCDField;
+    ADODTSTCXCMoratoriosImpuesto: TFMTBCDField;
+    ADODTSTCXCMoratoriosInteres: TFMTBCDField;
+    ADODTSTCXCMoratoriosTotal: TFMTBCDField;
+    ADODTSTCXCMoratoriosSaldo: TFMTBCDField;
+    ADODTSTCXCMoratoriosSaldoFactoraje: TFMTBCDField;
+    ADODTSTCXCMoratoriosIdAnexo: TIntegerField;
+    ADODTSTCXCMoratoriosIdCuentaXCobrarBase: TIntegerField;
+    ADODTSTCXCMoratoriosDescripcion: TStringField;
+    ADODTSTCXCMoratoriosIdCFDI: TLargeintField;
+    adodsMasterIdCFDI: TLargeintField;
+    adodsMasterIdCuentaXCobrarBase: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actGeneraPreFacturasExecute(Sender: TObject);
     procedure ADODtStPrefacturasCFDINewRecord(DataSet: TDataSet);
@@ -279,8 +297,8 @@ begin
     end;
     adodsmaster.Edit;
     adodsmaster.FieldByName('IdCuentaXCobrarEstatus').AsInteger:=0; //CAmbia a pendiente
-    adodsmaster.FieldByName('IdCFDINormal').AsInteger:= ADODtStPrefacturasCFDI.FieldByName('IDCFDI').AsInteger; //Feb 9/17
-    adodsmaster.post;
+    adodsmaster.FieldByName('IdCFDI').AsInteger:= ADODtStPrefacturasCFDI.FieldByName('IDCFDI').AsInteger; //Feb 9/17
+    adodsmaster.post;            //ERa CFDInormal.. mar 30/17
     ShowMessage('Prefactura generada');
     //&Verificar ivas..
   end;
@@ -290,21 +308,22 @@ procedure TdmCuentasXCobrar.adodsMasterAfterOpen(DataSet: TDataSet);
 begin
   inherited;
   adodsCxcDetalle.Open;
+  ADODTSTCXCMoratorios.Open;
 end;
 
 procedure TdmCuentasXCobrar.adodsMasterBeforeInsert(DataSet: TDataSet);
 const      //Ajustado por si hay que dar de alta CXC manual mar 10/17
    TxtSQL=' select IdCuentaXCobrar, IdCuentaXCobrarEstatus, IdPersona, '+
    'IdAnexosAmortizaciones, Fecha, Importe, Impuesto, Interes,'+
-   'Total, Saldo, SaldoFactoraje, IdCFDINormal from CuentasXCobrar';
-
+   'Total, Saldo, SaldoFactoraje, IdCFDI, IDAnexo from CuentasXCobrar';  // Normal era mar 30/17
+   orden=' order by  IdAnexo, IDAnexosAmortizaciones'; //Mar 27/17
 var Txt:String;
 begin
   Txt:=   Tadodataset(adodsMaster).CommandText;
   if pos('inner ',Txt)>0 then
   begin
     Tadodataset(adodsMaster).Close;
-    Tadodataset(adodsMaster).CommandText:=TxtSQL;
+    Tadodataset(adodsMaster).CommandText:=TxtSQL + Orden;   //Mar 27/17
     Tadodataset(adodsMaster).open;
   end;
   inherited;

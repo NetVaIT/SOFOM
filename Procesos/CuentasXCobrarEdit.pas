@@ -42,6 +42,7 @@ type
     DBLookupComboBox2: TDBLookupComboBox;
     PnlDetalleFact: TPanel;
     cxDBLabel1: TcxDBLabel;
+    pnlMoratorios: TPanel;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
@@ -56,16 +57,24 @@ implementation
 
 {$R *.dfm}
 
-uses CuentasXCobrarDM, CuentasXCobrarDetalleForm;
+uses CuentasXCobrarDM, CuentasXCobrarDetalleForm, CuentasXCobrarMoratoriosForm;
 
 procedure TFrmEdCuentasXCobrar.FormCreate(Sender: TObject);
 var FrmCXCDetalle:TFrmCXCDetalle;
+    frmConCXCMoratorios:TfrmConCXCMoratorios;
 begin
   inherited;
   FrmCXCDetalle:=TFrmCXCDetalle.Create(self);
   FrmCXCDetalle.Parent:= PnlDetalleFact;
   FrmCXCDetalle.Align:=alClient;
   FrmCXCDetalle.Show;
+  //MAr 27/17
+  frmConCXCMoratorios:=  TfrmConCXCMoratorios.Create(self);    //VErificar si hay o no para que se muestre o no..
+  frmConCXCMoratorios.Parent:= PnlMoratorios;
+  frmConCXCMoratorios.ApplyBestFit:=False;
+  frmConCXCMoratorios.Align:=alClient;
+  frmConCXCMoratorios.Show;
+
 end;
 
 end.

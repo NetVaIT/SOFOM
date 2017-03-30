@@ -450,7 +450,8 @@ begin
       PWideChar(UUID),
       PWideChar(ArchivoOUT));
     end;
-    Result:= (Valor=0);
+//    Result:= (Valor=0); //DEjó de funcionar
+    Result:= FileExists(ArchivoOUT);
     Respuesta:=intToStr(valor);
   finally
     VirtualXML_Free(hXML);

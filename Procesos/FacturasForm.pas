@@ -91,6 +91,8 @@ type
     cxDtEdtDesde: TcxDateEdit;
     cxDtEdtHasta: TcxDateEdit;
     ChckBxXFecha: TCheckBox;
+    dxBrBtnCancelaCFDI: TdxBarButton;
+    ChckBxFactVivas: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
     procedure SpdBtnBuscarClick(Sender: TObject);
@@ -101,15 +103,18 @@ type
     ffiltroNombre: String;
     fOrden: String;
     ffiltroFecha: String;
+    FActCancelaCFDI: TBasicAction;
     procedure SetActGenerarCFDI(const Value: TBasicAction);
     procedure SetActImprimePDF(const Value: TBasicAction);
     function GetFFiltroNombre: String;
     procedure PoneRangoFechas;
+    procedure SetActCancelaCFDI(const Value: TBasicAction);
     { Private declarations }
   public
     { Public declarations }
       property ActGenerarCFDI : TBasicAction read FActGenerarCFDI write SetActGenerarCFDI;
       property ActImprimePDF : TBasicAction read FActImprimePDF write SetActImprimePDF;
+      property ActCancelaCFDI : TBasicAction read FActCancelaCFDI write SetActCancelaCFDI;
 
       //Dic 20/16
      property FiltroFecha: String read ffiltroFecha write ffiltroFecha;
@@ -132,6 +137,11 @@ procedure TfrmFacturasGrid.DataSourceDataChange(Sender: TObject; Field: TField);
 begin
   inherited;
   dxBrBtnCFDI.Enabled:=datasource.DataSet.FieldByName('IDCFDIEstatus').AsInteger=1;  //Dic 7/16
+  dxBrBtnCancelaCFDI.Enabled:= (datasource.DataSet.FieldByName('IDCFDIEstatus').AsInteger=2) and   //MAr 23/17
+                               (datasource.DataSet.FieldByName('SaldoDocumento').Value=datasource.DataSet.FieldByName('Total').VAlue)and
+                               (datasource.DataSet.FieldByName('SaldoDocumento').Value=datasource.DataSet.FieldByName('SaldoFactoraje').VAlue);
+
+
 end;
 
 procedure TfrmFacturasGrid.EdtNombreChange(Sender: TObject);
@@ -173,6 +183,13 @@ begin
   Result := ffiltroNombre;
 end;
 
+procedure TfrmFacturasGrid.SetActCancelaCFDI(const Value: TBasicAction);
+begin                         //Mar 23/17
+  FActCancelaCFDI := Value;
+  dxBrBtnCancelaCFDI.Action:= Value;
+  dxBrBtnCancelaCFDI.ImageIndex:=19;
+end;
+
 procedure TfrmFacturasGrid.SetActGenerarCFDI(const Value: TBasicAction);
 begin           //Nov 29/16
   FActGenerarCFDI := Value;
@@ -194,10 +211,17 @@ const TxtSQL='select  IdCFDI, IdCFDITipoDocumento, IdCFDIFormaPago, C.IdMetodoPa
 'SubTotal, Descto, MotivoDescto, Total,  C.NumCtaPago,CadenaOriginal, TotalImpuestoRetenido, TotalImpuestoTrasladado,'+
 'SaldoDocumento, FechaCancelacion, Observaciones,PorcentajeIVA, EmailCliente, UUID_TB,'+
 'SelloCFD_TB, SelloSAT_TB,CertificadoSAT_TB,FechaTimbrado_TB, IdCuentaXCobrar, SaldoFactoraje from CFDI C '; //Mar 14/17 SF
-var AuxFiltro:String;     //Pendiente de programar   Dic 17/16    //Ene 12/17  era cxc
+var AuxFiltro, aux2 :String;     //Pendiente de programar   Dic 17/16    //Ene 12/17  era cxc
 begin
   inherited;
   AuxFiltro:='';
+  //Mar 23/17 desde
+  Aux2:='';//Mar 23/17
+  if ChckBxFactVivas.Checked then
+     Aux2:='SaldoDocumento>0';
+  // HAsta Mar 23/17
+
+
   PoneRangoFechas;
 
   if FFiltroFecha<>'' then
@@ -205,6 +229,15 @@ begin
     AuxFiltro:=' where '+FFiltroFecha;
 
   end;
+   //Mar 23/17 desde
+  if aux2<>'' then //Tiene filtrosaldo
+  begin
+    if AuxFiltro<>'' then
+      AuxFiltro :=AuxFiltro+ ' and '+Aux2
+    else
+     AuxFiltro:= ' where '+  Aux2;
+  end;
+  //Mar 23/17 hasta
 
  Tadodataset(datasource.DataSet).Close;
   Tadodataset(datasource.DataSet).CommandText:=TxtSQL+ffiltroNombre+ AuxFiltro;
@@ -214,6 +247,8 @@ begin
     Tadodataset(datasource.DataSet).Parameters.ParamByName('FIni').Value:=cxDtEdtDesde.Date;
     Tadodataset(datasource.DataSet).Parameters.ParamByName('FFin').Value:=cxDtEdtHasta.Date+1;
   end;
+
+
 
   Tadodataset(datasource.DataSet).open;
 

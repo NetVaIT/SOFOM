@@ -249,9 +249,8 @@ inherited dmPagos: TdmPagos
     CommandText = 
       'Select cxc.*, CI.SaldoDocumento, Ci.SaldoFactoraje as SaldoFacto' +
       'rajeCFDI'#13#10' from CuentasXCobrar CXC  '#13#10'left Join CFDI CI on CI.Id' +
-      'CFDI= CXC.IdCFDINormal where '#13#10' Saldo >0 and IDPersona=:IdPerson' +
-      'aCliente '#13#10'and IdCuentaXCobrarEstatus=0 and CXC.IDAnexo=:IdAnexo' +
-      #13#10
+      'CFDI= CXC.IdCFDI where '#13#10' Saldo >0 and IDPersona=:IdPersonaClien' +
+      'te '#13#10'and IdCuentaXCobrarEstatus=0 and CXC.IDAnexo=:IdAnexo'#13#10
     DataSource = DSMaster
     IndexFieldNames = 'IdPersona;IdAnexo'
     MasterFields = 'IdPersonaCliente;IdAnexo'
@@ -333,9 +332,6 @@ inherited dmPagos: TdmPagos
       Precision = 18
       Size = 6
     end
-    object ADODtStCXCPendientesIdCFDINormal: TLargeintField
-      FieldName = 'IdCFDINormal'
-    end
     object ADODtStCXCPendientesSaldoDocumento: TFMTBCDField
       FieldName = 'SaldoDocumento'
       currency = True
@@ -347,6 +343,15 @@ inherited dmPagos: TdmPagos
       currency = True
       Precision = 18
       Size = 6
+    end
+    object ADODtStCXCPendientesIdCuentaXCobrarBase: TIntegerField
+      FieldName = 'IdCuentaXCobrarBase'
+    end
+    object ADODtStCXCPendientesIdCFDI: TLargeintField
+      FieldName = 'IdCFDI'
+    end
+    object ADODtStCXCPendientesEsMoratorio: TBooleanField
+      FieldName = 'EsMoratorio'
     end
   end
   object ADODtStCxCDetallePend: TADODataSet
@@ -1423,7 +1428,7 @@ inherited dmPagos: TdmPagos
         Size = 4
         Value = Null
       end>
-    Left = 632
+    Left = 640
     Top = 312
     object CXCMoratoriosParaFacturarIdCuentaXCobrar: TIntegerField
       FieldName = 'IdCuentaXCobrar'

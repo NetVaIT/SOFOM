@@ -197,6 +197,7 @@ type
     ADODtStCFDIConceptosIdCuentaXCobrarDetalle: TIntegerField;
     adodsMasterIdCuentaXCobrar: TIntegerField;
     adodsMasterSaldoFactoraje: TFMTBCDField;
+    ActCancelarCFDI: TAction;
     procedure DataModuleCreate(Sender: TObject);
     procedure actProcesaFacturaExecute(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
@@ -210,6 +211,7 @@ type
     procedure ADODtStDireccionesClienteCalcFields(DataSet: TDataSet);
     procedure ActImprimeFacturaExecute(Sender: TObject);
     procedure adodsMasterAfterOpen(DataSet: TDataSet);
+    procedure ActCancelarCFDIExecute(Sender: TObject);
 
   private
     FTipoDoc: Integer;
@@ -249,6 +251,23 @@ uses FacturasForm, ConceptosFacturaForm, DocComprobanteFiscal, FacturaTipos,
   XMLtoPDFDmod, _Utils;
 
 {$R *.dfm}
+
+procedure TdmFacturas.ActCancelarCFDIExecute(Sender: TObject);
+var
+  f:String;
+begin
+  inherited;
+//Cancelar CFDI
+
+  f:='Serie: '+adodsMasterserie.asstring+' Folio:'+adodsMasterFolio.AsString;
+  if (Application.MessageBox(pChar('Esta seguro de cancelar el CFDI con '+f +' ?'),'Confirmación',MB_YESNO)=IDYES) then
+  begin
+    //REgistrar en Bitacora... VErificar que tipo de Factura es.. y que impplica cancelar...
+
+
+  end;
+
+end;
 
 procedure TdmFacturas.ActImprimeFacturaExecute(Sender: TObject);
 var      //Dic 22/15
@@ -1078,6 +1097,7 @@ begin
   gGridForm.DataSet:= adodsMaster;
   TfrmFacturasGrid(gGridForm).ActGenerarCFDI := actProcesaFactura;  //Nov29/16
   TfrmFacturasGrid(gGridForm).ActImprimePDF := ActImprimeFactura;  //Dic 15/16
+  TfrmFacturasGrid(gGridForm).ActCancelaCFDI := ActCancelarCFDI;//Mar 23/17
 end;
 
 procedure TdmFacturas.ReadFileCERKEY(FileNameCER, FileNameKEY: TFileName);

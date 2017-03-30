@@ -29,14 +29,23 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
     Width = 1072
     Height = 180
     ExplicitTop = 75
-    ExplicitWidth = 1078
+    ExplicitWidth = 1072
     ExplicitHeight = 180
     inherited cxGrid: TcxGrid
       Width = 1072
       Height = 180
-      ExplicitWidth = 1078
+      ExplicitWidth = 1072
       ExplicitHeight = 180
       inherited tvMaster: TcxGridDBTableView
+        object tvMasterIdAnexo: TcxGridDBColumn
+          Caption = 'No.Anexo'
+          DataBinding.FieldName = 'IdAnexo'
+        end
+        object tvMasterIdAnexosAmortizaciones: TcxGridDBColumn
+          Caption = 'No. Anexo Amortizaci'#243'n'
+          DataBinding.FieldName = 'IdAnexosAmortizaciones'
+          Width = 128
+        end
         object tvMasterIdCuentaXCobrar: TcxGridDBColumn
           DataBinding.FieldName = 'IdCuentaXCobrar'
           Width = 103
@@ -47,10 +56,6 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
         end
         object tvMasterIdPersona: TcxGridDBColumn
           DataBinding.FieldName = 'IdPersona'
-          Visible = False
-        end
-        object tvMasterIdAnexosAmortizaciones: TcxGridDBColumn
-          DataBinding.FieldName = 'IdAnexosAmortizaciones'
           Visible = False
         end
         object tvMasterCliente: TcxGridDBColumn
@@ -79,6 +84,17 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
         object tvMasterSaldo: TcxGridDBColumn
           DataBinding.FieldName = 'Saldo'
         end
+        object tvMasterSaldoFactoraje: TcxGridDBColumn
+          DataBinding.FieldName = 'SaldoFactoraje'
+          Visible = False
+        end
+        object tvMasterIdCFDI: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCFDI'
+        end
+        object tvMasterIdCuentaXCobrarBase: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCuentaXCobrarBase'
+          Visible = False
+        end
       end
     end
   end
@@ -86,28 +102,28 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
     Top = 346
     Width = 1072
     ExplicitTop = 346
-    ExplicitWidth = 1078
+    ExplicitWidth = 1072
   end
   inherited pnlDetail2: TPanel
     Top = 302
     Width = 1072
     ExplicitTop = 302
-    ExplicitWidth = 1078
+    ExplicitWidth = 1072
   end
   inherited pnlDetail1: TPanel
     Top = 258
     Width = 1072
     ExplicitTop = 258
-    ExplicitWidth = 1078
+    ExplicitWidth = 1072
   end
   inherited pnlClose: TPanel
     Top = 387
     Width = 1072
     ExplicitTop = 387
-    ExplicitWidth = 1078
+    ExplicitWidth = 1072
     inherited btnClose: TButton
       Left = 987
-      ExplicitLeft = 993
+      ExplicitLeft = 987
     end
   end
   object PnlBusqueda: TPanel [8]
@@ -118,8 +134,6 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 9
-    ExplicitLeft = -29
-    ExplicitWidth = 1107
     DesignSize = (
       1072
       44)
@@ -133,7 +147,6 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
       Caption = 'Cerrar'
       TabOrder = 0
       OnClick = btnCloseClick
-      ExplicitLeft = 1024
     end
     object Panel1: TPanel
       Left = 0
@@ -169,7 +182,8 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
       BevelOuter = bvNone
       ParentBackground = False
       TabOrder = 2
-      ExplicitWidth = 908
+      ExplicitLeft = 205
+      ExplicitTop = -6
       object Label1: TLabel
         Left = 21
         Top = 4
@@ -219,9 +233,9 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
       end
       object ChckBxXFecha: TCheckBox
         Left = 373
-        Top = 18
+        Top = 9
         Width = 82
-        Height = 17
+        Height = 29
         Caption = 'Usar Fecha'
         Checked = True
         State = cbChecked
@@ -229,20 +243,36 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
       end
       object ChckBxConSaldo: TCheckBox
         Left = 461
-        Top = 10
+        Top = 9
         Width = 74
-        Height = 33
+        Height = 29
         Caption = 'Con Saldo'
         TabOrder = 3
         WordWrap = True
       end
+      object ChckBxMostrarMoratorios: TCheckBox
+        Left = 541
+        Top = 9
+        Width = 108
+        Height = 29
+        Caption = 'Mostrar Moratorios'
+        TabOrder = 4
+        WordWrap = True
+      end
     end
+  end
+  inherited ActionList: TActionList
+    Left = 56
+    Top = 96
   end
   inherited DataSource: TDataSource
     DataSet = dmCuentasXCobrar.adodsMaster
     OnDataChange = DataSourceDataChange
+    Left = 16
   end
   inherited dxBarManager: TdxBarManager
+    Left = 120
+    Top = 160
     DockControlHeights = (
       0
       0
@@ -308,10 +338,17 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
     end
   end
   inherited cxStyleRepository: TcxStyleRepository
+    Left = 8
+    Top = 96
     PixelsPerInch = 96
+  end
+  inherited cxGridPopupMenu: TcxGridPopupMenu
+    Left = 64
+    Top = 152
   end
   inherited cxImageList: TcxImageList
     FormatVersion = 1
+    DesignInfo = 6750320
     ImageInfo = <
       item
         Image.Data = {

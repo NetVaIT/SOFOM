@@ -9,11 +9,13 @@ inherited FrmEdCuentasXCobrar: TFrmEdCuentasXCobrar
   inherited pcMain: TcxPageControl
     Width = 724
     Height = 658
+    ExplicitWidth = 724
+    ExplicitHeight = 658
     ClientRectBottom = 656
     ClientRectRight = 722
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 27
+      ExplicitLeft = 2
+      ExplicitTop = 28
       ExplicitWidth = 720
       ExplicitHeight = 628
       object Label1: TLabel
@@ -155,12 +157,13 @@ inherited FrmEdCuentasXCobrar: TFrmEdCuentasXCobrar
       end
       object PnlDetalleFact: TPanel
         Left = 0
-        Top = 280
+        Top = 232
         Width = 720
-        Height = 348
+        Height = 204
         Align = alBottom
         BevelKind = bkTile
         TabOrder = 8
+        ExplicitTop = 264
       end
       object cxDBLabel1: TcxDBLabel
         Left = 24
@@ -170,16 +173,30 @@ inherited FrmEdCuentasXCobrar: TFrmEdCuentasXCobrar
         Height = 21
         Width = 121
       end
+      object pnlMoratorios: TPanel
+        Left = 0
+        Top = 436
+        Width = 720
+        Height = 192
+        Align = alBottom
+        BevelKind = bkTile
+        TabOrder = 10
+        ExplicitTop = 438
+      end
     end
   end
   inherited pmlMain: TPanel
     Top = 658
     Width = 724
+    ExplicitTop = 658
+    ExplicitWidth = 724
     inherited btnCancel: TButton
       Left = 642
+      ExplicitLeft = 642
     end
     inherited btnOk: TButton
       Left = 561
+      ExplicitLeft = 561
     end
   end
   inherited DataSource: TDataSource

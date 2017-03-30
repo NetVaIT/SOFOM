@@ -23,7 +23,6 @@ object FrmAplicacionPago: TFrmAplicacionPago
     Height = 201
     Align = alTop
     TabOrder = 0
-    ExplicitTop = 51
     object Label3: TLabel
       Left = 174
       Top = 98
@@ -237,8 +236,6 @@ object FrmAplicacionPago: TFrmAplicacionPago
     Align = alClient
     TabOrder = 1
     LookAndFeel.Kind = lfStandard
-    ExplicitTop = 242
-    ExplicitHeight = 210
     object tvMaster: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       OnCellDblClick = tvMasterCellDblClick
@@ -303,10 +300,6 @@ object FrmAplicacionPago: TFrmAplicacionPago
         Caption = 'Saldo Factoraje'
         DataBinding.FieldName = 'SaldoFactoraje'
       end
-      object tvMasterIdCFDINormal: TcxGridDBColumn
-        DataBinding.FieldName = 'IdCFDINormal'
-        Width = 115
-      end
       object tvMasterSaldoDocumento: TcxGridDBColumn
         DataBinding.FieldName = 'SaldoDocumento'
         Width = 147
@@ -314,6 +307,18 @@ object FrmAplicacionPago: TFrmAplicacionPago
       object tvMasterSaldoFactorajeCFDI: TcxGridDBColumn
         DataBinding.FieldName = 'SaldoFactorajeCFDI'
         Width = 146
+      end
+      object tvMasterIdCuentaXCobrarBase: TcxGridDBColumn
+        DataBinding.FieldName = 'IdCuentaXCobrarBase'
+        Visible = False
+      end
+      object tvMasterIdCFDI: TcxGridDBColumn
+        DataBinding.FieldName = 'IdCFDI'
+        Visible = False
+      end
+      object tvMasterEsMoratorio: TcxGridDBColumn
+        DataBinding.FieldName = 'EsMoratorio'
+        Visible = False
       end
     end
     object cxGridLevel1: TcxGridLevel
@@ -429,7 +434,6 @@ object FrmAplicacionPago: TFrmAplicacionPago
     ParentShowHint = False
     ShowHint = True
     TabOrder = 3
-    ExplicitTop = 203
   end
   object Panel1: TPanel
     Left = 0
