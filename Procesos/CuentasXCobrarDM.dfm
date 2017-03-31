@@ -198,7 +198,6 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     Top = 176
   end
   object ADODSCXCEstatus: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -209,7 +208,6 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     Top = 96
   end
   object ADOSPersonas: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -623,7 +621,7 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     IndexFieldNames = 'idpersona'
     MasterFields = 'IdPersonaEmisor'
     Parameters = <>
-    Left = 728
+    Left = 736
     Top = 96
     object ADODtStPersonaEmisoridpersona: TAutoIncField
       FieldName = 'idpersona'

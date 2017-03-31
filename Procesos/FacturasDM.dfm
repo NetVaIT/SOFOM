@@ -585,7 +585,7 @@ inherited dmFacturas: TdmFacturas
         Value = Null
       end>
     Left = 496
-    Top = 88
+    Top = 80
     object ADODtStBuscaFolioSerieIdCFDITipoDocumento: TAutoIncField
       FieldName = 'IdCFDITipoDocumento'
       ReadOnly = True

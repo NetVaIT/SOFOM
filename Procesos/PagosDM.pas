@@ -346,6 +346,35 @@ type
     ADODtStCXCPendientesIdCuentaXCobrarBase: TIntegerField;
     ADODtStCXCPendientesIdCFDI: TLargeintField;
     ADODtStCXCPendientesEsMoratorio: TBooleanField;
+    ADODSCXCPendAnterior: TADODataSet;
+    AutoIncField6: TAutoIncField;
+    IntegerField14: TIntegerField;
+    IntegerField15: TIntegerField;
+    IntegerField16: TIntegerField;
+    IntegerField17: TIntegerField;
+    DateTimeField3: TDateTimeField;
+    FMTBCDField11: TFMTBCDField;
+    FMTBCDField12: TFMTBCDField;
+    FMTBCDField13: TFMTBCDField;
+    FMTBCDField14: TFMTBCDField;
+    FMTBCDField15: TFMTBCDField;
+    IntegerField18: TIntegerField;
+    FMTBCDField16: TFMTBCDField;
+    FMTBCDField17: TFMTBCDField;
+    FMTBCDField18: TFMTBCDField;
+    IntegerField19: TIntegerField;
+    LargeintField4: TLargeintField;
+    BooleanField1: TBooleanField;
+    ADODtStAnexoMoratorios: TADODataSet;
+    ADODtStAnexoMoratoriosIdAnexoAmortizacion: TIntegerField;
+    ADODtStAnexoMoratoriosIdAnexoMoratorioEstatus: TIntegerField;
+    ADODtStAnexoMoratoriosIdCuentaXCobrar: TIntegerField;
+    ADODtStAnexoMoratoriosFecha: TDateTimeField;
+    ADODtStAnexoMoratoriosImporteBase: TFMTBCDField;
+    ADODtStAnexoMoratoriosImporte: TFMTBCDField;
+    ADODtStAnexoMoratoriosDescuento: TFMTBCDField;
+    ADODtStAnexoMoratoriosImpuesto: TFMTBCDField;
+    ADODtStAnexoMoratoriosImporteAplicado: TFMTBCDField;
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsMasterAfterPost(DataSet: TDataSet);
     procedure adodsMasterBeforePost(DataSet: TDataSet);
@@ -1275,6 +1304,8 @@ begin
    TFrmConPagos(gGridForm).DSDetalleMostrar.DataSet:=ADODtStDetalleCXCMostrar;
    TFrmConPagos(gGridForm).DSAplicacion.DataSet :=ADODtStAplicacionesPagos;
    // hasta Agregado Feb 16/17
+   TFrmConPagos(gGridForm).DSMoratoriosDet.DataSet :=ADODtStAnexoMoratorios; //Mar 31/17
+
  //  TfrmFacturasGrid(gGridForm).ActGenerarCFDI := actProcesaFactura;  //Nov29/16
 end;
 

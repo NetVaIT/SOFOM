@@ -69,6 +69,10 @@ inherited dmAplicacionesConsulta: TdmAplicacionesConsulta
       Size = 100
     end
   end
+  inherited adodsUpdate: TADODataSet
+    Left = 328
+    Top = 8
+  end
   object ADOQryAuxiliar: TADOQuery
     Connection = _dmConection.ADOConnection
     Parameters = <>

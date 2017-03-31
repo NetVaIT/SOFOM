@@ -18,7 +18,7 @@ inherited dmAbonarCapital: TdmAbonarCapital
       'WHERE IdAnexo = :IdAnexo'
       '')
     Left = 216
-    Top = 80
+    Top = 72
     object adoqAnexoSaldoInsoluto: TFMTBCDField
       FieldName = 'SaldoInsoluto'
       Precision = 18
@@ -74,7 +74,6 @@ inherited dmAbonarCapital: TdmAbonarCapital
     Top = 136
   end
   object adoqAnexosSel: TADOQuery
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     Parameters = <>

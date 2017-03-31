@@ -250,7 +250,10 @@ inherited dmPagos: TdmPagos
       'Select cxc.*, CI.SaldoDocumento, Ci.SaldoFactoraje as SaldoFacto' +
       'rajeCFDI'#13#10' from CuentasXCobrar CXC  '#13#10'left Join CFDI CI on CI.Id' +
       'CFDI= CXC.IdCFDI where '#13#10' Saldo >0 and IDPersona=:IdPersonaClien' +
-      'te '#13#10'and IdCuentaXCobrarEstatus=0 and CXC.IDAnexo=:IdAnexo'#13#10
+      'te '#13#10'and ((IdCuentaXCobrarEstatus=0 and  ESMoratorio=0)'#13#10'or( Esm' +
+      'oratorio=1))-- IdCuentaXCobrarEstatus=-1 and puede que esten fac' +
+      'turadas'#13#10' and CXC.IDAnexo=:IdAnexo'#13#10'order by CXC.idanexosamortiz' +
+      'aciones,EsMoratorio DEsc, CXC.Fecha'
     DataSource = DSMaster
     IndexFieldNames = 'IdPersona;IdAnexo'
     MasterFields = 'IdPersonaCliente;IdAnexo'
@@ -375,8 +378,8 @@ inherited dmPagos: TdmPagos
         Size = 4
         Value = 8
       end>
-    Left = 628
-    Top = 235
+    Left = 636
+    Top = 251
     object ADODtStCxCDetallePendIdCuentaXCobrar: TIntegerField
       FieldName = 'IdCuentaXCobrar'
     end
@@ -513,8 +516,8 @@ inherited dmPagos: TdmPagos
   end
   object DSCXCPendientes: TDataSource
     DataSet = ADODtStCXCPendientes
-    Left = 492
-    Top = 240
+    Left = 500
+    Top = 248
   end
   object ADODtstAplicacionesInternas: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -605,7 +608,7 @@ inherited dmPagos: TdmPagos
         Size = 4
         Value = Null
       end>
-    Left = 492
+    Left = 500
     Top = 315
     object ADODtStSaldoPrioridad1InteresMasIVA: TFMTBCDField
       FieldName = 'InteresMasIVA'
@@ -841,7 +844,7 @@ inherited dmPagos: TdmPagos
         Size = 4
         Value = Null
       end>
-    Left = 796
+    Left = 868
     Top = 235
     object IntegerField6: TIntegerField
       FieldName = 'IdCuentaXCobrar'
@@ -1778,6 +1781,182 @@ inherited dmPagos: TdmPagos
     end
     object IntegerField13: TIntegerField
       FieldName = 'IdPersona'
+    end
+  end
+  object ADODSCXCPendAnterior: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'Select cxc.*, CI.SaldoDocumento, Ci.SaldoFactoraje as SaldoFacto' +
+      'rajeCFDI'#13#10' from CuentasXCobrar CXC  '#13#10'left Join CFDI CI on CI.Id' +
+      'CFDI= CXC.IdCFDI where '#13#10' Saldo >0 and IDPersona=:IdPersonaClien' +
+      'te '#13#10'and IdCuentaXCobrarEstatus=0 and CXC.IDAnexo=:IdAnexo'#13#10
+    DataSource = DSMaster
+    IndexFieldNames = 'IdPersona;IdAnexo'
+    MasterFields = 'IdPersonaCliente;IdAnexo'
+    Parameters = <
+      item
+        Name = 'IdPersonaCliente'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end
+      item
+        Name = 'IdAnexo'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 380
+    Top = 299
+    object AutoIncField6: TAutoIncField
+      DisplayLabel = 'No.CuentaXCobrar'
+      FieldName = 'IdCuentaXCobrar'
+      ReadOnly = True
+    end
+    object IntegerField14: TIntegerField
+      FieldName = 'IdCuentaXCobrarEstatus'
+    end
+    object IntegerField15: TIntegerField
+      FieldName = 'IdPersona'
+    end
+    object IntegerField16: TIntegerField
+      FieldName = 'IdAnexosAmortizaciones'
+    end
+    object IntegerField17: TIntegerField
+      FieldName = 'IdAnexo'
+    end
+    object DateTimeField3: TDateTimeField
+      FieldName = 'Fecha'
+    end
+    object FMTBCDField11: TFMTBCDField
+      FieldName = 'Importe'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object FMTBCDField12: TFMTBCDField
+      FieldName = 'Impuesto'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object FMTBCDField13: TFMTBCDField
+      FieldName = 'Interes'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object FMTBCDField14: TFMTBCDField
+      FieldName = 'Total'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object FMTBCDField15: TFMTBCDField
+      FieldName = 'Saldo'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object IntegerField18: TIntegerField
+      FieldName = 'IdEstadoCuenta'
+    end
+    object FMTBCDField16: TFMTBCDField
+      FieldName = 'SaldoFactoraje'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object FMTBCDField17: TFMTBCDField
+      FieldName = 'SaldoDocumento'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object FMTBCDField18: TFMTBCDField
+      FieldName = 'SaldoFactorajeCFDI'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object IntegerField19: TIntegerField
+      FieldName = 'IdCuentaXCobrarBase'
+    end
+    object LargeintField4: TLargeintField
+      FieldName = 'IdCFDI'
+    end
+    object BooleanField1: TBooleanField
+      FieldName = 'EsMoratorio'
+    end
+  end
+  object ADODtStAnexoMoratorios: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdAnexoAmortizacion, IdAnexoMoratorioEstatus, '#13#10'IdCuentaX' +
+      'Cobrar, Fecha, ImporteBase, Importe, Descuento,'#13#10' Impuesto, Impo' +
+      'rteAplicado from AnexosMoratorios'#13#10'Where IdCuentaXCobrar=:IdCuen' +
+      'taXCobrar'
+    DataSource = DSCXCPendientes
+    IndexFieldNames = 'IdCuentaXCobrar'
+    MasterFields = 'IdCuentaXCobrar'
+    Parameters = <
+      item
+        Name = 'IdCuentaXCobrar'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 492
+    Top = 459
+    object ADODtStAnexoMoratoriosIdAnexoAmortizacion: TIntegerField
+      FieldName = 'IdAnexoAmortizacion'
+    end
+    object ADODtStAnexoMoratoriosIdAnexoMoratorioEstatus: TIntegerField
+      FieldName = 'IdAnexoMoratorioEstatus'
+    end
+    object ADODtStAnexoMoratoriosIdCuentaXCobrar: TIntegerField
+      FieldName = 'IdCuentaXCobrar'
+    end
+    object ADODtStAnexoMoratoriosFecha: TDateTimeField
+      FieldName = 'Fecha'
+    end
+    object ADODtStAnexoMoratoriosImporteBase: TFMTBCDField
+      FieldName = 'ImporteBase'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStAnexoMoratoriosImporte: TFMTBCDField
+      FieldName = 'Importe'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStAnexoMoratoriosDescuento: TFMTBCDField
+      FieldName = 'Descuento'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStAnexoMoratoriosImpuesto: TFMTBCDField
+      FieldName = 'Impuesto'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStAnexoMoratoriosImporteAplicado: TFMTBCDField
+      FieldName = 'ImporteAplicado'
+      currency = True
+      Precision = 18
+      Size = 6
     end
   end
 end

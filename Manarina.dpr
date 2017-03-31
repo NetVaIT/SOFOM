@@ -202,7 +202,8 @@ uses
   AnexosMoratoriosDM in 'Procesos\AnexosMoratoriosDM.pas' {dmAnexosMoratorios: TDataModule},
   AnexosMoratoriosForm in 'Procesos\AnexosMoratoriosForm.pas' {frmAnexosMoratorios},
   AnexosMoratoriosEdit in 'Procesos\AnexosMoratoriosEdit.pas' {frmAnexosMoratoriosEdit},
-  CuentasXCobrarMoratoriosForm in 'Procesos\CuentasXCobrarMoratoriosForm.pas' {frmConCXCMoratorios};
+  CuentasXCobrarMoratoriosForm in 'Procesos\CuentasXCobrarMoratoriosForm.pas' {frmConCXCMoratorios},
+  AnexoMoratoriosCon in 'Procesos\AnexoMoratoriosCon.pas' {FrmAnexoMoratoriosDetalle};
 
 {$R *.res}
 

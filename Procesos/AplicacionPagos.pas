@@ -94,6 +94,8 @@ type
     tvMasterIdCuentaXCobrarBase: TcxGridDBColumn;
     tvMasterIdCFDI: TcxGridDBColumn;
     tvMasterEsMoratorio: TcxGridDBColumn;
+    SpdBtnMostrarDetalleMora: TSpeedButton;
+    DSMoratoriosDet: TDataSource;
     procedure BtBtnAplicarClick(Sender: TObject);
     procedure DSAplicacionStateChange(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -102,6 +104,8 @@ type
     procedure tvMasterCellDblClick(Sender: TcxCustomGridTableView;
       ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
       AShift: TShiftState; var AHandled: Boolean);
+    procedure SpdBtnMostrarDetalleMoraClick(Sender: TObject);
+    procedure dsConCXCPendientesDataChange(Sender: TObject; Field: TField);
   private
     FActFacturaMora: TBasicAction;
     function Quitasignos(TextoPesos: String): String;
@@ -124,7 +128,7 @@ implementation
 
 {$R *.dfm}
 
-uses PagosDM, _ConectionDmod;
+uses PagosDM, _ConectionDmod, AnexoMoratoriosCon;
 
 procedure TFrmAplicacionPago.BtBtnAgregarClick(Sender: TObject);
 begin
@@ -157,7 +161,7 @@ begin
 
  //VErificar sai la cuentaX cobrar es la más vieja                                                                                                        //Mar 9/17
   if EsCuentaXCobrarAntigua(dsConCXCpendientes.DataSet.FieldByName('IdCuentaXCobrar').AsInteger,dsPago.DataSet.FieldByName('IDPersonaCliente').asinteger, dsPago.DataSet.FieldByName('IDAnexo').asinteger)
-       and CXCFacturada(dsConCXCpendientes.DataSet.FieldByName('IdCuentaXCobrar').AsInteger)   then
+       and CXCFacturada(dsConCXCpendientes.DataSet.FieldByName('IdCuentaXCobrar').AsInteger)   then //Verificar si sobra esta validacion ya que el filtro se hace por prefacturadas para CXC normales
   begin
     //Verificar si tendra moratorios para mandar facturar moratorios
     //Moratorios no aplica para FActoraje
@@ -399,6 +403,20 @@ begin
 
 end;
 
+procedure TFrmAplicacionPago.SpdBtnMostrarDetalleMoraClick(Sender: TObject);
+var
+  FrmAnexoMoratoriosDetalle:TFrmAnexoMoratoriosDetalle;   //Mar 31/17
+
+begin
+  FrmAnexoMoratoriosDetalle:=TFrmAnexoMoratoriosDetalle.Create(self);
+  FrmAnexoMoratoriosDetalle.DataSource.dataset:=dsMoratoriosDet.dataset;
+  FrmAnexoMoratoriosDetalle.DataSource.dataset.Open;
+  FrmAnexoMoratoriosDetalle.PnlClose.Visible:=True;
+  FrmAnexoMoratoriosDetalle.ShowModal;
+  FrmAnexoMoratoriosDetalle.Free;
+
+end;
+
 procedure TFrmAplicacionPago.tvMasterCellDblClick(
   Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo;
   AButton: TMouseButton; AShift: TShiftState; var AHandled: Boolean);
@@ -428,6 +446,12 @@ procedure TFrmAplicacionPago.DSAplicacionStateChange(Sender: TObject);
 begin
   if Assigned(dsAplicacion.DataSet) then
     BtBtnAplicar.Enabled:=(dsAplicacion.DataSet.State=dsInsert) and (not dsConCXCpendientes.DataSet.Eof);
+end;
+
+procedure TFrmAplicacionPago.dsConCXCPendientesDataChange(Sender: TObject;
+  Field: TField);
+begin
+  SpdBtnMostrarDetalleMora.Enabled:= dsConCXCPendientes.DataSet.FieldByName('EsMoratorio').AsBoolean; //Mar 31/17
 end;
 
 procedure TFrmAplicacionPago.FormCloseQuery(Sender: TObject;

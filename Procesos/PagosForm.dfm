@@ -4,6 +4,7 @@ inherited FrmConPagos: TFrmConPagos
   ClientHeight = 428
   ClientWidth = 1101
   ExplicitWidth = 1107
+  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -29,13 +30,13 @@ inherited FrmConPagos: TFrmConPagos
     Width = 1101
     Height = 180
     ExplicitTop = 75
-    ExplicitWidth = 1107
-    ExplicitHeight = 209
+    ExplicitWidth = 1101
+    ExplicitHeight = 180
     inherited cxGrid: TcxGrid
       Width = 1101
       Height = 180
-      ExplicitWidth = 1107
-      ExplicitHeight = 209
+      ExplicitWidth = 1101
+      ExplicitHeight = 180
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdPago: TcxGridDBColumn
           DataBinding.FieldName = 'IdPago'
@@ -118,28 +119,28 @@ inherited FrmConPagos: TFrmConPagos
     Top = 346
     Width = 1101
     ExplicitTop = 346
-    ExplicitWidth = 1107
+    ExplicitWidth = 1101
   end
   inherited pnlDetail2: TPanel
     Top = 302
     Width = 1101
     ExplicitTop = 302
-    ExplicitWidth = 1107
+    ExplicitWidth = 1101
   end
   inherited pnlDetail1: TPanel
     Top = 258
     Width = 1101
     ExplicitTop = 258
-    ExplicitWidth = 1107
+    ExplicitWidth = 1101
   end
   inherited pnlClose: TPanel
     Top = 387
     Width = 1101
     ExplicitTop = 387
-    ExplicitWidth = 1107
+    ExplicitWidth = 1101
     inherited btnClose: TButton
       Left = 1016
-      ExplicitLeft = 1022
+      ExplicitLeft = 1016
     end
   end
   object PnlBusqueda: TPanel [8]
@@ -150,7 +151,6 @@ inherited FrmConPagos: TFrmConPagos
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 9
-    ExplicitWidth = 1107
     DesignSize = (
       1101
       44)
@@ -164,7 +164,6 @@ inherited FrmConPagos: TFrmConPagos
       Caption = 'Cerrar'
       TabOrder = 0
       OnClick = btnCloseClick
-      ExplicitLeft = 1024
     end
     object Panel1: TPanel
       Left = 0
@@ -200,7 +199,7 @@ inherited FrmConPagos: TFrmConPagos
       BevelOuter = bvNone
       ParentBackground = False
       TabOrder = 2
-      ExplicitWidth = 908
+      ExplicitTop = -6
       object Label1: TLabel
         Left = 21
         Top = 4
@@ -1103,7 +1102,6 @@ inherited FrmConPagos: TFrmConPagos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42712.575441516200000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end
@@ -1136,5 +1134,10 @@ inherited FrmConPagos: TFrmConPagos
     DataSet = dmPagos.ADODtStAnexoSeleccion
     Left = 640
     Top = 176
+  end
+  object DSMoratoriosDet: TDataSource
+    DataSet = dmPagos.ADODtStAnexoMoratorios
+    Left = 908
+    Top = 13
   end
 end
