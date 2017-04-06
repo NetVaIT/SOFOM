@@ -10,6 +10,7 @@ uses
 resourcestring
   strAllowGenAnexo = '¿Deseas crear el anexo en base a la cotización %s?';
   strGenPagoIncial = '¿Deseas crear los pagos inciales de este anexo?';
+  strNeedProduct   = 'Necesita agregar uno o más productos al anexo';
 
 type
   TdmContratos = class(T_dmStandar)
@@ -110,7 +111,6 @@ type
     adodsAmortizacionesImpactoISR: TFMTBCDField;
     actCrearAnexo: TAction;
     adodsCotizaionesSel: TADODataSet;
-    adodsCotizaionesSelIdCotizacion: TAutoIncField;
     adodsCotizaionesSelIdentificador: TStringField;
     adodsCotizaionesSelDescripcion: TStringField;
     adodsCotizaionesSelMontoFinanciar: TFMTBCDField;
@@ -118,7 +118,6 @@ type
     adodsCotizaionesSelPlazo: TIntegerField;
     adodsCotizaionesSelPagoMensual: TFMTBCDField;
     adospGenAnexoDeCotizacion: TADOStoredProc;
-    adodsAnexosIdCotizacion: TIntegerField;
     actCrearPagoInicial: TAction;
     adopSetCXCPorAnexo: TADOStoredProc;
     adodsAnexosPagoInicialCreado: TBooleanField;
@@ -144,6 +143,8 @@ type
     adodsAnexosTasaMoratoriaAnual: TBCDField;
     actMoratorios: TAction;
     dsAmortizaciones: TDataSource;
+    adodsAnexosIdCotizacionDetalle: TIntegerField;
+    adodsCotizaionesSelIdCotizacionDetalle: TAutoIncField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsAnexosPrecioMonedaChange(Sender: TField);
     procedure adodsAnexosNewRecord(DataSet: TDataSet);
@@ -224,25 +225,37 @@ begin
 end;
 
 procedure TdmContratos.actGenerarExecute(Sender: TObject);
+var
+  dmProductos: TdmProductos;
 begin
   inherited;
-  // Generar Credito
-  adodsCreditos.Insert;
-  adodsCreditos.Post;
-  // Generar Amortizaciones
-  dmAmortizaciones.TipoContrato := TipoContrato;
-  if dmAmortizaciones.GenAnexosAmortizaciones(adodsCreditosIdAnexoCredito.Value,
-  adodsAnexosFecha.Value, adodsCreditosFechaCorte.Value, adodsCreditosFechaVencimiento.Value,
-  adodsCreditosTasaAnual.Value, adodsCreditosPlazo.Value,
-  adodsCreditosMontoFiananciar.AsExtended, adodsCreditosValorResidual.AsExtended,
-  adodsCreditosImpactoISR.AsExtended) then
-  begin
-    adodsAmortizaciones.Close;
-    adodsAmortizaciones.Open;
+  dmProductos := TdmProductos.Create(Self);
+  try
+    if dmProductos.GetCountProductos(IdAnexo) = 0 then
+      MessageDlg(strNeedProduct, mtInformation, [mbOK], 0)
+    else
+    begin
+      // Generar Credito
+      adodsCreditos.Insert;
+      adodsCreditos.Post;
+      // Generar Amortizaciones
+      dmAmortizaciones.TipoContrato := TipoContrato;
+      if dmAmortizaciones.GenAnexosAmortizaciones(adodsCreditosIdAnexoCredito.Value,
+      adodsAnexosFecha.Value, adodsCreditosFechaCorte.Value, adodsCreditosFechaVencimiento.Value,
+      adodsCreditosTasaAnual.Value, adodsCreditosPlazo.Value,
+      adodsCreditosMontoFiananciar.AsExtended, adodsCreditosValorResidual.AsExtended,
+      adodsCreditosImpactoISR.AsExtended) then
+      begin
+        adodsAmortizaciones.Close;
+        adodsAmortizaciones.Open;
+      end;
+      // Generar Pago Inicial
+      if CrearPagoInicial then
+        RefreshADODS(adodsAnexos, adodsAnexosIdAnexo);
+    end;
+  finally
+    dmProductos.Free;
   end;
-  // Generar Pago Inicial
-  if CrearPagoInicial then
-    RefreshADODS(adodsAnexos, adodsAnexosIdAnexo);
 end;
 
 procedure TdmContratos.actGenerarUpdate(Sender: TObject);
@@ -291,7 +304,7 @@ end;
 procedure TdmContratos.actCrearAnexoExecute(Sender: TObject);
 var
   frmCotizacionesSeleccionar: TfrmCotizacionesSeleccionar;
-  IdCotizacion: Integer;
+  IdCotizacionDetalle: Integer;
   IdAnexo: Integer;
   Msg: String;
 begin
@@ -306,17 +319,17 @@ begin
     adodsCotizaionesSel.Parameters.ParamByName('IdContratoTipo').Value:= adodsMasterIdContratoTipo.Value;
     adodsCotizaionesSel.Open;
     frmCotizacionesSeleccionar.ShowModal;
-    IdCotizacion := adodsCotizaionesSelIdCotizacion.Value;
+    IdCotizacionDetalle := adodsCotizaionesSelIdCotizacionDetalle.Value;
     Msg := Format(strAllowGenAnexo, [adodsCotizaionesSelIdentificador.Value]);
   finally
     adodsCotizaionesSel.Close;
     frmCotizacionesSeleccionar.Free;
   end;
   // Genera Anexo en base a la cotizacion seleccionada
-  if IdCotizacion > 0 then
+  if IdCotizacionDetalle > 0 then
     if MessageDlg(Msg, mtConfirmation, mbYesNo, 0) = mrYes then
     begin
-      adospGenAnexoDeCotizacion.Parameters.ParamByName('@IdCotizacion').Value:= IdCotizacion;
+      adospGenAnexoDeCotizacion.Parameters.ParamByName('@IdCotizacionDetalle').Value:= IdCotizacionDetalle;
       adospGenAnexoDeCotizacion.Parameters.ParamByName('@IdContrato').Value:= adodsMasterIdContrato.Value;
       adospGenAnexoDeCotizacion.ExecProc;
       IdAnexo := adospGenAnexoDeCotizacion.Parameters.ParamByName('@IdAnexo').Value;

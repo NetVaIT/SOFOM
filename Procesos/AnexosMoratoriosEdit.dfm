@@ -7,11 +7,12 @@ inherited frmAnexosMoratoriosEdit: TfrmAnexosMoratoriosEdit
   TextHeight = 13
   inherited pcMain: TcxPageControl
     Width = 220
+    ExplicitWidth = 220
     ClientRectRight = 218
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 2
       ExplicitTop = 28
-      ExplicitWidth = 434
+      ExplicitWidth = 216
       ExplicitHeight = 295
       object Label1: TLabel
         Left = 40
@@ -75,6 +76,7 @@ inherited frmAnexosMoratoriosEdit: TfrmAnexosMoratoriosEdit
         Top = 80
         DataBinding.DataField = 'Fecha'
         DataBinding.DataSource = DataSource
+        Enabled = False
         TabOrder = 1
         Width = 121
       end
@@ -83,6 +85,7 @@ inherited frmAnexosMoratoriosEdit: TfrmAnexosMoratoriosEdit
         Top = 120
         DataBinding.DataField = 'ImporteBase'
         DataBinding.DataSource = DataSource
+        Enabled = False
         TabOrder = 2
         Width = 121
       end
@@ -91,6 +94,7 @@ inherited frmAnexosMoratoriosEdit: TfrmAnexosMoratoriosEdit
         Top = 160
         DataBinding.DataField = 'Importe'
         DataBinding.DataSource = DataSource
+        Enabled = False
         TabOrder = 3
         Width = 121
       end
@@ -104,9 +108,10 @@ inherited frmAnexosMoratoriosEdit: TfrmAnexosMoratoriosEdit
       end
       object cxDBTextEdit4: TcxDBTextEdit
         Left = 40
-        Top = 240
+        Top = 243
         DataBinding.DataField = 'Impuesto'
         DataBinding.DataSource = DataSource
+        Enabled = False
         TabOrder = 5
         Width = 121
       end
@@ -114,11 +119,14 @@ inherited frmAnexosMoratoriosEdit: TfrmAnexosMoratoriosEdit
   end
   inherited pmlMain: TPanel
     Width = 220
+    ExplicitWidth = 220
     inherited btnCancel: TButton
       Left = 138
+      ExplicitLeft = 138
     end
     inherited btnOk: TButton
       Left = 57
+      ExplicitLeft = 57
     end
   end
   inherited cxImageList: TcxImageList

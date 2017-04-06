@@ -1,4 +1,4 @@
-unit CotizacionesForm;
+unit CotizacionesDetalleForm;
 
 interface
 
@@ -23,66 +23,85 @@ uses
   dxPSPDFExportCore, dxPSPDFExport, cxDrawTextUtils, dxPSPrVwStd, dxPSPrVwAdv,
   dxPSPrVwRibbon, dxPScxPageControlProducer, dxPScxGridLnk,
   dxPScxGridLayoutViewLnk, dxPScxEditorProducers, dxPScxExtEditorProducers,
-  dxSkinsdxRibbonPainter, cxGridCustomTableView, cxGridTableView,
-  cxGridDBTableView, dxPSCore, dxPScxCommon, dxBar, Vcl.ImgList,
+  dxSkinsdxRibbonPainter, dxPSCore, dxPScxCommon, dxBar, Vcl.ImgList,
   cxGridCustomPopupMenu, cxGridPopupMenu, cxClasses, Vcl.StdActns, Vcl.DBActns,
   System.Actions, Vcl.ActnList, Vcl.StdCtrls, cxGridLevel, cxGridCustomView,
-  cxGrid, Vcl.ExtCtrls;
+  cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
+  Vcl.ExtCtrls;
 
 type
-  TfrmCotizaciones = class(T_frmGrid)
+  TfrmCotizacionesDetalle = class(T_frmGrid)
+    tvMasterIdCotizacionDetalle: TcxGridDBColumn;
     tvMasterIdCotizacion: TcxGridDBColumn;
-    tvMasterIdPersona: TcxGridDBColumn;
-    tvMasterIdContratoTipo: TcxGridDBColumn;
-    tvMasterIdCotizacionEstatus: TcxGridDBColumn;
+    tvMasterIdMoneda: TcxGridDBColumn;
+    tvMasterIdCotizacionDetalleEstatus: TcxGridDBColumn;
     tvMasterIdUsuario: TcxGridDBColumn;
-    tvMasterIdentificador: TcxGridDBColumn;
-    tvMasterDescripcion: TcxGridDBColumn;
-    tvMasterElaboracion: TcxGridDBColumn;
-    tvMasterVigencia: TcxGridDBColumn;
-    tvMasterCliente: TcxGridDBColumn;
-    tvMasterTipoContrato: TcxGridDBColumn;
     tvMasterEstatus: TcxGridDBColumn;
+    tvMasterPrecioMoneda: TcxGridDBColumn;
+    tvMasterMoneda: TcxGridDBColumn;
+    tvMasterTipoCambio: TcxGridDBColumn;
+    tvMasterPrecio: TcxGridDBColumn;
+    tvMasterImpuesto: TcxGridDBColumn;
+    tvMasterPrecioTotal: TcxGridDBColumn;
+    tvMasterEnganchePorcentaje: TcxGridDBColumn;
+    tvMasterEnganche: TcxGridDBColumn;
+    tvMasterComisionPorcentaje: TcxGridDBColumn;
+    tvMasterComision: TcxGridDBColumn;
+    tvMasterComisionImpuesto: TcxGridDBColumn;
+    tvMasterGastos: TcxGridDBColumn;
+    tvMasterGastosImpuestos: TcxGridDBColumn;
+    tvMasterDespositosNumero: TcxGridDBColumn;
+    tvMasterDepositos: TcxGridDBColumn;
+    tvMasterPagoIncial: TcxGridDBColumn;
+    tvMasterOpcionCompraPorcentaje: TcxGridDBColumn;
+    tvMasterOpcionCompra: TcxGridDBColumn;
+    tvMasterValorResidualPorcentaje: TcxGridDBColumn;
+    tvMasterValorResidual: TcxGridDBColumn;
+    tvMasterMontoFinanciar: TcxGridDBColumn;
+    tvMasterTasaAnual: TcxGridDBColumn;
+    tvMasterPlazo: TcxGridDBColumn;
+    tvMasterPagoMensual: TcxGridDBColumn;
+    tvMasterImpactoISR: TcxGridDBColumn;
+    tvMasterRegistro: TcxGridDBColumn;
     tvMasterUsuario: TcxGridDBColumn;
     dxbbAmortizaciones: TdxBarButton;
-    dxbbCambiarEstatus: TdxBarButton;
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
+    FactGetTipoCambio: TBasicAction;
     FactAmortizaciones: TBasicAction;
-    FactCambiarEstatus: TBasicAction;
     procedure SetactAmortizaciones(const Value: TBasicAction);
-    procedure SetactCambiarEstatus(const Value: TBasicAction);
   public
     { Public declarations }
     property actAmortizaciones: TBasicAction read FactAmortizaciones write SetactAmortizaciones;
-    property actCambiarEstatus: TBasicAction read FactCambiarEstatus write SetactCambiarEstatus;
+//    property actCambiarEstatus: TBasicAction read FactCambiarEstatus write SetactCambiarEstatus;
+    property actGetTipoCambio: TBasicAction read FactGetTipoCambio write FactGetTipoCambio;
   end;
 
 implementation
 
 {$R *.dfm}
 
-uses CotizacionesDM, CotizacionesEdit;
+uses CotizacionesDM, CotizacionesDetalleEdit;
 
-{ TfrmCotizaciones }
-
-procedure TfrmCotizaciones.FormCreate(Sender: TObject);
+procedure TfrmCotizacionesDetalle.FormCreate(Sender: TObject);
 begin
   inherited;
-  gEditForm:= TfrmCotizacionesEdit.Create(Self);
+  gEditForm := TfrmCotizacionesDetalleEdit.Create(Self);
 end;
 
-procedure TfrmCotizaciones.SetactAmortizaciones(const Value: TBasicAction);
+procedure TfrmCotizacionesDetalle.FormShow(Sender: TObject);
+begin
+  inherited;
+  TfrmCotizacionesDetalleEdit(gEditForm).actGetTipoCambio := actGetTipoCambio;
+end;
+
+procedure TfrmCotizacionesDetalle.SetactAmortizaciones(
+  const Value: TBasicAction);
 begin
   FactAmortizaciones := Value;
   dxbbAmortizaciones.Action := Value;
-end;
-
-procedure TfrmCotizaciones.SetactCambiarEstatus(const Value: TBasicAction);
-begin
-  FactCambiarEstatus := Value;
-  dxbbCambiarEstatus.Action := Value;
 end;
 
 end.

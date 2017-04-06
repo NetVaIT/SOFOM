@@ -15,87 +15,81 @@ type
     adodsMasterIdCotizacion: TAutoIncField;
     adodsMasterIdPersona: TIntegerField;
     adodsMasterIdContratoTipo: TIntegerField;
-    adodsMasterIdMoneda: TIntegerField;
     adodsMasterIdCotizacionEstatus: TIntegerField;
     adodsMasterIdUsuario: TIntegerField;
     adodsMasterIdentificador: TStringField;
     adodsMasterDescripcion: TStringField;
     adodsMasterElaboracion: TDateTimeField;
     adodsMasterVigencia: TDateTimeField;
-    adodsMasterPrecioMoneda: TFMTBCDField;
-    adodsMasterTipoCambio: TFMTBCDField;
-    adodsMasterPrecio: TFMTBCDField;
-    adodsMasterImpuesto: TFMTBCDField;
-    adodsMasterPrecioTotal: TFMTBCDField;
-    adodsMasterEnganchePorcentaje: TFMTBCDField;
-    adodsMasterEnganche: TFMTBCDField;
-    adodsMasterComisionPorcentaje: TBCDField;
-    adodsMasterComision: TFMTBCDField;
-    adodsMasterComisionImpuesto: TFMTBCDField;
-    adodsMasterGastos: TFMTBCDField;
-    adodsMasterGastosImpuestos: TFMTBCDField;
-    adodsMasterDespositosNumero: TIntegerField;
-    adodsMasterDepositos: TFMTBCDField;
-    adodsMasterPagoIncial: TFMTBCDField;
-    adodsMasterOpcionCompraPorcentaje: TFMTBCDField;
-    adodsMasterOpcionCompra: TFMTBCDField;
-    adodsMasterValorResidualPorcentaje: TFMTBCDField;
-    adodsMasterValorResidual: TFMTBCDField;
-    adodsMasterMontoFinanciar: TFMTBCDField;
-    adodsMasterTasaAnual: TBCDField;
-    adodsMasterPlazo: TIntegerField;
-    adodsMasterPagoMensual: TFMTBCDField;
     adodsPersonas: TADODataSet;
     adodsContratosTipos: TADODataSet;
     adodsMonedas: TADODataSet;
     adodsUsuario: TADODataSet;
     adodsMasterCliente: TStringField;
     adodsMasterTipoContrato: TStringField;
-    adodsMasterMoneda: TStringField;
-    adodsMasterImpactoISR: TFMTBCDField;
     daMaster: TDataSource;
-    adodsCreditos: TADODataSet;
     adodsCotizacionesEstatus: TADODataSet;
-    adodsCreditosIdCotizacionCredito: TAutoIncField;
-    adodsCreditosIdCotizacion: TIntegerField;
-    adodsCreditosIdCotizacionCreditoEstatus: TIntegerField;
-    adodsCreditosIdUsuario: TIntegerField;
-    adodsCreditosFecha: TDateTimeField;
-    adodsCreditosMontoFinanciar: TFMTBCDField;
-    adodsCreditosValorResidual: TFMTBCDField;
-    adodsCreditosImpactoISR: TFMTBCDField;
-    adodsCreditosTasaAnual: TBCDField;
-    adodsCreditosPlazo: TIntegerField;
-    adodsCreditosPagoMensual: TFMTBCDField;
-    adodsCreditosEstatus: TADODataSet;
     adodsMasterEstatus: TStringField;
-    adodsUsuariosC: TADODataSet;
     adodsMasterUsuario: TStringField;
-    adodsCreditosEstatus2: TStringField;
-    adodsCreditosUsuario: TStringField;
     actAmortizaciones: TAction;
     actCambiarEstatus: TAction;
     adospUpdCotizacionesEstatus: TADOStoredProc;
     actAmortizacionesC: TAction;
     actGetTipoCambio: TAction;
+    adodsDetalle: TADODataSet;
+    adodsDetalleIdCotizacionDetalle: TAutoIncField;
+    adodsDetalleIdCotizacion: TIntegerField;
+    adodsDetalleIdMoneda: TIntegerField;
+    adodsDetalleIdCotizacionDetalleEstatus: TIntegerField;
+    adodsDetalleIdUsuario: TIntegerField;
+    adodsDetallePrecioMoneda: TFMTBCDField;
+    adodsDetalleMoneda: TStringField;
+    adodsDetalleTipoCambio: TFMTBCDField;
+    adodsDetallePrecio: TFMTBCDField;
+    adodsDetalleImpuesto: TFMTBCDField;
+    adodsDetallePrecioTotal: TFMTBCDField;
+    adodsDetalleEnganchePorcentaje: TFMTBCDField;
+    adodsDetalleEnganche: TFMTBCDField;
+    adodsDetalleComisionPorcentaje: TBCDField;
+    adodsDetalleComision: TFMTBCDField;
+    adodsDetalleComisionImpuesto: TFMTBCDField;
+    adodsDetalleGastos: TFMTBCDField;
+    adodsDetalleGastosImpuestos: TFMTBCDField;
+    adodsDetalleDespositosNumero: TIntegerField;
+    adodsDetalleDepositos: TFMTBCDField;
+    adodsDetallePagoIncial: TFMTBCDField;
+    adodsDetalleOpcionCompraPorcentaje: TFMTBCDField;
+    adodsDetalleOpcionCompra: TFMTBCDField;
+    adodsDetalleValorResidualPorcentaje: TFMTBCDField;
+    adodsDetalleValorResidual: TFMTBCDField;
+    adodsDetalleMontoFinanciar: TFMTBCDField;
+    adodsDetalleTasaAnual: TBCDField;
+    adodsDetallePlazo: TIntegerField;
+    adodsDetallePagoMensual: TFMTBCDField;
+    adodsDetalleImpactoISR: TFMTBCDField;
+    adodsDetalleUsuario: TStringField;
+    adodsUsuariosD: TADODataSet;
+    adodsCotizacionesDetalleEstatus: TADODataSet;
+    adodsDetalleEstatus: TStringField;
+    adodsDetalleRegistro: TDateTimeField;
+    dsDetalle: TDataSource;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
-    procedure adodsMasterPrecioMonedaChange(Sender: TField);
-    procedure adodsCreditosNewRecord(DataSet: TDataSet);
-    procedure adodsCreditosMontoFinanciarChange(Sender: TField);
     procedure actAmortizacionesExecute(Sender: TObject);
     procedure actCambiarEstatusExecute(Sender: TObject);
     procedure actCambiarEstatusUpdate(Sender: TObject);
-    procedure actAmortizacionesCExecute(Sender: TObject);
     procedure actGetTipoCambioExecute(Sender: TObject);
+    procedure adodsDetalleNewRecord(DataSet: TDataSet);
+    procedure adodsDetallePrecioMonedaChange(Sender: TField);
+    procedure daMasterDataChange(Sender: TObject; Field: TField);
+    procedure dsDetalleDataChange(Sender: TObject; Field: TField);
   private
     { Private declarations }
     dmAmortizaciones: TdmAmortizaciones;
     FPaymentTime: TPaymentTime;
     procedure SetPaymentTime(const Value: TPaymentTime);
-    procedure CalcularImportes;
-    procedure CalcularImportesCredito;
+    procedure CalcularImportesDetalles;
     function GetTipoContrato: TCTipoContrato;
     function GetEstatus: TCotizacionEstatus;
     function CambiarCotizacionesEstatus: Boolean;
@@ -112,30 +106,10 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses CotizacionesForm, _ConectionDmod, CotizacionesCreditosForm, _Utils,
- ConfiguracionDM;
+uses _ConectionDmod, _Utils, CotizacionesForm, CotizacionesDetalleForm,
+ConfiguracionDM;
 
 {$R *.dfm}
-
-procedure TdmCotizaciones.actAmortizacionesCExecute(Sender: TObject);
-var
-  Amortizaciones: TdmAmortizaciones;
-begin
-  inherited;
-  Amortizaciones := TdmAmortizaciones.Create(Self);
-  try
-    Amortizaciones.TipoContrato:= TipoContrato;
-    Amortizaciones.Execute(adodsMasterElaboracion.Value,
-    adodsMasterElaboracion.Value,adodsMasterElaboracion.Value,
-    adodsCreditosTasaAnual.Value, adodsCreditosPlazo.Value,
-    adodsCreditosMontoFinanciar.AsExtended,
-    adodsCreditosValorResidual.AsExtended,
-    adodsCreditosImpactoISR.AsExtended);
-    Amortizaciones.ShowModule(nil, '');
-  finally
-    Amortizaciones.Free;
-  end;
-end;
 
 procedure TdmCotizaciones.actAmortizacionesExecute(Sender: TObject);
 var
@@ -147,10 +121,10 @@ begin
     Amortizaciones.TipoContrato:= TipoContrato;
     Amortizaciones.Execute(adodsMasterElaboracion.Value,
     adodsMasterElaboracion.Value, adodsMasterElaboracion.Value,
-    adodsmasterTasaAnual.Value, adodsmasterPlazo.Value,
-    adodsMasterMontoFinanciar.AsExtended,
-    adodsMasterValorResidual.AsExtended,
-    adodsmasterImpactoISR.AsExtended);
+    adodsDetalleTasaAnual.Value, adodsDetallePlazo.Value,
+    adodsDetalleMontoFinanciar.AsExtended,
+    adodsDetalleValorResidual.AsExtended,
+    adodsDetalleImpactoISR.AsExtended);
     Amortizaciones.ShowModule(nil, '');
   finally
     Amortizaciones.Free;
@@ -188,29 +162,31 @@ end;
 procedure TdmCotizaciones.actGetTipoCambioExecute(Sender: TObject);
 begin
   inherited;
-  if adodsMaster.State in [dsEdit,dsInsert] then
+  if adodsDetalle.State in [dsEdit,dsInsert] then
   begin
-    adodsMasterTipoCambio.Value := dmConfiguracion.GetTipoCambio(adodsMasterIdMoneda.Value)
+    adodsDetalleTipoCambio.Value := dmConfiguracion.GetTipoCambio(adodsDetalleIdMoneda.Value)
   end;
 end;
 
-procedure TdmCotizaciones.adodsCreditosMontoFinanciarChange(Sender: TField);
+procedure TdmCotizaciones.adodsDetalleNewRecord(DataSet: TDataSet);
 begin
   inherited;
-  CalcularImportesCredito;
+  adodsDetalleIdCotizacionDetalleEstatus.Value := 1; // Activo
+  adodsDetalleIdUsuario.Value := _dmConection.IdUsuario;
+  adodsDetalleRegistro.Value := Date;
+  adodsDetalleIdMoneda.Value := _MONEDAS_ID_DOLAR_USA;
+  adodsDetalleTipoCambio.Value := 19;
+  adodsDetalleEnganchePorcentaje.Value := 0;
+  adodsDetalleComisionPorcentaje.Value := 0;
+  adodsDetalleDespositosNumero.Value := 2;
+  adodsDetalleOpcionCompraPorcentaje.Value := 0;
+  adodsDetalleValorResidualPorcentaje.Value := 0;
 end;
 
-procedure TdmCotizaciones.adodsCreditosNewRecord(DataSet: TDataSet);
+procedure TdmCotizaciones.adodsDetallePrecioMonedaChange(Sender: TField);
 begin
   inherited;
-  adodsCreditosIdCotizacionCreditoEstatus.Value := 1;
-  adodsCreditosIdUsuario.Value := _dmConection.IdUsuario;
-  adodsCreditosFecha.Value := Now;
-  adodsCreditosMontoFinanciar.Value := adodsMasterMontoFinanciar.Value;
-  adodsCreditosValorResidual.Value := adodsMasterValorResidual.Value;
-  adodsCreditosImpactoISR.Value := adodsMasterImpactoISR.Value;
-  adodsCreditosTasaAnual.Value := adodsMasterTasaAnual.Value;
-  adodsCreditosPlazo.Value := adodsMasterPlazo.Value;
+  CalcularImportesDetalles;
 end;
 
 procedure TdmCotizaciones.adodsMasterNewRecord(DataSet: TDataSet);
@@ -218,53 +194,30 @@ begin
   inherited;
   adodsMasterIdCotizacionEstatus.Value := 1; // Activo
   adodsmasterIdUsuario.Value := _dmConection.IdUsuario;
-  adodsMasterIdMoneda.Value := _MONEDAS_ID_DOLAR_USA;
   adodsMasterElaboracion.Value := Date;
   adodsMasterVigencia.Value := IncDay(Date, _CONFIGURACION_DIAS_VIGENCIA);
-  adodsMasterTipoCambio.Value := 19;
-  adodsMasterEnganchePorcentaje.Value := 0;
-  adodsMasterComisionPorcentaje.Value := 0;
-  adodsMasterDespositosNumero.Value := 2;
-  adodsMasterOpcionCompraPorcentaje.Value := 0;
-  adodsMasterValorResidualPorcentaje.Value := 0;
   end;
 
-procedure TdmCotizaciones.adodsMasterPrecioMonedaChange(Sender: TField);
+procedure TdmCotizaciones.CalcularImportesDetalles;
 begin
-  inherited;
-  CalcularImportes;
-end;
-
-procedure TdmCotizaciones.CalcularImportes;
-begin
-  if adodsMaster.State in [dsInsert, dsEdit] then
+  if adodsDetalle.State in [dsInsert, dsEdit] then
   begin
-    adodsMasterPrecio.Value := adodsMasterPrecioMoneda.Value * adodsMasterTipoCambio.Value;
-    adodsMasterImpuesto.Value := adodsMasterPrecio.Value * (_IMPUESTOS_IVA/100);
-    adodsMasterPrecioTotal.Value := adodsMasterPrecio.Value + adodsMasterImpuesto.Value;
-    adodsmASTEREnganche.Value := adodsMasterPrecioTotal.Value * (adodsMasterEnganchePorcentaje.Value/100);
-    adodsMasterComision.Value := (adodsMasterPrecioTotal.Value-adodsMasterEnganche.Value)*(adodsMasterComisionPorcentaje.Value/100);
-    adodsMasterComisionImpuesto.Value := adodsMasterComision.Value * (_IMPUESTOS_IVA/100);
-    adodsMasterGastosImpuestos.Value := adodsMasterGastos.Value * (_IMPUESTOS_IVA/100);
-    adodsMasterDepositos.Value := adodsMasterPagoMensual.Value * adodsMasterDespositosNumero.Value;
-    adodsMasterPagoIncial.Value := (adodsMasterEnganche.Value+adodsMasterComision.Value+adodsMasterComisionImpuesto.Value+
-    adodsMasterGastos.Value+adodsMasterGastosImpuestos.Value+adodsMasterDepositos.Value);
-    adodsMasterOpcionCompra.Value := adodsMasterPrecioTotal.Value * (adodsMasterOpcionCompraPorcentaje.Value/100);
-    adodsMasterValorResidual.Value := adodsMasterPrecioTotal.Value * (adodsMasterValorResidualPorcentaje.Value/100);
-    adodsMasterMontoFinanciar.Value:= adodsMasterPrecioTotal.Value-adodsMasterEnganche.Value;
-    adodsMasterPagoMensual.Value := dmAmortizaciones.Pago(adodsMasterTasaAnual.Value,
-    adodsMasterPlazo.Value, adodsMasterMontoFinanciar.AsExtended,
-    adodsMasterValorResidual.AsExtended) + adodsMasterImpactoISR.AsExtended;
-  end;
-end;
-
-procedure TdmCotizaciones.CalcularImportesCredito;
-begin
-  if adodsCreditos.State in [dsInsert, dsEdit] then
-  begin
-    adodsCreditosPagoMensual.Value := dmAmortizaciones.Pago(adodsCreditosTasaAnual.Value,
-    adodsCreditosPlazo.Value, adodsCreditosMontoFinanciar.AsExtended,
-    adodsCreditosValorResidual.AsExtended) + adodsCreditosImpactoISR.AsExtended;
+    adodsDetallePrecio.Value := adodsDetallePrecioMoneda.Value * adodsDetalleTipoCambio.Value;
+    adodsDetalleImpuesto.Value := adodsDetallePrecio.Value * (_IMPUESTOS_IVA/100);
+    adodsDetallePrecioTotal.Value := adodsDetallePrecio.Value + adodsDetalleImpuesto.Value;
+    adodsDetalleEnganche.Value := adodsDetallePrecioTotal.Value * (adodsDetalleEnganchePorcentaje.Value/100);
+    adodsDetalleComision.Value := (adodsDetallePrecioTotal.Value-adodsDetalleEnganche.Value)*(adodsDetalleComisionPorcentaje.Value/100);
+    adodsDetalleComisionImpuesto.Value := adodsDetalleComision.Value * (_IMPUESTOS_IVA/100);
+    adodsDetalleGastosImpuestos.Value := adodsDetalleGastos.Value * (_IMPUESTOS_IVA/100);
+    adodsDetalleDepositos.Value := adodsDetallePagoMensual.Value * adodsDetalleDespositosNumero.Value;
+    adodsDetallePagoIncial.Value := (adodsDetalleEnganche.Value+adodsDetalleComision.Value+adodsDetalleComisionImpuesto.Value+
+    adodsDetalleGastos.Value+adodsDetalleGastosImpuestos.Value+adodsDetalleDepositos.Value);
+    adodsDetalleOpcionCompra.Value := adodsDetallePrecioTotal.Value * (adodsDetalleOpcionCompraPorcentaje.Value/100);
+    adodsDetalleValorResidual.Value := adodsDetallePrecioTotal.Value * (adodsDetalleValorResidualPorcentaje.Value/100);
+    adodsDetalleMontoFinanciar.Value:= adodsDetallePrecioTotal.Value-adodsDetalleEnganche.Value;
+    adodsDetallePagoMensual.Value := dmAmortizaciones.Pago(adodsDetalleTasaAnual.Value,
+    adodsDetallePlazo.Value, adodsDetalleMontoFinanciar.AsExtended,
+    adodsDetalleValorResidual.AsExtended) + adodsDetalleImpactoISR.AsExtended;
   end;
 end;
 
@@ -291,19 +244,26 @@ begin
   end;
 end;
 
+procedure TdmCotizaciones.daMasterDataChange(Sender: TObject; Field: TField);
+begin
+  inherited;
+  if adodsMaster.State in [dsBrowse] then
+    if Assigned(gFormDeatil1) then
+      gFormDeatil1.ReadOnlyGrid := (adodsMasterIdCotizacionEstatus.Value <> 1) or (adodsDetalleIdCotizacionDetalleEstatus.Value <> 1);
+end;
+
 procedure TdmCotizaciones.DataModuleCreate(Sender: TObject);
 begin
   inherited;
   PaymentTime := ptEndOfPeriod;
   gGridForm:= TfrmCotizaciones.Create(Self);
   gGridForm.DataSet:= adodsMaster;
-  TfrmCotizaciones(gGridForm).actAmortizaciones := actAmortizaciones;
   TfrmCotizaciones(gGridForm).actCambiarEstatus := actCambiarEstatus;
-  TfrmCotizaciones(gGridForm).actGetTipoCambio := actGetTipoCambio;
-  if adodsCreditos.CommandText <> EmptyStr then adodsCreditos.Open;
-  gFormDeatil1:= TfrmCotizacionesCreditos.Create(Self);
-  gFormDeatil1.DataSet:= adodsCreditos;
-  TfrmCotizacionesCreditos(gFormDeatil1).actAmortizaciones := actAmortizacionesC;
+  if adodsDetalle.CommandText <> EmptyStr then adodsDetalle.Open;
+  gFormDeatil1:= TfrmCotizacionesDetalle.Create(Self);
+  gFormDeatil1.DataSet:= adodsDetalle;
+  TfrmCotizacionesDetalle(gFormDeatil1).actAmortizaciones := actAmortizaciones;
+  TfrmCotizacionesDetalle(gFormDeatil1).actGetTipoCambio := actGetTipoCambio;
 //  Calculo de las amortizaciones del modulo
   dmAmortizaciones := TdmAmortizaciones.Create(Self);
   dmAmortizaciones.PaymentTime := PaymentTime;
@@ -313,6 +273,14 @@ procedure TdmCotizaciones.DataModuleDestroy(Sender: TObject);
 begin
   inherited;
   FreeAndNil(dmAmortizaciones);
+end;
+
+procedure TdmCotizaciones.dsDetalleDataChange(Sender: TObject; Field: TField);
+begin
+  inherited;
+  if adodsDetalle.State in [dsBrowse] then
+    if Assigned(gFormDeatil1) then
+      gFormDeatil1.ReadOnlyGrid := (adodsDetalleIdCotizacionDetalleEstatus.Value <> 1);
 end;
 
 function TdmCotizaciones.GetEstatus: TCotizacionEstatus;

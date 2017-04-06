@@ -7,8 +7,8 @@ inherited frmCotizacionesSeleccionar: TfrmCotizacionesSeleccionar
   inherited pnlMaster: TPanel
     inherited cxGrid: TcxGrid
       inherited tvMaster: TcxGridDBTableView
-        object tvMasterIdCotizacion: TcxGridDBColumn
-          DataBinding.FieldName = 'IdCotizacion'
+        object tvMasterIdCotizacionDetalle: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCotizacionDetalle'
           Visible = False
         end
         object tvMasterIdentificador: TcxGridDBColumn
@@ -50,7 +50,6 @@ inherited frmCotizacionesSeleccionar: TfrmCotizacionesSeleccionar
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42723.572640879630000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

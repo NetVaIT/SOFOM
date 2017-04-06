@@ -65,7 +65,6 @@ type
     tvMasterValorResidualPorcentaje: TcxGridDBColumn;
     tvMasterValorResidual: TcxGridDBColumn;
     tvMasterImpactoISR: TcxGridDBColumn;
-    tvMasterIdCotizacion: TcxGridDBColumn;
     tvMasterPagoInicialCreado: TcxGridDBColumn;
     tvMasterFechaVencimiento: TcxGridDBColumn;
     dxbbGenerar: TdxBarButton;
@@ -74,6 +73,7 @@ type
     tvMasterSaldoInsoluto: TcxGridDBColumn;
     tvMasterMontoVencido: TcxGridDBColumn;
     tvMasterTasaMoratoriaAnual: TcxGridDBColumn;
+    tvMasterIdCotizacionDetalle: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private

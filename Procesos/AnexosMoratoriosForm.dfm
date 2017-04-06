@@ -41,6 +41,16 @@ inherited frmAnexosMoratorios: TfrmAnexosMoratorios
       end
     end
   end
+  inherited ActionList: TActionList
+    inherited DatasetInsert: TDataSetInsert
+      Enabled = False
+      Visible = False
+    end
+    inherited DatasetDelete: TDataSetDelete
+      Enabled = False
+      Visible = False
+    end
+  end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
       0
@@ -57,7 +67,7 @@ inherited frmAnexosMoratorios: TfrmAnexosMoratorios
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42804.494392372680000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

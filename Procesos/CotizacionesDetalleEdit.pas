@@ -1,10 +1,10 @@
-unit AnexosEdit;
+unit CotizacionesDetalleEdit;
 
 interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, System.UITypes, _EditForm, dxSkinsCore, dxSkinBlack,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, _EditForm, dxSkinsCore, dxSkinBlack,
   dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom,
   dxSkinDarkSide, dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
   dxSkinGlassOceans, dxSkinHighContrast, dxSkiniMaginary, dxSkinLilian,
@@ -18,30 +18,27 @@ uses
   dxSkinWhiteprint, dxSkinXmas2008Blue, dxSkinscxPCPainter, cxPCdxBarPopupMenu,
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, Vcl.ImgList,
   System.Actions, Vcl.ActnList, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls, cxPC,
-  cxContainer, cxEdit, cxSpinEdit, cxDBEdit, cxCurrencyEdit, Vcl.DBCtrls,
-  cxMaskEdit, cxDropDownEdit, cxCalendar, cxTextEdit, cxGroupBox, cxButtonEdit,
-  ProductosDM;
+  cxContainer, cxEdit, cxSpinEdit, cxDBEdit, cxCurrencyEdit, cxButtonEdit,
+  cxMaskEdit, cxDropDownEdit, cxCalendar, Vcl.DBCtrls, cxTextEdit, cxGroupBox;
 
 type
-  TfrmAnexosEdit = class(T_frmEdit)
-    tsSegmentos: TcxTabSheet;
+  TfrmCotizacionesDetalleEdit = class(T_frmEdit)
     cxGroupBox1: TcxGroupBox;
-    Label1: TLabel;
-    Label2: TLabel;
-    Label3: TLabel;
     Label4: TLabel;
     Label6: TLabel;
     Label7: TLabel;
     Label8: TLabel;
     Label9: TLabel;
-    cxDBTextEdit1: TcxDBTextEdit;
-    cxDBTextEdit2: TcxDBTextEdit;
-    cxDBDateEdit1: TcxDBDateEdit;
-    cxDBTextEdit3: TcxDBTextEdit;
+    Label28: TLabel;
+    Label31: TLabel;
+    edtPrecio: TcxDBTextEdit;
     DBLookupComboBox1: TDBLookupComboBox;
     cxDBTextEdit5: TcxDBTextEdit;
     cxDBTextEdit6: TcxDBTextEdit;
     cxDBTextEdit7: TcxDBTextEdit;
+    cxDBDateEdit4: TcxDBDateEdit;
+    cxDBTextEdit22: TcxDBTextEdit;
+    edtTipoCambio: TcxDBButtonEdit;
     cxGroupBox4: TcxGroupBox;
     Label17: TLabel;
     Label25: TLabel;
@@ -75,31 +72,19 @@ type
     Label21: TLabel;
     Label22: TLabel;
     Label23: TLabel;
-    Label24: TLabel;
-    Label5: TLabel;
     Label29: TLabel;
     cxDBTextEdit15: TcxDBTextEdit;
     cxDBCurrencyEdit3: TcxDBCurrencyEdit;
     cxDBSpinEdit2: TcxDBSpinEdit;
     cxDBTextEdit16: TcxDBTextEdit;
-    cxDBDateEdit2: TcxDBDateEdit;
-    cxDBDateEdit3: TcxDBDateEdit;
     cxDBTextEdit21: TcxDBTextEdit;
-    Label10: TLabel;
+    Label30: TLabel;
     DBLookupComboBox2: TDBLookupComboBox;
-    tsProductos: TcxTabSheet;
-    edtTipoCambio: TcxDBButtonEdit;
-    Label12: TLabel;
-    cxDBCurrencyEdit4: TcxDBCurrencyEdit;
-    procedure FormCreate(Sender: TObject);
-    procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure actPostExecute(Sender: TObject);
   private
-    { Private declarations }
-    dmProductos: TdmProductos;
     FactGetTipoCambio: TBasicAction;
     procedure SetactGetTipoCambio(const Value: TBasicAction);
+    { Private declarations }
   public
     { Public declarations }
     property actGetTipoCambio: TBasicAction read FactGetTipoCambio write SetactGetTipoCambio;
@@ -109,40 +94,19 @@ implementation
 
 {$R *.dfm}
 
-uses ContratosDM;
+uses CotizacionesDM;
 
-procedure TfrmAnexosEdit.actPostExecute(Sender: TObject);
-var
-  IdAnexo: Integer;
-begin
-  IdAnexo := DataSource.DataSet.FieldByName('IdAnexo').Value;
-  if dmProductos.GetCountProductos(IdAnexo) = 0 then
-    MessageDlg(strNeedProduct, mtInformation, [mbOK], 0)
-  else
-    inherited;
-end;
+{ TfrmCotizacionesDetalleEdit }
 
-procedure TfrmAnexosEdit.FormCreate(Sender: TObject);
+procedure TfrmCotizacionesDetalleEdit.FormShow(Sender: TObject);
 begin
   inherited;
-  dmProductos:= TdmProductos.Create(Self);
+  if edtPrecio.CanFocus then
+    edtPrecio.SetFocus;
 end;
 
-procedure TfrmAnexosEdit.FormDestroy(Sender: TObject);
-begin
-  inherited;
-  FreeAndNil(dmProductos);
-end;
-
-procedure TfrmAnexosEdit.FormShow(Sender: TObject);
-begin
-  inherited;
-  dmProductos.MasterSource := DataSource;
-  dmProductos.MasterFields := 'IdAnexo';
-  dmProductos.ShowModule(tsProductos,'');
-end;
-
-procedure TfrmAnexosEdit.SetactGetTipoCambio(const Value: TBasicAction);
+procedure TfrmCotizacionesDetalleEdit.SetactGetTipoCambio(
+  const Value: TBasicAction);
 begin
   FactGetTipoCambio := Value;
   edtTipoCambio.Properties.Buttons[0].Action:= Value;

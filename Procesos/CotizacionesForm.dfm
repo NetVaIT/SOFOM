@@ -3,6 +3,8 @@ inherited frmCotizaciones: TfrmCotizaciones
   Caption = 'Cotizaciones'
   ClientHeight = 428
   ClientWidth = 645
+  ExplicitWidth = 651
+  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -48,10 +50,6 @@ inherited frmCotizaciones: TfrmCotizaciones
           DataBinding.FieldName = 'IdContratoTipo'
           Visible = False
         end
-        object tvMasterIdMoneda: TcxGridDBColumn
-          DataBinding.FieldName = 'IdMoneda'
-          Visible = False
-        end
         object tvMasterIdCotizacionEstatus: TcxGridDBColumn
           DataBinding.FieldName = 'IdCotizacionEstatus'
           Visible = False
@@ -72,12 +70,6 @@ inherited frmCotizaciones: TfrmCotizaciones
           DataBinding.FieldName = 'Descripcion'
           Width = 300
         end
-        object tvMasterElaboracion: TcxGridDBColumn
-          DataBinding.FieldName = 'Elaboracion'
-        end
-        object tvMasterVigencia: TcxGridDBColumn
-          DataBinding.FieldName = 'Vigencia'
-        end
         object tvMasterCliente: TcxGridDBColumn
           DataBinding.FieldName = 'Cliente'
           Width = 300
@@ -86,81 +78,11 @@ inherited frmCotizaciones: TfrmCotizaciones
           DataBinding.FieldName = 'TipoContrato'
           Width = 100
         end
-        object tvMasterPrecioMoneda: TcxGridDBColumn
-          DataBinding.FieldName = 'PrecioMoneda'
+        object tvMasterElaboracion: TcxGridDBColumn
+          DataBinding.FieldName = 'Elaboracion'
         end
-        object tvMasterMoneda: TcxGridDBColumn
-          DataBinding.FieldName = 'Moneda'
-          Width = 150
-        end
-        object tvMasterTipoCambio: TcxGridDBColumn
-          DataBinding.FieldName = 'TipoCambio'
-        end
-        object tvMasterPrecio: TcxGridDBColumn
-          DataBinding.FieldName = 'Precio'
-        end
-        object tvMasterImpuesto: TcxGridDBColumn
-          DataBinding.FieldName = 'Impuesto'
-        end
-        object tvMasterPrecioTotal: TcxGridDBColumn
-          DataBinding.FieldName = 'PrecioTotal'
-        end
-        object tvMasterEnganchePorcentaje: TcxGridDBColumn
-          DataBinding.FieldName = 'EnganchePorcentaje'
-        end
-        object tvMasterEnganche: TcxGridDBColumn
-          DataBinding.FieldName = 'Enganche'
-        end
-        object tvMasterComisionPorcentaje: TcxGridDBColumn
-          DataBinding.FieldName = 'ComisionPorcentaje'
-        end
-        object tvMasterComision: TcxGridDBColumn
-          DataBinding.FieldName = 'Comision'
-        end
-        object tvMasterComisionImpuesto: TcxGridDBColumn
-          DataBinding.FieldName = 'ComisionImpuesto'
-        end
-        object tvMasterGastos: TcxGridDBColumn
-          DataBinding.FieldName = 'Gastos'
-        end
-        object tvMasterGastosImpuestos: TcxGridDBColumn
-          DataBinding.FieldName = 'GastosImpuestos'
-        end
-        object tvMasterDespositosNumero: TcxGridDBColumn
-          DataBinding.FieldName = 'DespositosNumero'
-        end
-        object tvMasterDepositos: TcxGridDBColumn
-          DataBinding.FieldName = 'Depositos'
-        end
-        object tvMasterPagoIncial: TcxGridDBColumn
-          DataBinding.FieldName = 'PagoIncial'
-        end
-        object tvMasterOpcionCompraPorcentaje: TcxGridDBColumn
-          DataBinding.FieldName = 'OpcionCompraPorcentaje'
-        end
-        object tvMasterOpcionCompra: TcxGridDBColumn
-          DataBinding.FieldName = 'OpcionCompra'
-        end
-        object tvMasterValorResidualPorcentaje: TcxGridDBColumn
-          DataBinding.FieldName = 'ValorResidualPorcentaje'
-        end
-        object tvMasterValorResidual: TcxGridDBColumn
-          DataBinding.FieldName = 'ValorResidual'
-        end
-        object tvMasterMontoFinanciar: TcxGridDBColumn
-          DataBinding.FieldName = 'MontoFinanciar'
-        end
-        object tvMasterTasaAnual: TcxGridDBColumn
-          DataBinding.FieldName = 'TasaAnual'
-        end
-        object tvMasterPlazo: TcxGridDBColumn
-          DataBinding.FieldName = 'Plazo'
-        end
-        object tvMasterPagoMensual: TcxGridDBColumn
-          DataBinding.FieldName = 'PagoMensual'
-        end
-        object tvMasterImpactoISR: TcxGridDBColumn
-          DataBinding.FieldName = 'ImpactoISR'
+        object tvMasterVigencia: TcxGridDBColumn
+          DataBinding.FieldName = 'Vigencia'
         end
         object tvMasterUsuario: TcxGridDBColumn
           DataBinding.FieldName = 'Usuario'
@@ -198,9 +120,6 @@ inherited frmCotizaciones: TfrmCotizaciones
       ExplicitLeft = 560
     end
   end
-  inherited DataSource: TDataSource
-    DataSet = dmCotizaciones.adodsMaster
-  end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
       0
@@ -208,10 +127,33 @@ inherited frmCotizaciones: TfrmCotizaciones
       31
       0)
     inherited dxbNavigator: TdxBar
-      DockedLeft = 107
+      DockedLeft = 128
+    end
+    inherited dxbEdit: TdxBar
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'Insert1'
+        end
+        item
+          Visible = True
+          ItemName = 'Edit1'
+        end
+        item
+          Visible = True
+          ItemName = 'Delete1'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarButton7'
+        end
+        item
+          Visible = True
+          ItemName = 'dxbbCambiarEstatus'
+        end>
     end
     inherited dxbTools: TdxBar
-      DockedLeft = 238
+      DockedLeft = 256
       ItemLinks = <
         item
           Visible = True
@@ -229,7 +171,7 @@ inherited frmCotizaciones: TfrmCotizaciones
     object dxbbAmortizaciones: TdxBarButton
       Caption = 'Amortizaciones'
       Category = 0
-      Visible = ivAlways
+      Visible = ivNever
       ImageIndex = 11
       PaintStyle = psCaptionGlyph
     end
@@ -280,7 +222,6 @@ inherited frmCotizaciones: TfrmCotizaciones
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42711.658349664350000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

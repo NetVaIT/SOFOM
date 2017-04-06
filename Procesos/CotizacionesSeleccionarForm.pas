@@ -31,13 +31,13 @@ uses
 
 type
   TfrmCotizacionesSeleccionar = class(T_frmGrid)
-    tvMasterIdCotizacion: TcxGridDBColumn;
     tvMasterIdentificador: TcxGridDBColumn;
     tvMasterDescripcion: TcxGridDBColumn;
     tvMasterMontoFinanciar: TcxGridDBColumn;
     tvMasterTasaAnual: TcxGridDBColumn;
     tvMasterPlazo: TcxGridDBColumn;
     tvMasterPagoMensual: TcxGridDBColumn;
+    tvMasterIdCotizacionDetalle: TcxGridDBColumn;
   private
     { Private declarations }
   public

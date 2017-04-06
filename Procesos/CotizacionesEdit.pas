@@ -26,131 +26,32 @@ type
   TfrmCotizacionesEdit = class(T_frmEdit)
     tsAmortizaciones: TcxTabSheet;
     tsSegmentos: TcxTabSheet;
-    cxGroupBox1: TcxGroupBox;
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
+    Label10: TLabel;
+    Label12: TLabel;
+    Label28: TLabel;
+    Label30: TLabel;
+    Label31: TLabel;
     cxDBTextEdit1: TcxDBTextEdit;
     cxDBTextEdit2: TcxDBTextEdit;
     cxDBDateEdit1: TcxDBDateEdit;
-    Label10: TLabel;
     DBLookupComboBox3: TDBLookupComboBox;
-    Label12: TLabel;
     DBLookupComboBox4: TDBLookupComboBox;
-    Label4: TLabel;
-    Label6: TLabel;
-    Label7: TLabel;
-    Label8: TLabel;
-    Label9: TLabel;
-    cxDBTextEdit3: TcxDBTextEdit;
-    DBLookupComboBox1: TDBLookupComboBox;
-    cxDBTextEdit5: TcxDBTextEdit;
-    cxDBTextEdit6: TcxDBTextEdit;
-    cxDBTextEdit7: TcxDBTextEdit;
-    cxGroupBox2: TcxGroupBox;
-    Label11: TLabel;
-    Label13: TLabel;
-    Label14: TLabel;
-    Label15: TLabel;
-    Label16: TLabel;
-    Label18: TLabel;
-    Label19: TLabel;
-    cxDBCurrencyEdit1: TcxDBCurrencyEdit;
-    cxDBTextEdit8: TcxDBTextEdit;
-    cxDBCurrencyEdit2: TcxDBCurrencyEdit;
-    cxDBTextEdit9: TcxDBTextEdit;
-    cxDBTextEdit10: TcxDBTextEdit;
-    cxDBTextEdit11: TcxDBTextEdit;
-    cxDBTextEdit12: TcxDBTextEdit;
-    cxDBSpinEdit1: TcxDBSpinEdit;
-    cxDBTextEdit13: TcxDBTextEdit;
-    cxDBTextEdit14: TcxDBTextEdit;
-    cxGroupBox3: TcxGroupBox;
-    Label20: TLabel;
-    Label21: TLabel;
-    Label22: TLabel;
-    Label23: TLabel;
-    cxDBTextEdit15: TcxDBTextEdit;
-    cxDBCurrencyEdit3: TcxDBCurrencyEdit;
-    cxDBSpinEdit2: TcxDBSpinEdit;
-    cxDBTextEdit16: TcxDBTextEdit;
-    cxGroupBox4: TcxGroupBox;
-    cxGroupBox5: TcxGroupBox;
-    Label17: TLabel;
-    cxDBTextEdit17: TcxDBTextEdit;
-    Label25: TLabel;
-    cxDBTextEdit18: TcxDBTextEdit;
-    Label26: TLabel;
-    cxDBTextEdit19: TcxDBTextEdit;
-    Label27: TLabel;
-    cxDBTextEdit20: TcxDBTextEdit;
-    Label28: TLabel;
     cxDBDateEdit4: TcxDBDateEdit;
-    Label29: TLabel;
-    cxDBTextEdit21: TcxDBTextEdit;
-    Label30: TLabel;
     DBLookupComboBox2: TDBLookupComboBox;
-    Label31: TLabel;
     cxDBTextEdit22: TcxDBTextEdit;
-    edtTipoCambio: TcxDBButtonEdit;
-    procedure FormCreate(Sender: TObject);
-    procedure FormDestroy(Sender: TObject);
-    procedure FormShow(Sender: TObject);
-    procedure pcMainChange(Sender: TObject);
   private
     { Private declarations }
-    dmAmortizaciones: TdmAmortizaciones;
-    FactGetTipoCambio: TBasicAction;
-    procedure SetactGetTipoCambio(const Value: TBasicAction);
   public
     { Public declarations }
-    property actGetTipoCambio: TBasicAction read FactGetTipoCambio write SetactGetTipoCambio;
   end;
 
 implementation
 
 {$R *.dfm}
 
-uses CotizacionesDM, ProcesosType;
-
-procedure TfrmCotizacionesEdit.FormCreate(Sender: TObject);
-begin
-  inherited;
-  dmAmortizaciones := TdmAmortizaciones.Create(Self);
-//  dmAmortizaciones.PaymentTime := ptEndOfPeriod;
-end;
-
-procedure TfrmCotizacionesEdit.FormDestroy(Sender: TObject);
-begin
-  inherited;
-  FreeAndNil(dmAmortizaciones);
-end;
-
-procedure TfrmCotizacionesEdit.FormShow(Sender: TObject);
-begin
-  inherited;
-  dmAmortizaciones.ShowModule(tsAmortizaciones,'');
-end;
-
-procedure TfrmCotizacionesEdit.pcMainChange(Sender: TObject);
-var
-  FechaInicial: TDateTime;
-begin
-  inherited;
-  FechaInicial := DataSource.DataSet.FieldByName('FechaInicial').AsDateTime;
-  dmAmortizaciones.TipoContrato:= TCTipoContrato(DataSource.DataSet.FieldByName('IdContratoTipo').AsInteger);
-  dmAmortizaciones.Execute(FechaInicial,FechaInicial,FechaInicial,
-  DataSource.DataSet.FieldByName('TasaAnual').AsExtended,
-  DataSource.DataSet.FieldByName('Plazo').AsInteger,
-  DataSource.DataSet.FieldByName('MontoFinanciar').AsExtended,
-  DataSource.DataSet.FieldByName('ValorResidual').AsExtended,
-  DataSource.DataSet.FieldByName('ImpactoISR').AsExtended);
-end;
-
-procedure TfrmCotizacionesEdit.SetactGetTipoCambio(const Value: TBasicAction);
-begin
-  FactGetTipoCambio := Value;
-  edtTipoCambio.Properties.Buttons[0].Action:= Value;
-end;
+uses CotizacionesDM;
 
 end.

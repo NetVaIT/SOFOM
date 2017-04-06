@@ -203,7 +203,9 @@ uses
   AnexosMoratoriosForm in 'Procesos\AnexosMoratoriosForm.pas' {frmAnexosMoratorios},
   AnexosMoratoriosEdit in 'Procesos\AnexosMoratoriosEdit.pas' {frmAnexosMoratoriosEdit},
   CuentasXCobrarMoratoriosForm in 'Procesos\CuentasXCobrarMoratoriosForm.pas' {frmConCXCMoratorios},
-  AnexoMoratoriosCon in 'Procesos\AnexoMoratoriosCon.pas' {FrmAnexoMoratoriosDetalle};
+  AnexoMoratoriosCon in 'Procesos\AnexoMoratoriosCon.pas' {FrmAnexoMoratoriosDetalle},
+  CotizacionesDetalleForm in 'Procesos\CotizacionesDetalleForm.pas' {frmCotizacionesDetalle},
+  CotizacionesDetalleEdit in 'Procesos\CotizacionesDetalleEdit.pas' {frmCotizacionesDetalleEdit};
 
 {$R *.res}
 
