@@ -187,12 +187,16 @@ type
     procedure ActGeneraCuentasXCobrarExecute(Sender: TObject);
     procedure adodsMasterBeforeInsert(DataSet: TDataSet);
   private
+    FFacturando: boolean;
     function SacaTipoComp(TipoDoc: Integer): String;
     function SacaDireccion(IDCliente: Integer): Integer;
     function SacaMetodo(IDCliente: Integer; var CtaPago:String): Integer;
+    procedure Facturar(IDCFDIGen: Integer; var CFDICreado: Boolean;
+      IDGenTipoDoc: integer);
     { Private declarations }
   public
     { Public declarations }
+    Property Facturando:boolean read FFacturando write FFacturando; //Abr 7/17 copiado de Pagos
   end;
 
 var
@@ -202,7 +206,7 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses CuentasXCobrarForm;
+uses CuentasXCobrarForm, FacturasDM;
 
 {$R *.dfm}
 
@@ -261,6 +265,7 @@ begin
 end;
 
 procedure TdmCuentasXCobrar.actGeneraPreFacturasExecute(Sender: TObject);
+var CFDICreado:Boolean;
 begin
   inherited;
   DetallesCXCParaFacturar.Open;
@@ -282,7 +287,7 @@ begin
 
     while not DetallesCXCParaFacturar.Eof do
     begin
-     if not DetallesCXCParaFacturar.FieldByName('EsMoratorios').AsBoolean then    //FEb 2/17 Nuevo para que sólo facture lo que no es moratorio, porque el moratorio se debe facturarse cuando se pague
+   // abr 7/17 DEshabilitado porque  van en cxc aparte  if not DetallesCXCParaFacturar.FieldByName('EsMoratorios').AsBoolean then    //FEb 2/17 Nuevo para que sólo facture lo que no es moratorio, porque el moratorio se debe facturarse cuando se pague
      begin
       ADODtStCFDIConceptosPref.Insert;
       ADODtStCFDIConceptosPrefDescripcion.AsString:= DetallesCXCParaFacturar.fieldbyname('Descripcion').asString;
@@ -299,10 +304,32 @@ begin
     adodsmaster.FieldByName('IdCuentaXCobrarEstatus').AsInteger:=0; //CAmbia a pendiente
     adodsmaster.FieldByName('IdCFDI').AsInteger:= ADODtStPrefacturasCFDI.FieldByName('IDCFDI').AsInteger; //Feb 9/17
     adodsmaster.post;            //ERa CFDInormal.. mar 30/17
-    ShowMessage('Prefactura generada');
-    //&Verificar ivas..
+
+    //Facturar Abr 7/17
+
+    Facturar(ADODtStPrefacturasCFDI.FieldByName('IDCFDI').AsInteger,CFDICreado, 1); //Timbra factura
+    //DEntro del proceso de facturacion se muestraPDF //Abr 7/17
+
   end;
 end;
+
+procedure TdmCuentasXCobrar.Facturar(IDCFDIGen: Integer;var CFDICreado:Boolean;IDGenTipoDoc:integer); //abr7/17 Copiado desde Pagos
+var
+   CreadaAntes:boolean;
+begin
+  FFacturando:=True;
+                                               //Mar 29/16
+  dmFacturas := TdmFacturas.CreateWMostrar(nil,True,IDGenTipoDoc);  //Era false pero verificar  a ver si no da el aV
+  dmFActuras.PIDCFDIGen:=IDCFDIGen;
+  dmFActuras.adodsMaster.open; //por si no esta abierta   //Feb12/17
+  CFDICreado:=  dmFActuras.adodsMaster.Locate('IDCFDI',IDCFDIGen,[]);  //SE ubica en el CFDI feb 8/
+  CreadaAntes:=dmFActuras.adodsMasterIdCFDIEstatus.AsInteger= 2;
+  if CFDICreado and (IDGenTipoDoc=1) and (not CreadaAntes)then  //Ajuste para que se mande crear si no esta Ene3/17 //Mod Mar 28/16
+    dmFacturas.ActProcesaFactura.Execute;
+  FreeAndNil(dmFacturas);
+  FFacturando:=False;
+end;
+
 
 procedure TdmCuentasXCobrar.adodsMasterAfterOpen(DataSet: TDataSet);
 begin

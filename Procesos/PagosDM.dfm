@@ -1,7 +1,7 @@
 inherited dmPagos: TdmPagos
   OldCreateOrder = True
   Height = 593
-  Width = 946
+  Width = 1167
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     AfterOpen = adodsMasterAfterOpen
@@ -814,131 +814,26 @@ inherited dmPagos: TdmPagos
       Size = 6
     end
   end
-  object ADODtStCxCDetallePend_anterior: TADODataSet
+  object adopSetCXCUPMoratorio: TADOStoredProc
     Connection = _dmConection.ADOConnection
-    CursorType = ctStatic
-    CommandText = 
-      'Select CXCD2.IdCuentaXCobrarDetalle acumulaACXC ,cxcd3.IdCuentaX' +
-      'CobrarDetalle as IVAde, Con.IdCFDI,Con2.IdCFDI As IDCFDIIVA, '#13#10'C' +
-      'on.IdCFDIConcepto,con.importe as impconc, CXCD.*, CXCTC.* from C' +
-      'uentasXCobrarDetalle CXCD '#13#10'inner join CuentasXCobrarTiposConcep' +
-      'tos CXCTC on CXCD.IdCuentaXCobrarTipo=CXCTC.IdCuentaXCobrarTipo'#13 +
-      #10'Left join CuentasXCobrarDEtalle CXCD2 on CXCD2.IdCuentaXCobrarT' +
-      'ipo=CXCTC.AcumulaAQuien'#13#10'Left join CuentasXCobrarDEtalle CXCD3 o' +
-      'n CXCD3.IdCuentaXCobrarTipo=CXCTC.BaseIVA'#13#10'left join CFDIConcept' +
-      'os Con on CXCD.IdCuentaXCobrarDetalle= Con.IdCuentaXCobrarDetall' +
-      'e'#13#10'Left join CuentasXCobrarDEtalle CXCD4 on CXCD3.IdCuentaXCobra' +
-      'rDetalle=CXCD4.IdCuentaXCobrarDetalle'#13#10'left join CFDIConceptos C' +
-      'on2 on CXCD4.IdCuentaXCobrarDetalle= Con2.IdCuentaXCobrarDetalle' +
-      #13#10'where CXCD.Saldo >0  and CXCD.IdCuentaXCobrar=:IdCuentaXCobrar' +
-      #13#10'order by CXCTC.ordenAplica  '
-    DataSource = DSCXCPendientes
-    IndexFieldNames = 'IdCuentaXCobrar'
-    MasterFields = 'IdCuentaXCobrar'
-    Parameters = <
-      item
-        Name = 'IdCuentaXCobrar'
-        Attributes = [paSigned]
-        DataType = ftInteger
-        Precision = 10
-        Size = 4
-        Value = Null
-      end>
-    Left = 868
-    Top = 235
-    object IntegerField6: TIntegerField
-      FieldName = 'IdCuentaXCobrar'
-    end
-    object IntegerField7: TIntegerField
-      FieldName = 'IdCuentaXCobrarTipo'
-    end
-    object StringField1: TStringField
-      FieldName = 'Identificador'
-      Size = 10
-    end
-    object StringField2: TStringField
-      FieldName = 'Descripcion'
-      Size = 100
-    end
-    object FMTBCDField7: TFMTBCDField
-      FieldName = 'Importe'
-      Precision = 18
-      Size = 6
-    end
-    object FMTBCDField8: TFMTBCDField
-      FieldName = 'Saldo'
-      Precision = 18
-      Size = 6
-    end
-    object AutoIncField2: TAutoIncField
-      FieldName = 'acumulaACXC'
-      ReadOnly = True
-    end
-    object AutoIncField3: TAutoIncField
-      FieldName = 'IVAde'
-      ReadOnly = True
-    end
-    object LargeintField1: TLargeintField
-      FieldName = 'IdCFDI'
-    end
-    object LargeintField2: TLargeintField
-      FieldName = 'IdCFDIConcepto'
-      ReadOnly = True
-    end
-    object FMTBCDField9: TFMTBCDField
-      FieldName = 'impconc'
-      Precision = 18
-      Size = 6
-    end
-    object IntegerField8: TIntegerField
-      FieldName = 'Fase'
-    end
-    object StringField3: TStringField
-      FieldName = 'Temporalidad'
-      Size = 15
-    end
-    object IntegerField9: TIntegerField
-      FieldName = 'OrdenAplica'
-    end
-    object IntegerField10: TIntegerField
-      FieldName = 'IdTipoContrato'
-    end
-    object LargeintField3: TLargeintField
-      FieldName = 'IDCFDIIVA'
-    end
-    object AutoIncField4: TAutoIncField
-      FieldName = 'IdCuentaXCobrarDetalle'
-      ReadOnly = True
-    end
-    object FMTBCDField10: TFMTBCDField
-      FieldName = 'SaldoFactoraje'
-      Precision = 18
-      Size = 6
-    end
-  end
-  object adopSetCXCMoratorio: TADOStoredProc
-    Connection = _dmConection.ADOConnection
-    ProcedureName = 'p_GenMoratorio;1'
+    ProcedureName = 'p_UpdMoratorios;1'
     Parameters = <
       item
         Name = '@RETURN_VALUE'
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
-        Name = '@IdCuentaXCobrar'
+        Name = '@IdAnexo'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
-        Value = Null
       end
       item
         Name = '@Fecha'
         Attributes = [paNullable]
         DataType = ftDateTime
-        Value = Null
       end>
     Left = 48
     Top = 528
@@ -1405,7 +1300,7 @@ inherited dmPagos: TdmPagos
       FieldName = 'IdMetodoPago'
     end
   end
-  object CXCMoratoriosParaFacturar: TADODataSet
+  object CXCMoratoriosParaFacturarXX: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -1431,58 +1326,58 @@ inherited dmPagos: TdmPagos
         Size = 4
         Value = Null
       end>
-    Left = 640
+    Left = 648
     Top = 312
-    object CXCMoratoriosParaFacturarIdCuentaXCobrar: TIntegerField
+    object CXCMoratoriosParaFacturarXXIdCuentaXCobrar: TIntegerField
       FieldName = 'IdCuentaXCobrar'
     end
-    object CXCMoratoriosParaFacturarIdCuentaXCobrarTipo: TIntegerField
+    object CXCMoratoriosParaFacturarXXIdCuentaXCobrarTipo: TIntegerField
       FieldName = 'IdCuentaXCobrarTipo'
     end
-    object CXCMoratoriosParaFacturarIdentificador: TStringField
+    object CXCMoratoriosParaFacturarXXIdentificador: TStringField
       FieldName = 'Identificador'
       Size = 10
     end
-    object CXCMoratoriosParaFacturarDescripcion: TStringField
+    object CXCMoratoriosParaFacturarXXDescripcion: TStringField
       FieldName = 'Descripcion'
       Size = 100
     end
-    object CXCMoratoriosParaFacturarImporte: TFMTBCDField
+    object CXCMoratoriosParaFacturarXXImporte: TFMTBCDField
       FieldName = 'Importe'
       Precision = 18
       Size = 6
     end
-    object CXCMoratoriosParaFacturarSaldo: TFMTBCDField
+    object CXCMoratoriosParaFacturarXXSaldo: TFMTBCDField
       FieldName = 'Saldo'
       Precision = 18
       Size = 6
     end
-    object CXCMoratoriosParaFacturarFacturar: TBooleanField
+    object CXCMoratoriosParaFacturarXXFacturar: TBooleanField
       FieldName = 'Facturar'
     end
-    object CXCMoratoriosParaFacturarIdTipoContrato: TIntegerField
+    object CXCMoratoriosParaFacturarXXIdTipoContrato: TIntegerField
       FieldName = 'IdTipoContrato'
     end
-    object CXCMoratoriosParaFacturarEsIVA: TBooleanField
+    object CXCMoratoriosParaFacturarXXEsIVA: TBooleanField
       FieldName = 'EsIVA'
     end
-    object CXCMoratoriosParaFacturarTemporalidad: TStringField
+    object CXCMoratoriosParaFacturarXXTemporalidad: TStringField
       FieldName = 'Temporalidad'
       Size = 15
     end
-    object CXCMoratoriosParaFacturarIdCuentaXCobrarDetalle: TAutoIncField
+    object CXCMoratoriosParaFacturarXXIdCuentaXCobrarDetalle: TAutoIncField
       FieldName = 'IdCuentaXCobrarDetalle'
       ReadOnly = True
     end
-    object CXCMoratoriosParaFacturarEsMoratorios: TBooleanField
+    object CXCMoratoriosParaFacturarXXEsMoratorios: TBooleanField
       FieldName = 'EsMoratorios'
     end
-    object CXCMoratoriosParaFacturarPagosAplicados: TFMTBCDField
+    object CXCMoratoriosParaFacturarXXPagosAplicados: TFMTBCDField
       FieldName = 'PagosAplicados'
       Precision = 18
       Size = 6
     end
-    object CXCMoratoriosParaFacturarSaldoPendiente: TFMTBCDField
+    object CXCMoratoriosParaFacturarXXSaldoPendiente: TFMTBCDField
       FieldName = 'SaldoPendiente'
       ReadOnly = True
       Precision = 19
@@ -1901,7 +1796,7 @@ inherited dmPagos: TdmPagos
       'select IdAnexoAmortizacion, IdAnexoMoratorioEstatus, '#13#10'IdCuentaX' +
       'Cobrar, Fecha, ImporteBase, Importe, Descuento,'#13#10' Impuesto, Impo' +
       'rteAplicado from AnexosMoratorios'#13#10'Where IdCuentaXCobrar=:IdCuen' +
-      'taXCobrar'
+      'taXCobrar '#13#10'and IdAnexoMoratorioEstatus =1'
     DataSource = DSCXCPendientes
     IndexFieldNames = 'IdCuentaXCobrar'
     MasterFields = 'IdCuentaXCobrar'
@@ -1957,6 +1852,79 @@ inherited dmPagos: TdmPagos
       currency = True
       Precision = 18
       Size = 6
+    end
+  end
+  object DetallesCXCParaFacturarMora: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdCuentaXCobrarDetalle, IdCuentaXCobrar, '#13#10'CXCD.IdCuentaX' +
+      'CobrarTipo, CXCD.Identificador, CXCD.Descripcion, '#13#10'CXCD.Importe' +
+      ', CXCD.Saldo,  CXCTC.Facturar,  CXCTC.IdTipoContrato,'#13#10'CXCTC.EsI' +
+      'VA,CXCTC.Temporalidad, CXCTC.EsMoratorios'#13#10'from CuentasXCobrarDe' +
+      'talle  CXCD '#13#10'inner join CuentasXCobrarTiposConceptos CXCTC on C' +
+      'XCD.IdCuentaXCobrarTipo=CXCTC.IdCuentaXCobrarTipo'#13#10' where  CXCTC' +
+      '.Facturar=1 and'#13#10'CXCTC.EsIVA =0 and CXCD.IdCuentaXCobrar =:IDCue' +
+      'ntaXCobrar'
+    DataSource = DSCXCPendientes
+    IndexFieldNames = 'IdCuentaXCobrar'
+    MasterFields = 'IDCuentaXCobrar'
+    Parameters = <
+      item
+        Name = 'IDCuentaXCobrar'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 792
+    Top = 248
+    object DetallesCXCParaFacturarMoraIdCuentaXCobrar: TIntegerField
+      FieldName = 'IdCuentaXCobrar'
+    end
+    object DetallesCXCParaFacturarMoraIdCuentaXCobrarTipo: TIntegerField
+      FieldName = 'IdCuentaXCobrarTipo'
+    end
+    object DetallesCXCParaFacturarMoraIdentificador: TStringField
+      FieldName = 'Identificador'
+      Size = 10
+    end
+    object DetallesCXCParaFacturarMoraDescripcion: TStringField
+      FieldName = 'Descripcion'
+      Size = 100
+    end
+    object DetallesCXCParaFacturarMoraImporte: TFMTBCDField
+      FieldName = 'Importe'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object DetallesCXCParaFacturarMoraSaldo: TFMTBCDField
+      FieldName = 'Saldo'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object DetallesCXCParaFacturarMoraFacturar: TBooleanField
+      FieldName = 'Facturar'
+    end
+    object DetallesCXCParaFacturarMoraIdTipoContrato: TIntegerField
+      FieldName = 'IdTipoContrato'
+    end
+    object DetallesCXCParaFacturarMoraEsIVA: TBooleanField
+      FieldName = 'EsIVA'
+    end
+    object DetallesCXCParaFacturarMoraTemporalidad: TStringField
+      FieldName = 'Temporalidad'
+      Size = 15
+    end
+    object DetallesCXCParaFacturarMoraIdCuentaXCobrarDetalle: TAutoIncField
+      FieldName = 'IdCuentaXCobrarDetalle'
+      ReadOnly = True
+    end
+    object DetallesCXCParaFacturarMoraEsMoratorios: TBooleanField
+      FieldName = 'EsMoratorios'
     end
   end
 end

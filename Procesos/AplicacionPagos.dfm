@@ -14,6 +14,7 @@ object FrmAplicacionPago: TFrmAplicacionPago
   Position = poMainFormCenter
   OnCloseQuery = FormCloseQuery
   OnDestroy = FormDestroy
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object PnlDatosPago: TPanel
@@ -23,7 +24,6 @@ object FrmAplicacionPago: TFrmAplicacionPago
     Height = 201
     Align = alTop
     TabOrder = 0
-    ExplicitWidth = 1034
     object Label3: TLabel
       Left = 174
       Top = 98
@@ -145,6 +145,72 @@ object FrmAplicacionPago: TFrmAplicacionPago
       Font.Style = [fsBold]
       ParentFont = False
     end
+    object SpdBtnActMoraFechaPago: TSpeedButton
+      Left = 672
+      Top = 170
+      Width = 220
+      Height = 25
+      Caption = 'Actualiza moratorios a Fecha Pago'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clNavy
+      Font.Height = -12
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      Glyph.Data = {
+        36060000424D3606000000000000360000002800000020000000100000000100
+        18000000000000060000C40E0000C40E00000000000000000000FFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFCAC9C8CAC9C8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCAC9C8CAC9C8FFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FF4E31314E3131766D6AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF6D55556D5555766D6AFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCAC9C8CAC9C8FFFFFF4E31
+        3199C64E99C64E4E3131FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFCAC9C8CAC9C8FFFFFF6D5555FFFFFFFFFFFF6D5555FFFFFFCAC9C8
+        CAC9C8CAC9C8CAC9C8CAC9C8CAC9C8CAC9C8776C6C4E3131A2A0A04E313199C6
+        4ECCF6A899C64E4E3131FFFFFFCAC9C8CAC9C8CAC9C8CAC9C8CAC9C8CAC9C8CA
+        C9C8776C6C6D5555A2A0A06D5555FFFFFFFFFFFFFFFFFF6D5555735C5C473030
+        4730304730304730304730304730304730304E313199C64E4E313199C64ECCF6
+        A899C64E4E3131FFFFFF7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F
+        7F7F7F7F7FFFFFFF6D5555FFFFFFFFFFFFFFFFFF6D5555FFFFFF473030EED4BA
+        EED4BAEED4BAEED4BAEED4BAEED4BAECD2B95C4141CFF6AC9CC854CCF6A899C6
+        4E4E3131FFFFFFFFFFFF7F7F7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFF7F7F7FFFFFFFFFFFFFFFFFFFFFFFFF6D5555FFFFFFFFFFFF473030FFFFFF
+        FFEFE0FFEFE0FFEFE0FFEFE0FFEFE0FDEDDE755E5ED8F8BCD7F8BBA8CE684E31
+        31CAC9C8CAC9C8FFFFFF7F7F7FFFFFFFFFFFFFFFEFE0FFEFE0FFEFE0FFFFFFFF
+        FFFF7F7F7FFFFFFFFFFFFFFFFFFF6D5555CAC9C8CAC9C8FFFFFF513B3BFFFFFF
+        FFEFE0F9E1C9F9E1C9F9E1C9F9E1C995662F897676DEF9C7DDF9C5D8F8BCA1CA
+        5C4E3131CAC9C8FFFFFF7F7F7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF6D
+        5555897676FFFFFFFFFFFFFFFFFFFFFFFF6D5555CAC9C8FFFFFF5F4B4BFFFFFF
+        9D723E986B3595662E95662EFFEFE095662F948383978686917F7F836E6E6D55
+        557E7373FFFFFFFFFFFF7F7F7FFFFFFF7F7F7F7F7F7F7F7F7F7F7F7FFFEFE06D
+        5555948383978686917F7F836E6E6D55557E7373FFFFFFFFFFFF655151FFFFFF
+        FFF1E4FFF1E3FFF0E1FFEFE0FFEFE095662F95662E95662EEED4BA473030CAC9
+        C8FFFFFFFFFFFFFFFFFF7F7F7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFE06D
+        55556D55556D5555FFFFFF7F7F7FCAC9C8FFFFFFFFFFFFFFFFFF655151FFFFFF
+        FFF1E4FFF1E3FFF0E1FFEFE0FFEFE0FFEFE0F9E1C9F9E1C9EED4BA473030CAC9
+        C8FFFFFFFFFFFFFFFFFF7F7F7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFF7F7F7FCAC9C8FFFFFFFFFFFFFFFFFF6A5858FFFFFF
+        FFF2E6FAE6D2FAE4CFF9E3CDF9E3CD986A3495662E95662ED9C2AA473030CAC9
+        C8FFFFFFFFFFFFFFFFFF7F7F7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF7F
+        7F7F7F7F7F7F7F7FFFFFFF7F7F7FCAC9C8FFFFFFFFFFFFFFFFFF766565FFFFFF
+        B4936BB39168AE895EAA8457FFF2E6A57D4EFFFFFF95662ED9C2AA473030CAC9
+        C8FFFFFFFFFFFFFFFFFF7F7F7FFFFFFF7F7F7F7F7F7F7F7F7F7F7F7FFFF2E67F
+        7F7FFFFFFF7F7F7FFFFFFF7F7F7FCAC9C8FFFFFFFFFFFFFFFFFF817171FFFFFF
+        FFF5EBFFF5EBFFF4EAFFF4E9FFF4E9AF8C62A57D4E9A6D37EED4BA473030CAC9
+        C8FFFFFFFFFFFFFFFFFF7F7F7FFFFFFFFFF5EBFFF5EBFFF4EAFFF4E9FFF4E97F
+        7F7F7F7F7F7F7F7FFFFFFF7F7F7FCAC9C8FFFFFFFFFFFFFFFFFF8A7B7BFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFD6BC473030CAC9
+        C8FFFFFFFFFFFFFFFFFF7F7F7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFF7F7F7FCAC9C8FFFFFFFFFFFFFFFFFFAC9E9E968989
+        9689899487878F81818C7E7E8C7E7E8879797F6F6F726161624F4F786262FFFF
+        FFFFFFFFFFFFFFFFFFFF7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F
+        7F7F7F7F7F7F7F7F7F7F7F7F7F7FFFFFFFFFFFFFFFFFFFFFFFFF}
+      NumGlyphs = 2
+      ParentFont = False
+      OnClick = SpdBtnActMoraFechaPagoClick
+    end
     object cxDBTxtEdtImporteAplicar: TcxDBTextEdit
       Left = 376
       Top = 114
@@ -237,7 +303,6 @@ object FrmAplicacionPago: TFrmAplicacionPago
     Align = alClient
     TabOrder = 1
     LookAndFeel.Kind = lfStandard
-    ExplicitWidth = 1034
     object tvMaster: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       OnCellDblClick = tvMasterCellDblClick
@@ -334,9 +399,8 @@ object FrmAplicacionPago: TFrmAplicacionPago
     Height = 57
     Align = alTop
     TabOrder = 2
-    ExplicitWidth = 1034
     object Label1: TLabel
-      Left = 50
+      Left = 266
       Top = 20
       Width = 92
       Height = 13
@@ -349,8 +413,8 @@ object FrmAplicacionPago: TFrmAplicacionPago
       ParentFont = False
     end
     object LblAplicandoFActoraje: TLabel
-      Left = 730
-      Top = 16
+      Left = 802
+      Top = 15
       Width = 162
       Height = 19
       Caption = 'Aplicando Factoraje'
@@ -361,8 +425,21 @@ object FrmAplicacionPago: TFrmAplicacionPago
       Font.Style = [fsBold]
       ParentFont = False
     end
+    object Label8: TLabel
+      Left = 24
+      Top = 20
+      Width = 67
+      Height = 13
+      Caption = 'Fecha Pago:'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clGreen
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
     object cxDBLblDisponible: TcxDBLabel
-      Left = 160
+      Left = 376
       Top = 18
       DataBinding.DataField = 'Saldo'
       DataBinding.DataSource = DSPago
@@ -370,7 +447,7 @@ object FrmAplicacionPago: TFrmAplicacionPago
       Width = 129
     end
     object BtBtnAgregar: TBitBtn
-      Left = 465
+      Left = 569
       Top = 15
       Width = 89
       Height = 25
@@ -394,7 +471,7 @@ object FrmAplicacionPago: TFrmAplicacionPago
       OnClick = BtBtnAgregarClick
     end
     object BtBtnAplicar: TBitBtn
-      Left = 576
+      Left = 680
       Top = 15
       Width = 89
       Height = 25
@@ -417,6 +494,14 @@ object FrmAplicacionPago: TFrmAplicacionPago
       TabOrder = 2
       OnClick = BtBtnAplicarClick
     end
+    object cxDBLabel8: TcxDBLabel
+      Left = 108
+      Top = 18
+      DataBinding.DataField = 'FechaPago'
+      DataBinding.DataSource = DSPago
+      Height = 21
+      Width = 129
+    end
   end
   object Panel2: TPanel
     Left = 0
@@ -437,7 +522,6 @@ object FrmAplicacionPago: TFrmAplicacionPago
     ParentShowHint = False
     ShowHint = True
     TabOrder = 3
-    ExplicitTop = 255
     object SpdBtnMostrarDetalleMora: TSpeedButton
       Left = 899
       Top = 6
@@ -519,7 +603,6 @@ object FrmAplicacionPago: TFrmAplicacionPago
     Font.Style = [fsBold]
     ParentFont = False
     TabOrder = 4
-    ExplicitWidth = 1034
   end
   object cxGrid1: TcxGrid
     Left = 0
@@ -529,7 +612,6 @@ object FrmAplicacionPago: TFrmAplicacionPago
     Align = alBottom
     TabOrder = 5
     LookAndFeel.Kind = lfStandard
-    ExplicitWidth = 1034
     object cxGridDBTableView1: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = DSDetalleMostrar
@@ -612,8 +694,7 @@ object FrmAplicacionPago: TFrmAplicacionPago
     Left = 940
     Top = 128
   end
-  object DSP_CalcMoratorio: TDataSource
-    DataSet = dmPagos.adopSetCXCMoratorio
+  object DSP_CalcMoratorioNueva: TDataSource
     Left = 940
     Top = 200
   end

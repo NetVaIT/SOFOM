@@ -103,7 +103,7 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
   end
   inherited ActionList: TActionList
     object actGeneraPreFacturas: TAction
-      Caption = 'Generar PreFacturas'
+      Caption = 'Generar Factura'
       OnExecute = actGeneraPreFacturasExecute
     end
     object ActActualizaMoratorios: TAction
@@ -304,8 +304,8 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       'SElect SUM(CXCD.importe) as IVAReg  from CuentasXCobrarDetalle  ' +
       'CXCD   -- para confirmar valor de IVA'#13#10'inner join CuentasXCobrar' +
       'TiposConceptos CXCTC on CXCD.IdCuentaXCobrarTipo=CXCTC.IdCuentaX' +
-      'CobrarTipo'#13#10' where CXCTC.Facturar=1 and CXCTC.EsIVA =1 and CXCTC' +
-      '.EsMoratorios=0'#13#10'and CXCD.IdCuentaXCobrar =:IDCuentaXCobrar'
+      'CobrarTipo'#13#10' where CXCTC.Facturar=1 and CXCTC.EsIVA =1 -- and CX' +
+      'CTC.EsMoratorios=0'#13#10'and CXCD.IdCuentaXCobrar =:IDCuentaXCobrar'
     MasterFields = 'IDCuentaXCobrar'
     Parameters = <
       item

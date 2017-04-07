@@ -591,20 +591,20 @@ begin
         if  DirectoryExists (RutaFactura) then
         begin
           ShowProgress(60,100.1,'Timbrando  CFDI .... ' + IntToStr(60) + '%');  //Jun 2/16
-          if not esProduccion then
+        (*  if not esProduccion then
           begin
             Continuar:=CrearArchivos_TimbrePrueba(RutaFactura,TimbreCFDI,adodsMasterSerie.asstring + adodsMasterFolio.asString + feXML);
             RutaPDF:=ChangeFileExt(RutaFactura, fePDF);
             RutaIMG:= ChangeFileExt(RutaFactura, fePNG);
             AuxTxt:='Proceso Alterno ';
           end
-          else
+          else  // deshabilitado para usar  la del  2017 Abr 6/17*)
             Continuar:=GenerarCFDI(RutaFactura, DocumentoComprobanteFiscal, Certificado, TimbreCFDI,EsProduccion);
           if Continuar then
           begin
-            if not esproduccion  then
+          (*  if not esproduccion  then
                XMLpdf.FileIMG :=RutaIMG//Ene 27/17
-            else
+            else  // deshabilitado para usar  la del  2017 Abr 6/17 *)
               XMLpdf.FileIMG := RutaFactura + fePNG; //Dic 21/15
             XMLpdf.CadenaOriginalTimbre:= TimbreCFDI.CadenaTimbre; //Dic 28/15                  tenia nov 28/16  adodsMasterIdentificadorCte.AsString
             //SAcar infocontrato                     //Ene 12/17
@@ -618,9 +618,9 @@ begin
             adodsMasterSelloSAT_TB.AsString:=TimbreCFDI.SelloSAT;
             adodsMasterSello.AsString:=TimbreCFDI.SelloEmisor; //Verificar
             adodsMasterCertificadoSAT_TB.AsString:=   TimbreCFDI.NoCertificadoSAT;
-            if not esproduccion  then
+           (* if not esproduccion  then
               adodsMasterFechaTimbrado_TB.AsDateTime:=StrToDateTime(TimbreCFDI.FechaTimbre)
-            else
+            else   // deshabilitado para usar  la del  2017 Abr 6/17*)
              adodsMasterFechaTimbrado_TB.AsDateTime:=ConvierteFechaT_DT(TimbreCFDI.FechaTimbre);
             adodsMasterCadenaOriginal.AsString:= TimbreCFDI.CadenaTimbre;// 26 ago se regreso como estaba//Cadenaoriginal;//CadenaTimbre ;Ago 24/16  // Dic 23/15
            // adodsMaster
@@ -672,9 +672,9 @@ begin
 
             if Respuesta <>'' then //Por los archivos Sep 27/16
                showMessage('Advertencias de asociacion archivos...'+ Respuesta);
-            if not EsProduccion then
+           (* if not EsProduccion then
               showMessage('Proceso Alterno de Facturación Terminado '+adodsMasterSerie.asstring+'-'+ adodsMasterFolio.asstring)
-            else
+            else   // deshabilitado para usar  la del  2017 Abr 6/17 *)
               if FileExists(RutaPDF) then
                 ShellExecute(application.Handle, 'open', PChar(RutaPDF), nil, nil, SW_SHOWNORMAL);     //VErificar el FRM Edit
        //     ActEnvioCorreoFact.Execute; //verificar  Abr5/16

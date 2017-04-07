@@ -4,7 +4,6 @@ inherited FrmConPagos: TFrmConPagos
   ClientHeight = 428
   ClientWidth = 1101
   ExplicitWidth = 1107
-  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -199,7 +198,6 @@ inherited FrmConPagos: TFrmConPagos
       BevelOuter = bvNone
       ParentBackground = False
       TabOrder = 2
-      ExplicitTop = -6
       object Label1: TLabel
         Left = 21
         Top = 4
@@ -1137,7 +1135,16 @@ inherited FrmConPagos: TFrmConPagos
   end
   object DSMoratoriosDet: TDataSource
     DataSet = dmPagos.ADODtStAnexoMoratorios
-    Left = 908
+    Left = 892
     Top = 13
+  end
+  object DSAuxiliar: TDataSource
+    DataSet = dmPagos.ADOQryAuxiliar
+    Left = 940
+    Top = 128
+  end
+  object DSP_CalcMoratorioNueva: TDataSource
+    Left = 1004
+    Top = 8
   end
 end

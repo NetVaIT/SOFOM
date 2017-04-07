@@ -75,6 +75,8 @@ type
     tvMasterIdAnexo: TcxGridDBColumn;
     tvMasterAnexo: TcxGridDBColumn;
     DSMoratoriosDet: TDataSource;
+    DSAuxiliar: TDataSource;
+    DSP_CalcMoratorioNueva: TDataSource;
     procedure FormCreate(Sender: TObject);
     procedure dxBrBtnAplicaiconesClick(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
@@ -89,6 +91,7 @@ type
 
     procedure PoneFiltro;
     procedure SetactAbonarCapital(const Value: TBasicAction);
+    function HayCXCSinFacturaPrevia: boolean;
     { Private declarations }
   public
     { Public declarations }
@@ -113,48 +116,71 @@ begin
   dxBrBtnAplicaicones.Enabled:= DataSource.DataSet.FieldByName('Saldo').AsFloat>0.0001;   //Verificar que cambia && ene 13 /17
 end;
 
+function TFrmConPagos.HayCXCSinFacturaPrevia: boolean;
+begin
+  dsAuxiliar.DataSet.Close;
+
+  TADOQuery(dsAuxiliar.dataset).SQL.clear;
+  TADOQuery(dsAuxiliar.dataset).SQL.Add('Select * from  CuentasXCobrar  where idAnexo ='+ datasource.DataSet.FieldByName('IdAnexo').asstring+
+                                        ' and IDPersona='+  datasource.DataSet.FieldByName('IdPersonaCliente').asstring+
+                                       ' and Saldo >0 and IdCuentaXCobrarEstatus=-1  and  ESMoratorio=0' );
+  dsAuxiliar.dataset.Open;
+  if not dsAuxiliar.dataset.eof and  (dsAuxiliar.dataset.fieldbyname('IdCFDI').isnull) then
+  begin
+    REsult:= true;
+  end
+  else
+    REsult:=False;
+end;
+
 procedure TFrmConPagos.dxBrBtnAplicaiconesClick(Sender: TObject);
 var FrmAplicacionPago:TFrmAplicacionPago;
 begin
   inherited;
-  if datasource.State in [dsEdit, DSInsert] then
-     datasource.DataSet.Post;
-
-  dsConCXCPendientes.DataSet.Close;
-  dsConCXCPendientes.DataSet.Open;
-  if dsConCXCPendientes.DataSet.Eof then
+  if (not HayCXCSinFacturaPrevia) or (application.MessageBox(pChar('Existen Cuentas X Cobrar que requieren factura previa.¿Continuar de todas formas?'),'Confirmación',MB_YESNO)=IDYES) then
   begin
-    ShowMessage('No existen Cuentas Por Cobrar pendientes de Pago para ese Cliente');
-  end
-  else
-  begin
-    FrmAplicacionPago:=TFrmAplicacionPago.create(self);
-    FrmAplicacionPago.ActFacturaMora:= ActFacturaMorato;
-    FrmAplicacionPago.EsFactoraje:= Datasource.DataSet.FieldByName('OrigenPago').AsInteger=1; //Ene 13/17
-    FrmAplicacionPago.LblaplicandoFactoraje.Visible:= Datasource.DataSet.FieldByName('OrigenPago').AsInteger=1; //Ene 13/17
+    if datasource.State in [dsEdit, DSInsert] then
+       datasource.DataSet.Post;
 
-    FrmAplicacionPago.LblImpAplicaNormal.Visible:= Datasource.DataSet.FieldByName('OrigenPago').AsInteger=0;
-    FrmAplicacionPago.LblEtiquetaFacto.Visible:= Datasource.DataSet.FieldByName('OrigenPago').AsInteger=1;
-    FrmAplicacionPago.cxDBTxtEdtImporteAplicar.Visible:= Datasource.DataSet.FieldByName('OrigenPago').AsInteger=0;
-    FrmAplicacionPago.cxDBTxtEdtImporteAplicaFactoraje.Visible:= Datasource.DataSet.FieldByName('OrigenPago').AsInteger=1;
+    dsConCXCPendientes.DataSet.Close;
+    dsConCXCPendientes.DataSet.Open;
+    if dsConCXCPendientes.DataSet.Eof then
+    begin
+      ShowMessage('No existen Cuentas Por Cobrar pendientes de Pago para ese Cliente');
+    end
+    else
+    begin
+      FrmAplicacionPago:=TFrmAplicacionPago.create(self);
+      FrmAplicacionPago.ActFacturaMora:= ActFacturaMorato;
+      FrmAplicacionPago.EsFactoraje:= Datasource.DataSet.FieldByName('OrigenPago').AsInteger=1; //Ene 13/17
+      FrmAplicacionPago.LblaplicandoFactoraje.Visible:= Datasource.DataSet.FieldByName('OrigenPago').AsInteger=1; //Ene 13/17
 
-    FrmAplicacionPago.DSPago.DataSet:=Datasource.DataSet;
-    FrmAplicacionPago.dsConCXCPendientes.DataSet:=dsConCXCPendientes.DataSet;
-    FrmAplicacionPago.DSDetallesCXC.dataset:=DSDetallesCXC.DataSet;
-    FrmAplicacionPago.DSDetalleMostrar.dataset:=DSDetalleMostrar.DataSet;   //Agregado Feb 16/17
+      FrmAplicacionPago.LblImpAplicaNormal.Visible:= Datasource.DataSet.FieldByName('OrigenPago').AsInteger=0;
+      FrmAplicacionPago.LblEtiquetaFacto.Visible:= Datasource.DataSet.FieldByName('OrigenPago').AsInteger=1;
+      FrmAplicacionPago.cxDBTxtEdtImporteAplicar.Visible:= Datasource.DataSet.FieldByName('OrigenPago').AsInteger=0;
+      FrmAplicacionPago.cxDBTxtEdtImporteAplicaFactoraje.Visible:= Datasource.DataSet.FieldByName('OrigenPago').AsInteger=1;
 
-    FrmAplicacionPago.DSAplicacion.DataSet:=DSAplicacion.DataSet;
+      FrmAplicacionPago.DSPago.DataSet:=Datasource.DataSet;
+      FrmAplicacionPago.dsConCXCPendientes.DataSet:=dsConCXCPendientes.DataSet;
+      FrmAplicacionPago.DSDetallesCXC.dataset:=DSDetallesCXC.DataSet;
+      FrmAplicacionPago.DSDetalleMostrar.dataset:=DSDetalleMostrar.DataSet;   //Agregado Feb 16/17
 
-    FrmAplicacionPago.DSMoratoriosDet.dataset:=DSMoratoriosdet.dataset;//Mar 31/17
-    FrmAplicacionPago.dsConCXCPendientes.DataSet.Open;
-    FrmAplicacionPago.DSDetalleMostrar.dataset.Open;   //Agregado Feb 16/17
-    FrmAplicacionPago.DSDetallesCXC.DataSet.Open;
-    FrmAplicacionPago.DSAplicacion.DataSet.Open;
-    FrmAplicacionPago.DSAplicacion.DataSet.insert;
-    FrmAplicacionPago.ShowModal;
-    FrmAplicacionPago.Free;
+      FrmAplicacionPago.DSAplicacion.DataSet:=DSAplicacion.DataSet;
+      FrmAplicacionPago.DSAuxiliar.Dataset:= DSAuxiliar.DataSet; //Abr 3/17
+
+      FrmAplicacionPago.DSMoratoriosDet.dataset:=DSMoratoriosdet.dataset;//Mar 31/17
+
+      FrmAplicacionPago.DSP_CalcMoratorioNueva.DataSet:= DSP_CalcMoratorioNueva.DataSet; //Abr 6/17
+      FrmAplicacionPago.dsConCXCPendientes.DataSet.Open;
+      FrmAplicacionPago.DSDetalleMostrar.dataset.Open;   //Agregado Feb 16/17
+      FrmAplicacionPago.DSDetallesCXC.DataSet.Open;
+      FrmAplicacionPago.DSAplicacion.DataSet.Open;
+      FrmAplicacionPago.DSAplicacion.DataSet.insert;
+      FrmAplicacionPago.ShowModal;
+      FrmAplicacionPago.Free;
+    end;
+    dsConCXCPendientes.DataSet.Close;
   end;
-  dsConCXCPendientes.DataSet.Close;
 end;
 
 procedure TFrmConPagos.EdtNombreChange(Sender: TObject);

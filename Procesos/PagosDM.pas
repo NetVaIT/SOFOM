@@ -132,25 +132,6 @@ type
     FMTBCDField5: TFMTBCDField;
     IntegerField5: TIntegerField;
     FMTBCDField6: TFMTBCDField;
-    ADODtStCxCDetallePend_anterior: TADODataSet;
-    IntegerField6: TIntegerField;
-    IntegerField7: TIntegerField;
-    StringField1: TStringField;
-    StringField2: TStringField;
-    FMTBCDField7: TFMTBCDField;
-    FMTBCDField8: TFMTBCDField;
-    AutoIncField2: TAutoIncField;
-    AutoIncField3: TAutoIncField;
-    LargeintField1: TLargeintField;
-    LargeintField2: TLargeintField;
-    FMTBCDField9: TFMTBCDField;
-    IntegerField8: TIntegerField;
-    StringField3: TStringField;
-    IntegerField9: TIntegerField;
-    IntegerField10: TIntegerField;
-    LargeintField3: TLargeintField;
-    AutoIncField4: TAutoIncField;
-    FMTBCDField10: TFMTBCDField;
     ADODtStCxCDetallePendPagosAplicados: TFMTBCDField;
     ADODtStCxCDetallePendPagosAplicadosFactoraje: TFMTBCDField;
     ADODtStCxCDetallePendFacturar: TBooleanField;
@@ -165,7 +146,7 @@ type
     ADODtStCxCDetallePendIVAde: TIntegerField;
     ADODtStCxCDetallePendIDCFDIIVA: TLargeintField;
     ADODtStCxCDetallePendDescripCXC: TStringField;
-    adopSetCXCMoratorio: TADOStoredProc;
+    adopSetCXCUPMoratorio: TADOStoredProc;
     ADODtStPrefacturasCFDI: TADODataSet;
     ADODtStPrefacturasCFDIIdCFDI: TLargeintField;
     ADODtStPrefacturasCFDIIdCFDITipoDocumento: TIntegerField;
@@ -265,25 +246,25 @@ type
     ADODtStPersonaEmisorPais: TStringField;
     ADODtStPersonaEmisorRegimenFiscalEmisor: TStringField;
     ADODtStPersonaEmisorIdMetodoPago: TIntegerField;
-    CXCMoratoriosParaFacturar: TADODataSet;
-    CXCMoratoriosParaFacturarIdCuentaXCobrar: TIntegerField;
-    CXCMoratoriosParaFacturarIdCuentaXCobrarTipo: TIntegerField;
-    CXCMoratoriosParaFacturarIdentificador: TStringField;
-    CXCMoratoriosParaFacturarDescripcion: TStringField;
-    CXCMoratoriosParaFacturarImporte: TFMTBCDField;
-    CXCMoratoriosParaFacturarSaldo: TFMTBCDField;
-    CXCMoratoriosParaFacturarFacturar: TBooleanField;
-    CXCMoratoriosParaFacturarIdTipoContrato: TIntegerField;
-    CXCMoratoriosParaFacturarEsIVA: TBooleanField;
-    CXCMoratoriosParaFacturarTemporalidad: TStringField;
-    CXCMoratoriosParaFacturarIdCuentaXCobrarDetalle: TAutoIncField;
-    CXCMoratoriosParaFacturarEsMoratorios: TBooleanField;
+    CXCMoratoriosParaFacturarXX: TADODataSet;
+    CXCMoratoriosParaFacturarXXIdCuentaXCobrar: TIntegerField;
+    CXCMoratoriosParaFacturarXXIdCuentaXCobrarTipo: TIntegerField;
+    CXCMoratoriosParaFacturarXXIdentificador: TStringField;
+    CXCMoratoriosParaFacturarXXDescripcion: TStringField;
+    CXCMoratoriosParaFacturarXXImporte: TFMTBCDField;
+    CXCMoratoriosParaFacturarXXSaldo: TFMTBCDField;
+    CXCMoratoriosParaFacturarXXFacturar: TBooleanField;
+    CXCMoratoriosParaFacturarXXIdTipoContrato: TIntegerField;
+    CXCMoratoriosParaFacturarXXEsIVA: TBooleanField;
+    CXCMoratoriosParaFacturarXXTemporalidad: TStringField;
+    CXCMoratoriosParaFacturarXXIdCuentaXCobrarDetalle: TAutoIncField;
+    CXCMoratoriosParaFacturarXXEsMoratorios: TBooleanField;
     ActGeneraPrefMoratorios: TAction;
     ADOSumaIVAMora: TADODataSet;
     ADODtStCXCPendientesSaldoDocumento: TFMTBCDField;
     ADODtStCXCPendientesSaldoFactorajeCFDI: TFMTBCDField;
-    CXCMoratoriosParaFacturarPagosAplicados: TFMTBCDField;
-    CXCMoratoriosParaFacturarSaldoPendiente: TFMTBCDField;
+    CXCMoratoriosParaFacturarXXPagosAplicados: TFMTBCDField;
+    CXCMoratoriosParaFacturarXXSaldoPendiente: TFMTBCDField;
     ADODtStCxCDetallePendsaldoDoc1: TFMTBCDField;
     ADODtStCxCDetallePendivaCFDI2: TFloatField;
     ADODtStCxCDetallePendSaldoDocumento: TFMTBCDField;
@@ -375,6 +356,19 @@ type
     ADODtStAnexoMoratoriosDescuento: TFMTBCDField;
     ADODtStAnexoMoratoriosImpuesto: TFMTBCDField;
     ADODtStAnexoMoratoriosImporteAplicado: TFMTBCDField;
+    DetallesCXCParaFacturarMora: TADODataSet;
+    DetallesCXCParaFacturarMoraIdCuentaXCobrar: TIntegerField;
+    DetallesCXCParaFacturarMoraIdCuentaXCobrarTipo: TIntegerField;
+    DetallesCXCParaFacturarMoraIdentificador: TStringField;
+    DetallesCXCParaFacturarMoraDescripcion: TStringField;
+    DetallesCXCParaFacturarMoraImporte: TFMTBCDField;
+    DetallesCXCParaFacturarMoraSaldo: TFMTBCDField;
+    DetallesCXCParaFacturarMoraFacturar: TBooleanField;
+    DetallesCXCParaFacturarMoraIdTipoContrato: TIntegerField;
+    DetallesCXCParaFacturarMoraEsIVA: TBooleanField;
+    DetallesCXCParaFacturarMoraTemporalidad: TStringField;
+    DetallesCXCParaFacturarMoraIdCuentaXCobrarDetalle: TAutoIncField;
+    DetallesCXCParaFacturarMoraEsMoratorios: TBooleanField;
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsMasterAfterPost(DataSet: TDataSet);
     procedure adodsMasterBeforePost(DataSet: TDataSet);
@@ -408,6 +402,7 @@ type
       IDGenTipoDoc: integer);
     function EncuentraFacturaconSaldo(var IdEstado: Integer; idcxc: Integer;
       Valor: Double): Boolean;
+    function ActualizaEstatusCXC(idCxC, IdCFDIAct: Integer): Boolean;
   public
     { Public declarations }
     Property Facturando:boolean read FFacturando write FFacturando; //Feb 8/17
@@ -782,16 +777,16 @@ var
 begin
   inherited;
   idCFDIMora:=-1;
-  CXCMoratoriosParaFacturar.Open;
 
-  if CXCMoratoriosParaFacturar.eof then
+  DetallesCXCParaFacturarMora.Open;
+  //Abr 5/27 deberia ser una factura normal de CXC
+// CXCMoratoriosParaFacturar.Open;
+
+  //if CXCMoratoriosParaFacturar.eof then
+  if not DetallesCXCParaFacturarMora.eof then
   begin
-   // ShowMessage('No existen moratorios para Facturar')  //No deberia estar habilitado en cualquiera
-  end
-  else
-  begin
-   ////Feb 13/17
-   if Not EncuentraFacturaconSaldo(Estado,CXCMoratoriosParaFacturar.FieldByName('IdCuentaXCobrar').AsInteger, CXCMoratoriosParaFacturar.FieldByName('SaldoPendiente').AsFloat)  then
+   ////Feb 13/17                           //CXCMoratoriosParaFacturar                                          CXCMoratoriosParaFacturar
+   if Not EncuentraFacturaconSaldo(Estado,DetallesCXCParaFacturarMora.FieldByName('IdCuentaXCobrar').AsInteger, DetallesCXCParaFacturarMora.FieldByName('Saldo').AsFloat)  then
    begin
     //En principio individual de la actual si esta precargada.., luego filtrar las prcargadas  hacer ciclo
     //Crear encabezado con datos de cliente
@@ -801,38 +796,45 @@ begin
     ADODtStPrefacturasCFDI.Insert; //ver que va en el evento..
     ADODtStPrefacturasCFDI.Post;
     idCFDIMora:=  ADODtStPrefacturasCFDIIdCFDI.AsInteger; //FEb 8/17
-    CXCMoratoriosParaFacturar.First;
+    DetallesCXCParaFacturarMora.First;  //CXCMoratoriosParaFacturar
 
-    while not CXCMoratoriosParaFacturar.Eof do
+    while not DetallesCXCParaFacturarMora.Eof do  //CXCMoratoriosParaFacturar
     begin   //ya esta filtrado por moratorios
       ADODtStCFDIConceptosPref.Insert;
-      ADODtStCFDIConceptosPrefDescripcion.AsString:= CXCMoratoriosParaFacturar.fieldbyname('Descripcion').asString;
-      ADODtStCFDIConceptosPrefIdCuentaXCobrarDetalle.AsInteger:=CXCMoratoriosParaFacturar.fieldbyname('IDCuentaXCobrarDEtalle').AsInteger;  //Sin a Dic 7/16
-      ADODtStCFDIConceptosPrefValorUnitario.AsFloat:= CXCMoratoriosParaFacturar.fieldbyname('SaldoPendiente').asFloat;  // feb 13/17 Se cambio por el SaldoPendiente que es la resta de importe y pagoAplicado  ya que si habia anteriores pagados el importe es diferente
+      ADODtStCFDIConceptosPrefDescripcion.AsString:= DetallesCXCParaFacturarMora.fieldbyname('Descripcion').asString;
+      ADODtStCFDIConceptosPrefIdCuentaXCobrarDetalle.AsInteger:=DetallesCXCParaFacturarMora.fieldbyname('IDCuentaXCobrarDEtalle').AsInteger;  //Sin a Dic 7/16
+      ADODtStCFDIConceptosPrefValorUnitario.AsFloat:= DetallesCXCParaFacturarMora.fieldbyname('Saldo').asFloat;  // abr 7/17 se cambio por saldo feb 13/17 Se cambio por el SaldoPendiente que es la resta de importe y pagoAplicado  ya que si habia anteriores pagados el importe es diferente
 
-      ADODtStCFDIConceptosPrefImporte.AsFloat:= CXCMoratoriosParaFacturar.fieldbyname('SaldoPendiente').AsFloat;  // feb 13/17 Se cambio por el SaldoPendiente  ya que si habia anteriores pagados el importe es diferente
+      ADODtStCFDIConceptosPrefImporte.AsFloat:= DetallesCXCParaFacturarMora.fieldbyname('Saldo').AsFloat;  // abr 7/17 se cambio por saldo
 
-      ADODtStCFDIConceptosPref.Post;
+      ADODtStCFDIConceptosPref.Post; //ver si ahi esta el calculo de los IVA //Hasta aca eb 5/17
 
-      CXCMoratoriosParaFacturar.Next;   //DEbe ser sólo uno
+      DetallesCXCParaFacturarMora.Next;   //DEbe ser sólo uno
     end;
    end;
 
-{
-    //VErificar si se hace algo en CXC
-    adodsmaster.Edit;
-    adodsmaster.FieldByName('IdCuentaXCobrarEstatus').AsInteger:=0; //CAmbia a pendiente
-    adodsmaster.post;}
-    //ShowMessage('Prefactura generada'); ver si se genera directo
-    //&Verificar ivas..
-    //FActurar??           //Sin timbrar feb 13/17
-     if (idCFDIMora<>-1) or (Estado=0) then //Creo prefactura de moratorios feb 8/17
-    begin
-      Facturar(idCFDIMora , CFDIcreado , 1); //Crea factura
+   //SE debe actualizar pero No con el AdoDtStCXCPendientes    abr 6/17
+   ActualizaEstatusCXC(AdoDtStCXCPendientesidcuentaXCobrar.asInteger, idCFDIMora );
+                                                                     //Par aque se ponga el IDCFDI en CXC
+
+   if (idCFDIMora<>-1) or (Estado=0) then //Creo prefactura de moratorios feb 8/17
+   begin
+      Facturar(idCFDIMora , CFDIcreado , 1); //Timbra factura
       if CFDICreado then
         Showmessage('Se  creo factura de moratorios');//Feb 12/17 //Mostrar??
     end;
   end;
+
+end;
+
+function TdmPagos.ActualizaEstatusCXC(idCxC,IdCFDIAct:Integer):Boolean;   //Abr 6/17
+var i:integer;
+begin
+  AdoQryAuxiliar.Close;
+  AdoQryAuxiliar.SQL.Clear;                                                                                                                 //Verificar si asi
+  AdoQryAuxiliar.SQL.Add('UPDATE CuentasXCobrar SET IDCuentaXCobrarEstatus =0 , IDCFDI ='+intTostr(IdCFDIAct)+' where  IDCuentaXCobrar= '+intToSTR(IdCXC)+' and IDCuentaXCobrarEstatus=-1');
+  i:=AdoQryAuxiliar.ExecSql;
+  Result:=i>0; //SE supone que regresa cantidad de registros con cambios.
 
 end;
 
@@ -866,7 +868,7 @@ begin
   if CFDICreado and (IDGenTipoDoc=1) and (not CreadaAntes)then  //Ajuste para que se mande crear si no esta Ene3/17 //Mod Mar 28/16
     dmFacturas.ActProcesaFactura.Execute;
   FreeAndNil(dmFacturas);
-
+  FFacturando:=False;
 end;
 
 
@@ -1304,7 +1306,10 @@ begin
    TFrmConPagos(gGridForm).DSDetalleMostrar.DataSet:=ADODtStDetalleCXCMostrar;
    TFrmConPagos(gGridForm).DSAplicacion.DataSet :=ADODtStAplicacionesPagos;
    // hasta Agregado Feb 16/17
+
    TFrmConPagos(gGridForm).DSMoratoriosDet.DataSet :=ADODtStAnexoMoratorios; //Mar 31/17
+   TFrmConPagos(gGridForm).DSauxiliar.DataSet :=ADOQryAuxiliar; //Abr 3/17
+   TFrmConPagos(gGridForm).DSP_CalcMoratorioNueva.DataSet:=adopSetCXCUPMoratorio; //Abr 6/17
 
  //  TfrmFacturasGrid(gGridForm).ActGenerarCFDI := actProcesaFactura;  //Nov29/16
 end;
