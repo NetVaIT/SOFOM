@@ -45,6 +45,8 @@ type
     cxDBTextEdit3: TcxDBTextEdit;
     Label11: TLabel;
     cxDBTextEdit4: TcxDBTextEdit;
+    Label12: TLabel;
+    cxDBDateEdit4: TcxDBDateEdit;
   private
     { Private declarations }
   public

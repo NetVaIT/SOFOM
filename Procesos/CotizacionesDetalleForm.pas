@@ -67,6 +67,8 @@ type
     dxbbAmortizaciones: TdxBarButton;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure DatasetEditExecute(Sender: TObject);
+    procedure DatasetDeleteExecute(Sender: TObject);
   private
     { Private declarations }
     FactGetTipoCambio: TBasicAction;
@@ -84,6 +86,22 @@ implementation
 {$R *.dfm}
 
 uses CotizacionesDM, CotizacionesDetalleEdit;
+
+procedure TfrmCotizacionesDetalle.DatasetDeleteExecute(Sender: TObject);
+begin
+  if DataSource.DataSet.FieldByName('IdCotizacionDetalleEstatus').AsInteger <> 1 then
+    ShowMessage('La cotizacion no es posible eliminarla')
+  else
+    inherited;
+end;
+
+procedure TfrmCotizacionesDetalle.DatasetEditExecute(Sender: TObject);
+begin
+  if DataSource.DataSet.FieldByName('IdCotizacionDetalleEstatus').AsInteger <> 1 then
+    ShowMessage('La cotizacion no es posible modificarla')
+  else
+    inherited;
+end;
 
 procedure TfrmCotizacionesDetalle.FormCreate(Sender: TObject);
 begin

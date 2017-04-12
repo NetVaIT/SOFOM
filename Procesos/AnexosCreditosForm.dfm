@@ -3,8 +3,6 @@ inherited frmAnexosCreditos: TfrmAnexosCreditos
   Caption = 'Cr'#233'ditos'
   ClientHeight = 428
   ClientWidth = 645
-  ExplicitWidth = 651
-  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -87,6 +85,9 @@ inherited frmAnexosCreditos: TfrmAnexosCreditos
         object tvMasterFecha: TcxGridDBColumn
           DataBinding.FieldName = 'Fecha'
           Width = 110
+        end
+        object tvMasterFechaCancelacion: TcxGridDBColumn
+          DataBinding.FieldName = 'FechaCancelacion'
         end
         object tvMasterUsuario: TcxGridDBColumn
           DataBinding.FieldName = 'Usuario'

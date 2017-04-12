@@ -3,8 +3,6 @@ inherited frmAnexos: TfrmAnexos
   Caption = 'Anexos'
   ClientHeight = 428
   ClientWidth = 645
-  ExplicitWidth = 651
-  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -224,6 +222,10 @@ inherited frmAnexos: TfrmAnexos
         end
         item
           Visible = True
+          ItemName = 'dxbbRestructurar'
+        end
+        item
+          Visible = True
           ItemName = 'dxbbAbonar'
         end>
     end
@@ -239,6 +241,13 @@ inherited frmAnexos: TfrmAnexos
       Category = 0
       Visible = ivNever
     end
+    object dxbbRestructurar: TdxBarButton
+      Caption = 'Restructurar'
+      Category = 0
+      Visible = ivAlways
+      ImageIndex = 13
+      PaintStyle = psCaptionGlyph
+    end
   end
   inherited cxStyleRepository: TcxStyleRepository
     PixelsPerInch = 96
@@ -249,7 +258,7 @@ inherited frmAnexos: TfrmAnexos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42683.688746423620000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

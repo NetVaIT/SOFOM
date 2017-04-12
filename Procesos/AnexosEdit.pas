@@ -119,7 +119,10 @@ begin
   if dmProductos.GetCountProductos(IdAnexo) = 0 then
     MessageDlg(strNeedProduct, mtInformation, [mbOK], 0)
   else
-    inherited;
+    if dmProductos.GetTotalPorcentajeAnexo(IdAnexo) <> 100 then
+      MessageDlg(strProductsPercentage, mtInformation, [mbOK], 0)
+    else
+      inherited;
 end;
 
 procedure TfrmAnexosEdit.FormCreate(Sender: TObject);

@@ -102,13 +102,22 @@ inherited frmAnexosCreditosEdit: TfrmAnexosCreditosEdit
         Caption = 'Impacto ISR'
         FocusControl = cxDBTextEdit4
       end
+      object Label12: TLabel
+        Left = 216
+        Top = 304
+        Width = 87
+        Height = 13
+        Caption = 'Fecha cancelaci'#243'n'
+        FocusControl = cxDBDateEdit4
+      end
       object DBLookupComboBox1: TDBLookupComboBox
         Left = 48
-        Top = 40
+        Top = 37
         Width = 209
         Height = 21
         DataField = 'Estatus'
         DataSource = DataSource
+        Enabled = False
         TabOrder = 0
       end
       object cxDBDateEdit1: TcxDBDateEdit
@@ -195,14 +204,20 @@ inherited frmAnexosCreditosEdit: TfrmAnexosCreditosEdit
         TabOrder = 10
         Width = 121
       end
+      object cxDBDateEdit4: TcxDBDateEdit
+        Left = 216
+        Top = 320
+        DataBinding.DataField = 'FechaCancelacion'
+        DataBinding.DataSource = DataSource
+        Enabled = False
+        TabOrder = 11
+        Width = 121
+      end
     end
   end
   inherited pmlMain: TPanel
     Top = 420
     ExplicitTop = 420
-  end
-  inherited DataSource: TDataSource
-    DataSet = dmContratos.adodsCreditos
   end
   inherited cxImageList: TcxImageList
     FormatVersion = 1

@@ -249,7 +249,7 @@ begin
   inherited;
   if adodsMaster.State in [dsBrowse] then
     if Assigned(gFormDeatil1) then
-      gFormDeatil1.ReadOnlyGrid := (adodsMasterIdCotizacionEstatus.Value <> 1) or (adodsDetalleIdCotizacionDetalleEstatus.Value <> 1);
+      gFormDeatil1.ReadOnlyGrid := (adodsMasterIdCotizacionEstatus.Value <> 1) //or (adodsDetalleIdCotizacionDetalleEstatus.Value <> 1);
 end;
 
 procedure TdmCotizaciones.DataModuleCreate(Sender: TObject);
@@ -278,9 +278,9 @@ end;
 procedure TdmCotizaciones.dsDetalleDataChange(Sender: TObject; Field: TField);
 begin
   inherited;
-  if adodsDetalle.State in [dsBrowse] then
-    if Assigned(gFormDeatil1) then
-      gFormDeatil1.ReadOnlyGrid := (adodsDetalleIdCotizacionDetalleEstatus.Value <> 1);
+//  if adodsDetalle.State in [dsBrowse] then
+//    if Assigned(gFormDeatil1) then
+//      gFormDeatil1.ReadOnlyGrid := (adodsDetalleIdCotizacionDetalleEstatus.Value <> 1);
 end;
 
 function TdmCotizaciones.GetEstatus: TCotizacionEstatus;

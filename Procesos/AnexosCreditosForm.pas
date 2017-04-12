@@ -48,6 +48,7 @@ type
     tvMasterValorResidual: TcxGridDBColumn;
     tvMasterImpactoISR: TcxGridDBColumn;
     tvMasterFechaVencimiento: TcxGridDBColumn;
+    tvMasterFechaCancelacion: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
@@ -59,6 +60,7 @@ type
     { Public declarations }
     property actPreAmortizaciones: TBasicAction read FactPreAmortizaciones write SetactPreAmortizaciones;
     property actGenAmortizaciones: TBasicAction read FactGenAmortizaciones write SetactGenAmortizaciones;
+    function AddCredito: Boolean;
   end;
 
 implementation
@@ -66,6 +68,17 @@ implementation
 {$R *.dfm}
 
 uses ContratosDM, AnexosCreditosEdit;
+
+function TfrmAnexosCreditos.AddCredito: Boolean;
+begin
+  Result:= False;
+  if Assigned(gEditForm) then
+  begin
+    DataSource.DataSet.Insert;
+    gEditForm.View:= False;
+    Result:= (gEditForm.ShowModal = mrOk);
+  end;
+end;
 
 procedure TfrmAnexosCreditos.FormCreate(Sender: TObject);
 begin

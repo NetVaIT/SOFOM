@@ -153,7 +153,6 @@ inherited frmCotizacionesDetalle: TfrmCotizacionesDetalle
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42828.563385358790000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

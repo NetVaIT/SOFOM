@@ -74,6 +74,7 @@ type
     tvMasterMontoVencido: TcxGridDBColumn;
     tvMasterTasaMoratoriaAnual: TcxGridDBColumn;
     tvMasterIdCotizacionDetalle: TcxGridDBColumn;
+    dxbbRestructurar: TdxBarButton;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
@@ -81,11 +82,14 @@ type
     FactGenerar: TBasicAction;
     FactGetTipoCambio: TBasicAction;
     FactAbonar: TBasicAction;
+    FactRestructurar: TBasicAction;
     procedure SetactGenerar(const Value: TBasicAction);
     procedure SetactAbonar(const Value: TBasicAction);
+    procedure SetactRestructurar(const Value: TBasicAction);
   public
     { Public declarations }
     property actGenerar: TBasicAction read FactGenerar write SetactGenerar;
+    property actRestructurar: TBasicAction read FactRestructurar write SetactRestructurar;
     property actGetTipoCambio: TBasicAction read FactGetTipoCambio write FactGetTipoCambio;
     property actAbonar: TBasicAction read FactAbonar write SetactAbonar;
   end;
@@ -118,6 +122,12 @@ procedure TfrmAnexos.SetactGenerar(const Value: TBasicAction);
 begin
   FactGenerar := Value;
   dxbbGenerar.Action := Value;
+end;
+
+procedure TfrmAnexos.SetactRestructurar(const Value: TBasicAction);
+begin
+  FactRestructurar := Value;
+  dxbbRestructurar.Action := Value;
 end;
 
 end.

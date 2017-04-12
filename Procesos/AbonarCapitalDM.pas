@@ -56,12 +56,12 @@ var
 begin
   Result := False;
 //  // Crear CXC
-//  adopCXCAbonarCapital.Parameters.ParamByName('@IdAnexo').Value := IdAnexo;
-//  adopCXCAbonarCapital.Parameters.ParamByName('@Fecha').Value := Fecha;
-//  adopCXCAbonarCapital.Parameters.ParamByName('@ImporteCapital').Value := Importe;
-//  adopCXCAbonarCapital.ExecProc;
-//  IdCuentaXCobrar := adopCXCAbonarCapital.Parameters.ParamByName('@IdCuentaXCobrar').Value;
-IdCuentaXCobrar :=  10;
+  adopCXCAbonarCapital.Parameters.ParamByName('@IdAnexo').Value := IdAnexo;
+  adopCXCAbonarCapital.Parameters.ParamByName('@Fecha').Value := Fecha;
+  adopCXCAbonarCapital.Parameters.ParamByName('@ImporteCapital').Value := Importe;
+  adopCXCAbonarCapital.ExecProc;
+  IdCuentaXCobrar := adopCXCAbonarCapital.Parameters.ParamByName('@IdCuentaXCobrar').Value;
+  //IdCuentaXCobrar :=  10;
   // Ajustar amortizaciones
   if IdCuentaXCobrar > 0 then
   begin

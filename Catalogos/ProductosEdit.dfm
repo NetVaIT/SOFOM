@@ -10,14 +10,14 @@ inherited frmProductosEdit: TfrmProductosEdit
   inherited pcMain: TcxPageControl
     Width = 750
     Height = 460
-    ExplicitWidth = 594
+    ExplicitWidth = 750
     ExplicitHeight = 460
     ClientRectBottom = 458
     ClientRectRight = 748
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 2
-      ExplicitTop = 28
-      ExplicitWidth = 590
+      ExplicitLeft = 42
+      ExplicitTop = 60
+      ExplicitWidth = 746
       ExplicitHeight = 430
       object Label1: TLabel
         Left = 24
@@ -34,6 +34,14 @@ inherited frmProductosEdit: TfrmProductosEdit
         Height = 13
         Caption = 'Descripcion'
         FocusControl = cxDBTextEdit2
+      end
+      object Label27: TLabel
+        Left = 599
+        Top = 223
+        Width = 77
+        Height = 13
+        Caption = 'Porcentaje total'
+        FocusControl = cxDBCurrencyEdit12
       end
       object cxDBTextEdit1: TcxDBTextEdit
         Left = 24
@@ -55,7 +63,7 @@ inherited frmProductosEdit: TfrmProductosEdit
         Left = 583
         Top = 59
         Caption = 'Datos de importaci'#243'n'
-        TabOrder = 3
+        TabOrder = 6
         Height = 148
         Width = 154
         object Label11: TLabel
@@ -309,7 +317,7 @@ inherited frmProductosEdit: TfrmProductosEdit
         Left = 255
         Top = 59
         Caption = 'Datos de compra'
-        TabOrder = 5
+        TabOrder = 3
         Height = 362
         Width = 162
         object Label14: TLabel
@@ -433,7 +441,7 @@ inherited frmProductosEdit: TfrmProductosEdit
         Left = 423
         Top = 240
         Caption = 'Depreciaci'#243'n comercial'
-        TabOrder = 6
+        TabOrder = 5
         Height = 181
         Width = 154
         object Label24: TLabel
@@ -487,25 +495,32 @@ inherited frmProductosEdit: TfrmProductosEdit
           Width = 121
         end
       end
+      object cxDBCurrencyEdit12: TcxDBCurrencyEdit
+        Left = 599
+        Top = 239
+        DataBinding.DataField = 'PorcentajeAnexo'
+        DataBinding.DataSource = DataSource
+        TabOrder = 7
+        Width = 121
+      end
     end
     object tsDocumentos: TcxTabSheet
       Caption = 'Documentos'
       ImageIndex = 1
-      ExplicitWidth = 590
     end
   end
   inherited pmlMain: TPanel
     Top = 460
     Width = 750
     ExplicitTop = 460
-    ExplicitWidth = 594
+    ExplicitWidth = 750
     inherited btnCancel: TButton
       Left = 668
-      ExplicitLeft = 512
+      ExplicitLeft = 668
     end
     inherited btnOk: TButton
       Left = 587
-      ExplicitLeft = 431
+      ExplicitLeft = 587
     end
   end
   inherited cxImageList: TcxImageList

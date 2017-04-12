@@ -33,7 +33,6 @@ inherited frmProductos: TfrmProductos
     inherited cxGrid: TcxGrid
       Width = 645
       Height = 224
-      ExplicitLeft = 56
       ExplicitWidth = 645
       ExplicitHeight = 224
       inherited tvMaster: TcxGridDBTableView
@@ -151,6 +150,9 @@ inherited frmProductos: TfrmProductos
         end
         object tvMasterValorComercial: TcxGridDBColumn
           DataBinding.FieldName = 'ValorComercial'
+        end
+        object tvMasterPorcentajeAnexo: TcxGridDBColumn
+          DataBinding.FieldName = 'PorcentajeAnexo'
         end
       end
     end

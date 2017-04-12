@@ -129,6 +129,11 @@ inherited dmContratos: TdmContratos
       ImageIndex = 13
       OnExecute = actMoratoriosExecute
     end
+    object actRestructurar: TAction
+      Caption = 'Restructurar'
+      ImageIndex = 13
+      OnExecute = actRestructurarExecute
+    end
   end
   object dsMaster: TDataSource
     AutoEdit = False
@@ -462,7 +467,6 @@ inherited dmContratos: TdmContratos
     end
   end
   object adodsMonedas: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdMoneda, Descripcion from Monedas'#13#10'order by Descripcion'
@@ -471,7 +475,6 @@ inherited dmContratos: TdmContratos
     Top = 144
   end
   object adodsAnexosEstatus: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdAnexoEstatus, Descripcion from AnexosEstatus'
@@ -696,13 +699,12 @@ inherited dmContratos: TdmContratos
   object adodsCreditos: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
-    AfterPost = adodsCreditosAfterPost
     OnNewRecord = adodsCreditosNewRecord
     CommandText = 
       'select IdAnexoCredito, IdAnexo, IdAnexoCreditoEstatus, IdUsuario' +
       ', Fecha, MontoFiananciar, ValorResidual, ImpactoISR, TasaAnual, ' +
-      'Plazo, PagoMensual, FechaCorte, FechaVencimiento from AnexosCred' +
-      'itos'#13#10'where IdAnexo = :IdAnexo'
+      'Plazo, PagoMensual, FechaCorte, FechaVencimiento, FechaCancelaci' +
+      'on from AnexosCreditos'#13#10'where IdAnexo = :IdAnexo'
     DataSource = dsAnexos
     MasterFields = 'IdAnexo'
     Parameters = <
@@ -798,6 +800,11 @@ inherited dmContratos: TdmContratos
     end
     object adodsCreditosFecha: TDateTimeField
       FieldName = 'Fecha'
+      OnChange = adodsCreditosFechaChange
+    end
+    object adodsCreditosFechaCancelacion: TDateTimeField
+      DisplayLabel = 'Fecha cancelaci'#243'n'
+      FieldName = 'FechaCancelacion'
     end
     object adodsCreditosUsuario: TStringField
       FieldKind = fkLookup
@@ -915,18 +922,21 @@ inherited dmContratos: TdmContratos
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@IdCotizacionDetalle'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end
       item
         Name = '@IdContrato'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end
       item
         Name = '@IdAnexo'
@@ -934,6 +944,7 @@ inherited dmContratos: TdmContratos
         DataType = ftInteger
         Direction = pdInputOutput
         Precision = 10
+        Value = Null
       end>
     Left = 56
     Top = 400
@@ -985,8 +996,8 @@ inherited dmContratos: TdmContratos
       end>
     SQL.Strings = (
       'SELECT dbo.GetFechaDia(:Fecha,:Dia) AS FechaNueva')
-    Left = 424
-    Top = 296
+    Left = 216
+    Top = 344
     object adoqGetFechaDiaFechaNueva: TDateTimeField
       FieldName = 'FechaNueva'
       ReadOnly = True
@@ -997,5 +1008,83 @@ inherited dmContratos: TdmContratos
     DataSet = adodsAmortizaciones
     Left = 392
     Top = 208
+  end
+  object adocGetCreditoValido: TADOCommand
+    CommandText = 
+      'DECLARE @IdAnexoCredito int '#13#10'SELECT @IdAnexoCredito = IdAnexoCr' +
+      'edito FROM  AnexosCreditos WHERE AnexosCreditos.IdAnexoCreditoEs' +
+      'tatus = 1 AND AnexosCreditos.IdAnexo = :IdAnexo'#13#10'IF @IdAnexoCred' +
+      'ito IS NULL SET @IdAnexoCredito  = 0'#13#10'SET :IdAnexoCredito  = @Id' +
+      'AnexoCredito '#13#10
+    Connection = _dmConection.ADOConnection
+    Parameters = <
+      item
+        Name = 'IdAnexo'
+        DataType = ftInteger
+        Size = -1
+        Value = Null
+      end
+      item
+        Name = 'IdAnexoCredito'
+        DataType = ftInteger
+        Direction = pdOutput
+        Size = -1
+        Value = Null
+      end>
+    Left = 360
+    Top = 304
+  end
+  object adopCanAnexosCreditos: TADOStoredProc
+    Connection = _dmConection.ADOConnection
+    ProcedureName = 'p_CanAnexosCreditos;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@IdAnexoCredito'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end>
+    Left = 360
+    Top = 400
+  end
+  object adocGetSaldoActual: TADOCommand
+    CommandText = 
+      'DECLARE @IdAnexo int'#13#10'DECLARE @SaldoInsolutoActual decimal(18,6)' +
+      #13#10'DECLARE @MontoVencido decimal(18,6)'#13#10'DECLARE @SaldoActual deci' +
+      'mal(18,6)'#13#10'SET @IdAnexo = :IdAnexo'#13#10'SELECT TOP (1) @SaldoInsolut' +
+      'oActual = AnexosAmortizaciones.SaldoInicial'#13#10'FROM AnexosAmortiza' +
+      'ciones '#13#10'INNER JOIN AnexosCreditos ON AnexosAmortizaciones.IdAne' +
+      'xoCredito = AnexosCreditos.IdAnexoCredito'#13#10'WHERE AnexosCreditos.' +
+      'IdAnexoCreditoEstatus = 1 '#13#10'AND AnexosAmortizaciones.FechaVencim' +
+      'iento >= GETDATE()'#13#10'AND AnexosCreditos.IdAnexo = @IdAnexo'#13#10'IF @S' +
+      'aldoInsolutoActual IS NULL SET @SaldoInsolutoActual = 0'#13#10'SELECT ' +
+      '@MontoVencido = MontoVencido from Anexos'#13#10'WHERE IdAnexo = @IdAne' +
+      'xo'#13#10'SET @SaldoActual = @SaldoInsolutoActual + @MontoVencido'#13#10'SET' +
+      ' :SaldoActual = @SaldoActual'#13#10
+    Connection = _dmConection.ADOConnection
+    Parameters = <
+      item
+        Name = 'IdAnexo'
+        DataType = ftInteger
+        Size = -1
+        Value = Null
+      end
+      item
+        Name = 'SaldoActual'
+        DataType = ftFloat
+        Direction = pdOutput
+        Size = -1
+        Value = Null
+      end>
+    Left = 360
+    Top = 352
   end
 end
