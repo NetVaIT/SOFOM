@@ -103,6 +103,7 @@ type
     ADODtStDatosPagosIdPagoAplicacion: TAutoIncField;
     AdoDtStEstadoCtaDetalleIdPagoAplicacion: TIntegerField;
     ActPDFEstadoCuenta: TAction;
+    ADODtStDatosCXCFechaVencimiento: TDateTimeField;
     procedure ActActualizaEstadoCtaExecute(Sender: TObject);
     procedure AdoDtStEstadoCtaDetalleNewRecord(DataSet: TDataSet);
     procedure DataModuleCreate(Sender: TObject);
@@ -529,8 +530,8 @@ begin
   ADOQryAuxiliar.Sql.Add('SElect A.IdContrato,Sum(CXC.Saldo) as SumaVencido from CuentasXCobrar CXC '+
                          ' inner join Anexos A on A.IdAnexo=CXC.IdAnexo '+
                          ' where IdContrato= '+intToStr(idcontrato)+
-                         ' and CXC.Saldo>0.001 and CXC.Fecha <=:Fecha '+  //Para que incluya el día de corte
-                         ' group by idcontrato ');
+                         ' and CXC.Saldo>0.001 and CXC.FechaVencimiento <=:Fecha '+  //Para que incluya el día de corte
+                         ' group by idcontrato ');     //Abr 11/17 FV
 
   ADOQryAuxiliar.Parameters.ParamByName('Fecha').Value:=  UltFecCorte;
   ADOQryAuxiliar.Open;

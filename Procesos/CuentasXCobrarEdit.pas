@@ -43,6 +43,8 @@ type
     PnlDetalleFact: TPanel;
     cxDBLabel1: TcxDBLabel;
     pnlMoratorios: TPanel;
+    Label2: TLabel;
+    cxDBDateEdit2: TcxDBDateEdit;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
@@ -71,7 +73,7 @@ begin
   //MAr 27/17
   frmConCXCMoratorios:=  TfrmConCXCMoratorios.Create(self);    //VErificar si hay o no para que se muestre o no..
   frmConCXCMoratorios.Parent:= PnlMoratorios;
-  frmConCXCMoratorios.ApplyBestFit:=False;
+ // frmConCXCMoratorios.ApplyBestFit:=False;
   frmConCXCMoratorios.Align:=alClient;
   frmConCXCMoratorios.Show;
 

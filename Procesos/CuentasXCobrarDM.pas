@@ -176,6 +176,11 @@ type
     ADODTSTCXCMoratoriosIdCFDI: TLargeintField;
     adodsMasterIdCFDI: TLargeintField;
     adodsMasterIdCuentaXCobrarBase: TIntegerField;
+    adodsMasterFechaVencimiento: TDateTimeField;
+    ADODTSTCXCMoratoriosFechaVencimiento: TDateTimeField;
+    adodsMasterEsMoratorio: TBooleanField;
+    ADOPActualizaTotalesCXC: TADOStoredProc;
+    ActTotalesCXC: TAction;
     procedure DataModuleCreate(Sender: TObject);
     procedure actGeneraPreFacturasExecute(Sender: TObject);
     procedure ADODtStPrefacturasCFDINewRecord(DataSet: TDataSet);
@@ -186,6 +191,7 @@ type
     procedure ActActualizaMoratoriosExecute(Sender: TObject);
     procedure ActGeneraCuentasXCobrarExecute(Sender: TObject);
     procedure adodsMasterBeforeInsert(DataSet: TDataSet);
+    procedure ActTotalesCXCExecute(Sender: TObject);
   private
     FFacturando: boolean;
     function SacaTipoComp(TipoDoc: Integer): String;
@@ -193,6 +199,7 @@ type
     function SacaMetodo(IDCliente: Integer; var CtaPago:String): Integer;
     procedure Facturar(IDCFDIGen: Integer; var CFDICreado: Boolean;
       IDGenTipoDoc: integer);
+    procedure RegistraBitacora(tipoRegistro: Integer);
     { Private declarations }
   public
     { Public declarations }
@@ -206,7 +213,7 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses CuentasXCobrarForm, FacturasDM;
+uses CuentasXCobrarForm, FacturasDM, _ConectionDmod;
 
 {$R *.dfm}
 
@@ -215,8 +222,10 @@ begin
   inherited;
   ADOStrprcActGralMoratorios.Parameters.ParamByName('@Fecha').Value:=date; //Sin hora
   ADOStrprcActGralMoratorios.ExecProc;
-
+  Showmessage('Se ejecutó proceso de Moratorios al día: '+ dateToStr(date)) ;
+  RegistraBitacora(1);//Moratorios Abr 12/17
   adodsMaster.Refresh;
+
 end;
 
 procedure TdmCuentasXCobrar.ActGeneraCuentasXCobrarExecute(Sender: TObject);
@@ -228,7 +237,7 @@ begin
   REs:=0;
   ShowMessage('Calcula Cuentas X Cobrar pendientes de generar al dia de hoy '+dateTimeToSTR(date));
   { feb 15/17
-  //SAca lo penbndiente al dia para poder usar las fechas de corte pendientes y generar
+  //SAca lo pendiente al dia para poder usar las fechas de corte pendientes y generar
   }
   ADOQryAuxiliar.Close;
   ADOQryAuxiliar.SQL.Clear;
@@ -250,9 +259,9 @@ begin
 
     ADOStrdPrcGeneraCXC.Parameters.ParamByName('@FechaCorte').Value:=FechaAux;
     ADOStrdPrcGeneraCXC.ExecProc;
-    ADOStrdPrcGeneraCXC.Parameters.ParamByName('@RETURN_Value').Value;
-    ShowMessage('Ejecutó proceso con fecha '+dateTimeToSTR(FechaAux));
-    Res:=Res+1;
+
+ // deshabilitado ab 11/17   ShowMessage('Ejecutó proceso con fecha '+dateTimeToSTR(FechaAux));
+    Res:=Res+ADOStrdPrcGeneraCXC.Parameters.ParamByName('@RETURN_Value').Value;;  //Movido aca abr 12/17
     ADOQryAuxiliar.Next;
   end;
   ADOQryAuxiliar.Close;
@@ -262,7 +271,33 @@ begin
      Showmessage('No existian Cuentas X Cobrar pendientes de generar')
   else
      Showmessage('Actualizó '+intToStr(res)+' Cuentas X Cobrar');
+  RegistraBitacora(0);//CuentasXCobrar
 end;
+
+
+Procedure TdmCuentasXCobrar.RegistraBitacora(tipoRegistro:Integer); //Abr 11/17
+var
+   tipoTxt:String;
+   REsp:Integer;
+begin
+  case TipoRegistro of
+  0:  tipoTxt:='CXC';
+  1:  tipoTxt:='MORA'
+  end;
+
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.SQL.Clear;
+  ADOQryAuxiliar.sql.Add('IF not exists(Select * from BitacoraGeneracion where Tipo = '''+TipoTxt+''' and FechaGeneracion =:IdFechaHoy1 )'+
+                         ' Insert into BitacoraGeneracion (Tipo, FechaGeneracion, IdUsuario) Values('''+tipotxt+''',:IdFechaHoy2, '  +
+                         intToSTR(_DMConection.idUsuario)+' ) ' );
+  ADOQryAuxiliar.Parameters.ParamByName('IdFechaHoy1').Value:=date;
+  ADOQryAuxiliar.Parameters.ParamByName('IdFechaHoy2').Value:=date;
+  Resp:=ADOQryAuxiliar.ExecSQL;
+//  if Resp=1 then
+  //  showmessage('Lo creó');
+  AdodsMaster.Refresh;
+end;
+
 
 procedure TdmCuentasXCobrar.actGeneraPreFacturasExecute(Sender: TObject);
 var CFDICreado:Boolean;
@@ -311,6 +346,13 @@ begin
     //DEntro del proceso de facturacion se muestraPDF //Abr 7/17
 
   end;
+end;
+
+procedure TdmCuentasXCobrar.ActTotalesCXCExecute(Sender: TObject);
+begin
+  inherited;
+  ADOPActualizaTotalesCXC.Parameters.ParamByName('@IdCuentaXCobrar').Value:=  adodsmaster.FieldByName('IDCuentaXCobrar').asinteger;
+  ADOPActualizaTotalesCXC.ExecProc;
 end;
 
 procedure TdmCuentasXCobrar.Facturar(IDCFDIGen: Integer;var CFDICreado:Boolean;IDGenTipoDoc:integer); //abr7/17 Copiado desde Pagos
@@ -511,6 +553,8 @@ begin
   TFrmConCuentasXCobrar(gGridForm).ActGenerarPrefactura := actGeneraPreFacturas; //Dic 7/16
   TFrmConCuentasXCobrar(gGridForm).ActActualizaMoratorios:= ActActualizaMoratorios;//Feb 8/17
   TFrmConCuentasXCobrar(gGridForm).ActGenerarCXCs:=ActGeneraCuentasXCobrar;//Feb 15/17
+  TFrmConCuentasXCobrar(gGridForm).ActTotalesCXC:=ActTotalesCXC;//abr  17/17
+   TFrmConCuentasXCobrar(gGridForm).DSAuxiliar.DataSet:=ADOQryAuxiliar; //Abr 11/17
 end;
 
 function TdmCuentasXCobrar.SacaTipoComp (TipoDoc:Integer) :String;

@@ -152,6 +152,7 @@ type
     dxBarLargeButton19: TdxBarLargeButton;
     dxBrLrgBtnSeguimiento: TdxBarLargeButton;
     ActSeguimiento: TAction;
+    dxBarLargeButton20: TdxBarLargeButton;
     procedure actCatalogoExecute(Sender: TObject);
     procedure actIntervaCXPExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);

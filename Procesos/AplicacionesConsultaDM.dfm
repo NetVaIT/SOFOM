@@ -5,13 +5,13 @@ inherited dmAplicacionesConsulta: TdmAplicacionesConsulta
     CommandText = 
       'select PA.FechaAplicacion ,pa.importe, PR.FechaPago as FechaPago' +
       ','#13#10' PR.FolioPago, Pr.SeriePago,Cc.IdCuentaXCobrar NoCuentaXCobra' +
-      'r,'#13#10' CC.Fecha as FechaCXC ,P.RazonSocial as Cliente,CC.IDAnexo,A' +
-      '.DEscripcion Anexo,'#13#10'PA.IdPagoAplicacion, Pa.IdPago, PA.IdCFDI, ' +
-      'PA.IdPersonaCliente '#13#10'from PagosAplicaciones PA'#13#10'inner join Pago' +
-      's PR on PA.IdPago=PR.IdPago'#13#10'inner join CuentasXCobrar CC on PA.' +
-      'IdCuentaXCobrar =Cc.IdcuentaXCobrar'#13#10' inner join Anexos A on A.I' +
-      'dAnexo=cc.IdAnexo '#13#10'inner join Personas P on P.IdPersona =Cc.IdP' +
-      'ersona'
+      'r,'#13#10' CC.FechaVencimiento as FechaCXC ,P.RazonSocial as Cliente,C' +
+      'C.IDAnexo,A.DEscripcion Anexo,'#13#10'PA.IdPagoAplicacion, Pa.IdPago, ' +
+      'PA.IdCFDI, PA.IdPersonaCliente '#13#10'from PagosAplicaciones PA'#13#10'inne' +
+      'r join Pagos PR on PA.IdPago=PR.IdPago'#13#10'inner join CuentasXCobra' +
+      'r CC on PA.IdCuentaXCobrar =Cc.IdcuentaXCobrar'#13#10' inner join Anex' +
+      'os A on A.IdAnexo=cc.IdAnexo '#13#10'inner join Personas P on P.IdPers' +
+      'ona =Cc.IdPersona'
     object adodsMasterCliente: TStringField
       FieldName = 'Cliente'
       Size = 300
@@ -73,6 +73,11 @@ inherited dmAplicacionesConsulta: TdmAplicacionesConsulta
     Left = 328
     Top = 8
   end
+  inherited ActionList: TActionList
+    object ActAplicaMoratorioInteno: TAction
+      OnExecute = ActAplicaMoratorioIntenoExecute
+    end
+  end
   object ADOQryAuxiliar: TADOQuery
     Connection = _dmConection.ADOConnection
     Parameters = <>
@@ -84,13 +89,13 @@ inherited dmAplicacionesConsulta: TdmAplicacionesConsulta
     CursorType = ctStatic
     CommandText = 
       'select IDPagoAplicacionInterna, PAI.IDPagoAplicacion,'#13#10'PAI.IdCue' +
-      'ntaXCobrarDetalle,  CXC.Fecha fechaCXC, CCd.Descripcion as ItemC' +
-      'XC , ccd.Saldo saldoCXC,'#13#10' PAI.IDCFDI, IDCFDIConcepto,'#13#10'PAI.Impo' +
-      'rte ImportePagado'#13#10#13#10' from PagosAplicacionesInternas PAI'#13#10' inner' +
-      ' join CuentasXCobrarDetalle CCD '#13#10'          on ccd.IdCuentaXCobr' +
-      'arDEtalle=PAI.IdCuentaXCobrarDEtalle'#13#10' inner join CuentasXCobrar' +
-      ' CXC  '#13#10'          on CXC.IdCuentaXCobrar=CCD.IdCuentaXCobrar'#13#10' w' +
-      'here'#13#10' IDPagoAplicacion=:IDPagoAplicacion'
+      'ntaXCobrarDetalle,  CXC.FechaVencimiento fechaCXC, CCd.Descripci' +
+      'on as ItemCXC , ccd.Saldo saldoCXC,'#13#10' PAI.IDCFDI, IDCFDIConcepto' +
+      ','#13#10'PAI.Importe ImportePagado'#13#10#13#10' from PagosAplicacionesInternas ' +
+      'PAI'#13#10' inner join CuentasXCobrarDetalle CCD '#13#10'          on ccd.Id' +
+      'CuentaXCobrarDEtalle=PAI.IdCuentaXCobrarDEtalle'#13#10' inner join Cue' +
+      'ntasXCobrar CXC  '#13#10'          on CXC.IdCuentaXCobrar=CCD.IdCuenta' +
+      'XCobrar'#13#10' where'#13#10' IDPagoAplicacion=:IDPagoAplicacion'
     DataSource = DSMaster
     IndexFieldNames = 'IDPagoAplicacion'
     MasterFields = 'IDPagoAplicacion'

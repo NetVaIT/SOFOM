@@ -14,8 +14,8 @@ inherited frmAbonarCapitalEdit: TfrmAbonarCapitalEdit
     ClientRectBottom = 337
     ClientRectRight = 692
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 2
-      ExplicitTop = 28
+      ExplicitLeft = 3
+      ExplicitTop = 30
       ExplicitWidth = 690
       ExplicitHeight = 309
       object cxLabel3: TcxLabel
@@ -119,6 +119,7 @@ inherited frmAbonarCapitalEdit: TfrmAbonarCapitalEdit
             end
             object tvMasterSaldoInsoluto: TcxGridDBColumn
               DataBinding.FieldName = 'SaldoInsoluto'
+              Width = 113
             end
           end
           object cxGridLevel1: TcxGridLevel
@@ -131,8 +132,11 @@ inherited frmAbonarCapitalEdit: TfrmAbonarCapitalEdit
   inherited pmlMain: TPanel
     Top = 339
     Width = 694
-    ExplicitTop = 339
+    ExplicitTop = 343
     ExplicitWidth = 694
+    DesignSize = (
+      694
+      41)
     inherited btnCancel: TButton
       Left = 612
       ExplicitLeft = 612

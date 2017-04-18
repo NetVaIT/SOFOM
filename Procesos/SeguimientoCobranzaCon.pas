@@ -82,7 +82,7 @@ begin
   DSCXCPendientes.DataSet.open;
   //dsclientes.DataSet.open;
   DSConIncidencias.DataSet.open;
-  ApplyBestFit:=False;
+//  ApplyBestFit:=False;
 
 end;
 

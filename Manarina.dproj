@@ -863,7 +863,7 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\AbonarCapitalDM.pas">
-            <Form>dmAbonarCapital</Form>
+            <Form>aram</Form>
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>

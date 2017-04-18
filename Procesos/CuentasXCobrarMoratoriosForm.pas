@@ -46,6 +46,7 @@ type
     tvMasterIdCuentaXCobrarBase: TcxGridDBColumn;
     tvMasterDescripcion: TcxGridDBColumn;
     tvMasterIdCFDI: TcxGridDBColumn;
+    tvMasterFechaVencimiento: TcxGridDBColumn;
   private
     { Private declarations }
   public

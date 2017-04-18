@@ -191,7 +191,7 @@ uses
   SeguimientoCobranzaCon in 'Procesos\SeguimientoCobranzaCon.pas' {FrmSeguimientoCobranza},
   SeguimientoCobranzaDM in 'Procesos\SeguimientoCobranzaDM.pas' {dmSeguimientoCobranza: TDataModule},
   SeguimientoRegistroEd in 'Procesos\SeguimientoRegistroEd.pas' {FrmSeguimientoRegistro},
-  AbonarCapitalDM in 'Procesos\AbonarCapitalDM.pas' {dmAbonarCapital: TDataModule},
+  AbonarCapitalDM in 'Procesos\AbonarCapitalDM.pas' {aram: TDataModule},
   AbonarCapitalEdit in 'Procesos\AbonarCapitalEdit.pas' {frmAbonarCapitalEdit},
   _ReportSOFOMDM in 'Standard\_ReportSOFOMDM.pas' {_dmReportSOFOM: TDataModule},
   PDFAntiguedadSaldosDM in 'Reportes\PDFAntiguedadSaldosDM.pas' {dmAntiguedadSaldosPDF: TDataModule},

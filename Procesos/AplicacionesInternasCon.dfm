@@ -4,6 +4,7 @@ inherited frmConAplicacionesInternas: TfrmConAplicacionesInternas
   ClientHeight = 428
   ClientWidth = 862
   ExplicitWidth = 868
+  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -27,12 +28,13 @@ inherited frmConAplicacionesInternas: TfrmConAplicacionesInternas
   inherited pnlMaster: TPanel
     Width = 862
     Height = 224
-    ExplicitWidth = 868
+    ExplicitWidth = 862
     ExplicitHeight = 224
     inherited cxGrid: TcxGrid
       Width = 862
       Height = 224
-      ExplicitWidth = 868
+      ExplicitTop = -3
+      ExplicitWidth = 862
       ExplicitHeight = 224
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIDPagoAplicacionInterna: TcxGridDBColumn
@@ -75,28 +77,28 @@ inherited frmConAplicacionesInternas: TfrmConAplicacionesInternas
     Top = 346
     Width = 862
     ExplicitTop = 346
-    ExplicitWidth = 868
+    ExplicitWidth = 862
   end
   inherited pnlDetail2: TPanel
     Top = 302
     Width = 862
     ExplicitTop = 302
-    ExplicitWidth = 868
+    ExplicitWidth = 862
   end
   inherited pnlDetail1: TPanel
     Top = 258
     Width = 862
     ExplicitTop = 258
-    ExplicitWidth = 868
+    ExplicitWidth = 862
   end
   inherited pnlClose: TPanel
     Top = 387
     Width = 862
     ExplicitTop = 387
-    ExplicitWidth = 868
+    ExplicitWidth = 862
     inherited btnClose: TButton
       Left = 777
-      ExplicitLeft = 783
+      ExplicitLeft = 777
     end
   end
   inherited DataSource: TDataSource
@@ -124,6 +126,7 @@ inherited frmConAplicacionesInternas: TfrmConAplicacionesInternas
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42739.414081597220000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

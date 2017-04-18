@@ -68,6 +68,7 @@ type
     ADODtstTelefonoCliente: TADODataSet;
     ADODtStTelContacto: TADODataSet;
     ADODtSTCXCPendIdCFDI: TLargeintField;
+    ADODtSTCXCPendFechaVencimiento: TDateTimeField;
     procedure DataModuleCreate(Sender: TObject);
     procedure ADODtStIncidenciasNewRecord(DataSet: TDataSet);
   private

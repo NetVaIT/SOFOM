@@ -1,6 +1,6 @@
 inherited dmPagos: TdmPagos
   OldCreateOrder = True
-  Height = 593
+  Height = 715
   Width = 1167
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
@@ -128,6 +128,10 @@ inherited dmPagos: TdmPagos
       ImageIndex = 13
       OnExecute = actAbonarCapitalExecute
     end
+    object actCrearCXCAbonoCapital: TAction
+      Caption = 'Abono a Capital'
+      OnExecute = actCrearCXCAbonoCapitalExecute
+    end
   end
   object ADOSPersonas: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -251,9 +255,12 @@ inherited dmPagos: TdmPagos
       'rajeCFDI'#13#10' from CuentasXCobrar CXC  '#13#10'left Join CFDI CI on CI.Id' +
       'CFDI= CXC.IdCFDI where '#13#10' Saldo >0 and IDPersona=:IdPersonaClien' +
       'te '#13#10'and ((IdCuentaXCobrarEstatus=0 and  ESMoratorio=0)'#13#10'or( Esm' +
-      'oratorio=1))-- IdCuentaXCobrarEstatus=-1 and puede que esten fac' +
-      'turadas'#13#10' and CXC.IDAnexo=:IdAnexo'#13#10'order by CXC.idanexosamortiz' +
-      'aciones,EsMoratorio DEsc, CXC.Fecha'
+      'oratorio=1)'#13#10'or (exists (select * from CuentasXCobrarDetalle CXC' +
+      'D where CXCD.descripcion like'#39'%Abono Capital%'#39' and CXC.IdCuentaX' +
+      'Cobrar=CXCD.idcuentaXCobrar )'#13#10'and CXC.IdCFDI is null) )-- IdCue' +
+      'ntaXCobrarEstatus=-1 and puede que esten facturadas'#13#10' and CXC.ID' +
+      'Anexo=:IdAnexo'#13#10'order by CXC.idanexosamortizaciones,EsMoratorio ' +
+      'DEsc, CXC.FechaVencimiento'
     DataSource = DSMaster
     IndexFieldNames = 'IdPersona;IdAnexo'
     MasterFields = 'IdPersonaCliente;IdAnexo'
@@ -355,6 +362,10 @@ inherited dmPagos: TdmPagos
     end
     object ADODtStCXCPendientesEsMoratorio: TBooleanField
       FieldName = 'EsMoratorio'
+    end
+    object ADODtStCXCPendientesFechaVencimiento: TDateTimeField
+      DisplayLabel = 'Fecha Vencimiento'
+      FieldName = 'FechaVencimiento'
     end
   end
   object ADODtStCxCDetallePend: TADODataSet
@@ -823,17 +834,20 @@ inherited dmPagos: TdmPagos
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@IdAnexo'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end
       item
         Name = '@Fecha'
         Attributes = [paNullable]
         DataType = ftDateTime
+        Value = Null
       end>
     Left = 48
     Top = 528
@@ -1391,8 +1405,9 @@ inherited dmPagos: TdmPagos
       'SElect SUM(CXCD.Saldo) as IVAReg  from CuentasXCobrarDetalle  CX' +
       'CD   -- para confirmar valor de IVA'#13#10'inner join CuentasXCobrarTi' +
       'posConceptos CXCTC on CXCD.IdCuentaXCobrarTipo=CXCTC.IdCuentaXCo' +
-      'brarTipo'#13#10' where CXCTC.Facturar=1 and CXCTC.EsIVA =1 and CXCTC.E' +
-      'sMoratorios=1'#13#10'and CXCD.IdCuentaXCobrar =:IDCuentaXCobrar'
+      'brarTipo'#13#10' where CXCTC.Facturar=1 and CXCTC.EsIVA =1 and'#13#10' ((CXC' +
+      'TC.EsMoratorios=1) or(CXCTC.Descripcion like '#39'%Abono Capital%'#39'))' +
+      #13#10'and CXCD.IdCuentaXCobrar =:IDCuentaXCobrar'
     Parameters = <
       item
         Name = 'IDCuentaXCobrar'
@@ -1926,5 +1941,136 @@ inherited dmPagos: TdmPagos
     object DetallesCXCParaFacturarMoraEsMoratorios: TBooleanField
       FieldName = 'EsMoratorios'
     end
+  end
+  object ADOPActualizaTotalesCXC: TADOStoredProc
+    Connection = _dmConection.ADOConnection
+    ProcedureName = 'p_UpdCuentasXCobrarTotales;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@IdCuentaXCobrar'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+      end>
+    Left = 248
+    Top = 528
+  end
+  object adoqAnexosSel: TADOQuery
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    Parameters = <
+      item
+        Name = 'IdAnexo'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    SQL.Strings = (
+      
+        'SELECT        Contratos.IdContrato, Contratos.IdPersona, Contrat' +
+        'os.IdContratoTipo, Anexos.IdAnexo,'
+      
+        'Contratos.Identificador AS Contrato, Anexos.Identificador AS Ane' +
+        'xo, Personas.RazonSocial AS Cliente, Anexos.SaldoInsoluto'
+      'FROM            Anexos INNER JOIN'
+      
+        '                         Contratos ON Anexos.IdContrato = Contra' +
+        'tos.IdContrato INNER JOIN'
+      
+        '                         Personas ON Contratos.IdPersona = Perso' +
+        'nas.IdPersona'
+      
+        'WHERE        (Anexos.MontoVencido = 0) AND (Anexos.SaldoInsoluto' +
+        ' >= 0)'
+      'and Anexos.idanexo=:IdAnexo --Abr 17/17')
+    Left = 56
+    Top = 624
+    object adoqAnexosSelIdContrato: TAutoIncField
+      FieldName = 'IdContrato'
+      ReadOnly = True
+      Visible = False
+    end
+    object adoqAnexosSelIdPersona: TIntegerField
+      FieldName = 'IdPersona'
+      Visible = False
+    end
+    object adoqAnexosSelIdContratoTipo: TIntegerField
+      FieldName = 'IdContratoTipo'
+      Visible = False
+    end
+    object adoqAnexosSelIdAnexo: TAutoIncField
+      FieldName = 'IdAnexo'
+      ReadOnly = True
+      Visible = False
+    end
+    object adoqAnexosSelContrato: TStringField
+      FieldName = 'Contrato'
+    end
+    object adoqAnexosSelAnexo: TStringField
+      FieldName = 'Anexo'
+      Size = 5
+    end
+    object adoqAnexosSelCliente: TStringField
+      FieldName = 'Cliente'
+      Size = 300
+    end
+    object adoqAnexosSelSaldoInsoluto: TFMTBCDField
+      DisplayLabel = 'Saldo insoluto'
+      FieldName = 'SaldoInsoluto'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+  end
+  object adopCXCAbonarCapital: TADOStoredProc
+    Connection = _dmConection.ADOConnection
+    ProcedureName = 'p_SetCuentasXCobrarAbonarCapital;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@IdAnexo'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@Fecha'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Value = Null
+      end
+      item
+        Name = '@ImporteCapital'
+        Attributes = [paNullable]
+        DataType = ftBCD
+        NumericScale = 6
+        Precision = 18
+        Value = Null
+      end
+      item
+        Name = '@IdCuentaXCobrar'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Direction = pdInputOutput
+        Precision = 10
+        Value = Null
+      end>
+    Left = 216
+    Top = 624
   end
 end

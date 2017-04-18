@@ -4,6 +4,7 @@ inherited frmFacturasGrid: TfrmFacturasGrid
   ClientHeight = 428
   ClientWidth = 935
   ExplicitWidth = 941
+  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -29,12 +30,12 @@ inherited frmFacturasGrid: TfrmFacturasGrid
     Width = 935
     Height = 180
     ExplicitTop = 75
-    ExplicitWidth = 809
+    ExplicitWidth = 935
     ExplicitHeight = 180
     inherited cxGrid: TcxGrid
       Width = 935
       Height = 180
-      ExplicitWidth = 809
+      ExplicitWidth = 935
       ExplicitHeight = 180
       inherited tvMaster: TcxGridDBTableView
         OptionsCustomize.ColumnFiltering = False
@@ -114,11 +115,16 @@ inherited frmFacturasGrid: TfrmFacturasGrid
         object tvMasterEstatus: TcxGridDBColumn
           DataBinding.FieldName = 'Estatus'
         end
+        object tvMasterUUID_TB: TcxGridDBColumn
+          Caption = 'UUID'
+          DataBinding.FieldName = 'UUID_TB'
+        end
         object tvMasterLugarExpedicion: TcxGridDBColumn
           DataBinding.FieldName = 'LugarExpedicion'
         end
         object tvMasterSello: TcxGridDBColumn
           DataBinding.FieldName = 'Sello'
+          Visible = False
         end
         object tvMasterCondPago: TcxGridDBColumn
           DataBinding.FieldName = 'CondPago'
@@ -180,9 +186,6 @@ inherited frmFacturasGrid: TfrmFacturasGrid
           DataBinding.FieldName = 'EmailCliente'
           Visible = False
         end
-        object tvMasterUUID_TB: TcxGridDBColumn
-          DataBinding.FieldName = 'UUID_TB'
-        end
         object tvMasterSelloCFD_TB: TcxGridDBColumn
           DataBinding.FieldName = 'SelloCFD_TB'
           Visible = False
@@ -210,31 +213,31 @@ inherited frmFacturasGrid: TfrmFacturasGrid
     Top = 346
     Width = 935
     ExplicitTop = 346
-    ExplicitWidth = 809
+    ExplicitWidth = 935
   end
   inherited pnlDetail2: TPanel
     Top = 302
     Width = 935
     ExplicitTop = 302
-    ExplicitWidth = 809
+    ExplicitWidth = 935
   end
   inherited pnlDetail1: TPanel
     Top = 258
     Width = 935
     ExplicitTop = 258
-    ExplicitWidth = 809
+    ExplicitWidth = 935
   end
   inherited pnlClose: TPanel
     Top = 387
     Width = 935
     ExplicitTop = 387
-    ExplicitWidth = 809
+    ExplicitWidth = 935
     DesignSize = (
       935
       41)
     inherited btnClose: TButton
       Left = 850
-      ExplicitLeft = 724
+      ExplicitLeft = 850
     end
   end
   object PnlBusqueda: TPanel [8]
@@ -245,7 +248,6 @@ inherited frmFacturasGrid: TfrmFacturasGrid
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 9
-    ExplicitWidth = 809
     DesignSize = (
       935
       44)
@@ -259,7 +261,6 @@ inherited frmFacturasGrid: TfrmFacturasGrid
       Caption = 'Cerrar'
       TabOrder = 0
       OnClick = btnCloseClick
-      ExplicitLeft = 726
     end
     object Panel1: TPanel
       Left = 0
@@ -295,8 +296,6 @@ inherited frmFacturasGrid: TfrmFacturasGrid
       BevelOuter = bvNone
       ParentBackground = False
       TabOrder = 2
-      ExplicitTop = -6
-      ExplicitWidth = 610
       object Label1: TLabel
         Left = 21
         Top = 4
@@ -353,6 +352,7 @@ inherited frmFacturasGrid: TfrmFacturasGrid
         Checked = True
         State = cbChecked
         TabOrder = 2
+        OnClick = SpdBtnBuscarClick
       end
       object ChckBxFactVivas: TCheckBox
         Left = 461
@@ -361,6 +361,7 @@ inherited frmFacturasGrid: TfrmFacturasGrid
         Height = 17
         Caption = 'Facturas con Saldo'
         TabOrder = 3
+        OnClick = SpdBtnBuscarClick
       end
     end
   end

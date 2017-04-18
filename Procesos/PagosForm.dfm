@@ -316,7 +316,7 @@ inherited FrmConPagos: TFrmConPagos
     object dxbbAbonarCapital: TdxBarButton
       Caption = 'Abonar capital'
       Category = 0
-      Visible = ivAlways
+      Visible = ivNever
       ImageIndex = 13
       PaintStyle = psCaptionGlyph
     end
@@ -1100,6 +1100,7 @@ inherited FrmConPagos: TFrmConPagos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42712.575441516200000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

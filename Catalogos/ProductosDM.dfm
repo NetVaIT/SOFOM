@@ -217,7 +217,6 @@ inherited dmProductos: TdmProductos
     end
   end
   object adodsTipos: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdProductoTipo, Descripcion from ProductosTipos'
@@ -226,7 +225,6 @@ inherited dmProductos: TdmProductos
     Top = 80
   end
   object adodsMarcas: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdMarca, Descripcion from Marcas'
@@ -235,7 +233,6 @@ inherited dmProductos: TdmProductos
     Top = 136
   end
   object adodsFamilias: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdFamila, Descripcion from Familias'
@@ -244,7 +241,6 @@ inherited dmProductos: TdmProductos
     Top = 184
   end
   object adodsEstatus: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdProductoEstatus, Descripcion from ProductosEstatus'
@@ -253,7 +249,6 @@ inherited dmProductos: TdmProductos
     Top = 240
   end
   object adodsMonedas: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdMoneda, Descripcion from Monedas'#13#10'order by Descripcion'

@@ -28,13 +28,12 @@ inherited frmConCXCMoratorios: TfrmConCXCMoratorios
   inherited pnlMaster: TPanel
     Width = 771
     Height = 224
-    ExplicitWidth = 645
+    ExplicitWidth = 771
     ExplicitHeight = 224
     inherited cxGrid: TcxGrid
       Width = 771
       Height = 224
-      ExplicitTop = -3
-      ExplicitWidth = 645
+      ExplicitWidth = 771
       ExplicitHeight = 224
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdCuentaXCobrar: TcxGridDBColumn
@@ -55,8 +54,14 @@ inherited frmConCXCMoratorios: TfrmConCXCMoratorios
           Width = 120
         end
         object tvMasterFecha: TcxGridDBColumn
+          Caption = 'Fecha Registro'
           DataBinding.FieldName = 'Fecha'
+          Visible = False
           Width = 90
+        end
+        object tvMasterFechaVencimiento: TcxGridDBColumn
+          Caption = 'Fecha Vencimiento'
+          DataBinding.FieldName = 'FechaVencimiento'
         end
         object tvMasterDescripcion: TcxGridDBColumn
           DataBinding.FieldName = 'Descripcion'
@@ -105,28 +110,28 @@ inherited frmConCXCMoratorios: TfrmConCXCMoratorios
     Top = 346
     Width = 771
     ExplicitTop = 346
-    ExplicitWidth = 645
+    ExplicitWidth = 771
   end
   inherited pnlDetail2: TPanel
     Top = 302
     Width = 771
     ExplicitTop = 302
-    ExplicitWidth = 645
+    ExplicitWidth = 771
   end
   inherited pnlDetail1: TPanel
     Top = 258
     Width = 771
     ExplicitTop = 258
-    ExplicitWidth = 645
+    ExplicitWidth = 771
   end
   inherited pnlClose: TPanel
     Top = 387
     Width = 771
     ExplicitTop = 387
-    ExplicitWidth = 645
+    ExplicitWidth = 771
     inherited btnClose: TButton
       Left = 686
-      ExplicitLeft = 560
+      ExplicitLeft = 686
     end
   end
   inherited DataSource: TDataSource
@@ -148,6 +153,7 @@ inherited frmConCXCMoratorios: TfrmConCXCMoratorios
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42821.676877581020000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

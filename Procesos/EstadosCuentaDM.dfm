@@ -151,19 +151,20 @@ inherited dmEstadosCuenta: TdmEstadosCuenta
     CursorType = ctStatic
     CommandText = 
       'select A.IdContrato,A.SaldoInsoluto,A.CapitalCobrado,  '#13#10'CT.Iden' +
-      'tificador AS TipoContrato,'#13#10'C.IdPersona,  c.Fecha, c.Total as to' +
-      'talCXC, c.IdAnexo,'#13#10' c.idcuentaXCobrar'#13#10'--, T.Acumula, t.Acumula' +
-      'AQuien, T.BaseIVA, T.EsIVA, T.Fase,'#13#10'-- t.IdTipoContrato '#13#10',con.' +
-      'IdPersona idpercontrato'#13#10' from Contratos con'#13#10'inner join Anexos ' +
-      'A on A.IdContrato=con.IdContrato'#13#10'inner join CuentasXCobrar C on' +
-      ' c.IdAnexo=A.IdAnexo'#13#10'inner join  ContratosTipos CT on CT.IdCont' +
-      'ratoTipo=con.IdContratoTipo'#13#10'--inner join CuentasXCobrarTiposCon' +
-      'ceptos T  on t.IdCuentaXCobrarTipo=CT.IdContratoTipo'#13#10'-- and  t.' +
-      'EstadoCuenta=1 '#13#10'and  C.idCuentaXCobrarEstatus=0 -- Pendiente'#13#10'a' +
-      'nd A.IDContrato=:IDContrato -- feb 20/17'#13#10'and c.Fecha>=:FechaCor' +
-      'teUlt  and c.Fecha <=:FechaCorte '#13#10'-- and c.IdCuentaXCobrar not ' +
-      'in (2,3,4)'#13#10'Order by C.IdPersona, A.idContrato,A.IdAnexo, c.Fech' +
-      'a,  C.IdCuentaXCobrar'#13#10
+      'tificador AS TipoContrato,'#13#10'C.IdPersona,  c.Fecha,c.FechaVencimi' +
+      'ento , c.Total as totalCXC, c.IdAnexo,'#13#10' c.idcuentaXCobrar'#13#10'--, ' +
+      'T.Acumula, t.AcumulaAQuien, T.BaseIVA, T.EsIVA, T.Fase,'#13#10'-- t.Id' +
+      'TipoContrato '#13#10',con.IdPersona idpercontrato'#13#10' from Contratos con' +
+      #13#10'inner join Anexos A on A.IdContrato=con.IdContrato'#13#10'inner join' +
+      ' CuentasXCobrar C on c.IdAnexo=A.IdAnexo'#13#10'inner join  ContratosT' +
+      'ipos CT on CT.IdContratoTipo=con.IdContratoTipo'#13#10'--inner join Cu' +
+      'entasXCobrarTiposConceptos T  on t.IdCuentaXCobrarTipo=CT.IdCont' +
+      'ratoTipo'#13#10'-- and  t.EstadoCuenta=1 '#13#10'and  C.idCuentaXCobrarEstat' +
+      'us=0 -- Pendiente'#13#10'and A.IDContrato=:IDContrato -- feb 20/17'#13#10'an' +
+      'd c.FechaVencimiento>=:FechaCorteUlt  and c.FechaVencimiento <=:' +
+      'FechaCorte '#13#10'-- and c.IdCuentaXCobrar not in (2,3,4)         -- ' +
+      'FV abr 11/17'#13#10'Order by C.IdPersona, A.idContrato,A.IdAnexo, c.Fe' +
+      'chaVencimiento,  C.IdCuentaXCobrar'#13#10
     MasterFields = 'IDContrato'
     Parameters = <
       item
@@ -222,6 +223,10 @@ inherited dmEstadosCuenta: TdmEstadosCuenta
     end
     object ADODtStDatosCXCidpercontrato: TIntegerField
       FieldName = 'idpercontrato'
+    end
+    object ADODtStDatosCXCFechaVencimiento: TDateTimeField
+      DisplayLabel = 'Fecha Vencimiento'
+      FieldName = 'FechaVencimiento'
     end
   end
   object ADODtStDatosPagos: TADODataSet

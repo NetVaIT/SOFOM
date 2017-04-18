@@ -31,13 +31,22 @@ type
     { Private declarations }
     frmAbonarCapitalEdit: TfrmAbonarCapitalEdit;
     FPaymentTime: TPaymentTime;
+    FIdAnexo: integer;
+    FImporteAct: integer;
+    FFechaAct: TDateTime;
     procedure SetPaymentTime(const Value: TPaymentTime);
     function AbonarCapital(IdAnexo, IdTipoContrato: Integer; Fecha: TDateTime; Importe: Extended;
     Tipo: TAbonoCapital): Boolean;
+    procedure SetFFechaAct(const Value: TDateTime);
+    procedure SetFIdAnexo(const Value: integer);
+    procedure SetFImporteAct(const Value: integer);
     property PaymentTime: TPaymentTime read FPaymentTime write SetPaymentTime;
   public
     { Public declarations }
     function Execute: Boolean;
+    property idAnexoAct: integer read  FIdAnexo write  SetFIdAnexo; //Abr 17/17
+    property FechaAct: TDateTime read  FFechaAct write  SetFFechaAct; //Abr 17/17
+    property ImporteAct: integer read  FImporteAct write  SetFImporteAct; //Abr 17/17
   end;
 
 implementation
@@ -50,20 +59,20 @@ implementation
 
 function TdmAbonarCapital.AbonarCapital(IdAnexo, IdTipoContrato: Integer; Fecha: TDateTime;
   Importe: Extended; Tipo: TAbonoCapital): Boolean;
-var
+var                                                        //No se usa
   dmAmortizaciones: TdmAmortizaciones;
   IdCuentaXCobrar: Integer;
 begin
   Result := False;
 //  // Crear CXC
-  adopCXCAbonarCapital.Parameters.ParamByName('@IdAnexo').Value := IdAnexo;
-  adopCXCAbonarCapital.Parameters.ParamByName('@Fecha').Value := Fecha;
-  adopCXCAbonarCapital.Parameters.ParamByName('@ImporteCapital').Value := Importe;
-  adopCXCAbonarCapital.ExecProc;
-  IdCuentaXCobrar := adopCXCAbonarCapital.Parameters.ParamByName('@IdCuentaXCobrar').Value;
-  //IdCuentaXCobrar :=  10;
+//  adopCXCAbonarCapital.Parameters.ParamByName('@IdAnexo').Value := IdAnexo;
+//  adopCXCAbonarCapital.Parameters.ParamByName('@Fecha').Value := Fecha;
+//  adopCXCAbonarCapital.Parameters.ParamByName('@ImporteCapital').Value := Importe;
+// adopCXCAbonarCapital.ExecProc;
+//  IdCuentaXCobrar := adopCXCAbonarCapital.Parameters.ParamByName('@IdCuentaXCobrar').Value;
+ IdCuentaXCobrar :=  10;
   // Ajustar amortizaciones
-  if IdCuentaXCobrar > 0 then
+ if IdCuentaXCobrar > 0 then
   begin
     dmAmortizaciones := TdmAmortizaciones.Create(Self);
     try
@@ -96,12 +105,13 @@ var
   IdTipoContrato: Integer;
 begin
   Result:= False;
+  adoqAnexosSel.Parameters.ParamByName('IdAnexo').Value:= IdanexoAct;    //Abr 17/17
   adoqAnexosSel.Open;
   frmAbonarCapitalEdit := TfrmAbonarCapitalEdit.Create(Self);
   try
     frmAbonarCapitalEdit.DataSet:= adoqAnexosSel;
-    frmAbonarCapitalEdit.Fecha := Date;
-    frmAbonarCapitalEdit.Importe := 0;
+    frmAbonarCapitalEdit.Fecha := FechaAct; //Date;  //Abr 17/17
+    frmAbonarCapitalEdit.Importe := Importeact; //0;  //Abr 17/17
     frmAbonarCapitalEdit.Tipo:= Ord(acReducirCuota);
     if frmAbonarCapitalEdit.Execute then
     begin
@@ -114,6 +124,21 @@ begin
     frmAbonarCapitalEdit.Free;
     adoqAnexosSel.Close;
   end;
+end;
+
+procedure TdmAbonarCapital.SetFFechaAct(const Value: TDateTime);
+begin
+  FFechaAct := Value;
+end;
+
+procedure TdmAbonarCapital.SetFIdAnexo(const Value: integer);
+begin
+  FIdAnexo := Value;
+end;
+
+procedure TdmAbonarCapital.SetFImporteAct(const Value: integer);
+begin
+  FImporteAct := Value;
 end;
 
 procedure TdmAbonarCapital.SetPaymentTime(const Value: TPaymentTime);

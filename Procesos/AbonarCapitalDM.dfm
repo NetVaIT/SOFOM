@@ -76,7 +76,15 @@ inherited dmAbonarCapital: TdmAbonarCapital
   object adoqAnexosSel: TADOQuery
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
-    Parameters = <>
+    Parameters = <
+      item
+        Name = 'IdAnexo'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
     SQL.Strings = (
       
         'SELECT        Contratos.IdContrato, Contratos.IdPersona, Contrat' +
@@ -93,7 +101,8 @@ inherited dmAbonarCapital: TdmAbonarCapital
         'nas.IdPersona'
       
         'WHERE        (Anexos.MontoVencido = 0) AND (Anexos.SaldoInsoluto' +
-        ' >= 0)')
+        ' >= 0)'
+      'and Anexos.idanexo=:IdAnexo --Abr 17/17')
     Left = 120
     Top = 80
     object adoqAnexosSelIdContrato: TAutoIncField

@@ -10,9 +10,10 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       'select IdCuentaXCobrar, IdCuentaXCobrarEstatus, IdPersona,'#13#10' IdA' +
       'nexosAmortizaciones, CXC.Fecha, Importe, CXC.Impuesto,'#13#10'CXC. Int' +
       'eres, CXC.Total, Saldo, SaldoFactoraje, IdCFDI ,'#13#10'CXC.IdAnexo, C' +
-      'XC.IdCuentaXCobrarBase'#13#10'from CuentasXCobrar CXC '#13#10'where EsMorato' +
-      'rio=0'#13#10#13#10'order by   IdAnexo, IDAnexosAmortizaciones'#13#10#13#10'--where i' +
-      'dcuentaxcobrarEstatus =-1 -- precargada'
+      'XC.IdCuentaXCobrarBase,CXC.FechaVencimiento, EsMoratorio'#13#10'from C' +
+      'uentasXCobrar CXC '#13#10'where EsMoratorio=0'#13#10#13#10'order by   IdAnexo, I' +
+      'DAnexosAmortizaciones'#13#10#13#10'--where idcuentaxcobrarEstatus =-1 -- p' +
+      'recargada'
     Left = 48
     Top = 24
     object adodsMasterIdCuentaXCobrar: TAutoIncField
@@ -97,6 +98,12 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     object adodsMasterIdCuentaXCobrarBase: TIntegerField
       FieldName = 'IdCuentaXCobrarBase'
     end
+    object adodsMasterFechaVencimiento: TDateTimeField
+      FieldName = 'FechaVencimiento'
+    end
+    object adodsMasterEsMoratorio: TBooleanField
+      FieldName = 'EsMoratorio'
+    end
   end
   inherited adodsUpdate: TADODataSet
     Left = 328
@@ -113,6 +120,10 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     object ActGeneraCuentasXCobrar: TAction
       Caption = 'Generar CXC'
       OnExecute = ActGeneraCuentasXCobrarExecute
+    end
+    object ActTotalesCXC: TAction
+      Caption = 'TotalesCXC'
+      OnExecute = ActTotalesCXCExecute
     end
   end
   object ADOdsCXCDetalle: TADODataSet
@@ -869,11 +880,12 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     BeforeInsert = adodsMasterBeforeInsert
     CommandText = 
       'select IdCuentaXCobrar, IdCuentaXCobrarEstatus, IdPersona,'#13#10' IdA' +
-      'nexosAmortizaciones, CXC.Fecha, Importe, CXC.Impuesto,'#13#10'CXC. Int' +
-      'eres, CXC.Total, Saldo, SaldoFactoraje, IdCFDI ,'#13#10'CXC.IdAnexo, C' +
-      'XC.IdCuentaXCobrarBase, '#39'Inter'#233's Moratorio '#39' as Descripcion'#13#10'fro' +
-      'm CuentasXCobrar CXC '#13#10'where EsMoratorio =1 and CXC.IdCuentaXCob' +
-      'rarBase=:IdCuentaXCobrar'#13#10'order by   CXC.Fecha'#13#10#13#10
+      'nexosAmortizaciones, CXC.Fecha,CXC.FechaVencimiento,'#13#10' Importe, ' +
+      'CXC.Impuesto,'#13#10'CXC. Interes, CXC.Total, Saldo, SaldoFactoraje, I' +
+      'dCFDI ,'#13#10'CXC.IdAnexo, CXC.IdCuentaXCobrarBase, '#39'Inter'#233's Moratori' +
+      'o '#39' as Descripcion'#13#10'from CuentasXCobrar CXC '#13#10'where EsMoratorio ' +
+      '=1 and CXC.IdCuentaXCobrarBase=:IdCuentaXCobrar'#13#10'order by   CXC.' +
+      'Fecha'#13#10#13#10
     DataSource = DSMaster
     IndexFieldNames = 'IdCuentaXCobrarBase'
     MasterFields = 'IdCuentaXCobrar'
@@ -954,5 +966,29 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     object ADODTSTCXCMoratoriosIdCFDI: TLargeintField
       FieldName = 'IdCFDI'
     end
+    object ADODTSTCXCMoratoriosFechaVencimiento: TDateTimeField
+      FieldName = 'FechaVencimiento'
+    end
+  end
+  object ADOPActualizaTotalesCXC: TADOStoredProc
+    Connection = _dmConection.ADOConnection
+    ProcedureName = 'p_UpdCuentasXCobrarTotales;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@IdCuentaXCobrar'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end>
+    Left = 720
+    Top = 400
   end
 end

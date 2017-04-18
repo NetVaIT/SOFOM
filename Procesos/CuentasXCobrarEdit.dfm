@@ -74,8 +74,8 @@ inherited FrmEdCuentasXCobrar: TFrmEdCuentasXCobrar
         FocusControl = cxDBTextEdit5
       end
       object Label11: TLabel
-        Left = 192
-        Top = 64
+        Left = 483
+        Top = 67
         Width = 56
         Height = 13
         Caption = 'EstatusCXC'
@@ -88,6 +88,14 @@ inherited FrmEdCuentasXCobrar: TFrmEdCuentasXCobrar
         Height = 13
         Caption = 'Cliente'
         FocusControl = DBLookupComboBox2
+      end
+      object Label2: TLabel
+        Left = 192
+        Top = 64
+        Width = 89
+        Height = 13
+        Caption = 'Fecha Vencimiento'
+        FocusControl = cxDBDateEdit2
       end
       object cxDBDateEdit1: TcxDBDateEdit
         Left = 24
@@ -138,8 +146,8 @@ inherited FrmEdCuentasXCobrar: TFrmEdCuentasXCobrar
         Width = 121
       end
       object DBLookupComboBox1: TDBLookupComboBox
-        Left = 192
-        Top = 80
+        Left = 483
+        Top = 83
         Width = 209
         Height = 21
         DataField = 'EstatusCXC'
@@ -163,7 +171,6 @@ inherited FrmEdCuentasXCobrar: TFrmEdCuentasXCobrar
         Align = alBottom
         BevelKind = bkTile
         TabOrder = 8
-        ExplicitTop = 264
       end
       object cxDBLabel1: TcxDBLabel
         Left = 24
@@ -181,7 +188,14 @@ inherited FrmEdCuentasXCobrar: TFrmEdCuentasXCobrar
         Align = alBottom
         BevelKind = bkTile
         TabOrder = 10
-        ExplicitTop = 438
+      end
+      object cxDBDateEdit2: TcxDBDateEdit
+        Left = 192
+        Top = 80
+        DataBinding.DataField = 'FechaVencimiento'
+        DataBinding.DataSource = DataSource
+        TabOrder = 11
+        Width = 121
       end
     end
   end

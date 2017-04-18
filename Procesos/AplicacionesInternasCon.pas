@@ -40,6 +40,7 @@ type
     tvMasterItemCXC: TcxGridDBColumn;
     tvMastersaldoCXC: TcxGridDBColumn;
     tvMasterImportePagado: TcxGridDBColumn;
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -54,5 +55,11 @@ implementation
 {$R *.dfm}
 
 uses AplicacionesConsultaDM;
+
+procedure TfrmConAplicacionesInternas.FormCreate(Sender: TObject);
+begin
+  inherited;
+  applybestfit:=False;
+end;
 
 end.

@@ -57,15 +57,19 @@ type
     tvMasterCliente: TcxGridDBColumn;
     tvMasterIDAnexo: TcxGridDBColumn;
     tvMasterAnexo: TcxGridDBColumn;
+    SpdBtnAplicaMoraInt: TSpeedButton;
     procedure SpdBtnConsultaClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure RdGrpSeleccionClick(Sender: TObject);
   private
     ffiltroFec: String;
+    FAplicaMoraInt: TBasicAction;
+    procedure SetAplicaMoraInt(const Value: TBasicAction);
     { Private declarations }
   public
     { Public declarations }
     property filtroFecha:String read ffiltroFec write ffiltroFec; //Ene 5/17
+     property ActAplicaMoraInterno : TBasicAction read FAplicaMoraInt write SetAplicaMoraInt;
   end;
 
 var
@@ -106,9 +110,15 @@ begin
   case RdGrpSeleccion.itemindex of
     0:ffiltroFec:=' where PA.FechaAplicacion >=:Fini and PA.FechaAplicacion<= :FFin';// ' Where idCFDIEstatus=1'
     1:ffiltroFec:=' where PR.FechaPago >=:Fini and PR.FechaPago<= :FFin';
-    2:ffiltroFec:=' where CC.Fecha >=:Fini and CC.Fecha<= :FFin';
+    2:ffiltroFec:=' where CC.FechaVencimiento >=:Fini and CC.FechaVencimiento<= :FFin';    //Abr 11/17 FV
     3:ffiltroFec:='' ;    //Todos
   end;
+end;
+
+procedure TfrmConaplicaciones.SetAplicaMoraInt(const Value: TBasicAction);
+begin
+  FAplicaMoraInt := Value;
+  SpdBtnAplicaMoraInt.Action:=Value;
 end;
 
 procedure TfrmConaplicaciones.SpdBtnConsultaClick(Sender: TObject);
@@ -116,7 +126,7 @@ procedure TfrmConaplicaciones.SpdBtnConsultaClick(Sender: TObject);
 const
    TxtSQL='select PA.FechaAplicacion ,pa.importe, PR.FechaPago as FechaPago,'+
           ' PR.FolioPago, Pr.SeriePago,Cc.IdCuentaXCobrar NoCuentaXCobrar, '+
-          ' CC.Fecha as FechaCXC ,P.RazonSocial as Cliente,CC.IDAnexo,A.DEscripcion Anexo,'+
+          ' CC.FechaVencimiento as FechaCXC ,P.RazonSocial as Cliente,CC.IDAnexo,A.DEscripcion Anexo,'+   //FV abr 11/17
           ' PA.IdPagoAplicacion, Pa.IdPago, PA.IdCFDI, PA.IdPersonaCliente' +
           ' from PagosAplicaciones PA inner join Pagos PR on PA.IdPago=PR.IdPago' +
           ' inner join CuentasXCobrar CC on PA.IdCuentaXCobrar =Cc.IdcuentaXCobrar' +

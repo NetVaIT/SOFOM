@@ -24,6 +24,7 @@ object FrmAplicacionPago: TFrmAplicacionPago
     Height = 201
     Align = alTop
     TabOrder = 0
+    ExplicitTop = 63
     object Label3: TLabel
       Left = 174
       Top = 98
@@ -211,6 +212,34 @@ object FrmAplicacionPago: TFrmAplicacionPago
       ParentFont = False
       OnClick = SpdBtnActMoraFechaPagoClick
     end
+    object SpdBtnAbonoCapital: TSpeedButton
+      Left = 837
+      Top = 98
+      Width = 127
+      Height = 25
+      Caption = 'Abono a Capital'
+      Enabled = False
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clNavy
+      Font.Height = -12
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      Glyph.Data = {
+        76010000424D7601000000000000760000002800000020000000100000000100
+        04000000000000010000120B0000120B00001000000000000000000000000000
+        800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+        FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333033333
+        33333333373F33333333333330B03333333333337F7F33333333333330F03333
+        333333337F7FF3333333333330B00333333333337F773FF33333333330F0F003
+        333333337F7F773F3333333330B0B0B0333333337F7F7F7F3333333300F0F0F0
+        333333377F73737F33333330B0BFBFB03333337F7F33337F33333330F0FBFBF0
+        3333337F7333337F33333330BFBFBFB033333373F3333373333333330BFBFB03
+        33333337FFFFF7FF3333333300000000333333377777777F333333330EEEEEE0
+        33333337FFFFFF7FF3333333000000000333333777777777F33333330000000B
+        03333337777777F7F33333330000000003333337777777773333}
+      NumGlyphs = 2
+      ParentFont = False
+    end
     object cxDBTxtEdtImporteAplicar: TcxDBTextEdit
       Left = 376
       Top = 114
@@ -311,6 +340,8 @@ object FrmAplicacionPago: TFrmAplicacionPago
       DataController.Summary.FooterSummaryItems = <>
       DataController.Summary.SummaryGroups = <>
       OptionsBehavior.IncSearch = True
+      OptionsCustomize.ColumnFiltering = False
+      OptionsCustomize.ColumnSorting = False
       OptionsCustomize.ColumnsQuickCustomization = True
       OptionsData.Deleting = False
       OptionsData.Editing = False
@@ -339,7 +370,11 @@ object FrmAplicacionPago: TFrmAplicacionPago
       end
       object tvMasterFecha: TcxGridDBColumn
         DataBinding.FieldName = 'Fecha'
+        Visible = False
         Width = 125
+      end
+      object tvMasterFechaVencimiento: TcxGridDBColumn
+        DataBinding.FieldName = 'FechaVencimiento'
       end
       object tvMasterImporte: TcxGridDBColumn
         DataBinding.FieldName = 'Importe'
@@ -366,6 +401,7 @@ object FrmAplicacionPago: TFrmAplicacionPago
       object tvMasterSaldoFactoraje: TcxGridDBColumn
         Caption = 'Saldo Factoraje'
         DataBinding.FieldName = 'SaldoFactoraje'
+        Visible = False
       end
       object tvMasterSaldoDocumento: TcxGridDBColumn
         DataBinding.FieldName = 'SaldoDocumento'
@@ -373,6 +409,7 @@ object FrmAplicacionPago: TFrmAplicacionPago
       end
       object tvMasterSaldoFactorajeCFDI: TcxGridDBColumn
         DataBinding.FieldName = 'SaldoFactorajeCFDI'
+        Visible = False
         Width = 146
       end
       object tvMasterIdCuentaXCobrarBase: TcxGridDBColumn
@@ -647,12 +684,15 @@ object FrmAplicacionPago: TFrmAplicacionPago
       end
       object cxGridDBTableView1Importe: TcxGridDBColumn
         DataBinding.FieldName = 'Importe'
+        Width = 77
       end
       object cxGridDBTableView1PagosAplicados: TcxGridDBColumn
         DataBinding.FieldName = 'PagosAplicados'
+        Width = 90
       end
       object cxGridDBTableView1Saldo: TcxGridDBColumn
         DataBinding.FieldName = 'Saldo'
+        Width = 113
       end
       object cxGridDBTableView1PagosAplicadosFactoraje: TcxGridDBColumn
         DataBinding.FieldName = 'PagosAplicadosFactoraje'
@@ -675,6 +715,7 @@ object FrmAplicacionPago: TFrmAplicacionPago
   object dsConCXCPendientes: TDataSource
     DataSet = dmPagos.ADODtStCXCPendientes
     OnDataChange = dsConCXCPendientesDataChange
+    OnUpdateData = dsConCXCPendientesUpdateData
     Left = 708
     Top = 144
   end
@@ -691,8 +732,8 @@ object FrmAplicacionPago: TFrmAplicacionPago
   end
   object DSAuxiliar: TDataSource
     DataSet = dmPagos.ADOQryAuxiliar
-    Left = 940
-    Top = 128
+    Left = 988
+    Top = 120
   end
   object DSP_CalcMoratorioNueva: TDataSource
     Left = 940

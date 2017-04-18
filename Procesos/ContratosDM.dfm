@@ -499,7 +499,7 @@ inherited dmContratos: TdmContratos
         Value = 1
       end>
     Left = 616
-    Top = 176
+    Top = 168
     object adodsAnexosProductosIdAnexoProducto: TIntegerField
       FieldName = 'IdAnexoProducto'
       Visible = False

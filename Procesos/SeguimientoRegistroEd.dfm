@@ -313,8 +313,6 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
       Color = 16776176
       TabOrder = 2
       Visible = False
-      ExplicitLeft = 624
-      ExplicitHeight = 141
       object DBCtrlGrdContacto: TDBCtrlGrid
         Left = 2
         Top = 40
@@ -329,7 +327,6 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
         TabOrder = 0
         RowCount = 2
         OnPaintPanel = DBCtrlGrdContactoPaintPanel
-        ExplicitHeight = 73
         object Label3: TLabel
           Left = 37
           Top = 3
@@ -753,8 +750,6 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
     Height = 188
     Align = alClient
     TabOrder = 2
-    ExplicitTop = 113
-    ExplicitHeight = 228
     object PnlSoloIncidencias: TPanel
       Left = 1
       Top = 86
@@ -763,7 +758,6 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
       Align = alBottom
       TabOrder = 0
       Visible = False
-      ExplicitTop = 126
       object DBGrid1: TDBGrid
         Left = 1
         Top = 30
@@ -1018,6 +1012,12 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
         item
           Expanded = False
           FieldName = 'Fecha'
+          Visible = False
+        end
+        item
+          Expanded = False
+          FieldName = 'FechaVencimiento'
+          Title.Caption = 'Fecha Vencimiento'
           Visible = True
         end
         item
@@ -1027,9 +1027,9 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
         end
         item
           Expanded = False
-          FieldName = 'IdCFDINormal'
-          Width = 75
-          Visible = True
+          FieldName = 'IdCFDI'
+          Width = -1
+          Visible = False
         end
         item
           Expanded = False
@@ -1270,8 +1270,6 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
       Font.Style = []
       ParentFont = False
       TabOrder = 1
-      ExplicitLeft = 5
-      ExplicitTop = 34
       object Label16: TLabel
         Left = 26
         Top = 11
