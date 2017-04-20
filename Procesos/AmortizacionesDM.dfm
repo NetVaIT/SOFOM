@@ -333,6 +333,14 @@ inherited dmAmortizaciones: TdmAmortizaciones
         Precision = 10
         Size = 4
         Value = Null
+      end
+      item
+        Name = 'Fecha'
+        DataType = ftDateTime
+        NumericScale = 3
+        Precision = 23
+        Size = 16
+        Value = Null
       end>
     SQL.Strings = (
       
@@ -363,7 +371,9 @@ inherited dmAmortizaciones: TdmAmortizaciones
         ' = AnexosCreditos.IdAnexoCredito'
       'WHERE AnexosCreditos.IdAnexoCreditoEstatus = 1 '
       'AND AnexosCreditos.IdAnexo = :IdAnexo'
-      'AND AnexosAmortizaciones.FechaVencimiento >= GETDATE()')
+      
+        'AND AnexosAmortizaciones.FechaVencimiento >=:Fecha  -- abr 19/17' +
+        ' GETDATE()')
     Left = 216
     Top = 88
     object adoqAnexosAmortizacionesIdAnexoAmortizacion: TAutoIncField

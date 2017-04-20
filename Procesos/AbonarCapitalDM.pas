@@ -78,7 +78,7 @@ begin
     try
       dmAmortizaciones.PaymentTime := PaymentTime;
       dmAmortizaciones.TipoContrato:= TCTipoContrato(IdTipoContrato);
-      Result := dmAmortizaciones.SetAmortizaciones(IdAnexo, Importe, Tipo);
+      Result := dmAmortizaciones.SetAmortizaciones(IdAnexo, Importe, Tipo, Fecha);  //No usada
     finally
       dmAmortizaciones.Free;
     end;

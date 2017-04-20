@@ -128,7 +128,7 @@ type
     function GenAnexosAmortizaciones(IdAnexoCredito: Integer;
       FechaPrestamo, FechaCorte, FechaVencimiento: TDateTime; TasaAnual: Extended; NPeriodo: Integer;
       ValorPresente, ValorFuturo, ImpactoISR: Extended): Boolean;
-    function SetAmortizaciones(IdAnexo: Integer; Importe: Extended; Tipo: TAbonoCapital): Boolean;
+    function SetAmortizaciones(IdAnexo: Integer; Importe: Extended; Tipo: TAbonoCapital;Fecha:TDateTime): Boolean;
   end;
 
 implementation
@@ -537,8 +537,8 @@ begin
 end;
 
 function TdmAmortizaciones.SetAmortizaciones(IdAnexo: Integer;
-  Importe: Extended; Tipo: TAbonoCapital): Boolean;
-var
+  Importe: Extended; Tipo: TAbonoCapital; Fecha:TDateTime): Boolean;
+var                                       //Abr 19/17
   PeriodoInicial: Integer;
   NPeriodoSegmento: Integer;
   PeriodoSegmento: Integer;
@@ -575,6 +575,7 @@ var
   begin
     adoqAnexosAmortizaciones.Close;
     adoqAnexosAmortizaciones.Parameters.ParamByName('IdAnexo').Value:= IdAnexo;
+    adoqAnexosAmortizaciones.Parameters.ParamByName('Fecha').Value:= Fecha;   //Abr 19/17
     adoqAnexosAmortizaciones.Open;
     try
       dxmAnexosAmortizaciones.Close;

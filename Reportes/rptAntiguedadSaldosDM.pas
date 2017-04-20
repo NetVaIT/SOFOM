@@ -27,6 +27,8 @@ type
     ActGenPDFAntigSaldos: TAction;
     adodsMasterTC: TStringField;
     ActPDFAntiguedadXCliente: TAction;
+    adodsMasterAnexo: TStringField;
+    adodsMasterContrato: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure ActGenPDFAntigSaldosExecute(Sender: TObject);
     procedure ActPDFAntiguedadXClienteExecute(Sender: TObject);

@@ -4,6 +4,7 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
   ClientHeight = 428
   ClientWidth = 1192
   ExplicitWidth = 1198
+  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -28,14 +29,14 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
     Top = 78
     Width = 1192
     Height = 177
-    ExplicitTop = 133
-    ExplicitWidth = 1198
-    ExplicitHeight = 151
+    ExplicitTop = 78
+    ExplicitWidth = 1192
+    ExplicitHeight = 177
     inherited cxGrid: TcxGrid
       Width = 1192
       Height = 177
-      ExplicitWidth = 1198
-      ExplicitHeight = 151
+      ExplicitWidth = 1192
+      ExplicitHeight = 177
       inherited tvMaster: TcxGridDBTableView
         DataController.Options = [dcoAssignGroupingValues, dcoAssignMasterDetailKeys]
         DataController.Summary.DefaultGroupSummaryItems = <
@@ -128,20 +129,29 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
           DataBinding.FieldName = 'Fecha'
         end
         object tvMasterIDContrato: TcxGridDBColumn
-          Caption = 'No.Contrato'
+          Caption = 'IdContrato'
           DataBinding.FieldName = 'IDContrato'
           Visible = False
-          GroupIndex = 1
           Width = 67
-        end
-        object tvMasterTipoContrato: TcxGridDBColumn
-          DataBinding.FieldName = 'TipoContrato'
-          Width = 199
         end
         object tvMasterIDAnexo: TcxGridDBColumn
           DataBinding.FieldName = 'IDAnexo'
           Visible = False
+        end
+        object tvMasterContrato: TcxGridDBColumn
+          DataBinding.FieldName = 'Contrato'
+          Visible = False
+          GroupIndex = 1
+        end
+        object tvMasterAnexo: TcxGridDBColumn
+          DataBinding.FieldName = 'Anexo'
+          Visible = False
           GroupIndex = 2
+          Width = 71
+        end
+        object tvMasterTipoContrato: TcxGridDBColumn
+          DataBinding.FieldName = 'TipoContrato'
+          Width = 199
         end
         object tvMasterIdCuentaXCobrar: TcxGridDBColumn
           DataBinding.FieldName = 'IdCuentaXCobrar'
@@ -188,6 +198,10 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
           DataBinding.FieldName = 'IdContratoTipo'
           Visible = False
         end
+        object tvMasterTC: TcxGridDBColumn
+          DataBinding.FieldName = 'TC'
+          Visible = False
+        end
       end
     end
   end
@@ -195,31 +209,31 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
     Top = 346
     Width = 1192
     ExplicitTop = 346
-    ExplicitWidth = 1198
+    ExplicitWidth = 1192
   end
   inherited pnlDetail2: TPanel
     Top = 302
     Width = 1192
     ExplicitTop = 302
-    ExplicitWidth = 1198
+    ExplicitWidth = 1192
   end
   inherited pnlDetail1: TPanel
     Top = 258
     Width = 1192
     ExplicitTop = 258
-    ExplicitWidth = 1198
+    ExplicitWidth = 1192
   end
   inherited pnlClose: TPanel
     Top = 387
     Width = 1192
     ExplicitTop = 387
-    ExplicitWidth = 1198
+    ExplicitWidth = 1192
     DesignSize = (
       1192
       41)
     inherited btnClose: TButton
       Left = 1107
-      ExplicitLeft = 1113
+      ExplicitLeft = 1107
     end
   end
   object PnlFiltros: TPanel [8]
@@ -230,8 +244,6 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
     Align = alTop
     ParentBackground = False
     TabOrder = 9
-    ExplicitTop = 53
-    ExplicitWidth = 1198
     object PnlBusqueda: TPanel
       Left = 202
       Top = 1
@@ -1219,6 +1231,7 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42585.483476608800000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

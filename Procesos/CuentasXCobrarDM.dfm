@@ -104,6 +104,26 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     object adodsMasterEsMoratorio: TBooleanField
       FieldName = 'EsMoratorio'
     end
+    object adodsMasterAnexo: TStringField
+      FieldKind = fkLookup
+      FieldName = 'Anexo'
+      LookupDataSet = ADODtStAdicionalesContratoAnexo
+      LookupKeyFields = 'IdAnexo'
+      LookupResultField = 'Anexo'
+      KeyFields = 'IdAnexo'
+      Size = 100
+      Lookup = True
+    end
+    object adodsMasterContrato: TStringField
+      FieldKind = fkLookup
+      FieldName = 'Contrato'
+      LookupDataSet = ADODtStAdicionalesContratoAnexo
+      LookupKeyFields = 'IdAnexo'
+      LookupResultField = 'Contrato'
+      KeyFields = 'IdAnexo'
+      Size = 100
+      Lookup = True
+    end
   end
   inherited adodsUpdate: TADODataSet
     Left = 328
@@ -990,5 +1010,33 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       end>
     Left = 720
     Top = 400
+  end
+  object ADODtStAdicionalesContratoAnexo: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    AfterOpen = adodsMasterAfterOpen
+    BeforeInsert = adodsMasterBeforeInsert
+    CommandText = 
+      'select A.IdAnexo, C.IdContrato, A.Identificador as Anexo, C.Iden' +
+      'tificador As Contrato'#13#10' from Anexos A, Contratos C '#13#10'where A.idC' +
+      'ontrato=C.IdContrato '
+    Parameters = <>
+    Left = 200
+    Top = 312
+    object ADODtStAdicionalesContratoAnexoIdAnexo: TAutoIncField
+      FieldName = 'IdAnexo'
+      ReadOnly = True
+    end
+    object ADODtStAdicionalesContratoAnexoIdContrato: TAutoIncField
+      FieldName = 'IdContrato'
+      ReadOnly = True
+    end
+    object ADODtStAdicionalesContratoAnexoAnexo: TStringField
+      FieldName = 'Anexo'
+      Size = 5
+    end
+    object ADODtStAdicionalesContratoAnexoContrato: TStringField
+      FieldName = 'Contrato'
+    end
   end
 end

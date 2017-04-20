@@ -75,6 +75,9 @@ type
     dxBrBtnPuntoFAct: TdxBarButton;
     DSAuxiliar: TDataSource;
     dxBrBtnActTotalesCXC: TdxBarButton;
+    tvMasterEsMoratorio: TcxGridDBColumn;
+    tvMasterAnexo: TcxGridDBColumn;
+    tvMasterContrato: TcxGridDBColumn;
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
     procedure FormCreate(Sender: TObject);
     procedure SpdBtnBuscarClick(Sender: TObject);

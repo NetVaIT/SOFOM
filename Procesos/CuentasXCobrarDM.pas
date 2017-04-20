@@ -181,6 +181,13 @@ type
     adodsMasterEsMoratorio: TBooleanField;
     ADOPActualizaTotalesCXC: TADOStoredProc;
     ActTotalesCXC: TAction;
+    ADODtStAdicionalesContratoAnexo: TADODataSet;
+    ADODtStAdicionalesContratoAnexoIdAnexo: TAutoIncField;
+    ADODtStAdicionalesContratoAnexoIdContrato: TAutoIncField;
+    ADODtStAdicionalesContratoAnexoAnexo: TStringField;
+    ADODtStAdicionalesContratoAnexoContrato: TStringField;
+    adodsMasterAnexo: TStringField;
+    adodsMasterContrato: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actGeneraPreFacturasExecute(Sender: TObject);
     procedure ADODtStPrefacturasCFDINewRecord(DataSet: TDataSet);
@@ -282,7 +289,8 @@ var
 begin
   case TipoRegistro of
   0:  tipoTxt:='CXC';
-  1:  tipoTxt:='MORA'
+  1:  tipoTxt:='MORA';
+  2:  tipoTxt:='ABOCAP'; //Abr 19/17
   end;
 
   ADOQryAuxiliar.Close;
@@ -378,6 +386,7 @@ begin
   inherited;
   adodsCxcDetalle.Open;
   ADODTSTCXCMoratorios.Open;
+  ADODtStAdicionalesContratoAnexo.Open; //Abr 20/17
 end;
 
 procedure TdmCuentasXCobrar.adodsMasterBeforeInsert(DataSet: TDataSet);

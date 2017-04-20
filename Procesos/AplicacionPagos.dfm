@@ -24,7 +24,6 @@ object FrmAplicacionPago: TFrmAplicacionPago
     Height = 201
     Align = alTop
     TabOrder = 0
-    ExplicitTop = 63
     object Label3: TLabel
       Left = 174
       Top = 98
@@ -239,6 +238,7 @@ object FrmAplicacionPago: TFrmAplicacionPago
         03333337777777F7F33333330000000003333337777777773333}
       NumGlyphs = 2
       ParentFont = False
+      OnClick = SpdBtnAbonoCapitalClick
     end
     object cxDBTxtEdtImporteAplicar: TcxDBTextEdit
       Left = 376

@@ -114,6 +114,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure SpdBtnActMoraFechaPagoClick(Sender: TObject);
     procedure dsConCXCPendientesUpdateData(Sender: TObject);
+    procedure SpdBtnAbonoCapitalClick(Sender: TObject);
   private
     FActFacturaMora: TBasicAction;
     FActAbonoCApital: TBasicAction;
@@ -285,8 +286,10 @@ begin
             if (not dsConCXCpendientes.DataSet.eof) then   //Tiene CXC pendeintes
               DSAplicacion.DataSet.Insert // ahi se coloca el dato de importe posible de pago
             else
+            begin
               SpdBtnAbonoCapital.Enabled:=(dsPago.dataset.Fieldbyname('Saldo').AsExtended>0); //Habilitar boton para abono a Capital.
-
+             // SpdBtnAbonoCapital.Action:= FActAbonoCApital; //Para ver si lo deja usar?? abr 19/17
+            end;
           end;
         end;
       end
@@ -433,7 +436,7 @@ end;
 procedure TFrmAplicacionPago.SetFActAbonoCapital(const Value: TBasicAction);
 begin
   FActAbonoCApital := Value;
-  SpdBtnAbonoCapital.Action:=value;
+  //SpdBtnAbonoCapital.Action:=value;
 end;
 
 procedure TFrmAplicacionPago.SetFActFacturaMora(const Value: TBasicAction);
@@ -467,6 +470,11 @@ var
 begin
   Decodedate(FechaHora, a,m, d);
   Result:=EncodeDAte(a,m,d);
+end;
+
+procedure TFrmAplicacionPago.SpdBtnAbonoCapitalClick(Sender: TObject);
+begin
+  ActAbonoCapital.Execute; //?? verificar si asi funciona
 end;
 
 procedure TFrmAplicacionPago.SpdBtnActMoraFechaPagoClick(Sender: TObject);
@@ -559,6 +567,7 @@ end;
 procedure TFrmAplicacionPago.dsConCXCPendientesUpdateData(Sender: TObject);
 begin
   SpdBtnAbonoCapital.Enabled:=(dsConCXCpendientes.DataSet.eof) and(dsPago.dataset.Fieldbyname('Saldo').AsExtended>0); //Habilitar boton para abono a Capital.
+  //SpdBtnAbonoCapital.Action:= FActAbonoCApital; //Para ver si lo deja usar?? abr 19/17
 end;
 
 function TFrmAplicacionPago.EsProximoAPagar(IDCXC, idpersonaCliente, IdAnexo:Integer):Boolean;  //Abr 3/17
@@ -609,6 +618,7 @@ begin
   begin
     DSAplicacion.DataSet.Close;
     SpdBtnAbonoCapital.Enabled:=(dsConCXCpendientes.DataSet.eof) and(dsPago.dataset.Fieldbyname('Saldo').AsExtended>0); //Habilitar boton para abono a Capital.
+//    SpdBtnAbonoCapital.Action:= FActAbonoCApital; //Para ver si lo deja usar?? abr 19/17
   end;
 end;
 

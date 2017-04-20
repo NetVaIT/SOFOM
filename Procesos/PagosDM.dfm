@@ -132,6 +132,10 @@ inherited dmPagos: TdmPagos
       Caption = 'Abono a Capital'
       OnExecute = actCrearCXCAbonoCapitalExecute
     end
+    object ActAjusteAmortiza: TAction
+      Caption = 'ActAjusteAmortiza'
+      OnExecute = ActAjusteAmortizaExecute
+    end
   end
   object ADOSPersonas: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -589,7 +593,7 @@ inherited dmPagos: TdmPagos
   object ADOQryAuxiliar: TADOQuery
     Connection = _dmConection.ADOConnection
     Parameters = <>
-    Left = 36
+    Left = 44
     Top = 323
   end
   object ADODtStSaldoPrioridad1: TADODataSet
@@ -850,7 +854,7 @@ inherited dmPagos: TdmPagos
         Value = Null
       end>
     Left = 48
-    Top = 528
+    Top = 512
   end
   object ADODtStPrefacturasCFDI: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -1314,90 +1318,6 @@ inherited dmPagos: TdmPagos
       FieldName = 'IdMetodoPago'
     end
   end
-  object CXCMoratoriosParaFacturarXX: TADODataSet
-    Connection = _dmConection.ADOConnection
-    CursorType = ctStatic
-    CommandText = 
-      'select IdCuentaXCobrarDetalle, IdCuentaXCobrar, '#13#10'CXCD.IdCuentaX' +
-      'CobrarTipo, CXCD.Identificador, CXCD.Descripcion, '#13#10'CXCD.Importe' +
-      ', CXCD.Saldo,  CXCTC.Facturar,  CXCTC.IdTipoContrato,'#13#10'CXCTC.EsI' +
-      'VA,CXCTC.Temporalidad, CXCTC.EsMoratorios,'#13#10'CXCD.PagosAplicados,' +
-      ' (CXCD.Importe -CXCD.PagosAplicados) as SaldoPendiente'#13#10'from Cue' +
-      'ntasXCobrarDetalle  CXCD '#13#10'inner join CuentasXCobrarTiposConcept' +
-      'os CXCTC on'#13#10' CXCD.IdCuentaXCobrarTipo=CXCTC.IdCuentaXCobrarTipo' +
-      #13#10' where  CXCTC.Facturar=1 and CXCTC.EsMoratorios=1 and'#13#10'CXCTC.E' +
-      'sIVA =0  and  CXCD.Saldo>0'#13#10'and CXCD.IdCuentaXCobrar =:IDCuentaX' +
-      'Cobrar'
-    DataSource = DSCXCPendientes
-    IndexFieldNames = 'IdCuentaXCobrar'
-    MasterFields = 'IDCuentaXCobrar'
-    Parameters = <
-      item
-        Name = 'IDCuentaXCobrar'
-        Attributes = [paSigned]
-        DataType = ftInteger
-        Precision = 10
-        Size = 4
-        Value = Null
-      end>
-    Left = 648
-    Top = 312
-    object CXCMoratoriosParaFacturarXXIdCuentaXCobrar: TIntegerField
-      FieldName = 'IdCuentaXCobrar'
-    end
-    object CXCMoratoriosParaFacturarXXIdCuentaXCobrarTipo: TIntegerField
-      FieldName = 'IdCuentaXCobrarTipo'
-    end
-    object CXCMoratoriosParaFacturarXXIdentificador: TStringField
-      FieldName = 'Identificador'
-      Size = 10
-    end
-    object CXCMoratoriosParaFacturarXXDescripcion: TStringField
-      FieldName = 'Descripcion'
-      Size = 100
-    end
-    object CXCMoratoriosParaFacturarXXImporte: TFMTBCDField
-      FieldName = 'Importe'
-      Precision = 18
-      Size = 6
-    end
-    object CXCMoratoriosParaFacturarXXSaldo: TFMTBCDField
-      FieldName = 'Saldo'
-      Precision = 18
-      Size = 6
-    end
-    object CXCMoratoriosParaFacturarXXFacturar: TBooleanField
-      FieldName = 'Facturar'
-    end
-    object CXCMoratoriosParaFacturarXXIdTipoContrato: TIntegerField
-      FieldName = 'IdTipoContrato'
-    end
-    object CXCMoratoriosParaFacturarXXEsIVA: TBooleanField
-      FieldName = 'EsIVA'
-    end
-    object CXCMoratoriosParaFacturarXXTemporalidad: TStringField
-      FieldName = 'Temporalidad'
-      Size = 15
-    end
-    object CXCMoratoriosParaFacturarXXIdCuentaXCobrarDetalle: TAutoIncField
-      FieldName = 'IdCuentaXCobrarDetalle'
-      ReadOnly = True
-    end
-    object CXCMoratoriosParaFacturarXXEsMoratorios: TBooleanField
-      FieldName = 'EsMoratorios'
-    end
-    object CXCMoratoriosParaFacturarXXPagosAplicados: TFMTBCDField
-      FieldName = 'PagosAplicados'
-      Precision = 18
-      Size = 6
-    end
-    object CXCMoratoriosParaFacturarXXSaldoPendiente: TFMTBCDField
-      FieldName = 'SaldoPendiente'
-      ReadOnly = True
-      Precision = 19
-      Size = 6
-    end
-  end
   object ADOSumaIVAMora: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
@@ -1693,117 +1613,6 @@ inherited dmPagos: TdmPagos
       FieldName = 'IdPersona'
     end
   end
-  object ADODSCXCPendAnterior: TADODataSet
-    Connection = _dmConection.ADOConnection
-    CursorType = ctStatic
-    CommandText = 
-      'Select cxc.*, CI.SaldoDocumento, Ci.SaldoFactoraje as SaldoFacto' +
-      'rajeCFDI'#13#10' from CuentasXCobrar CXC  '#13#10'left Join CFDI CI on CI.Id' +
-      'CFDI= CXC.IdCFDI where '#13#10' Saldo >0 and IDPersona=:IdPersonaClien' +
-      'te '#13#10'and IdCuentaXCobrarEstatus=0 and CXC.IDAnexo=:IdAnexo'#13#10
-    DataSource = DSMaster
-    IndexFieldNames = 'IdPersona;IdAnexo'
-    MasterFields = 'IdPersonaCliente;IdAnexo'
-    Parameters = <
-      item
-        Name = 'IdPersonaCliente'
-        Attributes = [paSigned]
-        DataType = ftInteger
-        Precision = 10
-        Size = 4
-        Value = Null
-      end
-      item
-        Name = 'IdAnexo'
-        Attributes = [paSigned, paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Size = 4
-        Value = Null
-      end>
-    Left = 380
-    Top = 299
-    object AutoIncField6: TAutoIncField
-      DisplayLabel = 'No.CuentaXCobrar'
-      FieldName = 'IdCuentaXCobrar'
-      ReadOnly = True
-    end
-    object IntegerField14: TIntegerField
-      FieldName = 'IdCuentaXCobrarEstatus'
-    end
-    object IntegerField15: TIntegerField
-      FieldName = 'IdPersona'
-    end
-    object IntegerField16: TIntegerField
-      FieldName = 'IdAnexosAmortizaciones'
-    end
-    object IntegerField17: TIntegerField
-      FieldName = 'IdAnexo'
-    end
-    object DateTimeField3: TDateTimeField
-      FieldName = 'Fecha'
-    end
-    object FMTBCDField11: TFMTBCDField
-      FieldName = 'Importe'
-      currency = True
-      Precision = 18
-      Size = 6
-    end
-    object FMTBCDField12: TFMTBCDField
-      FieldName = 'Impuesto'
-      currency = True
-      Precision = 18
-      Size = 6
-    end
-    object FMTBCDField13: TFMTBCDField
-      FieldName = 'Interes'
-      currency = True
-      Precision = 18
-      Size = 6
-    end
-    object FMTBCDField14: TFMTBCDField
-      FieldName = 'Total'
-      currency = True
-      Precision = 18
-      Size = 6
-    end
-    object FMTBCDField15: TFMTBCDField
-      FieldName = 'Saldo'
-      currency = True
-      Precision = 18
-      Size = 6
-    end
-    object IntegerField18: TIntegerField
-      FieldName = 'IdEstadoCuenta'
-    end
-    object FMTBCDField16: TFMTBCDField
-      FieldName = 'SaldoFactoraje'
-      currency = True
-      Precision = 18
-      Size = 6
-    end
-    object FMTBCDField17: TFMTBCDField
-      FieldName = 'SaldoDocumento'
-      currency = True
-      Precision = 18
-      Size = 6
-    end
-    object FMTBCDField18: TFMTBCDField
-      FieldName = 'SaldoFactorajeCFDI'
-      currency = True
-      Precision = 18
-      Size = 6
-    end
-    object IntegerField19: TIntegerField
-      FieldName = 'IdCuentaXCobrarBase'
-    end
-    object LargeintField4: TLargeintField
-      FieldName = 'IdCFDI'
-    end
-    object BooleanField1: TBooleanField
-      FieldName = 'EsMoratorio'
-    end
-  end
   object ADODtStAnexoMoratorios: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
@@ -1951,15 +1760,17 @@ inherited dmPagos: TdmPagos
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@IdCuentaXCobrar'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end>
-    Left = 248
-    Top = 528
+    Left = 208
+    Top = 520
   end
   object adoqAnexosSel: TADOQuery
     Connection = _dmConection.ADOConnection
@@ -1991,8 +1802,8 @@ inherited dmPagos: TdmPagos
         'WHERE        (Anexos.MontoVencido = 0) AND (Anexos.SaldoInsoluto' +
         ' >= 0)'
       'and Anexos.idanexo=:IdAnexo --Abr 17/17')
-    Left = 56
-    Top = 624
+    Left = 48
+    Top = 600
     object adoqAnexosSelIdContrato: TAutoIncField
       FieldName = 'IdContrato'
       ReadOnly = True
@@ -2070,7 +1881,7 @@ inherited dmPagos: TdmPagos
         Precision = 10
         Value = Null
       end>
-    Left = 216
-    Top = 624
+    Left = 200
+    Top = 600
   end
 end

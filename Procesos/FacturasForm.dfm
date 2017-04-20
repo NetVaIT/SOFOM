@@ -39,6 +39,10 @@ inherited frmFacturasGrid: TfrmFacturasGrid
       ExplicitHeight = 180
       inherited tvMaster: TcxGridDBTableView
         OptionsCustomize.ColumnFiltering = False
+        object tvMasterIdCFDI: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCFDI'
+          Visible = False
+        end
         object tvMasterCliente: TcxGridDBColumn
           DataBinding.FieldName = 'Cliente'
           Width = 241
@@ -204,6 +208,34 @@ inherited frmFacturasGrid: TfrmFacturasGrid
         end
         object tvMasterMetodoPago: TcxGridDBColumn
           DataBinding.FieldName = 'MetodoPago'
+          Visible = False
+        end
+        object tvMasterMetPagoClaveSAT: TcxGridDBColumn
+          DataBinding.FieldName = 'MetPagoClaveSAT'
+          Visible = False
+        end
+        object tvMasterClaveMoneda: TcxGridDBColumn
+          DataBinding.FieldName = 'ClaveMoneda'
+          Visible = False
+        end
+        object tvMasterTipoDocumento: TcxGridDBColumn
+          DataBinding.FieldName = 'TipoDocumento'
+          Visible = False
+        end
+        object tvMasterDirCompleta: TcxGridDBColumn
+          DataBinding.FieldName = 'DirCompleta'
+          Visible = False
+        end
+        object tvMasterDireccionC: TcxGridDBColumn
+          DataBinding.FieldName = 'DireccionC'
+          Visible = False
+        end
+        object tvMasterIdCuentaXCobrar: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCuentaXCobrar'
+          Visible = False
+        end
+        object tvMasterSaldoFactoraje: TcxGridDBColumn
+          DataBinding.FieldName = 'SaldoFactoraje'
           Visible = False
         end
       end

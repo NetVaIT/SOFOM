@@ -87,11 +87,13 @@ type
     ffiltroFecha: String;
     ffiltro: String;
     FactAbonarCapital: TBasicAction;
+    FactAjustePrueba: TBasicAction;
     function GetFFiltroNombre: String;
 
     procedure PoneFiltro;
     procedure SetactAbonarCapital(const Value: TBasicAction);
     function HayCXCSinFacturaPrevia: boolean;
+    procedure SetactAjusteprueba(const Value: TBasicAction);
     { Private declarations }
   public
     { Public declarations }
@@ -99,6 +101,8 @@ type
     property FiltroFecha: String read ffiltroFecha write ffiltroFecha;
     property FiltroNombre:String read GetFFiltroNombre write ffiltroNombre;
     property actAbonarCapital: TBasicAction read FactAbonarCapital write SetactAbonarCapital;
+
+    property actAjustePrueba: TBasicAction read FactAjustePrueba write SetactAjusteprueba;
   end;
 
 var
@@ -293,6 +297,11 @@ procedure TFrmConPagos.SetactAbonarCapital(const Value: TBasicAction);
 begin
   FactAbonarCapital := Value;
  // dxbbAbonarCapital.Action := Value;
+end;
+
+procedure TFrmConPagos.SetactAjusteprueba(const Value: TBasicAction);
+begin
+  FactAjustePrueba := Value;
 end;
 
 procedure TFrmConPagos.SpdBtnBuscarClick(Sender: TObject);

@@ -93,6 +93,14 @@ type
     ChckBxXFecha: TCheckBox;
     dxBrBtnCancelaCFDI: TdxBarButton;
     ChckBxFactVivas: TCheckBox;
+    tvMasterIdCFDI: TcxGridDBColumn;
+    tvMasterMetPagoClaveSAT: TcxGridDBColumn;
+    tvMasterClaveMoneda: TcxGridDBColumn;
+    tvMasterTipoDocumento: TcxGridDBColumn;
+    tvMasterDirCompleta: TcxGridDBColumn;
+    tvMasterDireccionC: TcxGridDBColumn;
+    tvMasterIdCuentaXCobrar: TcxGridDBColumn;
+    tvMasterSaldoFactoraje: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
     procedure SpdBtnBuscarClick(Sender: TObject);

@@ -38,14 +38,23 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
       ExplicitWidth = 1072
       ExplicitHeight = 180
       inherited tvMaster: TcxGridDBTableView
+        object tvMasterContrato: TcxGridDBColumn
+          DataBinding.FieldName = 'Contrato'
+          Visible = False
+        end
+        object tvMasterAnexo: TcxGridDBColumn
+          DataBinding.FieldName = 'Anexo'
+          Width = 132
+        end
         object tvMasterIdAnexo: TcxGridDBColumn
           Caption = 'No.Anexo'
           DataBinding.FieldName = 'IdAnexo'
+          Visible = False
         end
         object tvMasterIdAnexosAmortizaciones: TcxGridDBColumn
           Caption = 'No. Anexo Amortizaci'#243'n'
           DataBinding.FieldName = 'IdAnexosAmortizaciones'
-          Width = 128
+          Width = 125
         end
         object tvMasterIdCuentaXCobrar: TcxGridDBColumn
           DataBinding.FieldName = 'IdCuentaXCobrar'
@@ -100,6 +109,10 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
         end
         object tvMasterIdCuentaXCobrarBase: TcxGridDBColumn
           DataBinding.FieldName = 'IdCuentaXCobrarBase'
+          Visible = False
+        end
+        object tvMasterEsMoratorio: TcxGridDBColumn
+          DataBinding.FieldName = 'EsMoratorio'
           Visible = False
         end
       end
