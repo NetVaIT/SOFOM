@@ -65,6 +65,10 @@ type
     tvMasterRegistro: TcxGridDBColumn;
     tvMasterUsuario: TcxGridDBColumn;
     dxbbAmortizaciones: TdxBarButton;
+    tvMasterFechaVencimiento: TcxGridDBColumn;
+    tvMasterPorcentajeDepreciacion: TcxGridDBColumn;
+    tvMasterPorcentajeISR: TcxGridDBColumn;
+    tvMasterPorcentajeKE: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure DatasetEditExecute(Sender: TObject);
@@ -73,12 +77,14 @@ type
     { Private declarations }
     FactGetTipoCambio: TBasicAction;
     FactAmortizaciones: TBasicAction;
+    FactGetImpactoISR: TBasicAction;
     procedure SetactAmortizaciones(const Value: TBasicAction);
   public
     { Public declarations }
     property actAmortizaciones: TBasicAction read FactAmortizaciones write SetactAmortizaciones;
 //    property actCambiarEstatus: TBasicAction read FactCambiarEstatus write SetactCambiarEstatus;
     property actGetTipoCambio: TBasicAction read FactGetTipoCambio write FactGetTipoCambio;
+    property actGetImpactoISR: TBasicAction read FactGetImpactoISR write FactGetImpactoISR;
   end;
 
 implementation
@@ -113,6 +119,7 @@ procedure TfrmCotizacionesDetalle.FormShow(Sender: TObject);
 begin
   inherited;
   TfrmCotizacionesDetalleEdit(gEditForm).actGetTipoCambio := actGetTipoCambio;
+  TfrmCotizacionesDetalleEdit(gEditForm).actGetImpactoISR := actGetImpactoISR;
 end;
 
 procedure TfrmCotizacionesDetalle.SetactAmortizaciones(

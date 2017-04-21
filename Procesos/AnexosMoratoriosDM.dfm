@@ -79,12 +79,14 @@ inherited dmAnexosMoratorios: TdmAnexosMoratorios
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@IdAnexoAmortizacion'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end>
     Left = 88
     Top = 144

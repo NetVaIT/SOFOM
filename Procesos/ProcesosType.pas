@@ -4,9 +4,13 @@ interface
 
 
 const
-  _IMPUESTOS_IVA = 16.0;
-  _MONEDAS_ID_DOLAR_USA = 51;
   _CONFIGURACION_DIAS_VIGENCIA = 30;
+  _MONEDAS_ID_DOLAR_USA = 51;
+  _IMPUESTOS_IVA = 16.0;
+  _PORCENTAJE_DEPRECIACION = 25.0;
+  _PORCENTAJE_ISR = 30.0;
+  _PORCENTAJE_KE = 18.0;
+
 type
   TCTipoContrato = (tcNone, tcCreditoSimple, tcArrendamientoFinanciero, tcArrendamientoPuro);
   TCotizacionEstatus = (aeNone, aeAbierto, aeContratado, aeCerrado);
@@ -30,6 +34,14 @@ type
   PagoTotal: Extended;
   SaldoFinal: Extended;
   end;
+
+  TCapitalMes = record
+  Anio: Word;
+  Meses: Word;
+  CapitalTotal: Extended;
+  end;
+
+  TCapitalMeses = Array of TCapitalMes;
 
 implementation
 

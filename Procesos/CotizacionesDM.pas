@@ -9,6 +9,7 @@ uses
 
 resourcestring
   strUpdateEstatus = '¿Desea modificar el estatus de la cotización?';
+  strNotArrendamientoPuro = 'Solo se permite el cálculo para el tipo de contrato de Arrendamiento Puro.';
 
 type
   TdmCotizaciones = class(T_dmStandar)
@@ -73,6 +74,11 @@ type
     adodsDetalleEstatus: TStringField;
     adodsDetalleRegistro: TDateTimeField;
     dsDetalle: TDataSource;
+    actGetImpactoISR: TAction;
+    adodsDetalleFechaVencimiento: TDateTimeField;
+    adodsDetallePorcentajeDepreciacion: TBCDField;
+    adodsDetallePorcentajeISR: TBCDField;
+    adodsDetallePorcentajeKE: TBCDField;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
@@ -83,7 +89,7 @@ type
     procedure adodsDetalleNewRecord(DataSet: TDataSet);
     procedure adodsDetallePrecioMonedaChange(Sender: TField);
     procedure daMasterDataChange(Sender: TObject; Field: TField);
-    procedure dsDetalleDataChange(Sender: TObject; Field: TField);
+    procedure actGetImpactoISRExecute(Sender: TObject);
   private
     { Private declarations }
     dmAmortizaciones: TdmAmortizaciones;
@@ -107,7 +113,7 @@ implementation
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
 uses _ConectionDmod, _Utils, CotizacionesForm, CotizacionesDetalleForm,
-ConfiguracionDM;
+ConfiguracionDM, ImpactoISRDM;
 
 {$R *.dfm}
 
@@ -119,8 +125,8 @@ begin
   Amortizaciones := TdmAmortizaciones.Create(Self);
   try
     Amortizaciones.TipoContrato:= TipoContrato;
-    Amortizaciones.Execute(adodsMasterElaboracion.Value,
-    adodsMasterElaboracion.Value, adodsMasterElaboracion.Value,
+    Amortizaciones.Execute(adodsDetalleFechaVencimiento.Value,
+    adodsDetalleFechaVencimiento.Value, adodsDetalleFechaVencimiento.Value,
     adodsDetalleTasaAnual.Value, adodsDetallePlazo.Value,
     adodsDetalleMontoFinanciar.AsExtended,
     adodsDetalleValorResidual.AsExtended,
@@ -159,6 +165,39 @@ begin
   end;
 end;
 
+procedure TdmCotizaciones.actGetImpactoISRExecute(Sender: TObject);
+var
+  dmImpactoISR: TdmImpactoISR;
+  ImpactoISR: Extended;
+begin
+  inherited;
+  if adodsDetalle.State in [dsEdit,dsInsert] then
+  begin
+//    if (TipoContrato = tcArrendamientoPuro) then
+//    begin
+      dmImpactoISR := TdmImpactoISR.Create(Self);
+      try
+  //      Amortizaciones.TipoContrato:= TipoContrato;
+        dmImpactoISR.PorcentajeDepreciacion := adodsDetallePorcentajeDepreciacion.Value;
+        dmImpactoISR.PorcentajeISR := adodsDetallePorcentajeISR.Value;
+        dmImpactoISR.PorcentajeKe := adodsDetallePorcentajeKE.Value;
+        if dmImpactoISR.Execute(adodsDetalleFechaVencimiento.Value,
+        adodsDetalleTasaAnual.Value,
+        adodsDetallePlazo.Value,
+        adodsDetallePrecioTotal.AsExtended,
+        adodsDetalleEnganche.AsExtended,
+        adodsDetalleMontoFinanciar.AsExtended,
+        adodsDetalleValorResidual.AsExtended, ImpactoISR) then
+          adodsDetalleImpactoISR.Value := ImpactoISR;
+      finally
+        dmImpactoISR.Free;
+      end;
+//    end
+//    else
+//      MessageDlg(strNotArrendamientoPuro, mtInformation, [mbOK], 0);
+  end;
+end;
+
 procedure TdmCotizaciones.actGetTipoCambioExecute(Sender: TObject);
 begin
   inherited;
@@ -181,6 +220,10 @@ begin
   adodsDetalleDespositosNumero.Value := 2;
   adodsDetalleOpcionCompraPorcentaje.Value := 0;
   adodsDetalleValorResidualPorcentaje.Value := 0;
+  adodsDetalleFechaVencimiento.Value := Date;
+  adodsDetallePorcentajeDepreciacion.Value := _PORCENTAJE_DEPRECIACION;
+  adodsDetallePorcentajeISR.Value := _PORCENTAJE_ISR;
+  adodsDetallePorcentajeKE.Value := _PORCENTAJE_KE;
 end;
 
 procedure TdmCotizaciones.adodsDetallePrecioMonedaChange(Sender: TField);
@@ -249,7 +292,7 @@ begin
   inherited;
   if adodsMaster.State in [dsBrowse] then
     if Assigned(gFormDeatil1) then
-      gFormDeatil1.ReadOnlyGrid := (adodsMasterIdCotizacionEstatus.Value <> 1) //or (adodsDetalleIdCotizacionDetalleEstatus.Value <> 1);
+      gFormDeatil1.ReadOnlyGrid := (adodsMasterIdCotizacionEstatus.Value <> 1);
 end;
 
 procedure TdmCotizaciones.DataModuleCreate(Sender: TObject);
@@ -264,6 +307,7 @@ begin
   gFormDeatil1.DataSet:= adodsDetalle;
   TfrmCotizacionesDetalle(gFormDeatil1).actAmortizaciones := actAmortizaciones;
   TfrmCotizacionesDetalle(gFormDeatil1).actGetTipoCambio := actGetTipoCambio;
+  TfrmCotizacionesDetalle(gFormDeatil1).actGetImpactoISR := actGetImpactoISR;
 //  Calculo de las amortizaciones del modulo
   dmAmortizaciones := TdmAmortizaciones.Create(Self);
   dmAmortizaciones.PaymentTime := PaymentTime;
@@ -273,14 +317,6 @@ procedure TdmCotizaciones.DataModuleDestroy(Sender: TObject);
 begin
   inherited;
   FreeAndNil(dmAmortizaciones);
-end;
-
-procedure TdmCotizaciones.dsDetalleDataChange(Sender: TObject; Field: TField);
-begin
-  inherited;
-//  if adodsDetalle.State in [dsBrowse] then
-//    if Assigned(gFormDeatil1) then
-//      gFormDeatil1.ReadOnlyGrid := (adodsDetalleIdCotizacionDetalleEstatus.Value <> 1);
 end;
 
 function TdmCotizaciones.GetEstatus: TCotizacionEstatus;

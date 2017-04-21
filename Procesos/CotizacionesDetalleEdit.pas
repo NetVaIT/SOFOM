@@ -72,22 +72,34 @@ type
     Label21: TLabel;
     Label22: TLabel;
     Label23: TLabel;
-    Label29: TLabel;
     cxDBTextEdit15: TcxDBTextEdit;
     cxDBCurrencyEdit3: TcxDBCurrencyEdit;
     cxDBSpinEdit2: TcxDBSpinEdit;
     cxDBTextEdit16: TcxDBTextEdit;
-    cxDBTextEdit21: TcxDBTextEdit;
     Label30: TLabel;
     DBLookupComboBox2: TDBLookupComboBox;
+    cxGroupBox6: TcxGroupBox;
+    Label29: TLabel;
+    edtImpactoISR: TcxDBButtonEdit;
+    Label1: TLabel;
+    cxDBDateEdit1: TcxDBDateEdit;
+    Label2: TLabel;
+    cxDBCurrencyEdit4: TcxDBCurrencyEdit;
+    Label3: TLabel;
+    cxDBCurrencyEdit5: TcxDBCurrencyEdit;
+    Label5: TLabel;
+    cxDBCurrencyEdit6: TcxDBCurrencyEdit;
     procedure FormShow(Sender: TObject);
   private
-    FactGetTipoCambio: TBasicAction;
-    procedure SetactGetTipoCambio(const Value: TBasicAction);
     { Private declarations }
+    FactGetTipoCambio: TBasicAction;
+    FactGetImpactoISR: TBasicAction;
+    procedure SetactGetTipoCambio(const Value: TBasicAction);
+    procedure SetactGetImpactoISR(const Value: TBasicAction);
   public
     { Public declarations }
     property actGetTipoCambio: TBasicAction read FactGetTipoCambio write SetactGetTipoCambio;
+    property actGetImpactoISR: TBasicAction read FactGetImpactoISR write SetactGetImpactoISR;
   end;
 
 implementation
@@ -103,6 +115,13 @@ begin
   inherited;
   if edtPrecio.CanFocus then
     edtPrecio.SetFocus;
+end;
+
+procedure TfrmCotizacionesDetalleEdit.SetactGetImpactoISR(
+  const Value: TBasicAction);
+begin
+  FactGetImpactoISR := Value;
+  edtImpactoISR.Properties.Buttons[0].Action:= Value;
 end;
 
 procedure TfrmCotizacionesDetalleEdit.SetactGetTipoCambio(

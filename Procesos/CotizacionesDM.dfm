@@ -117,6 +117,11 @@ inherited dmCotizaciones: TdmCotizaciones
       Hint = 'Obtiene la '#250'ltima cotizaci'#243'n de la moneda'
       OnExecute = actGetTipoCambioExecute
     end
+    object actGetImpactoISR: TAction
+      Caption = '...'
+      Hint = 'Obtierne el c'#225'lculo del impacto ISR'
+      OnExecute = actGetImpactoISRExecute
+    end
   end
   object adodsPersonas: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -137,6 +142,7 @@ inherited dmCotizaciones: TdmCotizaciones
     Top = 128
   end
   object adodsMonedas: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdMoneda, Descripcion from Monedas'#13#10'order by Descripcion'
@@ -206,8 +212,9 @@ inherited dmCotizaciones: TdmCotizaciones
       'sionPorcentaje, Comision, ComisionImpuesto, Gastos, GastosImpues' +
       'tos, DespositosNumero, Depositos, PagoIncial, OpcionCompraPorcen' +
       'taje, OpcionCompra, ValorResidualPorcentaje, ValorResidual, Mont' +
-      'oFinanciar, TasaAnual, Plazo, PagoMensual, ImpactoISR from Cotiz' +
-      'acionesDetalle'#13#10'where IdCotizacion = :IdCotizacion'#13#10
+      'oFinanciar, TasaAnual, Plazo, PagoMensual, ImpactoISR, FechaVenc' +
+      'imiento, PorcentajeDepreciacion, PorcentajeISR, PorcentajeKE fro' +
+      'm CotizacionesDetalle'#13#10'where IdCotizacion = :IdCotizacion'#13#10
     DataSource = daMaster
     MasterFields = 'IdCotizacion'
     Parameters = <
@@ -216,6 +223,7 @@ inherited dmCotizaciones: TdmCotizaciones
         Attributes = [paSigned]
         DataType = ftInteger
         Precision = 10
+        Size = 4
         Value = 5
       end>
     Left = 160
@@ -429,10 +437,36 @@ inherited dmCotizaciones: TdmCotizaciones
       Precision = 18
       Size = 6
     end
+    object adodsDetalleFechaVencimiento: TDateTimeField
+      DisplayLabel = 'Fecha vencimiento'
+      FieldName = 'FechaVencimiento'
+    end
+    object adodsDetallePorcentajeDepreciacion: TBCDField
+      DisplayLabel = 'Porcentaje depreciaci'#243'n'
+      FieldName = 'PorcentajeDepreciacion'
+      DisplayFormat = '0.00 %'
+      EditFormat = '0.00'
+      Precision = 19
+    end
+    object adodsDetallePorcentajeISR: TBCDField
+      DisplayLabel = 'Porcentaje ISR'
+      FieldName = 'PorcentajeISR'
+      DisplayFormat = '0.00 %'
+      EditFormat = '0.00'
+      Precision = 19
+    end
+    object adodsDetallePorcentajeKE: TBCDField
+      DisplayLabel = 'Porcentaje Ke'
+      FieldName = 'PorcentajeKE'
+      DisplayFormat = '0.00 %'
+      EditFormat = '0.00'
+      Precision = 19
+    end
     object adodsDetalleImpactoISR: TFMTBCDField
       DisplayLabel = 'Impacto ISR'
       FieldName = 'ImpactoISR'
       OnChange = adodsDetallePrecioMonedaChange
+      currency = True
       Precision = 18
       Size = 6
     end
@@ -451,6 +485,7 @@ inherited dmCotizaciones: TdmCotizaciones
     end
   end
   object adodsUsuariosD: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdUsuario, Login from Usuarios'
@@ -459,6 +494,7 @@ inherited dmCotizaciones: TdmCotizaciones
     Top = 200
   end
   object adodsCotizacionesDetalleEstatus: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -471,7 +507,6 @@ inherited dmCotizaciones: TdmCotizaciones
   object dsDetalle: TDataSource
     AutoEdit = False
     DataSet = adodsDetalle
-    OnDataChange = dsDetalleDataChange
     Left = 240
     Top = 88
   end

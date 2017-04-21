@@ -1,23 +1,23 @@
 inherited frmCotizacionesDetalleEdit: TfrmCotizacionesDetalleEdit
   Caption = 'Cotizaci'#243'n'
-  ClientHeight = 568
-  ClientWidth = 736
-  ExplicitWidth = 742
-  ExplicitHeight = 597
+  ClientHeight = 604
+  ClientWidth = 727
+  ExplicitWidth = 733
+  ExplicitHeight = 633
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
-    Width = 736
-    Height = 527
+    Width = 727
+    Height = 563
     ExplicitWidth = 736
     ExplicitHeight = 527
-    ClientRectBottom = 525
-    ClientRectRight = 734
+    ClientRectBottom = 561
+    ClientRectRight = 725
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 2
-      ExplicitTop = 28
+      ExplicitLeft = 3
+      ExplicitTop = 30
       ExplicitWidth = 732
-      ExplicitHeight = 497
+      ExplicitHeight = 568
       object cxGroupBox1: TcxGroupBox
         Left = 6
         Top = -1
@@ -260,10 +260,10 @@ inherited frmCotizacionesDetalleEdit: TfrmCotizacionesDetalleEdit
         Top = 256
         Caption = 'Pagos iniciales'
         TabOrder = 3
-        Height = 218
+        Height = 270
         Width = 350
         object Label11: TLabel
-          Left = 65
+          Left = 64
           Top = 19
           Width = 47
           Height = 13
@@ -271,55 +271,55 @@ inherited frmCotizacionesDetalleEdit: TfrmCotizacionesDetalleEdit
           FocusControl = cxDBTextEdit8
         end
         object Label13: TLabel
-          Left = 70
-          Top = 46
+          Left = 69
+          Top = 43
           Width = 42
           Height = 13
           Caption = 'Comisi'#243'n'
           FocusControl = cxDBTextEdit9
         end
         object Label14: TLabel
-          Left = 103
-          Top = 73
+          Left = 104
+          Top = 68
           Width = 75
           Height = 13
           Caption = 'IVA de comisi'#243'n'
           FocusControl = cxDBTextEdit10
         end
         object Label15: TLabel
-          Left = 59
-          Top = 100
+          Left = 60
+          Top = 92
           Width = 119
           Height = 13
           Caption = 'Gastos de administraci'#243'n'
           FocusControl = cxDBTextEdit11
         end
         object Label16: TLabel
-          Left = 111
-          Top = 127
+          Left = 112
+          Top = 117
           Width = 67
           Height = 13
           Caption = 'IVA de gastos'
           FocusControl = cxDBTextEdit12
         end
         object Label18: TLabel
-          Left = 17
-          Top = 153
+          Left = 16
+          Top = 152
           Width = 100
           Height = 13
           Caption = 'Dep'#243'sito en garantia'
           FocusControl = cxDBTextEdit13
         end
         object Label19: TLabel
-          Left = 97
-          Top = 180
+          Left = 100
+          Top = 184
           Width = 79
           Height = 13
           Caption = 'Total pago inicial'
           FocusControl = cxDBTextEdit14
         end
         object cxDBCurrencyEdit1: TcxDBCurrencyEdit
-          Left = 118
+          Left = 120
           Top = 16
           DataBinding.DataField = 'EnganchePorcentaje'
           DataBinding.DataSource = DataSource
@@ -336,8 +336,8 @@ inherited frmCotizacionesDetalleEdit: TfrmCotizacionesDetalleEdit
           Width = 121
         end
         object cxDBCurrencyEdit2: TcxDBCurrencyEdit
-          Left = 118
-          Top = 43
+          Left = 120
+          Top = 40
           DataBinding.DataField = 'ComisionPorcentaje'
           DataBinding.DataSource = DataSource
           TabOrder = 2
@@ -345,7 +345,7 @@ inherited frmCotizacionesDetalleEdit: TfrmCotizacionesDetalleEdit
         end
         object cxDBTextEdit9: TcxDBTextEdit
           Left = 184
-          Top = 43
+          Top = 40
           DataBinding.DataField = 'Comision'
           DataBinding.DataSource = DataSource
           Enabled = False
@@ -354,7 +354,7 @@ inherited frmCotizacionesDetalleEdit: TfrmCotizacionesDetalleEdit
         end
         object cxDBTextEdit10: TcxDBTextEdit
           Left = 184
-          Top = 70
+          Top = 65
           DataBinding.DataField = 'ComisionImpuesto'
           DataBinding.DataSource = DataSource
           Enabled = False
@@ -363,7 +363,7 @@ inherited frmCotizacionesDetalleEdit: TfrmCotizacionesDetalleEdit
         end
         object cxDBTextEdit11: TcxDBTextEdit
           Left = 184
-          Top = 97
+          Top = 89
           DataBinding.DataField = 'Gastos'
           DataBinding.DataSource = DataSource
           TabOrder = 5
@@ -371,7 +371,7 @@ inherited frmCotizacionesDetalleEdit: TfrmCotizacionesDetalleEdit
         end
         object cxDBTextEdit12: TcxDBTextEdit
           Left = 184
-          Top = 124
+          Top = 114
           DataBinding.DataField = 'GastosImpuestos'
           DataBinding.DataSource = DataSource
           Enabled = False
@@ -379,8 +379,8 @@ inherited frmCotizacionesDetalleEdit: TfrmCotizacionesDetalleEdit
           Width = 121
         end
         object cxDBSpinEdit1: TcxDBSpinEdit
-          Left = 118
-          Top = 150
+          Left = 120
+          Top = 152
           DataBinding.DataField = 'DespositosNumero'
           DataBinding.DataSource = DataSource
           TabOrder = 7
@@ -388,7 +388,7 @@ inherited frmCotizacionesDetalleEdit: TfrmCotizacionesDetalleEdit
         end
         object cxDBTextEdit13: TcxDBTextEdit
           Left = 184
-          Top = 150
+          Top = 152
           DataBinding.DataField = 'Depositos'
           DataBinding.DataSource = DataSource
           Enabled = False
@@ -397,7 +397,7 @@ inherited frmCotizacionesDetalleEdit: TfrmCotizacionesDetalleEdit
         end
         object cxDBTextEdit14: TcxDBTextEdit
           Left = 184
-          Top = 177
+          Top = 176
           DataBinding.DataField = 'PagoIncial'
           DataBinding.DataSource = DataSource
           Enabled = False
@@ -407,14 +407,14 @@ inherited frmCotizacionesDetalleEdit: TfrmCotizacionesDetalleEdit
       end
       object cxGroupBox3: TcxGroupBox
         Left = 362
-        Top = 256
+        Top = 405
         Caption = 'Pagos mensuales'
-        TabOrder = 4
-        Height = 218
+        TabOrder = 5
+        Height = 121
         Width = 350
         object Label20: TLabel
           Left = 95
-          Top = 19
+          Top = 11
           Width = 83
           Height = 13
           Caption = 'Monto a financiar'
@@ -422,7 +422,7 @@ inherited frmCotizacionesDetalleEdit: TfrmCotizacionesDetalleEdit
         end
         object Label21: TLabel
           Left = 126
-          Top = 73
+          Top = 33
           Width = 52
           Height = 13
           Caption = 'Tasa anual'
@@ -430,7 +430,7 @@ inherited frmCotizacionesDetalleEdit: TfrmCotizacionesDetalleEdit
         end
         object Label22: TLabel
           Left = 153
-          Top = 100
+          Top = 60
           Width = 25
           Height = 13
           Caption = 'Plazo'
@@ -438,23 +438,15 @@ inherited frmCotizacionesDetalleEdit: TfrmCotizacionesDetalleEdit
         end
         object Label23: TLabel
           Left = 112
-          Top = 127
+          Top = 87
           Width = 66
           Height = 13
           Caption = 'Pago mensual'
           FocusControl = cxDBTextEdit16
         end
-        object Label29: TLabel
-          Left = 119
-          Top = 46
-          Width = 59
-          Height = 13
-          Caption = 'Impacto ISR'
-          FocusControl = cxDBTextEdit21
-        end
         object cxDBTextEdit15: TcxDBTextEdit
           Left = 184
-          Top = 16
+          Top = 8
           DataBinding.DataField = 'MontoFinanciar'
           DataBinding.DataSource = DataSource
           Enabled = False
@@ -463,51 +455,135 @@ inherited frmCotizacionesDetalleEdit: TfrmCotizacionesDetalleEdit
         end
         object cxDBCurrencyEdit3: TcxDBCurrencyEdit
           Left = 184
-          Top = 70
+          Top = 30
           DataBinding.DataField = 'TasaAnual'
           DataBinding.DataSource = DataSource
-          TabOrder = 2
+          TabOrder = 1
           Width = 121
         end
         object cxDBSpinEdit2: TcxDBSpinEdit
           Left = 184
-          Top = 97
+          Top = 57
           DataBinding.DataField = 'Plazo'
           DataBinding.DataSource = DataSource
-          TabOrder = 3
+          TabOrder = 2
           Width = 121
         end
         object cxDBTextEdit16: TcxDBTextEdit
           Left = 184
-          Top = 124
+          Top = 84
           DataBinding.DataField = 'PagoMensual'
           DataBinding.DataSource = DataSource
           Enabled = False
+          TabOrder = 3
+          Width = 121
+        end
+      end
+      object cxGroupBox6: TcxGroupBox
+        Left = 362
+        Top = 256
+        Caption = 'Impacto ISR'
+        TabOrder = 4
+        Height = 153
+        Width = 350
+        object Label29: TLabel
+          Left = 118
+          Top = 117
+          Width = 59
+          Height = 13
+          Caption = 'Impacto ISR'
+        end
+        object Label1: TLabel
+          Left = 88
+          Top = 19
+          Width = 89
+          Height = 13
+          Caption = 'Fecha vencimiento'
+          FocusControl = cxDBDateEdit1
+        end
+        object Label2: TLabel
+          Left = 62
+          Top = 43
+          Width = 115
+          Height = 13
+          Caption = 'Porcentaje depreciaci'#243'n'
+          FocusControl = cxDBCurrencyEdit4
+        end
+        object Label3: TLabel
+          Left = 105
+          Top = 68
+          Width = 72
+          Height = 13
+          Caption = 'Porcentaje ISR'
+          FocusControl = cxDBCurrencyEdit5
+        end
+        object Label5: TLabel
+          Left = 110
+          Top = 92
+          Width = 67
+          Height = 13
+          Caption = 'Porcentaje Ke'
+          FocusControl = cxDBCurrencyEdit6
+        end
+        object edtImpactoISR: TcxDBButtonEdit
+          Left = 184
+          Top = 114
+          DataBinding.DataField = 'ImpactoISR'
+          DataBinding.DataSource = DataSource
+          Properties.Buttons = <
+            item
+              Default = True
+              Kind = bkEllipsis
+            end>
           TabOrder = 4
           Width = 121
         end
-        object cxDBTextEdit21: TcxDBTextEdit
+        object cxDBDateEdit1: TcxDBDateEdit
           Left = 184
-          Top = 43
-          DataBinding.DataField = 'ImpactoISR'
+          Top = 16
+          DataBinding.DataField = 'FechaVencimiento'
+          DataBinding.DataSource = DataSource
+          TabOrder = 0
+          Width = 121
+        end
+        object cxDBCurrencyEdit4: TcxDBCurrencyEdit
+          Left = 184
+          Top = 40
+          DataBinding.DataField = 'PorcentajeDepreciacion'
           DataBinding.DataSource = DataSource
           TabOrder = 1
+          Width = 121
+        end
+        object cxDBCurrencyEdit5: TcxDBCurrencyEdit
+          Left = 184
+          Top = 65
+          DataBinding.DataField = 'PorcentajeISR'
+          DataBinding.DataSource = DataSource
+          TabOrder = 2
+          Width = 121
+        end
+        object cxDBCurrencyEdit6: TcxDBCurrencyEdit
+          Left = 184
+          Top = 89
+          DataBinding.DataField = 'PorcentajeKE'
+          DataBinding.DataSource = DataSource
+          TabOrder = 3
           Width = 121
         end
       end
     end
   end
   inherited pmlMain: TPanel
-    Top = 527
-    Width = 736
+    Top = 563
+    Width = 727
     ExplicitTop = 527
     ExplicitWidth = 736
     inherited btnCancel: TButton
-      Left = 654
+      Left = 645
       ExplicitLeft = 654
     end
     inherited btnOk: TButton
-      Left = 573
+      Left = 564
       ExplicitLeft = 573
     end
   end

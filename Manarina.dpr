@@ -207,7 +207,9 @@ uses
   CotizacionesDetalleForm in 'Procesos\CotizacionesDetalleForm.pas' {frmCotizacionesDetalle},
   CotizacionesDetalleEdit in 'Procesos\CotizacionesDetalleEdit.pas' {frmCotizacionesDetalleEdit},
   rptInformacionContratosDM in 'Reportes\rptInformacionContratosDM.pas' {DMRptInformacionContratos: TDataModule},
-  rptInformacionContratosForm in 'Reportes\rptInformacionContratosForm.pas' {FrmInformacionContratosGrid};
+  rptInformacionContratosForm in 'Reportes\rptInformacionContratosForm.pas' {FrmInformacionContratosGrid},
+  ImpactoISRDM in 'Procesos\ImpactoISRDM.pas' {dmImpactoISR: TDataModule},
+  ImpactoISREdit in 'Procesos\ImpactoISREdit.pas' {frmImpactoISREdit};
 
 {$R *.res}
 

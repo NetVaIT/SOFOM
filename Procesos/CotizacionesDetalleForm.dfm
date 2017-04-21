@@ -103,6 +103,18 @@ inherited frmCotizacionesDetalle: TfrmCotizacionesDetalle
         object tvMasterPagoMensual: TcxGridDBColumn
           DataBinding.FieldName = 'PagoMensual'
         end
+        object tvMasterFechaVencimiento: TcxGridDBColumn
+          DataBinding.FieldName = 'FechaVencimiento'
+        end
+        object tvMasterPorcentajeDepreciacion: TcxGridDBColumn
+          DataBinding.FieldName = 'PorcentajeDepreciacion'
+        end
+        object tvMasterPorcentajeISR: TcxGridDBColumn
+          DataBinding.FieldName = 'PorcentajeISR'
+        end
+        object tvMasterPorcentajeKE: TcxGridDBColumn
+          DataBinding.FieldName = 'PorcentajeKE'
+        end
         object tvMasterImpactoISR: TcxGridDBColumn
           DataBinding.FieldName = 'ImpactoISR'
         end

@@ -129,6 +129,9 @@ type
       FechaPrestamo, FechaCorte, FechaVencimiento: TDateTime; TasaAnual: Extended; NPeriodo: Integer;
       ValorPresente, ValorFuturo, ImpactoISR: Extended): Boolean;
     function SetAmortizaciones(IdAnexo: Integer; Importe: Extended; Tipo: TAbonoCapital;Fecha:TDateTime): Boolean;
+    procedure GetCapitalAnual(FechaVencimiento: TDateTime; TasaAnual: Extended;
+      Plazo: Integer; ValorPresente, ValorFuturo: Extended;
+      var CapitalMeses: TCapitalMeses);
   end;
 
 implementation
@@ -250,6 +253,56 @@ begin
   Result.Pago := Pago;
   Result.PagoTotal := Pago + InteresImpuesto + ImpactoISR;;
   Result.SaldoFinal := SaldoFinal;
+end;
+
+procedure TdmAmortizaciones.GetCapitalAnual(FechaVencimiento: TDateTime;
+  TasaAnual: Extended; Plazo: Integer; ValorPresente, ValorFuturo: Extended;
+  var CapitalMeses: TCapitalMeses);
+var
+  AnioIni: Word;
+  Meses: Word;
+  Capital: Extended;
+  CapitalMes: TCapitalMes;
+
+  function AgregarCapital(NuevoCapitalMes: TCapitalMes): Integer;
+  begin
+      SetLength(CapitalMeses, Length(CapitalMeses) + 1);
+      CapitalMeses[Length(CapitalMeses) - 1] := NuevoCapitalMes;
+      Result:=Length(CapitalMeses) - 1;
+  end;
+
+begin
+  // Inicializa amotizaciones
+//  TipoContrato := tcArrendamientoPuro;
+  GenAmortizaciones(FechaVencimiento, FechaVencimiento, FechaVencimiento,
+  TasaAnual, Plazo, ValorPresente, ValorFuturo, 0, PaymentTime);
+  AnioIni:= Yearof(dxmAmortizacionesFechaVencimiento.Value);
+  Meses:= 0;
+  Capital:= 0;
+  dxmAmortizaciones.First;
+  while not dxmAmortizaciones.Eof do
+  begin
+    if AnioIni <> Yearof(dxmAmortizacionesFechaVencimiento.Value) then
+    begin
+      // Graba
+      CapitalMes.Anio := AnioIni;
+      CapitalMes.Meses := Meses;
+      CapitalMes.CapitalTotal:= Capital;
+      AgregarCapital(CapitalMes);
+      // Inicializa
+      AnioIni:= Yearof(dxmAmortizacionesFechaVencimiento.Value);
+      Meses:= 0;
+      Capital:= 0;
+    end;
+    Inc(Meses);
+    Capital := Capital + dxmAmortizacionesCapitalTotal.Value;
+    dxmAmortizaciones.Next;
+  end;
+  // Graba
+  CapitalMes.Anio := AnioIni;
+  CapitalMes.Meses := Meses;
+  CapitalMes.CapitalTotal:= Capital;
+  AgregarCapital(CapitalMes);
 end;
 
 function TdmAmortizaciones.GetInteresImpuesto(Interes: Extended): Extended;
