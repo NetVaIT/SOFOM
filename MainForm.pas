@@ -153,6 +153,8 @@ type
     dxBrLrgBtnSeguimiento: TdxBarLargeButton;
     ActSeguimiento: TAction;
     dxBarLargeButton20: TdxBarLargeButton;
+    dxBrLrgBtnInformacionContratos: TdxBarLargeButton;
+    ActInformacionContratos: TAction;
     procedure actCatalogoExecute(Sender: TObject);
     procedure actIntervaCXPExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -185,7 +187,7 @@ uses UbicacionesDM, BancosDM, MonedasDM, PuestosDM, PlazasTurnosDM,
   MarcasDM, FamiliasDM, ContratosDM, AmortizacionesDM, FacturasDM,
   CuentasXCobrarDM, PagosDM, CotizacionesDM, rptAntiguedadSaldosDM,
   AplicacionesConsultaDM, EstadosCuentaDM, ListasRestringidasDM,
-  SeguimientoCobranzaDM;
+  SeguimientoCobranzaDM, rptInformacionContratosDM;
 //  EsquemaPagosDM, FormulasDM, ReglasNegocioDM,
 //  MovimientosTiposDM, RolesDM, InstruccionesDM,
 //  IncidenciasDM, InstruccionesTiposDM, PeriodosDM, MovimientosDM,
@@ -252,7 +254,7 @@ begin
    50: gModulo := TdmRptAntiguedadSaldos.Create(Self);
    51: gModulo := TdmEstadosCuenta.Create(Self);
 
-
+   52: gModulo := TdmRptInformacionContratos.Create(Self);  //Abr 20/17
 //   51: begin
 //         gModulo := TdmMovimientosD.Create(Self);
 //         TdmMovimientosD(gModulo).TipoReporte:= trDispercion;

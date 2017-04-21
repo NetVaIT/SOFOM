@@ -35,6 +35,7 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
     inherited cxGrid: TcxGrid
       Width = 1192
       Height = 177
+      ExplicitLeft = 1
       ExplicitWidth = 1192
       ExplicitHeight = 177
       inherited tvMaster: TcxGridDBTableView
