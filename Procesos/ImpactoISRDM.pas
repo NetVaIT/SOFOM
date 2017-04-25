@@ -132,7 +132,10 @@ begin
     dxmdDepreciacion.Post;
     dxmdDepreciacion.Next;
   end;
-  Result := (TotalKe/Plazo)*FactorIVA;
+  if Plazo < 1 then
+    Result := 0
+  else
+    Result := (TotalKe/Plazo)*FactorIVA;
 end;
 
 procedure TdmImpactoISR.SetPorcentajeDepreciacion(const Value: Currency);

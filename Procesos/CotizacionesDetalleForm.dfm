@@ -103,6 +103,9 @@ inherited frmCotizacionesDetalle: TfrmCotizacionesDetalle
         object tvMasterPagoMensual: TcxGridDBColumn
           DataBinding.FieldName = 'PagoMensual'
         end
+        object tvMasterTIR: TcxGridDBColumn
+          DataBinding.FieldName = 'TIR'
+        end
         object tvMasterFechaVencimiento: TcxGridDBColumn
           DataBinding.FieldName = 'FechaVencimiento'
         end
@@ -126,6 +129,9 @@ inherited frmCotizacionesDetalle: TfrmCotizacionesDetalle
         end
       end
     end
+  end
+  inherited DataSource: TDataSource
+    DataSet = dmCotizaciones.adodsDetalle
   end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
@@ -165,6 +171,7 @@ inherited frmCotizacionesDetalle: TfrmCotizacionesDetalle
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42828.563385358790000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

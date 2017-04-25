@@ -19,7 +19,8 @@ uses
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, Vcl.ImgList,
   System.Actions, Vcl.ActnList, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls, cxPC,
   cxContainer, cxEdit, cxSpinEdit, cxDBEdit, cxCurrencyEdit, cxButtonEdit,
-  cxMaskEdit, cxDropDownEdit, cxCalendar, Vcl.DBCtrls, cxTextEdit, cxGroupBox;
+  cxMaskEdit, cxDropDownEdit, cxCalendar, Vcl.DBCtrls, cxTextEdit, cxGroupBox,
+  Vcl.Mask;
 
 type
   TfrmCotizacionesDetalleEdit = class(T_frmEdit)
@@ -39,12 +40,12 @@ type
     cxDBDateEdit4: TcxDBDateEdit;
     cxDBTextEdit22: TcxDBTextEdit;
     edtTipoCambio: TcxDBButtonEdit;
-    cxGroupBox4: TcxGroupBox;
+    cxGroupBox3: TcxGroupBox;
     Label17: TLabel;
     Label25: TLabel;
     cxDBTextEdit17: TcxDBTextEdit;
     cxDBTextEdit18: TcxDBTextEdit;
-    cxGroupBox5: TcxGroupBox;
+    cxGroupBox4: TcxGroupBox;
     Label26: TLabel;
     Label27: TLabel;
     cxDBTextEdit19: TcxDBTextEdit;
@@ -67,7 +68,7 @@ type
     cxDBSpinEdit1: TcxDBSpinEdit;
     cxDBTextEdit13: TcxDBTextEdit;
     cxDBTextEdit14: TcxDBTextEdit;
-    cxGroupBox3: TcxGroupBox;
+    cxGroupBox5: TcxGroupBox;
     Label20: TLabel;
     Label21: TLabel;
     Label22: TLabel;
@@ -89,6 +90,8 @@ type
     cxDBCurrencyEdit5: TcxDBCurrencyEdit;
     Label5: TLabel;
     cxDBCurrencyEdit6: TcxDBCurrencyEdit;
+    Label10: TLabel;
+    cxDBCurrencyEdit7: TcxDBCurrencyEdit;
     procedure FormShow(Sender: TObject);
   private
     { Private declarations }

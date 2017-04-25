@@ -69,6 +69,7 @@ type
     tvMasterPorcentajeDepreciacion: TcxGridDBColumn;
     tvMasterPorcentajeISR: TcxGridDBColumn;
     tvMasterPorcentajeKE: TcxGridDBColumn;
+    tvMasterTIR: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure DatasetEditExecute(Sender: TObject);

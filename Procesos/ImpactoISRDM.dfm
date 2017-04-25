@@ -1,11 +1,11 @@
 inherited dmImpactoISR: TdmImpactoISR
   OldCreateOrder = True
-  inherited ActionList: TActionList [1]
+  inherited ActionList: TActionList
     object actImpactoISR: TAction
       Caption = 'actImpactoISR'
     end
   end
-  object dxmdDepreciacion: TdxMemData [2]
+  object dxmdDepreciacion: TdxMemData
     Indexes = <>
     SortOptions = []
     Left = 152
@@ -37,7 +37,5 @@ inherited dmImpactoISR: TdmImpactoISR
       FieldName = 'Ke'
       currency = True
     end
-  end
-  inherited adodsUpdate: TADODataSet [3]
   end
 end

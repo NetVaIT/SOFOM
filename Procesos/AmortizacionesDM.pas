@@ -132,6 +132,10 @@ type
     procedure GetCapitalAnual(FechaVencimiento: TDateTime; TasaAnual: Extended;
       Plazo: Integer; ValorPresente, ValorFuturo: Extended;
       var CapitalMeses: TCapitalMeses);
+    function GetTIR(FechaVencimiento: TDateTime; Precio, Enganche,
+      ComisionInicial, Depositos, ComisionFinal, TasaAnual: Extended;
+      DepositosNumero, Plazo: Integer; ValorPresente, ValorFuturo,
+      ImpactoISR: Extended): Extended;
   end;
 
 implementation
@@ -272,8 +276,8 @@ var
   end;
 
 begin
+  if Plazo < 1 then exit;
   // Inicializa amotizaciones
-//  TipoContrato := tcArrendamientoPuro;
   GenAmortizaciones(FechaVencimiento, FechaVencimiento, FechaVencimiento,
   TasaAnual, Plazo, ValorPresente, ValorFuturo, 0, PaymentTime);
   AnioIni:= Yearof(dxmAmortizacionesFechaVencimiento.Value);
@@ -316,6 +320,36 @@ begin
   end;
 end;
 
+function TdmAmortizaciones.GetTIR(FechaVencimiento: TDateTime; Precio, Enganche,
+  ComisionInicial, Depositos, ComisionFinal, TasaAnual: Extended; DepositosNumero,
+  Plazo: Integer; ValorPresente, ValorFuturo, ImpactoISR: Extended): Extended;
+var
+  CashFlows: array of Double;
+  Periodo0 : Extended;
+begin
+  Result := 0;
+  if (Precio = 0) or (Plazo < 1) then exit;
+  Periodo0 := (-1*Precio) + Enganche + ComisionInicial + Depositos;
+  SetLength(CashFlows, Length(CashFlows) + 1);
+  CashFlows[Length(CashFlows) - 1] := Periodo0;
+  GenAmortizaciones(FechaVencimiento, FechaVencimiento, FechaVencimiento,
+  TasaAnual, Plazo, ValorPresente, ValorFuturo, ImpactoISR, PaymentTime);
+  dxmAmortizaciones.First;
+  while not dxmAmortizaciones.Eof do
+  begin
+    SetLength(CashFlows, Length(CashFlows) + 1);
+    if dxmAmortizacionesPeriodo.Value < (Plazo+1-DepositosNumero) then
+      CashFlows[Length(CashFlows) - 1] := dxmAmortizacionesCapital.Value + dxmAmortizacionesCapitalImpuesto.Value +
+      dxmAmortizacionesInteres.Value + dxmAmortizacionesInteresImpuesto.Value
+    else
+      CashFlows[Length(CashFlows) - 1] := dxmAmortizacionesInteresImpuesto.Value;
+    if dxmAmortizacionesPeriodo.Value = Plazo then
+      CashFlows[Length(CashFlows) - 1] := CashFlows[Length(CashFlows) - 1] + ValorFuturo + ComisionFinal;
+    dxmAmortizaciones.Next;
+  end;
+  Result := InternalRateOfReturn(0, CashFlows)*100*12;
+end;
+
 procedure TdmAmortizaciones.GenAmortizaciones(FechaPrestamo, FechaCorte, FechaVencimiento: TDateTime;
   TasaAnual: Extended; NPeriodo: Integer; ValorPresente,ValorFuturo, ImpactoISR: Extended;
   PaymentTime: TPaymentTime);
@@ -333,9 +367,9 @@ var
   Amortizacion: TAmortizacion;
 begin
 //  if (Rate <= -1.0) or (Period < 1) or (Period > NPeriods) then ArgError('PeriodPayment');
-  if NPeriodo < 1 then exit;
   dxmAmortizaciones.Close;
   dxmAmortizaciones.Open;
+  if NPeriodo < 1 then exit;
   SaldoInicial:= ValorPresente;
   for Periodo := 1 to NPeriodo do
   begin

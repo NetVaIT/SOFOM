@@ -213,8 +213,8 @@ inherited dmCotizaciones: TdmCotizaciones
       'tos, DespositosNumero, Depositos, PagoIncial, OpcionCompraPorcen' +
       'taje, OpcionCompra, ValorResidualPorcentaje, ValorResidual, Mont' +
       'oFinanciar, TasaAnual, Plazo, PagoMensual, ImpactoISR, FechaVenc' +
-      'imiento, PorcentajeDepreciacion, PorcentajeISR, PorcentajeKE fro' +
-      'm CotizacionesDetalle'#13#10'where IdCotizacion = :IdCotizacion'#13#10
+      'imiento, PorcentajeDepreciacion, PorcentajeISR, PorcentajeKE, TI' +
+      'R from CotizacionesDetalle'#13#10'where IdCotizacion = :IdCotizacion'#13#10
     DataSource = daMaster
     MasterFields = 'IdCotizacion'
     Parameters = <
@@ -436,6 +436,12 @@ inherited dmCotizaciones: TdmCotizaciones
       currency = True
       Precision = 18
       Size = 6
+    end
+    object adodsDetalleTIR: TBCDField
+      FieldName = 'TIR'
+      DisplayFormat = '0.00 %'
+      EditFormat = '0.00'
+      Precision = 19
     end
     object adodsDetalleFechaVencimiento: TDateTimeField
       DisplayLabel = 'Fecha vencimiento'

@@ -79,6 +79,7 @@ type
     adodsDetallePorcentajeDepreciacion: TBCDField;
     adodsDetallePorcentajeISR: TBCDField;
     adodsDetallePorcentajeKE: TBCDField;
+    adodsDetalleTIR: TBCDField;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
@@ -258,9 +259,25 @@ begin
     adodsDetalleOpcionCompra.Value := adodsDetallePrecioTotal.Value * (adodsDetalleOpcionCompraPorcentaje.Value/100);
     adodsDetalleValorResidual.Value := adodsDetallePrecioTotal.Value * (adodsDetalleValorResidualPorcentaje.Value/100);
     adodsDetalleMontoFinanciar.Value:= adodsDetallePrecioTotal.Value-adodsDetalleEnganche.Value;
+    // Calcular pago mensual
+    dmAmortizaciones.TipoContrato:= TipoContrato;
     adodsDetallePagoMensual.Value := dmAmortizaciones.Pago(adodsDetalleTasaAnual.Value,
     adodsDetallePlazo.Value, adodsDetalleMontoFinanciar.AsExtended,
     adodsDetalleValorResidual.AsExtended) + adodsDetalleImpactoISR.AsExtended;
+    // Calcular TIR
+    adodsDetalleTIR.Value := dmAmortizaciones.GetTIR(
+    adodsDetalleFechaVencimiento.Value,
+    adodsDetallePrecioTotal.AsExtended,
+    adodsDetalleEnganche.AsExtended,
+    adodsDetalleComision.AsExtended+adodsDetalleComisionImpuesto.AsExtended,
+    adodsDetalleDepositos.AsExtended,
+    adodsDetalleOpcionCompra.AsExtended,
+    adodsDetalleTasaAnual.Value,
+    adodsDetalleDespositosNumero.Value,
+    adodsDetallePlazo.Value,
+    adodsDetalleMontoFinanciar.AsExtended,
+    adodsDetalleValorResidual.AsExtended,
+    adodsDetalleImpactoISR.AsExtended);
   end;
 end;
 
