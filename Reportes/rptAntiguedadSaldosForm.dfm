@@ -35,7 +35,6 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
     inherited cxGrid: TcxGrid
       Width = 1192
       Height = 177
-      ExplicitLeft = 1
       ExplicitWidth = 1192
       ExplicitHeight = 177
       inherited tvMaster: TcxGridDBTableView
@@ -75,6 +74,16 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
             Kind = skSum
             Position = spFooter
             Column = tvMasterIDAnexo
+          end
+          item
+            Kind = skSum
+            Position = spFooter
+            Column = tvMasterSaldo
+          end
+          item
+            Kind = skSum
+            Position = spFooter
+            Column = tvMasterSaldoTotalVencido
           end>
         DataController.Summary.FooterSummaryItems = <
           item
@@ -96,6 +105,14 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
           item
             Kind = skSum
             Column = tvMasterVencidosmsde90das
+          end
+          item
+            Kind = skSum
+            Column = tvMasterSaldo
+          end
+          item
+            Kind = skSum
+            Column = tvMasterSaldoTotalVencido
           end>
         DataController.Summary.SummaryGroups = <
           item
@@ -158,9 +175,15 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
           DataBinding.FieldName = 'IdCuentaXCobrar'
           Width = 99
         end
+        object tvMasterSaldo: TcxGridDBColumn
+          DataBinding.FieldName = 'Saldo'
+        end
         object tvMasterVigentes: TcxGridDBColumn
           DataBinding.FieldName = 'Vigentes'
           Width = 120
+        end
+        object tvMasterSaldoTotalVencido: TcxGridDBColumn
+          DataBinding.FieldName = 'Saldo Total Vencido'
         end
         object tvMasterVencidosa30das: TcxGridDBColumn
           DataBinding.FieldName = 'Vencidos a 30 d'#237'as'
@@ -189,10 +212,6 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
         end
         object tvMasterTotal: TcxGridDBColumn
           DataBinding.FieldName = 'Total'
-          Visible = False
-        end
-        object tvMasterSaldo: TcxGridDBColumn
-          DataBinding.FieldName = 'Saldo'
           Visible = False
         end
         object tvMasterIdContratoTipo: TcxGridDBColumn
@@ -1232,7 +1251,6 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42585.483476608800000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

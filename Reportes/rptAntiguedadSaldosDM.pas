@@ -29,6 +29,7 @@ type
     ActPDFAntiguedadXCliente: TAction;
     adodsMasterAnexo: TStringField;
     adodsMasterContrato: TStringField;
+    adodsMasterSaldoTotalVencido: TFMTBCDField;
     procedure DataModuleCreate(Sender: TObject);
     procedure ActGenPDFAntigSaldosExecute(Sender: TObject);
     procedure ActPDFAntiguedadXClienteExecute(Sender: TObject);

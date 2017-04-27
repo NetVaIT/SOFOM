@@ -7,15 +7,19 @@ inherited FrmInformacionContratosGrid: TFrmInformacionContratosGrid
   TextHeight = 13
   inherited splDetail3: TSplitter
     Width = 1181
+    ExplicitWidth = 1181
   end
   inherited splDetail1: TSplitter
     Width = 1181
+    ExplicitWidth = 1181
   end
   inherited splDetail2: TSplitter
     Width = 1181
+    ExplicitWidth = 1181
   end
   inherited pnlMaster: TPanel
     Width = 1181
+    ExplicitWidth = 1181
     inherited cxGrid: TcxGrid
       Width = 1181
       ExplicitTop = -3
@@ -185,17 +189,22 @@ inherited FrmInformacionContratosGrid: TFrmInformacionContratosGrid
   end
   inherited pnlDetail3: TPanel
     Width = 1181
+    ExplicitWidth = 1181
   end
   inherited pnlDetail2: TPanel
     Width = 1181
+    ExplicitWidth = 1181
   end
   inherited pnlDetail1: TPanel
     Width = 1181
+    ExplicitWidth = 1181
   end
   inherited pnlClose: TPanel
     Width = 1181
+    ExplicitWidth = 1181
     inherited btnClose: TButton
       Left = 1096
+      ExplicitLeft = 1096
     end
   end
   inherited ActionList: TActionList
@@ -215,6 +224,12 @@ inherited FrmInformacionContratosGrid: TFrmInformacionContratosGrid
       0
       31
       0)
+    inherited dxbNavigator: TdxBar
+      DockedLeft = 107
+    end
+    inherited dxbTools: TdxBar
+      DockedLeft = 238
+    end
   end
   inherited cxStyleRepository: TcxStyleRepository
     Left = 552
@@ -238,7 +253,6 @@ inherited FrmInformacionContratosGrid: TFrmInformacionContratosGrid
     Top = 47
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42845.604105219910000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

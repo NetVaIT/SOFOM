@@ -1298,7 +1298,7 @@ object _frmGrid: T_frmGrid
       PrinterPage.PageSize.Y = 279400
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
-      ReportDocument.CreationDate = 42832.666965092590000000
+      ReportDocument.CreationDate = 42852.486407361110000000
       OptionsView.Caption = False
       OptionsView.FilterBar = False
       BuiltInReportLink = True

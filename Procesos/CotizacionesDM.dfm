@@ -142,7 +142,6 @@ inherited dmCotizaciones: TdmCotizaciones
     Top = 128
   end
   object adodsMonedas: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdMoneda, Descripcion from Monedas'#13#10'order by Descripcion'
@@ -491,16 +490,14 @@ inherited dmCotizaciones: TdmCotizaciones
     end
   end
   object adodsUsuariosD: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdUsuario, Login from Usuarios'
     Parameters = <>
     Left = 160
-    Top = 200
+    Top = 208
   end
   object adodsCotizacionesDetalleEstatus: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -513,7 +510,7 @@ inherited dmCotizaciones: TdmCotizaciones
   object dsDetalle: TDataSource
     AutoEdit = False
     DataSet = adodsDetalle
-    Left = 240
+    Left = 248
     Top = 88
   end
 end

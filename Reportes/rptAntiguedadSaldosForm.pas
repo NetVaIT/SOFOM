@@ -67,6 +67,7 @@ type
     tvMasterContrato: TcxGridDBColumn;
     tvMasterAnexo: TcxGridDBColumn;
     tvMasterTC: TcxGridDBColumn;
+    tvMasterSaldoTotalVencido: TcxGridDBColumn;
     procedure SpdBtnConsultaClick(Sender: TObject);
     procedure EdtNombreKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
