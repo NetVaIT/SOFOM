@@ -1077,11 +1077,12 @@
     CursorType = ctStatic
     CommandText = 
       'SElect Cliente,sum("Saldo")  as SaldoTotal,sum("Saldo Total Venc' +
-      'ido")  as TotalVencido, Sum (vigentes)as TotalVigentes, SUM ("ve' +
-      'ncidos a 30 d'#237'as") as Total30Dias, SUM ("vencidos a 60 d'#237'as") as' +
-      ' Total60Dias,'#13#10#13#10'SUM ("vencidos a 90 d'#237'as") as Total90Dias ,SUM ' +
-      '("vencidos m'#225's de 90 d'#237'as") as TotalMas90Dias '#13#10'  from Vw_Antigu' +
-      'edadSaldosCXC '#13#10'Group BY Cliente'
+      'ido")  as TotalVencido, Sum (vigentes)as TotalVigentes, '#13#10'SUM ("' +
+      'vencidos a 30 d'#237'as") as Total30Dias, '#13#10'SUM ("vencidos a 60 d'#237'as"' +
+      ') as Total60Dias,'#13#10'SUM ("vencidos a 90 d'#237'as") as Total90Dias ,'#13#10 +
+      'SUM ("vencidos a 120 d'#237'as") as Total120Dias ,'#13#10'Sum("Vencidos a m' +
+      'as de 120 d'#237'as") as TotalMas120Dias'#13#10'  from Vw_AntiguedadSaldosC' +
+      'XC '#13#10'Group BY Cliente'
     Parameters = <>
     Left = 24
     Top = 152
@@ -1093,13 +1094,13 @@
   end
   object ppRprtAntXCliente: TppReport
     AutoStop = False
-    DataPipeline = ppDBAntXCliente
+    DataPipeline = ppDBAntXClienteX
     PassSetting = psTwoPass
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.Duplex = dpVertical
     PrinterSetup.Orientation = poLandscape
-    PrinterSetup.PaperName = 'Carta'
+    PrinterSetup.PaperName = 'Oficio'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350
@@ -1107,8 +1108,8 @@
     PrinterSetup.mmMarginRight = 6350
     PrinterSetup.mmMarginTop = 6350
     PrinterSetup.mmPaperHeight = 215900
-    PrinterSetup.mmPaperWidth = 279400
-    PrinterSetup.PaperSize = 1
+    PrinterSetup.mmPaperWidth = 355600
+    PrinterSetup.PaperSize = 5
     Template.FileName = 'C:\Desarrollo\SOFOM\Reportes\rptAntiguedadSaldosXCliente.rtm'
     Units = utMillimeters
     ArchiveFileName = '($MyDocuments)\ReportArchive.raf'
@@ -1150,7 +1151,7 @@
     Top = 152
     Version = '15.0'
     mmColumnWidth = 203200
-    DataPipelineName = 'ppDBAntXCliente'
+    DataPipelineName = 'ppDBAntXClienteX'
     object ppTitleBand2: TppTitleBand
       Background.Brush.Style = bsClear
       mmBottomOffset = 0
@@ -1173,7 +1174,7 @@
         mmHeight = 30427
         mmLeft = 59531
         mmTop = 2646
-        mmWidth = 203730
+        mmWidth = 279930
         BandType = 1
         LayerName = Foreground1
       end
@@ -4572,7 +4573,7 @@
         Font.Style = [fsBold]
         Transparent = True
         mmHeight = 4763
-        mmLeft = 2908
+        mmLeft = 5293
         mmTop = 7938
         mmWidth = 14023
         BandType = 0
@@ -4590,7 +4591,7 @@
         TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 4763
-        mmLeft = 89694
+        mmLeft = 117475
         mmTop = 7938
         mmWidth = 25665
         BandType = 0
@@ -4599,7 +4600,7 @@
       object ppLabel20: TppLabel
         UserName = 'Label7'
         AutoSize = False
-        Caption = 'Venc. a 30 d'#237'as'
+        Caption = '1-30 d'#237'as'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -4608,7 +4609,7 @@
         TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 4763
-        mmLeft = 144749
+        mmLeft = 170454
         mmTop = 7938
         mmWidth = 24071
         BandType = 0
@@ -4617,7 +4618,7 @@
       object ppLabel21: TppLabel
         UserName = 'Label8'
         AutoSize = False
-        Caption = 'Venc. a 60 d'#237'as'
+        Caption = '31 - 60 d'#237'as'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -4626,7 +4627,7 @@
         TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 4763
-        mmLeft = 171467
+        mmLeft = 197172
         mmTop = 7938
         mmWidth = 25660
         BandType = 0
@@ -4635,7 +4636,7 @@
       object ppLabel22: TppLabel
         UserName = 'Label9'
         AutoSize = False
-        Caption = 'Venc. a 90 d'#237'as'
+        Caption = '61 - 90 d'#237'as'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -4644,7 +4645,7 @@
         TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 4763
-        mmLeft = 198447
+        mmLeft = 224152
         mmTop = 7938
         mmWidth = 26188
         BandType = 0
@@ -4653,7 +4654,7 @@
       object ppLabel23: TppLabel
         UserName = 'Label10'
         AutoSize = False
-        Caption = 'Venc. a m'#225's de 90 d'#237'as'
+        Caption = '90 - 120 d'#237'as'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -4662,7 +4663,7 @@
         TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 4763
-        mmLeft = 226486
+        mmLeft = 253736
         mmTop = 7938
         mmWidth = 35454
         BandType = 0
@@ -4677,7 +4678,7 @@
         mmHeight = 3175
         mmLeft = 1316
         mmTop = 12435
-        mmWidth = 264055
+        mmWidth = 340255
         BandType = 0
         LayerName = Foreground1
       end
@@ -4690,14 +4691,14 @@
         mmHeight = 3175
         mmLeft = 1323
         mmTop = 3175
-        mmWidth = 264055
+        mmWidth = 340255
         BandType = 0
         LayerName = Foreground1
       end
       object ppLabel16: TppLabel
         UserName = 'Label16'
         AutoSize = False
-        Caption = 'Total Vencido'
+        Caption = 'Vencido'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -4706,16 +4707,16 @@
         TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 4763
-        mmLeft = 118552
+        mmLeft = 144198
         mmTop = 7938
-        mmWidth = 23280
+        mmWidth = 24077
         BandType = 0
         LayerName = Foreground1
       end
       object ppLabel25: TppLabel
         UserName = 'Label25'
         AutoSize = False
-        Caption = 'Saldo Total'
+        Caption = 'Saldo Total Cobrado'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -4724,9 +4725,27 @@
         TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 4763
-        mmLeft = 67468
+        mmLeft = 81492
         mmTop = 7938
-        mmWidth = 21431
+        mmWidth = 32015
+        BandType = 0
+        LayerName = Foreground1
+      end
+      object ppLabel27: TppLabel
+        UserName = 'Label102'
+        AutoSize = False
+        Caption = 'M'#225's de 120 d'#237'as'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 9
+        Font.Style = [fsBold]
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 4763
+        mmLeft = 291612
+        mmTop = 7938
+        mmWidth = 35454
         BandType = 0
         LayerName = Foreground1
       end
@@ -4740,7 +4759,7 @@
       object ppDBText16: TppDBText
         UserName = 'DBText6'
         DataField = 'TotalVigentes'
-        DataPipeline = ppDBAntXCliente
+        DataPipeline = ppDBAntXClienteX
         DisplayFormat = '$#,0.00;-$#,0.00'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -4750,10 +4769,10 @@
         ParentDataPipeline = False
         TextAlignment = taRightJustified
         Transparent = True
-        DataPipelineName = 'ppDBAntXCliente'
+        DataPipelineName = 'ppDBAntXClienteX'
         mmHeight = 4763
-        mmLeft = 92075
-        mmTop = 529
+        mmLeft = 117475
+        mmTop = 794
         mmWidth = 25665
         BandType = 4
         LayerName = Foreground1
@@ -4761,7 +4780,7 @@
       object ppDBText17: TppDBText
         UserName = 'DBText7'
         DataField = 'Total30Dias'
-        DataPipeline = ppDBAntXCliente
+        DataPipeline = ppDBAntXClienteX
         DisplayFormat = '$#,0.00;-$#,0.00'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -4771,10 +4790,10 @@
         ParentDataPipeline = False
         TextAlignment = taRightJustified
         Transparent = True
-        DataPipelineName = 'ppDBAntXCliente'
+        DataPipelineName = 'ppDBAntXClienteX'
         mmHeight = 4763
-        mmLeft = 147109
-        mmTop = 529
+        mmLeft = 170392
+        mmTop = 794
         mmWidth = 24077
         BandType = 4
         LayerName = Foreground1
@@ -4782,7 +4801,7 @@
       object ppDBText18: TppDBText
         UserName = 'DBText8'
         DataField = 'Total60Dias'
-        DataPipeline = ppDBAntXCliente
+        DataPipeline = ppDBAntXClienteX
         DisplayFormat = '$#,0.00;-$#,0.00'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -4792,9 +4811,9 @@
         ParentDataPipeline = False
         TextAlignment = taRightJustified
         Transparent = True
-        DataPipelineName = 'ppDBAntXCliente'
+        DataPipelineName = 'ppDBAntXClienteX'
         mmHeight = 4763
-        mmLeft = 173832
+        mmLeft = 197115
         mmTop = 529
         mmWidth = 25665
         BandType = 4
@@ -4803,7 +4822,7 @@
       object ppDBText19: TppDBText
         UserName = 'DBText9'
         DataField = 'Total90Dias'
-        DataPipeline = ppDBAntXCliente
+        DataPipeline = ppDBAntXClienteX
         DisplayFormat = '$#,0.00;-$#,0.00'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -4813,9 +4832,9 @@
         ParentDataPipeline = False
         TextAlignment = taRightJustified
         Transparent = True
-        DataPipelineName = 'ppDBAntXCliente'
+        DataPipelineName = 'ppDBAntXClienteX'
         mmHeight = 4763
-        mmLeft = 200819
+        mmLeft = 224103
         mmTop = 529
         mmWidth = 26194
         BandType = 4
@@ -4823,8 +4842,8 @@
       end
       object ppDBText20: TppDBText
         UserName = 'DBText10'
-        DataField = 'TotalMas90Dias'
-        DataPipeline = ppDBAntXCliente
+        DataField = 'Total120Dias'
+        DataPipeline = ppDBAntXClienteX
         DisplayFormat = '$#,0.00;-$#,0.00'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -4834,18 +4853,18 @@
         ParentDataPipeline = False
         TextAlignment = taRightJustified
         Transparent = True
-        DataPipelineName = 'ppDBAntXCliente'
+        DataPipelineName = 'ppDBAntXClienteX'
         mmHeight = 4763
-        mmLeft = 228865
+        mmLeft = 253736
         mmTop = 529
-        mmWidth = 33073
+        mmWidth = 35190
         BandType = 4
         LayerName = Foreground1
       end
       object ppDBText11: TppDBText
         UserName = 'DBText1'
         DataField = 'Cliente'
-        DataPipeline = ppDBAntXCliente
+        DataPipeline = ppDBAntXClienteX
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -4853,18 +4872,18 @@
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
-        DataPipelineName = 'ppDBAntXCliente'
+        DataPipelineName = 'ppDBAntXClienteX'
         mmHeight = 4763
-        mmLeft = 2908
+        mmLeft = 5295
         mmTop = 529
-        mmWidth = 63765
+        mmWidth = 75949
         BandType = 4
         LayerName = Foreground1
       end
       object ppDBText12: TppDBText
         UserName = 'DBText12'
         DataField = 'TotalVencido'
-        DataPipeline = ppDBAntXCliente
+        DataPipeline = ppDBAntXClienteX
         DisplayFormat = '$#,0.00;-$#,0.00'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -4874,9 +4893,9 @@
         ParentDataPipeline = False
         TextAlignment = taRightJustified
         Transparent = True
-        DataPipelineName = 'ppDBAntXCliente'
+        DataPipelineName = 'ppDBAntXClienteX'
         mmHeight = 4763
-        mmLeft = 120386
+        mmLeft = 144198
         mmTop = 794
         mmWidth = 24077
         BandType = 4
@@ -4885,7 +4904,7 @@
       object ppDBText13: TppDBText
         UserName = 'DBText13'
         DataField = 'SaldoTotal'
-        DataPipeline = ppDBAntXCliente
+        DataPipeline = ppDBAntXClienteX
         DisplayFormat = '$#,0.00;-$#,0.00'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -4895,11 +4914,32 @@
         ParentDataPipeline = False
         TextAlignment = taRightJustified
         Transparent = True
-        DataPipelineName = 'ppDBAntXCliente'
+        DataPipelineName = 'ppDBAntXClienteX'
         mmHeight = 4763
-        mmLeft = 66146
+        mmLeft = 90791
         mmTop = 794
         mmWidth = 23283
+        BandType = 4
+        LayerName = Foreground1
+      end
+      object ppDBText14: TppDBText
+        UserName = 'DBText101'
+        DataField = 'Total120Dias'
+        DataPipeline = ppDBAntXClienteX
+        DisplayFormat = '$#,0.00;-$#,0.00'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 9
+        Font.Style = []
+        ParentDataPipeline = False
+        TextAlignment = taRightJustified
+        Transparent = True
+        DataPipelineName = 'ppDBAntXClienteX'
+        mmHeight = 4763
+        mmLeft = 292670
+        mmTop = 794
+        mmWidth = 33073
         BandType = 4
         LayerName = Foreground1
       end
@@ -4918,7 +4958,7 @@
         mmHeight = 3968
         mmLeft = 1323
         mmTop = 265
-        mmWidth = 264055
+        mmWidth = 340255
         BandType = 8
         LayerName = Foreground1
       end
@@ -4950,7 +4990,7 @@
         TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 3969
-        mmLeft = 254794
+        mmLeft = 330994
         mmTop = 2646
         mmWidth = 10583
         BandType = 8
@@ -4965,7 +5005,7 @@
       object ppDBCalc11: TppDBCalc
         UserName = 'DBCalc6'
         DataField = 'TotalVigentes'
-        DataPipeline = ppDBAntXCliente
+        DataPipeline = ppDBAntXClienteX
         DisplayFormat = '$#,0.00;-$#,0.00'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -4975,9 +5015,9 @@
         ParentDataPipeline = False
         TextAlignment = taRightJustified
         Transparent = True
-        DataPipelineName = 'ppDBAntXCliente'
+        DataPipelineName = 'ppDBAntXClienteX'
         mmHeight = 4498
-        mmLeft = 94986
+        mmLeft = 117475
         mmTop = 4233
         mmWidth = 22754
         BandType = 7
@@ -4986,7 +5026,7 @@
       object ppDBCalc12: TppDBCalc
         UserName = 'DBCalc7'
         DataField = 'Total30Dias'
-        DataPipeline = ppDBAntXCliente
+        DataPipeline = ppDBAntXClienteX
         DisplayFormat = '$#,0.00;-$#,0.00'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -4995,9 +5035,9 @@
         Font.Style = []
         TextAlignment = taRightJustified
         Transparent = True
-        DataPipelineName = 'ppDBAntXCliente'
+        DataPipelineName = 'ppDBAntXClienteX'
         mmHeight = 4498
-        mmLeft = 147109
+        mmLeft = 174096
         mmTop = 3969
         mmWidth = 24077
         BandType = 7
@@ -5006,7 +5046,7 @@
       object ppDBCalc13: TppDBCalc
         UserName = 'DBCalc8'
         DataField = 'Total60Dias'
-        DataPipeline = ppDBAntXCliente
+        DataPipeline = ppDBAntXClienteX
         DisplayFormat = '$#,0.00;-$#,0.00'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -5015,9 +5055,9 @@
         Font.Style = []
         TextAlignment = taRightJustified
         Transparent = True
-        DataPipelineName = 'ppDBAntXCliente'
+        DataPipelineName = 'ppDBAntXClienteX'
         mmHeight = 4498
-        mmLeft = 175419
+        mmLeft = 202407
         mmTop = 3969
         mmWidth = 24077
         BandType = 7
@@ -5026,7 +5066,7 @@
       object ppDBCalc14: TppDBCalc
         UserName = 'DBCalc9'
         DataField = 'Total90Dias'
-        DataPipeline = ppDBAntXCliente
+        DataPipeline = ppDBAntXClienteX
         DisplayFormat = '$#,0.00;-$#,0.00'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -5035,9 +5075,9 @@
         Font.Style = []
         TextAlignment = taRightJustified
         Transparent = True
-        DataPipelineName = 'ppDBAntXCliente'
+        DataPipelineName = 'ppDBAntXClienteX'
         mmHeight = 4498
-        mmLeft = 200819
+        mmLeft = 227807
         mmTop = 3969
         mmWidth = 26194
         BandType = 7
@@ -5045,8 +5085,8 @@
       end
       object ppDBCalc15: TppDBCalc
         UserName = 'DBCalc10'
-        DataField = 'TotalMas90Dias'
-        DataPipeline = ppDBAntXCliente
+        DataField = 'Total90Dias'
+        DataPipeline = ppDBAntXClienteX
         DisplayFormat = '$#,0.00;-$#,0.00'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -5056,9 +5096,9 @@
         ParentDataPipeline = False
         TextAlignment = taRightJustified
         Transparent = True
-        DataPipelineName = 'ppDBAntXCliente'
+        DataPipelineName = 'ppDBAntXClienteX'
         mmHeight = 4498
-        mmLeft = 228865
+        mmLeft = 255853
         mmTop = 3969
         mmWidth = 31485
         BandType = 7
@@ -5073,7 +5113,7 @@
         mmHeight = 3969
         mmLeft = 28046
         mmTop = 2910
-        mmWidth = 233892
+        mmWidth = 313532
         BandType = 7
         LayerName = Foreground1
       end
@@ -5098,7 +5138,7 @@
       object ppDBCalc18: TppDBCalc
         UserName = 'DBCalc18'
         DataField = 'TotalVencido'
-        DataPipeline = ppDBAntXCliente
+        DataPipeline = ppDBAntXClienteX
         DisplayFormat = '$#,0.00;-$#,0.00'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -5108,9 +5148,9 @@
         ParentDataPipeline = False
         TextAlignment = taRightJustified
         Transparent = True
-        DataPipelineName = 'ppDBAntXCliente'
+        DataPipelineName = 'ppDBAntXClienteX'
         mmHeight = 4498
-        mmLeft = 120386
+        mmLeft = 147373
         mmTop = 4233
         mmWidth = 24077
         BandType = 7
@@ -5119,7 +5159,7 @@
       object ppDBCalc21: TppDBCalc
         UserName = 'DBCalc21'
         DataField = 'SaldoTotal'
-        DataPipeline = ppDBAntXCliente
+        DataPipeline = ppDBAntXClienteX
         DisplayFormat = '$#,0.00;-$#,0.00'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -5129,11 +5169,32 @@
         ParentDataPipeline = False
         TextAlignment = taRightJustified
         Transparent = True
-        DataPipelineName = 'ppDBAntXCliente'
+        DataPipelineName = 'ppDBAntXClienteX'
         mmHeight = 4498
-        mmLeft = 66146
+        mmLeft = 93134
         mmTop = 4233
         mmWidth = 22754
+        BandType = 7
+        LayerName = Foreground1
+      end
+      object ppDBCalc22: TppDBCalc
+        UserName = 'DBCalc101'
+        DataField = 'TotalMas120Dias'
+        DataPipeline = ppDBAntXClienteX
+        DisplayFormat = '$#,0.00;-$#,0.00'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 9
+        Font.Style = []
+        ParentDataPipeline = False
+        TextAlignment = taRightJustified
+        Transparent = True
+        DataPipelineName = 'ppDBAntXClienteX'
+        mmHeight = 4498
+        mmLeft = 294217
+        mmTop = 3969
+        mmWidth = 31485
         BandType = 7
         LayerName = Foreground1
       end
@@ -5147,6 +5208,12 @@
     end
     object ppParameterList2: TppParameterList
     end
+  end
+  object ppDBAntXClienteX: TppDBPipeline
+    DataSource = DSAntXCliente
+    UserName = 'dbpRptAntXClientex'
+    Left = 64
+    Top = 216
   end
   object ppDBAntXCliente: TppDBPipeline
     DataSource = DSAntXCliente

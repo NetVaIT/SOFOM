@@ -1,4 +1,5 @@
 inherited DMRptInformacionContratos: TDMRptInformacionContratos
+  OldCreateOrder = True
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     CommandText = 

@@ -118,13 +118,17 @@ type
     ppDBCalc20: TppDBCalc;
     ppLabel25: TppLabel;
     ppDBText13: TppDBText;
-    ppDBAntXCliente: TppDBPipeline;
+    ppDBAntXClienteX: TppDBPipeline;
     ppDBCalc21: TppDBCalc;
     ppLine9: TppLine;
     adodsReportAnexo: TStringField;
     adodsReportContrato: TStringField;
     ppLine10: TppLine;
     ppLabel26: TppLabel;
+    ppDBAntXCliente: TppDBPipeline;
+    ppLabel27: TppLabel;
+    ppDBText14: TppDBText;
+    ppDBCalc22: TppDBCalc;
   private
     { Private declarations }
   public
