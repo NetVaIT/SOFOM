@@ -11,7 +11,6 @@ inherited frmMain: TfrmMain
     OnApplicationMenuClick = dxRibbon1ApplicationMenuClick
     ExplicitWidth = 1020
     inherited dxRibbon1Tab1: TdxRibbonTab
-      Active = False
       Index = 0
     end
     object dxRibbon1Tab2: TdxRibbonTab
@@ -44,7 +43,6 @@ inherited frmMain: TfrmMain
       Index = 2
     end
     object dxRibbon1Tab5: TdxRibbonTab
-      Active = True
       Caption = 'Reportes'
       Groups = <
         item
@@ -336,8 +334,8 @@ inherited frmMain: TfrmMain
       DockedTop = 0
       FloatLeft = 1054
       FloatTop = 8
-      FloatClientWidth = 131
-      FloatClientHeight = 108
+      FloatClientWidth = 136
+      FloatClientHeight = 162
       ItemLinks = <
         item
           Visible = True
@@ -10793,7 +10791,7 @@ inherited frmMain: TfrmMain
     object actAmortizaciones: TAction
       Tag = 31
       Category = 'Procesos'
-      Caption = 'Amortizaciones'
+      Caption = 'Calculadora de amortizaciones'
       ImageIndex = 44
       OnExecute = actCatalogoExecute
     end

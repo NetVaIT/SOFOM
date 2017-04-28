@@ -199,7 +199,7 @@ begin
   TfrmSegmentos(gGridForm).Monto := 0;
   TfrmSegmentos(gGridForm).TasaAnual := 0;
   TfrmSegmentos(gGridForm).Plazo := 1;
-  TfrmSegmentos(gGridForm).FechaInicial := 0;
+  TfrmSegmentos(gGridForm).FechaInicial := Date;
 //  IniSegmentos(0, 1, 0, 0);
 //  gFormDeatil1:= TfrmAmortizaciones.Create(Self);
 //  gFormDeatil1.DataSet := dxmAmortizaciones;

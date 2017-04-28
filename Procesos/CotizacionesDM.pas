@@ -73,13 +73,14 @@ type
     adodsCotizacionesDetalleEstatus: TADODataSet;
     adodsDetalleEstatus: TStringField;
     adodsDetalleRegistro: TDateTimeField;
-    dsDetalle: TDataSource;
     actGetImpactoISR: TAction;
     adodsDetalleFechaVencimiento: TDateTimeField;
     adodsDetallePorcentajeDepreciacion: TBCDField;
     adodsDetallePorcentajeISR: TBCDField;
     adodsDetallePorcentajeKE: TBCDField;
     adodsDetalleTIR: TBCDField;
+    adodsCotizacionLkp: TADODataSet;
+    adodsDetalleDescripcion: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);

@@ -146,7 +146,7 @@ inherited dmCotizaciones: TdmCotizaciones
     CursorType = ctStatic
     CommandText = 'select IdMoneda, Descripcion from Monedas'#13#10'order by Descripcion'
     Parameters = <>
-    Left = 160
+    Left = 200
     Top = 144
   end
   object adodsUsuario: TADODataSet
@@ -225,7 +225,7 @@ inherited dmCotizaciones: TdmCotizaciones
         Size = 4
         Value = 5
       end>
-    Left = 160
+    Left = 200
     Top = 88
     object adodsDetalleIdCotizacionDetalle: TAutoIncField
       FieldName = 'IdCotizacionDetalle'
@@ -256,6 +256,17 @@ inherited dmCotizaciones: TdmCotizaciones
       LookupResultField = 'Descripcion'
       KeyFields = 'IdCotizacionDetalleEstatus'
       Size = 50
+      Lookup = True
+    end
+    object adodsDetalleDescripcion: TStringField
+      FieldKind = fkLookup
+      FieldName = 'Descripcion'
+      LookupDataSet = adodsCotizacionLkp
+      LookupKeyFields = 'IdCotizacion'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IdCotizacion'
+      Visible = False
+      Size = 100
       Lookup = True
     end
     object adodsDetallePrecioMoneda: TFMTBCDField
@@ -494,7 +505,7 @@ inherited dmCotizaciones: TdmCotizaciones
     CursorType = ctStatic
     CommandText = 'select IdUsuario, Login from Usuarios'
     Parameters = <>
-    Left = 160
+    Left = 200
     Top = 208
   end
   object adodsCotizacionesDetalleEstatus: TADODataSet
@@ -504,13 +515,19 @@ inherited dmCotizaciones: TdmCotizaciones
       'select IdCotizacionDetalleEstatus, Descripcion from Cotizaciones' +
       'DetalleEstatus'
     Parameters = <>
-    Left = 160
+    Left = 200
     Top = 256
   end
-  object dsDetalle: TDataSource
-    AutoEdit = False
-    DataSet = adodsDetalle
-    Left = 248
-    Top = 88
+  object adodsCotizacionLkp: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'SELECT IdCotizacion, '#39'Cotizaci'#243'n '#39' + Cotizaciones.Identificador ' +
+      '+ '#39' - '#39' + ContratosTipos.Descripcion AS Descripcion'#13#10'FROM Cotiza' +
+      'ciones INNER JOIN ContratosTipos ON Cotizaciones.IdContratoTipo ' +
+      '= ContratosTipos.IdContratoTipo'#13#10
+    Parameters = <>
+    Left = 200
+    Top = 320
   end
 end
