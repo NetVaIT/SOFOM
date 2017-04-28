@@ -103,7 +103,7 @@ var
   FechaIni, FechaFin:TDAteTime;
 begin
   inherited;
-  TxtSQL:= 'SElect Cliente, Sum (vigentes)as TotalVigentes, SUM ("vencidos a 30 días") as Total30Dias,'
+  TxtSQL:= 'SElect Cliente,sum("Saldo")  as SaldoTotal,  Sum ("Saldo Total Vencido")as TotalVencido, Sum (vigentes)as TotalVigentes, SUM ("vencidos a 30 días") as Total30Dias,'
           +' SUM ("vencidos a 60 días") as Total60Dias, SUM ("vencidos a 90 días") as Total90Dias ,'
           +'SUM ("vencidos más de 90 días") as TotalMas90Dias  from Vw_AntiguedadSaldosCXC ';
   Fecha:= ' where fecha>=:Fini and fecha<=:Ffin ';

@@ -69,7 +69,6 @@ type
     ppLabel12: TppLabel;
     ADODtStAntXCliente: TADODataSet;
     DSAntXCliente: TDataSource;
-    ppDBAntXCliente: TppDBPipeline;
     ppRprtAntXCliente: TppReport;
     ppTitleBand2: TppTitleBand;
     ppLblTitulo2: TppLabel;
@@ -105,6 +104,27 @@ type
     ppDesignLayers2: TppDesignLayers;
     ppDesignLayer2: TppDesignLayer;
     ppParameterList2: TppParameterList;
+    adodsReportSaldoTotalVencido: TFMTBCDField;
+    ppLabel13: TppLabel;
+    ppDBCalc16: TppDBCalc;
+    ppLabel15: TppLabel;
+    ppDBCalc17: TppDBCalc;
+    ppLabel16: TppLabel;
+    ppDBText12: TppDBText;
+    ppDBCalc18: TppDBCalc;
+    ppLabel17: TppLabel;
+    ppDBCalc19: TppDBCalc;
+    ppLabel18: TppLabel;
+    ppDBCalc20: TppDBCalc;
+    ppLabel25: TppLabel;
+    ppDBText13: TppDBText;
+    ppDBAntXCliente: TppDBPipeline;
+    ppDBCalc21: TppDBCalc;
+    ppLine9: TppLine;
+    adodsReportAnexo: TStringField;
+    adodsReportContrato: TStringField;
+    ppLine10: TppLine;
+    ppLabel26: TppLabel;
   private
     { Private declarations }
   public

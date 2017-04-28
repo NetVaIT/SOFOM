@@ -171,6 +171,7 @@ const
    TxtSQL=' SELECT   Cc.IdCuentaXCobrar, cc.IDAnexo,a.Identificador as Anexo, A.IdContrato, Con.IdContratoTipo,Con.Identificador as Contrato,'
          +' CT.Identificador as TC, ct.Descripcion as TipoContrato,Cc.Fecha, Cc.IdPersona, cc.IdCuentaXCobrarEstatus, Cc.Total, CC.Saldo,'
          +' PR.RazonSocial AS Cliente, CASE WHEN getdate() - Cc.Fecha < 30 THEN Cc.Saldo END AS ''Vigentes'','
+         +' CASE WHEN getdate() - Cc.Fecha >= 30 THEN Cc.Saldo END as ''Saldo Total Vencido'','
          +' CASE WHEN (getdate() - Cc.Fecha < 60 ) AND (getdate() - Cc.Fecha >= 30 )'
          +' THEN Cc.Saldo END AS ''Vencidos a 30 días'', CASE WHEN (getdate() - Cc.Fecha < 90 ) AND (getdate()'
          +'  - Cc.Fecha >= 60 ) THEN Cc.Saldo END AS ''Vencidos a 60 días'', CASE WHEN (getdate() - Cc.Fecha >= 90 ) AND'
