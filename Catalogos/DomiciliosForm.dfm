@@ -1,6 +1,5 @@
 inherited frmDomicilios: TfrmDomicilios
   Caption = 'Domicilios'
-  OnCreate = FormCreate
   ExplicitWidth = 651
   ExplicitHeight = 457
   PixelsPerInch = 96
@@ -80,5 +79,12 @@ inherited frmDomicilios: TfrmDomicilios
   end
   inherited cxImageList: TcxImageList
     FormatVersion = 1
+  end
+  inherited dxComponentPrinter: TdxComponentPrinter
+    inherited dxcplGrid: TdxGridReportLink
+      ReportDocument.CreationDate = 42870.486940787040000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
+      BuiltInReportLink = True
+    end
   end
 end

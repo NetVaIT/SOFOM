@@ -213,7 +213,8 @@ uses
   MonedasCotizacionesDM in 'Catalogos\MonedasCotizacionesDM.pas' {dmMonedasCotizaciones: TDataModule},
   MonedasCotizacionesForm in 'Catalogos\MonedasCotizacionesForm.pas' {frmMonedasCotizaciones},
   MonedasCotizacionesEdit in 'Catalogos\MonedasCotizacionesEdit.pas' {frmMonedasCotizacionesEdit},
-  RptCoberturaDM in 'Reportes\RptCoberturaDM.pas' {dmRptCobertura: TDataModule};
+  RptCoberturaDM in 'Reportes\RptCoberturaDM.pas' {dmRptCobertura: TDataModule},
+  RptExpedientesRecibidosDM in 'Reportes\RptExpedientesRecibidosDM.pas' {dmRptExpedientesRecibidos: TDataModule};
 
 {$R *.res}
 

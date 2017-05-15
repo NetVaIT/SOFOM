@@ -49,16 +49,21 @@ type
     tvMasterIdCotizacionCausa: TcxGridDBColumn;
     tvMasterCausa: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
     FactAmortizaciones: TBasicAction;
     FactCambiarEstatus: TBasicAction;
+    FDataSetEstatus: TDataSet;
+    FDataSetCausa: TDataSet;
     procedure SetactAmortizaciones(const Value: TBasicAction);
     procedure SetactCambiarEstatus(const Value: TBasicAction);
   public
     { Public declarations }
     property actAmortizaciones: TBasicAction read FactAmortizaciones write SetactAmortizaciones;
     property actCambiarEstatus: TBasicAction read FactCambiarEstatus write SetactCambiarEstatus;
+    property DataSetEstatus: TDataSet read FDataSetEstatus write FDataSetEstatus;
+    property DataSetCausa: TDataSet read FDataSetCausa write FDataSetCausa;
   end;
 
 implementation
@@ -73,6 +78,13 @@ procedure TfrmCotizaciones.FormCreate(Sender: TObject);
 begin
   inherited;
   gEditForm:= TfrmCotizacionesEdit.Create(Self);
+end;
+
+procedure TfrmCotizaciones.FormShow(Sender: TObject);
+begin
+  inherited;
+  TfrmCotizacionesEdit(gEditForm).DataSetEstatus := DataSetEstatus;
+  TfrmCotizacionesEdit(gEditForm).DataSetCausa := DataSetCausa;
 end;
 
 procedure TfrmCotizaciones.SetactAmortizaciones(const Value: TBasicAction);

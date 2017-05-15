@@ -143,6 +143,8 @@ type
     dxBarLargeButton22: TdxBarLargeButton;
     actRptCobertura: TAction;
     dxBarLargeButton26: TdxBarLargeButton;
+    actExpecientes: TAction;
+    dxBarLargeButton31: TdxBarLargeButton;
     procedure actCatalogoExecute(Sender: TObject);
     procedure actIntervaCXPExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -176,7 +178,7 @@ uses UbicacionesDM, BancosDM, MonedasDM, PuestosDM, PlazasTurnosDM,
   CuentasXCobrarDM, PagosDM, CotizacionesDM, rptAntiguedadSaldosDM,
   AplicacionesConsultaDM, EstadosCuentaDM, ListasRestringidasDM,
   SeguimientoCobranzaDM, rptInformacionContratosDM, MonedasCotizacionesDM,
-  RptCoberturaDM;
+  RptCoberturaDM, RptExpedientesRecibidosDM;
 //  EsquemaPagosDM, FormulasDM, ReglasNegocioDM,
 //  MovimientosTiposDM, RolesDM, InstruccionesDM,
 //  IncidenciasDM, InstruccionesTiposDM, PeriodosDM, MovimientosDM,
@@ -245,6 +247,11 @@ begin
    52: gModulo := TdmRptInformacionContratos.Create(Self);  //Abr 20/17
    53: begin
          gReport := TdmRptCobertura.Create(Self);
+         gReport.Title := pCaption;
+         gReport.Execute;
+       end;
+   54: begin
+         gReport := TdmRptExpedientesRecibidos.Create(Self);
          gReport.Title := pCaption;
          gReport.Execute;
        end;

@@ -30,7 +30,6 @@ type
     adodsMasterTipoContrato: TStringField;
     daMaster: TDataSource;
     adodsCotizacionesEstatus: TADODataSet;
-    adodsMasterEstatus: TStringField;
     adodsMasterUsuario: TStringField;
     actAmortizaciones: TAction;
     actCambiarEstatus: TAction;
@@ -81,10 +80,11 @@ type
     adodsDetalleTIR: TBCDField;
     adodsCotizacionLkp: TADODataSet;
     adodsDetalleDescripcion: TStringField;
-    adodsCotizacionesTipos: TADODataSet;
+    adodsCotizacionesCausas: TADODataSet;
     adodsMasterIdCotizacionCausa: TIntegerField;
+    dsCotizacionesEstatus: TDataSource;
+    adodsMasterEstatus: TStringField;
     adodsMasterCausa: TStringField;
-    DataSource1: TDataSource;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
@@ -96,6 +96,7 @@ type
     procedure adodsDetallePrecioMonedaChange(Sender: TField);
     procedure daMasterDataChange(Sender: TObject; Field: TField);
     procedure actGetImpactoISRExecute(Sender: TObject);
+    procedure adodsMasterIdCotizacionEstatusChange(Sender: TField);
   private
     { Private declarations }
     dmAmortizaciones: TdmAmortizaciones;
@@ -238,6 +239,12 @@ begin
   CalcularImportesDetalles;
 end;
 
+procedure TdmCotizaciones.adodsMasterIdCotizacionEstatusChange(Sender: TField);
+begin
+  inherited;
+  adodsMasterIdCotizacionCausa.Clear;
+end;
+
 procedure TdmCotizaciones.adodsMasterNewRecord(DataSet: TDataSet);
 begin
   inherited;
@@ -324,6 +331,10 @@ begin
   gGridForm:= TfrmCotizaciones.Create(Self);
   gGridForm.DataSet:= adodsMaster;
   TfrmCotizaciones(gGridForm).actCambiarEstatus := actCambiarEstatus;
+  TfrmCotizaciones(gGridForm).DataSetEstatus := adodsCotizacionesEstatus;
+  TfrmCotizaciones(gGridForm).DataSetCausa := adodsCotizacionesCausas;
+  adodsCotizacionesEstatus.Open;
+  adodsCotizacionesCausas.Open;
   if adodsDetalle.CommandText <> EmptyStr then adodsDetalle.Open;
   gFormDeatil1:= TfrmCotizacionesDetalle.Create(Self);
   gFormDeatil1.DataSet:= adodsDetalle;
@@ -338,6 +349,8 @@ end;
 procedure TdmCotizaciones.DataModuleDestroy(Sender: TObject);
 begin
   inherited;
+  adodsCotizacionesCausas.Close;
+  adodsCotizacionesEstatus.Close;
   FreeAndNil(dmAmortizaciones);
 end;
 

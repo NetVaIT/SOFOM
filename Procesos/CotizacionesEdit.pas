@@ -20,7 +20,8 @@ uses
   System.Actions, Vcl.ActnList, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls, cxPC,
   cxContainer, cxEdit, cxSpinEdit, cxDBEdit, cxCurrencyEdit, Vcl.DBCtrls,
   cxMaskEdit, cxDropDownEdit, cxCalendar, cxTextEdit,
-  AmortizacionesDM, AnexosSegmentosDM, cxGroupBox, cxButtonEdit;
+  AmortizacionesDM, AnexosSegmentosDM, cxGroupBox, cxButtonEdit, cxLookupEdit,
+  cxDBLookupEdit, cxDBLookupComboBox;
 
 type
   TfrmCotizacionesEdit = class(T_frmEdit)
@@ -40,14 +41,22 @@ type
     DBLookupComboBox3: TDBLookupComboBox;
     DBLookupComboBox4: TDBLookupComboBox;
     cxDBDateEdit4: TcxDBDateEdit;
-    DBLookupComboBox2: TDBLookupComboBox;
+    cxDBLookupComboBox2: TcxDBLookupComboBox;
     cxDBTextEdit22: TcxDBTextEdit;
     Label4: TLabel;
-    DBLookupComboBox1: TDBLookupComboBox;
+    cxDBLookupComboBox1: TcxDBLookupComboBox;
+    dsEstatus: TDataSource;
+    dsCausa: TDataSource;
   private
+    FDataSetEstatus: TDataSet;
+    FDataSetCausa: TDataSet;
+    procedure SetDataSetCausa(const Value: TDataSet);
+    procedure SetDataSetEstatus(const Value: TDataSet);
     { Private declarations }
   public
     { Public declarations }
+    property DataSetEstatus: TDataSet read FDataSetEstatus write SetDataSetEstatus;
+    property DataSetCausa: TDataSet read FDataSetCausa write SetDataSetCausa;
   end;
 
 implementation
@@ -55,5 +64,19 @@ implementation
 {$R *.dfm}
 
 uses CotizacionesDM;
+
+{ TfrmCotizacionesEdit }
+
+procedure TfrmCotizacionesEdit.SetDataSetCausa(const Value: TDataSet);
+begin
+  FDataSetCausa := Value;
+  dsCausa.DataSet := Value;
+end;
+
+procedure TfrmCotizacionesEdit.SetDataSetEstatus(const Value: TDataSet);
+begin
+  FDataSetEstatus := Value;
+  dsEstatus.DataSet := Value;
+end;
 
 end.

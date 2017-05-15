@@ -6,9 +6,16 @@ inherited dmCotizaciones: TdmCotizaciones
     CursorType = ctStatic
     OnNewRecord = adodsMasterNewRecord
     CommandText = 
-      'select IdCotizacion, IdPersona, IdCotizacionEstatus, IdCotizacio' +
-      'nCausa, IdContratoTipo, IdUsuario, Identificador, Descripcion, E' +
-      'laboracion, Vigencia'#13#10'from Cotizaciones'
+      'SELECT Cotizaciones.IdCotizacion, Cotizaciones.IdPersona, Cotiza' +
+      'ciones.IdCotizacionEstatus, Cotizaciones.IdCotizacionCausa, Coti' +
+      'zaciones.IdContratoTipo, Cotizaciones.IdUsuario, CotizacionesEst' +
+      'atus.Descripcion AS Estatus, Cotizaciones.Identificador, '#13#10'Cotiz' +
+      'aciones.Descripcion, Cotizaciones.Elaboracion, Cotizaciones.Vige' +
+      'ncia, CotizacionesCausas.Descripcion AS Causa'#13#10'FROM Cotizaciones' +
+      ' INNER JOIN'#13#10'CotizacionesEstatus ON Cotizaciones.IdCotizacionEst' +
+      'atus = CotizacionesEstatus.IdCotizacionEstatus LEFT JOIN'#13#10'Cotiza' +
+      'cionesCausas ON Cotizaciones.IdCotizacionCausa = CotizacionesCau' +
+      'sas.IdCotizacionCausa'#13#10
     Left = 40
     object adodsMasterIdCotizacion: TAutoIncField
       FieldName = 'IdCotizacion'
@@ -26,6 +33,7 @@ inherited dmCotizaciones: TdmCotizaciones
     object adodsMasterIdCotizacionEstatus: TIntegerField
       FieldName = 'IdCotizacionEstatus'
       Visible = False
+      OnChange = adodsMasterIdCotizacionEstatusChange
     end
     object adodsMasterIdCotizacionCausa: TIntegerField
       FieldName = 'IdCotizacionCausa'
@@ -36,14 +44,8 @@ inherited dmCotizaciones: TdmCotizaciones
       Visible = False
     end
     object adodsMasterEstatus: TStringField
-      FieldKind = fkLookup
       FieldName = 'Estatus'
-      LookupDataSet = adodsCotizacionesEstatus
-      LookupKeyFields = 'IdCotizacionEstatus'
-      LookupResultField = 'Descripcion'
-      KeyFields = 'IdCotizacionEstatus'
       Size = 50
-      Lookup = True
     end
     object adodsMasterIdentificador: TStringField
       FieldName = 'Identificador'
@@ -89,14 +91,8 @@ inherited dmCotizaciones: TdmCotizaciones
       Lookup = True
     end
     object adodsMasterCausa: TStringField
-      FieldKind = fkLookup
       FieldName = 'Causa'
-      LookupDataSet = adodsCotizacionesTipos
-      LookupKeyFields = 'IdCotizacionCausa'
-      LookupResultField = 'Descripcion'
-      KeyFields = 'IdCotizacionCausa'
       Size = 50
-      Lookup = True
     end
     object adodsMasterUsuario: TStringField
       FieldKind = fkLookup
@@ -142,7 +138,6 @@ inherited dmCotizaciones: TdmCotizaciones
     end
   end
   object adodsPersonas: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -153,7 +148,6 @@ inherited dmCotizaciones: TdmCotizaciones
     Top = 72
   end
   object adodsContratosTipos: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdContratoTipo, Descripcion from ContratosTipos'
@@ -170,7 +164,6 @@ inherited dmCotizaciones: TdmCotizaciones
     Top = 144
   end
   object adodsUsuario: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdUsuario, Login from Usuarios'
@@ -186,7 +179,6 @@ inherited dmCotizaciones: TdmCotizaciones
     Top = 16
   end
   object adodsCotizacionesEstatus: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdCotizacionEstatus, Descripcion from CotizacionesEstatus'
@@ -552,18 +544,29 @@ inherited dmCotizaciones: TdmCotizaciones
     Left = 232
     Top = 320
   end
-  object adodsCotizacionesTipos: TADODataSet
+  object adodsCotizacionesCausas: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
       'select IdCotizacionCausa, IdCotizacionEstatus, Descripcion from ' +
-      'CotizacionesCausas'
-    Parameters = <>
+      'CotizacionesCausas'#13#10'where IdCotizacionEstatus = :IdCotizacionEst' +
+      'atus'
+    DataSource = dsCotizacionesEstatus
+    MasterFields = 'IdCotizacionEstatus'
+    Parameters = <
+      item
+        Name = 'IdCotizacionEstatus'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end>
     Left = 48
     Top = 312
   end
-  object DataSource1: TDataSource
-    Left = 152
-    Top = 240
+  object dsCotizacionesEstatus: TDataSource
+    DataSet = adodsCotizacionesEstatus
+    Left = 128
+    Top = 224
   end
 end
