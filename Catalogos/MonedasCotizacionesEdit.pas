@@ -1,4 +1,4 @@
-unit CotizacionesEdit;
+unit MonedasCotizacionesEdit;
 
 interface
 
@@ -18,32 +18,17 @@ uses
   dxSkinWhiteprint, dxSkinXmas2008Blue, dxSkinscxPCPainter, cxPCdxBarPopupMenu,
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, Vcl.ImgList,
   System.Actions, Vcl.ActnList, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls, cxPC,
-  cxContainer, cxEdit, cxSpinEdit, cxDBEdit, cxCurrencyEdit, Vcl.DBCtrls,
-  cxMaskEdit, cxDropDownEdit, cxCalendar, cxTextEdit,
-  AmortizacionesDM, AnexosSegmentosDM, cxGroupBox, cxButtonEdit;
+  cxContainer, cxEdit, cxDBEdit, Vcl.DBCtrls, cxTextEdit, cxMaskEdit,
+  cxDropDownEdit, cxCalendar;
 
 type
-  TfrmCotizacionesEdit = class(T_frmEdit)
-    tsAmortizaciones: TcxTabSheet;
-    tsSegmentos: TcxTabSheet;
+  TfrmMonedasCotizacionesEdit = class(T_frmEdit)
     Label1: TLabel;
-    Label2: TLabel;
-    Label3: TLabel;
-    Label10: TLabel;
-    Label12: TLabel;
-    Label28: TLabel;
-    Label30: TLabel;
-    Label31: TLabel;
-    cxDBTextEdit1: TcxDBTextEdit;
-    cxDBTextEdit2: TcxDBTextEdit;
     cxDBDateEdit1: TcxDBDateEdit;
-    DBLookupComboBox3: TDBLookupComboBox;
-    DBLookupComboBox4: TDBLookupComboBox;
-    cxDBDateEdit4: TcxDBDateEdit;
-    DBLookupComboBox2: TDBLookupComboBox;
-    cxDBTextEdit22: TcxDBTextEdit;
-    Label4: TLabel;
+    Label2: TLabel;
     DBLookupComboBox1: TDBLookupComboBox;
+    Label3: TLabel;
+    cxDBTextEdit1: TcxDBTextEdit;
   private
     { Private declarations }
   public
@@ -54,6 +39,6 @@ implementation
 
 {$R *.dfm}
 
-uses CotizacionesDM;
+uses MonedasCotizacionesDM;
 
 end.

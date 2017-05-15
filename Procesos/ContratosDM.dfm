@@ -704,7 +704,8 @@ inherited dmContratos: TdmContratos
       'select IdAnexoCredito, IdAnexo, IdAnexoCreditoEstatus, IdUsuario' +
       ', Fecha, MontoFiananciar, ValorResidual, ImpactoISR, TasaAnual, ' +
       'Plazo, PagoMensual, FechaCorte, FechaVencimiento, FechaCancelaci' +
-      'on from AnexosCreditos'#13#10'where IdAnexo = :IdAnexo'
+      'on from AnexosCreditos'#13#10'where IdAnexo = :IdAnexo'#13#10'order by IdAne' +
+      'xoCreditoEstatus, FechaCancelacion DESC'
     DataSource = dsAnexos
     MasterFields = 'IdAnexo'
     Parameters = <

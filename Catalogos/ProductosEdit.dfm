@@ -1,69 +1,93 @@
 inherited frmProductosEdit: TfrmProductosEdit
   Caption = 'frmProductosEdit'
-  ClientHeight = 501
+  ClientHeight = 545
   ClientWidth = 750
   OnDestroy = FormDestroy
   ExplicitWidth = 756
-  ExplicitHeight = 530
+  ExplicitHeight = 574
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
     Width = 750
-    Height = 460
+    Height = 504
     ExplicitWidth = 750
-    ExplicitHeight = 460
-    ClientRectBottom = 458
+    ExplicitHeight = 504
+    ClientRectBottom = 502
     ClientRectRight = 748
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 42
-      ExplicitTop = 60
+      ExplicitLeft = 2
+      ExplicitTop = 28
       ExplicitWidth = 746
-      ExplicitHeight = 430
+      ExplicitHeight = 474
       object Label1: TLabel
-        Left = 24
-        Top = 16
+        Left = 16
+        Top = 56
         Width = 61
         Height = 13
         Caption = 'Identificador'
         FocusControl = cxDBTextEdit1
       end
       object Label2: TLabel
-        Left = 151
-        Top = 16
+        Left = 143
+        Top = 56
         Width = 54
         Height = 13
         Caption = 'Descripcion'
         FocusControl = cxDBTextEdit2
       end
       object Label27: TLabel
-        Left = 599
-        Top = 223
+        Left = 591
+        Top = 263
         Width = 77
         Height = 13
         Caption = 'Porcentaje total'
         FocusControl = cxDBCurrencyEdit12
       end
+      object Label28: TLabel
+        Left = 16
+        Top = 13
+        Width = 43
+        Height = 13
+        Caption = 'Contrato'
+        FocusControl = cxDBTextEdit8
+      end
+      object Label29: TLabel
+        Left = 213
+        Top = 13
+        Width = 54
+        Height = 13
+        Caption = 'Descripcion'
+        FocusControl = cxDBTextEdit9
+      end
+      object Label30: TLabel
+        Left = 143
+        Top = 13
+        Width = 31
+        Height = 13
+        Caption = 'Anexo'
+        FocusControl = cxDBTextEdit10
+      end
       object cxDBTextEdit1: TcxDBTextEdit
-        Left = 24
-        Top = 32
+        Left = 16
+        Top = 72
         DataBinding.DataField = 'Identificador'
         DataBinding.DataSource = DataSource
-        TabOrder = 0
+        TabOrder = 3
         Width = 121
       end
       object cxDBTextEdit2: TcxDBTextEdit
-        Left = 151
-        Top = 32
+        Left = 143
+        Top = 72
         DataBinding.DataField = 'Descripcion'
         DataBinding.DataSource = DataSource
-        TabOrder = 1
-        Width = 426
+        TabOrder = 4
+        Width = 586
       end
       object cxGroupBox2: TcxGroupBox
-        Left = 583
-        Top = 59
+        Left = 575
+        Top = 99
         Caption = 'Datos de importaci'#243'n'
-        TabOrder = 6
+        TabOrder = 9
         Height = 148
         Width = 154
         object Label11: TLabel
@@ -116,10 +140,10 @@ inherited frmProductosEdit: TfrmProductosEdit
         end
       end
       object cxGroupBox3: TcxGroupBox
-        Left = 423
-        Top = 59
+        Left = 415
+        Top = 99
         Caption = 'Depreciaci'#243'n contable'
-        TabOrder = 4
+        TabOrder = 7
         Height = 181
         Width = 154
         object Label18: TLabel
@@ -151,6 +175,7 @@ inherited frmProductosEdit: TfrmProductosEdit
           Top = 40
           DataBinding.DataField = 'PorcentajeContable'
           DataBinding.DataSource = DataSource
+          Properties.DecimalPlaces = 4
           TabOrder = 0
           Width = 121
         end
@@ -174,10 +199,10 @@ inherited frmProductosEdit: TfrmProductosEdit
         end
       end
       object cxGroupBox4: TcxGroupBox
-        Left = 20
-        Top = 59
+        Left = 12
+        Top = 99
         Caption = 'Caracteristicas'
-        TabOrder = 2
+        TabOrder = 5
         Height = 362
         Width = 229
         object Label3: TLabel
@@ -314,10 +339,10 @@ inherited frmProductosEdit: TfrmProductosEdit
         end
       end
       object cxGroupBox1: TcxGroupBox
-        Left = 255
-        Top = 59
+        Left = 247
+        Top = 99
         Caption = 'Datos de compra'
-        TabOrder = 3
+        TabOrder = 6
         Height = 362
         Width = 162
         object Label14: TLabel
@@ -438,10 +463,10 @@ inherited frmProductosEdit: TfrmProductosEdit
         end
       end
       object cxGroupBox5: TcxGroupBox
-        Left = 423
-        Top = 240
+        Left = 415
+        Top = 280
         Caption = 'Depreciaci'#243'n comercial'
-        TabOrder = 5
+        TabOrder = 8
         Height = 181
         Width = 154
         object Label24: TLabel
@@ -473,6 +498,7 @@ inherited frmProductosEdit: TfrmProductosEdit
           Top = 40
           DataBinding.DataField = 'PorcentajeComercial'
           DataBinding.DataSource = DataSource
+          Properties.DecimalPlaces = 4
           TabOrder = 0
           Width = 121
         end
@@ -496,12 +522,39 @@ inherited frmProductosEdit: TfrmProductosEdit
         end
       end
       object cxDBCurrencyEdit12: TcxDBCurrencyEdit
-        Left = 599
-        Top = 239
+        Left = 591
+        Top = 279
         DataBinding.DataField = 'PorcentajeAnexo'
         DataBinding.DataSource = DataSource
-        TabOrder = 7
+        TabOrder = 10
         Width = 121
+      end
+      object cxDBTextEdit8: TcxDBTextEdit
+        Left = 16
+        Top = 29
+        DataBinding.DataField = 'Contrato'
+        DataBinding.DataSource = DataSource
+        Enabled = False
+        TabOrder = 0
+        Width = 121
+      end
+      object cxDBTextEdit9: TcxDBTextEdit
+        Left = 213
+        Top = 29
+        DataBinding.DataField = 'Cliente'
+        DataBinding.DataSource = DataSource
+        Enabled = False
+        TabOrder = 1
+        Width = 516
+      end
+      object cxDBTextEdit10: TcxDBTextEdit
+        Left = 143
+        Top = 29
+        DataBinding.DataField = 'Anexo'
+        DataBinding.DataSource = DataSource
+        Enabled = False
+        TabOrder = 2
+        Width = 64
       end
     end
     object tsDocumentos: TcxTabSheet
@@ -510,9 +563,9 @@ inherited frmProductosEdit: TfrmProductosEdit
     end
   end
   inherited pmlMain: TPanel
-    Top = 460
+    Top = 504
     Width = 750
-    ExplicitTop = 460
+    ExplicitTop = 508
     ExplicitWidth = 750
     inherited btnCancel: TButton
       Left = 668

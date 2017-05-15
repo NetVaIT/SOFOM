@@ -54,6 +54,10 @@ type
     adocGetCountProductos: TADOCommand;
     adocGetPorcentajeAnexo: TADOCommand;
     adodsMasterPorcentajeAnexo: TBCDField;
+    adodsAnexos: TADODataSet;
+    adodsMasterContrato: TStringField;
+    adodsMasterAnexo: TStringField;
+    adodsMasterCliente: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterPrecioMonedaChange(Sender: TField);
     procedure adodsMasterNewRecord(DataSet: TDataSet);

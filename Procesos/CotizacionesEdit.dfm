@@ -1,23 +1,23 @@
 inherited frmCotizacionesEdit: TfrmCotizacionesEdit
   Caption = 'Cotizaci'#243'n'
-  ClientHeight = 240
+  ClientHeight = 266
   ClientWidth = 596
   ExplicitWidth = 602
-  ExplicitHeight = 269
+  ExplicitHeight = 295
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
     Width = 596
-    Height = 199
-    ExplicitWidth = 719
-    ExplicitHeight = 200
-    ClientRectBottom = 197
+    Height = 225
+    ExplicitWidth = 596
+    ExplicitHeight = 199
+    ClientRectBottom = 223
     ClientRectRight = 594
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 2
       ExplicitTop = 28
-      ExplicitWidth = 715
-      ExplicitHeight = 170
+      ExplicitWidth = 592
+      ExplicitHeight = 169
       object Label1: TLabel
         Left = 37
         Top = 19
@@ -81,6 +81,14 @@ inherited frmCotizacionesEdit: TfrmCotizacionesEdit
         Height = 13
         Caption = 'Usuario'
       end
+      object Label4: TLabel
+        Left = 68
+        Top = 148
+        Width = 30
+        Height = 13
+        Caption = 'Causa'
+        FocusControl = DBLookupComboBox1
+      end
       object cxDBTextEdit1: TcxDBTextEdit
         Left = 104
         Top = 16
@@ -138,7 +146,6 @@ inherited frmCotizacionesEdit: TfrmCotizacionesEdit
         Height = 21
         DataField = 'Estatus'
         DataSource = DataSource
-        Enabled = False
         TabOrder = 6
       end
       object cxDBTextEdit22: TcxDBTextEdit
@@ -150,35 +157,45 @@ inherited frmCotizacionesEdit: TfrmCotizacionesEdit
         TabOrder = 7
         Width = 121
       end
+      object DBLookupComboBox1: TDBLookupComboBox
+        Left = 104
+        Top = 144
+        Width = 480
+        Height = 21
+        DataField = 'Causa'
+        DataSource = DataSource
+        TabOrder = 8
+      end
     end
     object tsSegmentos: TcxTabSheet
       Caption = 'Segmentos'
       ImageIndex = 2
       TabVisible = False
-      ExplicitWidth = 715
-      ExplicitHeight = 674
+      ExplicitHeight = 169
     end
     object tsAmortizaciones: TcxTabSheet
       Caption = 'Amortizaciones'
       ImageIndex = 1
       TabVisible = False
-      ExplicitWidth = 715
-      ExplicitHeight = 674
+      ExplicitHeight = 169
     end
   end
   inherited pmlMain: TPanel
-    Top = 199
+    Top = 225
     Width = 596
-    ExplicitTop = 200
-    ExplicitWidth = 719
+    ExplicitTop = 199
+    ExplicitWidth = 596
     inherited btnCancel: TButton
       Left = 514
-      ExplicitLeft = 637
+      ExplicitLeft = 514
     end
     inherited btnOk: TButton
       Left = 433
-      ExplicitLeft = 556
+      ExplicitLeft = 433
     end
+  end
+  inherited DataSource: TDataSource
+    DataSet = dmCotizaciones.adodsMaster
   end
   inherited cxImageList: TcxImageList
     FormatVersion = 1

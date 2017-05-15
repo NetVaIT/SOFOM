@@ -83,6 +83,12 @@ type
     cxDBCurrencyEdit11: TcxDBCurrencyEdit;
     Label27: TLabel;
     cxDBCurrencyEdit12: TcxDBCurrencyEdit;
+    Label28: TLabel;
+    cxDBTextEdit8: TcxDBTextEdit;
+    Label29: TLabel;
+    cxDBTextEdit9: TcxDBTextEdit;
+    Label30: TLabel;
+    cxDBTextEdit10: TcxDBTextEdit;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);

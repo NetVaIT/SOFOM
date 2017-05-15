@@ -66,6 +66,9 @@ type
     tvMasterDepreciacionComercial: TcxGridDBColumn;
     tvMasterValorComercial: TcxGridDBColumn;
     tvMasterPorcentajeAnexo: TcxGridDBColumn;
+    tvMasterContrato: TcxGridDBColumn;
+    tvMasterAnexo: TcxGridDBColumn;
+    tvMasterCliente: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
   private
     FactActualizarDepreciacion: TBasicAction;

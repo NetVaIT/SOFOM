@@ -1,6 +1,6 @@
 inherited frmCotizaciones: TfrmCotizaciones
   BorderStyle = bsToolWindow
-  Caption = 'Cotizaciones'
+  Caption = 'Solicitudes'
   ClientHeight = 428
   ClientWidth = 645
   ExplicitWidth = 651
@@ -54,6 +54,10 @@ inherited frmCotizaciones: TfrmCotizaciones
           DataBinding.FieldName = 'IdCotizacionEstatus'
           Visible = False
         end
+        object tvMasterIdCotizacionCausa: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCotizacionCausa'
+          Visible = False
+        end
         object tvMasterIdUsuario: TcxGridDBColumn
           DataBinding.FieldName = 'IdUsuario'
           Visible = False
@@ -83,6 +87,9 @@ inherited frmCotizaciones: TfrmCotizaciones
         end
         object tvMasterVigencia: TcxGridDBColumn
           DataBinding.FieldName = 'Vigencia'
+        end
+        object tvMasterCausa: TcxGridDBColumn
+          DataBinding.FieldName = 'Causa'
         end
         object tvMasterUsuario: TcxGridDBColumn
           DataBinding.FieldName = 'Usuario'
@@ -119,6 +126,9 @@ inherited frmCotizaciones: TfrmCotizaciones
       Left = 560
       ExplicitLeft = 560
     end
+  end
+  inherited DataSource: TDataSource
+    DataSet = dmCotizaciones.adodsMaster
   end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
@@ -222,6 +232,7 @@ inherited frmCotizaciones: TfrmCotizaciones
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42711.658349664350000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

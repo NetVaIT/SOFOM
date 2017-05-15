@@ -5,7 +5,7 @@
         <FrameworkType>VCL</FrameworkType>
         <MainSource>Manarina.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Release</Config>
+        <Config Condition="'$(Config)'==''">Debug</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Application</AppType>
@@ -944,6 +944,24 @@
         <DCCReference Include="Procesos\ImpactoISREdit.pas">
             <Form>frmImpactoISREdit</Form>
             <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\MonedasCotizacionesDM.pas">
+            <Form>dmMonedasCotizaciones</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Catalogos\MonedasCotizacionesForm.pas">
+            <Form>frmMonedasCotizaciones</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\MonedasCotizacionesEdit.pas">
+            <Form>frmMonedasCotizacionesEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Reportes\RptCoberturaDM.pas">
+            <Form>dmRptCobertura</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>

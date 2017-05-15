@@ -81,6 +81,10 @@ type
     adodsDetalleTIR: TBCDField;
     adodsCotizacionLkp: TADODataSet;
     adodsDetalleDescripcion: TStringField;
+    adodsCotizacionesTipos: TADODataSet;
+    adodsMasterIdCotizacionCausa: TIntegerField;
+    adodsMasterCausa: TStringField;
+    DataSource1: TDataSource;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);

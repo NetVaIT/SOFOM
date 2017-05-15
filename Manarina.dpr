@@ -209,7 +209,11 @@ uses
   rptInformacionContratosDM in 'Reportes\rptInformacionContratosDM.pas' {DMRptInformacionContratos: TDataModule},
   rptInformacionContratosForm in 'Reportes\rptInformacionContratosForm.pas' {FrmInformacionContratosGrid},
   ImpactoISRDM in 'Procesos\ImpactoISRDM.pas' {dmImpactoISR: TDataModule},
-  ImpactoISREdit in 'Procesos\ImpactoISREdit.pas' {frmImpactoISREdit};
+  ImpactoISREdit in 'Procesos\ImpactoISREdit.pas' {frmImpactoISREdit},
+  MonedasCotizacionesDM in 'Catalogos\MonedasCotizacionesDM.pas' {dmMonedasCotizaciones: TDataModule},
+  MonedasCotizacionesForm in 'Catalogos\MonedasCotizacionesForm.pas' {frmMonedasCotizaciones},
+  MonedasCotizacionesEdit in 'Catalogos\MonedasCotizacionesEdit.pas' {frmMonedasCotizacionesEdit},
+  RptCoberturaDM in 'Reportes\RptCoberturaDM.pas' {dmRptCobertura: TDataModule};
 
 {$R *.res}
 

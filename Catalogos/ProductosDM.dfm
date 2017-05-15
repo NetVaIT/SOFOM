@@ -40,6 +40,35 @@ inherited dmProductos: TdmProductos
       FieldName = 'IdMoneda'
       Visible = False
     end
+    object adodsMasterContrato: TStringField
+      FieldKind = fkLookup
+      FieldName = 'Contrato'
+      LookupDataSet = adodsAnexos
+      LookupKeyFields = 'IdAnexo'
+      LookupResultField = 'Contrato'
+      KeyFields = 'IdAnexo'
+      Lookup = True
+    end
+    object adodsMasterAnexo: TStringField
+      FieldKind = fkLookup
+      FieldName = 'Anexo'
+      LookupDataSet = adodsAnexos
+      LookupKeyFields = 'IdAnexo'
+      LookupResultField = 'Anexo'
+      KeyFields = 'IdAnexo'
+      Size = 10
+      Lookup = True
+    end
+    object adodsMasterCliente: TStringField
+      FieldKind = fkLookup
+      FieldName = 'Cliente'
+      LookupDataSet = adodsAnexos
+      LookupKeyFields = 'IdAnexo'
+      LookupResultField = 'Cliente'
+      KeyFields = 'IdAnexo'
+      Size = 300
+      Lookup = True
+    end
     object adodsMasterIdentificador: TStringField
       FieldName = 'Identificador'
       Size = 10
@@ -147,6 +176,7 @@ inherited dmProductos: TdmProductos
     object adodsMasterPrecio: TBCDField
       DisplayLabel = 'Precio moneda local'
       FieldName = 'Precio'
+      currency = True
       Precision = 19
     end
     object adodsMasterImpuesto: TBCDField
@@ -158,13 +188,14 @@ inherited dmProductos: TdmProductos
     object adodsMasterPrecioTotal: TBCDField
       DisplayLabel = 'Precio total'
       FieldName = 'PrecioTotal'
+      currency = True
       Precision = 19
     end
     object adodsMasterPorcentajeContable: TBCDField
       DisplayLabel = '% depreciaci'#243'n contable'
       FieldName = 'PorcentajeContable'
-      DisplayFormat = '0.00 %'
-      EditFormat = '0.00'
+      DisplayFormat = '0.0000 %'
+      EditFormat = '0.0000'
       Precision = 19
     end
     object adodsMasterDepreciacionContable: TBCDField
@@ -182,8 +213,8 @@ inherited dmProductos: TdmProductos
     object adodsMasterPorcentajeComercial: TBCDField
       DisplayLabel = '% depreciaci'#243'n comercial'
       FieldName = 'PorcentajeComercial'
-      DisplayFormat = '0.00 %'
-      EditFormat = '0.00'
+      DisplayFormat = '0.0000 %'
+      EditFormat = '0.0000'
       Precision = 19
     end
     object adodsMasterDepreciacionComercial: TBCDField
@@ -259,7 +290,13 @@ inherited dmProductos: TdmProductos
   object adospUpdProductosDepreciacion: TADOStoredProc
     Connection = _dmConection.ADOConnection
     ProcedureName = 'p_UpdProductosDepreciacion;1'
-    Parameters = <>
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end>
     Left = 296
     Top = 280
   end
@@ -308,5 +345,19 @@ inherited dmProductos: TdmProductos
       end>
     Left = 296
     Top = 224
+  end
+  object adodsAnexos: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'SELECT        Anexos.IdAnexo,'#13#10'Contratos.Identificador AS Contra' +
+      'to, Anexos.Identificador AS Anexo, Personas.RazonSocial AS Clien' +
+      'te'#13#10'FROM            Anexos INNER JOIN'#13#10'                         ' +
+      'Contratos ON Anexos.IdContrato = Contratos.IdContrato INNER JOIN' +
+      #13#10'                         Personas ON Contratos.IdPersona = Per' +
+      'sonas.IdPersona'
+    Parameters = <>
+    Left = 136
+    Top = 88
   end
 end

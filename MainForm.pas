@@ -89,32 +89,16 @@ type
     dxRibbon1Tab5: TdxRibbonTab;
     dxBarLargeButton25: TdxBarLargeButton;
     dxBarButton9: TdxBarButton;
-    actRptDetalleMovimientosPersona: TAction;
     actCXCConceptos: TAction;
     dxBarLargeButton27: TdxBarLargeButton;
-    actRptDispersion: TAction;
     dxBarLargeButton28: TdxBarLargeButton;
-    actRptMovimientosPeriodo: TAction;
     dxBarLargeButton30: TdxBarLargeButton;
     dxBarButton10: TdxBarButton;
-    dxBarLargeButton31: TdxBarLargeButton;
     dxtshConfiguracion: TdxRibbonBackstageViewTabSheet;
     dxtshUsuarios: TdxRibbonBackstageViewTabSheet;
-    actRptNomina: TAction;
-    dxBarLargeButton32: TdxBarLargeButton;
-    actRptPrestamos: TAction;
-    dxBarLargeButton33: TdxBarLargeButton;
     actPrestamos: TAction;
     dxBarLargeButton34: TdxBarLargeButton;
     actRptPlaza: TAction;
-    actRptPagos: TAction;
-    actRptCXPPagos: TAction;
-    dxBarLargeButton36: TdxBarLargeButton;
-    dxBarLargeButton37: TdxBarLargeButton;
-    actRptMovimientosPersona: TAction;
-    dxBarLargeButton26: TdxBarLargeButton;
-    dxBarButton11: TdxBarButton;
-    dxBarButton12: TdxBarButton;
     dxBarButton13: TdxBarButton;
     dxBarButton14: TdxBarButton;
     actProductos: TAction;
@@ -155,6 +139,10 @@ type
     dxBarLargeButton20: TdxBarLargeButton;
     dxBrLrgBtnInformacionContratos: TdxBarLargeButton;
     ActInformacionContratos: TAction;
+    actMonedasCotizaciones: TAction;
+    dxBarLargeButton22: TdxBarLargeButton;
+    actRptCobertura: TAction;
+    dxBarLargeButton26: TdxBarLargeButton;
     procedure actCatalogoExecute(Sender: TObject);
     procedure actIntervaCXPExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -187,7 +175,8 @@ uses UbicacionesDM, BancosDM, MonedasDM, PuestosDM, PlazasTurnosDM,
   MarcasDM, FamiliasDM, ContratosDM, AmortizacionesDM, FacturasDM,
   CuentasXCobrarDM, PagosDM, CotizacionesDM, rptAntiguedadSaldosDM,
   AplicacionesConsultaDM, EstadosCuentaDM, ListasRestringidasDM,
-  SeguimientoCobranzaDM, rptInformacionContratosDM;
+  SeguimientoCobranzaDM, rptInformacionContratosDM, MonedasCotizacionesDM,
+  RptCoberturaDM;
 //  EsquemaPagosDM, FormulasDM, ReglasNegocioDM,
 //  MovimientosTiposDM, RolesDM, InstruccionesDM,
 //  IncidenciasDM, InstruccionesTiposDM, PeriodosDM, MovimientosDM,
@@ -214,7 +203,7 @@ begin
     3: gModulo := TdmMonedas.Create(Self);
     4: gModulo := TdmPlazasTurnos.Create(Self);
     5: gModulo := TdmListasRestringidas.Create(Self);
-//    5: gModulo := TdmPeriodos.Create(Self);
+    6: gModulo := TdmMonedasCotizaciones.Create(Self);
 //    6: gModulo := TdmFormulas.Create(Self);
 //    7: gModulo := TdmReglasNegocio.Create(Self);
     8: gModulo := TdmPuestos.Create(Self);
@@ -253,8 +242,12 @@ begin
 
    50: gModulo := TdmRptAntiguedadSaldos.Create(Self);
    51: gModulo := TdmEstadosCuenta.Create(Self);
-
    52: gModulo := TdmRptInformacionContratos.Create(Self);  //Abr 20/17
+   53: begin
+         gReport := TdmRptCobertura.Create(Self);
+         gReport.Title := pCaption;
+         gReport.Execute;
+       end;
 //   51: begin
 //         gModulo := TdmMovimientosD.Create(Self);
 //         TdmMovimientosD(gModulo).TipoReporte:= trDispercion;
@@ -317,6 +310,7 @@ begin
   actUbicaciones.Enabled        := Conected;
   actBancos.Enabled             := Conected;
   actMonedas.Enabled            := Conected;
+  actMonedasCotizaciones.Enabled := Conected;
   actPuestos.Enabled            := Conected;
   actCapacitaciones.Enabled     := Conected;
   actPlazasTurnos.Enabled       := Conected;
@@ -338,15 +332,8 @@ begin
   actCuentasContables.Enabled   := Conected;
   actCuentasInternas.Enabled    := Conected;
   actCXCConceptos.Enabled       := Conected;
-  actRptMovimientosPeriodo.Enabled := Conected;
-  actRptDispersion.Enabled         := Conected;
-  actRptNomina.Enabled             := Conected;
-  actRptPrestamos.Enabled       := Conected;
-  actRptDetalleMovimientosPersona.Enabled := Conected;
-  actPrestamos.Enabled          := Conected;
   actRptPlaza.Enabled           := Conected;
-  actRptCXPPagos.Enabled        := Conected;
-  actRptPagos.Enabled           := Conected;
+  actRptCobertura.Enabled      := Conected;
 end;
 
 procedure TfrmMain.DestroyModule;

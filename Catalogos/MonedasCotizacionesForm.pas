@@ -1,4 +1,4 @@
-unit CotizacionesForm;
+unit MonedasCotizacionesForm;
 
 interface
 
@@ -23,68 +23,36 @@ uses
   dxPSPDFExportCore, dxPSPDFExport, cxDrawTextUtils, dxPSPrVwStd, dxPSPrVwAdv,
   dxPSPrVwRibbon, dxPScxPageControlProducer, dxPScxGridLnk,
   dxPScxGridLayoutViewLnk, dxPScxEditorProducers, dxPScxExtEditorProducers,
-  dxSkinsdxRibbonPainter, cxGridCustomTableView, cxGridTableView,
-  cxGridDBTableView, dxPSCore, dxPScxCommon, dxBar, Vcl.ImgList,
+  dxSkinsdxRibbonPainter, dxPSCore, dxPScxCommon, dxBar, Vcl.ImgList,
   cxGridCustomPopupMenu, cxGridPopupMenu, cxClasses, Vcl.StdActns, Vcl.DBActns,
   System.Actions, Vcl.ActnList, Vcl.StdCtrls, cxGridLevel, cxGridCustomView,
-  cxGrid, Vcl.ExtCtrls;
+  cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
+  Vcl.ExtCtrls;
 
 type
-  TfrmCotizaciones = class(T_frmGrid)
-    tvMasterIdCotizacion: TcxGridDBColumn;
-    tvMasterIdPersona: TcxGridDBColumn;
-    tvMasterIdContratoTipo: TcxGridDBColumn;
-    tvMasterIdCotizacionEstatus: TcxGridDBColumn;
-    tvMasterIdUsuario: TcxGridDBColumn;
-    tvMasterIdentificador: TcxGridDBColumn;
-    tvMasterDescripcion: TcxGridDBColumn;
-    tvMasterElaboracion: TcxGridDBColumn;
-    tvMasterVigencia: TcxGridDBColumn;
-    tvMasterCliente: TcxGridDBColumn;
-    tvMasterTipoContrato: TcxGridDBColumn;
-    tvMasterEstatus: TcxGridDBColumn;
-    tvMasterUsuario: TcxGridDBColumn;
-    dxbbAmortizaciones: TdxBarButton;
-    dxbbCambiarEstatus: TdxBarButton;
-    tvMasterIdCotizacionCausa: TcxGridDBColumn;
-    tvMasterCausa: TcxGridDBColumn;
+  TfrmMonedasCotizaciones = class(T_frmGrid)
+    tvMasterIdMonedaCotizacion: TcxGridDBColumn;
+    tvMasterIdMoneda: TcxGridDBColumn;
+    tvMasterFecha: TcxGridDBColumn;
+    tvMasterMoneda: TcxGridDBColumn;
+    tvMasterImporte: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
-    FactAmortizaciones: TBasicAction;
-    FactCambiarEstatus: TBasicAction;
-    procedure SetactAmortizaciones(const Value: TBasicAction);
-    procedure SetactCambiarEstatus(const Value: TBasicAction);
   public
     { Public declarations }
-    property actAmortizaciones: TBasicAction read FactAmortizaciones write SetactAmortizaciones;
-    property actCambiarEstatus: TBasicAction read FactCambiarEstatus write SetactCambiarEstatus;
   end;
 
 implementation
 
 {$R *.dfm}
 
-uses CotizacionesDM, CotizacionesEdit;
+uses MonedasCotizacionesDM, MonedasCotizacionesEdit;
 
-{ TfrmCotizaciones }
-
-procedure TfrmCotizaciones.FormCreate(Sender: TObject);
+procedure TfrmMonedasCotizaciones.FormCreate(Sender: TObject);
 begin
   inherited;
-  gEditForm:= TfrmCotizacionesEdit.Create(Self);
-end;
-
-procedure TfrmCotizaciones.SetactAmortizaciones(const Value: TBasicAction);
-begin
-  FactAmortizaciones := Value;
-  dxbbAmortizaciones.Action := Value;
-end;
-
-procedure TfrmCotizaciones.SetactCambiarEstatus(const Value: TBasicAction);
-begin
-  FactCambiarEstatus := Value;
-  dxbbCambiarEstatus.Action := Value;
+  gEditForm := TfrmMonedasCotizacionesEdit.Create(Self);
 end;
 
 end.

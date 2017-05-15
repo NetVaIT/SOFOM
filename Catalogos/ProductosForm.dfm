@@ -64,6 +64,17 @@ inherited frmProductos: TfrmProductos
           DataBinding.FieldName = 'IdMoneda'
           Visible = False
         end
+        object tvMasterContrato: TcxGridDBColumn
+          DataBinding.FieldName = 'Contrato'
+        end
+        object tvMasterAnexo: TcxGridDBColumn
+          DataBinding.FieldName = 'Anexo'
+        end
+        object tvMasterCliente: TcxGridDBColumn
+          DataBinding.FieldName = 'Cliente'
+          Visible = False
+          Width = 304
+        end
         object tvMasterIdentificador: TcxGridDBColumn
           DataBinding.FieldName = 'Identificador'
         end
@@ -223,7 +234,6 @@ inherited frmProductos: TfrmProductos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42681.569967037040000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

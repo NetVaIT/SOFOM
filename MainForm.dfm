@@ -11,6 +11,7 @@ inherited frmMain: TfrmMain
     OnApplicationMenuClick = dxRibbon1ApplicationMenuClick
     ExplicitWidth = 1020
     inherited dxRibbon1Tab1: TdxRibbonTab
+      Active = False
       Index = 0
     end
     object dxRibbon1Tab2: TdxRibbonTab
@@ -43,6 +44,7 @@ inherited frmMain: TfrmMain
       Index = 2
     end
     object dxRibbon1Tab5: TdxRibbonTab
+      Active = True
       Caption = 'Reportes'
       Groups = <
         item
@@ -73,7 +75,6 @@ inherited frmMain: TfrmMain
   end
   inherited dxRibbonStatusBar1: TdxRibbonStatusBar
     Width = 1020
-    ExplicitTop = 32000
     ExplicitWidth = 1020
   end
   inherited pnlMain: TPanel
@@ -126,8 +127,8 @@ inherited frmMain: TfrmMain
       DockedTop = 0
       FloatLeft = 674
       FloatTop = 8
-      FloatClientWidth = 134
-      FloatClientHeight = 162
+      FloatClientWidth = 144
+      FloatClientHeight = 216
       ItemLinks = <
         item
           Visible = True
@@ -143,6 +144,10 @@ inherited frmMain: TfrmMain
         end
         item
           Visible = True
+          ItemName = 'dxBarLargeButton22'
+        end
+        item
+          Visible = True
           ItemName = 'dxBarLargeButton19'
         end>
       OneOnRow = False
@@ -154,7 +159,7 @@ inherited frmMain: TfrmMain
     object dxbOrganizacion: TdxBar [3]
       Caption = 'Organizacion'
       CaptionButtons = <>
-      DockedLeft = 284
+      DockedLeft = 365
       DockedTop = 0
       FloatLeft = 759
       FloatTop = 8
@@ -186,7 +191,7 @@ inherited frmMain: TfrmMain
     object dxbPresonas: TdxBar [4]
       Caption = 'Personas'
       CaptionButtons = <>
-      DockedLeft = 613
+      DockedLeft = 694
       DockedTop = 0
       FloatLeft = 764
       FloatTop = 8
@@ -255,7 +260,7 @@ inherited frmMain: TfrmMain
     object dxbProductos: TdxBar [6]
       Caption = 'Productos'
       CaptionButtons = <>
-      DockedLeft = 465
+      DockedLeft = 546
       DockedTop = 0
       FloatLeft = 1133
       FloatTop = 8
@@ -287,8 +292,8 @@ inherited frmMain: TfrmMain
       DockedTop = 0
       FloatLeft = 1133
       FloatTop = 8
-      FloatClientWidth = 134
-      FloatClientHeight = 432
+      FloatClientWidth = 178
+      FloatClientHeight = 324
       ItemLinks = <
         item
           Visible = True
@@ -336,7 +341,7 @@ inherited frmMain: TfrmMain
       FloatLeft = 1054
       FloatTop = 8
       FloatClientWidth = 136
-      FloatClientHeight = 162
+      FloatClientHeight = 216
       ItemLinks = <
         item
           Visible = True
@@ -349,6 +354,10 @@ inherited frmMain: TfrmMain
         item
           Visible = True
           ItemName = 'dxBrLrgBtnInformacionContratos'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton26'
         end>
       OneOnRow = True
       Row = 0
@@ -550,15 +559,6 @@ inherited frmMain: TfrmMain
       Action = actCotizaciones
       Category = 0
     end
-    object dxBrLrgBtnAntiguedad: TdxBarLargeButton
-      Tag = 50
-      Action = ActRptAntiguedadSaldos
-      Category = 0
-    end
-    object dxBrLrgBtnEstadoCuenta: TdxBarLargeButton
-      Action = ActEstadoCuenta
-      Category = 0
-    end
     object dxBarLargeButton19: TdxBarLargeButton
       Action = actListasRestringidas
       Category = 0
@@ -576,48 +576,33 @@ inherited frmMain: TfrmMain
       Hint = 'New Button'
       Visible = ivAlways
     end
-    object dxBrLrgBtnInformacionContratos: TdxBarLargeButton
-      Tag = 52
-      Action = ActInformacionContratos
+    object dxBarLargeButton22: TdxBarLargeButton
+      Action = actMonedasCotizaciones
       Category = 0
-      SyncImageIndex = False
-      ImageIndex = -1
-    end
-    object dxBarLargeButton31: TdxBarLargeButton
-      Action = actRptDispersion
-      Category = 1
-    end
-    object dxBarLargeButton32: TdxBarLargeButton
-      Action = actRptNomina
-      Category = 1
-    end
-    object dxBarLargeButton33: TdxBarLargeButton
-      Action = actRptPrestamos
-      Category = 1
     end
     object dxBarLargeButton26: TdxBarLargeButton
-      Action = actRptMovimientosPersona
-      Category = 1
-    end
-    object dxBarButton11: TdxBarButton
-      Action = actRptDetalleMovimientosPersona
-      Category = 1
-    end
-    object dxBarButton12: TdxBarButton
-      Action = actRptMovimientosPeriodo
-      Category = 1
+      Action = actRptCobertura
+      Category = 0
     end
     object dxBarButton13: TdxBarButton
       Action = actRptPlaza
       Category = 1
     end
-    object dxBarLargeButton36: TdxBarLargeButton
-      Action = actRptCXPPagos
+    object dxBrLrgBtnAntiguedad: TdxBarLargeButton
+      Tag = 50
+      Action = ActRptAntiguedadSaldos
       Category = 1
     end
-    object dxBarLargeButton37: TdxBarLargeButton
-      Action = actRptPagos
+    object dxBrLrgBtnEstadoCuenta: TdxBarLargeButton
+      Action = ActEstadoCuenta
       Category = 1
+    end
+    object dxBrLrgBtnInformacionContratos: TdxBarLargeButton
+      Tag = 52
+      Action = ActInformacionContratos
+      Category = 1
+      SyncImageIndex = False
+      ImageIndex = -1
     end
     object dxBarLargeButton12: TdxBarLargeButton
       Action = actPersonas
@@ -10528,6 +10513,13 @@ inherited frmMain: TfrmMain
       ImageIndex = 44
       OnExecute = actCatalogoExecute
     end
+    object actMonedasCotizaciones: TAction
+      Tag = 6
+      Category = 'Catalogos'
+      Caption = 'Cotizaci'#243'm de monedas'
+      ImageIndex = 19
+      OnExecute = actCatalogoExecute
+    end
     object actFormulas: TAction
       Tag = 6
       Category = 'Catalogos'
@@ -10684,27 +10676,6 @@ inherited frmMain: TfrmMain
       ImageIndex = 19
       OnExecute = actCatalogoExecute
     end
-    object actRptDispersion: TAction
-      Tag = 51
-      Category = 'Reportes'
-      Caption = 'Dispersi'#243'n'
-      ImageIndex = 9
-      OnExecute = actCatalogoExecute
-    end
-    object actRptNomina: TAction
-      Tag = 52
-      Category = 'Reportes'
-      Caption = 'Nomina'
-      ImageIndex = 9
-      OnExecute = actCatalogoExecute
-    end
-    object actRptPrestamos: TAction
-      Tag = 53
-      Category = 'Reportes'
-      Caption = 'Prestamos'
-      ImageIndex = 9
-      OnExecute = actCatalogoExecute
-    end
     object actCXCConceptos: TAction
       Tag = 17
       Category = 'Catalogos'
@@ -10717,41 +10688,6 @@ inherited frmMain: TfrmMain
       Category = 'Catalogos'
       Caption = 'Prestamos'
       ImageIndex = 34
-      OnExecute = actCatalogoExecute
-    end
-    object actRptCXPPagos: TAction
-      Tag = 54
-      Category = 'Reportes'
-      Caption = 'Pagos'
-      ImageIndex = 40
-      OnExecute = actCatalogoExecute
-    end
-    object actRptPagos: TAction
-      Tag = 55
-      Category = 'Reportes'
-      Caption = 'Detalle de pagos'
-      ImageIndex = 40
-      OnExecute = actCatalogoExecute
-    end
-    object actRptMovimientosPersona: TAction
-      Tag = 56
-      Category = 'Reportes'
-      Caption = 'Movimientos por Persona'
-      ImageIndex = 17
-      OnExecute = actCatalogoExecute
-    end
-    object actRptDetalleMovimientosPersona: TAction
-      Tag = 57
-      Category = 'Reportes'
-      Caption = 'Detalle de Movimientos por Persona'
-      ImageIndex = 17
-      OnExecute = actCatalogoExecute
-    end
-    object actRptMovimientosPeriodo: TAction
-      Tag = 58
-      Category = 'Reportes'
-      Caption = 'Movimientos del Periodo'
-      ImageIndex = 18
       OnExecute = actCatalogoExecute
     end
     object actRptPlaza: TAction
@@ -10871,6 +10807,13 @@ inherited frmMain: TfrmMain
       Category = 'Reportes'
       Caption = 'Informaci'#243'n Contratos'
       ImageIndex = 53
+      OnExecute = actCatalogoExecute
+    end
+    object actRptCobertura: TAction
+      Tag = 53
+      Category = 'Reportes'
+      Caption = 'Cobertura'
+      ImageIndex = 33
       OnExecute = actCatalogoExecute
     end
   end
