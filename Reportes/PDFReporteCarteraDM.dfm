@@ -2,6 +2,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
   Height = 428
   Width = 436
   inherited adodsReport: TADODataSet
+    Active = True
     OnCalcFields = CuotasReportCalcFields
     CommandText = 
       'SElect IdAnexo, Contrato, Anexo, CLiente, Tc, Plazo, Total/1000 ' +
@@ -10,11 +11,11 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       'Vigente /1000 as TotalVigente,'#13#10' TotalPorVencer/1000 as TotalPor' +
       'Vencer, TotalCobradoVencido/1000 as TotalCobradoVencido,'#13#10' Venci' +
       'doA30/1000 as VencidoA30, VencidoA60/1000 as VencidoA60, Vencido' +
-      'A90/1000 as VencidoA90, VencidoA120/1000 as VencidoA120, Vencido' +
-      'Mas120/1000 as VencidoMas120,'#13#10'DiasRetraso, Cantidad, atrasados,' +
-      ' atiempo, CuotasPendientes, DiasPagoTotal, '#13#10'DiasPagoRetraso, Po' +
-      'rcentajeAtrasados, PorcentajeATiempo, CalificacionInicial'#13#10'from ' +
-      'vw_ReporteCarteraCompleto'#13#10'order by IdAnexo'
+      'A90/1000 as VencidoA90, VencidoMas120/1000 as VencidoMas120,'#13#10'Di' +
+      'asRetraso, Cantidad, atrasados, atiempo, CuotasPendientes, DiasP' +
+      'agoTotal, '#13#10'DiasPagoRetraso, PorcentajeAtrasados, PorcentajeATie' +
+      'mpo, CalificacionInicial'#13#10'from vw_ReporteCarteraCompleto'#13#10'order ' +
+      'by IdAnexo'
     object adodsReportIdAnexo: TIntegerField
       FieldName = 'IdAnexo'
     end
@@ -97,12 +98,6 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       Precision = 38
       Size = 6
     end
-    object adodsReportVencidoA120: TFMTBCDField
-      FieldName = 'VencidoA120'
-      ReadOnly = True
-      Precision = 38
-      Size = 6
-    end
     object adodsReportVencidoMas120: TFMTBCDField
       FieldName = 'VencidoMas120'
       ReadOnly = True
@@ -158,6 +153,248 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
     object adodsReportCalificacionInicial: TStringField
       FieldName = 'CalificacionInicial'
       Size = 2
+    end
+  end
+  inherited dbpReport: TppDBPipeline
+    object dbpReportppField1: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'IdAnexo'
+      FieldName = 'IdAnexo'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 0
+    end
+    object dbpReportppField2: TppField
+      FieldAlias = 'Contrato'
+      FieldName = 'Contrato'
+      FieldLength = 20
+      DisplayWidth = 20
+      Position = 1
+    end
+    object dbpReportppField3: TppField
+      FieldAlias = 'Anexo'
+      FieldName = 'Anexo'
+      FieldLength = 5
+      DisplayWidth = 5
+      Position = 2
+    end
+    object dbpReportppField4: TppField
+      FieldAlias = 'CLiente'
+      FieldName = 'CLiente'
+      FieldLength = 300
+      DisplayWidth = 300
+      Position = 3
+    end
+    object dbpReportppField5: TppField
+      FieldAlias = 'Tc'
+      FieldName = 'Tc'
+      FieldLength = 5
+      DisplayWidth = 5
+      Position = 4
+    end
+    object dbpReportppField6: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'Plazo'
+      FieldName = 'Plazo'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 5
+    end
+    object dbpReportppField7: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'Total'
+      FieldName = 'Total'
+      FieldLength = 6
+      DataType = dtDouble
+      DisplayWidth = 39
+      Position = 6
+    end
+    object dbpReportppField8: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'CobradoCXC'
+      FieldName = 'CobradoCXC'
+      FieldLength = 6
+      DataType = dtDouble
+      DisplayWidth = 39
+      Position = 7
+    end
+    object dbpReportppField9: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'TotalPorCobrar'
+      FieldName = 'TotalPorCobrar'
+      FieldLength = 6
+      DataType = dtDouble
+      DisplayWidth = 39
+      Position = 8
+    end
+    object dbpReportppField10: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'Saldopendiente'
+      FieldName = 'Saldopendiente'
+      FieldLength = 6
+      DataType = dtDouble
+      DisplayWidth = 39
+      Position = 9
+    end
+    object dbpReportppField11: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'TotalVigente'
+      FieldName = 'TotalVigente'
+      FieldLength = 6
+      DataType = dtDouble
+      DisplayWidth = 39
+      Position = 10
+    end
+    object dbpReportppField12: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'TotalPorVencer'
+      FieldName = 'TotalPorVencer'
+      FieldLength = 6
+      DataType = dtDouble
+      DisplayWidth = 39
+      Position = 11
+    end
+    object dbpReportppField13: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'TotalCobradoVencido'
+      FieldName = 'TotalCobradoVencido'
+      FieldLength = 6
+      DataType = dtDouble
+      DisplayWidth = 39
+      Position = 12
+    end
+    object dbpReportppField14: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'VencidoA30'
+      FieldName = 'VencidoA30'
+      FieldLength = 6
+      DataType = dtDouble
+      DisplayWidth = 39
+      Position = 13
+    end
+    object dbpReportppField15: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'VencidoA60'
+      FieldName = 'VencidoA60'
+      FieldLength = 6
+      DataType = dtDouble
+      DisplayWidth = 39
+      Position = 14
+    end
+    object dbpReportppField16: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'VencidoA90'
+      FieldName = 'VencidoA90'
+      FieldLength = 6
+      DataType = dtDouble
+      DisplayWidth = 39
+      Position = 15
+    end
+    object dbpReportppField17: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'VencidoMas120'
+      FieldName = 'VencidoMas120'
+      FieldLength = 6
+      DataType = dtDouble
+      DisplayWidth = 39
+      Position = 16
+    end
+    object dbpReportppField18: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'DiasRetraso'
+      FieldName = 'DiasRetraso'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 17
+    end
+    object dbpReportppField19: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'Cantidad'
+      FieldName = 'Cantidad'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 18
+    end
+    object dbpReportppField20: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'atrasados'
+      FieldName = 'atrasados'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 19
+    end
+    object dbpReportppField21: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'atiempo'
+      FieldName = 'atiempo'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 20
+    end
+    object dbpReportppField22: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'CuotasPendientes'
+      FieldName = 'CuotasPendientes'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 21
+    end
+    object dbpReportppField23: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'DiasPagoTotal'
+      FieldName = 'DiasPagoTotal'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 22
+    end
+    object dbpReportppField24: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'DiasPagoRetraso'
+      FieldName = 'DiasPagoRetraso'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 23
+    end
+    object dbpReportppField25: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'PorcentajeAtrasados'
+      FieldName = 'PorcentajeAtrasados'
+      FieldLength = 12
+      DataType = dtDouble
+      DisplayWidth = 27
+      Position = 24
+    end
+    object dbpReportppField26: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'PorcentajeATiempo'
+      FieldName = 'PorcentajeATiempo'
+      FieldLength = 12
+      DataType = dtDouble
+      DisplayWidth = 27
+      Position = 25
+    end
+    object dbpReportppField27: TppField
+      FieldAlias = 'CuotaMostrar'
+      FieldName = 'CuotaMostrar'
+      FieldLength = 10
+      DisplayWidth = 10
+      Position = 26
+    end
+    object dbpReportppField28: TppField
+      FieldAlias = 'CalificacionInicial'
+      FieldName = 'CalificacionInicial'
+      FieldLength = 2
+      DisplayWidth = 2
+      Position = 27
     end
   end
   inherited ppReport: TppReport
@@ -751,7 +988,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       end
       object ppDBText12: TppDBText
         UserName = 'DBText101'
-        DataField = 'VencidoA30'
+        DataField = 'VencidoA90'
         DataPipeline = dbpReport
         DisplayFormat = '#,0;-#,0'
         Font.Charset = DEFAULT_CHARSET
@@ -772,7 +1009,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       end
       object ppDBText13: TppDBText
         UserName = 'DBText13'
-        DataField = 'VencidoA60'
+        DataField = 'VencidoMas120'
         DataPipeline = dbpReport
         DisplayFormat = '#,0;-#,0'
         Font.Charset = DEFAULT_CHARSET
@@ -910,6 +1147,205 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Font.Name = 'arial'
         mmLeft = 255059
         mmWidth = 10319
+        LayerName = Foreground
+      end
+    end
+    object ppSummaryBand1: TppSummaryBand [4]
+      Background.Brush.Style = bsClear
+      mmBottomOffset = 0
+      mmHeight = 13229
+      mmPrintPosition = 0
+      object ppDBCalc1: TppDBCalc
+        UserName = 'DBCalc1'
+        DataField = 'Total'
+        DataPipeline = dbpReport
+        DisplayFormat = '#,0;-#,0'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        DataPipelineName = 'dbpReport'
+        mmHeight = 4498
+        mmLeft = 108479
+        mmTop = 1058
+        mmWidth = 14023
+        BandType = 7
+        LayerName = Foreground
+      end
+      object ppDBCalc2: TppDBCalc
+        UserName = 'DBCalc2'
+        DataField = 'TotalPorVencer'
+        DataPipeline = dbpReport
+        DisplayFormat = '#,0;-#,0'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        DataPipelineName = 'dbpReport'
+        mmHeight = 4498
+        mmLeft = 124619
+        mmTop = 1058
+        mmWidth = 13229
+        BandType = 7
+        LayerName = Foreground
+      end
+      object ppDBCalc3: TppDBCalc
+        UserName = 'DBCalc3'
+        DataField = 'TotalCobradoVencido'
+        DataPipeline = dbpReport
+        DisplayFormat = '#,0;-#,0'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        DataPipelineName = 'dbpReport'
+        mmHeight = 4498
+        mmLeft = 139965
+        mmTop = 1058
+        mmWidth = 10054
+        BandType = 7
+        LayerName = Foreground
+      end
+      object ppDBCalc4: TppDBCalc
+        UserName = 'DBCalc4'
+        DataField = 'VencidoA30'
+        DataPipeline = dbpReport
+        DisplayFormat = '#,0;-#,0'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        DataPipelineName = 'dbpReport'
+        mmHeight = 4498
+        mmLeft = 151871
+        mmTop = 1058
+        mmWidth = 10054
+        BandType = 7
+        LayerName = Foreground
+      end
+      object ppDBCalc5: TppDBCalc
+        UserName = 'DBCalc5'
+        DataField = 'VencidoA60'
+        DataPipeline = dbpReport
+        DisplayFormat = '#,0;-#,0'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        DataPipelineName = 'dbpReport'
+        mmHeight = 4498
+        mmLeft = 163777
+        mmTop = 1058
+        mmWidth = 10054
+        BandType = 7
+        LayerName = Foreground
+      end
+      object ppDBCalc6: TppDBCalc
+        UserName = 'DBCalc6'
+        DataField = 'VencidoA90'
+        DataPipeline = dbpReport
+        DisplayFormat = '#,0;-#,0'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        DataPipelineName = 'dbpReport'
+        mmHeight = 4498
+        mmLeft = 175684
+        mmTop = 1058
+        mmWidth = 10054
+        BandType = 7
+        LayerName = Foreground
+      end
+      object ppDBCalc7: TppDBCalc
+        UserName = 'DBCalc7'
+        DataField = 'VencidoA90'
+        DataPipeline = dbpReport
+        DisplayFormat = '#,0;-#,0'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        DataPipelineName = 'dbpReport'
+        mmHeight = 4498
+        mmLeft = 187590
+        mmTop = 1058
+        mmWidth = 10054
+        BandType = 7
+        LayerName = Foreground
+      end
+      object ppDBCalc8: TppDBCalc
+        UserName = 'DBCalc8'
+        DataField = 'VencidoMas120'
+        DataPipeline = dbpReport
+        DisplayFormat = '#,0;-#,0'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        DataPipelineName = 'dbpReport'
+        mmHeight = 4498
+        mmLeft = 199496
+        mmTop = 1058
+        mmWidth = 10054
+        BandType = 7
+        LayerName = Foreground
+      end
+      object ppLabel34: TppLabel
+        UserName = 'Label34'
+        AutoSize = False
+        Border.BorderPositions = [bpBottom]
+        Border.Weight = 0.748799979686737100
+        Caption = 'Totales:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 4763
+        mmLeft = 92604
+        mmTop = 1058
+        mmWidth = 14023
+        BandType = 7
+        LayerName = Foreground
+      end
+      object ppLine2: TppLine
+        UserName = 'LineFooter1'
+        Anchors = [atLeft, atTop, atRight, atBottom]
+        Pen.Color = clGray
+        Pen.Width = 2
+        Weight = 1.500000000000000000
+        mmHeight = 2646
+        mmLeft = 90752
+        mmTop = 0
+        mmWidth = 119063
+        BandType = 7
         LayerName = Foreground
       end
     end

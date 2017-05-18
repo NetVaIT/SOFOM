@@ -32,7 +32,6 @@ type
     adodsReportVencidosa30días: TFMTBCDField;
     adodsReportVencidosa60días: TFMTBCDField;
     adodsReportVencidosa90días: TFMTBCDField;
-    adodsReportVencidosmásde90días: TFMTBCDField;
     ppDBText3: TppDBText;
     ppLabel5: TppLabel;
     ppDBText5: TppDBText;
@@ -76,7 +75,6 @@ type
     ppHeaderBand2: TppHeaderBand;
     ppLabel14: TppLabel;
     ppDBText11: TppDBText;
-    ppLabel19: TppLabel;
     ppLabel20: TppLabel;
     ppLabel21: TppLabel;
     ppLabel22: TppLabel;
@@ -84,7 +82,6 @@ type
     ppLine5: TppLine;
     ppLine6: TppLine;
     ppDetailBand2: TppDetailBand;
-    ppDBText16: TppDBText;
     ppDBText17: TppDBText;
     ppDBText18: TppDBText;
     ppDBText19: TppDBText;
@@ -97,7 +94,6 @@ type
     ppDBCalc11: TppDBCalc;
     ppDBCalc12: TppDBCalc;
     ppDBCalc13: TppDBCalc;
-    ppDBCalc14: TppDBCalc;
     ppDBCalc15: TppDBCalc;
     ppLine8: TppLine;
     ppLabel24: TppLabel;
@@ -129,6 +125,7 @@ type
     ppLabel27: TppLabel;
     ppDBText14: TppDBText;
     ppDBCalc22: TppDBCalc;
+    adodsReportVencidosmásde120días: TFMTBCDField;
   private
     { Private declarations }
   public

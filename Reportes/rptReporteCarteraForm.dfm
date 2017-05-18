@@ -87,10 +87,6 @@ inherited FrmReporteCarteraGrid: TFrmReporteCarteraGrid
           DataBinding.FieldName = 'VencidoA90'
           Width = 118
         end
-        object tvMasterVencidoA120: TcxGridDBColumn
-          DataBinding.FieldName = 'VencidoA120'
-          Width = 111
-        end
         object tvMasterVencidoMas120: TcxGridDBColumn
           DataBinding.FieldName = 'VencidoMas120'
           Width = 92

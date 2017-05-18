@@ -47,7 +47,6 @@ type
     tvMasterVencidoA30: TcxGridDBColumn;
     tvMasterVencidoA60: TcxGridDBColumn;
     tvMasterVencidoA90: TcxGridDBColumn;
-    tvMasterVencidoA120: TcxGridDBColumn;
     tvMasterVencidoMas120: TcxGridDBColumn;
     tvMasterDiasRetraso: TcxGridDBColumn;
     tvMasterCantidad: TcxGridDBColumn;

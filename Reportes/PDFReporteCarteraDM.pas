@@ -35,7 +35,6 @@ type
     adodsReportVencidoA30: TFMTBCDField;
     adodsReportVencidoA60: TFMTBCDField;
     adodsReportVencidoA90: TFMTBCDField;
-    adodsReportVencidoA120: TFMTBCDField;
     adodsReportVencidoMas120: TFMTBCDField;
     adodsReportDiasRetraso: TIntegerField;
     adodsReportCantidad: TIntegerField;
@@ -159,6 +158,17 @@ type
     ADODtStRepHojaControlCteAtrasados: TIntegerField;
     ADODtStRepHojaControlCteATiempo: TIntegerField;
     ADODtStRepHojaControlCteTotalPagados: TIntegerField;
+    ppSummaryBand1: TppSummaryBand;
+    ppDBCalc1: TppDBCalc;
+    ppDBCalc2: TppDBCalc;
+    ppDBCalc3: TppDBCalc;
+    ppDBCalc4: TppDBCalc;
+    ppDBCalc5: TppDBCalc;
+    ppDBCalc6: TppDBCalc;
+    ppDBCalc7: TppDBCalc;
+    ppDBCalc8: TppDBCalc;
+    ppLabel34: TppLabel;
+    ppLine2: TppLine;
     procedure CuotasReportCalcFields(DataSet: TDataSet);
   private
     { Private declarations }

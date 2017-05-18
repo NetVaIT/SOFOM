@@ -24,7 +24,6 @@ type
     adodsMasterVencidoA30: TFMTBCDField;
     adodsMasterVencidoA60: TFMTBCDField;
     adodsMasterVencidoA90: TFMTBCDField;
-    adodsMasterVencidoA120: TFMTBCDField;
     adodsMasterVencidoMas120: TFMTBCDField;
     adodsMasterDiasRetraso: TIntegerField;
     adodsMasterCantidad: TIntegerField;
@@ -67,7 +66,7 @@ begin
   inherited;
   TxtSQL:= 'SElect Cliente,sum("Saldo")  as SaldoTotal,  Sum ("Saldo Total Vencido")as TotalVencido, Sum (vigentes)as TotalVigentes, SUM ("vencidos a 30 días") as Total30Dias,'
           +' SUM ("vencidos a 60 días") as Total60Dias, SUM ("vencidos a 90 días") as Total90Dias ,'
-          +' SUM ("vencidos a 120 días") as Total120Dias ,Sum("Vencidos a mas de 120 días") as TotalMas120Dias,'
+        //  +' SUM ("vencidos a 120 días") as Total120Dias ,Sum("Vencidos a mas de 120 días") as TotalMas120Dias,' //May 18/17
           +' SUM ("Vencidos a mas de 120 días") as TotalMas120Dias  from Vw_AntiguedadSaldosCXC ';
   Fecha:= ' where fecha>=:Fini and fecha<=:Ffin ';
   GrupoSQL:=' Group BY Cliente order by Totalvencido desc, SaldoTotal desc'; //adodsMaster.CommandText; ver si se le coloca Fecha

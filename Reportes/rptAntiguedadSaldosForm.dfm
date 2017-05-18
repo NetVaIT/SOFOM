@@ -2,38 +2,37 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
   BorderStyle = bsToolWindow
   Caption = 'Antig'#252'edad de Saldos'
   ClientHeight = 428
-  ClientWidth = 1192
-  ExplicitWidth = 1198
-  ExplicitHeight = 457
+  ClientWidth = 1363
+  ExplicitWidth = 1369
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
     Top = 343
-    Width = 1192
+    Width = 1363
     ExplicitTop = 343
     ExplicitWidth = 1198
   end
   inherited splDetail1: TSplitter
     Top = 255
-    Width = 1192
+    Width = 1363
     ExplicitTop = 255
     ExplicitWidth = 1198
   end
   inherited splDetail2: TSplitter
     Top = 299
-    Width = 1192
+    Width = 1363
     ExplicitTop = 299
     ExplicitWidth = 1198
   end
   inherited pnlMaster: TPanel
     Top = 78
-    Width = 1192
+    Width = 1363
     Height = 177
     ExplicitTop = 78
     ExplicitWidth = 1192
     ExplicitHeight = 177
     inherited cxGrid: TcxGrid
-      Width = 1192
+      Width = 1363
       Height = 177
       ExplicitWidth = 1192
       ExplicitHeight = 177
@@ -63,7 +62,7 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
           item
             Kind = skSum
             Position = spFooter
-            Column = tvMasterVencidosmsde90das
+            Column = tvMasterVencidosmsde120das
           end
           item
             Kind = skSum
@@ -104,7 +103,6 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
           end
           item
             Kind = skSum
-            Column = tvMasterVencidosmsde90das
           end
           item
             Kind = skSum
@@ -113,6 +111,10 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
           item
             Kind = skSum
             Column = tvMasterSaldoTotalVencido
+          end
+          item
+            Kind = skSum
+            Column = tvMasterVencidosmsde120das
           end>
         DataController.Summary.SummaryGroups = <
           item
@@ -197,10 +199,8 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
           DataBinding.FieldName = 'Vencidos a 90 d'#237'as'
           Width = 121
         end
-        object tvMasterVencidosmsde90das: TcxGridDBColumn
-          DataBinding.FieldName = 'Vencidos m'#225's de 90 d'#237'as'
-          Options.Editing = False
-          Width = 137
+        object tvMasterVencidosmsde120das: TcxGridDBColumn
+          DataBinding.FieldName = 'Vencidos m'#225's de 120 d'#237'as'
         end
         object tvMasterIdPersona: TcxGridDBColumn
           DataBinding.FieldName = 'IdPersona'
@@ -227,43 +227,44 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
   end
   inherited pnlDetail3: TPanel
     Top = 346
-    Width = 1192
+    Width = 1363
     ExplicitTop = 346
     ExplicitWidth = 1192
   end
   inherited pnlDetail2: TPanel
     Top = 302
-    Width = 1192
+    Width = 1363
     ExplicitTop = 302
     ExplicitWidth = 1192
   end
   inherited pnlDetail1: TPanel
     Top = 258
-    Width = 1192
+    Width = 1363
     ExplicitTop = 258
     ExplicitWidth = 1192
   end
   inherited pnlClose: TPanel
     Top = 387
-    Width = 1192
+    Width = 1363
     ExplicitTop = 387
     ExplicitWidth = 1192
     DesignSize = (
-      1192
+      1363
       41)
     inherited btnClose: TButton
-      Left = 1107
+      Left = 1278
       ExplicitLeft = 1107
     end
   end
   object PnlFiltros: TPanel [8]
     Left = 0
     Top = 31
-    Width = 1192
+    Width = 1363
     Height = 47
     Align = alTop
     ParentBackground = False
     TabOrder = 9
+    ExplicitWidth = 1192
     object PnlBusqueda: TPanel
       Left = 202
       Top = 1
@@ -1251,6 +1252,7 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42585.483476608800000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

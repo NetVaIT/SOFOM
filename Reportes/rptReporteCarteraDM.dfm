@@ -8,11 +8,11 @@ inherited dmrptReporteCartera: TdmrptReporteCartera
       'r, Saldopendiente  as Saldopendiente,'#13#10' TotalVigente  as TotalVi' +
       'gente,'#13#10' TotalPorVencer as TotalPorVencer, TotalCobradoVencido a' +
       's TotalCobradoVencido,'#13#10' VencidoA30 as VencidoA30, VencidoA60 as' +
-      ' VencidoA60, VencidoA90 as VencidoA90, '#13#10'VencidoA120 as VencidoA' +
-      '120, VencidoMas120 as VencidoMas120,'#13#10'DiasRetraso, Cantidad, atr' +
-      'asados, atiempo, CuotasPendientes, DiasPagoTotal, '#13#10'DiasPagoRetr' +
-      'aso, PorcentajeAtrasados, PorcentajeATiempo'#13#10'from vw_ReporteCart' +
-      'eraCompleto'#13#10'order by IdAnexo'
+      ' VencidoA60, VencidoA90 as VencidoA90, '#13#10'VencidoMas120 as Vencid' +
+      'oMas120,'#13#10'DiasRetraso, Cantidad, atrasados, atiempo, CuotasPendi' +
+      'entes, DiasPagoTotal, '#13#10'DiasPagoRetraso, PorcentajeAtrasados, Po' +
+      'rcentajeATiempo'#13#10'from vw_ReporteCarteraCompleto'#13#10'order by IdAnex' +
+      'o'
     object adodsMasterIdAnexo: TIntegerField
       FieldName = 'IdAnexo'
     end
@@ -98,13 +98,6 @@ inherited dmrptReporteCartera: TdmrptReporteCartera
     end
     object adodsMasterVencidoA90: TFMTBCDField
       FieldName = 'VencidoA90'
-      ReadOnly = True
-      DisplayFormat = '###,###.##'
-      Precision = 38
-      Size = 6
-    end
-    object adodsMasterVencidoA120: TFMTBCDField
-      FieldName = 'VencidoA120'
       ReadOnly = True
       DisplayFormat = '###,###.##'
       Precision = 38

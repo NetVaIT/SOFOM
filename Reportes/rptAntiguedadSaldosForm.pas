@@ -39,7 +39,6 @@ type
     tvMasterVencidosa30das: TcxGridDBColumn;
     tvMasterVencidosa60das: TcxGridDBColumn;
     tvMasterVencidosa90das: TcxGridDBColumn;
-    tvMasterVencidosmsde90das: TcxGridDBColumn;
     PnlFiltros: TPanel;
     PnlBusqueda: TPanel;
     Label3: TLabel;
@@ -68,6 +67,7 @@ type
     tvMasterAnexo: TcxGridDBColumn;
     tvMasterTC: TcxGridDBColumn;
     tvMasterSaldoTotalVencido: TcxGridDBColumn;
+    tvMasterVencidosmsde120das: TcxGridDBColumn;
     procedure SpdBtnConsultaClick(Sender: TObject);
     procedure EdtNombreKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
@@ -170,13 +170,13 @@ procedure TfrmRptAntiguedadSaldos.SpdBtnConsultaClick(Sender: TObject);
 const
    TxtSQL=' SELECT   Cc.IdCuentaXCobrar, cc.IDAnexo,a.Identificador as Anexo, A.IdContrato, Con.IdContratoTipo,Con.Identificador as Contrato,'
          +' CT.Identificador as TC, ct.Descripcion as TipoContrato,Cc.Fecha, Cc.IdPersona, cc.IdCuentaXCobrarEstatus, Cc.Total, CC.Saldo,'
-         +' PR.RazonSocial AS Cliente, CASE WHEN getdate() - Cc.Fecha < 30 THEN Cc.Saldo END AS ''Vigentes'','
-         +' CASE WHEN getdate() - Cc.Fecha >= 30 THEN Cc.Saldo END as ''Saldo Total Vencido'','
-         +' CASE WHEN (getdate() - Cc.Fecha < 60 ) AND (getdate() - Cc.Fecha >= 30 )'
-         +' THEN Cc.Saldo END AS ''Vencidos a 30 días'', CASE WHEN (getdate() - Cc.Fecha < 90 ) AND (getdate()'
-         +'  - Cc.Fecha >= 60 ) THEN Cc.Saldo END AS ''Vencidos a 60 días'', CASE WHEN (getdate() - Cc.Fecha >= 90 ) AND'
-         +'   (getdate() - Cc.Fecha < 120 ) THEN Cc.Saldo END AS ''Vencidos a 90 días'', CASE WHEN getdate()'
-         +'  - Cc.Fecha >= 120 THEN Cc.Saldo END AS ''Vencidos más de 90 días'''
+         +' PR.RazonSocial AS Cliente, CASE WHEN getdate() - Cc.Fecha <= 30 THEN Cc.Saldo END AS ''Vigentes'','
+         +' CASE WHEN getdate() - Cc.Fecha >= 1 THEN Cc.Saldo END as ''Saldo Total Vencido'','
+         +' CASE WHEN (getdate() - Cc.Fecha <= 60 ) AND (getdate() - Cc.Fecha > 30 )'
+         +' THEN Cc.Saldo END AS ''Vencidos a 30 días'', CASE WHEN (getdate() - Cc.Fecha <= 90 ) AND (getdate()'
+         +'  - Cc.Fecha > 60 ) THEN Cc.Saldo END AS ''Vencidos a 60 días'', CASE WHEN (getdate() - Cc.Fecha > 90 ) AND'
+         +'   (getdate() - Cc.Fecha <=120 ) THEN Cc.Saldo END AS ''Vencidos a 90 días'', CASE WHEN getdate()'
+         +'  - Cc.Fecha > 120 THEN Cc.Saldo END AS ''Vencidos más de 120 días'''
 
          +' FROM         CuentasXCobrar AS Cc INNER JOIN  Personas AS PR ON Cc.IdPersona = PR.IdPersona '
          +'             left join  Anexos As A ON Cc.IdAnexo=A.IdAnexo      '
