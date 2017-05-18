@@ -253,6 +253,7 @@ inherited FrmInformacionContratosGrid: TFrmInformacionContratosGrid
     Top = 47
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42845.604105219910000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

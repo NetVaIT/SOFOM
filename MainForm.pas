@@ -145,6 +145,8 @@ type
     dxBarLargeButton26: TdxBarLargeButton;
     actExpecientes: TAction;
     dxBarLargeButton31: TdxBarLargeButton;
+    dxBrLrgBtnReporteCartera: TdxBarLargeButton;
+    ActReporteCArtera: TAction;
     procedure actCatalogoExecute(Sender: TObject);
     procedure actIntervaCXPExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -178,7 +180,7 @@ uses UbicacionesDM, BancosDM, MonedasDM, PuestosDM, PlazasTurnosDM,
   CuentasXCobrarDM, PagosDM, CotizacionesDM, rptAntiguedadSaldosDM,
   AplicacionesConsultaDM, EstadosCuentaDM, ListasRestringidasDM,
   SeguimientoCobranzaDM, rptInformacionContratosDM, MonedasCotizacionesDM,
-  RptCoberturaDM, RptExpedientesRecibidosDM;
+  RptCoberturaDM, RptExpedientesRecibidosDM, rptReporteCarteraDM;
 //  EsquemaPagosDM, FormulasDM, ReglasNegocioDM,
 //  MovimientosTiposDM, RolesDM, InstruccionesDM,
 //  IncidenciasDM, InstruccionesTiposDM, PeriodosDM, MovimientosDM,
@@ -255,6 +257,8 @@ begin
          gReport.Title := pCaption;
          gReport.Execute;
        end;
+   55: gModulo := TdmRptReporteCartera.Create(Self);  //may 12/17
+
 //   51: begin
 //         gModulo := TdmMovimientosD.Create(Self);
 //         TdmMovimientosD(gModulo).TipoReporte:= trDispercion;

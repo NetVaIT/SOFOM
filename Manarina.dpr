@@ -191,7 +191,7 @@ uses
   SeguimientoCobranzaCon in 'Procesos\SeguimientoCobranzaCon.pas' {FrmSeguimientoCobranza},
   SeguimientoCobranzaDM in 'Procesos\SeguimientoCobranzaDM.pas' {dmSeguimientoCobranza: TDataModule},
   SeguimientoRegistroEd in 'Procesos\SeguimientoRegistroEd.pas' {FrmSeguimientoRegistro},
-  AbonarCapitalDM in 'Procesos\AbonarCapitalDM.pas' {aram: TDataModule},
+  AbonarCapitalDM in 'Procesos\AbonarCapitalDM.pas' {dmAbonarCapital: TDataModule},
   AbonarCapitalEdit in 'Procesos\AbonarCapitalEdit.pas' {frmAbonarCapitalEdit},
   _ReportSOFOMDM in 'Standard\_ReportSOFOMDM.pas' {_dmReportSOFOM: TDataModule},
   PDFAntiguedadSaldosDM in 'Reportes\PDFAntiguedadSaldosDM.pas' {dmAntiguedadSaldosPDF: TDataModule},
@@ -210,11 +210,14 @@ uses
   rptInformacionContratosForm in 'Reportes\rptInformacionContratosForm.pas' {FrmInformacionContratosGrid},
   ImpactoISRDM in 'Procesos\ImpactoISRDM.pas' {dmImpactoISR: TDataModule},
   ImpactoISREdit in 'Procesos\ImpactoISREdit.pas' {frmImpactoISREdit},
-  MonedasCotizacionesDM in 'Catalogos\MonedasCotizacionesDM.pas' {dmMonedasCotizaciones: TDataModule},
-  MonedasCotizacionesForm in 'Catalogos\MonedasCotizacionesForm.pas' {frmMonedasCotizaciones},
-  MonedasCotizacionesEdit in 'Catalogos\MonedasCotizacionesEdit.pas' {frmMonedasCotizacionesEdit},
+  PDFReporteCarteraDM in 'Reportes\PDFReporteCarteraDM.pas' {DmReporteCarteraPDF: TDataModule},
+  rptReporteCarteraDM in 'Reportes\rptReporteCarteraDM.pas' {dmrptReporteCartera: TDataModule},
+  rptReporteCarteraForm in 'Reportes\rptReporteCarteraForm.pas' {FrmReporteCarteraGrid},
   RptCoberturaDM in 'Reportes\RptCoberturaDM.pas' {dmRptCobertura: TDataModule},
-  RptExpedientesRecibidosDM in 'Reportes\RptExpedientesRecibidosDM.pas' {dmRptExpedientesRecibidos: TDataModule};
+  RptExpedientesRecibidosDM in 'Reportes\RptExpedientesRecibidosDM.pas' {dmRptExpedientesRecibidos: TDataModule},
+  MonedasCotizacionesDM in 'Catalogos\MonedasCotizacionesDM.pas' {dmMonedasCotizaciones: TDataModule},
+  MonedasCotizacionesEdit in 'Catalogos\MonedasCotizacionesEdit.pas' {frmMonedasCotizacionesEdit},
+  MonedasCotizacionesForm in 'Catalogos\MonedasCotizacionesForm.pas' {frmMonedasCotizaciones};
 
 {$R *.res}
 

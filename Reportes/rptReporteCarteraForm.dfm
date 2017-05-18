@@ -1,383 +1,164 @@
-object _frmGrid: T_frmGrid
-  Left = 0
-  Top = 0
-  BorderIcons = []
-  BorderStyle = bsNone
-  Caption = '_frmGrid'
-  ClientHeight = 457
-  ClientWidth = 651
-  Color = clBtnFace
-  Font.Charset = DEFAULT_CHARSET
-  Font.Color = clWindowText
-  Font.Height = -11
-  Font.Name = 'Tahoma'
-  Font.Style = []
-  OldCreateOrder = False
-  Position = poScreenCenter
-  ShowHint = True
-  OnCreate = FormCreate
-  OnShow = FormShow
+inherited FrmReporteCarteraGrid: TFrmReporteCarteraGrid
+  Caption = 'FrmReporteCarteraGrid'
+  ClientWidth = 1027
+  ExplicitWidth = 1027
+  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
-  object splDetail3: TSplitter
-    Left = 0
-    Top = 372
-    Width = 651
-    Height = 3
-    Cursor = crVSplit
-    Align = alBottom
-    Visible = False
-    ExplicitLeft = 8
-    ExplicitTop = 422
+  inherited splDetail3: TSplitter
+    Width = 1027
   end
-  object splDetail1: TSplitter
-    Left = 0
-    Top = 284
-    Width = 651
-    Height = 3
-    Cursor = crVSplit
-    Align = alBottom
-    Visible = False
-    ExplicitLeft = 8
-    ExplicitTop = 300
+  inherited splDetail1: TSplitter
+    Width = 1027
   end
-  object splDetail2: TSplitter
-    Left = 0
-    Top = 328
-    Width = 651
-    Height = 3
-    Cursor = crVSplit
-    Align = alBottom
-    Visible = False
-    ExplicitTop = 375
+  inherited splDetail2: TSplitter
+    Width = 1027
   end
-  object pnlMaster: TPanel
-    Left = 0
-    Top = 31
-    Width = 651
-    Height = 253
-    Align = alClient
-    BevelOuter = bvNone
-    TabOrder = 0
-    object cxGrid: TcxGrid
-      Left = 0
-      Top = 0
-      Width = 651
-      Height = 253
-      Align = alClient
-      PopupMenu = PopupMenu
-      TabOrder = 0
-      LookAndFeel.Kind = lfStandard
-      object tvMaster: TcxGridDBTableView
-        Navigator.Buttons.CustomButtons = <>
-        OnCellDblClick = tvMasterCellDblClick
-        DataController.DataSource = DataSource
-        DataController.Summary.DefaultGroupSummaryItems = <>
-        DataController.Summary.FooterSummaryItems = <>
-        DataController.Summary.SummaryGroups = <>
-        OptionsBehavior.IncSearch = True
-        OptionsCustomize.ColumnsQuickCustomization = True
-        OptionsData.Deleting = False
-        OptionsData.Editing = False
-        OptionsData.Inserting = False
-        OptionsView.NoDataToDisplayInfoText = ' '
-        OptionsView.GroupByBox = False
+  inherited pnlMaster: TPanel
+    Width = 1027
+    inherited cxGrid: TcxGrid
+      Width = 1027
+      inherited tvMaster: TcxGridDBTableView
+        object tvMasterIdAnexo: TcxGridDBColumn
+          DataBinding.FieldName = 'IdAnexo'
+          Visible = False
+        end
+        object tvMasterContrato: TcxGridDBColumn
+          DataBinding.FieldName = 'Contrato'
+          Width = 100
+        end
+        object tvMasterAnexo: TcxGridDBColumn
+          DataBinding.FieldName = 'Anexo'
+          Width = 67
+        end
+        object tvMasterCLiente: TcxGridDBColumn
+          DataBinding.FieldName = 'CLiente'
+          Width = 245
+        end
+        object tvMasterTc: TcxGridDBColumn
+          DataBinding.FieldName = 'Tc'
+        end
+        object tvMasterCuotaMostrar: TcxGridDBColumn
+          Caption = 'Cuotas Pend.'
+          DataBinding.FieldName = 'CuotaMostrar'
+          Width = 79
+        end
+        object tvMasterPlazo: TcxGridDBColumn
+          DataBinding.FieldName = 'Plazo'
+          Visible = False
+        end
+        object tvMasterTotal: TcxGridDBColumn
+          DataBinding.FieldName = 'Total'
+          Width = 98
+        end
+        object tvMasterCobradoCXC: TcxGridDBColumn
+          DataBinding.FieldName = 'CobradoCXC'
+          Visible = False
+        end
+        object tvMasterTotalPorCobrar: TcxGridDBColumn
+          DataBinding.FieldName = 'TotalPorCobrar'
+          Width = 131
+        end
+        object tvMasterSaldopendiente: TcxGridDBColumn
+          DataBinding.FieldName = 'Saldopendiente'
+          Width = 133
+        end
+        object tvMasterTotalVigente: TcxGridDBColumn
+          DataBinding.FieldName = 'TotalVigente'
+          Width = 132
+        end
+        object tvMasterTotalPorVencer: TcxGridDBColumn
+          DataBinding.FieldName = 'TotalPorVencer'
+          Width = 146
+        end
+        object tvMasterTotalCobradoVencido: TcxGridDBColumn
+          DataBinding.FieldName = 'TotalCobradoVencido'
+          Width = 122
+        end
+        object tvMasterVencidoA30: TcxGridDBColumn
+          DataBinding.FieldName = 'VencidoA30'
+          Width = 105
+        end
+        object tvMasterVencidoA60: TcxGridDBColumn
+          DataBinding.FieldName = 'VencidoA60'
+          Width = 77
+        end
+        object tvMasterVencidoA90: TcxGridDBColumn
+          DataBinding.FieldName = 'VencidoA90'
+          Width = 118
+        end
+        object tvMasterVencidoA120: TcxGridDBColumn
+          DataBinding.FieldName = 'VencidoA120'
+          Width = 111
+        end
+        object tvMasterVencidoMas120: TcxGridDBColumn
+          DataBinding.FieldName = 'VencidoMas120'
+          Width = 92
+        end
+        object tvMasterDiasRetraso: TcxGridDBColumn
+          DataBinding.FieldName = 'DiasRetraso'
+          Visible = False
+        end
+        object tvMasterCantidad: TcxGridDBColumn
+          DataBinding.FieldName = 'Cantidad'
+          Visible = False
+        end
+        object tvMasteratrasados: TcxGridDBColumn
+          DataBinding.FieldName = 'atrasados'
+          Visible = False
+        end
+        object tvMasteratiempo: TcxGridDBColumn
+          DataBinding.FieldName = 'atiempo'
+          Visible = False
+        end
+        object tvMasterCuotasPendientes: TcxGridDBColumn
+          DataBinding.FieldName = 'CuotasPendientes'
+          Visible = False
+        end
+        object tvMasterDiasPagoTotal: TcxGridDBColumn
+          DataBinding.FieldName = 'DiasPagoTotal'
+          Width = 76
+        end
+        object tvMasterDiasPagoRetraso: TcxGridDBColumn
+          DataBinding.FieldName = 'DiasPagoRetraso'
+          Width = 88
+        end
+        object tvMasterPorcentajeAtrasados: TcxGridDBColumn
+          DataBinding.FieldName = 'PorcentajeAtrasados'
+          Width = 91
+        end
+        object tvMasterPorcentajeATiempo: TcxGridDBColumn
+          DataBinding.FieldName = 'PorcentajeATiempo'
+          Width = 100
+        end
       end
-      object cxGridLevel1: TcxGridLevel
-        GridView = tvMaster
-      end
     end
   end
-  object pnlDetail3: TPanel
-    Left = 0
-    Top = 375
-    Width = 651
-    Height = 41
-    Align = alBottom
-    BevelOuter = bvNone
-    TabOrder = 3
-    Visible = False
+  inherited pnlDetail3: TPanel
+    Width = 1027
   end
-  object pnlDetail2: TPanel
-    Left = 0
-    Top = 331
-    Width = 651
-    Height = 41
-    Align = alBottom
-    BevelOuter = bvNone
-    TabOrder = 2
-    Visible = False
+  inherited pnlDetail2: TPanel
+    Width = 1027
   end
-  object pnlDetail1: TPanel
-    Left = 0
-    Top = 287
-    Width = 651
-    Height = 41
-    Align = alBottom
-    BevelOuter = bvNone
-    TabOrder = 1
-    Visible = False
+  inherited pnlDetail1: TPanel
+    Width = 1027
   end
-  object pnlClose: TPanel
-    Left = 0
-    Top = 416
-    Width = 651
-    Height = 41
-    Align = alBottom
-    TabOrder = 8
-    Visible = False
-    DesignSize = (
-      651
-      41)
-    object btnClose: TButton
-      Left = 566
-      Top = 6
-      Width = 75
-      Height = 25
-      Anchors = [akTop, akRight]
-      Cancel = True
-      Caption = 'Cerrar'
-      TabOrder = 0
-      OnClick = btnCloseClick
+  inherited pnlClose: TPanel
+    Width = 1027
+    inherited btnClose: TButton
+      Left = 942
     end
   end
-  object ActionList: TActionList
-    Images = cxImageList
-    Left = 104
-    Top = 88
-    object DatasetFirst: TDataSetFirst
-      Category = 'Dataset'
-      Caption = '&Primero'
-      Hint = 'Primero'
-      ImageIndex = 0
-      DataSource = DataSource
-    end
-    object DatasetPrior: TDataSetPrior
-      Category = 'Dataset'
-      Caption = '&Anterior'
-      Hint = 'Anterior'
-      ImageIndex = 1
-      DataSource = DataSource
-    end
-    object DatasetNext: TDataSetNext
-      Category = 'Dataset'
-      Caption = '&Siguiente'
-      Hint = 'Siguiente'
-      ImageIndex = 2
-      DataSource = DataSource
-    end
-    object DatasetLast: TDataSetLast
-      Category = 'Dataset'
-      Caption = '&'#218'ltimo'
-      Hint = #218'ltimo'
-      ImageIndex = 3
-      DataSource = DataSource
-    end
-    object DatasetInsert: TDataSetInsert
-      Category = 'Dataset'
-      Caption = '&Insertar'
-      Hint = 'Insertar'
-      ImageIndex = 10
-      ShortCut = 45
-      OnExecute = DatasetInsertExecute
-      DataSource = DataSource
-    end
-    object DatasetDelete: TDataSetDelete
-      Category = 'Dataset'
-      Caption = '&Eliminar'
-      Hint = 'Eliminar'
-      ImageIndex = 12
-      ShortCut = 16430
-      OnExecute = DatasetDeleteExecute
-      DataSource = DataSource
-    end
-    object DatasetEdit: TDataSetEdit
-      Category = 'Dataset'
-      Caption = '&Editar'
-      Hint = 'Editar'
-      ImageIndex = 11
-      ShortCut = 113
-      OnExecute = DatasetEditExecute
-      DataSource = DataSource
-    end
-    object actShow: TAction
-      Category = 'Dataset'
-      Caption = 'Consultar'
-      ImageIndex = 11
-      Visible = False
-      OnExecute = actShowExecute
-    end
-    object DatasetPost: TDataSetPost
-      Category = 'Dataset'
-      Caption = 'P&ost'
-      Hint = 'Post'
-      ImageIndex = 7
-      DataSource = DataSource
-    end
-    object DatasetCancel: TDataSetCancel
-      Category = 'Dataset'
-      Caption = '&Cancel'
-      Hint = 'Cancel'
-      ImageIndex = 8
-      DataSource = DataSource
-    end
-    object DatasetRefresh: TDataSetRefresh
-      Category = 'Dataset'
-      Caption = '&Actualizar'
-      Hint = 'Actualizar'
-      ImageIndex = 9
-      ShortCut = 116
-      OnExecute = DatasetRefreshExecute
-      DataSource = DataSource
-    end
-    object FileSaveAs1: TFileSaveAs
-      Category = 'File'
-      Caption = '&Guardar como...'
-      Dialog.DefaultExt = 'xls'
-      Dialog.Filter = 
-        'Libro de Excel|*.xls|Libro de Excel|*.xlsx|Documento HTML|*.htlm' +
-        '|Documento de texto|*.txt|Documento XML|'#168'.xml'
-      Hint = 'Guardar como|Exporta la informaci'#243'n a un archivo'
-      ImageIndex = 14
-      OnAccept = FileSaveAs1Accept
-    end
-    object actPreview: TAction
-      Category = 'File'
-      Caption = 'Vista previa'
-      Hint = 'Vista previa'
-      ImageIndex = 15
-      OnExecute = actPreviewExecute
-    end
-    object actFullExpandGroup: TAction
-      Caption = 'Expandir'
-      Hint = 'Expande todos los grupos'
-      OnExecute = actFullExpandGroupExecute
-    end
-    object actFullColapseGroup: TAction
-      Caption = 'Contraer'
-      Hint = 'Colapsa todos los grupos'
-      OnExecute = actFullColapseGroupExecute
-    end
+  inherited DataSource: TDataSource
+    DataSet = dmrptReporteCartera.adodsMaster
   end
-  object DataSource: TDataSource
-    AutoEdit = False
-    Left = 48
-    Top = 144
-  end
-  object dxBarManager: TdxBarManager
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Segoe UI'
-    Font.Style = []
-    Categories.Strings = (
-      'Default')
-    Categories.ItemsVisibles = (
-      2)
-    Categories.Visibles = (
-      True)
-    ImageOptions.Images = cxImageList
-    PopupMenuLinks = <>
-    UseSystemFont = True
-    Left = 216
-    Top = 144
+  inherited dxBarManager: TdxBarManager
     DockControlHeights = (
       0
       0
       31
       0)
-    object dxbNavigator: TdxBar
-      AllowClose = False
-      AllowCustomizing = False
-      AllowQuickCustomizing = False
-      Caption = 'Navegaci'#243'n'
-      CaptionButtons = <>
-      DockedDockingStyle = dsTop
-      DockedLeft = 105
-      DockedTop = 0
-      DockingStyle = dsTop
-      FloatLeft = 592
-      FloatTop = 202
-      FloatClientWidth = 115
-      FloatClientHeight = 22
-      ItemLinks = <
-        item
-          Visible = True
-          ItemName = 'dxBarButton1'
-        end
-        item
-          Visible = True
-          ItemName = 'dxBarButton2'
-        end
-        item
-          Visible = True
-          ItemName = 'dxBarButton3'
-        end
-        item
-          Visible = True
-          ItemName = 'dxBarButton4'
-        end
-        item
-          Visible = True
-          ItemName = 'dxBarButton5'
-        end>
-      OneOnRow = False
-      Row = 0
-      UseOwnFont = False
-      Visible = True
-      WholeRow = False
-    end
-    object dxbEdit: TdxBar
-      AllowClose = False
-      AllowCustomizing = False
-      AllowQuickCustomizing = False
-      Caption = 'Edici'#243'n'
-      CaptionButtons = <>
-      DockedDockingStyle = dsTop
-      DockedLeft = 0
-      DockedTop = 0
-      DockingStyle = dsTop
-      FloatLeft = 413
-      FloatTop = 240
-      FloatClientWidth = 92
-      FloatClientHeight = 22
-      ItemLinks = <
-        item
-          Visible = True
-          ItemName = 'Insert1'
-        end
-        item
-          Visible = True
-          ItemName = 'Edit1'
-        end
-        item
-          Visible = True
-          ItemName = 'Delete1'
-        end
-        item
-          Visible = True
-          ItemName = 'dxBarButton7'
-        end>
-      OneOnRow = False
-      Row = 0
-      UseOwnFont = False
-      Visible = True
-      WholeRow = False
-    end
-    object dxbTools: TdxBar
-      AllowClose = False
-      AllowCustomizing = False
-      AllowQuickCustomizing = False
-      Caption = 'Herramientas'
-      CaptionButtons = <>
-      DockedDockingStyle = dsTop
-      DockedLeft = 233
-      DockedTop = 0
-      DockingStyle = dsTop
-      FloatLeft = 624
-      FloatTop = 209
-      FloatClientWidth = 51
-      FloatClientHeight = 22
+    inherited dxbTools: TdxBar
       ItemLinks = <
         item
           Visible = True
@@ -386,128 +167,25 @@ object _frmGrid: T_frmGrid
         item
           Visible = True
           ItemName = 'dxbbPreview'
-        end>
-      OneOnRow = False
-      Row = 0
-      UseOwnFont = False
-      Visible = True
-      WholeRow = False
-    end
-    object dxbFilter: TdxBar
-      AllowClose = False
-      AllowCustomizing = False
-      AllowQuickCustomizing = False
-      Caption = 'Filtro'
-      CaptionButtons = <>
-      DockedDockingStyle = dsTop
-      DockedLeft = 292
-      DockedTop = 0
-      DockingStyle = dsTop
-      FloatLeft = 669
-      FloatTop = 8
-      FloatClientWidth = 0
-      FloatClientHeight = 0
-      ItemLinks = <
+        end
         item
           Visible = True
-          ItemName = 'dxbtnSearch'
+          ItemName = 'dxBrBtnReporteCarteraPDF'
         end>
-      OneOnRow = False
-      Row = 0
-      UseOwnFont = False
-      Visible = False
-      WholeRow = False
     end
-    object dxBarButton1: TdxBarButton
-      Action = DatasetFirst
+    object dxBrBtnReporteCarteraPDF: TdxBarButton
+      Caption = 'Reporte Cartera'
       Category = 0
-    end
-    object dxBarButton2: TdxBarButton
-      Action = DatasetPrior
-      Category = 0
-    end
-    object dxBarButton3: TdxBarButton
-      Action = DatasetNext
-      Category = 0
-    end
-    object dxBarButton4: TdxBarButton
-      Action = DatasetLast
-      Category = 0
-    end
-    object dxBarButton5: TdxBarButton
-      Action = DatasetRefresh
-      Category = 0
-    end
-    object Insert1: TdxBarButton
-      Action = DatasetInsert
-      Category = 0
-    end
-    object Edit1: TdxBarButton
-      Action = DatasetEdit
-      Category = 0
-    end
-    object Delete1: TdxBarButton
-      Action = DatasetDelete
-      Category = 0
-    end
-    object dxBarButton7: TdxBarButton
-      Action = actShow
-      Category = 0
-    end
-    object dxBarSeparator1: TdxBarSeparator
-      Caption = 'Separador'
-      Category = 0
-      Hint = 'Separador'
+      Hint = 'Reporte Cartera'
       Visible = ivAlways
-      ShowCaption = False
-    end
-    object dxBarButton6: TdxBarButton
-      Action = FileSaveAs1
-      Category = 0
-    end
-    object dxbbPreview: TdxBarButton
-      Action = actPreview
-      Category = 0
-    end
-    object dxbtnSearch: TdxBarButton
-      Caption = '&Find...'
-      Category = 0
-      Hint = 'Find|Finds the specified text'
-      Visible = ivAlways
-      ImageIndex = 16
-      ShortCut = 16454
+      ImageIndex = 17
     end
   end
-  object cxStyleRepository: TcxStyleRepository
-    Left = 32
-    Top = 88
+  inherited cxStyleRepository: TcxStyleRepository
     PixelsPerInch = 96
-    object cxsEven: TcxStyle
-    end
-    object cxsOdd: TcxStyle
-      AssignedValues = [svColor]
-      Color = clMoneyGreen
-    end
-    object cxsInactive: TcxStyle
-      AssignedValues = [svColor]
-      Color = clSilver
-    end
-    object cxsDelete: TcxStyle
-      AssignedValues = [svColor]
-      Color = 8421631
-    end
-    object cxsActive: TcxStyle
-    end
   end
-  object cxGridPopupMenu: TcxGridPopupMenu
-    Grid = cxGrid
-    PopupMenus = <>
-    Left = 128
-    Top = 144
-  end
-  object cxImageList: TcxImageList
+  inherited cxImageList: TcxImageList
     FormatVersion = 1
-    DesignInfo = 5701808
     ImageInfo = <
       item
         Image.Data = {
@@ -1239,68 +917,49 @@ object _frmGrid: T_frmGrid
           FF00FFFF0000FFFF000007C1000007C1000007C1000001010000000100000001
           00000001000080030000C1070000C1070000E38F0000E38F0000E38F0000FFFF
           0000}
+      end
+      item
+        Image.Data = {
+          36040000424D3604000000000000360000002800000010000000100000000100
+          2000000000000004000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+          00FF000000FF000000FF000000FF000000FF0000000000000000000000000000
+          0000000000FF0000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000FF0000000000000000000000000000
+          0000000000FF000000FF00000000000000FF000000FF000000FF000000FF0000
+          00FF000000FF000000FF00000000000000FF0000000000000000000000000000
+          0000000000FF000000FF00000000000000000000000000000000000000000000
+          0000000000000000000000000000000000FF0000000000000000000000000000
+          0000000000FF000000FF00000000000000000000000000000000000000000000
+          0000000000000000000000000000000000FF0000000000000000000000000000
+          0000000000FF000000FF00000000000000FF000000FF000000FF000000FF0000
+          00FF000000000000000000000000000000FF0000000000000000000000000000
+          0000000000FF000000FF00000000000000000000000000000000000000000000
+          0000000000000000000000000000000000FF0000000000000000000000000000
+          0000000000FF000000FF00000000000000FF000000FF000000FF000000FF0000
+          00FF000000FF000000FF00000000000000FF0000000000000000000000000000
+          0000000000FF000000FF00000000000000000000000000000000000000000000
+          0000000000000000000000000000000000FF0000000000000000000000000000
+          0000000000FF000000FF00000000000000FF000000FF000000FF000000FF0000
+          00FF000000000000000000000000000000FF0000000000000000000000000000
+          0000000000FF000000FF00000000000000000000000000000000000000000000
+          0000000000000000000000000000000000FF0000000000000000000000000000
+          000000000000000000FF000000FF000000FF000000FF000000FF000000FF0000
+          00FF000000FF000000FF000000FF000000FF0000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000}
       end>
   end
-  object PopupMenu: TdxBarPopupMenu
-    BarManager = dxBarManager
-    ItemLinks = <
-      item
-        Visible = True
-        ItemName = 'Insert1'
-      end
-      item
-        Visible = True
-        ItemName = 'Edit1'
-      end
-      item
-        Visible = True
-        ItemName = 'Delete1'
-      end
-      item
-        Visible = True
-        ItemName = 'dxBarButton7'
-      end
-      item
-        Visible = True
-        ItemName = 'dxBarSeparator1'
-      end
-      item
-        Visible = True
-        ItemName = 'dxBarButton5'
-      end>
-    UseOwnFont = False
-    Left = 56
-    Top = 216
-  end
-  object dxComponentPrinter: TdxComponentPrinter
-    CurrentLink = dxcplGrid
-    PreviewOptions.Caption = 'Vista previa'
-    Version = 0
-    Left = 152
-    Top = 215
-    object dxcplGrid: TdxGridReportLink
-      Active = True
-      Component = cxGrid
-      DesignerCaption = 'Formato del reporte'
-      PrinterPage.DMPaper = 1
-      PrinterPage.Footer = 6350
-      PrinterPage.GrayShading = True
-      PrinterPage.Header = 6350
-      PrinterPage.Margins.Bottom = 12700
-      PrinterPage.Margins.Left = 12700
-      PrinterPage.Margins.Right = 12700
-      PrinterPage.Margins.Top = 12700
-      PrinterPage.Orientation = poLandscape
-      PrinterPage.PageFooter.RightTitle.Strings = (
-        '[Page # of Pages #]'
-        '[Date & Time Printed]')
-      PrinterPage.PageSize.X = 215900
-      PrinterPage.PageSize.Y = 279400
-      PrinterPage._dxMeasurementUnits_ = 0
-      PrinterPage._dxLastMU_ = 2
-      ReportDocument.CreationDate = 42863.612697326390000000
-      OptionsView.Caption = False
-      OptionsView.FilterBar = False
+  inherited dxComponentPrinter: TdxComponentPrinter
+    inherited dxcplGrid: TdxGridReportLink
+      ReportDocument.CreationDate = 42867.572603240740000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

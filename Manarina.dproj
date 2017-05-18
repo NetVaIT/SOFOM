@@ -5,7 +5,7 @@
         <FrameworkType>VCL</FrameworkType>
         <MainSource>Manarina.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Debug</Config>
+        <Config Condition="'$(Config)'==''">Release</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Application</AppType>
@@ -863,7 +863,7 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\AbonarCapitalDM.pas">
-            <Form>aram</Form>
+            <Form>dmAbonarCapital</Form>
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
@@ -943,30 +943,38 @@
         </DCCReference>
         <DCCReference Include="Procesos\ImpactoISREdit.pas">
             <Form>frmImpactoISREdit</Form>
-            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Reportes\PDFReporteCarteraDM.pas">
+            <Form>DmReporteCarteraPDF</Form>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Reportes\rptReporteCarteraDM.pas">
+            <Form>dmrptReporteCartera</Form>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Reportes\rptReporteCarteraForm.pas">
+            <Form>FrmReporteCarteraGrid</Form>
+        </DCCReference>
+        <DCCReference Include="Reportes\RptCoberturaDM.pas">
+            <Form>dmRptCobertura</Form>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Reportes\RptExpedientesRecibidosDM.pas">
+            <Form>dmRptExpedientesRecibidos</Form>
+            <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Catalogos\MonedasCotizacionesDM.pas">
             <Form>dmMonedasCotizaciones</Form>
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="Catalogos\MonedasCotizacionesForm.pas">
-            <Form>frmMonedasCotizaciones</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="Catalogos\MonedasCotizacionesEdit.pas">
             <Form>frmMonedasCotizacionesEdit</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="Reportes\RptCoberturaDM.pas">
-            <Form>dmRptCobertura</Form>
+        <DCCReference Include="Catalogos\MonedasCotizacionesForm.pas">
+            <Form>frmMonedasCotizaciones</Form>
             <FormType>dfm</FormType>
-            <DesignClass>TDataModule</DesignClass>
-        </DCCReference>
-        <DCCReference Include="Reportes\RptExpedientesRecibidosDM.pas">
-            <Form>dmRptExpedientesRecibidos</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
