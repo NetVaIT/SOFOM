@@ -3,20 +3,25 @@ inherited dmRptCobertura: TdmRptCobertura
     CommandText = 
       'SELECT        Anexos.IdAnexo, Contratos.Identificador AS Contrat' +
       'o, Anexos.Identificador AS Anexo, Anexos.Fecha, Personas.RazonSo' +
-      'cial AS Cliente, Anexos.SaldoInsoluto, Anexos.MontoVencido, Anex' +
-      'os.Depositos, '#13#10'                         Anexos.SaldoInsoluto + ' +
-      'Anexos.MontoVencido - Anexos.Depositos AS TotalLiquidar, ISNULL(' +
-      'P.ValorComercialActualizado, 0) AS ValorComercialActualizado, '#13#10 +
-      '                         Anexos.SaldoInsoluto + Anexos.MontoVenc' +
-      'ido - Anexos.Depositos - ISNULL(P.ValorComercialActualizado, 0) ' +
-      'AS Cobertura'#13#10'FROM            Anexos INNER JOIN'#13#10'               ' +
-      '          Contratos ON Anexos.IdContrato = Contratos.IdContrato ' +
-      'INNER JOIN'#13#10'                         Personas ON Contratos.IdPer' +
-      'sona = Personas.IdPersona LEFT OUTER JOIN'#13#10'                     ' +
-      '        (SELECT        IdAnexo, SUM(ValorComercialActualizado) A' +
-      'S ValorComercialActualizado'#13#10'                               FROM' +
-      '            Productos'#13#10'                               GROUP BY I' +
-      'dAnexo) AS P ON Anexos.IdAnexo = P.IdAnexo'#13#10'ORDER BY 11'#13#10
+      'cial AS Cliente, P.TipoCambioOriginal, P.ValorComercial, Anexos.' +
+      'SaldoInsoluto, '#13#10'                         Anexos.MontoVencido, A' +
+      'nexos.Depositos, Anexos.SaldoInsoluto + Anexos.MontoVencido - An' +
+      'exos.Depositos AS TotalLiquidar, ISNULL(P.ValorComercialActualiz' +
+      'ado, 0) AS ValorComercialActualizado, '#13#10'                        ' +
+      ' Anexos.SaldoInsoluto + Anexos.MontoVencido - Anexos.Depositos -' +
+      ' ISNULL(P.ValorComercialActualizado, 0) AS Cobertura'#13#10'FROM      ' +
+      '      Anexos INNER JOIN'#13#10'                         Contratos ON A' +
+      'nexos.IdContrato = Contratos.IdContrato INNER JOIN'#13#10'            ' +
+      '             Personas ON Contratos.IdPersona = Personas.IdPerson' +
+      'a LEFT OUTER JOIN'#13#10'                             (SELECT        I' +
+      'dAnexo, MAX(TipoCambio) AS TipoCambioOriginal, MAX(dbo.GetCotiza' +
+      'cionMonedaFecha(IdMoneda, GETDATE())) AS TipoCambioActualizado, ' +
+      'SUM(ValorComercial) AS ValorComercial, '#13#10'                       ' +
+      '                                  SUM(ValorComercialActualizado)' +
+      ' AS ValorComercialActualizado'#13#10'                               FR' +
+      'OM            Productos'#13#10'                               GROUP BY' +
+      ' IdAnexo) AS P ON Anexos.IdAnexo = P.IdAnexo'#13#10'ORDER BY Cobertura' +
+      #13#10
     object adodsReportIdAnexo: TAutoIncField
       FieldName = 'IdAnexo'
       ReadOnly = True
@@ -34,6 +39,18 @@ inherited dmRptCobertura: TdmRptCobertura
     object adodsReportCliente: TStringField
       FieldName = 'Cliente'
       Size = 300
+    end
+    object adodsReportTipoCambioOriginal: TBCDField
+      DisplayLabel = 'TC original'
+      FieldName = 'TipoCambioOriginal'
+      ReadOnly = True
+      Precision = 19
+    end
+    object adodsReportValorComercial: TBCDField
+      DisplayLabel = 'Valor comercial'
+      FieldName = 'ValorComercial'
+      ReadOnly = True
+      Precision = 19
     end
     object adodsReportSaldoInsoluto: TFMTBCDField
       DisplayLabel = 'Saldo insoluto'
@@ -80,13 +97,17 @@ inherited dmRptCobertura: TdmRptCobertura
     end
   end
   inherited ppReport: TppReport
+    PrinterSetup.Orientation = poLandscape
+    PrinterSetup.mmPaperHeight = 215900
+    PrinterSetup.mmPaperWidth = 279400
     Units = utScreenPixels
     DataPipelineName = 'dbpReport'
     inherited ppTitleBand1: TppTitleBand
-      mmHeight = 39688
+      mmHeight = 35983
       inherited pplblTitle: TppLabel
         SaveOrder = -1
-        mmHeight = 31486
+        mmHeight = 27781
+        mmWidth = 198702
         LayerName = Foreground
       end
       inherited ppImage1: TppImage
@@ -175,9 +196,9 @@ inherited dmRptCobertura: TdmRptCobertura
         Transparent = True
         WordWrap = True
         mmHeight = 9525
-        mmLeft = 97896
+        mmLeft = 134938
         mmTop = 0
-        mmWidth = 17198
+        mmWidth = 21167
         BandType = 0
         LayerName = Foreground
       end
@@ -193,9 +214,9 @@ inherited dmRptCobertura: TdmRptCobertura
         Transparent = True
         WordWrap = True
         mmHeight = 9525
-        mmLeft = 115094
+        mmLeft = 156104
         mmTop = 0
-        mmWidth = 17198
+        mmWidth = 21167
         BandType = 0
         LayerName = Foreground
       end
@@ -211,9 +232,9 @@ inherited dmRptCobertura: TdmRptCobertura
         Transparent = True
         WordWrap = True
         mmHeight = 9525
-        mmLeft = 132292
+        mmLeft = 177270
         mmTop = 0
-        mmWidth = 17198
+        mmWidth = 21167
         BandType = 0
         LayerName = Foreground
       end
@@ -229,16 +250,16 @@ inherited dmRptCobertura: TdmRptCobertura
         Transparent = True
         WordWrap = True
         mmHeight = 9525
-        mmLeft = 149490
+        mmLeft = 198437
         mmTop = 0
-        mmWidth = 17198
+        mmWidth = 21167
         BandType = 0
         LayerName = Foreground
       end
       object ppLabel10: TppLabel
         UserName = 'Label10'
         AutoSize = False
-        Caption = 'Valor comercial'
+        Caption = 'Valor actualizado'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clNavy
         Font.Name = 'Arial'
@@ -247,9 +268,9 @@ inherited dmRptCobertura: TdmRptCobertura
         Transparent = True
         WordWrap = True
         mmHeight = 9525
-        mmLeft = 166688
+        mmLeft = 219604
         mmTop = 0
-        mmWidth = 17198
+        mmWidth = 21167
         BandType = 0
         LayerName = Foreground
       end
@@ -265,9 +286,9 @@ inherited dmRptCobertura: TdmRptCobertura
         Transparent = True
         WordWrap = True
         mmHeight = 9525
-        mmLeft = 184680
+        mmLeft = 240760
         mmTop = 0
-        mmWidth = 17198
+        mmWidth = 21167
         BandType = 0
         LayerName = Foreground
       end
@@ -278,9 +299,45 @@ inherited dmRptCobertura: TdmRptCobertura
         Pen.Width = 2
         Weight = 1.500000000000000000
         mmHeight = 2910
-        mmLeft = 2646
+        mmLeft = 1323
         mmTop = 9790
-        mmWidth = 200555
+        mmWidth = 264055
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel1: TppLabel
+        UserName = 'Label1'
+        AutoSize = False
+        Caption = 'TC original'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clNavy
+        Font.Name = 'Arial'
+        Font.Size = 10
+        Font.Style = [fsBold, fsItalic]
+        Transparent = True
+        WordWrap = True
+        mmHeight = 9525
+        mmLeft = 97896
+        mmTop = 0
+        mmWidth = 15875
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel12: TppLabel
+        UserName = 'Label12'
+        AutoSize = False
+        Caption = 'Valor comercial'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clNavy
+        Font.Name = 'Arial'
+        Font.Size = 10
+        Font.Style = [fsBold]
+        Transparent = True
+        WordWrap = True
+        mmHeight = 9525
+        mmLeft = 113771
+        mmTop = 0
+        mmWidth = 21167
         BandType = 0
         LayerName = Foreground
       end
@@ -373,9 +430,9 @@ inherited dmRptCobertura: TdmRptCobertura
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4233
-        mmLeft = 97896
+        mmLeft = 134938
         mmTop = 0
-        mmWidth = 17198
+        mmWidth = 21167
         BandType = 4
         LayerName = Foreground
       end
@@ -393,9 +450,9 @@ inherited dmRptCobertura: TdmRptCobertura
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4233
-        mmLeft = 115094
+        mmLeft = 156104
         mmTop = 0
-        mmWidth = 17198
+        mmWidth = 21167
         BandType = 4
         LayerName = Foreground
       end
@@ -413,9 +470,9 @@ inherited dmRptCobertura: TdmRptCobertura
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4233
-        mmLeft = 132292
+        mmLeft = 177271
         mmTop = 0
-        mmWidth = 17198
+        mmWidth = 21167
         BandType = 4
         LayerName = Foreground
       end
@@ -433,9 +490,9 @@ inherited dmRptCobertura: TdmRptCobertura
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4233
-        mmLeft = 149490
+        mmLeft = 198438
         mmTop = 0
-        mmWidth = 17198
+        mmWidth = 21167
         BandType = 4
         LayerName = Foreground
       end
@@ -453,9 +510,9 @@ inherited dmRptCobertura: TdmRptCobertura
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4233
-        mmLeft = 166688
+        mmLeft = 219605
         mmTop = 0
-        mmWidth = 17198
+        mmWidth = 21167
         BandType = 4
         LayerName = Foreground
       end
@@ -473,15 +530,56 @@ inherited dmRptCobertura: TdmRptCobertura
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4233
-        mmLeft = 184680
+        mmLeft = 240771
         mmTop = 0
-        mmWidth = 17198
+        mmWidth = 21167
+        BandType = 4
+        LayerName = Foreground
+      end
+      object ppDBText11: TppDBText
+        UserName = 'DBText11'
+        DataField = 'TipoCambioOriginal'
+        DataPipeline = dbpReport
+        DisplayFormat = '$#,0.00;-$#,0.00'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        DataPipelineName = 'dbpReport'
+        mmHeight = 4233
+        mmLeft = 97896
+        mmTop = 0
+        mmWidth = 15875
+        BandType = 4
+        LayerName = Foreground
+      end
+      object ppDBText12: TppDBText
+        UserName = 'DBText12'
+        DataField = 'ValorComercial'
+        DataPipeline = dbpReport
+        DisplayFormat = '$#,0;-$#,0'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        DataPipelineName = 'dbpReport'
+        mmHeight = 4233
+        mmLeft = 113771
+        mmTop = 0
+        mmWidth = 21167
         BandType = 4
         LayerName = Foreground
       end
     end
     inherited ppFooterBand1: TppFooterBand
       inherited ppLineFooter: TppLine
+        mmWidth = 264055
         LayerName = Foreground
       end
       inherited pplblPrintDate: TppSystemVariable
@@ -490,6 +588,7 @@ inherited dmRptCobertura: TdmRptCobertura
       end
       inherited pplblPageNo: TppSystemVariable
         SaveOrder = -1
+        mmLeft = 254794
         LayerName = Foreground
       end
     end

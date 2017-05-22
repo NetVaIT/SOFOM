@@ -149,10 +149,12 @@ uses SegmentosForm, AmortizacionesForm;
 procedure TdmAmortizaciones.actCalcularExecute(Sender: TObject);
 var
   FechaInicial: TDateTime;
+  FechaPrestamo: TDateTime;
 begin
   inherited;
   FechaInicial := TfrmSegmentos(gGridForm).FechaInicial;
-  GenAmortizaciones(FechaInicial, FechaInicial, FechaInicial, TfrmSegmentos(gGridForm).TasaAnual,
+  FechaPrestamo := IncDay(FechaInicial, -30);
+  GenAmortizaciones(FechaPrestamo, FechaInicial, FechaInicial, TfrmSegmentos(gGridForm).TasaAnual,
   TfrmSegmentos(gGridForm).Plazo, TfrmSegmentos(gGridForm).Monto,
   TfrmSegmentos(gGridForm).Futuro, TfrmSegmentos(gGridForm).ImpactoISR, PaymentTime);
 //  GenAmortizacionesSegmento(TfrmSegmentos(gGridForm).FechaInicial,TfrmSegmentos(gGridForm).Monto, 0, PaymentTime);
@@ -177,7 +179,7 @@ begin
       Tasa := TasaDiaria * Dias;
       Interes := Amortizacion.SaldoInicial * Tasa;
       InteresImpuesto := GetInteresImpuesto(Interes);
-      Pago := Amortizacion.Capital + Interes;
+      Pago := Amortizacion.CapitalTotal +  Interes;
       Amortizacion.Interes := Interes;
       Amortizacion.InteresImpuesto := InteresImpuesto;
       Amortizacion.InteresTotal := Interes + InteresImpuesto;
@@ -191,6 +193,7 @@ procedure TdmAmortizaciones.DataModuleCreate(Sender: TObject);
 begin
   inherited;
   PaymentTime := ptEndOfPeriod;
+  TipoContrato := tcArrendamientoFinanciero;
   gGridForm:= TfrmSegmentos.Create(Self);
   gGridForm.DataSet:= dxmAmortizaciones;
   gGridForm.ReadOnlyGrid := True;

@@ -42,6 +42,12 @@ type
     ppDBText9: TppDBText;
     ppDBText10: TppDBText;
     ppLine1: TppLine;
+    adodsReportTipoCambioOriginal: TBCDField;
+    adodsReportValorComercial: TBCDField;
+    ppLabel1: TppLabel;
+    ppDBText11: TppDBText;
+    ppLabel12: TppLabel;
+    ppDBText12: TppDBText;
   private
     { Private declarations }
   public

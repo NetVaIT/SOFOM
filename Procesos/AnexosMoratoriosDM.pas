@@ -19,9 +19,14 @@ type
     adodsEstatus: TADODataSet;
     adodsMasterEstatus: TStringField;
     adopUpdAmortizacionMoratorio: TADOStoredProc;
+    adodsMasterIdCuentaXCobrar: TIntegerField;
+    adodsMasterImporteAplicado: TFMTBCDField;
+    adodsMasterCancelacion: TDateTimeField;
+    dsMaster: TDataSource;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterImporteChange(Sender: TField);
     procedure adodsMasterAfterPost(DataSet: TDataSet);
+    procedure dsMasterDataChange(Sender: TObject; Field: TField);
   private
     { Private declarations }
     procedure CalcularImportes;
@@ -63,6 +68,22 @@ begin
   inherited;
   gGridForm:= TfrmAnexosMoratorios.Create(Self);
   gGridForm.DataSet := adodsMaster;
+end;
+
+procedure TdmAnexosMoratorios.dsMasterDataChange(Sender: TObject;
+  Field: TField);
+var
+  ReadOnly: Boolean;
+begin
+  inherited;
+  if adodsMaster.State in [dsBrowse] then
+  begin
+    ReadOnly:= ((adodsMasterIdAnexoMoratorioEstatus.Value <> 1) // Diferente de vigente
+    or (adodsMasterImporteAplicado.AsFloat <> 0));
+    gGridForm.ReadOnlyGrid := ReadOnly;
+    gGridForm.DatasetInsert.Visible := False;
+    gGridForm.DatasetDelete.Visible := False;
+  end;
 end;
 
 end.

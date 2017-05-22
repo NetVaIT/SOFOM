@@ -109,7 +109,7 @@ inherited dmRptExpedientesRecibidos: TdmRptExpedientesRecibidos
       object ppLabel4: TppLabel
         UserName = 'Label4'
         AutoSize = False
-        Caption = 'Causa'
+        Caption = 'Observaci'#243'n'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -502,7 +502,7 @@ inherited dmRptExpedientesRecibidos: TdmRptExpedientesRecibidos
             object ppLabel9: TppLabel
               UserName = 'Label9'
               AutoSize = False
-              Caption = 'Causa'
+              Caption = 'Observaci'#243'n'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
               Font.Name = 'Arial'
@@ -653,7 +653,7 @@ inherited dmRptExpedientesRecibidos: TdmRptExpedientesRecibidos
             object ppDBCalc3: TppDBCalc
               UserName = 'DBCalc3'
               DataField = 'Cuenta'
-              DataPipeline = dbpEstatus
+              DataPipeline = dbpCausa
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
               Font.Name = 'Arial'
@@ -661,7 +661,7 @@ inherited dmRptExpedientesRecibidos: TdmRptExpedientesRecibidos
               Font.Style = []
               TextAlignment = taRightJustified
               Transparent = True
-              DataPipelineName = 'dbpEstatus'
+              DataPipelineName = 'dbpCausa'
               mmHeight = 4498
               mmLeft = 132292
               mmTop = 1323
@@ -672,7 +672,7 @@ inherited dmRptExpedientesRecibidos: TdmRptExpedientesRecibidos
             object ppDBCalc4: TppDBCalc
               UserName = 'DBCalc4'
               DataField = 'Porcentaje'
-              DataPipeline = dbpEstatus
+              DataPipeline = dbpCausa
               DisplayFormat = '0.00 %'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
@@ -681,7 +681,7 @@ inherited dmRptExpedientesRecibidos: TdmRptExpedientesRecibidos
               Font.Style = []
               TextAlignment = taRightJustified
               Transparent = True
-              DataPipelineName = 'dbpEstatus'
+              DataPipelineName = 'dbpCausa'
               mmHeight = 4498
               mmLeft = 158750
               mmTop = 1323

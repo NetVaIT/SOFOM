@@ -1,79 +1,99 @@
 inherited frmAnexosMoratoriosEdit: TfrmAnexosMoratoriosEdit
   Caption = 'Moratorio'
-  ClientWidth = 220
-  ExplicitWidth = 226
-  ExplicitHeight = 395
+  ClientHeight = 296
+  ClientWidth = 408
+  ExplicitWidth = 414
+  ExplicitHeight = 325
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
-    Width = 220
+    Width = 408
+    Height = 255
     ExplicitWidth = 220
-    ClientRectRight = 218
+    ClientRectBottom = 253
+    ClientRectRight = 406
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 2
-      ExplicitTop = 28
-      ExplicitWidth = 216
+      ExplicitLeft = 4
+      ExplicitTop = 30
+      ExplicitWidth = 404
       ExplicitHeight = 295
       object Label1: TLabel
-        Left = 40
-        Top = 24
+        Left = 270
+        Top = 16
         Width = 36
         Height = 13
         Caption = 'Estatus'
         FocusControl = DBLookupComboBox1
       end
       object Label2: TLabel
-        Left = 40
-        Top = 64
+        Left = 16
+        Top = 16
         Width = 29
         Height = 13
         Caption = 'Fecha'
         FocusControl = cxDBDateEdit1
       end
       object Label3: TLabel
-        Left = 40
-        Top = 104
+        Left = 16
+        Top = 56
         Width = 23
         Height = 13
         Caption = 'Base'
         FocusControl = cxDBTextEdit1
       end
       object Label4: TLabel
-        Left = 40
-        Top = 144
+        Left = 16
+        Top = 96
         Width = 38
         Height = 13
         Caption = 'Importe'
         FocusControl = cxDBTextEdit2
       end
       object Label5: TLabel
-        Left = 40
-        Top = 184
+        Left = 143
+        Top = 96
         Width = 51
         Height = 13
         Caption = 'Descuento'
         FocusControl = cxDBTextEdit3
       end
       object Label6: TLabel
-        Left = 40
-        Top = 224
+        Left = 270
+        Top = 93
         Width = 45
         Height = 13
         Caption = 'Impuesto'
         FocusControl = cxDBTextEdit4
       end
+      object Label7: TLabel
+        Left = 270
+        Top = 176
+        Width = 80
+        Height = 13
+        Caption = 'Importe aplicado'
+        FocusControl = cxDBTextEdit5
+      end
+      object Label8: TLabel
+        Left = 143
+        Top = 16
+        Width = 57
+        Height = 13
+        Caption = 'Cancelacion'
+        FocusControl = cxDBDateEdit2
+      end
       object DBLookupComboBox1: TDBLookupComboBox
-        Left = 40
-        Top = 40
+        Left = 270
+        Top = 32
         Width = 121
         Height = 21
         DataField = 'Estatus'
         DataSource = DataSource
+        Enabled = False
         TabOrder = 0
       end
       object cxDBDateEdit1: TcxDBDateEdit
-        Left = 40
-        Top = 80
+        Left = 16
+        Top = 32
         DataBinding.DataField = 'Fecha'
         DataBinding.DataSource = DataSource
         Enabled = False
@@ -81,8 +101,8 @@ inherited frmAnexosMoratoriosEdit: TfrmAnexosMoratoriosEdit
         Width = 121
       end
       object cxDBTextEdit1: TcxDBTextEdit
-        Left = 40
-        Top = 120
+        Left = 16
+        Top = 72
         DataBinding.DataField = 'ImporteBase'
         DataBinding.DataSource = DataSource
         Enabled = False
@@ -90,8 +110,8 @@ inherited frmAnexosMoratoriosEdit: TfrmAnexosMoratoriosEdit
         Width = 121
       end
       object cxDBTextEdit2: TcxDBTextEdit
-        Left = 40
-        Top = 160
+        Left = 16
+        Top = 112
         DataBinding.DataField = 'Importe'
         DataBinding.DataSource = DataSource
         Enabled = False
@@ -99,33 +119,52 @@ inherited frmAnexosMoratoriosEdit: TfrmAnexosMoratoriosEdit
         Width = 121
       end
       object cxDBTextEdit3: TcxDBTextEdit
-        Left = 40
-        Top = 200
+        Left = 143
+        Top = 112
         DataBinding.DataField = 'Descuento'
         DataBinding.DataSource = DataSource
         TabOrder = 4
         Width = 121
       end
       object cxDBTextEdit4: TcxDBTextEdit
-        Left = 40
-        Top = 243
+        Left = 270
+        Top = 112
         DataBinding.DataField = 'Impuesto'
         DataBinding.DataSource = DataSource
         Enabled = False
         TabOrder = 5
         Width = 121
       end
+      object cxDBTextEdit5: TcxDBTextEdit
+        Left = 270
+        Top = 192
+        DataBinding.DataField = 'ImporteAplicado'
+        DataBinding.DataSource = DataSource
+        Enabled = False
+        TabOrder = 6
+        Width = 121
+      end
+      object cxDBDateEdit2: TcxDBDateEdit
+        Left = 143
+        Top = 32
+        DataBinding.DataField = 'Cancelacion'
+        DataBinding.DataSource = DataSource
+        Enabled = False
+        TabOrder = 7
+        Width = 121
+      end
     end
   end
   inherited pmlMain: TPanel
-    Width = 220
+    Top = 255
+    Width = 408
     ExplicitWidth = 220
     inherited btnCancel: TButton
-      Left = 138
+      Left = 326
       ExplicitLeft = 138
     end
     inherited btnOk: TButton
-      Left = 57
+      Left = 245
       ExplicitLeft = 57
     end
   end

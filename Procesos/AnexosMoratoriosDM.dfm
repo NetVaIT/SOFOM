@@ -5,8 +5,8 @@ inherited dmAnexosMoratorios: TdmAnexosMoratorios
     AfterPost = adodsMasterAfterPost
     CommandText = 
       'select IdAnexoMoratorio, IdAnexoAmortizacion, IdAnexoMoratorioEs' +
-      'tatus, Fecha, ImporteBase, Importe, Descuento, Impuesto from Ane' +
-      'xosMoratorios'
+      'tatus, IdCuentaXCobrar, Fecha, ImporteBase, Importe, Descuento, ' +
+      'Impuesto, ImporteAplicado, Cancelacion from AnexosMoratorios'
     object adodsMasterIdAnexoMoratorio: TIntegerField
       FieldName = 'IdAnexoMoratorio'
       Visible = False
@@ -17,6 +17,10 @@ inherited dmAnexosMoratorios: TdmAnexosMoratorios
     end
     object adodsMasterIdAnexoMoratorioEstatus: TIntegerField
       FieldName = 'IdAnexoMoratorioEstatus'
+      Visible = False
+    end
+    object adodsMasterIdCuentaXCobrar: TIntegerField
+      FieldName = 'IdCuentaXCobrar'
       Visible = False
     end
     object adodsMasterEstatus: TStringField
@@ -59,8 +63,21 @@ inherited dmAnexosMoratorios: TdmAnexosMoratorios
       Precision = 18
       Size = 6
     end
+    object adodsMasterImporteAplicado: TFMTBCDField
+      DisplayLabel = 'Importe aplicado'
+      FieldName = 'ImporteAplicado'
+      Visible = False
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object adodsMasterCancelacion: TDateTimeField
+      FieldName = 'Cancelacion'
+      Visible = False
+    end
   end
   object adodsEstatus: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -90,5 +107,12 @@ inherited dmAnexosMoratorios: TdmAnexosMoratorios
       end>
     Left = 88
     Top = 144
+  end
+  object dsMaster: TDataSource
+    AutoEdit = False
+    DataSet = adodsMaster
+    OnDataChange = dsMasterDataChange
+    Left = 104
+    Top = 16
   end
 end

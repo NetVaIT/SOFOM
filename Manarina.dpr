@@ -217,7 +217,9 @@ uses
   RptExpedientesRecibidosDM in 'Reportes\RptExpedientesRecibidosDM.pas' {dmRptExpedientesRecibidos: TDataModule},
   MonedasCotizacionesDM in 'Catalogos\MonedasCotizacionesDM.pas' {dmMonedasCotizaciones: TDataModule},
   MonedasCotizacionesEdit in 'Catalogos\MonedasCotizacionesEdit.pas' {frmMonedasCotizacionesEdit},
-  MonedasCotizacionesForm in 'Catalogos\MonedasCotizacionesForm.pas' {frmMonedasCotizaciones};
+  MonedasCotizacionesForm in 'Catalogos\MonedasCotizacionesForm.pas' {frmMonedasCotizaciones},
+  RptAnexosProductosDM in 'Reportes\RptAnexosProductosDM.pas' {dmRptAnexosProductos: TDataModule},
+  RptColocacionAcumuladoDM in 'Reportes\RptColocacionAcumuladoDM.pas' {dmRptColocacionAcumulado: TDataModule};
 
 {$R *.res}
 

@@ -120,33 +120,37 @@ type
     dxBarLargeButton39: TdxBarLargeButton;
     actEmisor: TAction;
     dxBrLrgBtnCuentasXCobrar: TdxBarLargeButton;
-    ActCuentasXCobrar: TAction;
+    actCuentasXCobrar: TAction;
     dxBrLrgBtnPagos: TdxBarLargeButton;
-    ActPagos: TAction;
+    actPagos: TAction;
     dxBrLrgBtnAplicaciones: TdxBarLargeButton;
-    ActAplicacionPagos: TAction;
+    actAplicacionPagos: TAction;
     actCotizaciones: TAction;
     dxBarLargeButton40: TdxBarLargeButton;
     dxBrMngrReportes: TdxBar;
     dxBrLrgBtnAntiguedad: TdxBarLargeButton;
-    ActRptAntiguedadSaldos: TAction;
+    actRptAntiguedadSaldos: TAction;
     dxBrLrgBtnEstadoCuenta: TdxBarLargeButton;
-    ActEstadoCuenta: TAction;
+    actEstadoCuenta: TAction;
     actListasRestringidas: TAction;
     dxBarLargeButton19: TdxBarLargeButton;
     dxBrLrgBtnSeguimiento: TdxBarLargeButton;
-    ActSeguimiento: TAction;
+    actSeguimiento: TAction;
     dxBarLargeButton20: TdxBarLargeButton;
     dxBrLrgBtnInformacionContratos: TdxBarLargeButton;
-    ActInformacionContratos: TAction;
+    actInformacionContratos: TAction;
     actMonedasCotizaciones: TAction;
     dxBarLargeButton22: TdxBarLargeButton;
     actRptCobertura: TAction;
     dxBarLargeButton26: TdxBarLargeButton;
-    actExpecientes: TAction;
+    actRptExpecientes: TAction;
     dxBarLargeButton31: TdxBarLargeButton;
     dxBrLrgBtnReporteCartera: TdxBarLargeButton;
-    ActReporteCArtera: TAction;
+    actReporteCartera: TAction;
+    actRptColocacion: TAction;
+    dxBarLargeButton32: TdxBarLargeButton;
+    actColocacionAcumulado: TAction;
+    dxBarLargeButton33: TdxBarLargeButton;
     procedure actCatalogoExecute(Sender: TObject);
     procedure actIntervaCXPExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -180,7 +184,8 @@ uses UbicacionesDM, BancosDM, MonedasDM, PuestosDM, PlazasTurnosDM,
   CuentasXCobrarDM, PagosDM, CotizacionesDM, rptAntiguedadSaldosDM,
   AplicacionesConsultaDM, EstadosCuentaDM, ListasRestringidasDM,
   SeguimientoCobranzaDM, rptInformacionContratosDM, MonedasCotizacionesDM,
-  RptCoberturaDM, RptExpedientesRecibidosDM, rptReporteCarteraDM;
+  RptCoberturaDM, RptExpedientesRecibidosDM, rptReporteCarteraDM,
+  RptAnexosProductosDM, RptColocacionAcumuladoDM;
 //  EsquemaPagosDM, FormulasDM, ReglasNegocioDM,
 //  MovimientosTiposDM, RolesDM, InstruccionesDM,
 //  IncidenciasDM, InstruccionesTiposDM, PeriodosDM, MovimientosDM,
@@ -247,17 +252,27 @@ begin
    50: gModulo := TdmRptAntiguedadSaldos.Create(Self);
    51: gModulo := TdmEstadosCuenta.Create(Self);
    52: gModulo := TdmRptInformacionContratos.Create(Self);  //Abr 20/17
-   53: begin
+   53: gModulo := TdmRptReporteCartera.Create(Self);  //may 12/17
+   54: begin
          gReport := TdmRptCobertura.Create(Self);
          gReport.Title := pCaption;
          gReport.Execute;
        end;
-   54: begin
+   55: begin
          gReport := TdmRptExpedientesRecibidos.Create(Self);
          gReport.Title := pCaption;
          gReport.Execute;
        end;
-   55: gModulo := TdmRptReporteCartera.Create(Self);  //may 12/17
+   56: begin
+         gReport := TdmRptAnexosProductos.Create(Self);
+         gReport.Title := pCaption;
+         gReport.Execute;
+       end;
+   57: begin
+         gReport := TdmRptColocacionAcumulado.Create(Self);
+         gReport.Title := pCaption;
+         gReport.Execute;
+       end;
 
 //   51: begin
 //         gModulo := TdmMovimientosD.Create(Self);
@@ -322,6 +337,7 @@ begin
   actBancos.Enabled             := Conected;
   actMonedas.Enabled            := Conected;
   actMonedasCotizaciones.Enabled := Conected;
+  actListasRestringidas.Enabled := Conected;
   actPuestos.Enabled            := Conected;
   actCapacitaciones.Enabled     := Conected;
   actPlazasTurnos.Enabled       := Conected;
@@ -329,6 +345,10 @@ begin
   actFormulas.Enabled           := Conected;
   actReglasNegocio.Enabled      := Conected;
   actEstablecimientos.Enabled   := Conected;
+  actProductos.Enabled          := Conected;
+  actMarcas.Enabled             := Conected;
+  actFamilias.Enabled           := Conected;
+  actProductosTipos.Enabled     := Conected;
   actRoles.Enabled              := Conected;
   actEsquemasPago.Enabled       := Conected;
   actMovimientosTipo.Enabled    := Conected;
@@ -340,11 +360,24 @@ begin
   actOutsourcing.Enabled        := Conected;
   actComisionistas.Enabled      := Conected;
   actSocios.Enabled             := Conected;
+  actEmisor.Enabled             := Conected;
   actCuentasContables.Enabled   := Conected;
   actCuentasInternas.Enabled    := Conected;
   actCXCConceptos.Enabled       := Conected;
+  actAmortizaciones.Enabled     := Conected;
+  actCotizaciones.Enabled       := Conected;
+  actContratos.Enabled          := Conected;
+  actFacturacion.Enabled        := Conected;
+  actCuentasXCobrar.Enabled     := Conected;
+  actPagos.Enabled              := Conected;
+  actAplicacionPagos.Enabled    := Conected;
+  actSeguimiento.Enabled        := Conected;
   actRptPlaza.Enabled           := Conected;
-  actRptCobertura.Enabled      := Conected;
+  actRptAntiguedadSaldos.Enabled:= Conected;
+  actEstadoCuenta.Enabled       := Conected;
+  actInformacionContratos.Enabled:= Conected;
+  actRptCobertura.Enabled       := Conected;
+  actRptExpecientes.Enabled     := Conected;
 end;
 
 procedure TfrmMain.DestroyModule;

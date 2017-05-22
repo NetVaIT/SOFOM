@@ -40,6 +40,9 @@ type
     tvMasterImporte: TcxGridDBColumn;
     tvMasterDescuento: TcxGridDBColumn;
     tvMasterImpuesto: TcxGridDBColumn;
+    tvMasterIdCuentaXCobrar: TcxGridDBColumn;
+    tvMasterImporteAplicado: TcxGridDBColumn;
+    tvMasterCancelacion: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }

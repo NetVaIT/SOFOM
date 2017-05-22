@@ -6,6 +6,7 @@ inherited frmAnexosMoratorios: TfrmAnexosMoratorios
   TextHeight = 13
   inherited pnlMaster: TPanel
     inherited cxGrid: TcxGrid
+      ExplicitTop = -3
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdAnexoMoratorio: TcxGridDBColumn
           DataBinding.FieldName = 'IdAnexoMoratorio'
@@ -17,6 +18,10 @@ inherited frmAnexosMoratorios: TfrmAnexosMoratorios
         end
         object tvMasterIdAnexoMoratorioEstatus: TcxGridDBColumn
           DataBinding.FieldName = 'IdAnexoMoratorioEstatus'
+          Visible = False
+        end
+        object tvMasterIdCuentaXCobrar: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCuentaXCobrar'
           Visible = False
         end
         object tvMasterEstatus: TcxGridDBColumn
@@ -37,6 +42,14 @@ inherited frmAnexosMoratorios: TfrmAnexosMoratorios
         end
         object tvMasterImpuesto: TcxGridDBColumn
           DataBinding.FieldName = 'Impuesto'
+        end
+        object tvMasterImporteAplicado: TcxGridDBColumn
+          DataBinding.FieldName = 'ImporteAplicado'
+          Visible = False
+        end
+        object tvMasterCancelacion: TcxGridDBColumn
+          DataBinding.FieldName = 'Cancelacion'
+          Visible = False
         end
       end
     end
@@ -67,7 +80,6 @@ inherited frmAnexosMoratorios: TfrmAnexosMoratorios
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42804.494392372680000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end
