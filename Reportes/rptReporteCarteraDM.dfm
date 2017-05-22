@@ -1,4 +1,5 @@
 inherited dmrptReporteCartera: TdmrptReporteCartera
+  OldCreateOrder = True
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     OnCalcFields = adodsMasterCalcFields
@@ -160,7 +161,12 @@ inherited dmrptReporteCartera: TdmrptReporteCartera
   inherited ActionList: TActionList
     object ActPDFCartera: TAction
       Caption = 'ActPDFCartera'
+      Hint = 'Reporte de Cartera'
       OnExecute = ActPDFCarteraExecute
+    end
+    object ActPDFHojaControl: TAction
+      Caption = 'PDF Hoja Control'
+      OnExecute = ActPDFHojaControlExecute
     end
   end
 end

@@ -59,13 +59,30 @@ type
     tvMasterPorcentajeATiempo: TcxGridDBColumn;
     tvMasterCuotaMostrar: TcxGridDBColumn;
     dxBrBtnReporteCarteraPDF: TdxBarButton;
+    dxBrBtnHojaControlCliente: TdxBarButton;
+    dxBrBtnHojaControlTodos: TdxBarButton;
+    procedure dxBrBtnHojaControlClienteClick(Sender: TObject);
+    procedure dxBrBtnHojaControlTodosClick(Sender: TObject);
   private
     FPDFREporteCartera: TBasicAction;
+    FPDFHojaControl: TBasicAction;
+    FIdAnexoAct: Integer;
+    FEsIndividual: Boolean;
+
     procedure SetPDFREporteCartera(const Value: TBasicAction);
+    procedure SetPDFHojaControl(const Value: TBasicAction);
+    function GetFIdAnexoAct: Integer;
+    function GetFEsIndividual: Boolean;
+
     { Private declarations }
   public
     { Public declarations }
+
+
     Property ActPDFReporteCartera: TBasicAction read FPDFREporteCartera write SetPDFREporteCartera;
+    Property ActPDFHojaControlGral: TBasicAction read FPDFHojaControl write SetPDFHojaControl;
+    property AIdAnexoAct :Integer read GetFIdAnexoAct write FIdAnexoAct;   //May22/17
+     property AEsIndividual :Boolean read GetFEsIndividual write FEsIndividual;   //May22/17
   end;
 
 var
@@ -78,6 +95,40 @@ implementation
 uses rptReporteCarteraDM;
 
 { TFrmReporteCarteraGrid }
+
+procedure TFrmReporteCarteraGrid.dxBrBtnHojaControlClienteClick(
+  Sender: TObject);
+begin
+  inherited;
+  // filtro individual por Anexo segun el que esta seleccionado
+  AEsIndividual:=True;
+  ActPDFHojaControlGral.Execute;
+end;
+
+procedure TFrmReporteCarteraGrid.dxBrBtnHojaControlTodosClick(Sender: TObject);
+begin
+  inherited;
+  FEsIndividual:=False;
+  ActPDFHojaControlGral.Execute;
+end;
+
+function TFrmReporteCarteraGrid.GetFEsIndividual: Boolean;
+begin
+  Result := FEsIndividual;
+end;
+
+function TFrmReporteCarteraGrid.GetFIdAnexoAct: Integer;
+begin
+  FIdAnexoAct:=datasource.DataSet.FieldByName('IdAnexo').AsInteger; //May 22/17
+  Result := FIdAnexoAct;
+end;
+
+procedure TFrmReporteCarteraGrid.SetPDFHojaControl(const Value: TBasicAction);
+begin
+  FPDFHojaControl := Value;
+ // dxBrBtnHojaControlTodos.Action:=value;
+ // dxBrBtnHojaControlTodos.ImageIndex:=19;
+end;
 
 procedure TFrmReporteCarteraGrid.SetPDFREporteCartera(
   const Value: TBasicAction);

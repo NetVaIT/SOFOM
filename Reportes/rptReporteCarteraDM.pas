@@ -36,9 +36,11 @@ type
     adodsMasterPorcentajeATiempo: TFMTBCDField;
     adodsMasterCuotaMostrar: TStringField;
     ActPDFCartera: TAction;
+    ActPDFHojaControl: TAction;
     procedure adodsMasterCalcFields(DataSet: TDataSet);
     procedure DataModuleCreate(Sender: TObject);
     procedure ActPDFCarteraExecute(Sender: TObject);
+    procedure ActPDFHojaControlExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -79,7 +81,7 @@ begin
   TxtSQL:=TxtSQL +GrupoSQL;
 
   TExto:= '_' +FormatDateTime('ddmmmyyyy',Date);
-  ArchiPDF:='AntiguedadXCliente'+Texto+'.PDF';
+  ArchiPDF:='CarteraXCliente'+Texto+'.PDF';
   dmReporteCarteraPDF:= TdmReporteCarteraPDF.Create(Self);
   try
    (*  dmReporteCarteraPDF.DSAntXCliente.DataSet.Close;
@@ -113,6 +115,78 @@ begin
 
 end;
 
+procedure TdmrptReporteCartera.ActPDFHojaControlExecute(Sender: TObject);
+var
+  dmReporteCarteraPDF:TDmReporteCarteraPDF;
+  ArchiPDF:TFileName;
+  Texto,TxtSQL, GrupoSQL, Fecha:String;
+  FechaIni, FechaFin:TDAteTime;
+begin
+  inherited;
+(*  TxtSQL:= 'SElect Cliente,sum("Saldo")  as SaldoTotal,  Sum ("Saldo Total Vencido")as TotalVencido, Sum (vigentes)as TotalVigentes, SUM ("vencidos a 30 días") as Total30Dias,'
+          +' SUM ("vencidos a 60 días") as Total60Dias, SUM ("vencidos a 90 días") as Total90Dias ,'
+        //  +' SUM ("vencidos a 120 días") as Total120Dias ,Sum("Vencidos a mas de 120 días") as TotalMas120Dias,' //May 18/17
+          +' SUM ("Vencidos a mas de 120 días") as TotalMas120Dias  from Vw_AntiguedadSaldosCXC ';
+  Fecha:= ' where fecha>=:Fini and fecha<=:Ffin ';
+  GrupoSQL:=' Group BY Cliente order by Totalvencido desc, SaldoTotal desc'; //adodsMaster.CommandText; ver si se le coloca Fecha
+
+  //FechaIni:=  TfrmrptantiguedadSaldos(gGridForm).AFecIni;
+  //FechaFin:=  TfrmrptantiguedadSaldos(gGridForm).AFecFin;
+  TExto:= adodsMaster.CommandText;
+  if pos(':FIni',Texto)>0 then   //REvisa si hizo consulta por fecha Mar 2/17
+     TxtSQL:=TxtSQL+Fecha;
+  TxtSQL:=TxtSQL +GrupoSQL;
+  *)
+
+  if  TFrmReporteCarteraGrid(gGridForm).AEsIndividual then
+  begin
+    TxtSQL:=' IdAnexo = ' + intTostr(TFrmReporteCarteraGrid(gGridForm).AIdAnexoAct);
+  end
+  else
+    TxtSql:='';
+
+  TExto:= '_' +FormatDateTime('ddmmmyyyy',Date);
+  ArchiPDF:='HojaControlGral'+Texto+'.PDF';
+  dmReporteCarteraPDF:= TdmReporteCarteraPDF.Create(Self);
+  try
+   (*  dmReporteCarteraPDF.DSAntXCliente.DataSet.Close;
+     TAdoDAtaset(dmReporteCarteraPDF.DSAntXCliente.DataSet).CommandText:=  TxtSQL;
+    if pos(':FIni',TxtSQL)>0 then
+    begin
+      TADoDAtaset(dmAntiguedadSaldosPDF.DSAntXCliente.DataSet).Parameters.ParamByName('Fini').Value:= FechaIni;
+      TADoDAtaset(dmAntiguedadSaldosPDF.DSAntXCliente.DataSet).Parameters.ParamByName('FFin').Value:= FechaFin;
+      TExto:= ' DEL ' + DAteToSTR(FEchaIni) + ' AL '+ DAteToSTR(FEchaFin);//+FormatDateTime('mmm-dd-yyyy',FechaIni)+ ' AL: '+FormatDateTime('dd mmm del aaaa',FechaFin);
+    end
+    else
+      TExto:=  'AL '+upperCASE(FormatDateTime('dd ''de'' mmmm ''del'' yyyy',Date));   *)
+
+    dmReporteCarteraPDF.ADODtStRepHojaControlCte.Open;
+    if TxtSql<>'' then    //May 22/17
+    begin
+      dmReporteCarteraPDF.ADODtStRepHojaControlCte.Filter:= TxtSql;
+      dmReporteCarteraPDF.ADODtStRepHojaControlCte.Filtered:=True;
+    end
+    else
+      dmReporteCarteraPDF.ADODtStRepHojaControlCte.Filtered:=False;
+
+    dmReporteCarteraPDF.ppRprtHojaControlCte.ShowPrintDialog:= False;
+    dmReporteCarteraPDF.ppRprtHojaControlCte.ShowCancelDialog:= False;
+    dmReporteCarteraPDF.ppRprtHojaControlCte.PrinterSetup.DocumentName:=  'HOJA CONTROL '+#13 +Texto;
+
+    dmReporteCarteraPDF.ppRprtHojaControlCte.DeviceType:= 'PDF';
+    dmReporteCarteraPDF.ppRprtHojaControlCte.TextFileName:= ArchiPDF;
+   // dmAntiguedadSaldosPDF.ppLblTitulo2.caption:= 'ANTIGUEDAD DE SALDOS COBRADOS POR CLIENTE '+#13 +Texto;
+    dmReporteCarteraPDF.ppRprtHojaControlCte.print;
+
+     dmReporteCarteraPDF.ADODtStRepHojaControlCte.Close;
+  finally
+    dmReporteCarteraPDF.Free;
+  end;
+  if FileExists(ArchiPDF) then
+      ShellExecute(application.Handle, 'open', PChar(ArchiPDF), nil, nil, SW_SHOWNORMAL);
+
+end;
+
 procedure TdmrptReporteCartera.adodsMasterCalcFields(DataSet: TDataSet);
 begin
   inherited;
@@ -128,6 +202,7 @@ begin
   gGridForm.ReadOnlyGrid:= True;
 
   TFrmReporteCarteraGrid(gGridForm).ActPDFReporteCartera:=ActPDFCartera;
+  TFrmReporteCarteraGrid(gGridForm).ActPDFHojaControlGral:=ActPDFHojaControl;
 end;
 
 end.
