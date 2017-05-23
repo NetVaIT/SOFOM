@@ -3,6 +3,8 @@ inherited frmAnexos: TfrmAnexos
   Caption = 'Anexos'
   ClientHeight = 428
   ClientWidth = 645
+  ExplicitWidth = 651
+  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -58,6 +60,9 @@ inherited frmAnexos: TfrmAnexos
           DataBinding.FieldName = 'Estatus'
           Width = 60
         end
+        object tvMasterFecha: TcxGridDBColumn
+          DataBinding.FieldName = 'Fecha'
+        end
         object tvMasterIdentificador: TcxGridDBColumn
           DataBinding.FieldName = 'Identificador'
           Width = 66
@@ -66,8 +71,8 @@ inherited frmAnexos: TfrmAnexos
           DataBinding.FieldName = 'Descripcion'
           Width = 400
         end
-        object tvMasterFecha: TcxGridDBColumn
-          DataBinding.FieldName = 'Fecha'
+        object tvMasterCartaCompensacion: TcxGridDBColumn
+          DataBinding.FieldName = 'CartaCompensacion'
         end
         object tvMasterPrecioMoneda: TcxGridDBColumn
           DataBinding.FieldName = 'PrecioMoneda'
@@ -258,7 +263,6 @@ inherited frmAnexos: TfrmAnexos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42683.688746423620000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

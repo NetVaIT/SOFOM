@@ -81,14 +81,16 @@ type
     cxDBCurrencyEdit10: TcxDBCurrencyEdit;
     Label26: TLabel;
     cxDBCurrencyEdit11: TcxDBCurrencyEdit;
-    Label27: TLabel;
-    cxDBCurrencyEdit12: TcxDBCurrencyEdit;
     Label28: TLabel;
     cxDBTextEdit8: TcxDBTextEdit;
     Label29: TLabel;
     cxDBTextEdit9: TcxDBTextEdit;
     Label30: TLabel;
     cxDBTextEdit10: TcxDBTextEdit;
+    Label27: TLabel;
+    cxDBCurrencyEdit12: TcxDBCurrencyEdit;
+    Label31: TLabel;
+    DBLookupComboBox6: TDBLookupComboBox;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);

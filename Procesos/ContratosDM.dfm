@@ -180,8 +180,8 @@ inherited dmContratos: TdmContratos
       'ompraPorcentaje, OpcionCompra, ValorResidualPorcentaje, ValorRes' +
       'idual, MontoFinanciar, TasaAnual, Plazo, PagoMensual, ImpactoISR' +
       ', '#13#10'FechaCorte, FechaVencimiento, TasaMoratoriaAnual, PagoInicia' +
-      'lCreado, CapitalCobrado, SaldoInsoluto, MontoVencido from Anexos' +
-      #13#10'where IdContrato = :IdContrato'
+      'lCreado, CapitalCobrado, SaldoInsoluto, MontoVencido, CartaCompe' +
+      'nsacion'#13#10'from Anexos'#13#10'where IdContrato = :IdContrato'
     DataSource = dsMaster
     MasterFields = 'IdContrato'
     Parameters = <
@@ -464,6 +464,10 @@ inherited dmContratos: TdmContratos
       currency = True
       Precision = 18
       Size = 6
+    end
+    object adodsAnexosCartaCompensacion: TBooleanField
+      DisplayLabel = 'Carta compensaci'#243'n'
+      FieldName = 'CartaCompensacion'
     end
   end
   object adodsMonedas: TADODataSet

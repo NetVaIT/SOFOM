@@ -75,6 +75,7 @@ type
     tvMasterTasaMoratoriaAnual: TcxGridDBColumn;
     tvMasterIdCotizacionDetalle: TcxGridDBColumn;
     dxbbRestructurar: TdxBarButton;
+    tvMasterCartaCompensacion: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private

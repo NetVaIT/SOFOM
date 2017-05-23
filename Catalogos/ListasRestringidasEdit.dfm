@@ -1,5 +1,5 @@
 inherited frmListasRestringidasEdit: TfrmListasRestringidasEdit
-  Caption = 'frmListasRestringidasEdit'
+  Caption = 'Lista restringida'
   ClientHeight = 319
   ExplicitWidth = 444
   ExplicitHeight = 348
@@ -7,12 +7,13 @@ inherited frmListasRestringidasEdit: TfrmListasRestringidasEdit
   TextHeight = 13
   inherited pcMain: TcxPageControl
     Height = 278
+    ExplicitHeight = 278
     ClientRectBottom = 276
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 2
       ExplicitTop = 28
       ExplicitWidth = 434
-      ExplicitHeight = 295
+      ExplicitHeight = 248
       object Label1: TLabel
         Left = 24
         Top = 24
@@ -99,6 +100,7 @@ inherited frmListasRestringidasEdit: TfrmListasRestringidasEdit
   end
   inherited pmlMain: TPanel
     Top = 278
+    ExplicitTop = 278
   end
   inherited cxImageList: TcxImageList
     FormatVersion = 1

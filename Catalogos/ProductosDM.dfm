@@ -4,13 +4,13 @@ inherited dmProductos: TdmProductos
     CursorType = ctStatic
     OnNewRecord = adodsMasterNewRecord
     CommandText = 
-      'select IdProducto, IdAnexo, IdProductoTipo, IdMarca, IdFamilia, ' +
-      'IdProductoEstatus, IdMoneda, Identificador, Descripcion, Modelo,' +
-      ' Anio, NumeroSerie, NumeroEconomico, FechaImportacion, Pedimento' +
-      ', Aduana, '#13#10'FechaCompra, PrecioMoneda, TipoCambio, Precio, Impue' +
-      'sto, PrecioTotal, PorcentajeContable, DepreciacionContable, Valo' +
-      'rContable, PorcentajeComercial, DepreciacionComercial, ValorCome' +
-      'rcial, PorcentajeAnexo from Productos'
+      'select IdProducto, IdAnexo, IdProductoTipo, IdFamilia, IdMarca, ' +
+      'IdProductoDestino, IdProductoEstatus, IdMoneda, Identificador, D' +
+      'escripcion, Modelo, Anio, NumeroSerie, NumeroEconomico, FechaImp' +
+      'ortacion, Pedimento, Aduana, '#13#10'FechaCompra, PrecioMoneda, TipoCa' +
+      'mbio, Precio, Impuesto, PrecioTotal, PorcentajeContable, Depreci' +
+      'acionContable, ValorContable, PorcentajeComercial, DepreciacionC' +
+      'omercial, ValorComercial, PorcentajeAnexo from Productos'
     object adodsMasterIdProducto: TAutoIncField
       FieldName = 'IdProducto'
       ReadOnly = True
@@ -30,6 +30,10 @@ inherited dmProductos: TdmProductos
     end
     object adodsMasterIdFamilia: TIntegerField
       FieldName = 'IdFamilia'
+      Visible = False
+    end
+    object adodsMasterIdProductoDestino: TIntegerField
+      FieldName = 'IdProductoDestino'
       Visible = False
     end
     object adodsMasterIdProductoEstatus: TIntegerField
@@ -76,6 +80,16 @@ inherited dmProductos: TdmProductos
     object adodsMasterDescripcion: TStringField
       FieldName = 'Descripcion'
       Size = 200
+    end
+    object adodsMasterDestino: TStringField
+      FieldKind = fkLookup
+      FieldName = 'Destino'
+      LookupDataSet = adodsDestino
+      LookupKeyFields = 'IdProductoDestino'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IdProductoDestino'
+      Size = 50
+      Lookup = True
     end
     object adodsMasterTipo: TStringField
       FieldKind = fkLookup
@@ -250,7 +264,9 @@ inherited dmProductos: TdmProductos
   object adodsTipos: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
-    CommandText = 'select IdProductoTipo, Descripcion from ProductosTipos'
+    CommandText = 
+      'select IdProductoTipo, Descripcion from ProductosTipos'#13#10'order by' +
+      ' Descripcion '
     Parameters = <>
     Left = 56
     Top = 80
@@ -258,7 +274,7 @@ inherited dmProductos: TdmProductos
   object adodsMarcas: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
-    CommandText = 'select IdMarca, Descripcion from Marcas'
+    CommandText = 'select IdMarca, Descripcion from Marcas'#13#10'order by Descripcion'#13#10
     Parameters = <>
     Left = 56
     Top = 136
@@ -266,7 +282,9 @@ inherited dmProductos: TdmProductos
   object adodsFamilias: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
-    CommandText = 'select IdFamila, Descripcion from Familias'
+    CommandText = 
+      'select IdFamila, Descripcion from Familias'#13#10'order by Descripcion' +
+      #13#10
     Parameters = <>
     Left = 56
     Top = 184
@@ -274,7 +292,9 @@ inherited dmProductos: TdmProductos
   object adodsEstatus: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
-    CommandText = 'select IdProductoEstatus, Descripcion from ProductosEstatus'
+    CommandText = 
+      'select IdProductoEstatus, Descripcion from ProductosEstatus'#13#10'ord' +
+      'er by Descripcion'#13#10
     Parameters = <>
     Left = 56
     Top = 240
@@ -296,6 +316,7 @@ inherited dmProductos: TdmProductos
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end>
     Left = 296
     Top = 280
@@ -359,5 +380,15 @@ inherited dmProductos: TdmProductos
     Parameters = <>
     Left = 136
     Top = 88
+  end
+  object adodsDestino: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdProductoDestino, Descripcion from ProductosDestino'#13#10'ord' +
+      'er by Descripcion '
+    Parameters = <>
+    Left = 144
+    Top = 160
   end
 end

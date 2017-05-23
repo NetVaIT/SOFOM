@@ -1,24 +1,24 @@
 inherited frmProductosEdit: TfrmProductosEdit
   Caption = 'frmProductosEdit'
-  ClientHeight = 545
+  ClientHeight = 569
   ClientWidth = 750
   OnDestroy = FormDestroy
   ExplicitWidth = 756
-  ExplicitHeight = 574
+  ExplicitHeight = 598
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
     Width = 750
-    Height = 504
+    Height = 528
     ExplicitWidth = 750
     ExplicitHeight = 504
-    ClientRectBottom = 502
+    ClientRectBottom = 526
     ClientRectRight = 748
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 2
-      ExplicitTop = 28
+      ExplicitLeft = 3
+      ExplicitTop = 30
       ExplicitWidth = 746
-      ExplicitHeight = 474
+      ExplicitHeight = 640
       object Label1: TLabel
         Left = 16
         Top = 56
@@ -34,14 +34,6 @@ inherited frmProductosEdit: TfrmProductosEdit
         Height = 13
         Caption = 'Descripcion'
         FocusControl = cxDBTextEdit2
-      end
-      object Label27: TLabel
-        Left = 591
-        Top = 263
-        Width = 77
-        Height = 13
-        Caption = 'Porcentaje total'
-        FocusControl = cxDBCurrencyEdit12
       end
       object Label28: TLabel
         Left = 16
@@ -88,7 +80,7 @@ inherited frmProductosEdit: TfrmProductosEdit
         Top = 99
         Caption = 'Datos de importaci'#243'n'
         TabOrder = 9
-        Height = 148
+        Height = 395
         Width = 154
         object Label11: TLabel
           Left = 16
@@ -144,11 +136,11 @@ inherited frmProductosEdit: TfrmProductosEdit
         Top = 99
         Caption = 'Depreciaci'#243'n contable'
         TabOrder = 7
-        Height = 181
+        Height = 148
         Width = 154
         object Label18: TLabel
           Left = 16
-          Top = 24
+          Top = 16
           Width = 118
           Height = 13
           Caption = '% depreciaci'#243'n contable'
@@ -156,7 +148,7 @@ inherited frmProductosEdit: TfrmProductosEdit
         end
         object Label19: TLabel
           Left = 16
-          Top = 64
+          Top = 56
           Width = 105
           Height = 13
           Caption = 'Depreciaci'#243'n contable'
@@ -164,7 +156,7 @@ inherited frmProductosEdit: TfrmProductosEdit
         end
         object Label20: TLabel
           Left = 16
-          Top = 104
+          Top = 96
           Width = 68
           Height = 13
           Caption = 'Valor contable'
@@ -172,7 +164,7 @@ inherited frmProductosEdit: TfrmProductosEdit
         end
         object cxDBCurrencyEdit4: TcxDBCurrencyEdit
           Left = 16
-          Top = 40
+          Top = 32
           DataBinding.DataField = 'PorcentajeContable'
           DataBinding.DataSource = DataSource
           Properties.DecimalPlaces = 4
@@ -181,7 +173,7 @@ inherited frmProductosEdit: TfrmProductosEdit
         end
         object cxDBCurrencyEdit5: TcxDBCurrencyEdit
           Left = 16
-          Top = 80
+          Top = 72
           DataBinding.DataField = 'DepreciacionContable'
           DataBinding.DataSource = DataSource
           Enabled = False
@@ -190,7 +182,7 @@ inherited frmProductosEdit: TfrmProductosEdit
         end
         object cxDBCurrencyEdit6: TcxDBCurrencyEdit
           Left = 16
-          Top = 120
+          Top = 112
           DataBinding.DataField = 'ValorContable'
           DataBinding.DataSource = DataSource
           Enabled = False
@@ -203,11 +195,11 @@ inherited frmProductosEdit: TfrmProductosEdit
         Top = 99
         Caption = 'Caracteristicas'
         TabOrder = 5
-        Height = 362
+        Height = 390
         Width = 229
         object Label3: TLabel
           Left = 16
-          Top = 16
+          Top = 56
           Width = 20
           Height = 13
           Caption = 'Tipo'
@@ -215,7 +207,7 @@ inherited frmProductosEdit: TfrmProductosEdit
         end
         object Label4: TLabel
           Left = 16
-          Top = 56
+          Top = 136
           Width = 29
           Height = 13
           Caption = 'Marca'
@@ -231,7 +223,7 @@ inherited frmProductosEdit: TfrmProductosEdit
         end
         object Label6: TLabel
           Left = 16
-          Top = 136
+          Top = 176
           Width = 34
           Height = 13
           Caption = 'Modelo'
@@ -239,7 +231,7 @@ inherited frmProductosEdit: TfrmProductosEdit
         end
         object Label7: TLabel
           Left = 16
-          Top = 176
+          Top = 216
           Width = 19
           Height = 13
           Caption = 'A'#241'o'
@@ -247,7 +239,7 @@ inherited frmProductosEdit: TfrmProductosEdit
         end
         object Label8: TLabel
           Left = 16
-          Top = 216
+          Top = 256
           Width = 78
           Height = 13
           Caption = 'N'#250'mero de serie'
@@ -255,7 +247,7 @@ inherited frmProductosEdit: TfrmProductosEdit
         end
         object Label9: TLabel
           Left = 16
-          Top = 256
+          Top = 296
           Width = 90
           Height = 13
           Caption = 'N'#250'mero econ'#243'mico'
@@ -263,29 +255,37 @@ inherited frmProductosEdit: TfrmProductosEdit
         end
         object Label10: TLabel
           Left = 16
-          Top = 296
+          Top = 336
           Width = 36
           Height = 13
           Caption = 'Estatus'
           FocusControl = DBLookupComboBox4
         end
-        object DBLookupComboBox1: TDBLookupComboBox
+        object Label31: TLabel
           Left = 16
-          Top = 35
-          Width = 200
-          Height = 21
-          DataField = 'Tipo'
-          DataSource = DataSource
-          TabOrder = 0
+          Top = 16
+          Width = 36
+          Height = 13
+          Caption = 'Destino'
+          FocusControl = DBLookupComboBox6
         end
-        object DBLookupComboBox2: TDBLookupComboBox
+        object DBLookupComboBox1: TDBLookupComboBox
           Left = 16
           Top = 72
           Width = 200
           Height = 21
-          DataField = 'Marca'
+          DataField = 'Tipo'
           DataSource = DataSource
           TabOrder = 1
+        end
+        object DBLookupComboBox2: TDBLookupComboBox
+          Left = 16
+          Top = 152
+          Width = 200
+          Height = 21
+          DataField = 'Marca'
+          DataSource = DataSource
+          TabOrder = 3
         end
         object DBLookupComboBox3: TDBLookupComboBox
           Left = 16
@@ -298,44 +298,53 @@ inherited frmProductosEdit: TfrmProductosEdit
         end
         object cxDBTextEdit3: TcxDBTextEdit
           Left = 16
-          Top = 152
+          Top = 192
           DataBinding.DataField = 'Modelo'
           DataBinding.DataSource = DataSource
-          TabOrder = 3
+          TabOrder = 4
           Width = 200
         end
         object cxDBSpinEdit1: TcxDBSpinEdit
           Left = 16
-          Top = 192
+          Top = 232
           DataBinding.DataField = 'Anio'
           DataBinding.DataSource = DataSource
-          TabOrder = 4
+          TabOrder = 5
           Width = 121
         end
         object cxDBTextEdit4: TcxDBTextEdit
           Left = 16
-          Top = 232
-          DataBinding.DataField = 'NumeroSerie'
-          DataBinding.DataSource = DataSource
-          TabOrder = 5
-          Width = 200
-        end
-        object cxDBTextEdit5: TcxDBTextEdit
-          Left = 16
           Top = 272
-          DataBinding.DataField = 'NumeroEconomico'
+          DataBinding.DataField = 'NumeroSerie'
           DataBinding.DataSource = DataSource
           TabOrder = 6
           Width = 200
         end
-        object DBLookupComboBox4: TDBLookupComboBox
+        object cxDBTextEdit5: TcxDBTextEdit
           Left = 16
           Top = 312
+          DataBinding.DataField = 'NumeroEconomico'
+          DataBinding.DataSource = DataSource
+          TabOrder = 7
+          Width = 200
+        end
+        object DBLookupComboBox4: TDBLookupComboBox
+          Left = 16
+          Top = 352
           Width = 200
           Height = 21
           DataField = 'Estatus'
           DataSource = DataSource
-          TabOrder = 7
+          TabOrder = 8
+        end
+        object DBLookupComboBox6: TDBLookupComboBox
+          Left = 16
+          Top = 32
+          Width = 200
+          Height = 21
+          DataField = 'Destino'
+          DataSource = DataSource
+          TabOrder = 0
         end
       end
       object cxGroupBox1: TcxGroupBox
@@ -343,11 +352,11 @@ inherited frmProductosEdit: TfrmProductosEdit
         Top = 99
         Caption = 'Datos de compra'
         TabOrder = 6
-        Height = 362
+        Height = 390
         Width = 162
         object Label14: TLabel
           Left = 16
-          Top = 24
+          Top = 16
           Width = 67
           Height = 13
           Caption = 'Fecha compra'
@@ -355,7 +364,7 @@ inherited frmProductosEdit: TfrmProductosEdit
         end
         object Label15: TLabel
           Left = 16
-          Top = 64
+          Top = 56
           Width = 29
           Height = 13
           Caption = 'Precio'
@@ -363,7 +372,7 @@ inherited frmProductosEdit: TfrmProductosEdit
         end
         object Label16: TLabel
           Left = 16
-          Top = 104
+          Top = 96
           Width = 38
           Height = 13
           Caption = 'Moneda'
@@ -371,7 +380,7 @@ inherited frmProductosEdit: TfrmProductosEdit
         end
         object Label17: TLabel
           Left = 16
-          Top = 144
+          Top = 136
           Width = 71
           Height = 13
           Caption = 'Tipo de cambio'
@@ -379,7 +388,7 @@ inherited frmProductosEdit: TfrmProductosEdit
         end
         object Label21: TLabel
           Left = 16
-          Top = 184
+          Top = 176
           Width = 94
           Height = 13
           Caption = 'Precio moneda local'
@@ -387,7 +396,7 @@ inherited frmProductosEdit: TfrmProductosEdit
         end
         object Label22: TLabel
           Left = 16
-          Top = 224
+          Top = 216
           Width = 17
           Height = 13
           Caption = 'IVA'
@@ -395,15 +404,23 @@ inherited frmProductosEdit: TfrmProductosEdit
         end
         object Label23: TLabel
           Left = 16
-          Top = 264
+          Top = 256
           Width = 54
           Height = 13
           Caption = 'Precio total'
           FocusControl = cxDBCurrencyEdit8
         end
+        object Label27: TLabel
+          Left = 16
+          Top = 296
+          Width = 77
+          Height = 13
+          Caption = 'Porcentaje total'
+          FocusControl = cxDBCurrencyEdit12
+        end
         object cxDBDateEdit2: TcxDBDateEdit
           Left = 16
-          Top = 40
+          Top = 32
           DataBinding.DataField = 'FechaCompra'
           DataBinding.DataSource = DataSource
           TabOrder = 0
@@ -411,7 +428,7 @@ inherited frmProductosEdit: TfrmProductosEdit
         end
         object cxDBCurrencyEdit1: TcxDBCurrencyEdit
           Left = 16
-          Top = 80
+          Top = 72
           DataBinding.DataField = 'PrecioMoneda'
           DataBinding.DataSource = DataSource
           TabOrder = 1
@@ -419,7 +436,7 @@ inherited frmProductosEdit: TfrmProductosEdit
         end
         object DBLookupComboBox5: TDBLookupComboBox
           Left = 16
-          Top = 120
+          Top = 112
           Width = 121
           Height = 21
           DataField = 'Moneda'
@@ -428,7 +445,7 @@ inherited frmProductosEdit: TfrmProductosEdit
         end
         object cxDBCurrencyEdit2: TcxDBCurrencyEdit
           Left = 16
-          Top = 160
+          Top = 152
           DataBinding.DataField = 'TipoCambio'
           DataBinding.DataSource = DataSource
           TabOrder = 3
@@ -436,7 +453,7 @@ inherited frmProductosEdit: TfrmProductosEdit
         end
         object cxDBCurrencyEdit3: TcxDBCurrencyEdit
           Left = 16
-          Top = 200
+          Top = 192
           DataBinding.DataField = 'Precio'
           DataBinding.DataSource = DataSource
           Enabled = False
@@ -445,7 +462,7 @@ inherited frmProductosEdit: TfrmProductosEdit
         end
         object cxDBCurrencyEdit7: TcxDBCurrencyEdit
           Left = 16
-          Top = 240
+          Top = 232
           DataBinding.DataField = 'Impuesto'
           DataBinding.DataSource = DataSource
           Enabled = False
@@ -454,24 +471,32 @@ inherited frmProductosEdit: TfrmProductosEdit
         end
         object cxDBCurrencyEdit8: TcxDBCurrencyEdit
           Left = 16
-          Top = 280
+          Top = 272
           DataBinding.DataField = 'PrecioTotal'
           DataBinding.DataSource = DataSource
           Enabled = False
           TabOrder = 6
           Width = 121
         end
+        object cxDBCurrencyEdit12: TcxDBCurrencyEdit
+          Left = 16
+          Top = 312
+          DataBinding.DataField = 'PorcentajeAnexo'
+          DataBinding.DataSource = DataSource
+          TabOrder = 7
+          Width = 121
+        end
       end
       object cxGroupBox5: TcxGroupBox
         Left = 415
-        Top = 280
+        Top = 253
         Caption = 'Depreciaci'#243'n comercial'
         TabOrder = 8
-        Height = 181
+        Height = 241
         Width = 154
         object Label24: TLabel
           Left = 16
-          Top = 24
+          Top = 22
           Width = 121
           Height = 13
           Caption = '% depreciaci'#243'n comercial'
@@ -479,7 +504,7 @@ inherited frmProductosEdit: TfrmProductosEdit
         end
         object Label25: TLabel
           Left = 16
-          Top = 64
+          Top = 62
           Width = 108
           Height = 13
           Caption = 'Depreciaci'#243'n comercial'
@@ -487,7 +512,7 @@ inherited frmProductosEdit: TfrmProductosEdit
         end
         object Label26: TLabel
           Left = 16
-          Top = 104
+          Top = 102
           Width = 71
           Height = 13
           Caption = 'Valor comercial'
@@ -495,7 +520,7 @@ inherited frmProductosEdit: TfrmProductosEdit
         end
         object cxDBCurrencyEdit9: TcxDBCurrencyEdit
           Left = 16
-          Top = 40
+          Top = 38
           DataBinding.DataField = 'PorcentajeComercial'
           DataBinding.DataSource = DataSource
           Properties.DecimalPlaces = 4
@@ -504,7 +529,7 @@ inherited frmProductosEdit: TfrmProductosEdit
         end
         object cxDBCurrencyEdit10: TcxDBCurrencyEdit
           Left = 16
-          Top = 80
+          Top = 78
           DataBinding.DataField = 'DepreciacionComercial'
           DataBinding.DataSource = DataSource
           Enabled = False
@@ -513,21 +538,13 @@ inherited frmProductosEdit: TfrmProductosEdit
         end
         object cxDBCurrencyEdit11: TcxDBCurrencyEdit
           Left = 16
-          Top = 120
+          Top = 118
           DataBinding.DataField = 'ValorComercial'
           DataBinding.DataSource = DataSource
           Enabled = False
           TabOrder = 2
           Width = 121
         end
-      end
-      object cxDBCurrencyEdit12: TcxDBCurrencyEdit
-        Left = 591
-        Top = 279
-        DataBinding.DataField = 'PorcentajeAnexo'
-        DataBinding.DataSource = DataSource
-        TabOrder = 10
-        Width = 121
       end
       object cxDBTextEdit8: TcxDBTextEdit
         Left = 16
@@ -560,12 +577,13 @@ inherited frmProductosEdit: TfrmProductosEdit
     object tsDocumentos: TcxTabSheet
       Caption = 'Documentos'
       ImageIndex = 1
+      ExplicitHeight = 474
     end
   end
   inherited pmlMain: TPanel
-    Top = 504
+    Top = 528
     Width = 750
-    ExplicitTop = 508
+    ExplicitTop = 504
     ExplicitWidth = 750
     inherited btnCancel: TButton
       Left = 668

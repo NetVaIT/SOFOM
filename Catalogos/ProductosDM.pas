@@ -58,6 +58,9 @@ type
     adodsMasterContrato: TStringField;
     adodsMasterAnexo: TStringField;
     adodsMasterCliente: TStringField;
+    adodsMasterIdProductoDestino: TIntegerField;
+    adodsDestino: TADODataSet;
+    adodsMasterDestino: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterPrecioMonedaChange(Sender: TField);
     procedure adodsMasterNewRecord(DataSet: TDataSet);

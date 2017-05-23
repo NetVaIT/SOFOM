@@ -152,6 +152,7 @@ type
     adopCanAnexosCreditos: TADOStoredProc;
     adodsCreditosFechaCancelacion: TDateTimeField;
     adocGetSaldoActual: TADOCommand;
+    adodsAnexosCartaCompensacion: TBooleanField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsAnexosPrecioMonedaChange(Sender: TField);
     procedure adodsAnexosNewRecord(DataSet: TDataSet);
@@ -417,6 +418,7 @@ begin
   adodsAnexosEnganchePorcentaje.Value := 0;
   adodsAnexosComisionPorcentaje.Value := 0;
   adodsAnexosDespositosNumero.Value := 2;
+  adodsAnexosCartaCompensacion.Value := False;
 end;
 
 procedure TdmContratos.adodsAnexosPrecioMonedaChange(Sender: TField);

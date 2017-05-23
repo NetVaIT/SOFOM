@@ -20,7 +20,7 @@ uses
   System.Actions, Vcl.ActnList, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls, cxPC,
   cxContainer, cxEdit, cxSpinEdit, cxDBEdit, cxCurrencyEdit, Vcl.DBCtrls,
   cxMaskEdit, cxDropDownEdit, cxCalendar, cxTextEdit, cxGroupBox, cxButtonEdit,
-  ProductosDM;
+  ProductosDM, cxCheckBox;
 
 type
   TfrmAnexosEdit = class(T_frmEdit)
@@ -91,6 +91,7 @@ type
     Label27: TLabel;
     cxDBTextEdit19: TcxDBTextEdit;
     cxDBTextEdit20: TcxDBTextEdit;
+    cxDBCheckBox1: TcxDBCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);

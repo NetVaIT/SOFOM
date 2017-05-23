@@ -144,7 +144,7 @@ inherited frmAnexosEdit: TfrmAnexosEdit
           DataBinding.DataField = 'Precio'
           DataBinding.DataSource = DataSource
           Enabled = False
-          TabOrder = 7
+          TabOrder = 8
           Width = 121
         end
         object cxDBTextEdit6: TcxDBTextEdit
@@ -153,7 +153,7 @@ inherited frmAnexosEdit: TfrmAnexosEdit
           DataBinding.DataField = 'Impuesto'
           DataBinding.DataSource = DataSource
           Enabled = False
-          TabOrder = 8
+          TabOrder = 9
           Width = 121
         end
         object cxDBTextEdit7: TcxDBTextEdit
@@ -162,7 +162,7 @@ inherited frmAnexosEdit: TfrmAnexosEdit
           DataBinding.DataField = 'PrecioTotal'
           DataBinding.DataSource = DataSource
           Enabled = False
-          TabOrder = 9
+          TabOrder = 10
           Width = 121
         end
         object DBLookupComboBox2: TDBLookupComboBox
@@ -185,6 +185,15 @@ inherited frmAnexosEdit: TfrmAnexosEdit
               Kind = bkEllipsis
             end>
           TabOrder = 6
+          Width = 121
+        end
+        object cxDBCheckBox1: TcxDBCheckBox
+          Left = 514
+          Top = 100
+          Caption = 'Carta compensaci'#243'n'
+          DataBinding.DataField = 'CartaCompensacion'
+          DataBinding.DataSource = dmContratos.dsAnexos
+          TabOrder = 7
           Width = 121
         end
       end

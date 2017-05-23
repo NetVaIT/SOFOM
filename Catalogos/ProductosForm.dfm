@@ -48,6 +48,10 @@ inherited frmProductos: TfrmProductos
           DataBinding.FieldName = 'IdProductoTipo'
           Visible = False
         end
+        object tvMasterIdProductoDestino: TcxGridDBColumn
+          DataBinding.FieldName = 'IdProductoDestino'
+          Visible = False
+        end
         object tvMasterIdMarca: TcxGridDBColumn
           DataBinding.FieldName = 'IdMarca'
           Visible = False
@@ -82,16 +86,20 @@ inherited frmProductos: TfrmProductos
           DataBinding.FieldName = 'Descripcion'
           Width = 304
         end
+        object tvMasterDestino: TcxGridDBColumn
+          DataBinding.FieldName = 'Destino'
+          Width = 150
+        end
         object tvMasterTipo: TcxGridDBColumn
           DataBinding.FieldName = 'Tipo'
           Width = 150
         end
-        object tvMasterMarca: TcxGridDBColumn
-          DataBinding.FieldName = 'Marca'
-          Width = 150
-        end
         object tvMasterFamilia: TcxGridDBColumn
           DataBinding.FieldName = 'Familia'
+          Width = 150
+        end
+        object tvMasterMarca: TcxGridDBColumn
+          DataBinding.FieldName = 'Marca'
           Width = 150
         end
         object tvMasterModelo: TcxGridDBColumn
@@ -234,6 +242,7 @@ inherited frmProductos: TfrmProductos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42681.569967037040000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

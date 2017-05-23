@@ -27,7 +27,7 @@ uses
   cxGridCustomPopupMenu, cxGridPopupMenu, cxClasses, Vcl.StdActns, Vcl.DBActns,
   System.Actions, Vcl.ActnList, Vcl.StdCtrls, cxGridLevel, cxGridCustomView,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
-  Vcl.ExtCtrls;
+  Vcl.ExtCtrls, cxTextEdit, cxBarEditItem, cxCurrencyEdit;
 
 type
   TfrmListasRestringidas = class(T_frmGrid)
@@ -40,11 +40,15 @@ type
     tvMasterPais: TcxGridDBColumn;
     tvMasterNombre: TcxGridDBColumn;
     tvMasterAlias: TcxGridDBColumn;
+    edtNombre: TcxBarEditItem;
     procedure FormCreate(Sender: TObject);
   private
+    function GetNombre: String;
+    procedure SetNombre(const Value: String);
     { Private declarations }
   public
     { Public declarations }
+    property Nombre: String read GetNombre write SetNombre;
   end;
 
 implementation
@@ -57,6 +61,17 @@ procedure TfrmListasRestringidas.FormCreate(Sender: TObject);
 begin
   inherited;
   gEditForm := TfrmListasRestringidasEdit.Create(Self);
+  ApplyBestFit:= False;
+end;
+
+function TfrmListasRestringidas.GetNombre: String;
+begin
+  Result := edtNombre.EditValue;
+end;
+
+procedure TfrmListasRestringidas.SetNombre(const Value: String);
+begin
+  edtNombre.EditValue := Value;
 end;
 
 end.

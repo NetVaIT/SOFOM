@@ -147,6 +147,7 @@ inherited frmCotizacionesEdit: TfrmCotizacionesEdit
           item
             FieldName = 'Descripcion'
           end>
+        Properties.ListOptions.SyncMode = True
         Properties.ListSource = dsEstatus
         TabOrder = 6
         Width = 121
@@ -170,6 +171,7 @@ inherited frmCotizacionesEdit: TfrmCotizacionesEdit
           item
             FieldName = 'Descripcion'
           end>
+        Properties.ListOptions.SyncMode = True
         Properties.ListSource = dsCausa
         TabOrder = 8
         Width = 480

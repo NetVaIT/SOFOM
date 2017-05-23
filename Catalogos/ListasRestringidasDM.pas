@@ -22,6 +22,8 @@ type
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
+  protected
+    procedure SetFilter; override;
   public
     { Public declarations }
   end;
@@ -39,6 +41,22 @@ begin
   inherited;
   gGridForm := TfrmListasRestringidas.Create(Self);
   gGridForm.DataSet := adodsMaster;
+  // Busqueda
+  SQLSelect:= 'select IdListaRestringida, IdOrganismo, IdPais, IdEstatus, Identificador, Nombre, Alias from ListasRestringidas';
+  SQLOrderBy:= 'ORDER BY Nombre ';
+  gGridForm.actSearch:= actSearch;
+  // Ejecuta filtrado
+//  TfrmListasRestringidas(gGridForm).Nombre:= EmptyStr;
+//  actSearch.Execute;
+end;
+
+procedure TdmListasRestringidas.SetFilter;
+var
+  Nombre: String;
+begin
+  inherited;
+  Nombre:= TfrmListasRestringidas(gGridForm).Nombre;
+  SQLWhere:= 'WHERE Nombre LIKE ''%' + Nombre + '%''';
 end;
 
 end.
