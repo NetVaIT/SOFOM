@@ -11,6 +11,7 @@ inherited frmMain: TfrmMain
     OnApplicationMenuClick = dxRibbon1ApplicationMenuClick
     ExplicitWidth = 1020
     inherited dxRibbon1Tab1: TdxRibbonTab
+      Active = False
       Index = 0
     end
     object dxRibbon1Tab2: TdxRibbonTab
@@ -43,6 +44,7 @@ inherited frmMain: TfrmMain
       Index = 2
     end
     object dxRibbon1Tab5: TdxRibbonTab
+      Active = True
       Caption = 'Reportes'
       Groups = <
         item
@@ -113,6 +115,8 @@ inherited frmMain: TfrmMain
         end>
     end
     inherited dxbArchivo: TdxBar
+      DockedDockControl = nil
+      DockedDockingStyle = dsNone
       FloatClientWidth = 51
       FloatClientHeight = 76
     end
@@ -336,8 +340,8 @@ inherited frmMain: TfrmMain
       DockedTop = 0
       FloatLeft = 1054
       FloatTop = 8
-      FloatClientWidth = 136
-      FloatClientHeight = 324
+      FloatClientWidth = 155
+      FloatClientHeight = 432
       ItemLinks = <
         item
           Visible = True
@@ -11024,7 +11028,7 @@ inherited frmMain: TfrmMain
     object actRptExpecientes: TAction
       Tag = 55
       Category = 'Reportes'
-      Caption = 'Expecientes recibidos'
+      Caption = 'Expedientes recibidos'
       ImageIndex = 53
       OnExecute = actCatalogoExecute
     end

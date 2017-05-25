@@ -247,7 +247,7 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
     Top = 387
     Width = 1363
     ExplicitTop = 387
-    ExplicitWidth = 1192
+    ExplicitWidth = 1363
     DesignSize = (
       1363
       41)
@@ -1252,7 +1252,6 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42585.483476608800000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

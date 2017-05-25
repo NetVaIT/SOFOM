@@ -4,7 +4,6 @@ inherited FrmConPagos: TFrmConPagos
   ClientHeight = 428
   ClientWidth = 1101
   ExplicitWidth = 1107
-  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -151,6 +150,7 @@ inherited FrmConPagos: TFrmConPagos
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 9
+    ExplicitTop = 28
     DesignSize = (
       1101
       44)
@@ -1101,7 +1101,6 @@ inherited FrmConPagos: TFrmConPagos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42712.575441516200000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end
@@ -1148,5 +1147,10 @@ inherited FrmConPagos: TFrmConPagos
   object DSP_CalcMoratorioNueva: TDataSource
     Left = 1004
     Top = 8
+  end
+  object DSP_ActTotalCXC: TDataSource
+    DataSet = dmPagos.ADOPActualizaTotalesCXC
+    Left = 796
+    Top = 352
   end
 end

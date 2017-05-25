@@ -749,4 +749,9 @@ object FrmAplicacionPago: TFrmAplicacionPago
     Left = 844
     Top = 256
   end
+  object DSP_ActTotalCXC: TDataSource
+    DataSet = dmPagos.ADOPActualizaTotalesCXC
+    Left = 796
+    Top = 352
+  end
 end

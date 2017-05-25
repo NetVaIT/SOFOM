@@ -101,6 +101,7 @@ type
     cxDBLabel8: TcxDBLabel;
     tvMasterFechaVencimiento: TcxGridDBColumn;
     SpdBtnAbonoCapital: TSpeedButton;
+    DSP_ActTotalCXC: TDataSource;
     procedure BtBtnAplicarClick(Sender: TObject);
     procedure DSAplicacionStateChange(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -497,7 +498,14 @@ begin
     TADOStoredProc(DSP_CalcMoratorioNueva.DataSet).Parameters.ParamByName('@Fecha').value:=  FechaPago;          //CAmbiar solo fecha
 
     TADOStoredProc(DSP_CalcMoratorioNueva.DataSet).ExecProc;
+      //Abr 17/17 Actualiza Totales de CXC para que actualice mnto vencido en anexo
+      //May 22/17
+    TADOStoredProc(DSP_ActTotalCXC.DataSet).Parameters.ParamByName('@IdCuentaXCobrar').Value:=  DSConCXCPendientes.DataSet.FieldByName('IDCuentaXCobrar').asinteger;        //May 22/17
+    TADOStoredProc(DSP_ActTotalCXC.DataSet).ExecProc;
 
+
+
+  //HAsta aca
  //Calcula moratorios a FechaPago
  //Abr 6/17.
     idActual:= dsConCXCpendientes.dataset.FieldByName('IdCuentaXCobrar').AsInteger;
@@ -505,6 +513,7 @@ begin
     dsConCXCpendientes.DataSet.Open;
 
     dsConCXCpendientes.dataset.Locate('IdCuentaXCobrar', idActual,[]);
+
 
   end;
 end;

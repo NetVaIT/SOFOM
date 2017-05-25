@@ -163,7 +163,7 @@ inherited dmRptColocacionAcumulado: TdmRptColocacionAcumulado
           end
           object TppTotalDef
             ChildType = 3
-            Color = clSilver
+            Color = 9868950
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
             Font.Height = -11
@@ -184,7 +184,7 @@ inherited dmRptColocacionAcumulado: TdmRptColocacionAcumulado
           end
           object TppTotalDef
             ChildType = 3
-            Color = clSilver
+            Color = 9868950
             DisplayFormat = '#,0;-#,0'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
@@ -200,13 +200,13 @@ inherited dmRptColocacionAcumulado: TdmRptColocacionAcumulado
             Color = clWhite
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
-            Font.Height = -13
+            Font.Height = -11
             Font.Name = 'Arial'
             Font.Style = []
           end
           object TppTotalDef
             ChildType = 3
-            Color = clSilver
+            Color = 9868950
             DisplayFormat = '#,0;-#,0'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
@@ -313,7 +313,7 @@ inherited dmRptColocacionAcumulado: TdmRptColocacionAcumulado
             end
             object TppTotalDef
               ChildType = 3
-              Color = clSilver
+              Color = clWindow
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWindowText
               Font.Height = -11
@@ -334,7 +334,7 @@ inherited dmRptColocacionAcumulado: TdmRptColocacionAcumulado
             end
             object TppTotalDef
               ChildType = 3
-              Color = clSilver
+              Color = clWindow
               DisplayFormat = '#,0;-#,0'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWindowText
@@ -350,13 +350,13 @@ inherited dmRptColocacionAcumulado: TdmRptColocacionAcumulado
               Color = clWhite
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWindowText
-              Font.Height = -13
+              Font.Height = -11
               Font.Name = 'Arial'
               Font.Style = []
             end
             object TppTotalDef
               ChildType = 3
-              Color = clSilver
+              Color = clWindow
               DisplayFormat = '#,0;-#,0'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWindowText
@@ -389,7 +389,7 @@ inherited dmRptColocacionAcumulado: TdmRptColocacionAcumulado
             end
             object TppTotalDef
               ChildType = 3
-              Color = clSilver
+              Color = clWindow
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWindowText
               Font.Height = -11
@@ -410,7 +410,7 @@ inherited dmRptColocacionAcumulado: TdmRptColocacionAcumulado
             end
             object TppTotalDef
               ChildType = 3
-              Color = clSilver
+              Color = clWindow
               DisplayFormat = '#,0;-#,0'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWindowText
@@ -426,13 +426,13 @@ inherited dmRptColocacionAcumulado: TdmRptColocacionAcumulado
               Color = clWhite
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWindowText
-              Font.Height = -13
+              Font.Height = -11
               Font.Name = 'Arial'
               Font.Style = []
             end
             object TppTotalDef
               ChildType = 3
-              Color = clSilver
+              Color = clWindow
               DisplayFormat = '#,0;-#,0'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWindowText

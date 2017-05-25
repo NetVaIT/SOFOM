@@ -77,6 +77,7 @@ type
     DSMoratoriosDet: TDataSource;
     DSAuxiliar: TDataSource;
     DSP_CalcMoratorioNueva: TDataSource;
+    DSP_ActTotalCXC: TDataSource;
     procedure FormCreate(Sender: TObject);
     procedure dxBrBtnAplicaiconesClick(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
@@ -182,6 +183,7 @@ begin
       FrmAplicacionPago.DSMoratoriosDet.dataset:=DSMoratoriosdet.dataset;//Mar 31/17
 
       FrmAplicacionPago.DSP_CalcMoratorioNueva.DataSet:= DSP_CalcMoratorioNueva.DataSet; //Abr 6/17
+      FrmAplicacionPago.DSP_ActTotalCXC.DataSet:=DSP_ActTotalCXC.DataSet; //May 22/17
       FrmAplicacionPago.dsConCXCPendientes.DataSet.Open;
       FrmAplicacionPago.DSDetalleMostrar.dataset.Open;   //Agregado Feb 16/17
       FrmAplicacionPago.DSDetallesCXC.DataSet.Open;
@@ -213,6 +215,7 @@ begin
       FrmAplicacionPago.DSMoratoriosDet.dataset:=DSMoratoriosdet.dataset;//Mar 31/17
 
       FrmAplicacionPago.DSP_CalcMoratorioNueva.DataSet:= DSP_CalcMoratorioNueva.DataSet; //Abr 6/17
+      FrmAplicacionPago.DSP_ActTotalCXC.DataSet:=DSP_ActTotalCXC.DataSet; //May 22/17
       FrmAplicacionPago.dsConCXCPendientes.DataSet.Open;
       FrmAplicacionPago.DSDetalleMostrar.dataset.Open;   //Agregado Feb 16/17
       FrmAplicacionPago.DSDetallesCXC.DataSet.Open;
