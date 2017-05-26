@@ -13,10 +13,10 @@ inherited dmRptColocacionAcumulado: TdmRptColocacionAcumulado
       'OIN ProductosTipos ON Productos.IdProductoTipo = ProductosTipos.' +
       'IdProductoTipo'#13#10'INNER JOIN Familias ON Productos.IdFamilia = Fam' +
       'ilias.IdFamila'#13#10'INNER JOIN Marcas ON Productos.IdMarca = Marcas.' +
-      'IdMarca '#13#10'WHERE Anio BETWEEN YEAR(GETDATE())-5 AND YEAR(GETDATE(' +
-      '))'#13#10'GROUP BY ProductosDestino.Descripcion, '#13#10'--ProductosTipos.De' +
-      'scripcion, '#13#10'Familias.Descripcion, '#13#10'Marcas.Descripcion, '#13#10'YEAR(' +
-      'Anexos.Fecha) '#13#10
+      'IdMarca '#13#10'WHERE Anio BETWEEN YEAR([Dbo].GetDateAux())-5 AND YEAR' +
+      '([Dbo].GetDateAux()) -- era GETDATE()'#13#10'GROUP BY ProductosDestino' +
+      '.Descripcion, '#13#10'--ProductosTipos.Descripcion, '#13#10'Familias.Descrip' +
+      'cion, '#13#10'Marcas.Descripcion, '#13#10'YEAR(Anexos.Fecha) '#13#10
     object adodsReportDestino: TStringField
       FieldName = 'Destino'
       Size = 50

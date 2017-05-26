@@ -1069,11 +1069,11 @@ inherited dmContratos: TdmContratos
       'ciones '#13#10'INNER JOIN AnexosCreditos ON AnexosAmortizaciones.IdAne' +
       'xoCredito = AnexosCreditos.IdAnexoCredito'#13#10'WHERE AnexosCreditos.' +
       'IdAnexoCreditoEstatus = 1 '#13#10'AND AnexosAmortizaciones.FechaVencim' +
-      'iento >= GETDATE()'#13#10'AND AnexosCreditos.IdAnexo = @IdAnexo'#13#10'IF @S' +
-      'aldoInsolutoActual IS NULL SET @SaldoInsolutoActual = 0'#13#10'SELECT ' +
-      '@MontoVencido = MontoVencido from Anexos'#13#10'WHERE IdAnexo = @IdAne' +
-      'xo'#13#10'SET @SaldoActual = @SaldoInsolutoActual + @MontoVencido'#13#10'SET' +
-      ' :SaldoActual = @SaldoActual'#13#10
+      'iento >= [Dbo].getDAteAux() -- GETDATE()'#13#10'AND AnexosCreditos.IdA' +
+      'nexo = @IdAnexo'#13#10'IF @SaldoInsolutoActual IS NULL SET @SaldoInsol' +
+      'utoActual = 0'#13#10'SELECT @MontoVencido = MontoVencido from Anexos'#13#10 +
+      'WHERE IdAnexo = @IdAnexo'#13#10'SET @SaldoActual = @SaldoInsolutoActua' +
+      'l + @MontoVencido'#13#10'SET :SaldoActual = @SaldoActual'#13#10
     Connection = _dmConection.ADOConnection
     Parameters = <
       item

@@ -373,7 +373,7 @@ inherited dmAmortizaciones: TdmAmortizaciones
       'AND AnexosCreditos.IdAnexo = :IdAnexo'
       
         'AND AnexosAmortizaciones.FechaVencimiento >=:Fecha  -- abr 19/17' +
-        ' GETDATE()')
+        ' ')
     Left = 216
     Top = 88
     object adoqAnexosAmortizacionesIdAnexoAmortizacion: TAutoIncField
