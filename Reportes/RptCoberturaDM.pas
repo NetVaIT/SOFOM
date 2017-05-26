@@ -6,21 +6,10 @@ uses
   System.SysUtils, System.Classes, _ReportSOFOMDM, ppCtrls, Data.DB, dxmdaset,
   ppParameter, ppDesignLayer, ppVar, ppBands, dxGDIPlusClasses, ppPrnabl,
   ppClass, ppCache, ppProd, ppReport, ppComm, ppRelatv, ppDB, ppDBPipe,
-  Data.Win.ADODB;
+  Data.Win.ADODB, ppStrtch, ppSubRpt;
 
 type
   TdmRptCobertura = class(T_dmReportSOFOM)
-    adodsReportIdAnexo: TAutoIncField;
-    adodsReportContrato: TStringField;
-    adodsReportAnexo: TStringField;
-    adodsReportFecha: TDateTimeField;
-    adodsReportCliente: TStringField;
-    adodsReportSaldoInsoluto: TFMTBCDField;
-    adodsReportMontoVencido: TFMTBCDField;
-    adodsReportDepositos: TFMTBCDField;
-    adodsReportTotalLiquidar: TFMTBCDField;
-    adodsReportValorComercialActualizado: TBCDField;
-    adodsReportCobertura: TFMTBCDField;
     ppLabel2: TppLabel;
     ppLabel3: TppLabel;
     ppLabel4: TppLabel;
@@ -42,12 +31,51 @@ type
     ppDBText9: TppDBText;
     ppDBText10: TppDBText;
     ppLine1: TppLine;
-    adodsReportTipoCambioOriginal: TBCDField;
-    adodsReportValorComercial: TBCDField;
     ppLabel1: TppLabel;
     ppDBText11: TppDBText;
     ppLabel12: TppLabel;
     ppDBText12: TppDBText;
+    ppLabel13: TppLabel;
+    adodsReportIdAnexo: TAutoIncField;
+    adodsReportContrato: TStringField;
+    adodsReportAnexo: TStringField;
+    adodsReportFecha: TDateTimeField;
+    adodsReportCliente: TStringField;
+    adodsReportSaldoInsoluto: TFMTBCDField;
+    adodsReportMontoVencido: TFMTBCDField;
+    adodsReportDepositos: TFMTBCDField;
+    adodsReportOpcionCompra: TFMTBCDField;
+    adodsReportValorResidual: TFMTBCDField;
+    adodsReportTotalLiquidar: TFMTBCDField;
+    adodsReportValorComercial: TBCDField;
+    adodsReportTipoCambioOriginal: TBCDField;
+    adodsReportValorComercialActualizado: TBCDField;
+    adodsReportCobertura: TFMTBCDField;
+    adodsReportFactor: TFMTBCDField;
+    ppLabel14: TppLabel;
+    ppDBText13: TppDBText;
+    ppLabel15: TppLabel;
+    ppLabel16: TppLabel;
+    ppLabel17: TppLabel;
+    ppLabel18: TppLabel;
+    ppLabel19: TppLabel;
+    ppLabel20: TppLabel;
+    ppLabel21: TppLabel;
+    ppDBText14: TppDBText;
+    ppLabel22: TppLabel;
+    ppLabel23: TppLabel;
+    ppDBText15: TppDBText;
+    ppLabel24: TppLabel;
+    adodsParidad: TADODataSet;
+    dsParidad: TDataSource;
+    dbpParidad: TppDBPipeline;
+    ppSubReport1: TppSubReport;
+    ppChildReport1: TppChildReport;
+    ppDesignLayers2: TppDesignLayers;
+    ppDesignLayer2: TppDesignLayer;
+    ppDetailBand2: TppDetailBand;
+    ppDBText16: TppDBText;
+    ppDBText17: TppDBText;
   private
     { Private declarations }
   public
