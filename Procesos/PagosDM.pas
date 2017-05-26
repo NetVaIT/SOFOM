@@ -504,7 +504,7 @@ var SErieAct:String;
 begin  //Pagos
   inherited;
 
-  DataSet.FieldByName('FechaPago').AsDateTime:=Date; //Era now Abr 18/17
+  DataSet.FieldByName('FechaPago').AsDateTime:=_DmConection.LaFechaActual;//May26/17 Date; //Era now Abr 18/17
   SerieAct:= ADODtStConfiguraciones.FieldByName('UltimaSeriePago').AsString;
   FolioAct:= ADODtStConfiguraciones.FieldByName('UltimoFolioPago').AsInteger;
   DataSet.FieldByName('SeriePago').AsString:=SerieAct;
@@ -735,7 +735,7 @@ end;
 procedure TdmPagos.ADODtStPagosAuxiliarNewRecord(DataSet: TDataSet);
 begin            //FEb 14/17
   inherited;
-  dataset.FieldByName('Fecha').asdatetime:=now;
+  dataset.FieldByName('Fecha').asdatetime:=now;     //REgistro auxiliar
   dataset.FieldByName('IdUsuario').AsInteger:= _DMConection.idUsuario;
   dataset.FieldByName('IdPagoAplicacionInterna').AsInteger:= ADODtstAplicacionesInternasIDPagoAplicacionInterna.AsInteger; //Verificar que lo ponga feb 14/17
 end;
@@ -843,7 +843,7 @@ begin
   frmAbonarCapitalEdit := TfrmAbonarCapitalEdit.Create(Self);
   try
     frmAbonarCapitalEdit.DataSet:= adoqAnexosSel;
-    frmAbonarCapitalEdit.Fecha := FechaAct; //Date;  //Abr 17/17
+    frmAbonarCapitalEdit.Fecha := FechaAct; //Date;  //Abr 17/17   Usa la de pago
     frmAbonarCapitalEdit.Importe := Importeact; //0;  //Abr 17/17
     frmAbonarCapitalEdit.Tipo:= Ord(acReducirCuota);
     if frmAbonarCapitalEdit.Execute then
@@ -891,7 +891,7 @@ begin
   ADOQryAuxiliar.SQL.Clear;
   ADOQryAuxiliar.sql.Add('Insert into BitacoraGeneracion (Tipo, FechaGeneracion, IdUsuario, Observaciones) Values('''+tipotxt+''',:IdFechaHoy1, '  +
                          intToSTR(_DMConection.idUsuario)+','''+Observacion+''' ) ' );
-  ADOQryAuxiliar.Parameters.ParamByName('IdFechaHoy1').Value:=date;
+  ADOQryAuxiliar.Parameters.ParamByName('IdFechaHoy1').Value:=_DmConection.LaFechaActual;//date; May 26/17
 
   Resp:=ADOQryAuxiliar.ExecSQL;
 //  if Resp=1 then

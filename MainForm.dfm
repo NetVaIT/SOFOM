@@ -15,6 +15,7 @@ inherited frmMain: TfrmMain
       Index = 0
     end
     object dxRibbon1Tab2: TdxRibbonTab
+      Active = True
       Caption = 'Cat'#225'logos'
       Groups = <
         item
@@ -44,7 +45,6 @@ inherited frmMain: TfrmMain
       Index = 2
     end
     object dxRibbon1Tab5: TdxRibbonTab
-      Active = True
       Caption = 'Reportes'
       Groups = <
         item
@@ -79,6 +79,7 @@ inherited frmMain: TfrmMain
   end
   inherited pnlMain: TPanel
     Width = 1020
+    ExplicitTop = 149
     ExplicitWidth = 1020
   end
   inherited dxBarManager: TdxBarManager
@@ -149,6 +150,10 @@ inherited frmMain: TfrmMain
         item
           Visible = True
           ItemName = 'dxBarLargeButton19'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBrLrgBtnPoneFechaActual'
         end>
       OneOnRow = False
       Row = 0
@@ -159,7 +164,7 @@ inherited frmMain: TfrmMain
     object dxbOrganizacion: TdxBar [3]
       Caption = 'Organizacion'
       CaptionButtons = <>
-      DockedLeft = 365
+      DockedLeft = 449
       DockedTop = 0
       FloatLeft = 759
       FloatTop = 8
@@ -191,7 +196,7 @@ inherited frmMain: TfrmMain
     object dxbPresonas: TdxBar [4]
       Caption = 'Personas'
       CaptionButtons = <>
-      DockedLeft = 694
+      DockedLeft = 778
       DockedTop = 0
       FloatLeft = 764
       FloatTop = 8
@@ -260,7 +265,7 @@ inherited frmMain: TfrmMain
     object dxbProductos: TdxBar [6]
       Caption = 'Productos'
       CaptionButtons = <>
-      DockedLeft = 546
+      DockedLeft = 630
       DockedTop = 0
       FloatLeft = 1133
       FloatTop = 8
@@ -606,6 +611,16 @@ inherited frmMain: TfrmMain
     end
     object dxBarLargeButton33: TdxBarLargeButton
       Action = actColocacionAcumulado
+      Category = 0
+    end
+    object dxBrLrgBtnCambioFecha: TdxBarLargeButton
+      Action = ActPoneFechaActual
+      Category = 0
+      SyncImageIndex = False
+      ImageIndex = 43
+    end
+    object dxBrLrgBtnPoneFechaActual: TdxBarLargeButton
+      Action = ActPoneFechaActual
       Category = 0
     end
     object dxBarButton13: TdxBarButton
@@ -11045,6 +11060,12 @@ inherited frmMain: TfrmMain
       Caption = 'Acumulado de colocaci'#243'n'
       ImageIndex = 16
       OnExecute = actCatalogoExecute
+    end
+    object ActPoneFechaActual: TAction
+      Category = 'Catalogos'
+      Caption = 'Establecer Fecha Actual'
+      ImageIndex = 43
+      OnExecute = ActPoneFechaActualExecute
     end
   end
   inherited dxBarScreenTipRepository: TdxBarScreenTipRepository

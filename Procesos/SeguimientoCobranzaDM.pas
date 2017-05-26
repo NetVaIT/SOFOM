@@ -91,7 +91,7 @@ uses SeguimientoCobranzaCon, _ConectionDmod;
 procedure TdmSeguimientoCobranza.ADODtStIncidenciasNewRecord(DataSet: TDataSet);
 begin
   inherited;
-  dataset.FieldByName('FEchareg').AsDateTime:=Now;
+  dataset.FieldByName('FEchareg').AsDateTime:=Now;   //SEguimiento
   dataset.FieldByName('IdUsuario').AsInteger:=_dmConection.IdUsuario;
   dataset.FieldByName('IdPersonaCliente').AsInteger:= ADODSMaster.FieldByName('IdPersona').AsInteger;
   dataset.FieldByName('IdIncidenciaEstado').AsInteger:=1;

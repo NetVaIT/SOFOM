@@ -139,7 +139,7 @@ implementation
 
 {$R *.dfm}
 
-uses FacturasDM, FacturasEdit;
+uses FacturasDM, FacturasEdit, _ConectionDmod;
 
 procedure TfrmFacturasGrid.DataSourceDataChange(Sender: TObject; Field: TField);
 begin
@@ -171,7 +171,7 @@ begin
   inherited;
   gEditForm:= TfrmEdfactura.Create(Self);
  // TfrmEdfactura(gEditForm).PnlDetalleFact :=
-
+            // may 26/17    _DmConection.LafechaActual   //SE dejo porque no puede timbrar en fechas anteriores
   decodeDate(date,a,m,d);   //Dic 20/16
   cxDtEdtDesde.date:= encodedate(a,m,1);
   m:=m+1;

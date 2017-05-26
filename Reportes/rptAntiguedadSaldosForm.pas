@@ -98,7 +98,7 @@ implementation
 
 {$R *.dfm}
 
-uses rptAntiguedadSaldosDM;
+uses rptAntiguedadSaldosDM, _ConectionDmod;
 
 
 procedure TfrmRptAntiguedadSaldos.EdtNombreKeyDown(Sender: TObject;
@@ -118,7 +118,8 @@ var
   FechaAux:TDAteTime;
 begin
   inherited;
-  DEcodeDate(Date,a,m,d);
+            //May 26/17  Date
+  DEcodeDate(_DmConection.LafechaActual,a,m,d);
 
   cxDtEdtInicio.Date:=EncodeDate(a,m,1);
   m:=m+1;
@@ -170,12 +171,12 @@ procedure TfrmRptAntiguedadSaldos.SpdBtnConsultaClick(Sender: TObject);
 const
    TxtSQL=' SELECT   Cc.IdCuentaXCobrar, cc.IDAnexo,a.Identificador as Anexo, A.IdContrato, Con.IdContratoTipo,Con.Identificador as Contrato,'
          +' CT.Identificador as TC, ct.Descripcion as TipoContrato,Cc.Fecha, Cc.IdPersona, cc.IdCuentaXCobrarEstatus, Cc.Total, CC.Saldo,'
-         +' PR.RazonSocial AS Cliente, CASE WHEN getdate() - Cc.Fecha <= 30 THEN Cc.Saldo END AS ''Vigentes'','
-         +' CASE WHEN getdate() - Cc.Fecha >= 1 THEN Cc.Saldo END as ''Saldo Total Vencido'','
-         +' CASE WHEN (getdate() - Cc.Fecha <= 60 ) AND (getdate() - Cc.Fecha > 30 )'
-         +' THEN Cc.Saldo END AS ''Vencidos a 30 días'', CASE WHEN (getdate() - Cc.Fecha <= 90 ) AND (getdate()'
-         +'  - Cc.Fecha > 60 ) THEN Cc.Saldo END AS ''Vencidos a 60 días'', CASE WHEN (getdate() - Cc.Fecha > 90 ) AND'
-         +'   (getdate() - Cc.Fecha <=120 ) THEN Cc.Saldo END AS ''Vencidos a 90 días'', CASE WHEN getdate()'
+         +' PR.RazonSocial AS Cliente, CASE WHEN [dbo].getdateAux() - Cc.Fecha <= 30 THEN Cc.Saldo END AS ''Vigentes'','
+         +' CASE WHEN [dbo].getdateAux() - Cc.Fecha >= 1 THEN Cc.Saldo END as ''Saldo Total Vencido'','
+         +' CASE WHEN ([dbo].getdateAux() - Cc.Fecha <= 60 ) AND ([dbo].getdateAux() - Cc.Fecha > 30 )'
+         +' THEN Cc.Saldo END AS ''Vencidos a 30 días'', CASE WHEN ([dbo].getdateAux() - Cc.Fecha <= 90 ) AND ([dbo].getdateAux()'
+         +'  - Cc.Fecha > 60 ) THEN Cc.Saldo END AS ''Vencidos a 60 días'', CASE WHEN ([dbo].getdateAux() - Cc.Fecha > 90 ) AND'
+         +'   ([dbo].getdateAux() - Cc.Fecha <=120 ) THEN Cc.Saldo END AS ''Vencidos a 90 días'', CASE WHEN [dbo].getdateAux()'
          +'  - Cc.Fecha > 120 THEN Cc.Saldo END AS ''Vencidos más de 120 días'''
 
          +' FROM         CuentasXCobrar AS Cc INNER JOIN  Personas AS PR ON Cc.IdPersona = PR.IdPersona '

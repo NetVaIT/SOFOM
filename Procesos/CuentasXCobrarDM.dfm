@@ -367,7 +367,7 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       ', '#13#10'PorcentajeIVA, EmailCliente, UUID_TB, SelloCFD_TB, '#13#10'SelloSA' +
       'T_TB, CertificadoSAT_TB, FechaTimbrado_TB,'#13#10' IdCuentaXCobrar, Sa' +
       'ldoFactoraje'#13#10' from CFDI C'#13#10'where fecha>DATEADD(MM, DATEDIFF(MM,' +
-      '0,GETDATE()), 0)'#13#10'order by IDCFDIESTATUS, Fecha '
+      '0,[dbo].getDateAux()), 0)'#13#10'order by IDCFDIESTATUS, Fecha '
     Parameters = <>
     Left = 456
     Top = 24
@@ -1038,5 +1038,11 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     object ADODtStAdicionalesContratoAnexoContrato: TStringField
       FieldName = 'Contrato'
     end
+  end
+  object ADOQryAux2: TADOQuery
+    Connection = _dmConection.ADOConnection
+    Parameters = <>
+    Left = 740
+    Top = 305
   end
 end

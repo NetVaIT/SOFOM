@@ -219,7 +219,8 @@ uses
   MonedasCotizacionesEdit in 'Catalogos\MonedasCotizacionesEdit.pas' {frmMonedasCotizacionesEdit},
   MonedasCotizacionesForm in 'Catalogos\MonedasCotizacionesForm.pas' {frmMonedasCotizaciones},
   RptAnexosProductosDM in 'Reportes\RptAnexosProductosDM.pas' {dmRptAnexosProductos: TDataModule},
-  RptColocacionAcumuladoDM in 'Reportes\RptColocacionAcumuladoDM.pas' {dmRptColocacionAcumulado: TDataModule};
+  RptColocacionAcumuladoDM in 'Reportes\RptColocacionAcumuladoDM.pas' {dmRptColocacionAcumulado: TDataModule},
+  PonerFechaActualForm in 'Catalogos\PonerFechaActualForm.pas' {FrmPoneFechaActual};
 
 {$R *.res}
 

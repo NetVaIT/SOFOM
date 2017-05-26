@@ -188,6 +188,7 @@ type
     ADODtStAdicionalesContratoAnexoContrato: TStringField;
     adodsMasterAnexo: TStringField;
     adodsMasterContrato: TStringField;
+    ADOQryAux2: TADOQuery;
     procedure DataModuleCreate(Sender: TObject);
     procedure actGeneraPreFacturasExecute(Sender: TObject);
     procedure ADODtStPrefacturasCFDINewRecord(DataSet: TDataSet);
@@ -207,10 +208,13 @@ type
     procedure Facturar(IDCFDIGen: Integer; var CFDICreado: Boolean;
       IDGenTipoDoc: integer);
     procedure RegistraBitacora(tipoRegistro: Integer);
+    function GetFFechaActual: TDAteTime;    //May 26/17
+
     { Private declarations }
   public
     { Public declarations }
     Property Facturando:boolean read FFacturando write FFacturando; //Abr 7/17 copiado de Pagos
+    Property FFechaActual:TDAteTime read GetFFechaActual;
   end;
 
 var
@@ -227,9 +231,9 @@ uses CuentasXCobrarForm, FacturasDM, _ConectionDmod;
 procedure TdmCuentasXCobrar.ActActualizaMoratoriosExecute(Sender: TObject);
 begin
   inherited;
-  ADOStrprcActGralMoratorios.Parameters.ParamByName('@Fecha').Value:=date; //Sin hora
+  ADOStrprcActGralMoratorios.Parameters.ParamByName('@Fecha').Value:=FFechaActual;// may 26/17 date;  //Sin hora
   ADOStrprcActGralMoratorios.ExecProc;
-  Showmessage('Se ejecutó proceso de Moratorios al día: '+ dateToStr(date)) ;
+  Showmessage('Se ejecutó proceso de Moratorios al día: '+ dateToStr(FFechaActual)) ; // may 26/17 era date
   RegistraBitacora(1);//Moratorios Abr 12/17
   adodsMaster.Refresh;
 
@@ -241,8 +245,8 @@ var
   FechaAux:TDateTime;
 begin
   inherited;
-  REs:=0;
-  ShowMessage('Calcula Cuentas X Cobrar pendientes de generar al dia de hoy '+dateTimeToSTR(date));
+  REs:=0;                                                                                 // may 26/17 era date
+  ShowMessage('Calcula Cuentas X Cobrar pendientes de generar al dia de hoy '+dateTimeToSTR(FFechaActual));
   { feb 15/17
   //SAca lo pendiente al dia para poder usar las fechas de corte pendientes y generar
   }
@@ -256,7 +260,7 @@ begin
                          '            and CXC.Fecha=AA.FechaCorte)'+
                          ' order by FechaCorte');
 
-  ADOQryAuxiliar.Parameters.ParamByName('FechaCorte').value:= date;      //Se buscan a al dìa de hoy
+  ADOQryAuxiliar.Parameters.ParamByName('FechaCorte').value:= FFechaActual;// may 26/17 date;      //Se buscan a al dìa de hoy  (Fecha Tabla)
 
   ADOQryAuxiliar.Open;
   while not ADOQryAuxiliar.eof do
@@ -298,8 +302,8 @@ begin
   ADOQryAuxiliar.sql.Add('IF not exists(Select * from BitacoraGeneracion where Tipo = '''+TipoTxt+''' and FechaGeneracion =:IdFechaHoy1 )'+
                          ' Insert into BitacoraGeneracion (Tipo, FechaGeneracion, IdUsuario) Values('''+tipotxt+''',:IdFechaHoy2, '  +
                          intToSTR(_DMConection.idUsuario)+' ) ' );
-  ADOQryAuxiliar.Parameters.ParamByName('IdFechaHoy1').Value:=date;
-  ADOQryAuxiliar.Parameters.ParamByName('IdFechaHoy2').Value:=date;
+  ADOQryAuxiliar.Parameters.ParamByName('IdFechaHoy1').Value:=FFechaActual;  //cambio May 28/17   date bitacora
+  ADOQryAuxiliar.Parameters.ParamByName('IdFechaHoy2').Value:=FFechaActual;  // cambio May 28/17   date bitacora
   Resp:=ADOQryAuxiliar.ExecSQL;
 //  if Resp=1 then
   //  showmessage('Lo creó');
@@ -380,6 +384,19 @@ begin
   FFacturando:=False;
 end;
 
+
+function TdmCuentasXCobrar.GetFFechaActual: TDAteTime;   //May 26/17   //Obtener fecha Pruebas sin Hora
+var d,m,a:word;
+begin
+
+  ADOQryAux2.Close;
+  ADOQryAux2.SQL.Clear;
+  ADOQryAux2.SQL.Add('SELECT [dbo].[GetDateAux] ()  as FechaAct ');
+  ADOQryAux2.open;
+  Result := ADOQryAux2.Fieldbyname('FechaAct').AsDateTime;
+  DEcodedate(Result,a,m,d);
+  result:=Encodedate(a,m,d);
+end;
 
 procedure TdmCuentasXCobrar.adodsMasterAfterOpen(DataSet: TDataSet);
 begin
@@ -527,7 +544,7 @@ begin
   DataSet.FieldByName('TipoComp').AsString:=SacaTipoComp(1); //DataSet.FieldByName('TipoComprobante').AsString;//'ingreso'; //columna TipoComprobante de Tabla CFDItipoDocumento
   //Verificar si serie yFolio se colocan aca o se colocan justo antes de generar el CFDI
   DataSet.FieldByName('Folio').AsInteger:=0; //Sin asignar aun
-  DataSet.FieldByName('Fecha').AsDateTime:=now; //Se supondría que se van a generar inmediatamente pero hay que verificar(por si se requiere cambio de fecha antes de generar)
+  DataSet.FieldByName('Fecha').AsDateTime:=now; //Prefactura Se supondría que se van a generar inmediatamente pero hay que verificar(por si se requiere cambio de fecha antes de generar)
   DataSet.FieldByName('LugarExpedicion').AsString:=ADODtStPersonaEmisorMunicipio.Value +', '+ADODtStPersonaEmisorEstado.Value;//'Zapopan, Jalisco' ; //Verificar si se saca de  la direccion del emisor?
 
 // DataSet.FieldByName('Serie').AsString:=

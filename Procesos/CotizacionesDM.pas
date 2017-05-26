@@ -219,7 +219,7 @@ begin
   inherited;
   adodsDetalleIdCotizacionDetalleEstatus.Value := 1; // Activo
   adodsDetalleIdUsuario.Value := _dmConection.IdUsuario;
-  adodsDetalleRegistro.Value := Date;
+  adodsDetalleRegistro.Value := _DmConection.LaFechaActual;//Date;  //May 26/17
   adodsDetalleIdMoneda.Value := _MONEDAS_ID_DOLAR_USA;
   adodsDetalleTipoCambio.Value := 19;
   adodsDetalleEnganchePorcentaje.Value := 0;
@@ -227,7 +227,7 @@ begin
   adodsDetalleDespositosNumero.Value := 2;
   adodsDetalleOpcionCompraPorcentaje.Value := 0;
   adodsDetalleValorResidualPorcentaje.Value := 0;
-  adodsDetalleFechaVencimiento.Value := Date;
+  adodsDetalleFechaVencimiento.Value := _DmConection.LaFechaActual;//Date;  //May 26/17
   adodsDetallePorcentajeDepreciacion.Value := _PORCENTAJE_DEPRECIACION;
   adodsDetallePorcentajeISR.Value := _PORCENTAJE_ISR;
   adodsDetallePorcentajeKE.Value := _PORCENTAJE_KE;
@@ -250,7 +250,7 @@ begin
   inherited;
   adodsMasterIdCotizacionEstatus.Value := 1; // Activo
   adodsmasterIdUsuario.Value := _dmConection.IdUsuario;
-  adodsMasterElaboracion.Value := Date;
+  adodsMasterElaboracion.Value :=  _DmConection.LaFechaActual;//Date;  //May 26/17
   adodsMasterVigencia.Value := IncDay(Date, _CONFIGURACION_DIAS_VIGENCIA);
   end;
 

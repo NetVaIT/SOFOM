@@ -19,7 +19,7 @@ inherited dmFacturas: TdmFacturas
       ', '#13#10'PorcentajeIVA, EmailCliente, UUID_TB, SelloCFD_TB, '#13#10'SelloSA' +
       'T_TB, CertificadoSAT_TB, FechaTimbrado_TB,'#13#10' IdCuentaXCobrar, Sa' +
       'ldoFactoraje'#13#10' from CFDI C'#13#10'-- where fecha>DATEADD(MM, DATEDIFF(' +
-      'MM,0,GETDATE()), 0)'#13#10'order by IDCFDIESTATUS, Fecha '
+      'MM,0, [dbo].getdateAux()), 0)'#13#10'order by IDCFDIESTATUS, Fecha '
     Left = 40
     object adodsMasterIdCFDI: TLargeintField
       FieldName = 'IdCFDI'

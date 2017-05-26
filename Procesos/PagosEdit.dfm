@@ -9,13 +9,13 @@ inherited FrmEdPagos: TFrmEdPagos
   inherited pcMain: TcxPageControl
     Width = 595
     Height = 461
-    ExplicitWidth = 589
-    ExplicitHeight = 438
+    ExplicitWidth = 595
+    ExplicitHeight = 461
     ClientRectBottom = 459
     ClientRectRight = 593
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 1
-      ExplicitTop = 30
+      ExplicitLeft = 2
+      ExplicitTop = 28
       ExplicitWidth = 591
       ExplicitHeight = 431
       object Label7: TLabel
@@ -44,7 +44,7 @@ inherited FrmEdPagos: TFrmEdPagos
         TabOrder = 0
         object Label1: TLabel
           Left = 27
-          Top = 122
+          Top = 119
           Width = 56
           Height = 13
           Caption = 'Fecha Pago'
@@ -277,15 +277,15 @@ inherited FrmEdPagos: TFrmEdPagos
   inherited pmlMain: TPanel
     Top = 461
     Width = 595
-    ExplicitTop = 438
-    ExplicitWidth = 589
+    ExplicitTop = 461
+    ExplicitWidth = 595
     inherited btnCancel: TButton
       Left = 513
-      ExplicitLeft = 507
+      ExplicitLeft = 513
     end
     inherited btnOk: TButton
       Left = 432
-      ExplicitLeft = 426
+      ExplicitLeft = 432
     end
   end
   inherited DataSource: TDataSource

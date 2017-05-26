@@ -3,6 +3,7 @@ object _dmConection: T_dmConection
   Height = 180
   Width = 227
   object ADOConnection: TADOConnection
+    Connected = True
     ConnectionString = 
       'Provider=SQLOLEDB.1;Password=as47Pw3K;Persist Security Info=True' +
       ';User ID=sa;Initial Catalog=SOFOM_DESA;Data Source=NAS1\COMPAC;U' +
@@ -47,6 +48,42 @@ object _dmConection: T_dmConection
     object adoqUsuariosPassword: TStringField
       FieldName = 'Password'
       Size = 15
+    end
+  end
+  object ADOQryFechaActual: TADOQuery
+    Connection = ADOConnection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'SELECT [dbo].[GetDateAux] ()  as FechaAct ')
+    Left = 139
+    Top = 72
+    object ADOQryFechaActualFechaAct: TDateTimeField
+      FieldName = 'FechaAct'
+      ReadOnly = True
+    end
+  end
+  object DSFechaActual: TDataSource
+    DataSet = ADOQryEdFecha
+    Left = 144
+    Top = 128
+  end
+  object ADOQryEdFecha: TADOQuery
+    Connection = ADOConnection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'SELECT* from FechaActualPruebas')
+    Left = 35
+    Top = 128
+    object ADOQryEdFechaFechaActual: TDateTimeField
+      FieldName = 'FechaActual'
+    end
+    object ADOQryEdFechaEsProduccion: TBooleanField
+      FieldName = 'EsProduccion'
+    end
+    object ADOQryEdFechaUsarFecha: TBooleanField
+      FieldName = 'UsarFecha'
     end
   end
 end

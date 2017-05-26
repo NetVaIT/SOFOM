@@ -873,7 +873,7 @@ inherited dmPagos: TdmPagos
       ', '#13#10'PorcentajeIVA, EmailCliente, UUID_TB, SelloCFD_TB, '#13#10'SelloSA' +
       'T_TB, CertificadoSAT_TB, FechaTimbrado_TB,'#13#10' IdCuentaXCobrar, Sa' +
       'ldoFactoraje'#13#10' from CFDI C'#13#10'where fecha>DATEADD(MM, DATEDIFF(MM,' +
-      '0,GETDATE()), 0)'#13#10'order by IDCFDIESTATUS, Fecha '
+      '0,[dbo].GetDateAux()), 0)'#13#10'order by IDCFDIESTATUS, Fecha '
     Parameters = <>
     Left = 480
     Top = 24

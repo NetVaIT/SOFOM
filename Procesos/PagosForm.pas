@@ -113,7 +113,7 @@ implementation
 
 {$R *.dfm}
 
-uses PagosDM, PagosEdit, AplicacionPagos;
+uses PagosDM, PagosEdit, AplicacionPagos, _ConectionDmod;
 
 procedure TFrmConPagos.DataSourceDataChange(Sender: TObject; Field: TField);
 begin
@@ -248,8 +248,8 @@ begin
   gEditForm:= TfrmEdPagos.Create(Self);
   TfrmEdPagos(gEditForm).DSPersonas.DataSet:=DSPersonas.DataSet;
   TfrmEdPagos(gEditForm).DSAnexos.DataSet:=DSAnexos.DataSet;  //Mar 9/17
-
-  DEcodeDate(Date,a,m,d);
+             //May 26/17  Date
+  DEcodeDate(_DmConection.LafechaActual,a,m,d);
   cxDtEdtDesde.Date:=EncodeDate(a,m,1);
   m:=m+1;
   if m=13 then

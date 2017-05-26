@@ -142,7 +142,7 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses SegmentosForm, AmortizacionesForm;
+uses SegmentosForm, AmortizacionesForm, _ConectionDmod;
 
 {$R *.dfm}
 
@@ -202,7 +202,7 @@ begin
   TfrmSegmentos(gGridForm).Monto := 0;
   TfrmSegmentos(gGridForm).TasaAnual := 0;
   TfrmSegmentos(gGridForm).Plazo := 1;
-  TfrmSegmentos(gGridForm).FechaInicial := Date;
+  TfrmSegmentos(gGridForm).FechaInicial := _DmConection.LaFechaActual;//Date;  //May 26/17
 //  IniSegmentos(0, 1, 0, 0);
 //  gFormDeatil1:= TfrmAmortizaciones.Create(Self);
 //  gFormDeatil1.DataSet := dxmAmortizaciones;

@@ -79,7 +79,7 @@ implementation
 
 {$R *.dfm}
 
-uses AplicacionesConsultaDM;
+uses AplicacionesConsultaDM, _ConectionDmod;
 
 procedure TfrmConaplicaciones.FormCreate(Sender: TObject);
 var
@@ -87,7 +87,8 @@ var
   FechaAux:TDAteTime;
 begin
   inherited;
-  DEcodeDate(Date,a,m,d);
+  // May 26/17      Date
+  DEcodeDate(_DmConection.LafechaActual,a,m,d);
 
   cxDtEdtInicio.Date:=EncodeDate(a,m,1);
   m:=m+1;

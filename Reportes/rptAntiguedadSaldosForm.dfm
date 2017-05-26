@@ -29,12 +29,12 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
     Width = 1363
     Height = 177
     ExplicitTop = 78
-    ExplicitWidth = 1192
+    ExplicitWidth = 1363
     ExplicitHeight = 177
     inherited cxGrid: TcxGrid
       Width = 1363
       Height = 177
-      ExplicitWidth = 1192
+      ExplicitWidth = 1363
       ExplicitHeight = 177
       inherited tvMaster: TcxGridDBTableView
         DataController.Options = [dcoAssignGroupingValues, dcoAssignMasterDetailKeys]
@@ -229,19 +229,19 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
     Top = 346
     Width = 1363
     ExplicitTop = 346
-    ExplicitWidth = 1192
+    ExplicitWidth = 1363
   end
   inherited pnlDetail2: TPanel
     Top = 302
     Width = 1363
     ExplicitTop = 302
-    ExplicitWidth = 1192
+    ExplicitWidth = 1363
   end
   inherited pnlDetail1: TPanel
     Top = 258
     Width = 1363
     ExplicitTop = 258
-    ExplicitWidth = 1192
+    ExplicitWidth = 1363
   end
   inherited pnlClose: TPanel
     Top = 387
@@ -253,7 +253,7 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
       41)
     inherited btnClose: TButton
       Left = 1278
-      ExplicitLeft = 1107
+      ExplicitLeft = 1278
     end
   end
   object PnlFiltros: TPanel [8]
@@ -264,7 +264,6 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
     Align = alTop
     ParentBackground = False
     TabOrder = 9
-    ExplicitWidth = 1192
     object PnlBusqueda: TPanel
       Left = 202
       Top = 1
@@ -1252,6 +1251,7 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42585.483476608800000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

@@ -4,7 +4,6 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
   ClientHeight = 428
   ClientWidth = 1072
   ExplicitWidth = 1078
-  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -154,7 +153,6 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 9
-    ExplicitTop = 28
     DesignSize = (
       1072
       44)
@@ -1545,6 +1543,7 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42709.621321724540000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

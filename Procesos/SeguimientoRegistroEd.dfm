@@ -1028,7 +1028,6 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
         item
           Expanded = False
           FieldName = 'IdCFDI'
-          Width = -1
           Visible = False
         end
         item

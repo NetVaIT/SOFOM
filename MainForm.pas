@@ -151,6 +151,9 @@ type
     dxBarLargeButton32: TdxBarLargeButton;
     actColocacionAcumulado: TAction;
     dxBarLargeButton33: TdxBarLargeButton;
+    dxBrLrgBtnCambioFecha: TdxBarLargeButton;
+    ActPoneFechaActual: TAction;
+    dxBrLrgBtnPoneFechaActual: TdxBarLargeButton;
     procedure actCatalogoExecute(Sender: TObject);
     procedure actIntervaCXPExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -158,6 +161,7 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure dxRibbon1ApplicationMenuClick(Sender: TdxCustomRibbon;
       var AHandled: Boolean);
+    procedure ActPoneFechaActualExecute(Sender: TObject);
   private
     { Private declarations }
   protected
@@ -185,7 +189,7 @@ uses UbicacionesDM, BancosDM, MonedasDM, PuestosDM, PlazasTurnosDM,
   AplicacionesConsultaDM, EstadosCuentaDM, ListasRestringidasDM,
   SeguimientoCobranzaDM, rptInformacionContratosDM, MonedasCotizacionesDM,
   RptCoberturaDM, RptExpedientesRecibidosDM, rptReporteCarteraDM,
-  RptAnexosProductosDM, RptColocacionAcumuladoDM;
+  RptAnexosProductosDM, RptColocacionAcumuladoDM, PonerFechaActualForm;
 //  EsquemaPagosDM, FormulasDM, ReglasNegocioDM,
 //  MovimientosTiposDM, RolesDM, InstruccionesDM,
 //  IncidenciasDM, InstruccionesTiposDM, PeriodosDM, MovimientosDM,
@@ -327,6 +331,16 @@ procedure TfrmMain.actIntervaCXPExecute(Sender: TObject);
 begin
   inherited;
   ExecuteUntilFinish('IntervaCXP.exe');
+end;
+
+procedure TfrmMain.ActPoneFechaActualExecute(Sender: TObject);
+var FrmPoneFechaActual:TFrmPoneFechaActual;
+begin
+  inherited;
+  FrmPoneFechaActual:=TFrmPoneFechaActual.Create(self);
+  FrmPoneFechaActual.ShowModal;
+  FrmPoneFechaActual.Free;
+
 end;
 
 procedure TfrmMain.ConfigControls;

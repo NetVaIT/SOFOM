@@ -40,6 +40,7 @@ type
     tvMasterPassword: TcxGridDBColumn;
     tvMasterLoginServidor: TcxGridDBColumn;
     tvMasterPasswordServidor: TcxGridDBColumn;
+    dxBrBtnPonerFecha: TdxBarButton;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }

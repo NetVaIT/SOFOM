@@ -123,7 +123,7 @@ implementation
 
 {$R *.dfm}
 
-uses CuentasXCobrarDM, CuentasXCobrarEdit;
+uses CuentasXCobrarDM, CuentasXCobrarEdit, _ConectionDmod;
 
 { TFrmConCuentasXCobrar }
 
@@ -174,7 +174,7 @@ begin     //Por terminar...
   dsauxiliar.DataSet.Close;
   TadoQuery(dsauxiliar.DataSet).SQL.Clear;
   TadoQuery(dsauxiliar.DataSet).SQL.Add(' Select * from BitacoraGeneracion where Tipo = '''+TipoTxt+''' and FechaGeneracion =:IdFechaHoy ');
-  TadoQuery(dsauxiliar.DataSet).Parameters.parambyname('IdFechahoy').Value:=date;
+  TadoQuery(dsauxiliar.DataSet).Parameters.parambyname('IdFechahoy').Value:=_Dmconection.LaFechaActual;//date;
   TadoQuery(dsauxiliar.DataSet).Open;
   if TadoQuery(dsauxiliar.DataSet).eof then  //No existe
      Result:=ivAlways
@@ -219,8 +219,8 @@ var         //mar 9/17
 begin
   inherited;
   gEditForm:= TFrmEdCuentasXCobrar.Create(Self);
-  //Desde aca Mar 9/17
-  DEcodeDate(Date,a,m,d);
+  //Desde aca Mar 9/17 Date //May 26/17
+  DEcodeDate(_DmConection.LafechaActual,a,m,d);
   cxDtEdtDesde.Date:=EncodeDate(a,m,1);
   m:=m+1;
   if m=13 then

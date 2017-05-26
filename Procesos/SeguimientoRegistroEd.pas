@@ -162,7 +162,7 @@ implementation
 
 {$R *.dfm}
 
-uses SeguimientoCobranzaDM;
+uses SeguimientoCobranzaDM, _ConectionDmod;
 
 procedure TFrmSeguimientoRegistro.ChckLstBxCondicionesClick(Sender: TObject);
 var Total,i, val:integer;
@@ -353,7 +353,7 @@ end;
 
 procedure TFrmSeguimientoRegistro.FormCreate(Sender: TObject);
 begin
-  DtTmDesde.Date:=Date;
+  DtTmDesde.Date:=_DmConection.LaFechaActual;//May 26/17 Date;
   DtTmHasta.Date:=date+1;
   dsDatossuc.DataSet.open;
   DSFuncXCli.DataSet.open;

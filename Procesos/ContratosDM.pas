@@ -244,7 +244,7 @@ begin
   if ProductosValido(IdAnexo) then
   begin
     // Generar Credito
-    FCreditosFecha := Date;
+    FCreditosFecha := _DmConection.LaFechaActual;//Date;  //May 26/17
     FCreditosFechaVencimiento := adodsAnexosFechaVencimiento.Value;
     FCreditosFechaCorte := adodsAnexosFechaCorte.Value;
     FCreditosMontoFiananciar := adodsAnexosMontoFinanciar.AsExtended;
@@ -413,7 +413,7 @@ begin
   inherited;
   adodsAnexosIdAnexoEstatus.Value := 1; // Activo
   adodsAnexosIdMoneda.Value := _MONEDAS_ID_DOLAR_USA;
-  adodsAnexosFecha.Value := Date;
+  adodsAnexosFecha.Value := _DmConection.LaFechaActual;//Date;  //May 26/17
   adodsAnexosTipoCambio.Value := 19;
   adodsAnexosEnganchePorcentaje.Value := 0;
   adodsAnexosComisionPorcentaje.Value := 0;
@@ -651,7 +651,7 @@ begin
     begin
       // Generar Credito
       IdAnexoCreditoAnterior := GetIdAnexoCreditoValido(IdAnexo);
-      FCreditosFecha := Date;
+      FCreditosFecha :=  _DmConection.LaFechaActual;//Date;  //May 26/17
       FCreditosFechaVencimiento := GetFechaDia(FCreditosFecha, adodsMasterDiaVencimiento.Value);
       FCreditosFechaCorte := GetFechaDia(FCreditosFecha, adodsMasterDiaCorte.Value);
       FCreditosMontoFiananciar := GetMonto(IdAnexo);

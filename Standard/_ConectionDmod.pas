@@ -20,6 +20,13 @@ type
     adoqUsuariosRazonSocial: TStringField;
     adoqUsuariosLogin: TStringField;
     adoqUsuariosPassword: TStringField;
+    ADOQryFechaActual: TADOQuery;
+    ADOQryFechaActualFechaAct: TDateTimeField;
+    DSFechaActual: TDataSource;
+    ADOQryEdFecha: TADOQuery;
+    ADOQryEdFechaFechaActual: TDateTimeField;
+    ADOQryEdFechaEsProduccion: TBooleanField;
+    ADOQryEdFechaUsarFecha: TBooleanField;
     procedure ADOConnectionConnectComplete(Connection: TADOConnection;
       const Error: Error; var EventStatus: TEventStatus);
     procedure ADOConnectionDisconnect(Connection: TADOConnection;
@@ -37,6 +44,7 @@ type
     FIdPersona: Integer;
     FUsuario: string;
     procedure SetExePath(const Value: string);
+    function GetFFechaActual: TDAteTime;
   public
     { Public declarations }
     function TryToConnect: Boolean;
@@ -53,6 +61,8 @@ type
 //    property Operador: String read FOperador;
 //    property NombreOperador: String read FNombreOperador;
     property ADMIN_PROD: String read FADMIN_PROD;
+
+    Property LaFechaActual:TDAteTime read GetFFechaActual;
   end;
 
 var
@@ -113,6 +123,18 @@ var
 begin
   vValor:= Copy(FADMIN_PROD, pTag, 1);
   Result := vValor = '1';
+end;
+
+function T_dmConection.GetFFechaActual: TDAteTime;    //May 26/17
+var
+  a,m,d:Word;
+begin
+  ADOQryFechaActual.close;
+  ADOQryFechaActual.open;
+  Result := ADOQryFechaActual.Fieldbyname('FechaAct').AsDateTime;
+  DEcodedate(Result,a,m,d);
+  result:=Encodedate(a,m,d);
+  ADOQryFechaActual.close;
 end;
 
 function T_dmConection.Login: Boolean;

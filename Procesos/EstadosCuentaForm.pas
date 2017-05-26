@@ -69,7 +69,7 @@ implementation
 
 {$R *.dfm}
 
-uses EstadosCuentaDM;
+uses EstadosCuentaDM, _ConectionDmod;
 
 { TFrmConEstadosCuenta }
 
@@ -82,7 +82,7 @@ end;
 procedure TFrmConEstadosCuenta.FormCreate(Sender: TObject);
 begin
   inherited;
-  dxBarDtCmbFechaCorte.Date:=DAte; //Verificar si dispara evento
+  dxBarDtCmbFechaCorte.Date:=_DmConection.LaFechaActual;//May 26/17DAte; //Verificar si dispara evento
 
   fFechaCorte:= dxBarDtCmbFechaCorte.Date;
 end;
