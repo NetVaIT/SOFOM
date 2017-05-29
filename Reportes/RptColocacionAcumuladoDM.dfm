@@ -55,8 +55,11 @@ inherited dmRptColocacionAcumulado: TdmRptColocacionAcumulado
     end
   end
   inherited ppReport: TppReport
+    Left = 248
     DataPipelineName = 'dbpReport'
-    inherited ppTitleBand1: TppTitleBand
+    inherited ppHeaderBand1: TppHeaderBand
+      PrintHeight = phDynamic
+      mmHeight = 26723
       inherited pplblTitle: TppLabel
         SaveOrder = -1
         LayerName = Foreground
@@ -64,9 +67,6 @@ inherited dmRptColocacionAcumulado: TdmRptColocacionAcumulado
       inherited ppImage1: TppImage
         LayerName = Foreground
       end
-    end
-    inherited ppHeaderBand1: TppHeaderBand
-      PrintHeight = phDynamic
       object ppCrossTab1: TppCrossTab
         UserName = 'CrossTab1'
         DataPipeline = dbpReport
@@ -75,7 +75,7 @@ inherited dmRptColocacionAcumulado: TdmRptColocacionAcumulado
         DataPipelineName = 'dbpReport'
         mmHeight = 5027
         mmLeft = 0
-        mmTop = 2117
+        mmTop = 21696
         mmWidth = 203200
         BandType = 0
         LayerName = Foreground
@@ -585,6 +585,9 @@ inherited dmRptColocacionAcumulado: TdmRptColocacionAcumulado
           end
         end
       end
+    end
+    inherited ppDetailBand1: TppDetailBand
+      mmHeight = 265
     end
     inherited ppFooterBand1: TppFooterBand
       inherited ppLineFooter: TppLine

@@ -56,7 +56,7 @@ object _dmConection: T_dmConection
     SQL.Strings = (
       'SELECT [dbo].[GetDateAux] ()  as FechaAct ')
     Left = 139
-    Top = 72
+    Top = 48
     object ADOQryFechaActualFechaAct: TDateTimeField
       FieldName = 'FechaAct'
       ReadOnly = True

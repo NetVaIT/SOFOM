@@ -11,10 +11,6 @@ uses
 type
   TDmReporteCarteraPDF = class(T_dmReportSOFOM)
     ppSystemVariable1: TppSystemVariable;
-    ppLabel1: TppLabel;
-    ppDBText1: TppDBText;
-    ppLabel2: TppLabel;
-    ppDBText2: TppDBText;
     ppLabel3: TppLabel;
     ppDBText3: TppDBText;
     ppLabel4: TppLabel;
@@ -227,6 +223,12 @@ type
     ppDBText27: TppDBText;
     ppLine3: TppLine;
     ADODtStRepHojaControlCteSaldoInsoluto: TFMTBCDField;
+    ppLabel1: TppLabel;
+    ppLabel2: TppLabel;
+    ADODtStSumasTotalesPorcCobradoPendiente: TFMTBCDField;
+    ADODtStSumasTotalesPorcXCobrar: TFMTBCDField;
+    ppDBText1: TppDBText;
+    ppDBText2: TppDBText;
     procedure CuotasReportCalcFields(DataSet: TDataSet);
   private
     { Private declarations }

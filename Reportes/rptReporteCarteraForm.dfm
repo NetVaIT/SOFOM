@@ -2,6 +2,7 @@ inherited FrmReporteCarteraGrid: TFrmReporteCarteraGrid
   Caption = 'FrmReporteCarteraGrid'
   ClientWidth = 1027
   ExplicitWidth = 1027
+  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -1066,6 +1067,7 @@ inherited FrmReporteCarteraGrid: TFrmReporteCarteraGrid
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42867.572603240740000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

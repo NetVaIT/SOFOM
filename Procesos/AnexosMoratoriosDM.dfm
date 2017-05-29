@@ -77,14 +77,13 @@ inherited dmAnexosMoratorios: TdmAnexosMoratorios
     end
   end
   object adodsEstatus: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
       'select IdAnexoMoratorioEstatus, Identificador, Descripcion from ' +
       'AnexosMoratoriosEstatus'
     Parameters = <>
-    Left = 88
+    Left = 96
     Top = 80
   end
   object adopUpdAmortizacionMoratorio: TADOStoredProc

@@ -1,15 +1,20 @@
 inherited _dmReportSOFOM: T_dmReportSOFOM
   OldCreateOrder = True
   inherited ppReport: TppReport
+    Units = utScreenPixels
     DataPipelineName = 'dbpReport'
     inherited ppTitleBand1: TppTitleBand
-      mmHeight = 35454
+      mmHeight = 265
+    end
+    inherited ppHeaderBand1: TppHeaderBand
+      mmHeight = 18521
       inherited pplblTitle: TppLabel
         SaveOrder = -1
-        mmHeight = 27252
-        mmLeft = 62706
-        mmTop = 4233
-        mmWidth = 135202
+        Anchors = [atLeft, atTop]
+        mmHeight = 18521
+        mmLeft = 44979
+        mmTop = 0
+        mmWidth = 153723
         LayerName = Foreground
       end
       object ppImage1: TppImage
@@ -3383,11 +3388,11 @@ inherited _dmReportSOFOM: T_dmReportSOFOM
           FA83085DC1E1075269AD9754D2DF47253096F46FD1DF29B4FF7F06460362098A
           25FD552AC7D2BF4F2530965452492595545246253096545249259554529752FA
           7F9BDF589A23AA3D690000000049454E44AE426082}
-        mmHeight = 35454
-        mmLeft = 7673
-        mmTop = 529
-        mmWidth = 50006
-        BandType = 1
+        mmHeight = 18521
+        mmLeft = 7938
+        mmTop = 0
+        mmWidth = 34396
+        BandType = 0
         LayerName = Foreground
       end
     end
@@ -3401,6 +3406,9 @@ inherited _dmReportSOFOM: T_dmReportSOFOM
       end
       inherited pplblPageNo: TppSystemVariable
         SaveOrder = -1
+        VarType = vtPageSetDesc
+        mmLeft = 185209
+        mmWidth = 16668
         LayerName = Foreground
       end
     end

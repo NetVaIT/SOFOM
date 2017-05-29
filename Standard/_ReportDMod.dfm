@@ -27,7 +27,8 @@ object _dmReport: T_dmReport
     PassSetting = psTwoPass
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
-    PrinterSetup.PaperName = 'Letter (8,5" x 11")'
+    PrinterSetup.Duplex = dpVertical
+    PrinterSetup.PaperName = 'Carta'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350
@@ -83,6 +84,12 @@ object _dmReport: T_dmReport
       mmBottomOffset = 0
       mmHeight = 10848
       mmPrintPosition = 0
+    end
+    object ppHeaderBand1: TppHeaderBand
+      Background.Brush.Style = bsClear
+      mmBottomOffset = 0
+      mmHeight = 11642
+      mmPrintPosition = 0
       object pplblTitle: TppLabel
         UserName = 'Titulo'
         Anchors = [atLeft, atTop, atRight, atBottom]
@@ -95,19 +102,13 @@ object _dmReport: T_dmReport
         Font.Style = [fsBold, fsItalic]
         TextAlignment = taCentered
         Transparent = True
-        mmHeight = 8202
+        mmHeight = 9000
         mmLeft = 1323
         mmTop = 1323
         mmWidth = 209021
-        BandType = 1
+        BandType = 0
         LayerName = Foreground
       end
-    end
-    object ppHeaderBand1: TppHeaderBand
-      Background.Brush.Style = bsClear
-      mmBottomOffset = 0
-      mmHeight = 7408
-      mmPrintPosition = 0
     end
     object ppDetailBand1: TppDetailBand
       Background1.Brush.Style = bsClear
