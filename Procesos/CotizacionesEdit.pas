@@ -47,6 +47,8 @@ type
     cxDBLookupComboBox1: TcxDBLookupComboBox;
     dsEstatus: TDataSource;
     dsCausa: TDataSource;
+    Label5: TLabel;
+    DBLookupComboBox1: TDBLookupComboBox;
   private
     FDataSetEstatus: TDataSet;
     FDataSetCausa: TDataSet;

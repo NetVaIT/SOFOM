@@ -48,6 +48,8 @@ type
     dxbbCambiarEstatus: TdxBarButton;
     tvMasterIdCotizacionCausa: TcxGridDBColumn;
     tvMasterCausa: TcxGridDBColumn;
+    tvMasterIdPersonaEmpleado: TcxGridDBColumn;
+    tvMasterEmpleado: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private

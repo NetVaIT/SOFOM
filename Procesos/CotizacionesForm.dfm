@@ -58,13 +58,13 @@ inherited frmCotizaciones: TfrmCotizaciones
           DataBinding.FieldName = 'IdCotizacionCausa'
           Visible = False
         end
+        object tvMasterIdPersonaEmpleado: TcxGridDBColumn
+          DataBinding.FieldName = 'IdPersonaEmpleado'
+          Visible = False
+        end
         object tvMasterIdUsuario: TcxGridDBColumn
           DataBinding.FieldName = 'IdUsuario'
           Visible = False
-        end
-        object tvMasterEstatus: TcxGridDBColumn
-          DataBinding.FieldName = 'Estatus'
-          Width = 100
         end
         object tvMasterIdentificador: TcxGridDBColumn
           DataBinding.FieldName = 'Identificador'
@@ -88,12 +88,20 @@ inherited frmCotizaciones: TfrmCotizaciones
         object tvMasterVigencia: TcxGridDBColumn
           DataBinding.FieldName = 'Vigencia'
         end
-        object tvMasterCausa: TcxGridDBColumn
-          DataBinding.FieldName = 'Causa'
+        object tvMasterEmpleado: TcxGridDBColumn
+          DataBinding.FieldName = 'Empleado'
+          Width = 200
         end
         object tvMasterUsuario: TcxGridDBColumn
           DataBinding.FieldName = 'Usuario'
           Width = 80
+        end
+        object tvMasterEstatus: TcxGridDBColumn
+          DataBinding.FieldName = 'Estatus'
+          Width = 100
+        end
+        object tvMasterCausa: TcxGridDBColumn
+          DataBinding.FieldName = 'Causa'
         end
       end
     end
@@ -126,9 +134,6 @@ inherited frmCotizaciones: TfrmCotizaciones
       Left = 560
       ExplicitLeft = 560
     end
-  end
-  inherited DataSource: TDataSource
-    DataSet = dmCotizaciones.adodsMaster
   end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
@@ -232,6 +237,7 @@ inherited frmCotizaciones: TfrmCotizaciones
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42711.658349664350000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

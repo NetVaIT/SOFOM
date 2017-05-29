@@ -3,7 +3,6 @@ object _dmConection: T_dmConection
   Height = 180
   Width = 227
   object ADOConnection: TADOConnection
-    Connected = True
     ConnectionString = 
       'Provider=SQLOLEDB.1;Password=as47Pw3K;Persist Security Info=True' +
       ';User ID=sa;Initial Catalog=SOFOM_DESA;Data Source=NAS1\COMPAC;U' +

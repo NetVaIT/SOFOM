@@ -85,6 +85,9 @@ type
     dsCotizacionesEstatus: TDataSource;
     adodsMasterEstatus: TStringField;
     adodsMasterCausa: TStringField;
+    adodsEmpleado: TADODataSet;
+    adodsMasterIdPersonaEmpleado: TIntegerField;
+    adodsMasterEmpleado: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
@@ -223,10 +226,12 @@ begin
   adodsDetalleIdMoneda.Value := _MONEDAS_ID_DOLAR_USA;
   adodsDetalleTipoCambio.Value := 19;
   adodsDetalleEnganchePorcentaje.Value := 0;
+  adodsDetalleGastos.Value := 0;
   adodsDetalleComisionPorcentaje.Value := 0;
   adodsDetalleDespositosNumero.Value := 2;
   adodsDetalleOpcionCompraPorcentaje.Value := 0;
   adodsDetalleValorResidualPorcentaje.Value := 0;
+  adodsDetalleImpactoISR.Value := 0;
   adodsDetalleFechaVencimiento.Value := _DmConection.LaFechaActual;//Date;  //May 26/17
   adodsDetallePorcentajeDepreciacion.Value := _PORCENTAJE_DEPRECIACION;
   adodsDetallePorcentajeISR.Value := _PORCENTAJE_ISR;

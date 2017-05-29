@@ -92,6 +92,8 @@ type
     cxDBTextEdit19: TcxDBTextEdit;
     cxDBTextEdit20: TcxDBTextEdit;
     cxDBCheckBox1: TcxDBCheckBox;
+    Label28: TLabel;
+    DBLookupComboBox3: TDBLookupComboBox;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -116,7 +118,10 @@ procedure TfrmAnexosEdit.actPostExecute(Sender: TObject);
 var
   IdAnexo: Integer;
 begin
-  IdAnexo := DataSource.DataSet.FieldByName('IdAnexo').Value;
+  if DataSource.DataSet.FieldByName('IdAnexo').IsNull then
+    IdAnexo := 0
+  else
+    IdAnexo := DataSource.DataSet.FieldByName('IdAnexo').Value;
   if dmProductos.GetCountProductos(IdAnexo) = 0 then
     MessageDlg(strNeedProduct, mtInformation, [mbOK], 0)
   else

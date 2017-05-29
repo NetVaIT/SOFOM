@@ -173,15 +173,16 @@ inherited dmContratos: TdmContratos
     OnNewRecord = adodsAnexosNewRecord
     CommandText = 
       'select IdAnexo, IdContrato, IdCotizacionDetalle, IdMoneda, IdAne' +
-      'xoEstatus, Identificador, Descripcion, Fecha, PrecioMoneda, Tipo' +
-      'Cambio, Precio, Impuesto, PrecioTotal, EnganchePorcentaje, Engan' +
-      'che, ComisionPorcentaje, Comision, ComisionImpuesto, Gastos, Gas' +
-      'tosImpuestos, '#13#10'DespositosNumero, Depositos, PagoIncial, OpcionC' +
-      'ompraPorcentaje, OpcionCompra, ValorResidualPorcentaje, ValorRes' +
-      'idual, MontoFinanciar, TasaAnual, Plazo, PagoMensual, ImpactoISR' +
-      ', '#13#10'FechaCorte, FechaVencimiento, TasaMoratoriaAnual, PagoInicia' +
-      'lCreado, CapitalCobrado, SaldoInsoluto, MontoVencido, CartaCompe' +
-      'nsacion'#13#10'from Anexos'#13#10'where IdContrato = :IdContrato'
+      'xoEstatus, IdPersonaEmpleado, Identificador, Descripcion, Fecha,' +
+      ' PrecioMoneda, TipoCambio, Precio, Impuesto, PrecioTotal, Enganc' +
+      'hePorcentaje, Enganche, ComisionPorcentaje, Comision, ComisionIm' +
+      'puesto, Gastos, GastosImpuestos, '#13#10'DespositosNumero, Depositos, ' +
+      'PagoIncial, OpcionCompraPorcentaje, OpcionCompra, ValorResidualP' +
+      'orcentaje, ValorResidual, MontoFinanciar, TasaAnual, Plazo, Pago' +
+      'Mensual, ImpactoISR, '#13#10'FechaCorte, FechaVencimiento, TasaMorator' +
+      'iaAnual, PagoInicialCreado, CapitalCobrado, SaldoInsoluto, Monto' +
+      'Vencido, CartaCompensacion'#13#10'from Anexos'#13#10'where IdContrato = :IdC' +
+      'ontrato'
     DataSource = dsMaster
     MasterFields = 'IdContrato'
     Parameters = <
@@ -219,20 +220,24 @@ inherited dmContratos: TdmContratos
     object adodsAnexosIdentificador: TStringField
       DisplayLabel = 'Anexo'
       FieldName = 'Identificador'
+      Required = True
       Size = 5
     end
     object adodsAnexosDescripcion: TStringField
       DisplayLabel = 'Descripci'#243'n'
       FieldName = 'Descripcion'
+      Required = True
       Size = 100
     end
     object adodsAnexosFecha: TDateTimeField
       FieldName = 'Fecha'
+      Required = True
       OnChange = adodsAnexosFechaChange
     end
     object adodsAnexosPrecioMoneda: TFMTBCDField
       DisplayLabel = 'Precio'
       FieldName = 'PrecioMoneda'
+      Required = True
       OnChange = adodsAnexosPrecioMonedaChange
       currency = True
       Precision = 18
@@ -469,8 +474,26 @@ inherited dmContratos: TdmContratos
       DisplayLabel = 'Carta compensaci'#243'n'
       FieldName = 'CartaCompensacion'
     end
+    object adodsAnexosIdPersonaEmpleado: TIntegerField
+      DisplayLabel = 'Vendedor'
+      FieldName = 'IdPersonaEmpleado'
+      Required = True
+      Visible = False
+    end
+    object adodsAnexosEmpleado: TStringField
+      DisplayLabel = 'Vendedor'
+      FieldKind = fkLookup
+      FieldName = 'Empleado'
+      LookupDataSet = adodsEmpleado
+      LookupKeyFields = 'IdPersona'
+      LookupResultField = 'RazonSocial'
+      KeyFields = 'IdPersonaEmpleado'
+      Size = 300
+      Lookup = True
+    end
   end
   object adodsMonedas: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdMoneda, Descripcion from Monedas'#13#10'order by Descripcion'
@@ -479,6 +502,7 @@ inherited dmContratos: TdmContratos
     Top = 144
   end
   object adodsAnexosEstatus: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdAnexoEstatus, Descripcion from AnexosEstatus'
@@ -1091,5 +1115,15 @@ inherited dmContratos: TdmContratos
       end>
     Left = 360
     Top = 352
+  end
+  object adodsEmpleado: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdPersona, RazonSocial from Personas'#13#10'where IdRolTipo = 5' +
+      #13#10'order by RazonSocial '
+    Parameters = <>
+    Left = 104
+    Top = 264
   end
 end

@@ -153,6 +153,9 @@ type
     adodsCreditosFechaCancelacion: TDateTimeField;
     adocGetSaldoActual: TADOCommand;
     adodsAnexosCartaCompensacion: TBooleanField;
+    adodsAnexosIdPersonaEmpleado: TIntegerField;
+    adodsEmpleado: TADODataSet;
+    adodsAnexosEmpleado: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsAnexosPrecioMonedaChange(Sender: TField);
     procedure adodsAnexosNewRecord(DataSet: TDataSet);
@@ -415,9 +418,15 @@ begin
   adodsAnexosIdMoneda.Value := _MONEDAS_ID_DOLAR_USA;
   adodsAnexosFecha.Value := _DmConection.LaFechaActual;//Date;  //May 26/17
   adodsAnexosTipoCambio.Value := 19;
+  adodsAnexosPrecioMoneda.Value := 0;
   adodsAnexosEnganchePorcentaje.Value := 0;
   adodsAnexosComisionPorcentaje.Value := 0;
+  adodsAnexosGastos.Value := 0;
   adodsAnexosDespositosNumero.Value := 2;
+  adodsAnexosOpcionCompraPorcentaje.Value := 0;
+  adodsAnexosValorResidualPorcentaje.Value := 0;
+  adodsAnexosImpactoISR.Value := 0;
+  adodsAnexosTasaMoratoriaAnual.Value := 0;
   adodsAnexosCartaCompensacion.Value := False;
 end;
 

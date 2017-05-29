@@ -1,6 +1,6 @@
 inherited dmCotizaciones: TdmCotizaciones
   OldCreateOrder = True
-  Height = 413
+  Height = 564
   Width = 532
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
@@ -8,26 +8,18 @@ inherited dmCotizaciones: TdmCotizaciones
     CommandText = 
       'SELECT Cotizaciones.IdCotizacion, Cotizaciones.IdPersona, Cotiza' +
       'ciones.IdCotizacionEstatus, Cotizaciones.IdCotizacionCausa, Coti' +
-      'zaciones.IdContratoTipo, Cotizaciones.IdUsuario, CotizacionesEst' +
-      'atus.Descripcion AS Estatus, Cotizaciones.Identificador, '#13#10'Cotiz' +
-      'aciones.Descripcion, Cotizaciones.Elaboracion, Cotizaciones.Vige' +
-      'ncia, CotizacionesCausas.Descripcion AS Causa'#13#10'FROM Cotizaciones' +
-      ' INNER JOIN'#13#10'CotizacionesEstatus ON Cotizaciones.IdCotizacionEst' +
-      'atus = CotizacionesEstatus.IdCotizacionEstatus LEFT JOIN'#13#10'Cotiza' +
-      'cionesCausas ON Cotizaciones.IdCotizacionCausa = CotizacionesCau' +
-      'sas.IdCotizacionCausa'#13#10
+      'zaciones.IdContratoTipo, Cotizaciones.IdPersonaEmpleado,'#13#10'Cotiza' +
+      'ciones.IdUsuario, CotizacionesEstatus.Descripcion AS Estatus, Co' +
+      'tizaciones.Identificador, Cotizaciones.Descripcion, Cotizaciones' +
+      '.Elaboracion, Cotizaciones.Vigencia, CotizacionesCausas.Descripc' +
+      'ion AS Causa'#13#10'FROM Cotizaciones INNER JOIN'#13#10'CotizacionesEstatus ' +
+      'ON Cotizaciones.IdCotizacionEstatus = CotizacionesEstatus.IdCoti' +
+      'zacionEstatus LEFT JOIN'#13#10'CotizacionesCausas ON Cotizaciones.IdCo' +
+      'tizacionCausa = CotizacionesCausas.IdCotizacionCausa'#13#10
     Left = 40
     object adodsMasterIdCotizacion: TAutoIncField
       FieldName = 'IdCotizacion'
       ReadOnly = True
-      Visible = False
-    end
-    object adodsMasterIdPersona: TIntegerField
-      FieldName = 'IdPersona'
-      Visible = False
-    end
-    object adodsMasterIdContratoTipo: TIntegerField
-      FieldName = 'IdContratoTipo'
       Visible = False
     end
     object adodsMasterIdCotizacionEstatus: TIntegerField
@@ -67,6 +59,12 @@ inherited dmCotizaciones: TdmCotizaciones
       FieldName = 'Vigencia'
       Required = True
     end
+    object adodsMasterIdPersona: TIntegerField
+      DisplayLabel = 'Cliente'
+      FieldName = 'IdPersona'
+      Required = True
+      Visible = False
+    end
     object adodsMasterCliente: TStringField
       FieldKind = fkLookup
       FieldName = 'Cliente'
@@ -77,6 +75,12 @@ inherited dmCotizaciones: TdmCotizaciones
       Required = True
       Size = 300
       Lookup = True
+    end
+    object adodsMasterIdContratoTipo: TIntegerField
+      DisplayLabel = 'Tipo de contrato'
+      FieldName = 'IdContratoTipo'
+      Required = True
+      Visible = False
     end
     object adodsMasterTipoContrato: TStringField
       DisplayLabel = 'Tipo de contrato'
@@ -90,7 +94,25 @@ inherited dmCotizaciones: TdmCotizaciones
       Size = 50
       Lookup = True
     end
+    object adodsMasterIdPersonaEmpleado: TIntegerField
+      DisplayLabel = 'Vendedor'
+      FieldName = 'IdPersonaEmpleado'
+      Required = True
+      Visible = False
+    end
+    object adodsMasterEmpleado: TStringField
+      DisplayLabel = 'Vendedor'
+      FieldKind = fkLookup
+      FieldName = 'Empleado'
+      LookupDataSet = adodsEmpleado
+      LookupKeyFields = 'IdPersona'
+      LookupResultField = 'RazonSocial'
+      KeyFields = 'IdPersonaEmpleado'
+      Size = 300
+      Lookup = True
+    end
     object adodsMasterCausa: TStringField
+      DisplayLabel = 'Observaci'#243'n'
       FieldName = 'Causa'
       Size = 50
     end
@@ -138,6 +160,7 @@ inherited dmCotizaciones: TdmCotizaciones
     end
   end
   object adodsPersonas: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -148,6 +171,7 @@ inherited dmCotizaciones: TdmCotizaciones
     Top = 72
   end
   object adodsContratosTipos: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdContratoTipo, Descripcion from ContratosTipos'
@@ -164,12 +188,13 @@ inherited dmCotizaciones: TdmCotizaciones
     Top = 144
   end
   object adodsUsuario: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdUsuario, Login from Usuarios'
     Parameters = <>
     Left = 48
-    Top = 184
+    Top = 248
   end
   object daMaster: TDataSource
     AutoEdit = False
@@ -184,7 +209,7 @@ inherited dmCotizaciones: TdmCotizaciones
     CommandText = 'select IdCotizacionEstatus, Descripcion from CotizacionesEstatus'
     Parameters = <>
     Left = 48
-    Top = 240
+    Top = 304
   end
   object adospUpdCotizacionesEstatus: TADOStoredProc
     Connection = _dmConection.ADOConnection
@@ -445,6 +470,7 @@ inherited dmCotizaciones: TdmCotizaciones
     object adodsDetalleTasaAnual: TBCDField
       DisplayLabel = 'Tasa anual'
       FieldName = 'TasaAnual'
+      Required = True
       OnChange = adodsDetallePrecioMonedaChange
       DisplayFormat = '0.00 %'
       EditFormat = '0.00'
@@ -452,6 +478,7 @@ inherited dmCotizaciones: TdmCotizaciones
     end
     object adodsDetallePlazo: TIntegerField
       FieldName = 'Plazo'
+      Required = True
       OnChange = adodsDetallePrecioMonedaChange
     end
     object adodsDetallePagoMensual: TFMTBCDField
@@ -562,11 +589,21 @@ inherited dmCotizaciones: TdmCotizaciones
         Value = Null
       end>
     Left = 48
-    Top = 312
+    Top = 376
   end
   object dsCotizacionesEstatus: TDataSource
     DataSet = adodsCotizacionesEstatus
     Left = 128
-    Top = 224
+    Top = 288
+  end
+  object adodsEmpleado: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdPersona, RazonSocial from Personas'#13#10'where IdRolTipo = 5' +
+      #13#10'order by RazonSocial '
+    Parameters = <>
+    Left = 48
+    Top = 192
   end
 end

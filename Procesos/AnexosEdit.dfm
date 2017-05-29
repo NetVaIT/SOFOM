@@ -27,15 +27,15 @@ inherited frmAnexosEdit: TfrmAnexosEdit
         Height = 218
         Width = 656
         object Label1: TLabel
-          Left = 117
+          Left = 147
           Top = 19
-          Width = 61
+          Width = 31
           Height = 13
-          Caption = 'Identificador'
+          Caption = 'Anexo'
           FocusControl = edtIdentificador
         end
         object Label2: TLabel
-          Left = 122
+          Left = 124
           Top = 46
           Width = 54
           Height = 13
@@ -96,6 +96,14 @@ inherited frmAnexosEdit: TfrmAnexosEdit
           Height = 13
           Caption = 'Estatus'
           FocusControl = DBLookupComboBox2
+        end
+        object Label28: TLabel
+          Left = 311
+          Top = 180
+          Width = 46
+          Height = 13
+          Caption = 'Vendedor'
+          FocusControl = DBLookupComboBox3
         end
         object edtIdentificador: TcxDBTextEdit
           Left = 184
@@ -188,13 +196,22 @@ inherited frmAnexosEdit: TfrmAnexosEdit
           Width = 121
         end
         object cxDBCheckBox1: TcxDBCheckBox
-          Left = 514
+          Left = 515
           Top = 100
           Caption = 'Carta compensaci'#243'n'
           DataBinding.DataField = 'CartaCompensacion'
           DataBinding.DataSource = dmContratos.dsAnexos
           TabOrder = 7
           Width = 121
+        end
+        object DBLookupComboBox3: TDBLookupComboBox
+          Left = 363
+          Top = 177
+          Width = 273
+          Height = 21
+          DataField = 'Empleado'
+          DataSource = DataSource
+          TabOrder = 11
         end
       end
       object cxGroupBox5: TcxGroupBox

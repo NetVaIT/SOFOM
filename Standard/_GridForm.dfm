@@ -1299,7 +1299,7 @@ object _frmGrid: T_frmGrid
       PrinterPage.PageSize.Y = 279400
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
-      ReportDocument.CreationDate = 42873.520375000000000000
+      ReportDocument.CreationDate = 42837.481034108790000000
       AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       OptionsView.Caption = False
       OptionsView.FilterBar = False

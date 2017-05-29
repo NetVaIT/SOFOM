@@ -56,6 +56,10 @@ inherited frmAnexos: TfrmAnexos
           DataBinding.FieldName = 'IdAnexoEstatus'
           Visible = False
         end
+        object tvMasterIdPersonaEmpleado: TcxGridDBColumn
+          DataBinding.FieldName = 'IdPersonaEmpleado'
+          Visible = False
+        end
         object tvMasterEstatus: TcxGridDBColumn
           DataBinding.FieldName = 'Estatus'
           Width = 60
@@ -73,6 +77,10 @@ inherited frmAnexos: TfrmAnexos
         end
         object tvMasterCartaCompensacion: TcxGridDBColumn
           DataBinding.FieldName = 'CartaCompensacion'
+        end
+        object tvMasterEmpleado: TcxGridDBColumn
+          DataBinding.FieldName = 'Empleado'
+          Width = 200
         end
         object tvMasterPrecioMoneda: TcxGridDBColumn
           DataBinding.FieldName = 'PrecioMoneda'
@@ -201,9 +209,6 @@ inherited frmAnexos: TfrmAnexos
       Left = 560
       ExplicitLeft = 560
     end
-  end
-  inherited DataSource: TDataSource
-    DataSet = dmContratos.adodsAnexos
   end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (

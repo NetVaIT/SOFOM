@@ -194,14 +194,20 @@ procedure T_frmGrid.DatasetEditExecute(Sender: TObject);
 begin
   DataSource.DataSet.Edit;
   if Assigned(gEditForm) then
+  begin
+    gEditForm.View:= False;
     gEditForm.ShowModal;
+  end;
 end;
 
 procedure T_frmGrid.DatasetInsertExecute(Sender: TObject);
 begin
   DataSource.DataSet.Insert;
   if Assigned(gEditForm) then
+  begin
+    gEditForm.View:= False;
     gEditForm.ShowModal;
+  end;
 end;
 
 procedure T_frmGrid.DatasetRefreshExecute(Sender: TObject);
