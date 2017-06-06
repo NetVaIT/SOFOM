@@ -154,6 +154,9 @@ type
     dxBrLrgBtnCambioFecha: TdxBarLargeButton;
     ActPoneFechaActual: TAction;
     dxBrLrgBtnPoneFechaActual: TdxBarLargeButton;
+    dxBarManagerBar2: TdxBar;
+    dxBarLargeButton36: TdxBarLargeButton;
+    actBuroCredito: TAction;
     procedure actCatalogoExecute(Sender: TObject);
     procedure actIntervaCXPExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -189,7 +192,8 @@ uses UbicacionesDM, BancosDM, MonedasDM, PuestosDM, PlazasTurnosDM,
   AplicacionesConsultaDM, EstadosCuentaDM, ListasRestringidasDM,
   SeguimientoCobranzaDM, rptInformacionContratosDM, MonedasCotizacionesDM,
   RptCoberturaDM, RptExpedientesRecibidosDM, rptReporteCarteraDM,
-  RptAnexosProductosDM, RptColocacionAcumuladoDM, PonerFechaActualForm;
+  RptAnexosProductosDM, RptColocacionAcumuladoDM, PonerFechaActualForm,
+  BuroCreditoDM;
 //  EsquemaPagosDM, FormulasDM, ReglasNegocioDM,
 //  MovimientosTiposDM, RolesDM, InstruccionesDM,
 //  IncidenciasDM, InstruccionesTiposDM, PeriodosDM, MovimientosDM,
@@ -277,7 +281,10 @@ begin
          gReport.Title := pCaption;
          gReport.Execute;
        end;
-
+   58: begin
+         gModulo := TdmBuroCredito.Create(Self);
+         TdmBuroCredito(gModulo).Execute;
+       end;
 //   51: begin
 //         gModulo := TdmMovimientosD.Create(Self);
 //         TdmMovimientosD(gModulo).TipoReporte:= trDispercion;

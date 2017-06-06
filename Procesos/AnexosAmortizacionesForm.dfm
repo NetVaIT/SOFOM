@@ -101,14 +101,14 @@ inherited frmAnexosAmortizaciones: TfrmAnexosAmortizaciones
           DataBinding.FieldName = 'DiasVencimiento'
           Width = 100
         end
-        object tvMasterMoratorioBase: TcxGridDBColumn
-          DataBinding.FieldName = 'MoratorioBase'
-        end
         object tvMasterMoratorio: TcxGridDBColumn
           DataBinding.FieldName = 'Moratorio'
         end
         object tvMasterMoratorioImpuesto: TcxGridDBColumn
           DataBinding.FieldName = 'MoratorioImpuesto'
+        end
+        object tvMasterSaldo: TcxGridDBColumn
+          DataBinding.FieldName = 'Saldo'
         end
       end
     end
@@ -222,7 +222,6 @@ inherited frmAnexosAmortizaciones: TfrmAnexosAmortizaciones
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42691.490725081020000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

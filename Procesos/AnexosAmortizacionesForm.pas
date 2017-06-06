@@ -51,10 +51,10 @@ type
     tvMasterFechaVencimiento: TcxGridDBColumn;
     tvMasterFechaMoratorio: TcxGridDBColumn;
     tvMasterDiasVencimiento: TcxGridDBColumn;
-    tvMasterMoratorioBase: TcxGridDBColumn;
     tvMasterMoratorio: TcxGridDBColumn;
     tvMasterMoratorioImpuesto: TcxGridDBColumn;
     dxbbMoratorios: TdxBarButton;
+    tvMasterSaldo: TcxGridDBColumn;
   private
     FactMoratorios: TBasicAction;
     procedure SetactMoratorios(const Value: TBasicAction);

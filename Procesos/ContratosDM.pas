@@ -133,7 +133,6 @@ type
     adoqGetFechaDiaFechaNueva: TDateTimeField;
     adodsAmortizacionesFechaMoratorio: TDateTimeField;
     adodsAmortizacionesDiasVencimiento: TIntegerField;
-    adodsAmortizacionesMoratorioBase: TFMTBCDField;
     adodsAmortizacionesMoratorio: TFMTBCDField;
     adodsAmortizacionesMoratorioImpuesto: TFMTBCDField;
     actAbonarCapital: TAction;
@@ -156,6 +155,7 @@ type
     adodsAnexosIdPersonaEmpleado: TIntegerField;
     adodsEmpleado: TADODataSet;
     adodsAnexosEmpleado: TStringField;
+    adodsAmortizacionesSaldo: TFMTBCDField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsAnexosPrecioMonedaChange(Sender: TField);
     procedure adodsAnexosNewRecord(DataSet: TDataSet);

@@ -68,6 +68,17 @@ type
     tvMasterRegimenFiscal: TcxGridDBColumn;
     tvMasterEstatusPersona: TcxGridDBColumn;
     tvMasterRiesgo: TcxGridDBColumn;
+    tvMasterIdBCCalificacion: TcxGridDBColumn;
+    tvMasterIdBCActividad1: TcxGridDBColumn;
+    tvMasterIdBCActividad2: TcxGridDBColumn;
+    tvMasterIdBCActividad3: TcxGridDBColumn;
+    tvMasterIdDocumentoLogo: TcxGridDBColumn;
+    tvMasterCalificacion: TcxGridDBColumn;
+    tvMasterActividad1: TcxGridDBColumn;
+    tvMasterActividad2: TcxGridDBColumn;
+    tvMasterActividad3: TcxGridDBColumn;
+    tvMasterCalificacionInicial: TcxGridDBColumn;
+    tvMasterCalificacionActual: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private

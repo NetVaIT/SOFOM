@@ -6,13 +6,14 @@ inherited dmPersona: TdmPersona
     CursorType = ctStatic
     OnNewRecord = adodsMasterNewRecord
     CommandText = 
-      'SELECT IdPersona, IdPersonaTipo, IdRazonSocialTipo, '#13#10'IdRolTipo,' +
-      ' IdSexo, IdEstadoCivil, IdPais, IdPoblacion, IdRiesgoTipo, RFC, ' +
-      'CURP,'#13#10' RazonSocial, Nombre, ApellidoPaterno, ApellidoMaterno,'#13#10 +
-      ' FechaNacimiento, LugarNacimiento, IdPersonaTitular, '#13#10'VigenciaF' +
-      'M34 ,IdMetodoPago, IdRegimenFiscal, IdDocumentoLogo,'#13#10' IdPersona' +
-      'Estatus, Identificador, NumCtaPagoCliente, '#13#10'SaldoCliente'#13#10'FROM ' +
-      'Personas'
+      'SELECT IdPersona, IdPersonaTipo, IdRolTipo, IdRazonSocialTipo, I' +
+      'dSexo, IdEstadoCivil, IdPais, IdPoblacion, IdRiesgoTipo, IdBCCal' +
+      'ificacion, IdBCActividad1, IdBCActividad2, IdBCActividad3, RFC, ' +
+      'CURP, RazonSocial, '#13#10'Nombre, ApellidoPaterno, ApellidoMaterno, F' +
+      'echaNacimiento, LugarNacimiento, VigenciaFM34, IdMetodoPago, IdR' +
+      'egimenFiscal, IdDocumentoLogo, IdPersonaEstatus, Identificador, ' +
+      'NumCtaPagoCliente, '#13#10'SaldoCliente, CalificacionInicial, Califica' +
+      'cionActual'#13#10'FROM Personas'
     Left = 56
     object adodsMasterIdPersona: TAutoIncField
       FieldName = 'IdPersona'
@@ -49,15 +50,39 @@ inherited dmPersona: TdmPersona
     end
     object adodsMasterIdMetodoPago: TIntegerField
       FieldName = 'IdMetodoPago'
+      Visible = False
     end
     object adodsMasterIdRegimenFiscal: TIntegerField
       FieldName = 'IdRegimenFiscal'
+      Visible = False
     end
     object adodsMasterIdPersonaEstatus: TIntegerField
       FieldName = 'IdPersonaEstatus'
+      Visible = False
+    end
+    object adodsMasterIdBCCalificacion: TIntegerField
+      FieldName = 'IdBCCalificacion'
+      Visible = False
     end
     object adodsMasterIdRiesgoTipo: TIntegerField
       FieldName = 'IdRiesgoTipo'
+      Visible = False
+    end
+    object adodsMasterIdBCActividad1: TIntegerField
+      FieldName = 'IdBCActividad1'
+      Visible = False
+    end
+    object adodsMasterIdBCActividad2: TIntegerField
+      FieldName = 'IdBCActividad2'
+      Visible = False
+    end
+    object adodsMasterIdBCActividad3: TIntegerField
+      FieldName = 'IdBCActividad3'
+      Visible = False
+    end
+    object adodsMasterIdDocumentoLogo: TIntegerField
+      FieldName = 'IdDocumentoLogo'
+      Visible = False
     end
     object adodsMasterIdentificador: TStringField
       FieldName = 'Identificador'
@@ -211,6 +236,18 @@ inherited dmPersona: TdmPersona
       Size = 15
       Lookup = True
     end
+    object adodsMasterCalificacion: TStringField
+      DisplayLabel = 'Calificaci'#243'n de cartera'
+      FieldKind = fkLookup
+      FieldName = 'Calificacion'
+      LookupDataSet = adodsBCCalificacion
+      LookupKeyFields = 'IdBCCalificacion'
+      LookupResultField = 'Identificador'
+      KeyFields = 'IdBCCalificacion'
+      Visible = False
+      Size = 5
+      Lookup = True
+    end
     object adodsMasterRiesgo: TStringField
       FieldKind = fkLookup
       FieldName = 'Riesgo'
@@ -218,8 +255,55 @@ inherited dmPersona: TdmPersona
       LookupKeyFields = 'IdRiesgoTipo'
       LookupResultField = 'Descripcion'
       KeyFields = 'IdRiesgoTipo'
+      Visible = False
       Size = 50
       Lookup = True
+    end
+    object adodsMasterActividad1: TStringField
+      DisplayLabel = 'Actividad 1'
+      FieldKind = fkLookup
+      FieldName = 'Actividad1'
+      LookupDataSet = adodsBCActividades1
+      LookupKeyFields = 'IdBCActividad'
+      LookupResultField = 'Identificador'
+      KeyFields = 'IdBCActividad1'
+      Visible = False
+      Size = 10
+      Lookup = True
+    end
+    object adodsMasterActividad2: TStringField
+      DisplayLabel = 'Actividad 2'
+      FieldKind = fkLookup
+      FieldName = 'Actividad2'
+      LookupDataSet = adodsBCActividades2
+      LookupKeyFields = 'IdBCActividad'
+      LookupResultField = 'Identificador'
+      KeyFields = 'IdBCActividad2'
+      Visible = False
+      Size = 10
+      Lookup = True
+    end
+    object adodsMasterActividad3: TStringField
+      DisplayLabel = 'Actividad 3'
+      FieldKind = fkLookup
+      FieldName = 'Actividad3'
+      LookupDataSet = adodsBCActividades3
+      LookupKeyFields = 'IdBCActividad'
+      LookupResultField = 'Identificador'
+      KeyFields = 'IdBCActividad3'
+      Visible = False
+      Size = 10
+      Lookup = True
+    end
+    object adodsMasterCalificacionInicial: TStringField
+      FieldName = 'CalificacionInicial'
+      Visible = False
+      Size = 2
+    end
+    object adodsMasterCalificacionActual: TStringField
+      FieldName = 'CalificacionActual'
+      Visible = False
+      Size = 2
     end
   end
   inherited adodsUpdate: TADODataSet
@@ -467,6 +551,7 @@ inherited dmPersona: TdmPersona
     Top = 360
   end
   object ADOdsPersonaEstatus: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -477,6 +562,7 @@ inherited dmPersona: TdmPersona
     Top = 432
   end
   object ADOdsMetodosPago: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -487,6 +573,7 @@ inherited dmPersona: TdmPersona
     Top = 432
   end
   object ADOdsRegimenFiscal: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -503,5 +590,45 @@ inherited dmPersona: TdmPersona
     Parameters = <>
     Left = 56
     Top = 432
+  end
+  object adodsBCCalificacion: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdBCCalificacion, Identificador, Descripcion from BCCalif' +
+      'icaciones'
+    Parameters = <>
+    Left = 160
+    Top = 192
+  end
+  object adodsBCActividades1: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdBCActividad, Identificador, Descripcion from BCActivida' +
+      'des'#13#10'ORDER BY Identificador'
+    Parameters = <>
+    Left = 160
+    Top = 248
+  end
+  object adodsBCActividades2: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdBCActividad, Identificador, Descripcion from BCActivida' +
+      'des'#13#10'ORDER BY Identificador'
+    Parameters = <>
+    Left = 160
+    Top = 296
+  end
+  object adodsBCActividades3: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdBCActividad, Identificador, Descripcion from BCActivida' +
+      'des'#13#10'ORDER BY Identificador'
+    Parameters = <>
+    Left = 160
+    Top = 352
   end
 end

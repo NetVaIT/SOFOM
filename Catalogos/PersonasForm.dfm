@@ -3,6 +3,8 @@ inherited frmPersonas: TfrmPersonas
   Caption = 'frmPersonas'
   ClientHeight = 428
   ClientWidth = 645
+  ExplicitWidth = 651
+  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -39,12 +41,12 @@ inherited frmPersonas: TfrmPersonas
           DataBinding.FieldName = 'IdPersona'
           Visible = False
         end
-        object tvMasterIdRolTipo: TcxGridDBColumn
-          DataBinding.FieldName = 'IdRolTipo'
-          Visible = False
-        end
         object tvMasterIdPersonaTipo: TcxGridDBColumn
           DataBinding.FieldName = 'IdPersonaTipo'
+          Visible = False
+        end
+        object tvMasterIdRolTipo: TcxGridDBColumn
+          DataBinding.FieldName = 'IdRolTipo'
           Visible = False
         end
         object tvMasterIdRazonSocialTipo: TcxGridDBColumn
@@ -67,10 +69,6 @@ inherited frmPersonas: TfrmPersonas
           DataBinding.FieldName = 'IdPoblacion'
           Visible = False
         end
-        object tvMasterIdRiesgoTipo: TcxGridDBColumn
-          DataBinding.FieldName = 'IdRiesgoTipo'
-          Visible = False
-        end
         object tvMasterIdMetodoPago: TcxGridDBColumn
           DataBinding.FieldName = 'IdMetodoPago'
           Visible = False
@@ -81,6 +79,30 @@ inherited frmPersonas: TfrmPersonas
         end
         object tvMasterIdPersonaEstatus: TcxGridDBColumn
           DataBinding.FieldName = 'IdPersonaEstatus'
+          Visible = False
+        end
+        object tvMasterIdBCCalificacion: TcxGridDBColumn
+          DataBinding.FieldName = 'IdBCCalificacion'
+          Visible = False
+        end
+        object tvMasterIdRiesgoTipo: TcxGridDBColumn
+          DataBinding.FieldName = 'IdRiesgoTipo'
+          Visible = False
+        end
+        object tvMasterIdBCActividad1: TcxGridDBColumn
+          DataBinding.FieldName = 'IdBCActividad1'
+          Visible = False
+        end
+        object tvMasterIdBCActividad2: TcxGridDBColumn
+          DataBinding.FieldName = 'IdBCActividad2'
+          Visible = False
+        end
+        object tvMasterIdBCActividad3: TcxGridDBColumn
+          DataBinding.FieldName = 'IdBCActividad3'
+          Visible = False
+        end
+        object tvMasterIdDocumentoLogo: TcxGridDBColumn
+          DataBinding.FieldName = 'IdDocumentoLogo'
           Visible = False
         end
         object tvMasterIdentificador: TcxGridDBColumn
@@ -176,9 +198,33 @@ inherited frmPersonas: TfrmPersonas
           DataBinding.FieldName = 'EstatusPersona'
           Width = 100
         end
+        object tvMasterCalificacion: TcxGridDBColumn
+          DataBinding.FieldName = 'Calificacion'
+          Visible = False
+        end
         object tvMasterRiesgo: TcxGridDBColumn
           DataBinding.FieldName = 'Riesgo'
           Width = 100
+        end
+        object tvMasterActividad1: TcxGridDBColumn
+          DataBinding.FieldName = 'Actividad1'
+          Visible = False
+        end
+        object tvMasterActividad2: TcxGridDBColumn
+          DataBinding.FieldName = 'Actividad2'
+          Visible = False
+        end
+        object tvMasterActividad3: TcxGridDBColumn
+          DataBinding.FieldName = 'Actividad3'
+          Visible = False
+        end
+        object tvMasterCalificacionInicial: TcxGridDBColumn
+          DataBinding.FieldName = 'CalificacionInicial'
+          Visible = False
+        end
+        object tvMasterCalificacionActual: TcxGridDBColumn
+          DataBinding.FieldName = 'CalificacionActual'
+          Visible = False
         end
       end
     end
@@ -252,6 +298,7 @@ inherited frmPersonas: TfrmPersonas
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42664.566576585640000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

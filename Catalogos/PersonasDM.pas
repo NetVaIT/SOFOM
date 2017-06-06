@@ -82,6 +82,21 @@ type
     adodsMasterIdentificador: TStringField;
     adodsRiesgosTipos: TADODataSet;
     adodsMasterRiesgo: TStringField;
+    adodsMasterIdBCCalificacion: TIntegerField;
+    adodsMasterIdBCActividad1: TIntegerField;
+    adodsMasterIdBCActividad2: TIntegerField;
+    adodsMasterIdBCActividad3: TIntegerField;
+    adodsMasterIdDocumentoLogo: TIntegerField;
+    adodsMasterCalificacionInicial: TStringField;
+    adodsMasterCalificacionActual: TStringField;
+    adodsBCCalificacion: TADODataSet;
+    adodsBCActividades1: TADODataSet;
+    adodsBCActividades2: TADODataSet;
+    adodsBCActividades3: TADODataSet;
+    adodsMasterCalificacion: TStringField;
+    adodsMasterActividad1: TStringField;
+    adodsMasterActividad2: TStringField;
+    adodsMasterActividad3: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsPersonaRolesNewRecord(DataSet: TDataSet);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
@@ -157,10 +172,10 @@ begin
   TfrmPersonas(gGridForm).RolTipo := RolTipo;
   TfrmPersonas(gGridForm).actAccionistas := actAccionistas;
   // Busqueda
-  SQLSelect:= 'SELECT IdPersona, IdPersonaTipo, IdRolTipo, IdRazonSocialTipo, IdSexo, IdEstadoCivil, IdPais, IdPoblacion, IdRiesgoTipo, RFC, CURP, ' +
-  'RazonSocial, Nombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, LugarNacimiento, VigenciaFM34 ' +
-  ',IdMetodoPago, IdRegimenFiscal, IdDocumentoLogo, IdPersonaEstatus, Identificador, NumCtaPagoCliente, SaldoCliente '+ //Nov 28/16
-  'FROM Personas ';
+  SQLSelect:= 'SELECT IdPersona, IdPersonaTipo, IdRolTipo, IdRazonSocialTipo, IdSexo, IdEstadoCivil, IdPais, IdPoblacion, IdRiesgoTipo, IdBCCalificacion, IdBCActividad1, IdBCActividad2, IdBCActividad3, RFC, CURP, RazonSocial, ' +
+  'Nombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, LugarNacimiento, VigenciaFM34, IdMetodoPago, IdRegimenFiscal, IdDocumentoLogo, IdPersonaEstatus, Identificador, NumCtaPagoCliente, ' +
+  'SaldoCliente, CalificacionInicial, CalificacionActual ' +
+  'FROM Personas';
   SQLOrderBy:= 'ORDER BY RazonSocial';
   actSearch.Execute;
 end;

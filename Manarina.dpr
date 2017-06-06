@@ -220,7 +220,9 @@ uses
   MonedasCotizacionesForm in 'Catalogos\MonedasCotizacionesForm.pas' {frmMonedasCotizaciones},
   RptAnexosProductosDM in 'Reportes\RptAnexosProductosDM.pas' {dmRptAnexosProductos: TDataModule},
   RptColocacionAcumuladoDM in 'Reportes\RptColocacionAcumuladoDM.pas' {dmRptColocacionAcumulado: TDataModule},
-  PonerFechaActualForm in 'Catalogos\PonerFechaActualForm.pas' {FrmPoneFechaActual};
+  PonerFechaActualForm in 'Catalogos\PonerFechaActualForm.pas' {FrmPoneFechaActual},
+  BuroCreditoDM in 'Procesos\BuroCreditoDM.pas' {dmBuroCredito: TDataModule},
+  BuroCreditoFiltroForm in 'Procesos\BuroCreditoFiltroForm.pas' {frmBuroCreditoFiltro};
 
 {$R *.res}
 

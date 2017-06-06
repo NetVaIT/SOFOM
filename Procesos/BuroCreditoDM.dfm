@@ -1,3 +1,604 @@
 inherited dmBuroCredito: TdmBuroCredito
   OldCreateOrder = True
+  object adoqConfiguracion: TADOQuery
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      
+        'SELECT BCClaveInstitucion, BCInstitucion, BCTipo FROM Configurac' +
+        'iones')
+    Left = 48
+    Top = 88
+    object adoqConfiguracionBCClaveInstitucion: TStringField
+      FieldName = 'BCClaveInstitucion'
+      Size = 4
+    end
+    object adoqConfiguracionBCInstitucion: TStringField
+      FieldName = 'BCInstitucion'
+      Size = 300
+    end
+    object adoqConfiguracionBCTipo: TStringField
+      FieldName = 'BCTipo'
+      Size = 3
+    end
+  end
+  object adoqCredito: TADOQuery
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    Parameters = <
+      item
+        Name = 'Fecha'
+        DataType = ftDateTime
+        NumericScale = 3
+        Precision = 23
+        Size = 16
+        Value = Null
+      end>
+    SQL.Strings = (
+      
+        'SELECT        Anexos.IdAnexo, Contratos.IdPersona, Personas.RFC,' +
+        ' Contratos.Identificador+Anexos.Identificador AS Contrato, '#39#39' AS' +
+        ' ContratoAnterior, Anexos.Fecha AS FechaApertura, Anexos.Plazo, '
+      
+        '                         BCTiposCreditos.Identificador AS TipoCr' +
+        'edito, Anexos.MontoFinanciar AS SaldoInicial, '#39'001'#39' AS Moneda, A' +
+        'nexos.Plazo AS NumeroPagos, '#39'30'#39' AS FrecuenciaPagos, Anexos.Pago' +
+        'Mensual AS ImportePagos, NULL '
+      
+        '                         AS FechaUltimoPago, NULL AS FechaReestr' +
+        'uctura, 0 AS PagoFinalMorosa, NULL AS FechaLiquidacion, 0 AS Qui' +
+        'ta, 0 AS Dacion, 0 AS Quebranto, '#39'   '#39' AS ClaveObservacion, '#39' '#39' ' +
+        'AS CreditoEspecial, NULL '
+      
+        '                         AS FechaPrimerIncumplimiento, Anexos.Sa' +
+        'ldoInsoluto, 0 AS CreditoMaximo, NULL AS FechacarteraVencida,'
+      
+        #9#9#9#9#9#9' Amortizaciones.FechaVencimiento, Amortizaciones.DiasVenci' +
+        'miento, Amortizaciones.Saldo, Amortizaciones.Interes '
+      'FROM            v_AnexosAmortizaciones Amortizaciones'
+      
+        'INNER JOIN AnexosCreditos ON Amortizaciones.IdAnexoCredito = Ane' +
+        'xosCreditos.IdAnexoCredito'
+      'INNER JOIN Anexos ON AnexosCreditos.IdAnexo = Anexos.IdAnexo'
+      
+        'INNER JOIN Contratos ON Anexos.IdContrato = Contratos.IdContrato' +
+        ' '
+      'INNER JOIN Personas ON Contratos.IdPersona = Personas.IdPersona '
+      
+        'INNER JOIN ContratosTipos ON Contratos.IdContratoTipo = Contrato' +
+        'sTipos.IdContratoTipo '
+      
+        'INNER JOIN BCTiposCreditos ON ContratosTipos.IdBCTipoCredito = B' +
+        'CTiposCreditos.IdBCTipoCredito '
+      'WHERE Amortizaciones.FechaVencimiento <= :Fecha'
+      'AND Amortizaciones.Saldo <> 0'
+      'ORDER BY Contrato, Amortizaciones.FechaVencimiento')
+    Left = 136
+    Top = 88
+    object adoqCreditoIdAnexo: TAutoIncField
+      FieldName = 'IdAnexo'
+      ReadOnly = True
+    end
+    object adoqCreditoIdPersona: TIntegerField
+      FieldName = 'IdPersona'
+    end
+    object adoqCreditoRFC: TStringField
+      FieldName = 'RFC'
+      Size = 13
+    end
+    object adoqCreditoContrato: TStringField
+      FieldName = 'Contrato'
+      ReadOnly = True
+      Size = 25
+    end
+    object adoqCreditoContratoAnterior: TStringField
+      FieldName = 'ContratoAnterior'
+      ReadOnly = True
+      Size = 1
+    end
+    object adoqCreditoFechaApertura: TDateTimeField
+      FieldName = 'FechaApertura'
+    end
+    object adoqCreditoPlazo: TIntegerField
+      FieldName = 'Plazo'
+    end
+    object adoqCreditoTipoCredito: TIntegerField
+      FieldName = 'TipoCredito'
+    end
+    object adoqCreditoSaldoInicial: TFMTBCDField
+      FieldName = 'SaldoInicial'
+      Precision = 18
+      Size = 6
+    end
+    object adoqCreditoMoneda: TStringField
+      FieldName = 'Moneda'
+      ReadOnly = True
+      Size = 3
+    end
+    object adoqCreditoNumeroPagos: TIntegerField
+      FieldName = 'NumeroPagos'
+    end
+    object adoqCreditoFrecuenciaPagos: TStringField
+      FieldName = 'FrecuenciaPagos'
+      ReadOnly = True
+      Size = 2
+    end
+    object adoqCreditoImportePagos: TFMTBCDField
+      FieldName = 'ImportePagos'
+      Precision = 18
+      Size = 6
+    end
+    object adoqCreditoFechaUltimoPago: TIntegerField
+      FieldName = 'FechaUltimoPago'
+      ReadOnly = True
+    end
+    object adoqCreditoFechaReestructura: TIntegerField
+      FieldName = 'FechaReestructura'
+      ReadOnly = True
+    end
+    object adoqCreditoPagoFinalMorosa: TIntegerField
+      FieldName = 'PagoFinalMorosa'
+      ReadOnly = True
+    end
+    object adoqCreditoFechaLiquidacion: TIntegerField
+      FieldName = 'FechaLiquidacion'
+      ReadOnly = True
+    end
+    object adoqCreditoQuita: TIntegerField
+      FieldName = 'Quita'
+      ReadOnly = True
+    end
+    object adoqCreditoDacion: TIntegerField
+      FieldName = 'Dacion'
+      ReadOnly = True
+    end
+    object adoqCreditoQuebranto: TIntegerField
+      FieldName = 'Quebranto'
+      ReadOnly = True
+    end
+    object adoqCreditoClaveObservacion: TStringField
+      FieldName = 'ClaveObservacion'
+      ReadOnly = True
+      Size = 3
+    end
+    object adoqCreditoCreditoEspecial: TStringField
+      FieldName = 'CreditoEspecial'
+      ReadOnly = True
+      Size = 1
+    end
+    object adoqCreditoFechaPrimerIncumplimiento: TIntegerField
+      FieldName = 'FechaPrimerIncumplimiento'
+      ReadOnly = True
+    end
+    object adoqCreditoSaldoInsoluto: TFMTBCDField
+      FieldName = 'SaldoInsoluto'
+      Precision = 18
+      Size = 6
+    end
+    object adoqCreditoCreditoMaximo: TIntegerField
+      FieldName = 'CreditoMaximo'
+      ReadOnly = True
+    end
+    object adoqCreditoFechacarteraVencida: TIntegerField
+      FieldName = 'FechacarteraVencida'
+      ReadOnly = True
+    end
+    object adoqCreditoFechaVencimiento: TDateTimeField
+      FieldName = 'FechaVencimiento'
+    end
+    object adoqCreditoDiasVencimiento: TIntegerField
+      FieldName = 'DiasVencimiento'
+      ReadOnly = True
+    end
+    object adoqCreditoSaldo: TFMTBCDField
+      FieldName = 'Saldo'
+      ReadOnly = True
+      Precision = 18
+      Size = 6
+    end
+    object adoqCreditoInteres: TFMTBCDField
+      FieldName = 'Interes'
+      Precision = 18
+      Size = 6
+    end
+  end
+  object adoqPersonas: TADOQuery
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    Parameters = <
+      item
+        Name = 'IdPersona'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    SQL.Strings = (
+      
+        'SELECT        Personas.IdPersona, Personas.RFC, Personas.CURP, C' +
+        'ASE WHEN IdPersonaTipo = 2 THEN dbo.BCTexto(RazonSocial) ELSE '#39#39 +
+        ' END AS Empresa, CASE WHEN IdPersonaTipo = 2 THEN '#39#39' ELSE dbo.BC' +
+        'Texto(Nombre) END AS PrimerNombre, '
+      
+        '                         CASE WHEN IdPersonaTipo = 2 THEN '#39#39' ELS' +
+        'E '#39#39' END AS SegindoNombre, CASE WHEN IdPersonaTipo = 2 THEN '#39#39' E' +
+        'LSE dbo.BCTexto(ApellidoPaterno) END AS ApellidoPaterno, '
+      
+        '                         CASE WHEN IdPersonaTipo = 2 THEN '#39#39' ELS' +
+        'E dbo.BCTexto(ApellidoMaterno) END AS ApellidoMaterno, Nacion.BC' +
+        'Codigo AS Nacionalidad, BCCalificaciones.Identificador AS Califi' +
+        'cacionCartera, '
+      
+        '                         BCActividades1.Identificador AS Activid' +
+        'ad1, BCActividades3.Identificador AS Actividad2, BCActividades2.' +
+        'Identificador AS Actividad3,'
+      
+        '                         Domicilios.Dirrecion1, Domicilios.Dirre' +
+        'cion2, Domicilios.Colonia, Domicilios.Municipio, Domicilios.Ciud' +
+        'ad, '
+      
+        '                         Domicilios.Estado, Domicilios.CodigoPos' +
+        'tal, Telefonos.Lada+Telefonos.Telefono AS Telefono, '#39#39' AS Extens' +
+        'ion,'
+      
+        #9#9#9#9#9#9' Faxes.Lada+Faxes.Telefono AS Fax, Personas.IdPersonaTipo ' +
+        'AS TipoCliente, '#39#39' AS EstadoPaisExtranjero, Domicilios.Pais'
+      'FROM            Personas INNER JOIN'
+      
+        '                         Paises AS Nacion ON Personas.IdPais = N' +
+        'acion.IdPais INNER JOIN'
+      
+        '                         BCCalificaciones ON Personas.IdBCCalifi' +
+        'cacion = BCCalificaciones.IdBCCalificacion LEFT OUTER JOIN'
+      
+        '                         BCActividades AS BCActividades1 ON Pers' +
+        'onas.IdBCActividad1 = BCActividades1.IdBCActividad LEFT OUTER JO' +
+        'IN'
+      
+        '                         BCActividades AS BCActividades2 ON Pers' +
+        'onas.IdBCActividad2 = BCActividades2.IdBCActividad LEFT OUTER JO' +
+        'IN'
+      
+        '                         BCActividades AS BCActividades3 ON Pers' +
+        'onas.IdBCActividad3 = BCActividades3.IdBCActividad LEFT OUTER JO' +
+        'IN'
+      
+        #9#9#9#9#9#9' Telefonos ON Personas.IdPersona = Telefonos.IdPersona AND' +
+        ' Telefonos.IdTelefonoTipo = 4 AND Telefonos.Predeterminado = 1 L' +
+        'EFT OUTER JOIN'
+      
+        #9#9#9#9#9#9' Telefonos Faxes ON Personas.IdPersona = Faxes.IdPersona A' +
+        'ND Telefonos.IdTelefonoTipo = 5 AND Telefonos.Predeterminado = 1'
+      #9#9#9#9#9#9' LEFT OUTER JOIN'
+      '('
+      
+        'SELECT       PersonasDomicilios.IdPersona, dbo.BCTexto(Domicilio' +
+        's.Calle + '#39' '#39' + Domicilios.NoExterior + '#39' '#39' + Domicilios.NoInter' +
+        'ior) AS Dirrecion1, '#39#39' AS Dirrecion2, dbo.BCTexto(Domicilios.Col' +
+        'onia) AS Colonia, dbo.BCTexto(Municipios.Descripcion) AS Municip' +
+        'io, dbo.BCTexto(Poblaciones.Descripcion) AS Ciudad, '
+      
+        '                         Estados.BCCodigo AS Estado, Paises.BCCo' +
+        'digo AS Pais, Domicilios.CodigoPostal'
+      'FROM            PersonasDomicilios INNER JOIN'
+      
+        '                         Domicilios ON PersonasDomicilios.IdDomi' +
+        'cilio = Domicilios.IdDomicilio INNER JOIN'
+      
+        '                         Paises ON Domicilios.IdPais = Paises.Id' +
+        'Pais INNER JOIN'
+      
+        '                         Estados ON Domicilios.IdEstado = Estado' +
+        's.IdEstado INNER JOIN'
+      
+        '                         Municipios ON Domicilios.IdMunicipio = ' +
+        'Municipios.IdMunicipio INNER JOIN'
+      
+        '                         Poblaciones ON Domicilios.IdPoblacion =' +
+        ' Poblaciones.IdPoblacion'
+      'WHERE        (PersonasDomicilios.Predeterminado = 1)'
+      ') Domicilios ON Personas.IdPersona = Domicilios.IdPersona'
+      'WHERE Personas.IdPersona = :IdPersona')
+    Left = 48
+    Top = 144
+    object adoqPersonasIdPersona: TAutoIncField
+      FieldName = 'IdPersona'
+      ReadOnly = True
+    end
+    object adoqPersonasRFC: TStringField
+      FieldName = 'RFC'
+      Size = 13
+    end
+    object adoqPersonasCURP: TStringField
+      FieldName = 'CURP'
+      Size = 18
+    end
+    object adoqPersonasEmpresa: TStringField
+      FieldName = 'Empresa'
+      ReadOnly = True
+      Size = 300
+    end
+    object adoqPersonasPrimerNombre: TStringField
+      FieldName = 'PrimerNombre'
+      ReadOnly = True
+      Size = 100
+    end
+    object adoqPersonasSegindoNombre: TStringField
+      FieldName = 'SegindoNombre'
+      ReadOnly = True
+      Size = 1
+    end
+    object adoqPersonasApellidoPaterno: TStringField
+      FieldName = 'ApellidoPaterno'
+      ReadOnly = True
+      Size = 100
+    end
+    object adoqPersonasApellidoMaterno: TStringField
+      FieldName = 'ApellidoMaterno'
+      ReadOnly = True
+      Size = 100
+    end
+    object adoqPersonasNacionalidad: TStringField
+      FieldName = 'Nacionalidad'
+      Size = 2
+    end
+    object adoqPersonasCalificacionCartera: TStringField
+      FieldName = 'CalificacionCartera'
+      Size = 5
+    end
+    object adoqPersonasActividad1: TStringField
+      FieldName = 'Actividad1'
+      Size = 10
+    end
+    object adoqPersonasActividad2: TStringField
+      FieldName = 'Actividad2'
+      Size = 10
+    end
+    object adoqPersonasActividad3: TStringField
+      FieldName = 'Actividad3'
+      Size = 10
+    end
+    object adoqPersonasDirrecion1: TStringField
+      FieldName = 'Dirrecion1'
+      ReadOnly = True
+      Size = 52
+    end
+    object adoqPersonasDirrecion2: TStringField
+      FieldName = 'Dirrecion2'
+      ReadOnly = True
+      Size = 1
+    end
+    object adoqPersonasColonia: TStringField
+      FieldName = 'Colonia'
+      Size = 50
+    end
+    object adoqPersonasMunicipio: TStringField
+      FieldName = 'Municipio'
+      Size = 50
+    end
+    object adoqPersonasCiudad: TStringField
+      FieldName = 'Ciudad'
+      Size = 150
+    end
+    object adoqPersonasEstado: TStringField
+      FieldName = 'Estado'
+      Size = 4
+    end
+    object adoqPersonasCodigoPostal: TStringField
+      FieldName = 'CodigoPostal'
+      Size = 10
+    end
+    object adoqPersonasTelefono: TStringField
+      FieldName = 'Telefono'
+      ReadOnly = True
+      Size = 30
+    end
+    object adoqPersonasExtension: TStringField
+      FieldName = 'Extension'
+      ReadOnly = True
+      Size = 1
+    end
+    object adoqPersonasFax: TStringField
+      FieldName = 'Fax'
+      ReadOnly = True
+      Size = 30
+    end
+    object adoqPersonasTipoCliente: TIntegerField
+      FieldName = 'TipoCliente'
+    end
+    object adoqPersonasEstadoPaisExtranjero: TStringField
+      FieldName = 'EstadoPaisExtranjero'
+      ReadOnly = True
+      Size = 1
+    end
+    object adoqPersonasPais: TStringField
+      FieldName = 'Pais'
+      Size = 2
+    end
+  end
+  object adoqAccionistas: TADOQuery
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    Parameters = <
+      item
+        Name = 'IdPersona'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    SQL.Strings = (
+      
+        'SELECT        PersonasAccionistas.IdPersonaAccionista, Personas.' +
+        'RFC, Personas.CURP, CASE WHEN IdPersonaTipo = 2 THEN dbo.BCTexto' +
+        '(RazonSocial) ELSE '#39#39' END AS Empresa, CASE WHEN IdPersonaTipo = ' +
+        '2 THEN '#39#39' ELSE dbo.BCTexto(Nombre) END AS PrimerNombre, '
+      
+        '                         CASE WHEN IdPersonaTipo = 2 THEN '#39#39' ELS' +
+        'E '#39#39' END AS SegindoNombre, CASE WHEN IdPersonaTipo = 2 THEN '#39#39' E' +
+        'LSE dbo.BCTexto(ApellidoPaterno) END AS ApellidoPaterno, '
+      
+        '                         CASE WHEN IdPersonaTipo = 2 THEN '#39#39' ELS' +
+        'E dbo.BCTexto(ApellidoMaterno) END AS ApellidoMaterno, '
+      #9#9#9#9#9#9' PersonasAccionistas.Porcentaje,'
+      
+        '                         Domicilios.Dirrecion1, Domicilios.Dirre' +
+        'cion2, Domicilios.Colonia, Domicilios.Municipio, Domicilios.Ciud' +
+        'ad, '
+      
+        '                         Domicilios.Estado, Domicilios.CodigoPos' +
+        'tal, Telefonos.Lada+Telefonos.Telefono AS Telefono, '#39#39' AS Extens' +
+        'ion,'
+      
+        #9#9#9#9#9#9' Faxes.Lada+Faxes.Telefono AS Fax, Personas.IdPersonaTipo ' +
+        'AS Tipo, '#39#39' AS EstadoPaisExtranjero, Domicilios.Pais'
+      'FROM            PersonasAccionistas INNER JOIN'
+      
+        '                         Personas ON PersonasAccionistas.IdAccio' +
+        'nista = Personas.IdPersona LEFT OUTER JOIN'
+      
+        #9#9#9#9#9#9' Telefonos ON Personas.IdPersona = Telefonos.IdPersona AND' +
+        ' Telefonos.IdTelefonoTipo = 4 AND Telefonos.Predeterminado = 1 L' +
+        'EFT OUTER JOIN'
+      
+        #9#9#9#9#9#9' Telefonos Faxes ON Personas.IdPersona = Faxes.IdPersona A' +
+        'ND Telefonos.IdTelefonoTipo = 5 AND Telefonos.Predeterminado = 1'
+      #9#9#9#9#9#9' LEFT OUTER JOIN'
+      '('
+      
+        'SELECT       PersonasDomicilios.IdPersona, dbo.BCTexto(Domicilio' +
+        's.Calle + '#39' '#39' + Domicilios.NoExterior + '#39' '#39' + Domicilios.NoInter' +
+        'ior) AS Dirrecion1, '#39#39' AS Dirrecion2, dbo.BCTexto(Domicilios.Col' +
+        'onia) AS Colonia, dbo.BCTexto(Municipios.Descripcion) AS Municip' +
+        'io, dbo.BCTexto(Poblaciones.Descripcion) AS Ciudad, '
+      
+        '                         Estados.BCCodigo AS Estado, Paises.BCCo' +
+        'digo AS Pais, Domicilios.CodigoPostal'
+      'FROM            PersonasDomicilios INNER JOIN'
+      
+        '                         Domicilios ON PersonasDomicilios.IdDomi' +
+        'cilio = Domicilios.IdDomicilio INNER JOIN'
+      
+        '                         Paises ON Domicilios.IdPais = Paises.Id' +
+        'Pais INNER JOIN'
+      
+        '                         Estados ON Domicilios.IdEstado = Estado' +
+        's.IdEstado INNER JOIN'
+      
+        '                         Municipios ON Domicilios.IdMunicipio = ' +
+        'Municipios.IdMunicipio INNER JOIN'
+      
+        '                         Poblaciones ON Domicilios.IdPoblacion =' +
+        ' Poblaciones.IdPoblacion'
+      'WHERE        (PersonasDomicilios.Predeterminado = 1)'
+      ') Domicilios ON Personas.IdPersona = Domicilios.IdPersona'
+      'WHERE PersonasAccionistas.Porcentaje > 10'
+      'AND PersonasAccionistas.IdPersona = :IdPersona')
+    Left = 136
+    Top = 144
+    object adoqAccionistasIdPersonaAccionista: TAutoIncField
+      FieldName = 'IdPersonaAccionista'
+      ReadOnly = True
+    end
+    object adoqAccionistasRFC: TStringField
+      FieldName = 'RFC'
+      Size = 13
+    end
+    object adoqAccionistasCURP: TStringField
+      FieldName = 'CURP'
+      Size = 18
+    end
+    object adoqAccionistasEmpresa: TStringField
+      FieldName = 'Empresa'
+      ReadOnly = True
+      Size = 255
+    end
+    object adoqAccionistasPrimerNombre: TStringField
+      FieldName = 'PrimerNombre'
+      ReadOnly = True
+      Size = 255
+    end
+    object adoqAccionistasSegindoNombre: TStringField
+      FieldName = 'SegindoNombre'
+      ReadOnly = True
+      Size = 1
+    end
+    object adoqAccionistasApellidoPaterno: TStringField
+      FieldName = 'ApellidoPaterno'
+      ReadOnly = True
+      Size = 255
+    end
+    object adoqAccionistasApellidoMaterno: TStringField
+      FieldName = 'ApellidoMaterno'
+      ReadOnly = True
+      Size = 255
+    end
+    object adoqAccionistasPorcentaje: TBCDField
+      FieldName = 'Porcentaje'
+      Precision = 19
+    end
+    object adoqAccionistasDirrecion1: TStringField
+      FieldName = 'Dirrecion1'
+      ReadOnly = True
+      Size = 255
+    end
+    object adoqAccionistasDirrecion2: TStringField
+      FieldName = 'Dirrecion2'
+      ReadOnly = True
+      Size = 1
+    end
+    object adoqAccionistasColonia: TStringField
+      FieldName = 'Colonia'
+      ReadOnly = True
+      Size = 255
+    end
+    object adoqAccionistasMunicipio: TStringField
+      FieldName = 'Municipio'
+      ReadOnly = True
+      Size = 255
+    end
+    object adoqAccionistasCiudad: TStringField
+      FieldName = 'Ciudad'
+      ReadOnly = True
+      Size = 255
+    end
+    object adoqAccionistasEstado: TStringField
+      FieldName = 'Estado'
+      Size = 4
+    end
+    object adoqAccionistasCodigoPostal: TStringField
+      FieldName = 'CodigoPostal'
+      Size = 10
+    end
+    object adoqAccionistasTelefono: TStringField
+      FieldName = 'Telefono'
+      ReadOnly = True
+      Size = 30
+    end
+    object adoqAccionistasExtension: TStringField
+      FieldName = 'Extension'
+      ReadOnly = True
+      Size = 1
+    end
+    object adoqAccionistasFax: TStringField
+      FieldName = 'Fax'
+      ReadOnly = True
+      Size = 30
+    end
+    object adoqAccionistasTipo: TIntegerField
+      FieldName = 'Tipo'
+    end
+    object adoqAccionistasEstadoPaisExtranjero: TStringField
+      FieldName = 'EstadoPaisExtranjero'
+      ReadOnly = True
+      Size = 1
+    end
+    object adoqAccionistasPais: TStringField
+      FieldName = 'Pais'
+      Size = 2
+    end
+  end
 end

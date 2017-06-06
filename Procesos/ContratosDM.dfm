@@ -569,14 +569,13 @@ inherited dmContratos: TdmContratos
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'select IdAnexoAmortizacion, IdAnexoCredito, IdAnexoSegmento, Per' +
+      'SELECT IdAnexoAmortizacion, IdAnexoCredito, IdAnexoSegmento, Per' +
       'iodo, FechaCorte, FechaVencimiento, TasaAnual, SaldoInicial, Pag' +
       'o, Capital, CapitalImpuesto, CapitalTotal, Interes, InteresImpue' +
-      'sto, InteresTotal, ImpactoISR, PagoTotal, SaldoFinal, '#13#10'FechaMor' +
-      'atorio, DATEDIFF(DAY, AnexosAmortizaciones.FechaVencimiento, Fec' +
-      'haMoratorio) AS DiasVencimiento, MoratorioBase, Moratorio, Morat' +
-      'orioImpuesto from AnexosAmortizaciones'#13#10'where IdAnexoCredito = :' +
-      'IdAnexoCredito'
+      'sto, InteresTotal, '#13#10'ImpactoISR, PagoTotal, SaldoFinal, FechaMor' +
+      'atorio, DiasVencimiento, Moratorio, MoratorioImpuesto, Saldo'#13#10'FR' +
+      'OM v_AnexosAmortizaciones'#13#10'WHERE IdAnexoCredito = :IdAnexoCredit' +
+      'o'
     DataSource = dsCreditos
     MasterFields = 'IdAnexoCredito'
     Parameters = <
@@ -703,13 +702,6 @@ inherited dmContratos: TdmContratos
       FieldName = 'DiasVencimiento'
       ReadOnly = True
     end
-    object adodsAmortizacionesMoratorioBase: TFMTBCDField
-      DisplayLabel = 'Base para moratorios'
-      FieldName = 'MoratorioBase'
-      currency = True
-      Precision = 18
-      Size = 6
-    end
     object adodsAmortizacionesMoratorio: TFMTBCDField
       FieldName = 'Moratorio'
       currency = True
@@ -719,6 +711,13 @@ inherited dmContratos: TdmContratos
     object adodsAmortizacionesMoratorioImpuesto: TFMTBCDField
       DisplayLabel = 'IVA Moratorio'
       FieldName = 'MoratorioImpuesto'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object adodsAmortizacionesSaldo: TFMTBCDField
+      FieldName = 'Saldo'
+      ReadOnly = True
       currency = True
       Precision = 18
       Size = 6
