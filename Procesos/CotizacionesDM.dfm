@@ -160,7 +160,6 @@ inherited dmCotizaciones: TdmCotizaciones
     end
   end
   object adodsPersonas: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -171,7 +170,6 @@ inherited dmCotizaciones: TdmCotizaciones
     Top = 72
   end
   object adodsContratosTipos: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdContratoTipo, Descripcion from ContratosTipos'
@@ -188,7 +186,6 @@ inherited dmCotizaciones: TdmCotizaciones
     Top = 144
   end
   object adodsUsuario: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdUsuario, Login from Usuarios'

@@ -79,21 +79,21 @@ inherited dmRepEstadoCta: TdmRepEstadoCta
     Template.FileName = 'C:\Desarrollo\SOFOM\Reportes\rptEstadoCuenta2.rtm'
     DataPipelineName = 'ppDBPplnDetalle'
     inherited ppTitleBand1: TppTitleBand
-      mmHeight = 37571
+      mmHeight = 0
+    end
+    inherited ppHeaderBand1: TppHeaderBand
+      mmHeight = 60590
       inherited pplblTitle: TppLabel
         SaveOrder = -1
         Caption = 'Estado de Cuenta'
         VerticalAlignment = avCenter
-        mmHeight = 30957
-        mmTop = 3969
+        mmHeight = 17994
+        mmTop = 527
         LayerName = Foreground
       end
       inherited ppImage1: TppImage
         LayerName = Foreground
       end
-    end
-    inherited ppHeaderBand1: TppHeaderBand
-      mmHeight = 40746
       object ppLabel1: TppLabel
         UserName = 'Label1'
         AutoSize = False
@@ -106,7 +106,7 @@ inherited dmRepEstadoCta: TdmRepEstadoCta
         Transparent = True
         mmHeight = 4763
         mmLeft = 8467
-        mmTop = 25929
+        mmTop = 45009
         mmWidth = 30692
         BandType = 0
         LayerName = Foreground
@@ -125,7 +125,7 @@ inherited dmRepEstadoCta: TdmRepEstadoCta
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
         mmLeft = 40481
-        mmTop = 25929
+        mmTop = 45009
         mmWidth = 32544
         BandType = 0
         LayerName = Foreground
@@ -142,7 +142,7 @@ inherited dmRepEstadoCta: TdmRepEstadoCta
         Transparent = True
         mmHeight = 4763
         mmLeft = 8467
-        mmTop = 19844
+        mmTop = 38924
         mmWidth = 23019
         BandType = 0
         LayerName = Foreground
@@ -161,7 +161,7 @@ inherited dmRepEstadoCta: TdmRepEstadoCta
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
         mmLeft = 40481
-        mmTop = 19844
+        mmTop = 38924
         mmWidth = 32544
         BandType = 0
         LayerName = Foreground
@@ -178,7 +178,7 @@ inherited dmRepEstadoCta: TdmRepEstadoCta
         Transparent = True
         mmHeight = 4763
         mmLeft = 8467
-        mmTop = 12965
+        mmTop = 32045
         mmWidth = 20108
         BandType = 0
         LayerName = Foreground
@@ -197,7 +197,7 @@ inherited dmRepEstadoCta: TdmRepEstadoCta
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
         mmLeft = 39688
-        mmTop = 12965
+        mmTop = 32045
         mmWidth = 31750
         BandType = 0
         LayerName = Foreground
@@ -214,7 +214,7 @@ inherited dmRepEstadoCta: TdmRepEstadoCta
         Transparent = True
         mmHeight = 4763
         mmLeft = 127000
-        mmTop = 4233
+        mmTop = 24373
         mmWidth = 25665
         BandType = 0
         LayerName = Foreground
@@ -234,7 +234,7 @@ inherited dmRepEstadoCta: TdmRepEstadoCta
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
         mmLeft = 153723
-        mmTop = 4233
+        mmTop = 24373
         mmWidth = 44186
         BandType = 0
         LayerName = Foreground
@@ -251,7 +251,7 @@ inherited dmRepEstadoCta: TdmRepEstadoCta
         Transparent = True
         mmHeight = 4763
         mmLeft = 127000
-        mmTop = 10319
+        mmTop = 30459
         mmWidth = 25665
         BandType = 0
         LayerName = Foreground
@@ -271,7 +271,7 @@ inherited dmRepEstadoCta: TdmRepEstadoCta
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
         mmLeft = 153723
-        mmTop = 10319
+        mmTop = 30459
         mmWidth = 44186
         BandType = 0
         LayerName = Foreground
@@ -288,7 +288,7 @@ inherited dmRepEstadoCta: TdmRepEstadoCta
         Transparent = True
         mmHeight = 4763
         mmLeft = 127000
-        mmTop = 24871
+        mmTop = 45011
         mmWidth = 25665
         BandType = 0
         LayerName = Foreground
@@ -308,7 +308,7 @@ inherited dmRepEstadoCta: TdmRepEstadoCta
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
         mmLeft = 153723
-        mmTop = 24871
+        mmTop = 45011
         mmWidth = 44186
         BandType = 0
         LayerName = Foreground
@@ -325,7 +325,7 @@ inherited dmRepEstadoCta: TdmRepEstadoCta
         Transparent = True
         mmHeight = 4763
         mmLeft = 127000
-        mmTop = 17463
+        mmTop = 37603
         mmWidth = 25665
         BandType = 0
         LayerName = Foreground
@@ -345,7 +345,7 @@ inherited dmRepEstadoCta: TdmRepEstadoCta
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
         mmLeft = 153723
-        mmTop = 17463
+        mmTop = 37603
         mmWidth = 44186
         BandType = 0
         LayerName = Foreground
@@ -362,7 +362,7 @@ inherited dmRepEstadoCta: TdmRepEstadoCta
         Transparent = True
         mmHeight = 4763
         mmLeft = 7673
-        mmTop = 1852
+        mmTop = 20932
         mmWidth = 20108
         BandType = 0
         LayerName = Foreground
@@ -381,7 +381,7 @@ inherited dmRepEstadoCta: TdmRepEstadoCta
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
         mmLeft = 39688
-        mmTop = 1852
+        mmTop = 20932
         mmWidth = 76729
         BandType = 0
         LayerName = Foreground
@@ -398,7 +398,7 @@ inherited dmRepEstadoCta: TdmRepEstadoCta
         Transparent = True
         mmHeight = 4763
         mmLeft = 7673
-        mmTop = 7144
+        mmTop = 26224
         mmWidth = 20108
         BandType = 0
         LayerName = Foreground
@@ -417,7 +417,7 @@ inherited dmRepEstadoCta: TdmRepEstadoCta
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
         mmLeft = 39688
-        mmTop = 7144
+        mmTop = 26224
         mmWidth = 35454
         BandType = 0
         LayerName = Foreground
@@ -436,7 +436,7 @@ inherited dmRepEstadoCta: TdmRepEstadoCta
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
         mmLeft = 102923
-        mmTop = 12965
+        mmTop = 32045
         mmWidth = 5821
         BandType = 0
         LayerName = Foreground
@@ -453,7 +453,7 @@ inherited dmRepEstadoCta: TdmRepEstadoCta
         Transparent = True
         mmHeight = 4763
         mmLeft = 79375
-        mmTop = 12965
+        mmTop = 32045
         mmWidth = 23019
         BandType = 0
         LayerName = Foreground
@@ -471,7 +471,7 @@ inherited dmRepEstadoCta: TdmRepEstadoCta
         Transparent = True
         mmHeight = 4763
         mmLeft = 6350
-        mmTop = 34925
+        mmTop = 55330
         mmWidth = 13494
         BandType = 0
         LayerName = Foreground
@@ -489,7 +489,7 @@ inherited dmRepEstadoCta: TdmRepEstadoCta
         Transparent = True
         mmHeight = 4763
         mmLeft = 23800
-        mmTop = 34925
+        mmTop = 55330
         mmWidth = 22754
         BandType = 0
         LayerName = Foreground
@@ -506,7 +506,7 @@ inherited dmRepEstadoCta: TdmRepEstadoCta
         Transparent = True
         mmHeight = 4763
         mmLeft = 57944
-        mmTop = 34925
+        mmTop = 55330
         mmWidth = 62706
         BandType = 0
         LayerName = Foreground
@@ -524,7 +524,7 @@ inherited dmRepEstadoCta: TdmRepEstadoCta
         Transparent = True
         mmHeight = 4763
         mmLeft = 162190
-        mmTop = 34925
+        mmTop = 55330
         mmWidth = 26988
         BandType = 0
         LayerName = Foreground
@@ -542,20 +542,19 @@ inherited dmRepEstadoCta: TdmRepEstadoCta
         Transparent = True
         mmHeight = 4763
         mmLeft = 124619
-        mmTop = 34925
+        mmTop = 55330
         mmWidth = 25929
         BandType = 0
         LayerName = Foreground
       end
       object ppLine1: TppLine
         UserName = 'LineFooter1'
-        Anchors = [atLeft, atTop, atRight, atBottom]
         Pen.Color = clGray
         Pen.Width = 2
         Weight = 1.500000000000000000
-        mmHeight = 3969
-        mmLeft = 1321
-        mmTop = 39423
+        mmHeight = 529
+        mmLeft = 1323
+        mmTop = 60056
         mmWidth = 200555
         BandType = 0
         LayerName = Foreground

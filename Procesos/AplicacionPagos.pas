@@ -475,7 +475,7 @@ end;
 
 procedure TFrmAplicacionPago.SpdBtnAbonoCapitalClick(Sender: TObject);
 begin
-  ActAbonoCapital.Execute; //?? verificar si asi funciona
+  ActAbonoCapital.Execute;
 end;
 
 procedure TFrmAplicacionPago.SpdBtnActMoraFechaPagoClick(Sender: TObject);

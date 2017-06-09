@@ -22,6 +22,7 @@ inherited FrmReporteCarteraGrid: TFrmReporteCarteraGrid
     ExplicitWidth = 1027
     inherited cxGrid: TcxGrid
       Width = 1027
+      ExplicitLeft = 24
       ExplicitWidth = 1027
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdAnexo: TcxGridDBColumn
@@ -54,7 +55,12 @@ inherited FrmReporteCarteraGrid: TFrmReporteCarteraGrid
         end
         object tvMasterTotal: TcxGridDBColumn
           DataBinding.FieldName = 'Total'
+          Visible = False
           Width = 98
+        end
+        object tvMasterSaldoTotal: TcxGridDBColumn
+          DataBinding.FieldName = 'SaldoTotal'
+          Width = 148
         end
         object tvMasterCobradoCXC: TcxGridDBColumn
           DataBinding.FieldName = 'CobradoCXC'
@@ -71,10 +77,6 @@ inherited FrmReporteCarteraGrid: TFrmReporteCarteraGrid
         object tvMasterTotalVigente: TcxGridDBColumn
           DataBinding.FieldName = 'TotalVigente'
           Width = 132
-        end
-        object tvMasterTotalPorVencer: TcxGridDBColumn
-          DataBinding.FieldName = 'TotalPorVencer'
-          Width = 146
         end
         object tvMasterTotalCobradoVencido: TcxGridDBColumn
           DataBinding.FieldName = 'TotalCobradoVencido'

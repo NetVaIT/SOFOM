@@ -14,7 +14,7 @@ inherited dmPagos: TdmPagos
       'select  IdPago, IdBanco, IdPersonaCliente, IdCuentaBancariaEstad' +
       'oCuenta, '#13#10'FechaPago, FolioPago, SeriePago, Referencia, Importe,' +
       ' Saldo, '#13#10'Observaciones, IdMetodoPago, CuentaPago, OrigenPago ,'#13 +
-      #10' IdContrato, IdAnexo '#13#10'from Pagos'
+      #10' IdContrato, IdAnexo, EsDeposito'#13#10'from Pagos'
     Left = 48
     object adodsMasterIdPago: TAutoIncField
       FieldName = 'IdPago'
@@ -113,6 +113,9 @@ inherited dmPagos: TdmPagos
       Size = 150
       Lookup = True
     end
+    object adodsMasterEsDeposito: TBooleanField
+      FieldName = 'EsDeposito'
+    end
   end
   inherited adodsUpdate: TADODataSet
     Left = 328
@@ -138,6 +141,7 @@ inherited dmPagos: TdmPagos
     end
   end
   object ADOSPersonas: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -165,6 +169,7 @@ inherited dmPagos: TdmPagos
     end
   end
   object ADoDtStBancos: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -743,6 +748,7 @@ inherited dmPagos: TdmPagos
     end
   end
   object ADODtstMetodoPago: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -1530,6 +1536,7 @@ inherited dmPagos: TdmPagos
     end
   end
   object ADODtStAnexos: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 

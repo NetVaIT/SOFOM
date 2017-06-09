@@ -14,7 +14,7 @@ inherited dmPersona: TdmPersona
       'egimenFiscal, IdDocumentoLogo, IdPersonaEstatus, Identificador, ' +
       'NumCtaPagoCliente, '#13#10'SaldoCliente, CalificacionInicial, Califica' +
       'cionActual'#13#10'FROM Personas'
-    Left = 56
+    Left = 64
     object adodsMasterIdPersona: TAutoIncField
       FieldName = 'IdPersona'
       ReadOnly = True
@@ -323,7 +323,7 @@ inherited dmPersona: TdmPersona
     CursorType = ctStatic
     CommandText = 'SELECT IdPersonaTipo, Descripcion FROM PersonasTipos'
     Parameters = <>
-    Left = 56
+    Left = 64
     Top = 72
   end
   object adodsRazonSocialTipo: TADODataSet
@@ -331,7 +331,7 @@ inherited dmPersona: TdmPersona
     CursorType = ctStatic
     CommandText = 'SELECT IdRazonSocialTipo, Descripcion FROM RazonesSocialesTipos'
     Parameters = <>
-    Left = 56
+    Left = 64
     Top = 128
   end
   object adodsSexo: TADODataSet
@@ -339,7 +339,7 @@ inherited dmPersona: TdmPersona
     CursorType = ctStatic
     CommandText = 'SELECT IdSexo, Descripcion FROM Sexos'
     Parameters = <>
-    Left = 56
+    Left = 64
     Top = 184
   end
   object adodsEstadoCivil: TADODataSet
@@ -347,7 +347,7 @@ inherited dmPersona: TdmPersona
     CursorType = ctStatic
     CommandText = 'SELECT IdEstadoCivil, Descripcion FROM EstadosCiviles'
     Parameters = <>
-    Left = 56
+    Left = 64
     Top = 240
   end
   object adodsPais: TADODataSet
@@ -355,7 +355,7 @@ inherited dmPersona: TdmPersona
     CursorType = ctStatic
     CommandText = 'SELECT IdPais, Descripcion FROM Paises'
     Parameters = <>
-    Left = 56
+    Left = 64
     Top = 296
   end
   object adodsPersonaRoles: TADODataSet
@@ -551,7 +551,6 @@ inherited dmPersona: TdmPersona
     Top = 360
   end
   object ADOdsPersonaEstatus: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -562,7 +561,6 @@ inherited dmPersona: TdmPersona
     Top = 432
   end
   object ADOdsMetodosPago: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -573,7 +571,6 @@ inherited dmPersona: TdmPersona
     Top = 432
   end
   object ADOdsRegimenFiscal: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 

@@ -74,6 +74,7 @@ type
     ppLine2: TppLine;
     ppDBCalc3: TppDBCalc;
     ppDBCalc4: TppDBCalc;
+    ppLine3: TppLine;
   private
     { Private declarations }
   public

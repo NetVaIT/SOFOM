@@ -42,7 +42,6 @@ type
     tvMasterTotalPorCobrar: TcxGridDBColumn;
     tvMasterSaldopendiente: TcxGridDBColumn;
     tvMasterTotalVigente: TcxGridDBColumn;
-    tvMasterTotalPorVencer: TcxGridDBColumn;
     tvMasterTotalCobradoVencido: TcxGridDBColumn;
     tvMasterVencidoA30: TcxGridDBColumn;
     tvMasterVencidoA60: TcxGridDBColumn;
@@ -61,6 +60,7 @@ type
     dxBrBtnReporteCarteraPDF: TdxBarButton;
     dxBrBtnHojaControlCliente: TdxBarButton;
     dxBrBtnHojaControlTodos: TdxBarButton;
+    tvMasterSaldoTotal: TcxGridDBColumn;
     procedure dxBrBtnHojaControlClienteClick(Sender: TObject);
     procedure dxBrBtnHojaControlTodosClick(Sender: TObject);
   private

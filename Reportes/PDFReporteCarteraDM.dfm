@@ -1,8 +1,7 @@
 inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
   Height = 428
-  Width = 436
+  Width = 546
   inherited adodsReport: TADODataSet
-    Active = True
     OnCalcFields = CuotasReportCalcFields
     CommandText = 
       'SElect IdAnexo, Contrato, Anexo, CLiente, Tc, Plazo, Total/1000 ' +
@@ -15,7 +14,8 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       'asRetraso, Cantidad, atrasados, atiempo, CuotasPendientes, DiasP' +
       'agoTotal, '#13#10'DiasPagoRetraso, PorcentajeAtrasados, PorcentajeATie' +
       'mpo, CalificacionInicial'#13#10'from vw_ReporteCarteraCompleto'#13#10'order ' +
-      'by IdAnexo'
+      'by TotalCobradoVencido desc , TotalPorCobrar DEsc'
+    Left = 40
     object adodsReportIdAnexo: TIntegerField
       FieldName = 'IdAnexo'
     end
@@ -155,254 +155,13 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       Size = 2
     end
   end
-  inherited dbpReport: TppDBPipeline
-    object dbpReportppField1: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdAnexo'
-      FieldName = 'IdAnexo'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 0
-    end
-    object dbpReportppField2: TppField
-      FieldAlias = 'Contrato'
-      FieldName = 'Contrato'
-      FieldLength = 20
-      DisplayWidth = 20
-      Position = 1
-    end
-    object dbpReportppField3: TppField
-      FieldAlias = 'Anexo'
-      FieldName = 'Anexo'
-      FieldLength = 5
-      DisplayWidth = 5
-      Position = 2
-    end
-    object dbpReportppField4: TppField
-      FieldAlias = 'CLiente'
-      FieldName = 'CLiente'
-      FieldLength = 300
-      DisplayWidth = 300
-      Position = 3
-    end
-    object dbpReportppField5: TppField
-      FieldAlias = 'Tc'
-      FieldName = 'Tc'
-      FieldLength = 5
-      DisplayWidth = 5
-      Position = 4
-    end
-    object dbpReportppField6: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'Plazo'
-      FieldName = 'Plazo'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 5
-    end
-    object dbpReportppField7: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'Total'
-      FieldName = 'Total'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 39
-      Position = 6
-    end
-    object dbpReportppField8: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'CobradoCXC'
-      FieldName = 'CobradoCXC'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 39
-      Position = 7
-    end
-    object dbpReportppField9: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'TotalPorCobrar'
-      FieldName = 'TotalPorCobrar'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 39
-      Position = 8
-    end
-    object dbpReportppField10: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'Saldopendiente'
-      FieldName = 'Saldopendiente'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 39
-      Position = 9
-    end
-    object dbpReportppField11: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'TotalVigente'
-      FieldName = 'TotalVigente'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 39
-      Position = 10
-    end
-    object dbpReportppField12: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'TotalPorVencer'
-      FieldName = 'TotalPorVencer'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 39
-      Position = 11
-    end
-    object dbpReportppField13: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'TotalCobradoVencido'
-      FieldName = 'TotalCobradoVencido'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 39
-      Position = 12
-    end
-    object dbpReportppField14: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'VencidoA30'
-      FieldName = 'VencidoA30'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 39
-      Position = 13
-    end
-    object dbpReportppField15: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'VencidoA60'
-      FieldName = 'VencidoA60'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 39
-      Position = 14
-    end
-    object dbpReportppField16: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'VencidoA90'
-      FieldName = 'VencidoA90'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 39
-      Position = 15
-    end
-    object dbpReportppField17: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'VencidoMas120'
-      FieldName = 'VencidoMas120'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 39
-      Position = 16
-    end
-    object dbpReportppField18: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'DiasRetraso'
-      FieldName = 'DiasRetraso'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 17
-    end
-    object dbpReportppField19: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'Cantidad'
-      FieldName = 'Cantidad'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 18
-    end
-    object dbpReportppField20: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'atrasados'
-      FieldName = 'atrasados'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 19
-    end
-    object dbpReportppField21: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'atiempo'
-      FieldName = 'atiempo'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 20
-    end
-    object dbpReportppField22: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'CuotasPendientes'
-      FieldName = 'CuotasPendientes'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 21
-    end
-    object dbpReportppField23: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'DiasPagoTotal'
-      FieldName = 'DiasPagoTotal'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 22
-    end
-    object dbpReportppField24: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'DiasPagoRetraso'
-      FieldName = 'DiasPagoRetraso'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 23
-    end
-    object dbpReportppField25: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'PorcentajeAtrasados'
-      FieldName = 'PorcentajeAtrasados'
-      FieldLength = 12
-      DataType = dtDouble
-      DisplayWidth = 27
-      Position = 24
-    end
-    object dbpReportppField26: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'PorcentajeATiempo'
-      FieldName = 'PorcentajeATiempo'
-      FieldLength = 12
-      DataType = dtDouble
-      DisplayWidth = 27
-      Position = 25
-    end
-    object dbpReportppField27: TppField
-      FieldAlias = 'CuotaMostrar'
-      FieldName = 'CuotaMostrar'
-      FieldLength = 10
-      DisplayWidth = 10
-      Position = 26
-    end
-    object dbpReportppField28: TppField
-      FieldAlias = 'CalificacionInicial'
-      FieldName = 'CalificacionInicial'
-      FieldLength = 2
-      DisplayWidth = 2
-      Position = 27
-    end
-  end
   inherited ppReport: TppReport
     PrinterSetup.Orientation = poLandscape
     PrinterSetup.mmPaperHeight = 215900
     PrinterSetup.mmPaperWidth = 279400
     PDFSettings.ImageCompressionLevel = 5
     PreviewFormSettings.ZoomSetting = zsPageWidth
+    Left = 248
     DataPipelineName = 'dbpReport'
     inherited ppHeaderBand1: TppHeaderBand
       mmHeight = 28310
@@ -766,6 +525,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       end
     end
     inherited ppDetailBand1: TppDetailBand
+      mmHeight = 5556
       object ppDBText3: TppDBText
         UserName = 'DBText3'
         DataField = 'CLiente'
@@ -1101,9 +861,23 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
     end
     object ppSummaryBand1: TppSummaryBand [4]
       Background.Brush.Style = bsClear
+      PrintHeight = phDynamic
       mmBottomOffset = 0
-      mmHeight = 55827
+      mmHeight = 29104
       mmPrintPosition = 0
+      object ppLine2: TppLine
+        UserName = 'LineFooter1'
+        Anchors = []
+        Pen.Color = clDefault
+        Style = lsDouble
+        Weight = 0.500000000000000000
+        mmHeight = 16933
+        mmLeft = 79111
+        mmTop = 0
+        mmWidth = 114565
+        BandType = 7
+        LayerName = Foreground
+      end
       object ppDBCalc1: TppDBCalc
         UserName = 'DBCalc1'
         DataField = 'TotalPorVencer'
@@ -1118,7 +892,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4498
-        mmLeft = 90724
+        mmLeft = 92314
         mmTop = 1058
         mmWidth = 14023
         BandType = 7
@@ -1138,7 +912,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4498
-        mmLeft = 106864
+        mmLeft = 108454
         mmTop = 1058
         mmWidth = 13229
         BandType = 7
@@ -1158,7 +932,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4498
-        mmLeft = 122210
+        mmLeft = 123800
         mmTop = 1058
         mmWidth = 10054
         BandType = 7
@@ -1178,7 +952,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4498
-        mmLeft = 134116
+        mmLeft = 135706
         mmTop = 1058
         mmWidth = 10054
         BandType = 7
@@ -1198,7 +972,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4498
-        mmLeft = 146022
+        mmLeft = 147612
         mmTop = 1058
         mmWidth = 10054
         BandType = 7
@@ -1218,7 +992,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4498
-        mmLeft = 157929
+        mmLeft = 159519
         mmTop = 1058
         mmWidth = 10054
         BandType = 7
@@ -1238,7 +1012,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4498
-        mmLeft = 169835
+        mmLeft = 171425
         mmTop = 1058
         mmWidth = 10054
         BandType = 7
@@ -1258,7 +1032,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4498
-        mmLeft = 181741
+        mmLeft = 183596
         mmTop = 1058
         mmWidth = 10054
         BandType = 7
@@ -1284,19 +1058,6 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         BandType = 7
         LayerName = Foreground
       end
-      object ppLine2: TppLine
-        UserName = 'LineFooter1'
-        Anchors = [atLeft, atTop, atRight, atBottom]
-        Pen.Color = clGray
-        Pen.Width = 2
-        Weight = 1.500000000000000000
-        mmHeight = 5821
-        mmLeft = 73025
-        mmTop = 0
-        mmWidth = 119063
-        BandType = 7
-        LayerName = Foreground
-      end
       object ppDBText36: TppDBText
         UserName = 'DBText36'
         DataField = 'PorcentajeVig1_30'
@@ -1313,7 +1074,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         DataPipelineName = 'ppDBSumasTotales'
         mmHeight = 4763
-        mmLeft = 134144
+        mmLeft = 135734
         mmTop = 12171
         mmWidth = 10054
         BandType = 7
@@ -1335,7 +1096,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         DataPipelineName = 'ppDBSumasTotales'
         mmHeight = 4763
-        mmLeft = 146050
+        mmLeft = 147640
         mmTop = 12171
         mmWidth = 10054
         BandType = 7
@@ -1356,7 +1117,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Transparent = True
         VerticalAlignment = avCenter
         mmHeight = 4763
-        mmLeft = 122238
+        mmLeft = 123828
         mmTop = 12171
         mmWidth = 10054
         BandType = 7
@@ -1378,7 +1139,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         DataPipelineName = 'ppDBSumasTotales'
         mmHeight = 4763
-        mmLeft = 157957
+        mmLeft = 159547
         mmTop = 12171
         mmWidth = 10054
         BandType = 7
@@ -1400,7 +1161,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         DataPipelineName = 'ppDBSumasTotales'
         mmHeight = 4763
-        mmLeft = 169863
+        mmLeft = 171453
         mmTop = 12171
         mmWidth = 10054
         BandType = 7
@@ -1422,7 +1183,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         DataPipelineName = 'ppDBSumasTotales'
         mmHeight = 4763
-        mmLeft = 182034
+        mmLeft = 183624
         mmTop = 12171
         mmWidth = 10054
         BandType = 7
@@ -1465,7 +1226,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         DataPipelineName = 'ppDBSumasTotales'
         mmHeight = 4763
-        mmLeft = 110067
+        mmLeft = 111657
         mmTop = 5821
         mmWidth = 10054
         BandType = 7
@@ -1487,11 +1248,1239 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         DataPipelineName = 'ppDBSumasTotales'
         mmHeight = 4763
-        mmLeft = 122238
+        mmLeft = 123828
         mmTop = 5821
         mmWidth = 10054
         BandType = 7
         LayerName = Foreground
+      end
+      object ppSubReport2: TppSubReport
+        UserName = 'SubReport2'
+        ExpandAll = False
+        NewPrintJob = False
+        OutlineSettings.CreateNode = True
+        TraverseAllData = False
+        DataPipelineName = 'ppDBPplnSumasXCalifica'
+        mmHeight = 5027
+        mmLeft = 0
+        mmTop = 20373
+        mmWidth = 266700
+        BandType = 7
+        LayerName = Foreground
+        mmBottomOffset = 0
+        mmOverFlowOffset = 0
+        mmStopPosition = 0
+        mmMinHeight = 0
+        object ppChildReport2: TppChildReport
+          AutoStop = False
+          DataPipeline = ppDBPplnSumasXCalifica
+          PrinterSetup.BinName = 'Default'
+          PrinterSetup.DocumentName = 'Report'
+          PrinterSetup.Duplex = dpVertical
+          PrinterSetup.Orientation = poLandscape
+          PrinterSetup.PaperName = 'Carta'
+          PrinterSetup.PrinterName = 'Default'
+          PrinterSetup.SaveDeviceSettings = False
+          PrinterSetup.mmMarginBottom = 6350
+          PrinterSetup.mmMarginLeft = 6350
+          PrinterSetup.mmMarginRight = 6350
+          PrinterSetup.mmMarginTop = 6350
+          PrinterSetup.mmPaperHeight = 215900
+          PrinterSetup.mmPaperWidth = 279400
+          PrinterSetup.PaperSize = 1
+          Units = utScreenPixels
+          Version = '15.0'
+          mmColumnWidth = 0
+          DataPipelineName = 'ppDBPplnSumasXCalifica'
+          object ppTitleBand4: TppTitleBand
+            Background.Brush.Style = bsClear
+            mmBottomOffset = 0
+            mmHeight = 5292
+            mmPrintPosition = 0
+            object ppLabel24: TppLabel
+              UserName = 'Label24'
+              AutoSize = False
+              Border.BorderPositions = [bpBottom]
+              Border.Visible = True
+              Border.Weight = 0.748799979686737100
+              Caption = 'Q'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 7
+              Font.Style = []
+              TextAlignment = taRightJustified
+              Transparent = True
+              mmHeight = 3440
+              mmLeft = 74348
+              mmTop = 794
+              mmWidth = 2646
+              BandType = 1
+              LayerName = Foreground3
+            end
+            object ppLabel25: TppLabel
+              UserName = 'Label25'
+              AutoSize = False
+              Border.BorderPositions = [bpBottom]
+              Border.Visible = True
+              Border.Weight = 0.748799979686737100
+              Caption = 'Total'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 7
+              Font.Style = []
+              TextAlignment = taRightJustified
+              Transparent = True
+              mmHeight = 3440
+              mmLeft = 92340
+              mmTop = 794
+              mmWidth = 14023
+              BandType = 1
+              LayerName = Foreground3
+            end
+            object ppLabel26: TppLabel
+              UserName = 'Label26'
+              AutoSize = False
+              Border.BorderPositions = [bpBottom]
+              Border.Visible = True
+              Border.Weight = 0.748799979686737100
+              Caption = 'Por Vencer'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 7
+              Font.Style = []
+              TextAlignment = taRightJustified
+              Transparent = True
+              mmHeight = 3440
+              mmLeft = 108479
+              mmTop = 794
+              mmWidth = 13229
+              BandType = 1
+              LayerName = Foreground3
+            end
+            object ppLabel27: TppLabel
+              UserName = 'Label27'
+              AutoSize = False
+              Border.BorderPositions = [bpBottom]
+              Border.Visible = True
+              Border.Weight = 0.748799979686737100
+              Caption = 'Vencido'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 7
+              Font.Style = []
+              TextAlignment = taRightJustified
+              Transparent = True
+              mmHeight = 3439
+              mmLeft = 123825
+              mmTop = 794
+              mmWidth = 10054
+              BandType = 1
+              LayerName = Foreground3
+            end
+            object ppLabel28: TppLabel
+              UserName = 'Label28'
+              AutoSize = False
+              Border.BorderPositions = [bpBottom]
+              Border.Visible = True
+              Border.Weight = 0.748799979686737100
+              Caption = '1-30'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 7
+              Font.Style = []
+              TextAlignment = taRightJustified
+              Transparent = True
+              mmHeight = 3439
+              mmLeft = 135732
+              mmTop = 794
+              mmWidth = 10054
+              BandType = 1
+              LayerName = Foreground3
+            end
+            object ppLabel29: TppLabel
+              UserName = 'Label29'
+              AutoSize = False
+              Border.BorderPositions = [bpBottom]
+              Border.Visible = True
+              Border.Weight = 0.748799979686737100
+              Caption = '31-60'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 7
+              Font.Style = []
+              TextAlignment = taRightJustified
+              Transparent = True
+              mmHeight = 3440
+              mmLeft = 147638
+              mmTop = 794
+              mmWidth = 10054
+              BandType = 1
+              LayerName = Foreground3
+            end
+            object ppLabel30: TppLabel
+              UserName = 'Label30'
+              AutoSize = False
+              Border.BorderPositions = [bpBottom]
+              Border.Visible = True
+              Border.Weight = 0.748799979686737100
+              Caption = '61-90'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 7
+              Font.Style = []
+              TextAlignment = taRightJustified
+              Transparent = True
+              mmHeight = 3440
+              mmLeft = 159544
+              mmTop = 794
+              mmWidth = 10054
+              BandType = 1
+              LayerName = Foreground3
+            end
+            object ppLabel51: TppLabel
+              UserName = 'Label51'
+              AutoSize = False
+              Border.BorderPositions = [bpBottom]
+              Border.Visible = True
+              Border.Weight = 0.748799979686737100
+              Caption = '91-120'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 7
+              Font.Style = []
+              TextAlignment = taRightJustified
+              Transparent = True
+              mmHeight = 3440
+              mmLeft = 171450
+              mmTop = 794
+              mmWidth = 10054
+              BandType = 1
+              LayerName = Foreground3
+            end
+            object ppLabel52: TppLabel
+              UserName = 'Label52'
+              AutoSize = False
+              Border.BorderPositions = [bpBottom]
+              Border.Visible = True
+              Border.Weight = 0.748799979686737100
+              Caption = '>120'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 7
+              Font.Style = []
+              TextAlignment = taRightJustified
+              Transparent = True
+              mmHeight = 3439
+              mmLeft = 183621
+              mmTop = 794
+              mmWidth = 10054
+              BandType = 1
+              LayerName = Foreground3
+            end
+          end
+          object ppDetailBand4: TppDetailBand
+            Background1.Brush.Style = bsClear
+            Background2.Brush.Style = bsClear
+            mmBottomOffset = 0
+            mmHeight = 21431
+            mmPrintPosition = 0
+            object ppShape1: TppShape
+              UserName = 'Shape1'
+              mmHeight = 20373
+              mmLeft = 55563
+              mmTop = 0
+              mmWidth = 142875
+              BandType = 4
+              LayerName = Foreground3
+            end
+            object ppDBText48: TppDBText
+              UserName = 'DBText48'
+              DataField = 'Calificacioninicial'
+              DataPipeline = ppDBPplnSumasXCalifica
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 8
+              Font.Style = []
+              Transparent = True
+              DataPipelineName = 'ppDBPplnSumasXCalifica'
+              mmHeight = 4763
+              mmLeft = 62971
+              mmTop = 1588
+              mmWidth = 3969
+              BandType = 4
+              LayerName = Foreground3
+            end
+            object ppDBText49: TppDBText
+              UserName = 'DBText49'
+              DataField = 'cantidad'
+              DataPipeline = ppDBPplnSumasXCalifica
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 7
+              Font.Style = []
+              TextAlignment = taRightJustified
+              Transparent = True
+              VerticalAlignment = avCenter
+              DataPipelineName = 'ppDBPplnSumasXCalifica'
+              mmHeight = 4763
+              mmLeft = 70908
+              mmTop = 1588
+              mmWidth = 6085
+              BandType = 4
+              LayerName = Foreground3
+            end
+            object ppDBText50: TppDBText
+              UserName = 'DBText50'
+              DataField = 'SumTotalPendiente'
+              DataPipeline = ppDBPplnSumasXCalifica
+              DisplayFormat = '#,0;-#,0'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 7
+              Font.Style = []
+              TextAlignment = taRightJustified
+              Transparent = True
+              VerticalAlignment = avCenter
+              DataPipelineName = 'ppDBPplnSumasXCalifica'
+              mmHeight = 4763
+              mmLeft = 92340
+              mmTop = 1588
+              mmWidth = 14023
+              BandType = 4
+              LayerName = Foreground3
+            end
+            object ppDBText51: TppDBText
+              UserName = 'DBText501'
+              DataField = 'sumXCobrar'
+              DataPipeline = ppDBPplnSumasXCalifica
+              DisplayFormat = '#,0;-#,0'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 7
+              Font.Style = []
+              TextAlignment = taRightJustified
+              Transparent = True
+              VerticalAlignment = avCenter
+              DataPipelineName = 'ppDBPplnSumasXCalifica'
+              mmHeight = 4763
+              mmLeft = 108479
+              mmTop = 1588
+              mmWidth = 13229
+              BandType = 4
+              LayerName = Foreground3
+            end
+            object ppDBText52: TppDBText
+              UserName = 'DBText502'
+              DataField = 'SumCobradoVencido'
+              DataPipeline = ppDBPplnSumasXCalifica
+              DisplayFormat = '#,0;-#,0'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 7
+              Font.Style = []
+              TextAlignment = taRightJustified
+              Transparent = True
+              VerticalAlignment = avCenter
+              DataPipelineName = 'ppDBPplnSumasXCalifica'
+              mmHeight = 4763
+              mmLeft = 123825
+              mmTop = 1323
+              mmWidth = 10054
+              BandType = 4
+              LayerName = Foreground3
+            end
+            object ppDBText53: TppDBText
+              UserName = 'DBText53'
+              DataField = 'Suma30'
+              DataPipeline = ppDBPplnSumasXCalifica
+              DisplayFormat = '#,0;-#,0'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 7
+              Font.Style = []
+              TextAlignment = taRightJustified
+              Transparent = True
+              VerticalAlignment = avCenter
+              DataPipelineName = 'ppDBPplnSumasXCalifica'
+              mmHeight = 4763
+              mmLeft = 147638
+              mmTop = 1588
+              mmWidth = 10054
+              BandType = 4
+              LayerName = Foreground3
+            end
+            object ppDBText54: TppDBText
+              UserName = 'DBText54'
+              DataField = 'suma60'
+              DataPipeline = ppDBPplnSumasXCalifica
+              DisplayFormat = '#,0;-#,0'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 7
+              Font.Style = []
+              TextAlignment = taRightJustified
+              Transparent = True
+              VerticalAlignment = avCenter
+              DataPipelineName = 'ppDBPplnSumasXCalifica'
+              mmHeight = 4763
+              mmLeft = 159544
+              mmTop = 1323
+              mmWidth = 10054
+              BandType = 4
+              LayerName = Foreground3
+            end
+            object ppDBText55: TppDBText
+              UserName = 'DBText55'
+              DataField = 'suma90'
+              DataPipeline = ppDBPplnSumasXCalifica
+              DisplayFormat = '#,0;-#,0'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 7
+              Font.Style = []
+              TextAlignment = taRightJustified
+              Transparent = True
+              VerticalAlignment = avCenter
+              DataPipelineName = 'ppDBPplnSumasXCalifica'
+              mmHeight = 4763
+              mmLeft = 171450
+              mmTop = 1323
+              mmWidth = 10054
+              BandType = 4
+              LayerName = Foreground3
+            end
+            object ppDBText56: TppDBText
+              UserName = 'DBText56'
+              DataField = 'sumamas120'
+              DataPipeline = ppDBPplnSumasXCalifica
+              DisplayFormat = '#,0;-#,0'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 7
+              Font.Style = []
+              TextAlignment = taRightJustified
+              Transparent = True
+              VerticalAlignment = avCenter
+              DataPipelineName = 'ppDBPplnSumasXCalifica'
+              mmHeight = 4763
+              mmLeft = 183621
+              mmTop = 1323
+              mmWidth = 10054
+              BandType = 4
+              LayerName = Foreground3
+            end
+            object ppDBText57: TppDBText
+              UserName = 'DBText57'
+              DataField = 'sumaVigente'
+              DataPipeline = ppDBPplnSumasXCalifica
+              DisplayFormat = '#,0;-#,0'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 7
+              Font.Style = []
+              TextAlignment = taRightJustified
+              Transparent = True
+              VerticalAlignment = avCenter
+              DataPipelineName = 'ppDBPplnSumasXCalifica'
+              mmHeight = 4763
+              mmLeft = 135732
+              mmTop = 1323
+              mmWidth = 10054
+              BandType = 4
+              LayerName = Foreground3
+            end
+            object ppDBText58: TppDBText
+              UserName = 'DBText503'
+              DataField = 'PorcXVencer'
+              DataPipeline = ppDBPplnSumasXCalifica
+              DisplayFormat = '0 %'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 7
+              Font.Style = []
+              TextAlignment = taRightJustified
+              Transparent = True
+              VerticalAlignment = avCenter
+              DataPipelineName = 'ppDBPplnSumasXCalifica'
+              mmHeight = 4763
+              mmLeft = 108479
+              mmTop = 7938
+              mmWidth = 13229
+              BandType = 4
+              LayerName = Foreground3
+            end
+            object ppDBText59: TppDBText
+              UserName = 'DBText59'
+              DataField = 'PorcVencido'
+              DataPipeline = ppDBPplnSumasXCalifica
+              DisplayFormat = '0 %'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 7
+              Font.Style = []
+              TextAlignment = taRightJustified
+              Transparent = True
+              VerticalAlignment = avCenter
+              DataPipelineName = 'ppDBPplnSumasXCalifica'
+              mmHeight = 4763
+              mmLeft = 123825
+              mmTop = 7938
+              mmWidth = 10054
+              BandType = 4
+              LayerName = Foreground3
+            end
+            object ppDBText60: TppDBText
+              UserName = 'DBText60'
+              DataField = 'PorcVenc1A30'
+              DataPipeline = ppDBPplnSumasXCalifica
+              DisplayFormat = '0 %'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 7
+              Font.Style = []
+              TextAlignment = taRightJustified
+              Transparent = True
+              VerticalAlignment = avCenter
+              DataPipelineName = 'ppDBPplnSumasXCalifica'
+              mmHeight = 4763
+              mmLeft = 135732
+              mmTop = 14022
+              mmWidth = 10054
+              BandType = 4
+              LayerName = Foreground3
+            end
+            object ppDBText61: TppDBText
+              UserName = 'DBText61'
+              DataField = 'PorcVenc31a60'
+              DataPipeline = ppDBPplnSumasXCalifica
+              DisplayFormat = '0 %'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 7
+              Font.Style = []
+              TextAlignment = taRightJustified
+              Transparent = True
+              VerticalAlignment = avCenter
+              DataPipelineName = 'ppDBPplnSumasXCalifica'
+              mmHeight = 4763
+              mmLeft = 147638
+              mmTop = 14023
+              mmWidth = 10054
+              BandType = 4
+              LayerName = Foreground3
+            end
+            object ppDBText62: TppDBText
+              UserName = 'DBText62'
+              DataField = 'PorcVenc61a90'
+              DataPipeline = ppDBPplnSumasXCalifica
+              DisplayFormat = '0 %'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 7
+              Font.Style = []
+              TextAlignment = taRightJustified
+              Transparent = True
+              VerticalAlignment = avCenter
+              DataPipelineName = 'ppDBPplnSumasXCalifica'
+              mmHeight = 4763
+              mmLeft = 159544
+              mmTop = 14023
+              mmWidth = 10054
+              BandType = 4
+              LayerName = Foreground3
+            end
+            object ppDBText63: TppDBText
+              UserName = 'DBText63'
+              DataField = 'PorcVenc91a120'
+              DataPipeline = ppDBPplnSumasXCalifica
+              DisplayFormat = '0 %'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 7
+              Font.Style = []
+              TextAlignment = taRightJustified
+              Transparent = True
+              VerticalAlignment = avCenter
+              DataPipelineName = 'ppDBPplnSumasXCalifica'
+              mmHeight = 4763
+              mmLeft = 171450
+              mmTop = 14022
+              mmWidth = 10054
+              BandType = 4
+              LayerName = Foreground3
+            end
+            object ppDBText64: TppDBText
+              UserName = 'DBText64'
+              DataField = 'PorcVencidoMas120'
+              DataPipeline = ppDBPplnSumasXCalifica
+              DisplayFormat = '0 %'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 7
+              Font.Style = []
+              TextAlignment = taRightJustified
+              Transparent = True
+              VerticalAlignment = avCenter
+              DataPipelineName = 'ppDBPplnSumasXCalifica'
+              mmHeight = 4763
+              mmLeft = 183621
+              mmTop = 14022
+              mmWidth = 10054
+              BandType = 4
+              LayerName = Foreground3
+            end
+            object ppLabel53: TppLabel
+              UserName = 'Label53'
+              AutoSize = False
+              Caption = '100%'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 7
+              Font.Style = [fsBold]
+              TextAlignment = taRightJustified
+              Transparent = True
+              VerticalAlignment = avCenter
+              mmHeight = 4763
+              mmLeft = 123825
+              mmTop = 14022
+              mmWidth = 10054
+              BandType = 4
+              LayerName = Foreground3
+            end
+            object ppLabel54: TppLabel
+              UserName = 'Label54'
+              AutoSize = False
+              Caption = '100%'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 7
+              Font.Style = [fsBold]
+              TextAlignment = taRightJustified
+              Transparent = True
+              VerticalAlignment = avCenter
+              mmHeight = 4763
+              mmLeft = 92340
+              mmTop = 7938
+              mmWidth = 14023
+              BandType = 4
+              LayerName = Foreground3
+            end
+            object ppImage3: TppImage
+              UserName = 'Image3'
+              AlignHorizontal = ahCenter
+              AlignVertical = avCenter
+              MaintainAspectRatio = False
+              Picture.Data = {
+                0B546478504E47496D61676589504E470D0A1A0A0000000D4948445200000010
+                000000100802000000909168360000000467414D410000B18F0BFC6105000000
+                097048597300000EC300000EC301C76FA8640000006C49444154384FCD91D10D
+                C02008449D8B81988769588661B42658CD7169D29FA6EFCF982777D8FA4B3E16
+                5C1BA29E770B9810262216EBE4A6F721A991E698ED1458876BCCCCC21D5EDA55
+                4AF88409AE25F98675381F0F87682004AC25CC20DA2904F987B22F5EFA81DF09
+                BD0FEB33BECF1F5C68920000000049454E44AE426082}
+              mmHeight = 5821
+              mmLeft = 57149
+              mmTop = 528
+              mmWidth = 5292
+              BandType = 4
+              LayerName = Foreground3
+            end
+          end
+          object ppSummaryBand3: TppSummaryBand
+            Background.Brush.Style = bsClear
+            PrintHeight = phDynamic
+            mmBottomOffset = 0
+            mmHeight = 11906
+            mmPrintPosition = 0
+            object ppSubReport3: TppSubReport
+              UserName = 'SubReport3'
+              ExpandAll = False
+              NewPrintJob = False
+              OutlineSettings.CreateNode = True
+              TraverseAllData = False
+              DataPipelineName = 'ppDBPplnMediana'
+              mmHeight = 5027
+              mmLeft = 0
+              mmTop = 2646
+              mmWidth = 266700
+              BandType = 7
+              LayerName = Foreground3
+              mmBottomOffset = 0
+              mmOverFlowOffset = 0
+              mmStopPosition = 0
+              mmMinHeight = 0
+              object ppChildReport3: TppChildReport
+                AutoStop = False
+                DataPipeline = ppDBPplnMediana
+                PrinterSetup.BinName = 'Default'
+                PrinterSetup.DocumentName = 'Report'
+                PrinterSetup.Duplex = dpVertical
+                PrinterSetup.Orientation = poLandscape
+                PrinterSetup.PaperName = 'Carta'
+                PrinterSetup.PrinterName = 'Default'
+                PrinterSetup.SaveDeviceSettings = False
+                PrinterSetup.mmMarginBottom = 6350
+                PrinterSetup.mmMarginLeft = 6350
+                PrinterSetup.mmMarginRight = 6350
+                PrinterSetup.mmMarginTop = 6350
+                PrinterSetup.mmPaperHeight = 215900
+                PrinterSetup.mmPaperWidth = 279400
+                PrinterSetup.PaperSize = 1
+                Units = utScreenPixels
+                Version = '15.0'
+                mmColumnWidth = 0
+                DataPipelineName = 'ppDBPplnMediana'
+                object ppTitleBand5: TppTitleBand
+                  Background.Brush.Style = bsClear
+                  mmBottomOffset = 0
+                  mmHeight = 1323
+                  mmPrintPosition = 0
+                end
+                object ppDetailBand5: TppDetailBand
+                  Background1.Brush.Style = bsClear
+                  Background2.Brush.Style = bsClear
+                  PrintHeight = phDynamic
+                  mmBottomOffset = 0
+                  mmHeight = 42598
+                  mmPrintPosition = 0
+                  object ppLabel55: TppLabel
+                    UserName = 'Label55'
+                    AutoSize = False
+                    Border.BorderPositions = [bpBottom]
+                    Border.Weight = 0.748799979686737100
+                    Caption = 'Mediana:'
+                    Font.Charset = DEFAULT_CHARSET
+                    Font.Color = clBlack
+                    Font.Name = 'Arial'
+                    Font.Size = 7
+                    Font.Style = []
+                    TextAlignment = taRightJustified
+                    Transparent = True
+                    VerticalAlignment = avCenter
+                    mmHeight = 4763
+                    mmLeft = 62442
+                    mmTop = 37306
+                    mmWidth = 14023
+                    BandType = 4
+                    LayerName = Foreground4
+                  end
+                  object ppDBText65: TppDBText
+                    UserName = 'DBText65'
+                    DataField = 'Mediana'
+                    DataPipeline = ppDBPplnMediana
+                    DisplayFormat = '#,0;-#,0'
+                    Font.Charset = DEFAULT_CHARSET
+                    Font.Color = clBlack
+                    Font.Name = 'Arial'
+                    Font.Size = 7
+                    Font.Style = []
+                    ParentDataPipeline = False
+                    TextAlignment = taRightJustified
+                    Transparent = True
+                    VerticalAlignment = avCenter
+                    DataPipelineName = 'ppDBPplnMediana'
+                    mmHeight = 4763
+                    mmLeft = 77258
+                    mmTop = 37306
+                    mmWidth = 17198
+                    BandType = 4
+                    LayerName = Foreground4
+                  end
+                  object ppLabel56: TppLabel
+                    UserName = 'Label56'
+                    AutoSize = False
+                    Border.BorderPositions = [bpBottom]
+                    Border.Weight = 0.748799979686737100
+                    Caption = '80%:'
+                    Font.Charset = DEFAULT_CHARSET
+                    Font.Color = clBlack
+                    Font.Name = 'Arial'
+                    Font.Size = 7
+                    Font.Style = []
+                    TextAlignment = taRightJustified
+                    Transparent = True
+                    VerticalAlignment = avCenter
+                    mmHeight = 4763
+                    mmLeft = 62442
+                    mmTop = 21960
+                    mmWidth = 14023
+                    BandType = 4
+                    LayerName = Foreground4
+                  end
+                  object ppLabel57: TppLabel
+                    UserName = 'Label57'
+                    AutoSize = False
+                    Border.BorderPositions = [bpBottom]
+                    Border.Weight = 0.748799979686737100
+                    Caption = '20%:'
+                    Font.Charset = DEFAULT_CHARSET
+                    Font.Color = clBlack
+                    Font.Name = 'Arial'
+                    Font.Size = 7
+                    Font.Style = []
+                    TextAlignment = taRightJustified
+                    Transparent = True
+                    VerticalAlignment = avCenter
+                    mmHeight = 4763
+                    mmLeft = 62442
+                    mmTop = 27517
+                    mmWidth = 14023
+                    BandType = 4
+                    LayerName = Foreground4
+                  end
+                  object ppLabel58: TppLabel
+                    UserName = 'Label58'
+                    AutoSize = False
+                    Border.BorderPositions = [bpBottom]
+                    Border.Weight = 0.748799979686737100
+                    Caption = 'N'#250'mero de Cr'#233'ditos:'
+                    Font.Charset = DEFAULT_CHARSET
+                    Font.Color = clBlack
+                    Font.Name = 'Arial'
+                    Font.Size = 7
+                    Font.Style = []
+                    TextAlignment = taRightJustified
+                    Transparent = True
+                    VerticalAlignment = avCenter
+                    mmHeight = 4763
+                    mmLeft = 31485
+                    mmTop = 529
+                    mmWidth = 44979
+                    BandType = 4
+                    LayerName = Foreground4
+                  end
+                  object ppLabel59: TppLabel
+                    UserName = 'Label59'
+                    AutoSize = False
+                    Border.BorderPositions = [bpBottom]
+                    Border.Weight = 0.748799979686737100
+                    Caption = 'Monto Total:'
+                    Font.Charset = DEFAULT_CHARSET
+                    Font.Color = clBlack
+                    Font.Name = 'Arial'
+                    Font.Size = 7
+                    Font.Style = []
+                    TextAlignment = taRightJustified
+                    Transparent = True
+                    VerticalAlignment = avCenter
+                    mmHeight = 4763
+                    mmLeft = 31485
+                    mmTop = 6617
+                    mmWidth = 44979
+                    BandType = 4
+                    LayerName = Foreground4
+                  end
+                  object ppLabel60: TppLabel
+                    UserName = 'Label60'
+                    AutoSize = False
+                    Border.BorderPositions = [bpBottom]
+                    Border.Weight = 0.748799979686737100
+                    Caption = 'Monto Cr'#233'dito Promedio:'
+                    Font.Charset = DEFAULT_CHARSET
+                    Font.Color = clBlack
+                    Font.Name = 'Arial'
+                    Font.Size = 7
+                    Font.Style = []
+                    TextAlignment = taRightJustified
+                    Transparent = True
+                    VerticalAlignment = avCenter
+                    mmHeight = 4763
+                    mmLeft = 31485
+                    mmTop = 12171
+                    mmWidth = 44979
+                    BandType = 4
+                    LayerName = Foreground4
+                  end
+                  object ppLabel61: TppLabel
+                    UserName = 'Label61'
+                    AutoSize = False
+                    Border.BorderPositions = [bpBottom]
+                    Border.Weight = 0.748799979686737100
+                    Caption = 'Desde:'
+                    Font.Charset = DEFAULT_CHARSET
+                    Font.Color = clBlack
+                    Font.Name = 'Arial'
+                    Font.Size = 7
+                    Font.Style = []
+                    TextAlignment = taRightJustified
+                    Transparent = True
+                    VerticalAlignment = avCenter
+                    mmHeight = 4763
+                    mmLeft = 108215
+                    mmTop = 529
+                    mmWidth = 14023
+                    BandType = 4
+                    LayerName = Foreground4
+                  end
+                  object ppLabel62: TppLabel
+                    UserName = 'Label62'
+                    AutoSize = False
+                    Border.BorderPositions = [bpBottom]
+                    Border.Weight = 0.748799979686737100
+                    Caption = 'Hasta:'
+                    Font.Charset = DEFAULT_CHARSET
+                    Font.Color = clBlack
+                    Font.Name = 'Arial'
+                    Font.Size = 7
+                    Font.Style = []
+                    TextAlignment = taRightJustified
+                    Transparent = True
+                    VerticalAlignment = avCenter
+                    mmHeight = 4763
+                    mmLeft = 140229
+                    mmTop = 529
+                    mmWidth = 14023
+                    BandType = 4
+                    LayerName = Foreground4
+                  end
+                  object ppLabel63: TppLabel
+                    UserName = 'Label63'
+                    AutoSize = False
+                    Border.BorderPositions = [bpBottom]
+                    Border.Visible = True
+                    Border.Weight = 0.748799979686737100
+                    Caption = 'Q'
+                    Font.Charset = DEFAULT_CHARSET
+                    Font.Color = clBlack
+                    Font.Name = 'Arial'
+                    Font.Size = 7
+                    Font.Style = []
+                    TextAlignment = taCentered
+                    Transparent = True
+                    VerticalAlignment = avCenter
+                    mmHeight = 3968
+                    mmLeft = 77258
+                    mmTop = 17992
+                    mmWidth = 7408
+                    BandType = 4
+                    LayerName = Foreground4
+                  end
+                  object ppLabel64: TppLabel
+                    UserName = 'Label64'
+                    AutoSize = False
+                    Border.BorderPositions = [bpBottom]
+                    Border.Visible = True
+                    Border.Weight = 0.748799979686737100
+                    Caption = 'Monto'
+                    Font.Charset = DEFAULT_CHARSET
+                    Font.Color = clBlack
+                    Font.Name = 'Arial'
+                    Font.Size = 7
+                    Font.Style = []
+                    TextAlignment = taRightJustified
+                    Transparent = True
+                    VerticalAlignment = avCenter
+                    mmHeight = 3969
+                    mmLeft = 88371
+                    mmTop = 17992
+                    mmWidth = 16404
+                    BandType = 4
+                    LayerName = Foreground4
+                  end
+                  object ppLabel65: TppLabel
+                    UserName = 'Label65'
+                    AutoSize = False
+                    Border.BorderPositions = [bpBottom]
+                    Border.Visible = True
+                    Border.Weight = 0.748799979686737100
+                    Caption = 'Promedio'
+                    Font.Charset = DEFAULT_CHARSET
+                    Font.Color = clBlack
+                    Font.Name = 'Arial'
+                    Font.Size = 7
+                    Font.Style = []
+                    TextAlignment = taRightJustified
+                    Transparent = True
+                    VerticalAlignment = avCenter
+                    mmHeight = 3969
+                    mmLeft = 106098
+                    mmTop = 17992
+                    mmWidth = 13758
+                    BandType = 4
+                    LayerName = Foreground4
+                  end
+                  object ppLblCantidad80: TppLabel
+                    UserName = 'LblCantidad80'
+                    AutoSize = False
+                    Border.BorderPositions = [bpBottom]
+                    Border.Weight = 0.748799979686737100
+                    Caption = '0'
+                    Font.Charset = DEFAULT_CHARSET
+                    Font.Color = clBlack
+                    Font.Name = 'Arial'
+                    Font.Size = 7
+                    Font.Style = []
+                    TextAlignment = taCentered
+                    Transparent = True
+                    VerticalAlignment = avCenter
+                    mmHeight = 4763
+                    mmLeft = 77258
+                    mmTop = 21960
+                    mmWidth = 7408
+                    BandType = 4
+                    LayerName = Foreground4
+                  end
+                  object ppLblCantidad20: TppLabel
+                    UserName = 'LblCantidad20'
+                    AutoSize = False
+                    Border.BorderPositions = [bpBottom]
+                    Border.Weight = 0.748799979686737100
+                    Caption = '0'
+                    Font.Charset = DEFAULT_CHARSET
+                    Font.Color = clBlack
+                    Font.Name = 'Arial'
+                    Font.Size = 7
+                    Font.Style = []
+                    TextAlignment = taCentered
+                    Transparent = True
+                    VerticalAlignment = avCenter
+                    mmHeight = 4763
+                    mmLeft = 77258
+                    mmTop = 27517
+                    mmWidth = 7408
+                    BandType = 4
+                    LayerName = Foreground4
+                  end
+                  object ppLblMonto80: TppLabel
+                    UserName = 'LbMonto80'
+                    AutoSize = False
+                    Border.BorderPositions = [bpBottom]
+                    Border.Weight = 0.748799979686737100
+                    Caption = '0'
+                    Font.Charset = DEFAULT_CHARSET
+                    Font.Color = clBlack
+                    Font.Name = 'Arial'
+                    Font.Size = 7
+                    Font.Style = []
+                    TextAlignment = taRightJustified
+                    Transparent = True
+                    VerticalAlignment = avCenter
+                    mmHeight = 4763
+                    mmLeft = 88371
+                    mmTop = 21960
+                    mmWidth = 16404
+                    BandType = 4
+                    LayerName = Foreground4
+                  end
+                  object ppLblMonto20: TppLabel
+                    UserName = 'LbMonto20'
+                    AutoSize = False
+                    Border.BorderPositions = [bpBottom]
+                    Border.Weight = 0.748799979686737100
+                    Caption = '0'
+                    Font.Charset = DEFAULT_CHARSET
+                    Font.Color = clBlack
+                    Font.Name = 'Arial'
+                    Font.Size = 7
+                    Font.Style = []
+                    TextAlignment = taRightJustified
+                    Transparent = True
+                    VerticalAlignment = avCenter
+                    mmHeight = 4763
+                    mmLeft = 88371
+                    mmTop = 27517
+                    mmWidth = 16404
+                    BandType = 4
+                    LayerName = Foreground4
+                  end
+                  object ppLblProm80: TppLabel
+                    UserName = 'LblProm80'
+                    AutoSize = False
+                    Border.BorderPositions = [bpBottom]
+                    Border.Weight = 0.748799979686737100
+                    Caption = '0'
+                    Font.Charset = DEFAULT_CHARSET
+                    Font.Color = clBlack
+                    Font.Name = 'Arial'
+                    Font.Size = 7
+                    Font.Style = []
+                    TextAlignment = taRightJustified
+                    Transparent = True
+                    VerticalAlignment = avCenter
+                    mmHeight = 4763
+                    mmLeft = 106098
+                    mmTop = 21960
+                    mmWidth = 13758
+                    BandType = 4
+                    LayerName = Foreground4
+                  end
+                  object ppLblPorm20: TppLabel
+                    UserName = 'LblProm20'
+                    AutoSize = False
+                    Border.BorderPositions = [bpBottom]
+                    Border.Weight = 0.748799979686737100
+                    Caption = '0'
+                    Font.Charset = DEFAULT_CHARSET
+                    Font.Color = clBlack
+                    Font.Name = 'Arial'
+                    Font.Size = 7
+                    Font.Style = []
+                    TextAlignment = taRightJustified
+                    Transparent = True
+                    VerticalAlignment = avCenter
+                    mmHeight = 4763
+                    mmLeft = 106098
+                    mmTop = 27517
+                    mmWidth = 13758
+                    BandType = 4
+                    LayerName = Foreground4
+                  end
+                  object ppLblNumCreditos: TppLabel
+                    UserName = 'LblNumCreditos'
+                    AutoSize = False
+                    Border.BorderPositions = [bpBottom]
+                    Border.Weight = 0.748799979686737100
+                    Caption = '0'
+                    Font.Charset = DEFAULT_CHARSET
+                    Font.Color = clBlack
+                    Font.Name = 'Arial'
+                    Font.Size = 7
+                    Font.Style = []
+                    TextAlignment = taRightJustified
+                    Transparent = True
+                    VerticalAlignment = avCenter
+                    mmHeight = 4763
+                    mmLeft = 80698
+                    mmTop = 529
+                    mmWidth = 19050
+                    BandType = 4
+                    LayerName = Foreground4
+                  end
+                  object ppLblMontoTotal: TppLabel
+                    UserName = 'LblMontoTotal'
+                    AutoSize = False
+                    Border.BorderPositions = [bpBottom]
+                    Border.Weight = 0.748799979686737100
+                    Caption = '0'
+                    Font.Charset = DEFAULT_CHARSET
+                    Font.Color = clBlack
+                    Font.Name = 'Arial'
+                    Font.Size = 7
+                    Font.Style = []
+                    TextAlignment = taRightJustified
+                    Transparent = True
+                    VerticalAlignment = avCenter
+                    mmHeight = 4763
+                    mmLeft = 80698
+                    mmTop = 6615
+                    mmWidth = 19050
+                    BandType = 4
+                    LayerName = Foreground4
+                  end
+                  object ppLblMontoPromedioCred: TppLabel
+                    UserName = 'LblMontoPromedioCred'
+                    AutoSize = False
+                    Border.BorderPositions = [bpBottom]
+                    Border.Weight = 0.748799979686737100
+                    Caption = '0'
+                    Font.Charset = DEFAULT_CHARSET
+                    Font.Color = clBlack
+                    Font.Name = 'Arial'
+                    Font.Size = 7
+                    Font.Style = []
+                    TextAlignment = taRightJustified
+                    Transparent = True
+                    VerticalAlignment = avCenter
+                    mmHeight = 4763
+                    mmLeft = 80698
+                    mmTop = 12171
+                    mmWidth = 19050
+                    BandType = 4
+                    LayerName = Foreground4
+                  end
+                  object ppLblValorMinCred: TppLabel
+                    UserName = 'LblValorMinCred'
+                    AutoSize = False
+                    Border.BorderPositions = [bpBottom]
+                    Border.Weight = 0.748799979686737100
+                    Caption = '0'
+                    Font.Charset = DEFAULT_CHARSET
+                    Font.Color = clBlack
+                    Font.Name = 'Arial'
+                    Font.Size = 7
+                    Font.Style = []
+                    Transparent = True
+                    VerticalAlignment = avCenter
+                    mmHeight = 4763
+                    mmLeft = 123296
+                    mmTop = 529
+                    mmWidth = 13758
+                    BandType = 4
+                    LayerName = Foreground4
+                  end
+                  object ppLblValorMaxCred: TppLabel
+                    UserName = 'LblValorMaxCred'
+                    AutoSize = False
+                    Border.BorderPositions = [bpBottom]
+                    Border.Weight = 0.748799979686737100
+                    Caption = '0'
+                    Font.Charset = DEFAULT_CHARSET
+                    Font.Color = clBlack
+                    Font.Name = 'Arial'
+                    Font.Size = 7
+                    Font.Style = []
+                    Transparent = True
+                    VerticalAlignment = avCenter
+                    mmHeight = 4763
+                    mmLeft = 155311
+                    mmTop = 529
+                    mmWidth = 13758
+                    BandType = 4
+                    LayerName = Foreground4
+                  end
+                end
+                object ppSummaryBand4: TppSummaryBand
+                  Background.Brush.Style = bsClear
+                  mmBottomOffset = 0
+                  mmHeight = 3704
+                  mmPrintPosition = 0
+                end
+                object ppDesignLayers5: TppDesignLayers
+                  object ppDesignLayer5: TppDesignLayer
+                    UserName = 'Foreground4'
+                    LayerType = ltBanded
+                    Index = 0
+                  end
+                end
+              end
+            end
+          end
+          object ppDesignLayers4: TppDesignLayers
+            object ppDesignLayer4: TppDesignLayer
+              UserName = 'Foreground3'
+              LayerType = ltBanded
+              Index = 0
+            end
+          end
+        end
       end
     end
   end
@@ -1503,28 +2492,30 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
     CursorType = ctStatic
     CommandText = 
       'SELECT      A.IdAnexo, A.Identificador AS Anexo, A.Plazo, '#13#10'A.Sa' +
-      'ldoInsoluto,'#13#10'C.Identificador AS Contrato, '#13#10'VR.*,(vr.cantCobRec' +
-      'NP+Vr.atrasados) as AtrasadoORec, CASE WHEN (Vr.atrasados > 0) T' +
-      'HEN VR.DiasREtrasoXAnexo / Vr.atrasados ELSE 0 END AS DiasPagoTo' +
-      'tal, '#13#10' CASE WHEN (Vr.atrasados > 0) THEN VR.DiasSoloRetraso / V' +
-      'r.atrasados ELSE 0 END AS DiasPagoRetraso, '#13#10' CASE WHEN (vr.CAnt' +
-      'idad > 0) THEN (round((Vr.atrasados * 100.0 / VR.Cantidad),1 )) ' +
-      'END AS PorcentajeAtrasados,'#13#10' CASE WHEN (vr.CAntidad > 0) THEN (' +
-      'round((Vr.aTiempo * 100.0 / VR.Cantidad), 1)) END AS PorcentajeA' +
-      'Tiempo, '#13#10'PR.CalificacionInicial, PR.RazonSocial AS cliente, '#13#10'C' +
-      'T.Identificador AS TC, AC.IdAnexoCreditoEstatus, A.PrecioMoneda,' +
-      'A.TipoCambio, A.PrecioTotal'#13#10'FROM         dbo.Anexos AS A INNER ' +
-      'JOIN'#13#10'           vw_RetrasoDiasXAnexo VR  on a.IdAnexo = VR.idan' +
-      'exo inner join'#13#10#13#10'                      dbo.Contratos AS C ON C.' +
-      'IdContrato = A.IdContrato INNER JOIN'#13#10'                      dbo.' +
-      'ContratosTipos AS CT ON C.IdContratoTipo = CT.IdContratoTipo INN' +
-      'ER JOIN'#13#10'                      dbo.Personas AS PR ON PR.IdPerson' +
-      'a = C.IdPersona INNER JOIN'#13#10'                      dbo.AnexosCred' +
-      'itos AS AC ON A.IdAnexo = AC.IdAnexo AND AC.IdAnexoCreditoEstatu' +
-      's = 1 '#13#10'order by A.IdAnexo'
+      'ldoInsoluto,VC.TotalPorVencer as SaldoTotal,'#13#10'C.Identificador AS' +
+      ' Contrato, '#13#10'VR.*,(vr.cantCobRecNP+Vr.atrasados) as AtrasadoORec' +
+      ', CASE WHEN (Vr.atrasados > 0) THEN VR.DiasREtrasoXAnexo / Vr.at' +
+      'rasados ELSE 0 END AS DiasPagoTotal, '#13#10' CASE WHEN (Vr.atrasados ' +
+      '> 0) THEN VR.DiasSoloRetraso / Vr.atrasados ELSE 0 END AS DiasPa' +
+      'goRetraso, '#13#10' CASE WHEN (vr.CAntidad > 0) THEN (round((Vr.atrasa' +
+      'dos * 100.0 / VR.Cantidad),1 )) END AS PorcentajeAtrasados,'#13#10' CA' +
+      'SE WHEN (vr.CAntidad > 0) THEN (round((Vr.aTiempo * 100.0 / VR.C' +
+      'antidad), 1)) END AS PorcentajeATiempo, '#13#10'PR.CalificacionInicial' +
+      ', PR.RazonSocial AS cliente, '#13#10'CT.Identificador AS TC, AC.IdAnex' +
+      'oCreditoEstatus, A.PrecioMoneda,A.TipoCambio, A.PrecioTotal'#13#10'FRO' +
+      'M         dbo.Anexos AS A INNER JOIN'#13#10'         vw_ReporteCartera' +
+      'Completo VC on a.IdAnexo= VC.IdAnexo inner join '#13#10'           vw_' +
+      'RetrasoDiasXAnexo VR  on a.IdAnexo = VR.idanexo inner join'#13#10#13#10'  ' +
+      '                    dbo.Contratos AS C ON C.IdContrato = A.IdCon' +
+      'trato INNER JOIN'#13#10'                      dbo.ContratosTipos AS CT' +
+      ' ON C.IdContratoTipo = CT.IdContratoTipo INNER JOIN'#13#10'           ' +
+      '           dbo.Personas AS PR ON PR.IdPersona = C.IdPersona INNE' +
+      'R JOIN'#13#10'                      dbo.AnexosCreditos AS AC ON A.IdAn' +
+      'exo = AC.IdAnexo AND AC.IdAnexoCreditoEstatus = 1 '#13#10'order by A.I' +
+      'dAnexo'
     Parameters = <>
     Left = 40
-    Top = 152
+    Top = 240
     object ADODtStRepHojaControlCteIdAnexo: TAutoIncField
       FieldName = 'IdAnexo'
       ReadOnly = True
@@ -1634,11 +2625,17 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       Precision = 18
       Size = 6
     end
+    object ADODtStRepHojaControlCteSaldoTotal: TFMTBCDField
+      FieldName = 'SaldoTotal'
+      ReadOnly = True
+      Precision = 38
+      Size = 6
+    end
   end
   object DSHojaControlCte: TDataSource
     DataSet = ADODtStRepHojaControlCte
     Left = 128
-    Top = 152
+    Top = 240
   end
   object ppRprtHojaControlCte: TppReport
     AutoStop = False
@@ -1696,7 +2693,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
     XLSSettings.Subject = 'Report'
     XLSSettings.Title = 'Report'
     Left = 312
-    Top = 152
+    Top = 240
     Version = '15.0'
     mmColumnWidth = 203200
     DataPipelineName = 'ppDBHojaControlCte'
@@ -5754,7 +6751,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       object ppSystemVariable4: TppSystemVariable
         UserName = 'lblPageNo'
         Anchors = [atRight, atBottom]
-        VarType = vtPageNoDesc
+        VarType = vtPageSetDesc
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clNavy
         Font.Name = 'arial'
@@ -5763,9 +6760,9 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 3969
-        mmLeft = 255059
+        mmLeft = 245269
         mmTop = 1323
-        mmWidth = 10319
+        mmWidth = 20109
         BandType = 8
         LayerName = Foreground1
       end
@@ -5819,7 +6816,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         end
         object ppDBText29: TppDBText
           UserName = 'DBText29'
-          DataField = 'SaldoInsoluto'
+          DataField = 'SaldoTotal'
           DataPipeline = ppDBHojaControlCte
           DisplayFormat = '#,0;-#,0'
           Font.Charset = DEFAULT_CHARSET
@@ -6321,7 +7318,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
     MasterFields = 'IdAnexo'
     Parameters = <>
     Left = 40
-    Top = 248
+    Top = 304
     object ADODtdtProductosIdAnexo: TIntegerField
       FieldName = 'IdAnexo'
     end
@@ -6380,13 +7377,13 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
   object dsProductos: TDataSource
     DataSet = ADODtdtProductos
     Left = 128
-    Top = 248
+    Top = 304
   end
   object ppDBProductos: TppDBPipeline
     DataSource = dsProductos
     UserName = 'DBProductos'
     Left = 200
-    Top = 248
+    Top = 304
     MasterDataPipelineName = 'ppDBHojaControlCte'
     object ppDBProductosppMasterFieldLink1: TppMasterFieldLink
       MasterFieldName = 'IdAnexo'
@@ -6396,7 +7393,6 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
     end
   end
   object ADODtStSumasTotales: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     OnCalcFields = CuotasReportCalcFields
@@ -6539,164 +7535,97 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
     UserName = 'dbpReport2'
     Left = 176
     Top = 80
-    object ppDBSumasTotalesppField1: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'SUMATotal'
-      FieldName = 'SUMATotal'
-      FieldLength = 0
-      DataType = dtDouble
-      DisplayWidth = 0
-      Position = 0
-    end
-    object ppDBSumasTotalesppField2: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'SUMACobradoCXC'
-      FieldName = 'SUMACobradoCXC'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 39
-      Position = 1
-    end
-    object ppDBSumasTotalesppField3: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'SUMATotalPorCobrar'
-      FieldName = 'SUMATotalPorCobrar'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 39
-      Position = 2
-    end
-    object ppDBSumasTotalesppField4: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'SUMASaldopendiente'
-      FieldName = 'SUMASaldopendiente'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 39
-      Position = 3
-    end
-    object ppDBSumasTotalesppField5: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'SUMATotalVigente'
-      FieldName = 'SUMATotalVigente'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 39
-      Position = 4
-    end
-    object ppDBSumasTotalesppField6: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'SUMATotalPorVencer'
-      FieldName = 'SUMATotalPorVencer'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 39
-      Position = 5
-    end
-    object ppDBSumasTotalesppField7: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'SUMAVencidoA30'
-      FieldName = 'SUMAVencidoA30'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 39
-      Position = 6
-    end
-    object ppDBSumasTotalesppField8: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'SUMAVencidoA60'
-      FieldName = 'SUMAVencidoA60'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 39
-      Position = 7
-    end
-    object ppDBSumasTotalesppField9: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'SUMAVencidoA90'
-      FieldName = 'SUMAVencidoA90'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 39
-      Position = 8
-    end
-    object ppDBSumasTotalesppField10: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'SUMAVencidoMas120'
-      FieldName = 'SUMAVencidoMas120'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 39
-      Position = 9
-    end
-    object ppDBSumasTotalesppField11: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'PorcentajeVig1_30'
-      FieldName = 'PorcentajeVig1_30'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 39
-      Position = 10
-    end
-    object ppDBSumasTotalesppField12: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'PorcentajeVenc31_60'
-      FieldName = 'PorcentajeVenc31_60'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 39
-      Position = 11
-    end
-    object ppDBSumasTotalesppField13: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'PorcentajeVenc61_90'
-      FieldName = 'PorcentajeVenc61_90'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 39
-      Position = 12
-    end
-    object ppDBSumasTotalesppField14: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'PorcentajeVenc91_120'
-      FieldName = 'PorcentajeVenc91_120'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 39
-      Position = 13
-    end
-    object ppDBSumasTotalesppField15: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'PorcentajeVencMas120'
-      FieldName = 'PorcentajeVencMas120'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 39
-      Position = 14
-    end
-    object ppDBSumasTotalesppField16: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'PorcCobradoPendiente'
-      FieldName = 'PorcCobradoPendiente'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 39
-      Position = 15
-    end
-    object ppDBSumasTotalesppField17: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'PorcXCobrar'
-      FieldName = 'PorcXCobrar'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 39
-      Position = 16
-    end
   end
   object ppDBHojaControlCte: TppDBPipeline
     DataSource = DSHojaControlCte
     UserName = 'DBHojaControlCte'
     Left = 216
-    Top = 152
+    Top = 240
+  end
+  object ADODtStSumasXCalificacion: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    OnCalcFields = CuotasReportCalcFields
+    CommandText = 
+      'SElect Calificacioninicial, Count(IdAnexo) cantidad ,SUM(TotalVi' +
+      'gente)/1000 as sumaVigente,  Sum (VencidoA30)/1000 Suma30, sum(V' +
+      'encidoA60)/1000 suma60 , '#13#10'sum(VencidoA90)/1000  suma90, SUM(Ven' +
+      'cidoMas120)/1000 sumamas120,Sum(TotalPorVencer) /1000 as SumTota' +
+      'lPendiente,'#13#10' Sum(TotalCobradoVencido)/1000  SumCobradoVencido, ' +
+      #13#10'SUM(TotalPorCobrar)/1000  sumXCobrar ,'#13#10#13#10'CAse when Sum(TotalP' +
+      'orVencer)>0 then (SUM(TotalPorCobrar)/Sum(TotalPorVencer))*100 e' +
+      'lse 0 end as  '#13#10' PorcXVencer,'#13#10' CAse when Sum(TotalPorVencer)>0 ' +
+      'then( SUM(TotalCobradoVencido)/Sum(TotalPorVencer))*100 else 0 e' +
+      'nd as  '#13#10' PorcVencido, '#13#10'  CAse when Sum(TotalCobradoVencido)>0 ' +
+      'then( SUM(TotalVigente)/Sum(TotalCobradoVencido))*100 else 0 end' +
+      ' as  '#13#10' PorcVenc1A30,'#13#10' CAse when Sum(TotalCobradoVencido)>0 the' +
+      'n( SUM(VencidoA30)/Sum(TotalCobradoVencido))*100 else 0 end as  ' +
+      #13#10' PorcVenc31a60,'#13#10'  CAse when Sum(TotalCobradoVencido)>0 then (' +
+      'SUM(VencidoA60)/Sum(TotalCobradoVencido))*100 else 0 end as  '#13#10' ' +
+      'PorcVenc61a90,'#13#10'   CAse when Sum(TotalCobradoVencido)>0 then (SU' +
+      'M(VencidoA90)/Sum(TotalCobradoVencido))*100 else 0 end as  '#13#10' Po' +
+      'rcVenc91a120,'#13#10'   CAse when Sum(TotalCobradoVencido)>0 then (SUM' +
+      '(VencidoMas120)/Sum(TotalCobradoVencido))*100 else 0 end as  '#13#10' ' +
+      'PorcVencidoMas120'#13#10#13#10#13#10'from vw_ReporteCarteraCompleto'#13#10#13#10'Group b' +
+      'y CalificacionInicial'
+    Parameters = <>
+    Left = 32
+    Top = 144
+  end
+  object DSSumasXCalifica: TDataSource
+    DataSet = ADODtStSumasXCalificacion
+    Left = 104
+    Top = 144
+  end
+  object ppDBPplnSumasXCalifica: TppDBPipeline
+    DataSource = DSSumasXCalifica
+    UserName = 'DBPplnSumasXCalifica'
+    Left = 176
+    Top = 144
+  end
+  object AdoDtstPercentiles: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    OnCalcFields = CuotasReportCalcFields
+    CommandText = 
+      'SELECT    IdAnexo, TotalPorVencer , TotalPorVencer/vwr2.Total as' +
+      ' Parcial'#13#10#13#10'FROM         vw_ReporteCarteraCompleto v1 , (SELECT ' +
+      'SUM(TotalPorVencer) as Total'#13#10#13#10'FROM         vw_ReporteCarteraCo' +
+      'mpleto ) vwr2'#13#10'ORDER BY TotalPorVencer DESC'#13#10#13#10#13#10
+    Parameters = <>
+    Left = 312
+    Top = 144
+  end
+  object ADODtStMediana: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    OnCalcFields = CuotasReportCalcFields
+    CommandText = 
+      'SELECT'#13#10'('#13#10'(SELECT MIN(TotalPorVencer)  as minimo FROM  (SELECT ' +
+      'TOP 50 PERCENT TotalPorVencer FROM   vw_ReporteCarteraCompleto v' +
+      '1 Order by TotalPorVencer DESC)AS H2) '#13#10'+   '#13#10'(SELECT MAX(TotalP' +
+      'orVencer) as maximo  FROM  (SELECT TOP 50 PERCENT TotalPorVencer' +
+      ' FROM   vw_ReporteCarteraCompleto v1 Order by TotalPorVencer )AS' +
+      ' H1 )'#13#10') / 2000 AS Mediana;'#13#10#13#10
+    Parameters = <>
+    Left = 416
+    Top = 144
+    object ADODtStMedianaMediana: TFMTBCDField
+      FieldName = 'Mediana'
+      ReadOnly = True
+      Precision = 38
+      Size = 6
+    end
+  end
+  object DSMediana: TDataSource
+    DataSet = ADODtStMediana
+    Left = 416
+    Top = 200
+  end
+  object ppDBPplnMediana: TppDBPipeline
+    DataSource = DSMediana
+    UserName = 'DBMediana'
+    Left = 488
+    Top = 200
   end
 end

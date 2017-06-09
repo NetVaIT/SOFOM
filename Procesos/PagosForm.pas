@@ -311,7 +311,7 @@ procedure TFrmConPagos.SpdBtnBuscarClick(Sender: TObject);
 const  //Dic 20/16
    TxtSQL='select  IdPago, IdBanco, IdPersonaCliente, IdCuentaBancariaEstadoCuenta,'+
           'FechaPago, FolioPago, SeriePago, Referencia, Importe, Saldo, Observaciones,' +
-          'PA.IdMetodoPago, CuentaPago, OrigenPago, IDContrato, IDAnexo from Pagos PA ';
+          'PA.IdMetodoPago, CuentaPago, OrigenPago, IDContrato, IDAnexo, ESdeposito from Pagos PA ';
 
 begin
   inherited;

@@ -13,7 +13,7 @@ object _dmConection: T_dmConection
     Provider = 'SQLOLEDB.1'
     OnDisconnect = ADOConnectionDisconnect
     OnConnectComplete = ADOConnectionConnectComplete
-    Left = 32
+    Left = 40
     Top = 8
   end
   object adoqUsuarios: TADOQuery

@@ -349,6 +349,7 @@ type
     adopCXCAbonarCapital: TADOStoredProc;
     actCrearCXCAbonoCapital: TAction;
     ActAjusteAmortiza: TAction;
+    adodsMasterEsDeposito: TBooleanField;
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsMasterAfterPost(DataSet: TDataSet);
     procedure adodsMasterBeforePost(DataSet: TDataSet);
@@ -408,7 +409,8 @@ type
       Importe: Extended; Tipo: TAbonoCapital; Fecha:TDateTime): Boolean;
     procedure SetPaymentTime(const Value: TPaymentTime);
     function FechaSinHora(FechaHora: TDAteTime): TDAteTime;
-    procedure RegistraBitacora(tipoRegistro: Integer;Observacion:String); //Abr 19/17
+    procedure RegistraBitacora(tipoRegistro: Integer;Observacion:String);
+    function CrearPagoXDeposito(Importe: Double; ADatosPago: TADODataSet): Boolean; //Abr 19/17
     property PaymentTime: TPaymentTime read FPaymentTime write SetPaymentTime;
   public
     { Public declarations }
@@ -473,7 +475,7 @@ procedure TdmPagos.adodsMasterBeforeInsert(DataSet: TDataSet);
 const      // mar 10/17
    TxtSQL='select  IdPago, IdBanco, IdPersonaCliente, IdCuentaBancariaEstadoCuenta, '+
    'FechaPago, FolioPago, SeriePago, Referencia, Importe, Saldo,Observaciones,'+
-   'IdMetodoPago, CuentaPago, OrigenPago,IdContrato, IdAnexo from Pagos';
+   'IdMetodoPago, CuentaPago, OrigenPago,IdContrato, IdAnexo, EsDeposito from Pagos';
 
 var Txt:String;
 begin
@@ -510,7 +512,8 @@ begin  //Pagos
   DataSet.FieldByName('SeriePago').AsString:=SerieAct;
   DataSet.FieldByName('FolioPago').asInteger:=FolioAct+1;  (*  // verificar donde para que no se repitan los numeros deshabilitado FEb 8/17*)
   //VEr que pasa si se usan iguales
-
+  DataSet.FieldByName('OrigenPago').asInteger :=0;    //Jun 9/17
+  DAtaset.FieldByName('EsDeposito').AsBoolean:=False; //Jun 9/17
 
 
 end;
@@ -617,6 +620,15 @@ begin
 
     ADODtStPagosAuxiliar.Post;
   end;
+  //Verificar si es un Deposito en GArantia   y crear un pago correspondiente Jun 8/17
+  if Pos('Deposito en Garantia',ADODtStCxCDetallePendDescripCXC.AsString)>0 then // verificar si asi o con sus id(56,66,76)
+  begin
+    if CrearPagoXDeposito(DataSet.FieldByName('IMPORTE').AsFloat,AdoDsMaster) then
+      ShowMessage('Se creó pago correspondiente al Depósito en Garantía');
+  end;
+
+  //HAsta aca jun 8/17
+
 
   if ADODtStCxCDetallePendEsCapital.value then
   begin   //Feb 16/17
@@ -631,6 +643,55 @@ begin
 
 
 
+end;
+
+function TdmPagos.CrearPagoXDeposito (Importe:Double; ADatosPago: TADODataSet):Boolean; //Jun 8/17
+var serieAct:String;
+    FolioAct, res:Integer;
+begin
+  Result:=False;
+  SerieAct:= ADODtStConfiguraciones.FieldByName('UltimaSeriePago').AsString;
+  FolioAct:= ADODtStConfiguraciones.FieldByName('UltimoFolioPago').AsInteger;
+  SerieAct:=SerieAct;
+  FolioAct:=FolioAct+1; 
+
+
+
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.SQl.Clear;
+  ADOQryAuxiliar.SQL.Add(' Insert Into Pagos(idPersonaCliente,FechaPago,IdAnexo, IdContrato, IDMetododePago,  ' +
+                         ' SeriePago, FolioPago,Importe, Saldo,Referencia, Observaciones, EsDeposito) Values (  '+
+                         ' :idPersonaCliente,:FechaPago,:IdAnexo,:IdContrato, :IDMetododePago,  ' +
+                         ' :SeriePago, :FolioPago,:Importe, :Saldo,:Referencia, :Observaciones,:EsDeposito)');
+
+  ADOQryAuxiliar.Parameters.ParamByName('idPersonaCliente').value:=ADatosPago.FieldByName('IdPersonaCliente').asInteger;
+  ADOQryAuxiliar.Parameters.ParamByName('FechaPago').value:=ADatosPago.FieldByName('FechaPago').asDatetime;
+  
+  ADOQryAuxiliar.Parameters.ParamByName('IdAnexo').value:=ADatosPago.FieldByName('IDAnexo').asInteger;
+  ADOQryAuxiliar.Parameters.ParamByName('IdContrato').value:=ADatosPago.FieldByName('IdContrato').asInteger;
+  ADOQryAuxiliar.Parameters.ParamByName('IDMetododePago').value:=aDatosPago.FieldByName('IDMetododePago').asDatetime;
+  
+  ADOQryAuxiliar.Parameters.ParamByName('SeriePago').value:=serieAct;
+  ADOQryAuxiliar.Parameters.ParamByName('FolioPago').value:= FolioAct;
+  ADOQryAuxiliar.Parameters.ParamByName('Importe').value:= Importe;
+  ADOQryAuxiliar.Parameters.ParamByName('Saldo').value:= Importe;
+  ADOQryAuxiliar.Parameters.ParamByName('Referencia').value:=  '';
+  ADOQryAuxiliar.Parameters.ParamByName('Observaciones').value:=  'Trasladado por Deposito en Garantía. API: '
+                                                                 + ADODtstAplicacionesInternasIDPagoAplicacionInterna.AsString;
+  ADOQryAuxiliar.Parameters.ParamByName('EsDeposito').value:=  True;
+  
+                            
+  Res:= ADOQryAuxiliar.ExecSQL;
+  if Res=1 then
+  begin
+     REsult:=True;
+    //Para actualizar folio pago
+    ADODtStConfiguraciones.Edit;
+    ADODtStConfiguraciones.FieldByName('UltimaSeriePago').AsString:=SerieAct;
+    ADODtStConfiguraciones.FieldByName('UltimoFolioPago').AsInteger :=FolioAct;
+    ADODtStConfiguraciones.Post;   
+    
+  end;
 end;
 
 procedure TdmPagos.ADODtStCFDIConceptosPrefAfterPost(DataSet: TDataSet);

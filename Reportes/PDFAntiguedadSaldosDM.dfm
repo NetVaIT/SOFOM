@@ -28,6 +28,7 @@
       'to'#13#10'             inner join ContratosTipos as CT On Con.IdContra' +
       'toTipo =CT.IdContratoTipo'#13#10' WHERE    (Cc.Saldo > 0) --  AND  -- ' +
       'mientras para que muestre todo'#13#10'    '#13#10'ORDER BY Cliente'
+    Left = 40
     object adodsReportIdCuentaXCobrar: TAutoIncField
       FieldName = 'IdCuentaXCobrar'
       ReadOnly = True
@@ -123,22 +124,28 @@
     Template.FileName = 'C:\Desarrollo\SOFOM\Reportes\rptAntiguedadSaldos.rtm'
     DataPipelineName = 'dbpReport'
     inherited ppTitleBand1: TppTitleBand
-      mmHeight = 35983
+      mmHeight = 0
+    end
+    inherited ppHeaderBand1: TppHeaderBand
+      mmHeight = 33867
       inherited pplblTitle: TppLabel
         SaveOrder = -1
         Caption = 'Antiguedad de Saldos '
         WordWrap = True
         VerticalAlignment = avCenter
-        mmHeight = 24606
+        mmHeight = 11906
+        mmLeft = 43921
+        mmTop = 4498
         mmWidth = 198702
         LayerName = Foreground
       end
       inherited ppImage1: TppImage
+        mmHeight = 19050
+        mmLeft = 5821
+        mmTop = 529
+        mmWidth = 35983
         LayerName = Foreground
       end
-    end
-    inherited ppHeaderBand1: TppHeaderBand
-      mmHeight = 13494
       object ppLabel26: TppLabel
         UserName = 'Label101'
         AutoSize = False
@@ -155,7 +162,7 @@
         Transparent = True
         mmHeight = 5019
         mmLeft = 108215
-        mmTop = 2116
+        mmTop = 22786
         mmWidth = 149225
         BandType = 0
         LayerName = Foreground
@@ -172,7 +179,7 @@
         Transparent = True
         mmHeight = 4763
         mmLeft = 5821
-        mmTop = 1323
+        mmTop = 21993
         mmWidth = 14023
         BandType = 0
         LayerName = Foreground
@@ -190,7 +197,7 @@
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
         mmLeft = 20902
-        mmTop = 1323
+        mmTop = 21993
         mmWidth = 98161
         BandType = 0
         LayerName = Foreground
@@ -208,7 +215,7 @@
         Transparent = True
         mmHeight = 4763
         mmLeft = 4763
-        mmTop = 7938
+        mmTop = 28608
         mmWidth = 15081
         BandType = 0
         LayerName = Foreground
@@ -226,7 +233,7 @@
         Transparent = True
         mmHeight = 4763
         mmLeft = 24871
-        mmTop = 7938
+        mmTop = 28608
         mmWidth = 10054
         BandType = 0
         LayerName = Foreground
@@ -244,7 +251,7 @@
         Transparent = True
         mmHeight = 4763
         mmLeft = 36248
-        mmTop = 7938
+        mmTop = 28608
         mmWidth = 11906
         BandType = 0
         LayerName = Foreground
@@ -262,7 +269,7 @@
         Transparent = True
         mmHeight = 4763
         mmLeft = 53975
-        mmTop = 7938
+        mmTop = 28608
         mmWidth = 16404
         BandType = 0
         LayerName = Foreground
@@ -280,7 +287,7 @@
         Transparent = True
         mmHeight = 4763
         mmLeft = 74613
-        mmTop = 7938
+        mmTop = 28608
         mmWidth = 30956
         BandType = 0
         LayerName = Foreground
@@ -298,7 +305,7 @@
         Transparent = True
         mmHeight = 4763
         mmLeft = 108215
-        mmTop = 7938
+        mmTop = 28608
         mmWidth = 33867
         BandType = 0
         LayerName = Foreground
@@ -316,7 +323,7 @@
         Transparent = True
         mmHeight = 4763
         mmLeft = 145521
-        mmTop = 7938
+        mmTop = 28608
         mmWidth = 33867
         BandType = 0
         LayerName = Foreground
@@ -334,7 +341,7 @@
         Transparent = True
         mmHeight = 4763
         mmLeft = 182827
-        mmTop = 7938
+        mmTop = 28608
         mmWidth = 33867
         BandType = 0
         LayerName = Foreground
@@ -352,21 +359,8 @@
         Transparent = True
         mmHeight = 4497
         mmLeft = 221457
-        mmTop = 7938
+        mmTop = 28608
         mmWidth = 33602
-        BandType = 0
-        LayerName = Foreground
-      end
-      object ppLine1: TppLine
-        UserName = 'LineFooter1'
-        Anchors = [atLeft, atTop, atRight, atBottom]
-        Pen.Color = clGray
-        Pen.Width = 2
-        Weight = 1.500000000000000000
-        mmHeight = 3969
-        mmLeft = 1323
-        mmTop = 12436
-        mmWidth = 264055
         BandType = 0
         LayerName = Foreground
       end
@@ -376,9 +370,22 @@
         Pen.Color = clGray
         Pen.Width = 2
         Weight = 1.500000000000000000
-        mmHeight = 3969
+        mmHeight = 24342
         mmLeft = 1323
-        mmTop = 265
+        mmTop = 20935
+        mmWidth = 264055
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLine1: TppLine
+        UserName = 'LineFooter1'
+        Anchors = [atLeft, atTop, atRight, atBottom]
+        Pen.Color = clGray
+        Pen.Width = 2
+        Weight = 1.500000000000000000
+        mmHeight = 24342
+        mmLeft = 1323
+        mmTop = 33106
         mmWidth = 264055
         BandType = 0
         LayerName = Foreground
@@ -1085,7 +1092,7 @@
       'a mas de 120 d'#237'as") as TotalMas120Dias'#13#10'  from Vw_AntiguedadSald' +
       'osCXC '#13#10'Group BY Cliente'
     Parameters = <>
-    Left = 24
+    Left = 32
     Top = 152
   end
   object DSAntXCliente: TDataSource
@@ -1156,13 +1163,13 @@
     object ppTitleBand2: TppTitleBand
       Background.Brush.Style = bsClear
       mmBottomOffset = 0
-      mmHeight = 35454
+      mmHeight = 21431
       mmPrintPosition = 0
       object ppLblTitulo2: TppLabel
         UserName = 'Titulo'
         Anchors = [atLeft, atTop, atRight, atBottom]
         AutoSize = False
-        Caption = 'Antiguedad de Saldos por Cliente '
+        Caption = 'Antig'#252'edad de Saldos por Cliente'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clNavy
         Font.Name = 'TIMES NEW ROMAN'
@@ -1172,10 +1179,10 @@
         Transparent = True
         WordWrap = True
         VerticalAlignment = avCenter
-        mmHeight = 30427
-        mmLeft = 59531
-        mmTop = 2646
-        mmWidth = 279930
+        mmHeight = 17727
+        mmLeft = 39952
+        mmTop = 1852
+        mmWidth = 300567
         BandType = 1
         LayerName = Foreground1
       end
@@ -4550,10 +4557,10 @@
           FA83085DC1E1075269AD9754D2DF47253096F46FD1DF29B4FF7F06460362098A
           25FD552AC7D2BF4F2530965452492595545246253096545249259554529752FA
           7F9BDF589A23AA3D690000000049454E44AE426082}
-        mmHeight = 35454
+        mmHeight = 19024
         mmLeft = 7673
         mmTop = 529
-        mmWidth = 50006
+        mmWidth = 29336
         BandType = 1
         LayerName = Foreground1
       end
@@ -4943,7 +4950,7 @@
       object ppSystemVariable2: TppSystemVariable
         UserName = 'lblPageNo'
         Anchors = [atRight, atBottom]
-        VarType = vtPageNoDesc
+        VarType = vtPageSetDesc
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clNavy
         Font.Name = 'TIMES NEW ROMAN'
@@ -4952,9 +4959,9 @@
         TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 3969
-        mmLeft = 330994
+        mmLeft = 324909
         mmTop = 2646
-        mmWidth = 10583
+        mmWidth = 16669
         BandType = 8
         LayerName = Foreground1
       end

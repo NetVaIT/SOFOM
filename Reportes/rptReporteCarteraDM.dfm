@@ -7,13 +7,14 @@ inherited dmrptReporteCartera: TdmrptReporteCartera
       'SElect IdAnexo, Contrato, Anexo, CLiente, Tc, Plazo, Total as To' +
       'tal, '#13#10'CobradoCXC as CobradoCXC, TotalPorCobrar as TotalPorCobra' +
       'r, Saldopendiente  as Saldopendiente,'#13#10' TotalVigente  as TotalVi' +
-      'gente,'#13#10' TotalPorVencer as TotalPorVencer, TotalCobradoVencido a' +
-      's TotalCobradoVencido,'#13#10' VencidoA30 as VencidoA30, VencidoA60 as' +
-      ' VencidoA60, VencidoA90 as VencidoA90, '#13#10'VencidoMas120 as Vencid' +
-      'oMas120,'#13#10'DiasRetraso, Cantidad, atrasados, atiempo, CuotasPendi' +
-      'entes, DiasPagoTotal, '#13#10'DiasPagoRetraso, PorcentajeAtrasados, Po' +
-      'rcentajeATiempo'#13#10'from vw_ReporteCarteraCompleto'#13#10'order by IdAnex' +
-      'o'
+      'gente,'#13#10' TotalPorVencer as SaldoTotal, TotalCobradoVencido as To' +
+      'talCobradoVencido,'#13#10' VencidoA30 as VencidoA30, VencidoA60 as Ven' +
+      'cidoA60, VencidoA90 as VencidoA90, '#13#10'VencidoMas120 as VencidoMas' +
+      '120,'#13#10'DiasRetraso, Cantidad, atrasados, atiempo, CuotasPendiente' +
+      's, DiasPagoTotal, '#13#10'DiasPagoRetraso, PorcentajeAtrasados, Porcen' +
+      'tajeATiempo'#13#10'from vw_ReporteCarteraCompleto'#13#10'order by  TotalCobr' +
+      'adoVencido desc, TotalPorVencer desc'
+    Left = 32
     object adodsMasterIdAnexo: TIntegerField
       FieldName = 'IdAnexo'
     end
@@ -64,13 +65,6 @@ inherited dmrptReporteCartera: TdmrptReporteCartera
     end
     object adodsMasterTotalVigente: TFMTBCDField
       FieldName = 'TotalVigente'
-      ReadOnly = True
-      DisplayFormat = '###,###.##'
-      Precision = 38
-      Size = 6
-    end
-    object adodsMasterTotalPorVencer: TFMTBCDField
-      FieldName = 'TotalPorVencer'
       ReadOnly = True
       DisplayFormat = '###,###.##'
       Precision = 38
@@ -156,6 +150,13 @@ inherited dmrptReporteCartera: TdmrptReporteCartera
       FieldName = 'CuotaMostrar'
       Size = 15
       Calculated = True
+    end
+    object adodsMasterSaldoTotal: TFMTBCDField
+      FieldName = 'SaldoTotal'
+      ReadOnly = True
+      DisplayFormat = '###,###.##'
+      Precision = 38
+      Size = 6
     end
   end
   inherited ActionList: TActionList

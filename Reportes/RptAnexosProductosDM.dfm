@@ -17,6 +17,7 @@ inherited dmRptAnexosProductos: TdmRptAnexosProductos
       'tus = AnexosEstatus.IdAnexoEstatus INNER JOIN'#13#10'                 ' +
       '        Personas AS Clientes ON Contratos.IdPersona = Clientes.I' +
       'dPersona'#13#10
+    Left = 40
     object adodsReportIdAnexo: TAutoIncField
       FieldName = 'IdAnexo'
       ReadOnly = True
@@ -68,9 +69,9 @@ inherited dmRptAnexosProductos: TdmRptAnexosProductos
     PrinterSetup.Orientation = poLandscape
     PrinterSetup.mmPaperHeight = 215900
     PrinterSetup.mmPaperWidth = 279400
-    Units = utScreenPixels
     DataPipelineName = 'dbpReport'
-    inherited ppTitleBand1: TppTitleBand
+    inherited ppHeaderBand1: TppHeaderBand
+      mmHeight = 29104
       inherited pplblTitle: TppLabel
         SaveOrder = -1
         mmWidth = 198702
@@ -79,9 +80,6 @@ inherited dmRptAnexosProductos: TdmRptAnexosProductos
       inherited ppImage1: TppImage
         LayerName = Foreground
       end
-    end
-    inherited ppHeaderBand1: TppHeaderBand
-      mmHeight = 10583
       object ppLabel1: TppLabel
         UserName = 'Label1'
         AutoSize = False
@@ -94,7 +92,7 @@ inherited dmRptAnexosProductos: TdmRptAnexosProductos
         Transparent = True
         mmHeight = 4233
         mmLeft = 0
-        mmTop = 0
+        mmTop = 19834
         mmWidth = 10583
         BandType = 0
         LayerName = Foreground
@@ -111,7 +109,7 @@ inherited dmRptAnexosProductos: TdmRptAnexosProductos
         Transparent = True
         mmHeight = 4233
         mmLeft = 10583
-        mmTop = 0
+        mmTop = 19834
         mmWidth = 10583
         BandType = 0
         LayerName = Foreground
@@ -128,7 +126,7 @@ inherited dmRptAnexosProductos: TdmRptAnexosProductos
         Transparent = True
         mmHeight = 4233
         mmLeft = 21167
-        mmTop = 0
+        mmTop = 19834
         mmWidth = 26458
         BandType = 0
         LayerName = Foreground
@@ -145,7 +143,7 @@ inherited dmRptAnexosProductos: TdmRptAnexosProductos
         Transparent = True
         mmHeight = 4233
         mmLeft = 47625
-        mmTop = 0
+        mmTop = 19834
         mmWidth = 15875
         BandType = 0
         LayerName = Foreground
@@ -162,7 +160,7 @@ inherited dmRptAnexosProductos: TdmRptAnexosProductos
         Transparent = True
         mmHeight = 4233
         mmLeft = 63500
-        mmTop = 0
+        mmTop = 19834
         mmWidth = 18521
         BandType = 0
         LayerName = Foreground
@@ -180,7 +178,7 @@ inherited dmRptAnexosProductos: TdmRptAnexosProductos
         WordWrap = True
         mmHeight = 8467
         mmLeft = 82021
-        mmTop = 0
+        mmTop = 19834
         mmWidth = 21167
         BandType = 0
         LayerName = Foreground
@@ -197,7 +195,7 @@ inherited dmRptAnexosProductos: TdmRptAnexosProductos
         Transparent = True
         mmHeight = 4233
         mmLeft = 103188
-        mmTop = 0
+        mmTop = 19834
         mmWidth = 26458
         BandType = 0
         LayerName = Foreground
@@ -214,7 +212,7 @@ inherited dmRptAnexosProductos: TdmRptAnexosProductos
         Transparent = True
         mmHeight = 4233
         mmLeft = 129646
-        mmTop = 0
+        mmTop = 19834
         mmWidth = 79375
         BandType = 0
         LayerName = Foreground
@@ -232,8 +230,8 @@ inherited dmRptAnexosProductos: TdmRptAnexosProductos
         WordWrap = True
         mmHeight = 8467
         mmLeft = 209021
-        mmTop = 0
-        mmWidth = 25133
+        mmTop = 19834
+        mmWidth = 25135
         BandType = 0
         LayerName = Foreground
       end
@@ -250,7 +248,7 @@ inherited dmRptAnexosProductos: TdmRptAnexosProductos
         WordWrap = True
         mmHeight = 8467
         mmLeft = 236273
-        mmTop = 0
+        mmTop = 19834
         mmWidth = 26458
         BandType = 0
         LayerName = Foreground
@@ -263,8 +261,8 @@ inherited dmRptAnexosProductos: TdmRptAnexosProductos
         Weight = 1.500000000000000000
         mmHeight = 2646
         mmLeft = 0
-        mmTop = 6333
-        mmWidth = 262730
+        mmTop = 26184
+        mmWidth = 262732
         BandType = 0
         LayerName = Foreground
       end
@@ -384,8 +382,9 @@ inherited dmRptAnexosProductos: TdmRptAnexosProductos
           DataPipeline = dbpProductos
           PrinterSetup.BinName = 'Default'
           PrinterSetup.DocumentName = 'Report'
+          PrinterSetup.Duplex = dpVertical
           PrinterSetup.Orientation = poLandscape
-          PrinterSetup.PaperName = 'Letter (8,5" x 11")'
+          PrinterSetup.PaperName = 'Carta'
           PrinterSetup.PrinterName = 'Default'
           PrinterSetup.SaveDeviceSettings = False
           PrinterSetup.mmMarginBottom = 6350
@@ -753,7 +752,8 @@ inherited dmRptAnexosProductos: TdmRptAnexosProductos
       end
       inherited pplblPageNo: TppSystemVariable
         SaveOrder = -1
-        mmLeft = 254794
+        mmLeft = 246063
+        mmWidth = 16669
         LayerName = Foreground
       end
     end

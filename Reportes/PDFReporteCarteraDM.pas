@@ -229,12 +229,91 @@ type
     ADODtStSumasTotalesPorcXCobrar: TFMTBCDField;
     ppDBText1: TppDBText;
     ppDBText2: TppDBText;
+    ADODtStSumasXCalificacion: TADODataSet;
+    DSSumasXCalifica: TDataSource;
+    ppDBPplnSumasXCalifica: TppDBPipeline;
+    ppSubReport2: TppSubReport;
+    ppChildReport2: TppChildReport;
+    ppDesignLayers4: TppDesignLayers;
+    ppDesignLayer4: TppDesignLayer;
+    ppTitleBand4: TppTitleBand;
+    ppDetailBand4: TppDetailBand;
+    ppSummaryBand3: TppSummaryBand;
+    ppShape1: TppShape;
+    ppDBText48: TppDBText;
+    ppLabel24: TppLabel;
+    ppLabel25: TppLabel;
+    ppLabel26: TppLabel;
+    ppLabel27: TppLabel;
+    ppLabel28: TppLabel;
+    ppLabel29: TppLabel;
+    ppLabel30: TppLabel;
+    ppLabel51: TppLabel;
+    ppLabel52: TppLabel;
+    ppDBText49: TppDBText;
+    ppDBText50: TppDBText;
+    ppDBText51: TppDBText;
+    ppDBText52: TppDBText;
+    ppDBText53: TppDBText;
+    ppDBText54: TppDBText;
+    ppDBText55: TppDBText;
+    ppDBText56: TppDBText;
+    ppDBText57: TppDBText;
+    ppDBText58: TppDBText;
+    ppDBText59: TppDBText;
+    ppDBText60: TppDBText;
+    ppDBText61: TppDBText;
+    ppDBText62: TppDBText;
+    ppDBText63: TppDBText;
+    ppDBText64: TppDBText;
+    ppLabel53: TppLabel;
+    ppLabel54: TppLabel;
+    AdoDtstPercentiles: TADODataSet;
+    ADODtStMediana: TADODataSet;
+    ADODtStMedianaMediana: TFMTBCDField;
+    DSMediana: TDataSource;
+    ppDBPplnMediana: TppDBPipeline;
+    ppSubReport3: TppSubReport;
+    ppChildReport3: TppChildReport;
+    ppTitleBand5: TppTitleBand;
+    ppDetailBand5: TppDetailBand;
+    ppLabel55: TppLabel;
+    ppDBText65: TppDBText;
+    ppLabel56: TppLabel;
+    ppLabel57: TppLabel;
+    ppLabel58: TppLabel;
+    ppLabel59: TppLabel;
+    ppLabel60: TppLabel;
+    ppLabel61: TppLabel;
+    ppLabel62: TppLabel;
+    ppLabel63: TppLabel;
+    ppLabel64: TppLabel;
+    ppLabel65: TppLabel;
+    ppSummaryBand4: TppSummaryBand;
+    ppDesignLayers5: TppDesignLayers;
+    ppDesignLayer5: TppDesignLayer;
+    ppLblCantidad80: TppLabel;
+    ppLblCantidad20: TppLabel;
+    ppLblMonto80: TppLabel;
+    ppLblMonto20: TppLabel;
+    ppLblProm80: TppLabel;
+    ppLblPorm20: TppLabel;
+    ppLblNumCreditos: TppLabel;
+    ppLblMontoTotal: TppLabel;
+    ppLblMontoPromedioCred: TppLabel;
+    ppLblValorMinCred: TppLabel;
+    ppLblValorMaxCred: TppLabel;
+    ppImage3: TppImage;
+    ADODtStRepHojaControlCteSaldoTotal: TFMTBCDField;
     procedure CuotasReportCalcFields(DataSet: TDataSet);
   private
     { Private declarations }
+
   public
     { Public declarations }
-     procedure AssignParam; override;
+    procedure AssignParam; override;
+    procedure CalculoPercentil(var Monto, Total,ValMax,ValMin:Double; var cantidad:Integer; porcBase:Double);
+
   end;
 
 var
@@ -250,6 +329,34 @@ procedure TDmReporteCarteraPDF.AssignParam;
 begin
   inherited;
 //
+end;
+                                                           //Jun 1/17
+procedure TDmReporteCarteraPDF.CalculoPercentil(var Monto, Total,ValMax,ValMin: Double;
+  var cantidad: Integer; porcBase: Double);
+  var Porcentaje:Double;
+begin
+  Cantidad:=0;
+  Porcentaje:=0;
+  Total :=0;
+  Monto:=0;
+  AdoDtStPercentiles.Close;
+  AdoDtStPercentiles.Open;
+  ValMax:= AdoDtStPercentiles.FieldByName('TotalPorVencer').AsExtended;
+  while (not AdoDtStPercentiles.eof) do
+  begin
+    if (porcentaje <PorcBase) then
+    begin
+      Monto:=Monto+ AdoDtStPercentiles.FieldByName('TotalPorVencer').AsExtended;
+      cantidad:=cantidad +1;
+      Porcentaje:= porcentaje  + AdoDtStPercentiles.FieldByName('Parcial').AsExtended;
+    end;
+    Total:=Total+AdoDtStPercentiles.FieldByName('TotalPorVencer').AsExtended;
+    AdoDtStPercentiles.next;
+  end;
+  Valmin:=AdoDtStPercentiles.FieldByName('TotalPorVencer').AsExtended;
+  AdoDtStPercentiles.Close;
+
+
 end;
 
 procedure TDmReporteCarteraPDF.CuotasReportCalcFields(DataSet: TDataSet);

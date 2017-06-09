@@ -21,6 +21,7 @@ inherited DMRptInformacionContratos: TDMRptInformacionContratos
       'dContrato=c.IdContrato'#13#10#13#10'inner join Productos PR on PR.IdAnexo=' +
       'A.IdAnexo'#13#10'left join vw_PagosXProducto vPaXPro on VPaXPro.IdProd' +
       'ucto=Pr.IdProducto'#13#10
+    Left = 32
     object adodsMasterIdContratoEstatus: TIntegerField
       FieldName = 'IdContratoEstatus'
     end

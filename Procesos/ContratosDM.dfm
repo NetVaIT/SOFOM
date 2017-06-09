@@ -8,6 +8,7 @@ inherited dmContratos: TdmContratos
       'select IdContrato, IdPersona, IdContratoTipo, IdContratoEstatus,' +
       ' Identificador, Fecha, MontoAutorizado, DiaCorte, DiaVencimiento' +
       ' from Contratos'
+    Left = 32
     object adodsMasterIdContrato: TAutoIncField
       FieldName = 'IdContrato'
       ReadOnly = True
@@ -493,16 +494,14 @@ inherited dmContratos: TdmContratos
     end
   end
   object adodsMonedas: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdMoneda, Descripcion from Monedas'#13#10'order by Descripcion'
     Parameters = <>
-    Left = 104
+    Left = 112
     Top = 144
   end
   object adodsAnexosEstatus: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdAnexoEstatus, Descripcion from AnexosEstatus'

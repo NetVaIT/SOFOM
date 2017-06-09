@@ -19,7 +19,6 @@ type
     adodsMasterTotalPorCobrar: TFMTBCDField;
     adodsMasterSaldopendiente: TFMTBCDField;
     adodsMasterTotalVigente: TFMTBCDField;
-    adodsMasterTotalPorVencer: TFMTBCDField;
     adodsMasterTotalCobradoVencido: TFMTBCDField;
     adodsMasterVencidoA30: TFMTBCDField;
     adodsMasterVencidoA60: TFMTBCDField;
@@ -37,6 +36,7 @@ type
     adodsMasterCuotaMostrar: TStringField;
     ActPDFCartera: TAction;
     ActPDFHojaControl: TAction;
+    adodsMasterSaldoTotal: TFMTBCDField;
     procedure adodsMasterCalcFields(DataSet: TDataSet);
     procedure DataModuleCreate(Sender: TObject);
     procedure ActPDFCarteraExecute(Sender: TObject);
@@ -64,6 +64,8 @@ var
   ArchiPDF:TFileName;
   Texto,TxtSQL, GrupoSQL, Fecha:String;
   FechaIni, FechaFin:TDAteTime;
+  Monto, Total,ValMax,ValMin:Double;    //jun 1/17
+  Cantidad:integer;  //jun 1/17
 begin
   inherited;
   TxtSQL:= 'SElect Cliente,sum("Saldo")  as SaldoTotal,  Sum ("Saldo Total Vencido")as TotalVencido, Sum (vigentes)as TotalVigentes, SUM ("vencidos a 30 días") as Total30Dias,'
@@ -99,6 +101,22 @@ begin
 
     dmReporteCarteraPDF.ppReport.ShowPrintDialog:= False;
     dmReporteCarteraPDF.ppReport.ShowCancelDialog:= False;
+            //Jun 1/17
+    dmReporteCarteraPDF.CalculoPercentil(Monto, Total,ValMax,ValMin,cantidad,0.8);
+    dmReporteCarteraPDF.ppLblNumCreditos.Caption:=  intTostr(dmReporteCarteraPDF.adodsReport.recordcount);
+    dmReporteCarteraPDF.ppLblCantidad80.Caption:= intToStr(cantidad) ;
+    dmReporteCarteraPDF.ppLblCantidad20.Caption:= intToStr(dmReporteCarteraPDF.adodsReport.recordcount-cantidad) ;
+    dmReporteCarteraPDF.ppLblMonto80.Caption:= FormatFloat('#,0',Monto/1000);  //Aplicar luego formato
+    dmReporteCarteraPDF.ppLblMonto20.Caption:= FormatFloat('#,0',(Total-Monto)/1000);  //Aplicar luego formato
+    dmReporteCarteraPDF.ppLblMontoTotal.Caption:= FormatFloat('#,0',Total/1000);  //Aplicar luego formato
+    dmReporteCarteraPDF.ppLblProm80.Caption:= FormatFloat('#,0',(Monto/cantidad)/1000);//Aplicar luego formato
+    dmReporteCarteraPDF.ppLblPorm20.Caption:= FormatFloat('#,0',((Total-Monto)/(dmReporteCarteraPDF.adodsReport.recordcount-cantidad)/1000)); //Aplicar luego formato
+    dmReporteCarteraPDF.ppLblValorMinCred.Caption:= FormatFloat('#,0',ValMin/1000);
+    dmReporteCarteraPDF.ppLblValorMaxCred.Caption:= FormatFloat('#,0',(ValMax/1000));
+
+
+    dmReporteCarteraPDF.ppLblMontoPromedioCred.Caption:= FormatFloat('#,0',(Total/dmReporteCarteraPDF.adodsReport.recordcount/1000));
+    // hasta aca jun  1/17
     dmReporteCarteraPDF.ppReport.PrinterSetup.DocumentName:=  'REPORTE DE CARTERA POR CLIENTE '+#13 +Texto;
 
     dmReporteCarteraPDF.ppReport.DeviceType:= 'PDF';

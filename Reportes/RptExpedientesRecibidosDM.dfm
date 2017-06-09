@@ -41,20 +41,19 @@ inherited dmRptExpedientesRecibidos: TdmRptExpedientesRecibidos
     end
   end
   inherited ppReport: TppReport
-    Units = utScreenPixels
     DataPipelineName = 'dbpReport'
     inherited ppTitleBand1: TppTitleBand
-      mmHeight = 39952
+      mmHeight = 0
+    end
+    inherited ppHeaderBand1: TppHeaderBand
+      mmHeight = 32544
       inherited pplblTitle: TppLabel
         SaveOrder = -1
-        mmHeight = 31750
         LayerName = Foreground
       end
       inherited ppImage1: TppImage
         LayerName = Foreground
       end
-    end
-    inherited ppHeaderBand1: TppHeaderBand
       object ppLabel1: TppLabel
         UserName = 'Label1'
         AutoSize = False
@@ -67,7 +66,7 @@ inherited dmRptExpedientesRecibidos: TdmRptExpedientesRecibidos
         Transparent = True
         mmHeight = 4233
         mmLeft = 0
-        mmTop = 0
+        mmTop = 26988
         mmWidth = 26458
         BandType = 0
         LayerName = Foreground
@@ -84,7 +83,7 @@ inherited dmRptExpedientesRecibidos: TdmRptExpedientesRecibidos
         Transparent = True
         mmHeight = 4233
         mmLeft = 26458
-        mmTop = 0
+        mmTop = 26988
         mmWidth = 79375
         BandType = 0
         LayerName = Foreground
@@ -101,7 +100,7 @@ inherited dmRptExpedientesRecibidos: TdmRptExpedientesRecibidos
         Transparent = True
         mmHeight = 4233
         mmLeft = 105834
-        mmTop = 0
+        mmTop = 26988
         mmWidth = 26458
         BandType = 0
         LayerName = Foreground
@@ -118,8 +117,18 @@ inherited dmRptExpedientesRecibidos: TdmRptExpedientesRecibidos
         Transparent = True
         mmHeight = 4233
         mmLeft = 132292
-        mmTop = 0
+        mmTop = 26988
         mmWidth = 66146
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLine3: TppLine
+        UserName = 'Line3'
+        Weight = 0.750000000000000000
+        mmHeight = 1058
+        mmLeft = 0
+        mmTop = 31485
+        mmWidth = 198438
         BandType = 0
         LayerName = Foreground
       end
@@ -208,6 +217,8 @@ inherited dmRptExpedientesRecibidos: TdmRptExpedientesRecibidos
       end
       inherited pplblPageNo: TppSystemVariable
         SaveOrder = -1
+        mmLeft = 182034
+        mmWidth = 16669
         LayerName = Foreground
       end
     end
@@ -239,7 +250,8 @@ inherited dmRptExpedientesRecibidos: TdmRptExpedientesRecibidos
           DataPipeline = dbpEstatus
           PrinterSetup.BinName = 'Default'
           PrinterSetup.DocumentName = 'Report'
-          PrinterSetup.PaperName = 'Letter (8,5" x 11")'
+          PrinterSetup.Duplex = dpVertical
+          PrinterSetup.PaperName = 'Carta'
           PrinterSetup.PrinterName = 'Default'
           PrinterSetup.SaveDeviceSettings = False
           PrinterSetup.mmMarginBottom = 6350
@@ -463,7 +475,8 @@ inherited dmRptExpedientesRecibidos: TdmRptExpedientesRecibidos
           DataPipeline = dbpCausa
           PrinterSetup.BinName = 'Default'
           PrinterSetup.DocumentName = 'Report'
-          PrinterSetup.PaperName = 'Letter (8,5" x 11")'
+          PrinterSetup.Duplex = dpVertical
+          PrinterSetup.PaperName = 'Carta'
           PrinterSetup.PrinterName = 'Default'
           PrinterSetup.SaveDeviceSettings = False
           PrinterSetup.mmMarginBottom = 6350
@@ -717,7 +730,7 @@ inherited dmRptExpedientesRecibidos: TdmRptExpedientesRecibidos
       'escripcion'#13#10#13#10
     Parameters = <>
     Left = 32
-    Top = 152
+    Top = 144
     object adodsEstatusIdCotizacionEstatus: TIntegerField
       FieldName = 'IdCotizacionEstatus'
     end

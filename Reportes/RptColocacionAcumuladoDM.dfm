@@ -55,7 +55,7 @@ inherited dmRptColocacionAcumulado: TdmRptColocacionAcumulado
     end
   end
   inherited ppReport: TppReport
-    Left = 248
+    Left = 256
     DataPipelineName = 'dbpReport'
     inherited ppHeaderBand1: TppHeaderBand
       PrintHeight = phDynamic

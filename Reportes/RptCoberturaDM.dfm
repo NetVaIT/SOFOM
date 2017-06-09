@@ -118,18 +118,466 @@ inherited dmRptCobertura: TdmRptCobertura
     PrinterSetup.Orientation = poLandscape
     PrinterSetup.mmPaperHeight = 215900
     PrinterSetup.mmPaperWidth = 279400
-    Units = utScreenPixels
+    Left = 256
     DataPipelineName = 'dbpReport'
     inherited ppTitleBand1: TppTitleBand
       PrintHeight = phDynamic
-      mmHeight = 35983
+      mmHeight = 529
+    end
+    inherited ppHeaderBand1: TppHeaderBand
+      PrintHeight = phDynamic
+      mmHeight = 42863
       inherited pplblTitle: TppLabel
         SaveOrder = -1
-        mmHeight = 27781
+        VerticalAlignment = avCenter
         mmWidth = 198702
         LayerName = Foreground
       end
       inherited ppImage1: TppImage
+        LayerName = Foreground
+      end
+      object ppLabel2: TppLabel
+        UserName = 'Label2'
+        AutoSize = False
+        Caption = 'N'#250'mero'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clNavy
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold, fsItalic]
+        Transparent = True
+        mmHeight = 3440
+        mmLeft = 0
+        mmTop = 34179
+        mmWidth = 15875
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel3: TppLabel
+        UserName = 'Label3'
+        AutoSize = False
+        Caption = 'Anexo'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clNavy
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold, fsItalic]
+        Transparent = True
+        mmHeight = 3440
+        mmLeft = 15875
+        mmTop = 34179
+        mmWidth = 10583
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel4: TppLabel
+        UserName = 'Label4'
+        AutoSize = False
+        Caption = 'Fecha'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clNavy
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold, fsItalic]
+        Transparent = True
+        mmHeight = 3440
+        mmLeft = 29104
+        mmTop = 34179
+        mmWidth = 15875
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel5: TppLabel
+        UserName = 'Label5'
+        AutoSize = False
+        Caption = 'Cliente'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clNavy
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold, fsItalic]
+        TextAlignment = taCentered
+        Transparent = True
+        mmHeight = 3440
+        mmLeft = 44979
+        mmTop = 30210
+        mmWidth = 50271
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel6: TppLabel
+        UserName = 'Label6'
+        AutoSize = False
+        Caption = 'Por vencer'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clNavy
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold, fsItalic]
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 3440
+        mmLeft = 95254
+        mmTop = 30210
+        mmWidth = 15875
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel7: TppLabel
+        UserName = 'Label7'
+        AutoSize = False
+        Caption = 'Vencido'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clNavy
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold, fsItalic]
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 3440
+        mmLeft = 111129
+        mmTop = 30210
+        mmWidth = 15875
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel8: TppLabel
+        UserName = 'Label8'
+        AutoSize = False
+        Caption = 'Deposito'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clNavy
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold, fsItalic]
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 3440
+        mmLeft = 127004
+        mmTop = 30210
+        mmWidth = 15875
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel9: TppLabel
+        UserName = 'Label9'
+        AutoSize = False
+        Caption = 'Saldo'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clNavy
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold, fsItalic]
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 3440
+        mmLeft = 174630
+        mmTop = 30210
+        mmWidth = 15875
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel10: TppLabel
+        UserName = 'Label10'
+        AutoSize = False
+        Caption = 'Valor'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clNavy
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold, fsItalic]
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 3440
+        mmLeft = 219605
+        mmTop = 30210
+        mmWidth = 15875
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel11: TppLabel
+        UserName = 'Label11'
+        AutoSize = False
+        Caption = 'Cobertura'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clNavy
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold, fsItalic]
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 3440
+        mmLeft = 235480
+        mmTop = 30210
+        mmWidth = 15875
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLine1: TppLine
+        UserName = 'LineFooter1'
+        Pen.Color = clGray
+        Pen.Width = 2
+        Weight = 1.500000000000000000
+        mmHeight = 1321
+        mmLeft = 0
+        mmTop = 41540
+        mmWidth = 264055
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel1: TppLabel
+        UserName = 'Label1'
+        AutoSize = False
+        Caption = 'Paridad'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clNavy
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold, fsItalic]
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 3440
+        mmLeft = 206375
+        mmTop = 30210
+        mmWidth = 13229
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel12: TppLabel
+        UserName = 'Label12'
+        AutoSize = False
+        Caption = 'Valor'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clNavy
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold]
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 3440
+        mmLeft = 190621
+        mmTop = 30210
+        mmWidth = 15875
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel13: TppLabel
+        UserName = 'Label13'
+        AutoSize = False
+        Border.BorderPositions = [bpBottom]
+        Border.Visible = True
+        Border.Weight = 0.748799979686737100
+        Caption = 'Contrato'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clNavy
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold, fsItalic]
+        TextAlignment = taCentered
+        Transparent = True
+        mmHeight = 3440
+        mmLeft = 0
+        mmTop = 30210
+        mmWidth = 44979
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel14: TppLabel
+        UserName = 'Label14'
+        AutoSize = False
+        Caption = 'Factor'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clNavy
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold, fsItalic]
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 3440
+        mmLeft = 251355
+        mmTop = 30210
+        mmWidth = 10583
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel15: TppLabel
+        UserName = 'Label101'
+        AutoSize = False
+        Caption = 'comercial'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clNavy
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold, fsItalic]
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 3440
+        mmLeft = 219605
+        mmTop = 34179
+        mmWidth = 15875
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel16: TppLabel
+        UserName = 'Label16'
+        AutoSize = False
+        Caption = 'actual'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clNavy
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold, fsItalic]
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 3440
+        mmLeft = 219605
+        mmTop = 38147
+        mmWidth = 15875
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel17: TppLabel
+        UserName = 'Label17'
+        AutoSize = False
+        Caption = 'original'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clNavy
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold, fsItalic]
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 3440
+        mmLeft = 206375
+        mmTop = 34182
+        mmWidth = 13229
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel18: TppLabel
+        UserName = 'Label18'
+        AutoSize = False
+        Caption = 'comercial'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clNavy
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold]
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 3440
+        mmLeft = 190502
+        mmTop = 34182
+        mmWidth = 15875
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel19: TppLabel
+        UserName = 'Label19'
+        AutoSize = False
+        Caption = 'garantia'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clNavy
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold, fsItalic]
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 3440
+        mmLeft = 127004
+        mmTop = 34182
+        mmWidth = 15875
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel20: TppLabel
+        UserName = 'Label20'
+        AutoSize = False
+        Caption = 'Opci'#243'n de'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clNavy
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold, fsItalic]
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 3440
+        mmLeft = 144202
+        mmTop = 30210
+        mmWidth = 15875
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel21: TppLabel
+        UserName = 'Label21'
+        AutoSize = False
+        Caption = 'compra'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clNavy
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold, fsItalic]
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 3440
+        mmLeft = 144202
+        mmTop = 34175
+        mmWidth = 15875
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel22: TppLabel
+        UserName = 'Label201'
+        AutoSize = False
+        Caption = 'Valor'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clNavy
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold, fsItalic]
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 3440
+        mmLeft = 158754
+        mmTop = 30210
+        mmWidth = 15875
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel23: TppLabel
+        UserName = 'Label23'
+        AutoSize = False
+        Caption = 'residual'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clNavy
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold, fsItalic]
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 3440
+        mmLeft = 158754
+        mmTop = 34175
+        mmWidth = 15875
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel24: TppLabel
+        UserName = 'Label24'
+        AutoSize = False
+        Caption = 'total'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clNavy
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold, fsItalic]
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 3440
+        mmLeft = 174626
+        mmTop = 34182
+        mmWidth = 15875
+        BandType = 0
         LayerName = Foreground
       end
       object ppSubReport1: TppSubReport
@@ -141,9 +589,9 @@ inherited dmRptCobertura: TdmRptCobertura
         DataPipelineName = 'dbpParidad'
         mmHeight = 5027
         mmLeft = 0
-        mmTop = 26988
+        mmTop = 20108
         mmWidth = 266700
-        BandType = 1
+        BandType = 0
         LayerName = Foreground
         mmBottomOffset = 0
         mmOverFlowOffset = 0
@@ -154,8 +602,9 @@ inherited dmRptCobertura: TdmRptCobertura
           DataPipeline = dbpParidad
           PrinterSetup.BinName = 'Default'
           PrinterSetup.DocumentName = 'Report'
+          PrinterSetup.Duplex = dpVertical
           PrinterSetup.Orientation = poLandscape
-          PrinterSetup.PaperName = 'Letter (8,5" x 11")'
+          PrinterSetup.PaperName = 'Carta'
           PrinterSetup.PrinterName = 'Default'
           PrinterSetup.SaveDeviceSettings = False
           PrinterSetup.mmMarginBottom = 6350
@@ -223,453 +672,6 @@ inherited dmRptCobertura: TdmRptCobertura
             end
           end
         end
-      end
-    end
-    inherited ppHeaderBand1: TppHeaderBand
-      PrintHeight = phDynamic
-      mmHeight = 14552
-      object ppLabel2: TppLabel
-        UserName = 'Label2'
-        AutoSize = False
-        Caption = 'N'#250'mero'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = [fsBold, fsItalic]
-        Transparent = True
-        mmHeight = 3440
-        mmLeft = 0
-        mmTop = 3969
-        mmWidth = 15875
-        BandType = 0
-        LayerName = Foreground
-      end
-      object ppLabel3: TppLabel
-        UserName = 'Label3'
-        AutoSize = False
-        Caption = 'Anexo'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = [fsBold, fsItalic]
-        Transparent = True
-        mmHeight = 3440
-        mmLeft = 15875
-        mmTop = 3969
-        mmWidth = 10583
-        BandType = 0
-        LayerName = Foreground
-      end
-      object ppLabel4: TppLabel
-        UserName = 'Label4'
-        AutoSize = False
-        Caption = 'Fecha'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = [fsBold, fsItalic]
-        Transparent = True
-        mmHeight = 3440
-        mmLeft = 29104
-        mmTop = 3969
-        mmWidth = 15875
-        BandType = 0
-        LayerName = Foreground
-      end
-      object ppLabel5: TppLabel
-        UserName = 'Label5'
-        AutoSize = False
-        Caption = 'Cliente'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = [fsBold, fsItalic]
-        TextAlignment = taCentered
-        Transparent = True
-        mmHeight = 3440
-        mmLeft = 44979
-        mmTop = 0
-        mmWidth = 50271
-        BandType = 0
-        LayerName = Foreground
-      end
-      object ppLabel6: TppLabel
-        UserName = 'Label6'
-        AutoSize = False
-        Caption = 'Por vencer'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = [fsBold, fsItalic]
-        TextAlignment = taRightJustified
-        Transparent = True
-        mmHeight = 3440
-        mmLeft = 95254
-        mmTop = 0
-        mmWidth = 15875
-        BandType = 0
-        LayerName = Foreground
-      end
-      object ppLabel7: TppLabel
-        UserName = 'Label7'
-        AutoSize = False
-        Caption = 'Vencido'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = [fsBold, fsItalic]
-        TextAlignment = taRightJustified
-        Transparent = True
-        mmHeight = 3440
-        mmLeft = 111129
-        mmTop = 0
-        mmWidth = 15875
-        BandType = 0
-        LayerName = Foreground
-      end
-      object ppLabel8: TppLabel
-        UserName = 'Label8'
-        AutoSize = False
-        Caption = 'Deposito'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = [fsBold, fsItalic]
-        TextAlignment = taRightJustified
-        Transparent = True
-        mmHeight = 3440
-        mmLeft = 127004
-        mmTop = 0
-        mmWidth = 15875
-        BandType = 0
-        LayerName = Foreground
-      end
-      object ppLabel9: TppLabel
-        UserName = 'Label9'
-        AutoSize = False
-        Caption = 'Saldo'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = [fsBold, fsItalic]
-        TextAlignment = taRightJustified
-        Transparent = True
-        mmHeight = 3440
-        mmLeft = 174630
-        mmTop = 0
-        mmWidth = 15875
-        BandType = 0
-        LayerName = Foreground
-      end
-      object ppLabel10: TppLabel
-        UserName = 'Label10'
-        AutoSize = False
-        Caption = 'Valor'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = [fsBold, fsItalic]
-        TextAlignment = taRightJustified
-        Transparent = True
-        mmHeight = 3440
-        mmLeft = 219605
-        mmTop = 0
-        mmWidth = 15875
-        BandType = 0
-        LayerName = Foreground
-      end
-      object ppLabel11: TppLabel
-        UserName = 'Label11'
-        AutoSize = False
-        Caption = 'Cobertura'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = [fsBold, fsItalic]
-        TextAlignment = taRightJustified
-        Transparent = True
-        mmHeight = 3440
-        mmLeft = 235480
-        mmTop = 0
-        mmWidth = 15875
-        BandType = 0
-        LayerName = Foreground
-      end
-      object ppLine1: TppLine
-        UserName = 'LineFooter1'
-        Pen.Color = clGray
-        Pen.Width = 2
-        Weight = 1.500000000000000000
-        mmHeight = 2646
-        mmLeft = 0
-        mmTop = 11895
-        mmWidth = 264055
-        BandType = 0
-        LayerName = Foreground
-      end
-      object ppLabel1: TppLabel
-        UserName = 'Label1'
-        AutoSize = False
-        Caption = 'Paridad'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = [fsBold, fsItalic]
-        TextAlignment = taRightJustified
-        Transparent = True
-        mmHeight = 3440
-        mmLeft = 206375
-        mmTop = 0
-        mmWidth = 13229
-        BandType = 0
-        LayerName = Foreground
-      end
-      object ppLabel12: TppLabel
-        UserName = 'Label12'
-        AutoSize = False
-        Caption = 'Valor'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = [fsBold]
-        TextAlignment = taRightJustified
-        Transparent = True
-        mmHeight = 3440
-        mmLeft = 190621
-        mmTop = 0
-        mmWidth = 15875
-        BandType = 0
-        LayerName = Foreground
-      end
-      object ppLabel13: TppLabel
-        UserName = 'Label13'
-        AutoSize = False
-        Border.BorderPositions = [bpBottom]
-        Border.Visible = True
-        Caption = 'Contrato'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = [fsBold, fsItalic]
-        TextAlignment = taCentered
-        Transparent = True
-        mmHeight = 3440
-        mmLeft = 0
-        mmTop = 0
-        mmWidth = 44979
-        BandType = 0
-        LayerName = Foreground
-      end
-      object ppLabel14: TppLabel
-        UserName = 'Label14'
-        AutoSize = False
-        Caption = 'Factor'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = [fsBold, fsItalic]
-        TextAlignment = taRightJustified
-        Transparent = True
-        mmHeight = 3440
-        mmLeft = 251355
-        mmTop = 0
-        mmWidth = 10583
-        BandType = 0
-        LayerName = Foreground
-      end
-      object ppLabel15: TppLabel
-        UserName = 'Label101'
-        AutoSize = False
-        Caption = 'comercial'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = [fsBold, fsItalic]
-        TextAlignment = taRightJustified
-        Transparent = True
-        mmHeight = 3440
-        mmLeft = 219605
-        mmTop = 3969
-        mmWidth = 15875
-        BandType = 0
-        LayerName = Foreground
-      end
-      object ppLabel16: TppLabel
-        UserName = 'Label16'
-        AutoSize = False
-        Caption = 'actual'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = [fsBold, fsItalic]
-        TextAlignment = taRightJustified
-        Transparent = True
-        mmHeight = 3440
-        mmLeft = 219605
-        mmTop = 7937
-        mmWidth = 15875
-        BandType = 0
-        LayerName = Foreground
-      end
-      object ppLabel17: TppLabel
-        UserName = 'Label17'
-        AutoSize = False
-        Caption = 'original'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = [fsBold, fsItalic]
-        TextAlignment = taRightJustified
-        Transparent = True
-        mmHeight = 3440
-        mmLeft = 206375
-        mmTop = 3972
-        mmWidth = 13229
-        BandType = 0
-        LayerName = Foreground
-      end
-      object ppLabel18: TppLabel
-        UserName = 'Label18'
-        AutoSize = False
-        Caption = 'comercial'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = [fsBold]
-        TextAlignment = taRightJustified
-        Transparent = True
-        mmHeight = 3440
-        mmLeft = 190502
-        mmTop = 3972
-        mmWidth = 15875
-        BandType = 0
-        LayerName = Foreground
-      end
-      object ppLabel19: TppLabel
-        UserName = 'Label19'
-        AutoSize = False
-        Caption = 'garantia'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = [fsBold, fsItalic]
-        TextAlignment = taRightJustified
-        Transparent = True
-        mmHeight = 3440
-        mmLeft = 127004
-        mmTop = 3972
-        mmWidth = 15875
-        BandType = 0
-        LayerName = Foreground
-      end
-      object ppLabel20: TppLabel
-        UserName = 'Label20'
-        AutoSize = False
-        Caption = 'Opci'#243'n de'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = [fsBold, fsItalic]
-        TextAlignment = taRightJustified
-        Transparent = True
-        mmHeight = 3440
-        mmLeft = 144202
-        mmTop = 0
-        mmWidth = 15875
-        BandType = 0
-        LayerName = Foreground
-      end
-      object ppLabel21: TppLabel
-        UserName = 'Label21'
-        AutoSize = False
-        Caption = 'compra'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = [fsBold, fsItalic]
-        TextAlignment = taRightJustified
-        Transparent = True
-        mmHeight = 3440
-        mmLeft = 144202
-        mmTop = 3965
-        mmWidth = 15875
-        BandType = 0
-        LayerName = Foreground
-      end
-      object ppLabel22: TppLabel
-        UserName = 'Label201'
-        AutoSize = False
-        Caption = 'Valor'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = [fsBold, fsItalic]
-        TextAlignment = taRightJustified
-        Transparent = True
-        mmHeight = 3440
-        mmLeft = 158754
-        mmTop = 0
-        mmWidth = 15875
-        BandType = 0
-        LayerName = Foreground
-      end
-      object ppLabel23: TppLabel
-        UserName = 'Label23'
-        AutoSize = False
-        Caption = 'residual'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = [fsBold, fsItalic]
-        TextAlignment = taRightJustified
-        Transparent = True
-        mmHeight = 3440
-        mmLeft = 158754
-        mmTop = 3965
-        mmWidth = 15875
-        BandType = 0
-        LayerName = Foreground
-      end
-      object ppLabel24: TppLabel
-        UserName = 'Label24'
-        AutoSize = False
-        Caption = 'total'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = [fsBold, fsItalic]
-        TextAlignment = taRightJustified
-        Transparent = True
-        mmHeight = 3440
-        mmLeft = 174626
-        mmTop = 3972
-        mmWidth = 15875
-        BandType = 0
-        LayerName = Foreground
       end
     end
     inherited ppDetailBand1: TppDetailBand
