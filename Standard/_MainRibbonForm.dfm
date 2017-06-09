@@ -19,11 +19,11 @@ object _frmMainRibbon: T_frmMainRibbon
     Left = 0
     Top = 0
     Width = 640
-    Height = 155
+    Height = 159
     ApplicationButton.Menu = dxRibbonBackstageView1
     BarManager = dxBarManager
     Style = rs2013
-    ColorSchemeName = 'White'
+    ColorSchemeName = 'MoneyTwins'
     QuickAccessToolbar.Toolbar = dxBarManager1Bar1
     SupportNonClientDrawing = True
     Contexts = <>
@@ -139,12 +139,14 @@ object _frmMainRibbon: T_frmMainRibbon
   end
   object pnlMain: TPanel
     Left = 0
-    Top = 155
+    Top = 159
     Width = 640
-    Height = 302
+    Height = 298
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 7
+    ExplicitTop = 155
+    ExplicitHeight = 302
   end
   object dxBarManager: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
@@ -241,7 +243,7 @@ object _frmMainRibbon: T_frmMainRibbon
   object dxSkinController: TdxSkinController
     Kind = lfOffice11
     NativeStyle = False
-    SkinName = 'Office2013White'
+    SkinName = 'MoneyTwins'
     Left = 488
     Top = 8
   end
