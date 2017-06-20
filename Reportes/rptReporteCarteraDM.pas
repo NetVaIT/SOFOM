@@ -110,7 +110,11 @@ begin
     dmReporteCarteraPDF.ppLblMonto20.Caption:= FormatFloat('#,0',(Total-Monto)/1000);  //Aplicar luego formato
     dmReporteCarteraPDF.ppLblMontoTotal.Caption:= FormatFloat('#,0',Total/1000);  //Aplicar luego formato
     dmReporteCarteraPDF.ppLblProm80.Caption:= FormatFloat('#,0',(Monto/cantidad)/1000);//Aplicar luego formato
-    dmReporteCarteraPDF.ppLblPorm20.Caption:= FormatFloat('#,0',((Total-Monto)/(dmReporteCarteraPDF.adodsReport.recordcount-cantidad)/1000)); //Aplicar luego formato
+    if (dmReporteCarteraPDF.adodsReport.recordcount-cantidad)<>0 then
+
+       dmReporteCarteraPDF.ppLblPorm20.Caption:= FormatFloat('#,0',((Total-Monto)/(dmReporteCarteraPDF.adodsReport.recordcount-cantidad)/1000)) //Aplicar luego formato
+    else
+      dmReporteCarteraPDF.ppLblPorm20.Caption:= FormatFloat('#,0',0);
     dmReporteCarteraPDF.ppLblValorMinCred.Caption:= FormatFloat('#,0',ValMin/1000);
     dmReporteCarteraPDF.ppLblValorMaxCred.Caption:= FormatFloat('#,0',(ValMax/1000));
 

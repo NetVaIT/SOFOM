@@ -255,7 +255,7 @@ begin
     ffiltroFecha:='';
   Aux:=Aux+ffiltroFecha;
   if ChckBxConSaldo.Checked then
-    Ffiltro:=' Saldo > 0.0001 '
+    Ffiltro:=' Saldo > 0.01 '     //0.0001 Jun 19/17
   else
     Ffiltro:='';
 

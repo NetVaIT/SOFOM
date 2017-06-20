@@ -268,7 +268,7 @@ begin
     if Produccion then
        VirtualXML_SetVirtualPACInfo(hXML, 'RMunguia', 'vpac-sef')
     else                                        //52079295     -- May 12/17
-       VirtualXML_SetVirtualPACInfo(hXML, 'DEMO_RMunguia', 'virtual');
+       VirtualXML_SetVirtualPACInfo(hXML, 'demo_RMunguia', 'virtual');
     // VirtualXML_SetComprobanteInfo(hXml, 'A', '1', '%cb_date', DatosCFDI[1], 'Pago en una sola exibición', '1000.00', '', '1160.00', '', '', '', 'No Disponible', '');                                                                                                                                                                                                  // V  Motivo decto tampoco en edt
     VirtualXML_SetComprobanteInfo(hXML,
     PWideChar(string(Documento.Serie)), PWideChar(IntToStr(Documento.Folio)),
@@ -441,8 +441,8 @@ begin
     end
     else
     begin                                     //52079295 -- May 12/17
-      VirtualXML_SetVirtualPACInfo(hXML, 'DEMO_RMunguia', 'virtual');
-      Valor:= VirtualXML_CancelaUUID('DEMO_RMunguia',
+      VirtualXML_SetVirtualPACInfo(hXML, 'demo_RMunguia', 'virtual'); //CAmbio nombre del usuario a minusculs las primeras Jun 16/17
+      Valor:= VirtualXML_CancelaUUID('demo_RMunguia',
       PWideChar(Certificado.RFCAlQuePertenece),
       PWideChar(Certificado.Ruta),
       PWideChar(Certificado.LlavePrivada.Ruta),

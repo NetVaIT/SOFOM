@@ -1496,7 +1496,7 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
         Font.Style = []
         ItemHeight = 13
         Items.Strings = (
-          'Cobro directo por Socio'
+          'Cobro directo por Asesor'
           'Condicionada'
           'En Aclaraci'#243'n'
           'Rechazada por el Cliente'

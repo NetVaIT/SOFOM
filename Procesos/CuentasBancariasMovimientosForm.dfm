@@ -1,33 +1,32 @@
-inherited frmCuentasBancarias: TfrmCuentasBancarias
-  Caption = 'Cuentas Bancarias'
-  ClientWidth = 763
-  ExplicitWidth = 763
+inherited FrmCuentasBancariasMovimientos: TFrmCuentasBancariasMovimientos
+  Caption = 'FrmCuentasBancariasMovimientos'
+  ClientWidth = 1018
+  ExplicitWidth = 1018
+  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Width = 763
-    ExplicitWidth = 856
+    Width = 1018
+    ExplicitWidth = 1018
   end
   inherited splDetail1: TSplitter
-    Top = 195
-    Width = 763
-    ExplicitTop = 195
-    ExplicitWidth = 856
+    Width = 1018
+    ExplicitWidth = 1018
   end
   inherited splDetail2: TSplitter
-    Width = 763
-    ExplicitWidth = 856
+    Width = 1018
+    ExplicitWidth = 1018
   end
   inherited pnlMaster: TPanel
-    Width = 763
-    Height = 169
-    ExplicitWidth = 856
-    ExplicitHeight = 164
+    Width = 1018
+    ExplicitTop = 26
+    ExplicitWidth = 1018
+    ExplicitHeight = 258
     inherited cxGrid: TcxGrid
-      Width = 763
-      Height = 164
-      ExplicitWidth = 856
-      ExplicitHeight = 164
+      Width = 1018
+      Height = 257
+      ExplicitWidth = 1018
+      ExplicitHeight = 258
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdCuentaBancaria: TcxGridDBColumn
           DataBinding.FieldName = 'IdCuentaBancaria'
@@ -45,84 +44,59 @@ inherited frmCuentasBancarias: TfrmCuentasBancarias
           DataBinding.FieldName = 'IdBanco'
           Visible = False
         end
-        object tvMasterIdDocumento: TcxGridDBColumn
-          DataBinding.FieldName = 'IdDocumento'
-          Visible = False
-        end
-        object tvMasterIdCuentaBancariaEstatus: TcxGridDBColumn
-          DataBinding.FieldName = 'IdCuentaBancariaEstatus'
-          Visible = False
-        end
-        object tvMasterEstatus: TcxGridDBColumn
-          DataBinding.FieldName = 'Estatus'
-          Width = 64
-        end
-        object tvMasterCuentaBancariaTipo: TcxGridDBColumn
-          Caption = 'Tipo Cuenta Bancaria'
-          DataBinding.FieldName = 'CuentaBancariaTipo'
-          Width = 107
-        end
         object tvMasterBanco: TcxGridDBColumn
           DataBinding.FieldName = 'Banco'
-          Width = 90
         end
         object tvMasterCuentaBancaria: TcxGridDBColumn
           Caption = 'Cuenta Bancaria'
           DataBinding.FieldName = 'CuentaBancaria'
-          Width = 95
         end
         object tvMasterClabeInterbancaria: TcxGridDBColumn
           Caption = 'Clabe Interbancaria'
           DataBinding.FieldName = 'ClabeInterbancaria'
-          Width = 114
+          Visible = False
         end
         object tvMasterIdMoneda: TcxGridDBColumn
           DataBinding.FieldName = 'IdMoneda'
           Visible = False
         end
-        object tvMasterMoneda: TcxGridDBColumn
-          DataBinding.FieldName = 'Moneda'
-          Width = 71
-        end
-        object tvMasterEstructuraEstadoCuenta: TcxGridDBColumn
-          Caption = 'Estructur aEstado Cuenta'
-          DataBinding.FieldName = 'EstructuraEstadoCuenta'
-          Width = 129
+        object tvMasterIdDocumento: TcxGridDBColumn
+          DataBinding.FieldName = 'IdDocumento'
+          Visible = False
         end
         object tvMasterSaldoCuenta: TcxGridDBColumn
-          Caption = 'Saldo de Cuenta'
+          Caption = 'Saldo Cuenta'
           DataBinding.FieldName = 'SaldoCuenta'
-          Width = 94
+        end
+        object tvMasterIdCuentaBancariaEstatus: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCuentaBancariaEstatus'
+          Visible = False
         end
       end
     end
   end
   inherited pnlDetail3: TPanel
-    Width = 763
-    ExplicitWidth = 856
+    Width = 1018
+    ExplicitWidth = 1018
   end
   inherited pnlDetail2: TPanel
-    Width = 763
-    ExplicitWidth = 856
+    Width = 1018
+    ExplicitWidth = 1018
   end
   inherited pnlDetail1: TPanel
-    Top = 198
-    Width = 763
-    Height = 130
-    ExplicitTop = 195
-    ExplicitWidth = 856
-    ExplicitHeight = 130
+    Width = 1018
+    ExplicitWidth = 1018
   end
   inherited pnlClose: TPanel
-    Width = 763
-    ExplicitWidth = 856
+    Width = 1018
+    ExplicitWidth = 1018
     inherited btnClose: TButton
-      Left = 465
-      ExplicitLeft = 465
+      Left = 933
+      ExplicitLeft = 933
     end
   end
   inherited DataSource: TDataSource
-    DataSet = dmCuentasBancarias.adodsMaster
+    DataSet = DMCuentasBancariasMovimientos.adodsMaster
   end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
@@ -131,10 +105,14 @@ inherited frmCuentasBancarias: TfrmCuentasBancarias
       26
       0)
     inherited dxbNavigator: TdxBar
-      DockedLeft = 107
+      DockedLeft = 2
+    end
+    inherited dxbEdit: TdxBar
+      Row = 1
+      Visible = False
     end
     inherited dxbTools: TdxBar
-      DockedLeft = 238
+      DockedLeft = 132
     end
   end
   inherited cxStyleRepository: TcxStyleRepository
@@ -145,7 +123,7 @@ inherited frmCuentasBancarias: TfrmCuentasBancarias
   end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
-      ReportDocument.CreationDate = 42768.721785995370000000
+      ReportDocument.CreationDate = 42898.598771296300000000
       AssignedFormatValues = []
       BuiltInReportLink = True
     end

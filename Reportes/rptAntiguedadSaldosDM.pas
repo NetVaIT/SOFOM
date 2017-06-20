@@ -30,6 +30,8 @@ type
     adodsMasterContrato: TStringField;
     adodsMasterSaldoTotalVencido: TFMTBCDField;
     adodsMasterVencidosmásde120días: TFMTBCDField;
+    adodsMasterFechaVencimiento: TDateTimeField;
+    adodsMasterCobroX: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure ActGenPDFAntigSaldosExecute(Sender: TObject);
     procedure ActPDFAntiguedadXClienteExecute(Sender: TObject);

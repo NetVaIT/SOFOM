@@ -25,17 +25,17 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
     ExplicitWidth = 1078
   end
   inherited pnlMaster: TPanel
-    Top = 75
+    Top = 72
     Width = 1072
-    Height = 180
-    ExplicitTop = 75
+    Height = 183
+    ExplicitTop = 72
     ExplicitWidth = 1072
-    ExplicitHeight = 180
+    ExplicitHeight = 183
     inherited cxGrid: TcxGrid
       Width = 1072
-      Height = 180
+      Height = 183
       ExplicitWidth = 1072
-      ExplicitHeight = 180
+      ExplicitHeight = 183
       inherited tvMaster: TcxGridDBTableView
         object tvMasterContrato: TcxGridDBColumn
           DataBinding.FieldName = 'Contrato'
@@ -147,7 +147,7 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
   end
   object PnlBusqueda: TPanel [8]
     Left = 0
-    Top = 31
+    Top = 28
     Width = 1072
     Height = 44
     Align = alTop
@@ -297,13 +297,9 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
     DockControlHeights = (
       0
       0
-      31
+      28
       0)
-    inherited dxbNavigator: TdxBar
-      DockedLeft = 107
-    end
     inherited dxbTools: TdxBar
-      DockedLeft = 238
       ItemLinks = <
         item
           Visible = True
@@ -1543,7 +1539,6 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42709.621321724540000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

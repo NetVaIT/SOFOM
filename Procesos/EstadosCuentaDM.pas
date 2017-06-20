@@ -160,6 +160,7 @@ begin
       adoDtstDatosCXC.Parameters.ParamByName('IDContrato').Value:=IDContratoAct;
       adoDtstDatosCXC.Parameters.ParamByName('FechaCorteUlt').Value:= UltFecCorteEC+1; //YA quew aunque adenro se le suma no se actualiza feb 28/17
       adoDtstDatosCXC.Parameters.ParamByName('FechaCorte').Value:= FechaCorte;
+      adoDtstDatosCXC.Parameters.ParamByName('FechaCorte2').value:= FechaCorte;  //jun 20/17
       adoDtstDatosCXC.Open;
 
     end
@@ -171,6 +172,7 @@ begin
       adoDtstDatosCXC.Parameters.ParamByName('IDContrato').Value:=IDContratoAct;
       adoDtstDatosCXC.Parameters.ParamByName('FechaCorteUlt').Value:= UltFecCorteEC; // parte de la del contrato feb 28/17
       adoDtstDatosCXC.Parameters.ParamByName('FechaCorte').value:= FechaCorte;
+      adoDtstDatosCXC.Parameters.ParamByName('FechaCorte2').value:= FechaCorte; // para que no genere si nio llegamos a la fecha de corte jun 20/17
       adoDtstDatosCXC.Open;
     end;
 
@@ -231,8 +233,8 @@ begin
             AdoDtStEstadoCtaDetalle.FieldByName('IdAnexo').AsInteger:=ADODtStDatosCXCIdAnexo.AsInteger;  //DEsde maestroCXC
             AdoDtStEstadoCtaDetalle.FieldByName('IdCuentaXCobrar').AsInteger:=adodtstDEtalleCXCIdCuentaXCobrar.AsInteger;
             AdoDtStEstadoCtaDetalle.FieldByName('IdCuentaXCobrarDetalle').AsInteger:=adodtstDEtalleCXCIdCuentaXCobrarDetalle.AsInteger;
-            AdoDtStEstadoCtaDetalle.FieldByName('FechaMovimiento').ASDAteTime:=ADODtStDatosCXCFecha.AsDateTime; //FEcha de la CXC (Corte)
-            AdoDtStEstadoCtaDetalle.FieldByName('TipoMovimiento').AsInteger:=1; //Cargo
+            AdoDtStEstadoCtaDetalle.FieldByName('FechaMovimiento').ASDAteTime:=ADODtStDatosCXCFechaVencimiento.AsDateTime; //FEcha de la CXC (Corte)
+            AdoDtStEstadoCtaDetalle.FieldByName('TipoMovimiento').AsInteger:=1; //Cargo       //Era fecha registro.. jun 20/17
                                                            //Value Feb 19/17
             AdoDtStEstadoCtaDetalle.FieldByName('Importe').Value:=adodtstDEtalleCXCImporte.asFloat; // Importe del detalle
             AdoDtStEstadoCtaDetalle.FieldByName('Concepto').AsString:=adodtstDEtalleCXCDescripcion.AsString;
@@ -542,14 +544,17 @@ end;
 
 function TdmEstadosCuenta.SacaUltimaFechaCorteEC(idcontrato: Integer;
   var FechaUltCorte: TDAteTime; var SaldoInsoluto:Double): Boolean;           //Feb 19/17
-begin
+
+begin                        //Ajustado Jun 20/17
   Result:=False;
+  //SAcar maxima fehca de corte
   ADOQryAuxiliar.Close;
   ADOQryAuxiliar.Sql.Clear;
-  ADOQryAuxiliar.Sql.Add('Select idcontrato, SaldoInsoluto ,max(FechaCorte) as FechaCorteEC  from EstadosCuenta '+
-                         ' where IdContrato= '+intToStr(idcontrato)+
-                         ' group by idcontrato, SaldoInsoluto ');
+                                         // CAmbio por que traia el max fecha  enla misma consulta..
+  ADOQryAuxiliar.Sql.Add('Select SaldoInsoluto ,FechaCorte as FechaCorteEC, IdEstadoCuenta  from EstadosCuenta '+
+                         ' where IdContrato= '+intToStr(idcontrato)+ ' order by FechaCorte desc');
   ADOQryAuxiliar.Open;
+  // EL primero siempre es el mayor en fecha
   if (not ADOQryAuxiliar.Eof) and (not ADOQryAuxiliar.FieldByName('FechaCorteEC').isnull) then
   begin
     FechaUltCorte:=ADOQryAuxiliar.FieldByName('FechaCorteEC').AsDateTime;

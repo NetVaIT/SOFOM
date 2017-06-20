@@ -1,29 +1,32 @@
 inherited FrmReporteCarteraGrid: TFrmReporteCarteraGrid
   Caption = 'FrmReporteCarteraGrid'
-  ClientWidth = 1027
-  ExplicitWidth = 1027
-  ExplicitHeight = 457
+  ClientWidth = 1295
+  ExplicitWidth = 1295
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Width = 1027
+    Width = 1295
     ExplicitWidth = 1027
   end
   inherited splDetail1: TSplitter
-    Width = 1027
+    Width = 1295
     ExplicitWidth = 1027
   end
   inherited splDetail2: TSplitter
-    Width = 1027
+    Width = 1295
     ExplicitWidth = 1027
   end
   inherited pnlMaster: TPanel
-    Width = 1027
+    Width = 1295
+    ExplicitTop = 28
     ExplicitWidth = 1027
+    ExplicitHeight = 256
     inherited cxGrid: TcxGrid
-      Width = 1027
-      ExplicitLeft = 24
-      ExplicitWidth = 1027
+      Width = 1295
+      Height = 256
+      ExplicitTop = -3
+      ExplicitWidth = 1295
+      ExplicitHeight = 256
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdAnexo: TcxGridDBColumn
           DataBinding.FieldName = 'IdAnexo'
@@ -67,20 +70,22 @@ inherited FrmReporteCarteraGrid: TFrmReporteCarteraGrid
           Visible = False
         end
         object tvMasterTotalPorCobrar: TcxGridDBColumn
+          Caption = 'Total Por Cobrar'
           DataBinding.FieldName = 'TotalPorCobrar'
           Width = 131
         end
         object tvMasterSaldopendiente: TcxGridDBColumn
+          Caption = 'Saldo Pendiente'
           DataBinding.FieldName = 'Saldopendiente'
           Width = 133
+        end
+        object tvMasterTotalCobradoVencido: TcxGridDBColumn
+          DataBinding.FieldName = 'TotalCobradoVencido'
+          Width = 126
         end
         object tvMasterTotalVigente: TcxGridDBColumn
           DataBinding.FieldName = 'TotalVigente'
           Width = 132
-        end
-        object tvMasterTotalCobradoVencido: TcxGridDBColumn
-          DataBinding.FieldName = 'TotalCobradoVencido'
-          Width = 122
         end
         object tvMasterVencidoA30: TcxGridDBColumn
           DataBinding.FieldName = 'VencidoA30'
@@ -138,22 +143,22 @@ inherited FrmReporteCarteraGrid: TFrmReporteCarteraGrid
     end
   end
   inherited pnlDetail3: TPanel
-    Width = 1027
+    Width = 1295
     ExplicitWidth = 1027
   end
   inherited pnlDetail2: TPanel
-    Width = 1027
+    Width = 1295
     ExplicitWidth = 1027
   end
   inherited pnlDetail1: TPanel
-    Width = 1027
+    Width = 1295
     ExplicitWidth = 1027
   end
   inherited pnlClose: TPanel
-    Width = 1027
+    Width = 1295
     ExplicitWidth = 1027
     inherited btnClose: TButton
-      Left = 942
+      Left = 1210
       ExplicitLeft = 942
     end
   end
@@ -164,13 +169,9 @@ inherited FrmReporteCarteraGrid: TFrmReporteCarteraGrid
     DockControlHeights = (
       0
       0
-      31
+      28
       0)
-    inherited dxbNavigator: TdxBar
-      DockedLeft = 107
-    end
     inherited dxbTools: TdxBar
-      DockedLeft = 238
       ItemLinks = <
         item
           Visible = True
@@ -1069,7 +1070,6 @@ inherited FrmReporteCarteraGrid: TFrmReporteCarteraGrid
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42867.572603240740000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

@@ -68,6 +68,7 @@ inherited dmEstadosCuenta: TdmEstadosCuenta
   inherited ActionList: TActionList
     object ActActualizaEstadoCta: TAction
       Caption = 'ActActualizaEstadoCta'
+      Hint = 'Actualizar Estado Cuenta'
       OnExecute = ActActualizaEstadoCtaExecute
     end
     object ActPDFEstadoCuenta: TAction
@@ -160,16 +161,22 @@ inherited dmEstadosCuenta: TdmEstadosCuenta
       'ipos CT on CT.IdContratoTipo=con.IdContratoTipo'#13#10'--inner join Cu' +
       'entasXCobrarTiposConceptos T  on t.IdCuentaXCobrarTipo=CT.IdCont' +
       'ratoTipo'#13#10'-- and  t.EstadoCuenta=1 '#13#10'and  C.idCuentaXCobrarEstat' +
-      'us=0 -- Pendiente'#13#10'and A.IDContrato=:IDContrato -- feb 20/17'#13#10'an' +
-      'd c.FechaVencimiento>=:FechaCorteUlt  and c.FechaVencimiento <=:' +
-      'FechaCorte '#13#10'-- and c.IdCuentaXCobrar not in (2,3,4)         -- ' +
-      'FV abr 11/17'#13#10'Order by C.IdPersona, A.idContrato,A.IdAnexo, c.Fe' +
-      'chaVencimiento,  C.IdCuentaXCobrar'#13#10
+      'us>=0 -- Pendiente Facturadas minimo'#13#10'and A.IDContrato=:IDContra' +
+      'to -- feb 20/17'#13#10'and   dbo.getDateAux()>=:FechaCorte2  and  c.Fe' +
+      'chaVencimiento>=:FechaCorteUlt  and c.FechaVencimiento <=:FechaC' +
+      'orte '#13#10'-- and c.IdCuentaXCobrar not in (2,3,4)         -- FV abr' +
+      ' 11/17'#13#10'Order by C.IdPersona, A.idContrato,A.IdAnexo, c.FechaVen' +
+      'cimiento,  C.IdCuentaXCobrar'#13#10
     MasterFields = 'IDContrato'
     Parameters = <
       item
         Name = 'IDContrato'
         DataType = ftInteger
+        Size = -1
+        Value = Null
+      end
+      item
+        Name = 'FechaCorte2'
         Size = -1
         Value = Null
       end

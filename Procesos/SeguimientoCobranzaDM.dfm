@@ -7,8 +7,8 @@ inherited dmSeguimientoCobranza: TdmSeguimientoCobranza
     CommandText = 
       'select CxC.IdPersona,P.RazonSocial,Sum(CXC.Saldo) as Saldo , sum' +
       '(CXC.Interes) as interes from CuentasXCobrar CXC, Personas P'#13#10'wh' +
-      'ere p.idpersona=Cxc.IdPersona'#13#10'Group by cxC.IdPersona, P.RazonSo' +
-      'cial'
+      'ere p.idpersona=Cxc.IdPersona'#13#10'and cxc.Saldo>0.01'#13#10'Group by cxC.' +
+      'IdPersona, P.RazonSocial'
     Left = 56
     Top = 24
     object adodsMasterIdPersona: TIntegerField

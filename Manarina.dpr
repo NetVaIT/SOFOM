@@ -222,7 +222,10 @@ uses
   RptColocacionAcumuladoDM in 'Reportes\RptColocacionAcumuladoDM.pas' {dmRptColocacionAcumulado: TDataModule},
   PonerFechaActualForm in 'Catalogos\PonerFechaActualForm.pas' {FrmPoneFechaActual},
   BuroCreditoDM in 'Procesos\BuroCreditoDM.pas' {dmBuroCredito: TDataModule},
-  BuroCreditoFiltroForm in 'Procesos\BuroCreditoFiltroForm.pas' {frmBuroCreditoFiltro};
+  BuroCreditoFiltroForm in 'Procesos\BuroCreditoFiltroForm.pas' {frmBuroCreditoFiltro},
+  CuentasBancariasMovimientosDM in 'Procesos\CuentasBancariasMovimientosDM.pas' {DMCuentasBancariasMovimientos: TDataModule},
+  CuentasBancariasMovimientosForm in 'Procesos\CuentasBancariasMovimientosForm.pas' {FrmCuentasBancariasMovimientos},
+  MovimientosXCuentaForm in 'Procesos\MovimientosXCuentaForm.pas' {FrmMovimientosXCtaBan};
 
 {$R *.res}
 
@@ -235,5 +238,8 @@ begin
   Application.CreateForm(T_frmMainRibbon, _frmMainRibbon);
   Application.CreateForm(T_frmProgress, _frmProgress);
   Application.CreateForm(T_dmReportSOFOM, _dmReportSOFOM);
+  Application.CreateForm(TDMCuentasBancariasMovimientos, DMCuentasBancariasMovimientos);
+  Application.CreateForm(TFrmCuentasBancariasMovimientos, FrmCuentasBancariasMovimientos);
+  Application.CreateForm(TFrmMovimientosXCtaBan, FrmMovimientosXCtaBan);
   Application.Run;
 end.

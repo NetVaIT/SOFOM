@@ -3,7 +3,6 @@ inherited frmMain: TfrmMain
   ClientWidth = 1020
   OnDestroy = FormDestroy
   ExplicitWidth = 1036
-  ExplicitHeight = 519
   PixelsPerInch = 96
   TextHeight = 13
   inherited dxRibbon1: TdxRibbon
@@ -11,6 +10,7 @@ inherited frmMain: TfrmMain
     OnApplicationMenuClick = dxRibbon1ApplicationMenuClick
     ExplicitWidth = 1020
     inherited dxRibbon1Tab1: TdxRibbonTab
+      Active = False
       Index = 0
     end
     object dxRibbon1Tab2: TdxRibbonTab
@@ -35,6 +35,7 @@ inherited frmMain: TfrmMain
       Index = 1
     end
     object dxRibbon1Tab3: TdxRibbonTab
+      Active = True
       Caption = 'Procesos'
       Groups = <
         item
@@ -80,7 +81,9 @@ inherited frmMain: TfrmMain
   end
   inherited pnlMain: TPanel
     Width = 1020
+    ExplicitTop = 159
     ExplicitWidth = 1020
+    ExplicitHeight = 298
   end
   inherited dxBarManager: TdxBarManager
     Categories.Strings = (
@@ -394,7 +397,7 @@ inherited frmMain: TfrmMain
       FloatLeft = 1054
       FloatTop = 8
       FloatClientWidth = 97
-      FloatClientHeight = 42
+      FloatClientHeight = 54
       ItemLinks = <
         item
           Visible = True

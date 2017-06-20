@@ -141,7 +141,6 @@ inherited dmPagos: TdmPagos
     end
   end
   object ADOSPersonas: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -169,7 +168,6 @@ inherited dmPagos: TdmPagos
     end
   end
   object ADoDtStBancos: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -748,7 +746,6 @@ inherited dmPagos: TdmPagos
     end
   end
   object ADODtstMetodoPago: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -1536,13 +1533,12 @@ inherited dmPagos: TdmPagos
     end
   end
   object ADODtStAnexos: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
       'select a.IdAnexo, A.IdContrato,A.IdAnexoEstatus, A.Identificador' +
       ','#13#10' A.Descripcion, A.Fecha, C.IdPersona from Anexos A , Contrato' +
-      's C '#13#10'where a.idcontrato=C.idcontrato and A.idanexoEstatus=1'#13#10
+      's C '#13#10'where a.idcontrato=C.idcontrato and A.idanexoEstatus<>5'
     Parameters = <>
     Left = 52
     Top = 131
@@ -1582,8 +1578,8 @@ inherited dmPagos: TdmPagos
     CommandText = 
       'select a.IdAnexo, A.IdContrato,A.IdAnexoEstatus, A.Identificador' +
       ','#13#10' A.Descripcion, A.Fecha, C.IdPersona from Anexos A , Contrato' +
-      's C '#13#10'where a.idcontrato=C.idcontrato and A.idanexoEstatus=1'#13#10'an' +
-      'd C.idPersona=:IdPersona'
+      's C '#13#10'where a.idcontrato=C.idcontrato and A.idanexoEstatus<>5'#13#10'a' +
+      'nd C.idPersona=:IdPersona'
     Parameters = <
       item
         Name = 'IdPersona'

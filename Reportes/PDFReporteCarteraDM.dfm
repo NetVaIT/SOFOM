@@ -159,9 +159,10 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
     PrinterSetup.Orientation = poLandscape
     PrinterSetup.mmPaperHeight = 215900
     PrinterSetup.mmPaperWidth = 279400
+    Template.FileName = 'C:\Desarrollo\SOFOM\Reportes\rptCarteraSinAnexo.rtm'
     PDFSettings.ImageCompressionLevel = 5
     PreviewFormSettings.ZoomSetting = zsPageWidth
-    Left = 248
+    Left = 256
     DataPipelineName = 'dbpReport'
     inherited ppHeaderBand1: TppHeaderBand
       mmHeight = 28310
@@ -292,7 +293,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Border.BorderPositions = [bpBottom]
         Border.Visible = True
         Border.Weight = 0.748799979686737100
-        Caption = '1-30'
+        Caption = '0-30'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -540,7 +541,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
         mmLeft = 8467
-        mmTop = 529
+        mmTop = 264
         mmWidth = 50536
         BandType = 4
         LayerName = Foreground
@@ -559,7 +560,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
         mmLeft = 60325
-        mmTop = 265
+        mmTop = 264
         mmWidth = 5027
         BandType = 4
         LayerName = Foreground
@@ -578,8 +579,8 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
-        mmLeft = 66675
-        mmTop = 529
+        mmLeft = 67998
+        mmTop = 264
         mmWidth = 16933
         BandType = 4
         LayerName = Foreground
@@ -588,7 +589,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         UserName = 'DBText6'
         DataField = 'TotalPorVencer'
         DataPipeline = dbpReport
-        DisplayFormat = '#,0;-#,0'
+        DisplayFormat = '#,0.00;-#,0.00'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -600,7 +601,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
         mmLeft = 92340
-        mmTop = 529
+        mmTop = 264
         mmWidth = 14023
         BandType = 4
         LayerName = Foreground
@@ -622,7 +623,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
         mmLeft = 123825
-        mmTop = 529
+        mmTop = 264
         mmWidth = 10054
         BandType = 4
         LayerName = Foreground
@@ -632,7 +633,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         BlankWhenZero = True
         DataField = 'TotalVigente'
         DataPipeline = dbpReport
-        DisplayFormat = '#,0;-#,0'
+        DisplayFormat = '#,0.00;-#,0.00'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -644,7 +645,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
         mmLeft = 135732
-        mmTop = 529
+        mmTop = 264
         mmWidth = 10054
         BandType = 4
         LayerName = Foreground
@@ -666,7 +667,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
         mmLeft = 147638
-        mmTop = 0
+        mmTop = 264
         mmWidth = 10054
         BandType = 4
         LayerName = Foreground
@@ -688,7 +689,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
         mmLeft = 159544
-        mmTop = 265
+        mmTop = 264
         mmWidth = 10054
         BandType = 4
         LayerName = Foreground
@@ -710,7 +711,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
         mmLeft = 171450
-        mmTop = 0
+        mmTop = 264
         mmWidth = 10054
         BandType = 4
         LayerName = Foreground
@@ -720,7 +721,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         BlankWhenZero = True
         DataField = 'VencidoMas120'
         DataPipeline = dbpReport
-        DisplayFormat = '#,0;-#,0'
+        DisplayFormat = '#,0.00;-#,0.00'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -732,7 +733,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
         mmLeft = 183621
-        mmTop = 0
+        mmTop = 264
         mmWidth = 10054
         BandType = 4
         LayerName = Foreground
@@ -753,7 +754,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
         mmLeft = 108479
-        mmTop = 794
+        mmTop = 264
         mmWidth = 13229
         BandType = 4
         LayerName = Foreground
@@ -774,7 +775,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
         mmLeft = 195263
-        mmTop = 0
+        mmTop = 264
         mmWidth = 9525
         BandType = 4
         LayerName = Foreground
@@ -794,7 +795,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
         mmLeft = 205846
-        mmTop = 265
+        mmTop = 264
         mmWidth = 13229
         BandType = 4
         LayerName = Foreground
@@ -814,7 +815,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
         mmLeft = 220134
-        mmTop = 0
+        mmTop = 264
         mmWidth = 11642
         BandType = 4
         LayerName = Foreground
@@ -834,7 +835,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
         mmLeft = 234421
-        mmTop = 265
+        mmTop = 264
         mmWidth = 9525
         BandType = 4
         LayerName = Foreground
@@ -7625,7 +7626,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
   object ppDBPplnMediana: TppDBPipeline
     DataSource = DSMediana
     UserName = 'DBMediana'
-    Left = 488
+    Left = 480
     Top = 200
   end
 end

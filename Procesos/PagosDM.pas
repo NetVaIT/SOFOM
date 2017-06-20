@@ -409,8 +409,8 @@ type
       Importe: Extended; Tipo: TAbonoCapital; Fecha:TDateTime): Boolean;
     procedure SetPaymentTime(const Value: TPaymentTime);
     function FechaSinHora(FechaHora: TDAteTime): TDAteTime;
-    procedure RegistraBitacora(tipoRegistro: Integer;Observacion:String);
-    function CrearPagoXDeposito(Importe: Double; ADatosPago: TADODataSet): Boolean; //Abr 19/17
+    procedure RegistraBitacora(tipoRegistro: Integer;Observacion:String);   //Abr 19/17
+    function CrearPagoXDeposito(Importe: Double; ADatosPago: TADODataSet): Boolean;//Jun 8/17
     property PaymentTime: TPaymentTime read FPaymentTime write SetPaymentTime;
   public
     { Public declarations }
@@ -496,6 +496,12 @@ begin
   Inserto:=dataset.state=dsInsert;
   if dataset.State = dsInsert then
   begin
+    if adodsMaster.FieldByName('IdAnexo').IsNULL then
+    begin
+      ShowMessage('Debe registrar el Anexo correspondiente al Pago');
+      abort;
+    end;
+
     adodsMaster.FieldByName('Saldo').Value:=adodsMaster.FieldByName('Importe').Value;  //Se debe usar value cuando tiene mas de 4 decimales para que no lo redondee.. sino no quedan iguales
   end;
 end;
@@ -669,7 +675,8 @@ begin
   
   ADOQryAuxiliar.Parameters.ParamByName('IdAnexo').value:=ADatosPago.FieldByName('IDAnexo').asInteger;
   ADOQryAuxiliar.Parameters.ParamByName('IdContrato').value:=ADatosPago.FieldByName('IdContrato').asInteger;
-  ADOQryAuxiliar.Parameters.ParamByName('IDMetododePago').value:=aDatosPago.FieldByName('IDMetododePago').asDatetime;
+  if not aDatosPago.FieldByName('IDMetododePago').isnull then
+     ADOQryAuxiliar.Parameters.ParamByName('IDMetododePago').value:=aDatosPago.FieldByName('IDMetododePago').asInteger;
   
   ADOQryAuxiliar.Parameters.ParamByName('SeriePago').value:=serieAct;
   ADOQryAuxiliar.Parameters.ParamByName('FolioPago').value:= FolioAct;
@@ -1090,7 +1097,7 @@ begin
   AdoQryAuxiliar.Close;
   AdoQryAuxiliar.SQL.Clear;                                                                                                                 //Verificar si asi
   AdoQryAuxiliar.SQL.Add('Select * from CFDI where IDCuentaXCobrar= '+intToSTR(IdCXC));
-//  +' and Subtotal= '+FloatToStr(valor)+' and SaldoDocumento>0.0001');
+//  +' and Subtotal= '+FloatToStr(valor)+' and SaldoDocumento>0.0001');   //No usado
   AdoQryAuxiliar.open;
   Result:= not AdoQryAuxiliar.EOF;
   if not AdoQryAuxiliar.EOF then  //Existe
@@ -1496,7 +1503,7 @@ begin        //FEb 10/17                 //No requerido aca
 
     ADOQryAuxiliar.SQL.Clear;
                                                       // SET '+CampoSaldo+' = '+CampoSaldo +' - '
-    ADOQryAuxiliar.SQL.Add('UPDATE CuentasXCobrar SET SALDO=SALDO - '+DataSet.FieldByName('Importe').AsString
+    ADOQryAuxiliar.SQL.Add('UPDATE CuentasXCobrar SET SALDO=SALDO - '+DataSet.FieldByName('Importe').AsString   // Si la CXC esta a 2 decimales aca aplica correcto
                           +' where IDCuentaXCobrar='+DAtaSEt.FieldByName('IDCuentaXCobrar').ASString);
     ADOQryAuxiliar.ExecSQL;
 
@@ -1505,7 +1512,7 @@ begin        //FEb 10/17                 //No requerido aca
     ADOQryAuxiliar.SQL.Clear;     //Abr 19/17
     ADOQryAuxiliar.SQL.Add('UPDATE CuentasXCobrar SET IdCuentaXCobrarEstatus = 3 ' +
                            ' where IDCuentaXCobrar='+DataSEt.FieldByName('IDCuentaXCobrar').ASString+
-                           ' and (Saldo < 0.0001)' );
+                           ' and (Saldo < 0.01)' ); // era 0.0001 Jun 19/17
     ADOQryAuxiliar.ExecSQL;
     ADOQryAuxiliar.Close;
 

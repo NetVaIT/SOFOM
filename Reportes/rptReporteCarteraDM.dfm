@@ -52,56 +52,58 @@ inherited dmrptReporteCartera: TdmrptReporteCartera
     object adodsMasterTotalPorCobrar: TFMTBCDField
       FieldName = 'TotalPorCobrar'
       ReadOnly = True
-      DisplayFormat = '###,###.##'
+      DisplayFormat = '###,##0.00'
       Precision = 38
       Size = 6
     end
     object adodsMasterSaldopendiente: TFMTBCDField
       FieldName = 'Saldopendiente'
       ReadOnly = True
-      DisplayFormat = '###,###.##'
-      Precision = 38
-      Size = 6
-    end
-    object adodsMasterTotalVigente: TFMTBCDField
-      FieldName = 'TotalVigente'
-      ReadOnly = True
-      DisplayFormat = '###,###.##'
+      DisplayFormat = '###,##0.00'
       Precision = 38
       Size = 6
     end
     object adodsMasterTotalCobradoVencido: TFMTBCDField
+      DisplayLabel = 'Total Cobrado Vencido'
       FieldName = 'TotalCobradoVencido'
       ReadOnly = True
-      DisplayFormat = '###,###.##'
+      DisplayFormat = '###,##0.00'
+      Precision = 38
+      Size = 6
+    end
+    object adodsMasterTotalVigente: TFMTBCDField
+      DisplayLabel = 'Vigente (0- 30 d'#237'as)'
+      FieldName = 'TotalVigente'
+      ReadOnly = True
+      DisplayFormat = '###,##0.00'
       Precision = 38
       Size = 6
     end
     object adodsMasterVencidoA30: TFMTBCDField
       FieldName = 'VencidoA30'
       ReadOnly = True
-      DisplayFormat = '###,###.##'
+      DisplayFormat = '###,##0.00'
       Precision = 38
       Size = 6
     end
     object adodsMasterVencidoA60: TFMTBCDField
       FieldName = 'VencidoA60'
       ReadOnly = True
-      DisplayFormat = '###,###.##'
+      DisplayFormat = '###,##0.00'
       Precision = 38
       Size = 6
     end
     object adodsMasterVencidoA90: TFMTBCDField
       FieldName = 'VencidoA90'
       ReadOnly = True
-      DisplayFormat = '###,###.##'
+      DisplayFormat = '###,##0.00'
       Precision = 38
       Size = 6
     end
     object adodsMasterVencidoMas120: TFMTBCDField
       FieldName = 'VencidoMas120'
       ReadOnly = True
-      DisplayFormat = '###,###.##'
+      DisplayFormat = '###,##0.00'
       Precision = 38
       Size = 6
     end
@@ -154,7 +156,7 @@ inherited dmrptReporteCartera: TdmrptReporteCartera
     object adodsMasterSaldoTotal: TFMTBCDField
       FieldName = 'SaldoTotal'
       ReadOnly = True
-      DisplayFormat = '###,###.##'
+      DisplayFormat = '###,##0.00'
       Precision = 38
       Size = 6
     end

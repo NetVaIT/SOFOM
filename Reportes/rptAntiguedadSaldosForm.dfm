@@ -13,7 +13,7 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
     ExplicitWidth = 1198
   end
   inherited splDetail1: TSplitter
-    Top = 255
+    Top = 296
     Width = 1363
     ExplicitTop = 255
     ExplicitWidth = 1198
@@ -25,17 +25,19 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
     ExplicitWidth = 1198
   end
   inherited pnlMaster: TPanel
-    Top = 78
+    Top = 75
     Width = 1363
-    Height = 177
-    ExplicitTop = 78
+    Height = 180
+    ExplicitTop = 75
     ExplicitWidth = 1363
-    ExplicitHeight = 177
+    ExplicitHeight = 180
     inherited cxGrid: TcxGrid
       Width = 1363
-      Height = 177
+      Height = 180
+      ExplicitLeft = 16
+      ExplicitTop = 6
       ExplicitWidth = 1363
-      ExplicitHeight = 177
+      ExplicitHeight = 180
       inherited tvMaster: TcxGridDBTableView
         DataController.Options = [dcoAssignGroupingValues, dcoAssignMasterDetailKeys]
         DataController.Summary.DefaultGroupSummaryItems = <
@@ -147,6 +149,10 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
         end
         object tvMasterFecha: TcxGridDBColumn
           DataBinding.FieldName = 'Fecha'
+          Width = 67
+        end
+        object tvMasterFechaVencimiento: TcxGridDBColumn
+          DataBinding.FieldName = 'FechaVencimiento'
         end
         object tvMasterIDContrato: TcxGridDBColumn
           Caption = 'IdContrato'
@@ -173,6 +179,11 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
           DataBinding.FieldName = 'TipoContrato'
           Width = 199
         end
+        object tvMasterCobroX: TcxGridDBColumn
+          Caption = 'Cobro Por'
+          DataBinding.FieldName = 'CobroX'
+          Width = 80
+        end
         object tvMasterIdCuentaXCobrar: TcxGridDBColumn
           DataBinding.FieldName = 'IdCuentaXCobrar'
           Width = 99
@@ -180,12 +191,14 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
         object tvMasterSaldo: TcxGridDBColumn
           DataBinding.FieldName = 'Saldo'
         end
-        object tvMasterVigentes: TcxGridDBColumn
-          DataBinding.FieldName = 'Vigentes'
-          Width = 120
-        end
         object tvMasterSaldoTotalVencido: TcxGridDBColumn
           DataBinding.FieldName = 'Saldo Total Vencido'
+          Width = 104
+        end
+        object tvMasterVigentes: TcxGridDBColumn
+          Caption = 'Vigentes (0-30 d)'
+          DataBinding.FieldName = 'Vigentes'
+          Width = 120
         end
         object tvMasterVencidosa30das: TcxGridDBColumn
           DataBinding.FieldName = 'Vencidos a 30 d'#237'as'
@@ -197,10 +210,11 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
         end
         object tvMasterVencidosa90das: TcxGridDBColumn
           DataBinding.FieldName = 'Vencidos a 90 d'#237'as'
-          Width = 121
+          Width = 154
         end
         object tvMasterVencidosmsde120das: TcxGridDBColumn
           DataBinding.FieldName = 'Vencidos m'#225's de 120 d'#237'as'
+          Width = 84
         end
         object tvMasterIdPersona: TcxGridDBColumn
           DataBinding.FieldName = 'IdPersona'
@@ -238,9 +252,10 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
     ExplicitWidth = 1363
   end
   inherited pnlDetail1: TPanel
-    Top = 258
+    Top = 255
     Width = 1363
-    ExplicitTop = 258
+    ExplicitLeft = 217
+    ExplicitTop = -38
     ExplicitWidth = 1363
   end
   inherited pnlClose: TPanel
@@ -258,7 +273,7 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
   end
   object PnlFiltros: TPanel [8]
     Left = 0
-    Top = 31
+    Top = 28
     Width = 1363
     Height = 47
     Align = alTop
@@ -392,13 +407,9 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
     DockControlHeights = (
       0
       0
-      31
+      28
       0)
-    inherited dxbNavigator: TdxBar
-      DockedLeft = 107
-    end
     inherited dxbTools: TdxBar
-      DockedLeft = 238
       ItemLinks = <
         item
           Visible = True
@@ -1251,7 +1262,6 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42585.483476608800000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

@@ -25,9 +25,9 @@ inherited FrmConPagos: TFrmConPagos
     ExplicitWidth = 1107
   end
   inherited pnlMaster: TPanel
-    Top = 75
+    Top = 70
     Width = 1101
-    Height = 180
+    Height = 185
     ExplicitTop = 75
     ExplicitWidth = 1101
     ExplicitHeight = 180
@@ -144,12 +144,13 @@ inherited FrmConPagos: TFrmConPagos
   end
   object PnlBusqueda: TPanel [8]
     Left = 0
-    Top = 31
+    Top = 26
     Width = 1101
     Height = 44
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 9
+    ExplicitTop = 31
     DesignSize = (
       1101
       44)
@@ -279,7 +280,7 @@ inherited FrmConPagos: TFrmConPagos
     DockControlHeights = (
       0
       0
-      31
+      26
       0)
     inherited dxbNavigator: TdxBar
       DockedLeft = 107
@@ -1100,6 +1101,7 @@ inherited FrmConPagos: TFrmConPagos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42712.575441516200000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

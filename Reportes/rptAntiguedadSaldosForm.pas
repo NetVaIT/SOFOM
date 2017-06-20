@@ -68,6 +68,8 @@ type
     tvMasterTC: TcxGridDBColumn;
     tvMasterSaldoTotalVencido: TcxGridDBColumn;
     tvMasterVencidosmsde120das: TcxGridDBColumn;
+    tvMasterFechaVencimiento: TcxGridDBColumn;
+    tvMasterCobroX: TcxGridDBColumn;
     procedure SpdBtnConsultaClick(Sender: TObject);
     procedure EdtNombreKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
@@ -168,16 +170,16 @@ begin
 end;
 
 procedure TfrmRptAntiguedadSaldos.SpdBtnConsultaClick(Sender: TObject);
-const
+const                                                                        //Agrego cc.FechaVencimiento, jun 16/17 y se va a cambiar
    TxtSQL=' SELECT   Cc.IdCuentaXCobrar, cc.IDAnexo,a.Identificador as Anexo, A.IdContrato, Con.IdContratoTipo,Con.Identificador as Contrato,'
-         +' CT.Identificador as TC, ct.Descripcion as TipoContrato,Cc.Fecha, Cc.IdPersona, cc.IdCuentaXCobrarEstatus, Cc.Total, CC.Saldo,'
-         +' PR.RazonSocial AS Cliente, CASE WHEN [dbo].getdateAux() - Cc.Fecha <= 30 THEN Cc.Saldo END AS ''Vigentes'','
-         +' CASE WHEN [dbo].getdateAux() - Cc.Fecha >= 1 THEN Cc.Saldo END as ''Saldo Total Vencido'','
-         +' CASE WHEN ([dbo].getdateAux() - Cc.Fecha <= 60 ) AND ([dbo].getdateAux() - Cc.Fecha > 30 )'
-         +' THEN Cc.Saldo END AS ''Vencidos a 30 días'', CASE WHEN ([dbo].getdateAux() - Cc.Fecha <= 90 ) AND ([dbo].getdateAux()'
-         +'  - Cc.Fecha > 60 ) THEN Cc.Saldo END AS ''Vencidos a 60 días'', CASE WHEN ([dbo].getdateAux() - Cc.Fecha > 90 ) AND'
-         +'   ([dbo].getdateAux() - Cc.Fecha <=120 ) THEN Cc.Saldo END AS ''Vencidos a 90 días'', CASE WHEN [dbo].getdateAux()'
-         +'  - Cc.Fecha > 120 THEN Cc.Saldo END AS ''Vencidos más de 120 días'''
+         +' CT.Identificador as TC, ct.Descripcion as TipoContrato,Cc.Fecha,cc.FechaVencimiento, Cc.IdPersona, cc.IdCuentaXCobrarEstatus, Cc.Total, CC.Saldo,'
+         +' PR.RazonSocial AS Cliente, CASE WHEN [dbo].getdateAux() - Cc.FechaVencimiento <= 30 THEN Cc.Saldo END AS ''Vigentes'','
+         +' CASE WHEN [dbo].getdateAux() - Cc.FechaVencimiento >= 0 THEN Cc.Saldo END as ''Saldo Total Vencido'','      //Ajustado para que los del dia aparezcan jun 19/17
+         +' CASE WHEN ([dbo].getdateAux() - Cc.FechaVencimiento <= 60 ) AND ([dbo].getdateAux() - Cc.FechaVencimiento > 30 )'
+         +' THEN Cc.Saldo END AS ''Vencidos a 30 días'', CASE WHEN ([dbo].getdateAux() - Cc.FechaVencimiento <= 90 ) AND ([dbo].getdateAux()'
+         +'  - Cc.FechaVencimiento > 60 ) THEN Cc.Saldo END AS ''Vencidos a 60 días'', CASE WHEN ([dbo].getdateAux() - Cc.FechaVencimiento > 90 ) AND'
+         +'   ([dbo].getdateAux() - Cc.FechaVencimiento <=120 ) THEN Cc.Saldo END AS ''Vencidos a 90 días'', CASE WHEN [dbo].getdateAux()'
+         +'  - Cc.FechaVencimiento > 120 THEN Cc.Saldo END AS ''Vencidos más de 120 días'''
 
          +' FROM         CuentasXCobrar AS Cc INNER JOIN  Personas AS PR ON Cc.IdPersona = PR.IdPersona '
          +'             left join  Anexos As A ON Cc.IdAnexo=A.IdAnexo      '
@@ -200,8 +202,8 @@ begin
   else
     FiltroCliente:='';
 
-  if ChckBxXFecha.checked then    //May 30/16
-     filtroFecha:='  and(Cc.Fecha >:FIni and Cc.Fecha <:FFin)'
+  if ChckBxXFecha.checked then    //May 30/16  //CAmbiado por FEcha vencimiento  jun 16/17
+     filtroFecha:='  and(Cc.FechaVencimiento >:FIni and Cc.FechaVencimiento <:FFin)'
   else
      filtroFecha:='';
 

@@ -25,9 +25,9 @@ inherited frmFacturasGrid: TfrmFacturasGrid
     ExplicitWidth = 815
   end
   inherited pnlMaster: TPanel
-    Top = 75
+    Top = 70
     Width = 935
-    Height = 180
+    Height = 185
     ExplicitTop = 75
     ExplicitWidth = 935
     ExplicitHeight = 180
@@ -273,12 +273,13 @@ inherited frmFacturasGrid: TfrmFacturasGrid
   end
   object PnlBusqueda: TPanel [8]
     Left = 0
-    Top = 31
+    Top = 26
     Width = 935
     Height = 44
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 9
+    ExplicitTop = 31
     DesignSize = (
       935
       44)
@@ -404,7 +405,7 @@ inherited frmFacturasGrid: TfrmFacturasGrid
     DockControlHeights = (
       0
       0
-      31
+      26
       0)
     inherited dxbNavigator: TdxBar
       DockedLeft = 107
