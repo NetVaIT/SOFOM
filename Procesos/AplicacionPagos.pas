@@ -188,8 +188,8 @@ begin
   aux:=strtoFLoat(quitasignos(cxDBLblDisponible.Caption));
 
   if (Valor <= aux) then //  //SaldoPago  alcanza para pagar el monto indicado en la aplicacion
-  begin
-    if (valor-dsConCXCpendientes.dataset.FieldByName(Camposaldo).Asfloat>0.001)  then
+  begin                                                                //0.001 jun 23/17
+    if (valor-dsConCXCpendientes.dataset.FieldByName(Camposaldo).Asfloat>0.01)  then
     begin
       // Esta aplicacndo monto mayor...
       Seguir:=False; //verificara si se le sugiere

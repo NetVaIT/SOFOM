@@ -350,6 +350,8 @@ type
     actCrearCXCAbonoCapital: TAction;
     ActAjusteAmortiza: TAction;
     adodsMasterEsDeposito: TBooleanField;
+    ADOStrdPrcGenCXCXAmortiza: TADOStoredProc;
+    ADOQryVerificaSaldoFinal: TADOQuery;
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsMasterAfterPost(DataSet: TDataSet);
     procedure adodsMasterBeforePost(DataSet: TDataSet);
@@ -410,7 +412,10 @@ type
     procedure SetPaymentTime(const Value: TPaymentTime);
     function FechaSinHora(FechaHora: TDAteTime): TDAteTime;
     procedure RegistraBitacora(tipoRegistro: Integer;Observacion:String);   //Abr 19/17
-    function CrearPagoXDeposito(Importe: Double; ADatosPago: TADODataSet): Boolean;//Jun 8/17
+    function CrearPagoXDeposito(Importe: Double; ADatosPago: TADODataSet): Boolean;
+    function VerificaYCreaCXCFinales(idAnexo:Integer): Boolean;
+    function CreaMoratoriosAFechaActual: Boolean;
+    function CrearCuentasFinales: Boolean;//Jun 8/17
     property PaymentTime: TPaymentTime read FPaymentTime write SetPaymentTime;
   public
     { Public declarations }
@@ -626,8 +631,12 @@ begin
 
     ADODtStPagosAuxiliar.Post;
   end;
-  //Verificar si es un Deposito en GArantia   y crear un pago correspondiente Jun 8/17
-  if Pos('Deposito en Garantia',ADODtStCxCDetallePendDescripCXC.AsString)>0 then // verificar si asi o con sus id(56,66,76)
+  //Verificar si es un Deposito en garantia   y crear un pago correspondiente Jun 8/17
+  if (Pos('Deposito en garantia',ADODtStCxCDetallePendDescripCXC.AsString)>0)
+  and (ADODtStCxCDetallePendSaldo.AsFloat=0)//Jun 21/17
+//No debe existir por que no habia la alicacion interna   and NoExistePagoXDeposito(ADODtstAplicacionesInternasIDPagoAplicacionInterna.asinteger,adodsMasterIDAnexo.AsInteger )
+
+  then // verificar si asi o con sus id(56,66,76)
   begin
     if CrearPagoXDeposito(DataSet.FieldByName('IMPORTE').AsFloat,AdoDsMaster) then
       ShowMessage('Se creó pago correspondiente al Depósito en Garantía');
@@ -665,7 +674,7 @@ begin
 
   ADOQryAuxiliar.Close;
   ADOQryAuxiliar.SQl.Clear;
-  ADOQryAuxiliar.SQL.Add(' Insert Into Pagos(idPersonaCliente,FechaPago,IdAnexo, IdContrato, IDMetododePago,  ' +
+  ADOQryAuxiliar.SQL.Add(' Insert Into Pagos(idPersonaCliente,FechaPago,IdAnexo, IdContrato, IDMetodoPago,  ' +
                          ' SeriePago, FolioPago,Importe, Saldo,Referencia, Observaciones, EsDeposito) Values (  '+
                          ' :idPersonaCliente,:FechaPago,:IdAnexo,:IdContrato, :IDMetododePago,  ' +
                          ' :SeriePago, :FolioPago,:Importe, :Saldo,:Referencia, :Observaciones,:EsDeposito)');
@@ -675,18 +684,18 @@ begin
   
   ADOQryAuxiliar.Parameters.ParamByName('IdAnexo').value:=ADatosPago.FieldByName('IDAnexo').asInteger;
   ADOQryAuxiliar.Parameters.ParamByName('IdContrato').value:=ADatosPago.FieldByName('IdContrato').asInteger;
-  if not aDatosPago.FieldByName('IDMetododePago').isnull then
-     ADOQryAuxiliar.Parameters.ParamByName('IDMetododePago').value:=aDatosPago.FieldByName('IDMetododePago').asInteger;
+  if not aDatosPago.FieldByName('IDMetodoPago').isnull then
+     ADOQryAuxiliar.Parameters.ParamByName('IDMetodoPago').value:=aDatosPago.FieldByName('IDMetodoPago').asInteger;
   
   ADOQryAuxiliar.Parameters.ParamByName('SeriePago').value:=serieAct;
   ADOQryAuxiliar.Parameters.ParamByName('FolioPago').value:= FolioAct;
-  ADOQryAuxiliar.Parameters.ParamByName('Importe').value:= Importe;
-  ADOQryAuxiliar.Parameters.ParamByName('Saldo').value:= Importe;
+  ADOQryAuxiliar.Parameters.ParamByName('Importe').value:=simpleroundto(Importe,-2); //REdondeado para evitar centavos  negativo sobre centavos .. otro sobre pesos
+  ADOQryAuxiliar.Parameters.ParamByName('Saldo').value:= simpleRoundto(Importe,-2);
   ADOQryAuxiliar.Parameters.ParamByName('Referencia').value:=  '';
   ADOQryAuxiliar.Parameters.ParamByName('Observaciones').value:=  'Trasladado por Deposito en Garantía. API: '
                                                                  + ADODtstAplicacionesInternasIDPagoAplicacionInterna.AsString;
   ADOQryAuxiliar.Parameters.ParamByName('EsDeposito').value:=  True;
-  
+
                             
   Res:= ADOQryAuxiliar.ExecSQL;
   if Res=1 then
@@ -1255,16 +1264,16 @@ begin        //FEb 10/17                 //No requerido aca
     ADODtStCxCDetallePend.Close;
     ADODtStCxCDetallePend.CommandText:='Select * From vw_CXCParaAplicar where Saldo >0  and IdCuentaXCobrar=:IdCuentaXCobrar '
                                       +' and EsMoratorios=0 and (idCFDI is not null or idCFDIIVA is not null)'
-                                      +' and (SaldoDocumento is null or SaldoDocumento>0.00001)'     //FEb 14/17   (verificar) Para que solo traiga el vigente
-                                      +' and (SaldoDoc1 is null or SaldoDoc1>0.00001)'       //FEb 14/17  (Verificar)
+                                      +' and (SaldoDocumento is null or SaldoDocumento>0.01)'     //  jun23/17 0.00001)FEb 14/17   (verificar) Para que solo traiga el vigente
+                                      +' and (SaldoDoc1 is null or SaldoDoc1>0.01)'       // 0.00001      FEb 14/17  (Verificar)
                                       +' order by fase desc, ordenAplica ' ;
   end
   else
   begin
     ADODtStCxCDetallePend.Close;
     ADODtStCxCDetallePend.CommandText:='Select * From vw_CXCParaAplicar where Saldo >0  and IdCuentaXCobrar=:IdCuentaXCobrar '
-                                       +' and (SaldoDocumento is null or SaldoDocumento>0.00001)'     //FEb 14/17    Para que solo traiga el vigente
-                                       +' and (SaldoDoc1 is null or SaldoDoc1>0.00001)'       //FEb 14/17
+                                       +' and (SaldoDocumento is null or SaldoDocumento>0.01)'     //FEb 14/17    Para que solo traiga el vigente
+                                       +' and (SaldoDoc1 is null or SaldoDoc1>0.01)'       //FEb 14/17    //  jun23/17 0.00001
                                        +' order by fase desc, ordenAplica ' ;
 
   end;
@@ -1463,7 +1472,7 @@ begin        //FEb 10/17                 //No requerido aca
       ADODtStCxCDetallePend.Next;
     end;
   end // del si no es inicial ene 31/17
-  else //PAGOS INICIALES
+  else //PAGOS INICIALES    y  probablementee los finales jun 21/17 ??
   begin  //Par aaplicar iniciales Todos deben aplicar igual
     while not ADODtStCxCDetallePend.Eof do
     begin
@@ -1549,6 +1558,101 @@ begin        //FEb 10/17                 //No requerido aca
 
 //  ADODtStCXCPendientes.Refresh;
 //  ADODtStCxCDetallePend.Refresh;
+
+  //VErificación de  Existencia Pago de Deposito en GArantia y Saldo Final, preguntar si se generan moratotrios al día o ver ??
+   VerificaYCreaCXCFinales(adodsMasterIdAnexo.AsInteger); //DEl que se acaba de aplicar
+
+end;
+
+function TdmPagos.VerificaYCreaCXCFinales(idAnexo:Integer):Boolean; //Jun 21/17
+var Saldo, SaldoDeposito:Double;
+begin
+  Saldo:=0;
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.sql.Clear;
+  ADOQryAuxiliar.sql.Add('Select * from Pagos where EsDeposito=1 and Saldo >0 and IdAnexo='+intTostr(IdAnexo));
+  ADOQryAuxiliar.open;
+  if not ADOQryAuxiliar.eof then
+  begin  //Existe Deposito en Garantía
+    SaldoDeposito:= ADOQryAuxiliar.FieldByName('Saldo').ASExtended ;
+    ADOQryVerificaSaldoFinal.Close;
+    ADOQryVerificaSaldoFinal.Parameters.ParamByName('IdAnexo').Value:= idanexo;
+    ADOQryVerificaSaldoFinal.Open;
+
+    if not ADOQryVerificaSaldoFinal.Eof then
+      Saldo:=ADOQryVerificaSaldoFinal.fieldbyname('SaldoPorCobrarOSinPago').AsExtended;
+    if (Saldo>0) and (Saldo <=saldoDeposito) then
+    begin // Aca ya debe venir con cxc actualizadas se verifican antes de aplicar el pago..
+       showMessage('               Tiene un Pago por depósito en garantía que puede usar para liquidar las últimas mensualidades. '
+              +#13+'Se verificará la no existencia de moratorios al día y se generarán las cuentas por cobrar finales en caso de que estén pendientes.');
+      //Crear moratorios
+      if (not CreaMoratoriosAFechaActual)  then
+      begin
+        if CrearCuentasFinales then   //Avisar de  la creación de las CXC finales...
+          showMessage('Se crearon Cuentas de Cobrar de las últimas amortizaciones quedarán disponibles para Facturar y aplicar al pago correspondiente al Depósito en Garantía')
+        else
+          ShowMessage('Es posible que las cuentas finales ya se encuentren creadas, verifique, facture y proceda a aplicar con el Pago de deposito en Garantía ');
+      end
+      else
+         ShowMessage('Hay Moratorios pendientes al día actual. Debe pagar primero estos antes de poder generar las cuentas por cobrar finales');
+
+    end;
+  end;
+
+end;
+
+function  TdmPagos.CrearCuentasFinales  :Boolean;
+var REs:integer;
+begin
+  Res:=0;
+  REsult:=FAlse;
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.sql.Clear;
+  ADOQryAuxiliar.sql.Add(' Select aa.IdAnexoAmortizacion, c.idanexo,aa.IdAnexoCredito, aa.PagoTotal from AnexosAmortizaciones aa '
+  +' inner join AnexosCreditos C on C.IdAnexoCredito=aa.IdAnexoCredito and c.IdAnexoCreditoEstatus=1 '
+  +' where c.IdAnexo=:idAnexo and (not Exists (select * from CuentasXCobrar cxc where cxc.IdAnexosAmortizaciones=aa.idanexoamortizacion))' );
+
+  ADOQryAuxiliar.Open;
+  while not ADOQryAuxiliar.eof  do
+  begin
+    ADOStrdPrcGenCXCXAmortiza.Parameters.ParamByName('@IdAnexoAmortizacion').value:=  ADOQryAuxiliar.fieldbyname('IdAnexoAmortizacion').AsInteger;
+    ADOStrdPrcGenCXCXAmortiza.ExecProc;
+    res:= ADOStrdPrcGenCXCXAmortiza.Parameters.ParamByName('@RETURNVALUE').Value;
+    if res<>0  then
+      Result:=True;
+    ADOQryAuxiliar.Next;
+  end;
+end;
+
+function  TdmPagos.CreaMoratoriosAFechaActual: Boolean; //Jun 22/17
+var idActual, Res:integer;
+begin
+  Result:=False;
+
+  adopSetCXCUPMoratorio.Parameters.ParamByName('@IdAnexo').value:=  IdAnexoAct;
+  adopSetCXCUPMoratorio.Parameters.ParamByName('@Fecha').value:= _DmConection.LaFechaActual ;          //CAmbiar solo fecha
+
+  adopSetCXCUPMoratorio.ExecProc;
+      //Abr 17/17 Actualiza Totales de CXC para que actualice mnto vencido en anexo
+      //May 22/17                                                           //verificar??
+  adopSetCXCUPMoratorio.Parameters.ParamByName('@IdCuentaXCobrar').Value:=  ADODtStCXCPendientes.FieldByName('IDCuentaXCobrar').asinteger;        //May 22/17
+
+  adopSetCXCUPMoratorio.ExecProc;
+//   Res:=
+   //HAsta aca
+ //Calcula moratorios a FechaPago
+ //Abr 6/17.
+  idActual:= ADODtStCXCPendientes.FieldByName('IdCuentaXCobrar').AsInteger;
+  ADODtStCXCPendientes.Close;
+  ADODtStCXCPendientes.Open;
+  ADODtStCXCPendientes.Locate('IdCuentaXCobrar', idActual,[]);
+  if ADODtStCXCPendientes.FieldByName('EsMoratorio').asBoolean then   //Se supone que tendría los moratorios creados???
+  begin
+    ShowMessage('Se crearon moratorios');
+    Result:=true;
+  end;
+
+
 end;
 
 function TdmPagos.AplicaPago(idPago, IdCxc, IDCFDI: Integer;

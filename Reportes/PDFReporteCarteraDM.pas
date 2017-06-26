@@ -305,6 +305,9 @@ type
     ppLblValorMaxCred: TppLabel;
     ppImage3: TppImage;
     ADODtStRepHojaControlCteSaldoTotal: TFMTBCDField;
+    adodsReportAlias: TStringField;
+    ppLabel22: TppLabel;
+    ppDBText66: TppDBText;
     procedure CuotasReportCalcFields(DataSet: TDataSet);
   private
     { Private declarations }

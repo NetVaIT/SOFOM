@@ -1,20 +1,20 @@
 inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
-  Height = 428
+  Height = 613
   Width = 546
   inherited adodsReport: TADODataSet
     OnCalcFields = CuotasReportCalcFields
     CommandText = 
-      'SElect IdAnexo, Contrato, Anexo, CLiente, Tc, Plazo, Total/1000 ' +
-      'as Total, '#13#10'CobradoCXC/1000 as CobradoCXC, TotalPorCobrar/1000 a' +
-      's TotalPorCobrar, Saldopendiente  /1000 as Saldopendiente, Total' +
-      'Vigente /1000 as TotalVigente,'#13#10' TotalPorVencer/1000 as TotalPor' +
-      'Vencer, TotalCobradoVencido/1000 as TotalCobradoVencido,'#13#10' Venci' +
-      'doA30/1000 as VencidoA30, VencidoA60/1000 as VencidoA60, Vencido' +
-      'A90/1000 as VencidoA90, VencidoMas120/1000 as VencidoMas120,'#13#10'Di' +
-      'asRetraso, Cantidad, atrasados, atiempo, CuotasPendientes, DiasP' +
-      'agoTotal, '#13#10'DiasPagoRetraso, PorcentajeAtrasados, PorcentajeATie' +
-      'mpo, CalificacionInicial'#13#10'from vw_ReporteCarteraCompleto'#13#10'order ' +
-      'by TotalCobradoVencido desc , TotalPorCobrar DEsc'
+      'SElect IdAnexo, Contrato, Anexo, CLiente, Alias, Tc, Plazo, Tota' +
+      'l/1000 as Total, '#13#10'CobradoCXC/1000 as CobradoCXC, TotalPorCobrar' +
+      '/1000 as TotalPorCobrar, Saldopendiente  /1000 as Saldopendiente' +
+      ', TotalVigente /1000 as TotalVigente,'#13#10' TotalPorVencer/1000 as T' +
+      'otalPorVencer, TotalCobradoVencido/1000 as TotalCobradoVencido,'#13 +
+      #10' VencidoA30/1000 as VencidoA30, VencidoA60/1000 as VencidoA60, ' +
+      'VencidoA90/1000 as VencidoA90, VencidoMas120/1000 as VencidoMas1' +
+      '20,'#13#10'DiasRetraso, Cantidad, atrasados, atiempo, CuotasPendientes' +
+      ', DiasPagoTotal, '#13#10'DiasPagoRetraso, PorcentajeAtrasados, Porcent' +
+      'ajeATiempo, CalificacionInicial'#13#10'from vw_ReporteCarteraCompleto'#13 +
+      #10'order by TotalCobradoVencido desc , TotalPorCobrar DEsc'
     Left = 40
     object adodsReportIdAnexo: TIntegerField
       FieldName = 'IdAnexo'
@@ -154,6 +154,10 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       FieldName = 'CalificacionInicial'
       Size = 2
     end
+    object adodsReportAlias: TStringField
+      FieldName = 'Alias'
+      Size = 5
+    end
   end
   inherited ppReport: TppReport
     PrinterSetup.Orientation = poLandscape
@@ -162,7 +166,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
     Template.FileName = 'C:\Desarrollo\SOFOM\Reportes\rptCarteraSinAnexo.rtm'
     PDFSettings.ImageCompressionLevel = 5
     PreviewFormSettings.ZoomSetting = zsPageWidth
-    Left = 256
+    Left = 264
     DataPipelineName = 'dbpReport'
     inherited ppHeaderBand1: TppHeaderBand
       mmHeight = 28310
@@ -193,9 +197,9 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Transparent = True
         VerticalAlignment = avCenter
         mmHeight = 4763
-        mmLeft = 8467
-        mmTop = 23018
-        mmWidth = 50536
+        mmLeft = 6879
+        mmTop = 23019
+        mmWidth = 34131
         BandType = 0
         LayerName = Foreground
       end
@@ -524,6 +528,27 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         BandType = 0
         LayerName = Foreground
       end
+      object ppLabel22: TppLabel
+        UserName = 'Label22'
+        AutoSize = False
+        Border.BorderPositions = [bpBottom]
+        Border.Visible = True
+        Border.Weight = 0.748799979686737100
+        Caption = 'Alias'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = []
+        Transparent = True
+        VerticalAlignment = avCenter
+        mmHeight = 4763
+        mmLeft = 44979
+        mmTop = 23019
+        mmWidth = 11642
+        BandType = 0
+        LayerName = Foreground
+      end
     end
     inherited ppDetailBand1: TppDetailBand
       mmHeight = 5556
@@ -541,8 +566,8 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
         mmLeft = 8467
-        mmTop = 264
-        mmWidth = 50536
+        mmTop = 265
+        mmWidth = 30692
         BandType = 4
         LayerName = Foreground
       end
@@ -840,9 +865,30 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         BandType = 4
         LayerName = Foreground
       end
+      object ppDBText66: TppDBText
+        UserName = 'DBText66'
+        DataField = 'Alias'
+        DataPipeline = dbpReport
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = []
+        Transparent = True
+        VerticalAlignment = avCenter
+        DataPipelineName = 'dbpReport'
+        mmHeight = 4763
+        mmLeft = 44979
+        mmTop = 265
+        mmWidth = 11642
+        BandType = 4
+        LayerName = Foreground
+      end
     end
     inherited ppFooterBand1: TppFooterBand
+      mmHeight = 5292
       inherited ppLineFooter: TppLine
+        mmHeight = 2646
         mmWidth = 264055
         LayerName = Foreground
       end
@@ -856,6 +902,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         SaveOrder = -1
         Font.Name = 'arial'
         mmLeft = 255059
+        mmTop = 0
         mmWidth = 10319
         LayerName = Foreground
       end

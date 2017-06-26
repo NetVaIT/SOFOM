@@ -11,24 +11,23 @@ inherited frmPersonaEdit: TfrmPersonaEdit
     Width = 654
     Height = 553
     ExplicitWidth = 654
-    ExplicitHeight = 509
+    ExplicitHeight = 553
     ClientRectBottom = 551
     ClientRectRight = 652
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 2
-      ExplicitTop = 28
+      ExplicitTop = 26
       ExplicitWidth = 650
-      ExplicitHeight = 479
+      ExplicitHeight = 525
       object PnlEmisor: TPanel
         Left = 0
         Top = 351
         Width = 650
-        Height = 172
+        Height = 174
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 5
         Visible = False
-        ExplicitHeight = 128
         object Label20: TLabel
           Left = 16
           Top = 4
@@ -80,9 +79,9 @@ inherited frmPersonaEdit: TfrmPersonaEdit
         object Label26: TLabel
           Left = 512
           Top = 8
-          Width = 61
+          Width = 91
           Height = 13
-          Caption = 'Identificador'
+          Caption = 'Identificador(Alias)'
           FocusControl = cxDBTextEdit5
         end
         object cxDBTextEdit1: TcxDBTextEdit
@@ -364,23 +363,21 @@ inherited frmPersonaEdit: TfrmPersonaEdit
         Left = 0
         Top = 351
         Width = 650
-        Height = 172
+        Height = 174
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 3
         Visible = False
-        ExplicitHeight = 128
       end
       object PnlCliente: TPanel
         Left = 0
         Top = 351
         Width = 650
-        Height = 172
+        Height = 174
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 4
         Visible = False
-        ExplicitTop = 350
         object Label17: TLabel
           Left = 16
           Top = 80
@@ -626,7 +623,7 @@ inherited frmPersonaEdit: TfrmPersonaEdit
   inherited pmlMain: TPanel
     Top = 553
     Width = 654
-    ExplicitTop = 509
+    ExplicitTop = 553
     ExplicitWidth = 654
     inherited btnCancel: TButton
       Left = 572

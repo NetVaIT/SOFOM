@@ -649,7 +649,6 @@ object FrmAplicacionPago: TFrmAplicacionPago
     Align = alBottom
     TabOrder = 5
     LookAndFeel.Kind = lfStandard
-    ExplicitTop = 497
     object cxGridDBTableView1: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = DSDetalleMostrar

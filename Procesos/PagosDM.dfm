@@ -1887,4 +1887,61 @@ inherited dmPagos: TdmPagos
     Left = 200
     Top = 600
   end
+  object ADOStrdPrcGenCXCXAmortiza: TADOStoredProc
+    Connection = _dmConection.ADOConnection
+    ProcedureName = 'p_SetCuentasXCobrarPorAmortizacion;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@IdAnexoAmortizacion'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+      end
+      item
+        Name = '@IdCuentaXCobrar'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Direction = pdInputOutput
+        Precision = 10
+      end>
+    Left = 504
+    Top = 592
+  end
+  object ADOQryVerificaSaldoFinal: TADOQuery
+    Connection = _dmConection.ADOConnection
+    Parameters = <
+      item
+        Name = 'idAnexo'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    SQL.Strings = (
+      'Select c.idanexo,aa.IdAnexoCredito,'
+      
+        'SUM(PagoTotal) SaldoPorCobrarOSinPago from AnexosAmortizaciones ' +
+        'aa '
+      
+        'inner join AnexosCreditos C on C.IdAnexoCredito=aa.IdAnexoCredit' +
+        'o and c.IdAnexoCreditoEstatus=1 '
+      'where c.IdAnexo=:idAnexo and'
+      
+        '(not Exists (select * from CuentasXCobrar cxc where cxc.IdAnexos' +
+        'Amortizaciones=aa.idanexoamortizacion)or'
+      
+        ' Exists (select * from CuentasXCobrar cc where cc.IdAnexosAmorti' +
+        'zaciones=aa.idanexoamortizacion and cc.Saldo>0) )'
+      ''
+      'Group by c.IdAnexo, aa.IdAnexoCredito')
+    Left = 660
+    Top = 595
+  end
 end

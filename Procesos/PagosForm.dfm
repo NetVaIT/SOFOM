@@ -28,14 +28,14 @@ inherited FrmConPagos: TFrmConPagos
     Top = 70
     Width = 1101
     Height = 185
-    ExplicitTop = 75
+    ExplicitTop = 70
     ExplicitWidth = 1101
-    ExplicitHeight = 180
+    ExplicitHeight = 185
     inherited cxGrid: TcxGrid
       Width = 1101
-      Height = 180
+      Height = 185
       ExplicitWidth = 1101
-      ExplicitHeight = 180
+      ExplicitHeight = 185
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdPago: TcxGridDBColumn
           DataBinding.FieldName = 'IdPago'
@@ -77,12 +77,18 @@ inherited FrmConPagos: TFrmConPagos
         object tvMasterSaldo: TcxGridDBColumn
           DataBinding.FieldName = 'Saldo'
         end
+        object tvMasterEsDeposito: TcxGridDBColumn
+          Caption = 'Dep'#243'sito Garant'#237'a'
+          DataBinding.FieldName = 'EsDeposito'
+          Width = 94
+        end
         object tvMasterReferencia: TcxGridDBColumn
           DataBinding.FieldName = 'Referencia'
           Width = 133
         end
         object tvMasterObservaciones: TcxGridDBColumn
           DataBinding.FieldName = 'Observaciones'
+          Width = 350
         end
         object tvMasterIdMetodoPago: TcxGridDBColumn
           DataBinding.FieldName = 'IdMetodoPago'
@@ -150,7 +156,6 @@ inherited FrmConPagos: TFrmConPagos
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 9
-    ExplicitTop = 31
     DesignSize = (
       1101
       44)
@@ -282,11 +287,7 @@ inherited FrmConPagos: TFrmConPagos
       0
       26
       0)
-    inherited dxbNavigator: TdxBar
-      DockedLeft = 107
-    end
     inherited dxbTools: TdxBar
-      DockedLeft = 238
       ItemLinks = <
         item
           Visible = True
@@ -1101,7 +1102,6 @@ inherited FrmConPagos: TFrmConPagos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42712.575441516200000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

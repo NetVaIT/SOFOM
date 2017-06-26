@@ -7,11 +7,11 @@ inherited dmAplicacionesConsulta: TdmAplicacionesConsulta
       ','#13#10' PR.FolioPago, Pr.SeriePago,Cc.IdCuentaXCobrar NoCuentaXCobra' +
       'r,'#13#10' CC.FechaVencimiento as FechaCXC ,P.RazonSocial as Cliente,C' +
       'C.IDAnexo,A.DEscripcion Anexo,'#13#10'PA.IdPagoAplicacion, Pa.IdPago, ' +
-      'PA.IdCFDI, PA.IdPersonaCliente '#13#10'from PagosAplicaciones PA'#13#10'inne' +
-      'r join Pagos PR on PA.IdPago=PR.IdPago'#13#10'inner join CuentasXCobra' +
-      'r CC on PA.IdCuentaXCobrar =Cc.IdcuentaXCobrar'#13#10' inner join Anex' +
-      'os A on A.IdAnexo=cc.IdAnexo '#13#10'inner join Personas P on P.IdPers' +
-      'ona =Cc.IdPersona'
+      'PA.IdCFDI, PA.IdPersonaCliente,'#13#10'A.IdContrato, P.idMetodoPago '#13#10 +
+      'from PagosAplicaciones PA'#13#10'inner join Pagos PR on PA.IdPago=PR.I' +
+      'dPago'#13#10'inner join CuentasXCobrar CC on PA.IdCuentaXCobrar =Cc.Id' +
+      'cuentaXCobrar'#13#10' inner join Anexos A on A.IdAnexo=cc.IdAnexo '#13#10'in' +
+      'ner join Personas P on P.IdPersona =Cc.IdPersona'
     object adodsMasterCliente: TStringField
       FieldName = 'Cliente'
       Size = 300
@@ -68,6 +68,12 @@ inherited dmAplicacionesConsulta: TdmAplicacionesConsulta
       FieldName = 'Anexo'
       Size = 100
     end
+    object adodsMasterIdContrato: TIntegerField
+      FieldName = 'IdContrato'
+    end
+    object adodsMasteridMetodoPago: TIntegerField
+      FieldName = 'idMetodoPago'
+    end
   end
   inherited adodsUpdate: TADODataSet
     Left = 328
@@ -76,6 +82,10 @@ inherited dmAplicacionesConsulta: TdmAplicacionesConsulta
   inherited ActionList: TActionList
     object ActAplicaMoratorioInteno: TAction
       OnExecute = ActAplicaMoratorioIntenoExecute
+    end
+    object ActCreaPagoDeposito: TAction
+      Caption = 'Crea Pago Dep'#243'sito'
+      OnExecute = ActCreaPagoDepositoExecute
     end
   end
   object ADOQryAuxiliar: TADOQuery
@@ -152,5 +162,19 @@ inherited dmAplicacionesConsulta: TdmAplicacionesConsulta
     DataSet = adodsMaster
     Left = 148
     Top = 16
+  end
+  object ADODtStConfiguraciones: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 'select UltimoFolioPago, UltimaSeriePago from Configuraciones'
+    Parameters = <>
+    Left = 36
+    Top = 227
+    object ADODtStConfiguracionesUltimoFolioPago: TIntegerField
+      FieldName = 'UltimoFolioPago'
+    end
+    object ADODtStConfiguracionesUltimaSeriePago: TStringField
+      FieldName = 'UltimaSeriePago'
+    end
   end
 end

@@ -128,7 +128,7 @@ const
    TxtSQL='select PA.FechaAplicacion ,pa.importe, PR.FechaPago as FechaPago,'+
           ' PR.FolioPago, Pr.SeriePago,Cc.IdCuentaXCobrar NoCuentaXCobrar, '+
           ' CC.FechaVencimiento as FechaCXC ,P.RazonSocial as Cliente,CC.IDAnexo,A.DEscripcion Anexo,'+   //FV abr 11/17
-          ' PA.IdPagoAplicacion, Pa.IdPago, PA.IdCFDI, PA.IdPersonaCliente' +
+          ' PA.IdPagoAplicacion, Pa.IdPago, PA.IdCFDI, PA.IdPersonaCliente, A.IdContrato, P.idMetodoPago ' +  //  jun 21/17 A.IdContrato, P.idMetodoPago
           ' from PagosAplicaciones PA inner join Pagos PR on PA.IdPago=PR.IdPago' +
           ' inner join CuentasXCobrar CC on PA.IdCuentaXCobrar =Cc.IdcuentaXCobrar' +
           ' inner join Anexos A on A.IdAnexo=cc.IdAnexo ' +

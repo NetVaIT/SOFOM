@@ -40,11 +40,15 @@ type
     tvMasterItemCXC: TcxGridDBColumn;
     tvMastersaldoCXC: TcxGridDBColumn;
     tvMasterImportePagado: TcxGridDBColumn;
+    dxBrBtnPAgosXDepo: TdxBarButton;
     procedure FormCreate(Sender: TObject);
   private
+    FActCreaPagoDeposito: TBasicAction;
+    procedure SetFCreaPagoDeposito(const Value: TBasicAction);
     { Private declarations }
   public
     { Public declarations }
+    property ActCreaPagoXDeposito: TBasicAction read FActCreaPagoDeposito write SetFCreaPagoDeposito;  //Jun 21/17
   end;
 
 var
@@ -60,6 +64,14 @@ procedure TfrmConAplicacionesInternas.FormCreate(Sender: TObject);
 begin
   inherited;
   applybestfit:=False;
+end;
+
+procedure TfrmConAplicacionesInternas.SetFCreaPagoDeposito(
+  const Value: TBasicAction);                   //Jun 21/17
+begin
+  FActCreaPagoDeposito := Value;
+  dxBrBtnPAgosXDepo.Action:=Value;
+  dxBrBtnPAgosXDepo.ImageIndex:=17;
 end;
 
 end.

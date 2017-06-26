@@ -21,13 +21,14 @@ inherited frmCuentasBancarias: TfrmCuentasBancarias
   inherited pnlMaster: TPanel
     Width = 763
     Height = 169
-    ExplicitWidth = 856
-    ExplicitHeight = 164
+    ExplicitTop = 26
+    ExplicitWidth = 763
+    ExplicitHeight = 169
     inherited cxGrid: TcxGrid
       Width = 763
-      Height = 164
-      ExplicitWidth = 856
-      ExplicitHeight = 164
+      Height = 169
+      ExplicitWidth = 763
+      ExplicitHeight = 169
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdCuentaBancaria: TcxGridDBColumn
           DataBinding.FieldName = 'IdCuentaBancaria'
@@ -85,7 +86,7 @@ inherited frmCuentasBancarias: TfrmCuentasBancarias
           Width = 71
         end
         object tvMasterEstructuraEstadoCuenta: TcxGridDBColumn
-          Caption = 'Estructur aEstado Cuenta'
+          Caption = 'Estructura Estado Cuenta'
           DataBinding.FieldName = 'EstructuraEstadoCuenta'
           Width = 129
         end
@@ -99,23 +100,23 @@ inherited frmCuentasBancarias: TfrmCuentasBancarias
   end
   inherited pnlDetail3: TPanel
     Width = 763
-    ExplicitWidth = 856
+    ExplicitWidth = 763
   end
   inherited pnlDetail2: TPanel
     Width = 763
-    ExplicitWidth = 856
+    ExplicitWidth = 763
   end
   inherited pnlDetail1: TPanel
     Top = 198
     Width = 763
     Height = 130
-    ExplicitTop = 195
-    ExplicitWidth = 856
+    ExplicitTop = 198
+    ExplicitWidth = 763
     ExplicitHeight = 130
   end
   inherited pnlClose: TPanel
     Width = 763
-    ExplicitWidth = 856
+    ExplicitWidth = 763
     inherited btnClose: TButton
       Left = 465
       ExplicitLeft = 465
@@ -130,12 +131,6 @@ inherited frmCuentasBancarias: TfrmCuentasBancarias
       0
       26
       0)
-    inherited dxbNavigator: TdxBar
-      DockedLeft = 107
-    end
-    inherited dxbTools: TdxBar
-      DockedLeft = 238
-    end
   end
   inherited cxStyleRepository: TcxStyleRepository
     PixelsPerInch = 96
@@ -146,7 +141,6 @@ inherited frmCuentasBancarias: TfrmCuentasBancarias
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42768.721785995370000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

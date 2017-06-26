@@ -15,9 +15,9 @@ inherited FrmEdPagos: TFrmEdPagos
     ClientRectRight = 593
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 2
-      ExplicitTop = 28
+      ExplicitTop = 26
       ExplicitWidth = 591
-      ExplicitHeight = 431
+      ExplicitHeight = 433
       object Label7: TLabel
         Left = 27
         Top = 325
@@ -271,6 +271,16 @@ inherited FrmEdPagos: TFrmEdPagos
           Visible = False
           OnClick = DBLkpCmbBxAnexosClick
         end
+        object cxDBCheckBox1: TcxDBCheckBox
+          Left = 472
+          Top = 138
+          Caption = 'Es Dep'#243'sito'
+          DataBinding.DataField = 'EsDeposito'
+          DataBinding.DataSource = DataSource
+          Properties.ReadOnly = True
+          TabOrder = 13
+          Width = 89
+        end
       end
     end
   end
@@ -297,8 +307,8 @@ inherited FrmEdPagos: TFrmEdPagos
   object DSPersonas: TDataSource
     AutoEdit = False
     DataSet = dmPagos.ADOSPersonas
-    Left = 528
-    Top = 152
+    Left = 496
+    Top = 200
   end
   object DSAnexos: TDataSource
     AutoEdit = False

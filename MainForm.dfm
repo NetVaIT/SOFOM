@@ -3,6 +3,7 @@ inherited frmMain: TfrmMain
   ClientWidth = 1020
   OnDestroy = FormDestroy
   ExplicitWidth = 1036
+  ExplicitHeight = 519
   PixelsPerInch = 96
   TextHeight = 13
   inherited dxRibbon1: TdxRibbon
@@ -14,6 +15,7 @@ inherited frmMain: TfrmMain
       Index = 0
     end
     object dxRibbon1Tab2: TdxRibbonTab
+      Active = True
       Caption = 'Cat'#225'logos'
       Groups = <
         item
@@ -35,7 +37,6 @@ inherited frmMain: TfrmMain
       Index = 1
     end
     object dxRibbon1Tab3: TdxRibbonTab
-      Active = True
       Caption = 'Procesos'
       Groups = <
         item

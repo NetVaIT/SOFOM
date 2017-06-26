@@ -19,7 +19,8 @@ uses
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, cxContainer,
   cxEdit, cxMemo, cxDBEdit, Vcl.DBCtrls, cxTextEdit, cxMaskEdit, cxDropDownEdit,
   cxCalendar, Vcl.StdCtrls, Vcl.ImgList, System.Actions, Vcl.ActnList, Data.DB,
-  Vcl.ExtCtrls, cxPC, cxLabel, cxDBLabel, cxGroupBox, cxRadioGroup, Data.Win.ADODB;
+  Vcl.ExtCtrls, cxPC, cxLabel, cxDBLabel, cxGroupBox, cxRadioGroup, Data.Win.ADODB,
+  cxCheckBox;
 
 type
   TFrmEdPagos = class(T_frmEdit)
@@ -52,6 +53,7 @@ type
     DBLkpCmbBxAnexos: TDBLookupComboBox;
     DSAnexos: TDataSource;
     cxDBLblAnexo: TcxDBLabel;
+    cxDBCheckBox1: TcxDBCheckBox;
     procedure DBLkpCmbBxClienteClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure cxDBTextEdit3Exit(Sender: TObject);
@@ -127,8 +129,8 @@ end;
 
 procedure TFrmEdPagos.FormShow(Sender: TObject);
 begin
-  inherited;             //SE cambio por si son diferntes a mas de 3 decimales
-  PnlDatosBase.Enabled:=abs(DataSource.DataSet.FieldByName('Saldo').AsFloat- DataSource.DataSet.FieldByName('Importe').AsFloat)<0.001;
+  inherited;             //SE cambio por si son diferntes a mas de 3 decimales                                               //0.001
+  PnlDatosBase.Enabled:=abs(DataSource.DataSet.FieldByName('Saldo').AsFloat- DataSource.DataSet.FieldByName('Importe').AsFloat)<0.01;
 end;
 
 end.

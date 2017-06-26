@@ -27,17 +27,17 @@ inherited frmConaplicaciones: TfrmConaplicaciones
     ExplicitWidth = 1025
   end
   inherited pnlMaster: TPanel
-    Top = 73
+    Top = 68
     Width = 1019
-    Height = 191
-    ExplicitTop = 73
+    Height = 196
+    ExplicitTop = 68
     ExplicitWidth = 1019
-    ExplicitHeight = 191
+    ExplicitHeight = 196
     inherited cxGrid: TcxGrid
       Width = 1019
-      Height = 191
+      Height = 196
       ExplicitWidth = 1019
-      ExplicitHeight = 191
+      ExplicitHeight = 196
       inherited tvMaster: TcxGridDBTableView
         object tvMasterCliente: TcxGridDBColumn
           DataBinding.FieldName = 'Cliente'
@@ -132,7 +132,7 @@ inherited frmConaplicaciones: TfrmConaplicaciones
   end
   object Panel1: TPanel [8]
     Left = 0
-    Top = 31
+    Top = 26
     Width = 1019
     Height = 42
     Align = alTop
@@ -269,14 +269,8 @@ inherited frmConaplicaciones: TfrmConaplicaciones
     DockControlHeights = (
       0
       0
-      31
+      26
       0)
-    inherited dxbNavigator: TdxBar
-      DockedLeft = 107
-    end
-    inherited dxbTools: TdxBar
-      DockedLeft = 238
-    end
   end
   inherited cxStyleRepository: TcxStyleRepository
     PixelsPerInch = 96
@@ -1057,7 +1051,6 @@ inherited frmConaplicaciones: TfrmConaplicaciones
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42738.400515763890000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end
