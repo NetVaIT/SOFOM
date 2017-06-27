@@ -198,6 +198,21 @@ type
     adodsMasterIdCuentaXCobrar: TIntegerField;
     adodsMasterSaldoFactoraje: TFMTBCDField;
     ActCancelarCFDI: TAction;
+    ADODtStCFDINotaCredito_PonerenPagos: TADODataSet;
+    ADODtStCFDINotaCredito_PonerenPagosIdCFDI: TLargeintField;
+    ADODtStCFDINotaCredito_PonerenPagosIdCFDITipoDocumento: TIntegerField;
+    ADODtStCFDINotaCredito_PonerenPagosIdPersonaReceptor: TIntegerField;
+    ADODtStCFDINotaCredito_PonerenPagosIdCFDIEstatus: TIntegerField;
+    ADODtStCFDINotaCredito_PonerenPagosIdClienteDomicilio: TIntegerField;
+    ADODtStCFDINotaCredito_PonerenPagosSerie: TStringField;
+    ADODtStCFDINotaCredito_PonerenPagosFolio: TLargeintField;
+    ADODtStCFDINotaCredito_PonerenPagosFecha: TDateTimeField;
+    ADODtStCFDINotaCredito_PonerenPagosSubTotal: TFloatField;
+    ADODtStCFDINotaCredito_PonerenPagosTotal: TFMTBCDField;
+    ADODtStCFDINotaCredito_PonerenPagosTotalImpuestoTrasladado: TFloatField;
+    ADODtStCFDINotaCredito_PonerenPagosSaldoDocumento: TFMTBCDField;
+    ADODtStCFDINotaCredito_PonerenPagosObservaciones: TStringField;
+    ADODtStCFDINotaCredito_PonerenPagosSaldoFactoraje: TFMTBCDField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actProcesaFacturaExecute(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
@@ -820,6 +835,8 @@ begin
   ADODtStPersonaEmisor.Open;
   ADODtStPersonaReceptor.open;
 
+  ADODtStTiposDocumentos.Open; //Jun 26/17
+
 end;
 
 
@@ -835,10 +852,13 @@ begin
     if ADODtStDireccAuxiliar.RecordCount >=1 then
     begin                                      //FActura cambia
      adodsMaster.FieldByName('IdClienteDomicilio').AsInteger:= ADODtStDireccAuxiliar.Fieldbyname('IDPersonaDomicilio').AsInteger;
-     if not ADODtStDireccAuxiliar.Fieldbyname('IdMetododePago').Isnull then
+
+     if not ADODtStPersonaReceptorIdMetodoPago.Isnull then    //Modificado jun 26/17
      begin
-       adodsMaster.FieldByName('IdMetodoPago').AsInteger:= ADODtStDireccAuxiliar.Fieldbyname('IdMetododePago').AsInteger;
-       adodsMaster.FieldByName('NumCtaPago').AsString:= ADODtStDireccAuxiliar.Fieldbyname('NumCtaPagoCliente').AsString;
+       adodsMaster.FieldByName('IdMetodoPago').AsInteger:= ADODtStPersonaReceptorIdMetodoPago.AsInteger;
+       if not ADODtStPersonaReceptorNumCtaPagoCliente.Isnull then
+
+         adodsMaster.FieldByName('NumCtaPago').AsString:= ADODtStPersonaReceptorNumCtaPagoCliente.AsString;
      end;
 
     end;
@@ -1085,6 +1105,7 @@ constructor TdmFacturas.CreateWMostrar(AOwner: TComponent; Muestra: Boolean;
 begin
   FMuestra:=Muestra;
   FTipoDoc:=TipoDoc;
+
   inherited Create(AOwner);
 end;
 
@@ -1093,8 +1114,13 @@ begin
   inherited;
   if ADODtStCFDIConceptos.CommandText <> EmptyStr then ADODtStCFDIConceptos.Open;
   gGridForm:= TfrmFacturasGrid.Create(Self);
-
   gGridForm.DataSet:= adodsMaster;
+  case TipoDocumento  of  //Jun 26/17
+  1:  gGridForm.Caption:='Facturas';
+  2:  gGridForm.Caption:='Notas de Crédito';
+  end;
+  TfrmFacturasGrid(gGridForm).ChckBxFactVivas.Caption:= gGridForm.Caption+' con Saldo';
+  TfrmFacturasGrid(gGridForm).TipoD := TipoDocumento;
   TfrmFacturasGrid(gGridForm).ActGenerarCFDI := actProcesaFactura;  //Nov29/16
   TfrmFacturasGrid(gGridForm).ActImprimePDF := ActImprimeFactura;  //Dic 15/16
   TfrmFacturasGrid(gGridForm).ActCancelaCFDI := ActCancelarCFDI;//Mar 23/17

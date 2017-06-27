@@ -20,7 +20,7 @@ uses
   cxEdit, cxMemo, cxDBEdit, Vcl.DBCtrls, cxTextEdit, cxMaskEdit, cxDropDownEdit,
   cxCalendar, Vcl.StdCtrls, Vcl.ImgList, System.Actions, Vcl.ActnList, Data.DB,
   Vcl.ExtCtrls, cxPC, cxLabel, cxDBLabel, cxGroupBox, cxRadioGroup, Data.Win.ADODB,
-  cxCheckBox;
+  cxCheckBox, Vcl.Menus, cxButtons;
 
 type
   TFrmEdPagos = class(T_frmEdit)
@@ -54,12 +54,15 @@ type
     DSAnexos: TDataSource;
     cxDBLblAnexo: TcxDBLabel;
     cxDBCheckBox1: TcxDBCheckBox;
+    cxBtnUsaNotaCredito: TcxButton;
+    DSNotasCredito: TDataSource;
     procedure DBLkpCmbBxClienteClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure cxDBTextEdit3Exit(Sender: TObject);
     procedure DBLkpCmbBxAnexosClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure cxDBLblAnexoClick(Sender: TObject);
+    procedure cxBtnUsaNotaCreditoClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -73,7 +76,17 @@ implementation
 
 {$R *.dfm}
 
-uses PagosDM;
+uses PagosDM, ListaNotaCreditoForm;
+
+procedure TFrmEdPagos.cxBtnUsaNotaCreditoClick(Sender: TObject);
+begin                             //Jun 27/17
+  inherited;
+ (* frmListaNotasCredito:=TfrmListaNotasCredito.Create(self);
+  frmListaNotasCredito.ShowModal;
+  //Tomar datos //Solo ajustar daldo dela nota cuanso se Guarde el pago
+
+  frmListaNotasCredito.Free;*)
+end;
 
 procedure TFrmEdPagos.cxDBLblAnexoClick(Sender: TObject);
 begin            //Mar 9/17 Siempre esta editando.

@@ -28,14 +28,14 @@ inherited frmFacturasGrid: TfrmFacturasGrid
     Top = 70
     Width = 935
     Height = 185
-    ExplicitTop = 75
+    ExplicitTop = 70
     ExplicitWidth = 935
-    ExplicitHeight = 180
+    ExplicitHeight = 185
     inherited cxGrid: TcxGrid
       Width = 935
-      Height = 180
+      Height = 185
       ExplicitWidth = 935
-      ExplicitHeight = 180
+      ExplicitHeight = 185
       inherited tvMaster: TcxGridDBTableView
         OptionsCustomize.ColumnFiltering = False
         object tvMasterIdCFDI: TcxGridDBColumn
@@ -279,7 +279,6 @@ inherited frmFacturasGrid: TfrmFacturasGrid
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 9
-    ExplicitTop = 31
     DesignSize = (
       935
       44)
@@ -389,7 +388,7 @@ inherited frmFacturasGrid: TfrmFacturasGrid
       object ChckBxFactVivas: TCheckBox
         Left = 461
         Top = 19
-        Width = 116
+        Width = 148
         Height = 17
         Caption = 'Facturas con Saldo'
         TabOrder = 3
@@ -407,11 +406,7 @@ inherited frmFacturasGrid: TfrmFacturasGrid
       0
       26
       0)
-    inherited dxbNavigator: TdxBar
-      DockedLeft = 107
-    end
     inherited dxbTools: TdxBar
-      DockedLeft = 238
       ItemLinks = <
         item
           Visible = True
@@ -1311,7 +1306,7 @@ inherited frmFacturasGrid: TfrmFacturasGrid
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42699.643536909720000000
-      AssignedFormatValues = []
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

@@ -105,6 +105,7 @@ type
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
     procedure SpdBtnBuscarClick(Sender: TObject);
     procedure EdtNombreChange(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     FActGenerarCFDI: TBasicAction;
     FActImprimePDF: TBasicAction;
@@ -112,6 +113,7 @@ type
     fOrden: String;
     ffiltroFecha: String;
     FActCancelaCFDI: TBasicAction;
+    FTipoDoc: Integer;
     procedure SetActGenerarCFDI(const Value: TBasicAction);
     procedure SetActImprimePDF(const Value: TBasicAction);
     function GetFFiltroNombre: String;
@@ -129,7 +131,7 @@ type
     // Property ElOrden :String read fOrden write fOrden;
      property FiltroNombre:String read GetFFiltroNombre write ffiltroNombre;
      //Dic 20/16 hasta aca
-
+     property TipoD:Integer read FTipoDoc write fTipoDoc; // Jun 26/17
   end;
 
 var
@@ -143,8 +145,8 @@ uses FacturasDM, FacturasEdit, _ConectionDmod;
 
 procedure TfrmFacturasGrid.DataSourceDataChange(Sender: TObject; Field: TField);
 begin
-  inherited;
-  dxBrBtnCFDI.Enabled:=datasource.DataSet.FieldByName('IDCFDIEstatus').AsInteger=1;  //Dic 7/16
+  inherited;                                                                          //Jun 27/17
+  dxBrBtnCFDI.Enabled:=(datasource.DataSet.FieldByName('IDCFDIEstatus').AsInteger=1) and (datasource.DataSet.FieldByName('total').Value>0);  //Dic 7/16
   dxBrBtnCancelaCFDI.Enabled:= (datasource.DataSet.FieldByName('IDCFDIEstatus').AsInteger=2) and   //MAr 23/17
                                (datasource.DataSet.FieldByName('SaldoDocumento').Value=datasource.DataSet.FieldByName('Total').VAlue)and
                                (datasource.DataSet.FieldByName('SaldoDocumento').Value=datasource.DataSet.FieldByName('SaldoFactoraje').VAlue);
@@ -183,7 +185,13 @@ begin
   fechaAux:=encodedate(a,m,1);
   cxDtEdtHasta.date :=fechaAux-1;
 
-  SpdBtnBuscarClick(SpdBtnBuscar); //Mar 14/17
+ // SpdBtnBuscarClick(SpdBtnBuscar); //Mar 14/17
+end;
+
+procedure TfrmFacturasGrid.FormShow(Sender: TObject);
+begin
+  inherited;
+  SpdBtnBuscarClick(SpdBtnBuscar); //Movido aca Jun 27/17
 end;
 
 function TfrmFacturasGrid.GetFFiltroNombre: String;
@@ -246,6 +254,12 @@ begin
      AuxFiltro:= ' where '+  Aux2;
   end;
   //Mar 23/17 hasta
+
+
+ if AuxFiltro <>'' then  //Jun 26/17
+   AuxFiltro:= AuxFiltro+ ' and idCFDITipoDocumento= '+ intTostr(TipoD)
+ else
+   AuxFiltro:= ' where idCFDITipoDocumento= '+ intTostr(TipoD);
 
  Tadodataset(datasource.DataSet).Close;
   Tadodataset(datasource.DataSet).CommandText:=TxtSQL+ffiltroNombre+ AuxFiltro;

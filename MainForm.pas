@@ -157,6 +157,8 @@ type
     dxBarManagerBar2: TdxBar;
     dxBarLargeButton36: TdxBarLargeButton;
     actBuroCredito: TAction;
+    dxBarLargeButton37: TdxBarLargeButton;
+    ActNotasCredito: TAction;
     procedure actCatalogoExecute(Sender: TObject);
     procedure actIntervaCXPExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -256,6 +258,8 @@ begin
    36: gModulo := TdmCotizaciones.Create(Self);
 
    37: gModulo := TdmSeguimientoCobranza.Create(Self);  //Feb 15/17
+
+   38: gModulo := TDMFacturas.CreateWMostrar(Self,True,2); //jun 26/17   Notas Credito
 
    50: gModulo := TdmRptAntiguedadSaldos.Create(Self);
    51: gModulo := TdmEstadosCuenta.Create(Self);

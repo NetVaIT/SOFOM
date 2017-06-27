@@ -15,9 +15,9 @@ inherited frmEdFactura: TfrmEdFactura
     ClientRectRight = 1044
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 2
-      ExplicitTop = 28
+      ExplicitTop = 26
       ExplicitWidth = 1042
-      ExplicitHeight = 583
+      ExplicitHeight = 585
       object Label1: TLabel
         Left = 48
         Top = 40
@@ -106,15 +106,21 @@ inherited frmEdFactura: TfrmEdFactura
         Caption = 'MetodoPago'
         FocusControl = DBLookupComboBox3
       end
+      object Label13: TLabel
+        Left = 816
+        Top = 37
+        Width = 77
+        Height = 13
+        Caption = 'Tipo Documento'
+      end
       object PnlDetalleFact: TPanel
         Left = 0
-        Top = 352
+        Top = 354
         Width = 1042
         Height = 231
         Align = alBottom
         BevelKind = bkTile
         TabOrder = 0
-        ExplicitTop = 354
       end
       object cxDBDateEdit1: TcxDBDateEdit
         Left = 48
@@ -206,6 +212,15 @@ inherited frmEdFactura: TfrmEdFactura
         Visible = False
         Height = 22
         Width = 321
+      end
+      object DBLookupComboBox2: TDBLookupComboBox
+        Left = 816
+        Top = 56
+        Width = 160
+        Height = 21
+        DataField = 'TipoDocumento'
+        DataSource = DataSource
+        TabOrder = 12
       end
     end
   end

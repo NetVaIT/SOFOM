@@ -49,6 +49,8 @@ type
     cxDBLabel7: TcxDBLabel;
     cxDBLabel8: TcxDBLabel;
     cxDBLabel9: TcxDBLabel;
+    DBLookupComboBox2: TDBLookupComboBox;
+    Label13: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
@@ -79,9 +81,20 @@ end;
 
 procedure TfrmEdFactura.FormShow(Sender: TObject);
 begin
-  inherited;
-  pcMain.Enabled:=False; //Dic 20/16 Sólo permite consulta.. Ver que pasa en caso que se quiera realizar factura manual??? o por donde?
-  PnlDetalleFact.Enabled:=False;   //Dic 20/16
+  inherited;                                                                               //Prefactura                                //A menos que fuera la de opcion compra...
+(*  if (datasource.State<>dsinsert)then // or (datasource.DataSet.FieldByName('IdCFDIEstatus').AsInteger<>1)  or (not datasource.DataSet.FieldByName('IdCuentaXCobrar').ISNull) then // jun 26/17 Verificar   // o si es de las de opcion de compra  y es prefactura ?? ver como
+  begin
+    if (datasource.DataSet.FieldByName('IdCFDIEstatus').AsInteger<>1) or (not datasource.DataSet.FieldByName('IdCuentaXCobrar').ISNull) then // si no es prefactura o si tiene cxc asociada
+    begin
+      pcMain.Enabled:=False; //Dic 20/16 Sólo permite consulta.. Ver que pasa en caso que se quiera realizar factura manual??? o por donde?
+      PnlDetalleFact.Enabled:=False;   //Dic 20/16
+    end;
+
+  end;  *)
+
+  pcMain.Enabled:=(datasource.State=dsinsert) or ((datasource.DataSet.FieldByName('IdCFDIEstatus').AsInteger=1) and datasource.DataSet.FieldByName('IdCuentaXCobrar').ISNull );//False; //Dic 20/16 Sólo permite consulta.. Ver que pasa en caso que se quiera realizar factura manual??? o por donde?
+  PnlDetalleFact.Enabled:= (datasource.State=dsinsert) or ((datasource.DataSet.FieldByName('IdCFDIEstatus').AsInteger=1) and datasource.DataSet.FieldByName('IdCuentaXCobrar').ISNull );//False;   //Dic 20/16
+
 end;
 
 end.
