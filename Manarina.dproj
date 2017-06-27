@@ -918,9 +918,6 @@
             <Form>frmConCXCMoratorios</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="Procesos\AnexoMoratoriosCon.pas">
-            <Form>FrmAnexoMoratoriosDetalle</Form>
-        </DCCReference>
         <DCCReference Include="Procesos\CotizacionesDetalleForm.pas">
             <Form>frmCotizacionesDetalle</Form>
             <FormType>dfm</FormType>

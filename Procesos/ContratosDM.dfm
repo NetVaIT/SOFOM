@@ -985,14 +985,18 @@ inherited dmContratos: TdmContratos
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@IdAnexo'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
-        Value = Null
+      end
+      item
+        Name = '@Fase'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
       end
       item
         Name = '@IdCuentaXCobrar'
@@ -1000,7 +1004,6 @@ inherited dmContratos: TdmContratos
         DataType = ftInteger
         Direction = pdInputOutput
         Precision = 10
-        Value = Null
       end>
     Left = 224
     Top = 400

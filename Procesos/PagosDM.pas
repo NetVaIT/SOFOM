@@ -40,7 +40,6 @@ type
     ADODtStCXCPendientesIdCuentaXCobrar: TAutoIncField;
     ADODtStCXCPendientesIdCuentaXCobrarEstatus: TIntegerField;
     ADODtStCXCPendientesIdPersona: TIntegerField;
-    ADODtStCXCPendientesIdAnexosAmortizaciones: TIntegerField;
     ADODtStCXCPendientesIdAnexo: TIntegerField;
     ADODtStCXCPendientesFecha: TDateTimeField;
     ADODtStCXCPendientesImporte: TFMTBCDField;
@@ -312,16 +311,6 @@ type
     ADODtStCXCPendientesIdCuentaXCobrarBase: TIntegerField;
     ADODtStCXCPendientesIdCFDI: TLargeintField;
     ADODtStCXCPendientesEsMoratorio: TBooleanField;
-    ADODtStAnexoMoratorios: TADODataSet;
-    ADODtStAnexoMoratoriosIdAnexoAmortizacion: TIntegerField;
-    ADODtStAnexoMoratoriosIdAnexoMoratorioEstatus: TIntegerField;
-    ADODtStAnexoMoratoriosIdCuentaXCobrar: TIntegerField;
-    ADODtStAnexoMoratoriosFecha: TDateTimeField;
-    ADODtStAnexoMoratoriosImporteBase: TFMTBCDField;
-    ADODtStAnexoMoratoriosImporte: TFMTBCDField;
-    ADODtStAnexoMoratoriosDescuento: TFMTBCDField;
-    ADODtStAnexoMoratoriosImpuesto: TFMTBCDField;
-    ADODtStAnexoMoratoriosImporteAplicado: TFMTBCDField;
     DetallesCXCParaFacturarMora: TADODataSet;
     DetallesCXCParaFacturarMoraIdCuentaXCobrar: TIntegerField;
     DetallesCXCParaFacturarMoraIdCuentaXCobrarTipo: TIntegerField;
@@ -352,6 +341,7 @@ type
     adodsMasterEsDeposito: TBooleanField;
     ADOStrdPrcGenCXCXAmortiza: TADOStoredProc;
     ADOQryVerificaSaldoFinal: TADOQuery;
+    ADODtStCXCPendientesIdAnexoAmortizacion: TIntegerField;
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsMasterAfterPost(DataSet: TDataSet);
     procedure adodsMasterBeforePost(DataSet: TDataSet);
@@ -1773,7 +1763,6 @@ begin
    TFrmConPagos(gGridForm).DSAplicacion.DataSet :=ADODtStAplicacionesPagos;
    // hasta Agregado Feb 16/17
 
-   TFrmConPagos(gGridForm).DSMoratoriosDet.DataSet :=ADODtStAnexoMoratorios; //Mar 31/17
    TFrmConPagos(gGridForm).DSauxiliar.DataSet :=ADOQryAuxiliar; //Abr 3/17
    TFrmConPagos(gGridForm).DSP_CalcMoratorioNueva.DataSet:=adopSetCXCUPMoratorio; //Abr 6/17
    TFrmConPagos(gGridForm).actAbonarCapital:=actCrearCXCAbonoCapital; //Abr 18/17

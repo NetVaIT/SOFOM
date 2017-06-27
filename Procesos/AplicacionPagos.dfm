@@ -360,8 +360,8 @@ object FrmAplicacionPago: TFrmAplicacionPago
         DataBinding.FieldName = 'IdPersona'
         Visible = False
       end
-      object tvMasterIdAnexosAmortizaciones: TcxGridDBColumn
-        DataBinding.FieldName = 'IdAnexosAmortizaciones'
+      object tvMasterIdAnexoAmortizacion: TcxGridDBColumn
+        DataBinding.FieldName = 'IdAnexoAmortizacion'
         Visible = False
       end
       object tvMasterIdAnexo: TcxGridDBColumn
@@ -743,11 +743,6 @@ object FrmAplicacionPago: TFrmAplicacionPago
     DataSet = dmPagos.ADODtStDetalleCXCMostrar
     Left = 772
     Top = 528
-  end
-  object DSMoratoriosDet: TDataSource
-    DataSet = dmPagos.ADODtStAnexoMoratorios
-    Left = 844
-    Top = 256
   end
   object DSP_ActTotalCXC: TDataSource
     DataSet = dmPagos.ADOPActualizaTotalesCXC

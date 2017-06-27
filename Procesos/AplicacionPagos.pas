@@ -55,7 +55,6 @@ type
     cxDBDateEdit1: TcxDBDateEdit;
     tvMasterIdCuentaXCobrarEstatus: TcxGridDBColumn;
     tvMasterIdPersona: TcxGridDBColumn;
-    tvMasterIdAnexosAmortizaciones: TcxGridDBColumn;
     tvMasterIdAnexo: TcxGridDBColumn;
     tvMasterFecha: TcxGridDBColumn;
     tvMasterImporte: TcxGridDBColumn;
@@ -95,13 +94,13 @@ type
     tvMasterIdCFDI: TcxGridDBColumn;
     tvMasterEsMoratorio: TcxGridDBColumn;
     SpdBtnMostrarDetalleMora: TSpeedButton;
-    DSMoratoriosDet: TDataSource;
     SpdBtnActMoraFechaPago: TSpeedButton;
     Label8: TLabel;
     cxDBLabel8: TcxDBLabel;
     tvMasterFechaVencimiento: TcxGridDBColumn;
     SpdBtnAbonoCapital: TSpeedButton;
     DSP_ActTotalCXC: TDataSource;
+    tvMasterIdAnexoAmortizacion: TcxGridDBColumn;
     procedure BtBtnAplicarClick(Sender: TObject);
     procedure DSAplicacionStateChange(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -117,6 +116,7 @@ type
     procedure dsConCXCPendientesUpdateData(Sender: TObject);
     procedure SpdBtnAbonoCapitalClick(Sender: TObject);
   private
+    { Private declarations }
     FActFacturaMora: TBasicAction;
     FActAbonoCApital: TBasicAction;
     function Quitasignos(TextoPesos: String): String;
@@ -131,7 +131,7 @@ type
     function SacaFechaMora(IDAnexoAmorAct: Integer): TDAteTime;
     procedure SetFActAbonoCapital(const Value: TBasicAction);
     function FechaSinHora(FechaHora: TDAteTime): TDAteTime;
-    { Private declarations }
+    procedure RefreshCXCPendientes;
   public
     { Public declarations }
     EsFactoraje:Boolean;
@@ -139,36 +139,31 @@ type
     property ActAbonoCapital : TBasicAction read FActAbonoCApital write SetFActAbonoCapital;
   end;
 
-var
-  FrmAplicacionPago: TFrmAplicacionPago;
+//var
+//  FrmAplicacionPago: TFrmAplicacionPago;
 
 implementation
 
 {$R *.dfm}
 
-uses PagosDM, _ConectionDmod, AnexoMoratoriosCon;
+uses _ConectionDmod, PagosDM, AnexosMoratoriosDM;
 
 procedure TFrmAplicacionPago.BtBtnAgregarClick(Sender: TObject);
 begin
   dsAplicacion.DataSet.Insert;
-
  //DH Abr 17/17 BtBtnAgregar.Enabled:= (strtoFLoat(quitasignos(cxDBLblDisponible.Caption))>0)
 //DH Abr 17/17        and (DsAplicacion.state =dsBrowse)and (not dsConCXCpendientes.dataset.eof);
-
-
 end;
 
 procedure TFrmAplicacionPago.BtBtnAplicarClick(Sender: TObject);
 var             //FEb 12/17
    valor, aux, Mora, moraPagado:Double;
    f, camposaldo,campoimporte, FolioSerie:String;
-   idActual:integer; //Dic14/16
+//   idActual:integer; //Dic14/16
    ActMora, TieneMora, seguir:boolean; //Feb 12/17
    FechaMora:TDAteTime;
-
   IdAnexoAct:Integer;     //abr 5/17
   FEchaPago:TDateTime;   //abr 5/17
-
 begin
         //Comparar antes de facturar para que el valor no sea mayor que el que se necesita...
   //Verificar si se pone una transaccion  // SE movio aca.feb 14/17 Verificar que cambia && ene 13 /17
@@ -218,7 +213,7 @@ begin
     begin
       if dsConCXCpendientes.DataSet.FieldByName('EsMoratorio').Asboolean   then
       begin
-        FEchaMora:=SacaFechaMora(dsConCXCpendientes.DataSet.FieldByName('IdAnexosAmortizaciones').asInteger);                                                                                                   //No usa factoraje
+        FEchaMora:=SacaFechaMora(dsConCXCpendientes.DataSet.FieldByName('IdAnexoAmortizacion').asInteger);                                                                                                   //No usa factoraje
         if application.MessageBox(PChar('¿Desea pagar la Cuenta XCobrar de moratorios por : '+FloatTostrF(dsConCXCpendientes.DataSet.FieldByName('Saldo').AsFloat,ffCurrency,10,2)
                             +' generados a la fecha:'+dateToSTR(FEchaMora)),    // deberia ser esta pero no es --> dsConCXCpendientes.DataSet.FieldByName('Fecha').AsString) ,
                             'Confirmación',MB_ICONEXCLAMATION or MB_YESNO)=ID_YES  then
@@ -273,14 +268,8 @@ begin
             _dmConection.ADOConnection.RollbackTrans; //Feb 14/17
             ShowMessage('Operacion cancelada por errores');
           end;
-          idActual:= dsConCXCpendientes.dataset.FieldByName('IdCuentaXCobrar').AsInteger; //Dic 14/16
-          dsConCXCpendientes.DataSet.Close;
-          dsConCXCpendientes.DataSet.Open;
-
-          dsConCXCpendientes.dataset.Locate('IdCuentaXCobrar', idActual,[]); //Dic 14/16
-
+          RefreshCXCPendientes;
           dsPago.dataset.Refresh;
-
           //Abr 17/17
           if (dsPago.dataset.Fieldbyname('Saldo').AsExtended>0) then     //Queda saldo
           begin
@@ -356,6 +345,16 @@ begin       //Sin uso abr /17
 
 end;
 //Verificar si tendra moratorios para mandar facturar moratorios
+procedure TFrmAplicacionPago.RefreshCXCPendientes;
+var
+  IdCuentaXCobrar: Integer;
+begin
+    IdCuentaXCobrar:= dsConCXCpendientes.Dataset.FieldByName('IdCuentaXCobrar').AsInteger;
+    dsConCXCpendientes.DataSet.Close;
+    dsConCXCpendientes.DataSet.Open;
+    dsConCXCpendientes.Dataset.Locate('IdCuentaXCobrar', IdCuentaXCobrar, []);
+end;
+
 function TFrmAplicacionPago.ActualizaMoratorios(IdCxCAct:integer;FechaPago:TDateTime; var ValorMora:Double; var FechaAct:TDateTime):Boolean;
 var               //FEb 7/17    //DEjdo de usar abr 6/17
    MoratorioAct:Double;
@@ -411,11 +410,7 @@ begin
 
   dsAuxiliar.dataset.Open;
   Result:=not dsAuxiliar.dataset.Eof;  //Existe y está al menos prefacturada..  //feb 10/17
-
 end;
-
-
-
 
 function TFrmAplicacionPago.Quitasignos(TextoPesos:String):String;//Ago 15/16
 var 
@@ -480,56 +475,43 @@ end;
 
 procedure TFrmAplicacionPago.SpdBtnActMoraFechaPagoClick(Sender: TObject);
 var
-  IdAnexoAct,idActual:Integer;
-  FEchaPago:TDateTime;
-
+  IdAnexoAct: Integer;
+  FEchaPago: TDateTime;
 begin
   IdAnexoAct:= DSPago.DataSet.FieldByName('IdAnexo').AsInteger; // Abr 5/17
   FEchaPago:= FechaSinHora(DSPago.DataSet.FieldByName('FechaPago').AsDAteTime);// Abr 5/17  //Ajuste Abr 18/17
-
   if UltimaFechaPagoAplicado(FechaPago,IdAnexoAct) then
   begin
     ShowMessage('Fecha de Pago actual es anterior a fechas de Pago aplicadas para ese anexo. No se hará recálculo de moratorios. ');
   end
   else
   begin
-
     TADOStoredProc(DSP_CalcMoratorioNueva.DataSet).Parameters.ParamByName('@IdAnexo').value:=  IdAnexoAct;
     TADOStoredProc(DSP_CalcMoratorioNueva.DataSet).Parameters.ParamByName('@Fecha').value:=  FechaPago;          //CAmbiar solo fecha
-
     TADOStoredProc(DSP_CalcMoratorioNueva.DataSet).ExecProc;
       //Abr 17/17 Actualiza Totales de CXC para que actualice mnto vencido en anexo
       //May 22/17
     TADOStoredProc(DSP_ActTotalCXC.DataSet).Parameters.ParamByName('@IdCuentaXCobrar').Value:=  DSConCXCPendientes.DataSet.FieldByName('IDCuentaXCobrar').asinteger;        //May 22/17
     TADOStoredProc(DSP_ActTotalCXC.DataSet).ExecProc;
-
-
-
-  //HAsta aca
- //Calcula moratorios a FechaPago
- //Abr 6/17.
-    idActual:= dsConCXCpendientes.dataset.FieldByName('IdCuentaXCobrar').AsInteger;
-    dsConCXCpendientes.DataSet.Close;
-    dsConCXCpendientes.DataSet.Open;
-
-    dsConCXCpendientes.dataset.Locate('IdCuentaXCobrar', idActual,[]);
-
-
+    RefreshCXCPendientes;
   end;
 end;
 
 procedure TFrmAplicacionPago.SpdBtnMostrarDetalleMoraClick(Sender: TObject);
 var
-  FrmAnexoMoratoriosDetalle:TFrmAnexoMoratoriosDetalle;   //Mar 31/17
-
+  dmAnexosMoratorios: TdmAnexosMoratorios;
+  IdCuentaXCobrar: Integer;
 begin
-  FrmAnexoMoratoriosDetalle:=TFrmAnexoMoratoriosDetalle.Create(self);
-  FrmAnexoMoratoriosDetalle.DataSource.dataset:=dsMoratoriosDet.dataset;
-  FrmAnexoMoratoriosDetalle.DataSource.dataset.Open;
-  FrmAnexoMoratoriosDetalle.PnlClose.Visible:=True;
-  FrmAnexoMoratoriosDetalle.ShowModal;
-  FrmAnexoMoratoriosDetalle.Free;
-
+  IdCuentaXCobrar:= dsConCXCpendientes.DataSet.FieldByName('IdCuentaXCobrar').AsInteger;
+  dmAnexosMoratorios := TdmAnexosMoratorios.CreateWCXC(Self, IdCuentaXCobrar);
+  try
+    dmAnexosMoratorios.MasterSource := dsConCXCPendientes;
+    dmAnexosMoratorios.MasterFields:= 'IdAnexoAmortizacion';
+    dmAnexosMoratorios.ShowModule(nil,'');
+  finally
+    dmAnexosMoratorios.Free;
+  end;
+  RefreshCXCPendientes;
 end;
 
 procedure TFrmAplicacionPago.tvMasterCellDblClick(

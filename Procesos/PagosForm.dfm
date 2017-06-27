@@ -1102,6 +1102,7 @@ inherited FrmConPagos: TFrmConPagos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42712.575441516200000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end
@@ -1134,11 +1135,6 @@ inherited FrmConPagos: TFrmConPagos
     DataSet = dmPagos.ADODtStAnexoSeleccion
     Left = 640
     Top = 176
-  end
-  object DSMoratoriosDet: TDataSource
-    DataSet = dmPagos.ADODtStAnexoMoratorios
-    Left = 892
-    Top = 13
   end
   object DSAuxiliar: TDataSource
     DataSet = dmPagos.ADOQryAuxiliar

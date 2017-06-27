@@ -74,7 +74,6 @@ type
     tvMasterIdContrato: TcxGridDBColumn;
     tvMasterIdAnexo: TcxGridDBColumn;
     tvMasterAnexo: TcxGridDBColumn;
-    DSMoratoriosDet: TDataSource;
     DSAuxiliar: TDataSource;
     DSP_CalcMoratorioNueva: TDataSource;
     DSP_ActTotalCXC: TDataSource;
@@ -85,32 +84,27 @@ type
     procedure SpdBtnBuscarClick(Sender: TObject);
     procedure EdtNombreChange(Sender: TObject);
   private
+    { Private declarations }
     ffiltroNombre: String;
     ffiltroFecha: String;
     ffiltro: String;
     FactAbonarCapital: TBasicAction;
     FactAjustePrueba: TBasicAction;
     function GetFFiltroNombre: String;
-
     procedure PoneFiltro;
     procedure SetactAbonarCapital(const Value: TBasicAction);
     function HayCXCSinFacturaPrevia: boolean;
     procedure SetactAjusteprueba(const Value: TBasicAction);
     function HayCXCPorGenerar: boolean;
     function SonUltimas(SaldoPago:Double; var Msg:String): Boolean;
-    { Private declarations }
   public
     { Public declarations }
     property FiltroCon:String read ffiltro write ffiltro;
     property FiltroFecha: String read ffiltroFecha write ffiltroFecha;
     property FiltroNombre:String read GetFFiltroNombre write ffiltroNombre;
     property actAbonarCapital: TBasicAction read FactAbonarCapital write SetactAbonarCapital;
-
     property actAjustePrueba: TBasicAction read FactAjustePrueba write SetactAjusteprueba;
   end;
-
-var
-  FrmConPagos: TFrmConPagos;
 
 implementation
 
@@ -132,7 +126,6 @@ begin
     dxBrBtnAplicaicones.Hint:=mensaje
   else
     dxBrBtnAplicaicones.Hint:='Aplicaciones';
-
 end;
 
 function TFrmConPagos.SonUltimas(SaldoPago:Double; var Msg:String):Boolean;
@@ -217,8 +210,6 @@ begin
     else
       Msg:='Tiene Cuentas por Cobrar de moratorios pendientes';
   end;
-
-
 end;
 
 function TFrmConPagos.HayCXCPorGenerar: boolean;
@@ -226,17 +217,13 @@ begin
   if datasource.DataSet.FieldByName('IdAnexo').asstring<>'' then
  begin
   dsAuxiliar.DataSet.Close;
-
   TADOQuery(dsAuxiliar.dataset).SQL.clear;
-
-
   TADOQuery(dsAuxiliar.dataset).SQL.Add('Select c.idanexo,aa.IdAnexoCredito,aa.FechaCorte ,PagoTotal from AnexosAmortizaciones aa'+
   ' inner join AnexosCreditos C on C.IdAnexoCredito=aa.IdAnexoCredito and c.IdAnexoCreditoEstatus=1 ' +
   ' where idAnexo ='+ datasource.DataSet.FieldByName('IdAnexo').asstring+
   ' and (not Exists (select * from CuentasXCobrar cxc where cxc.IdAnexosAmortizaciones=aa.idanexoamortizacion) '+
   ' or Exists (select * from CuentasXCobrar cc where cc.IdAnexosAmortizaciones=aa.idanexoamortizacion and '+
   ' cc.IdCuentaXCobrarEstatus=-1 and EsMoratorio=0 ) ) and aa.FechaCorte<=dbo.GetDateAux() ');
-
                                             // jun21/17
   dsAuxiliar.dataset.Open;
   if not dsAuxiliar.dataset.eof  then
@@ -313,9 +300,6 @@ begin
 
         FrmAplicacionPago.DSAplicacion.DataSet:=DSAplicacion.DataSet;
         FrmAplicacionPago.DSAuxiliar.Dataset:= DSAuxiliar.DataSet; //Abr 3/17
-
-        FrmAplicacionPago.DSMoratoriosDet.dataset:=DSMoratoriosdet.dataset;//Mar 31/17
-
         FrmAplicacionPago.DSP_CalcMoratorioNueva.DataSet:= DSP_CalcMoratorioNueva.DataSet; //Abr 6/17
         FrmAplicacionPago.DSP_ActTotalCXC.DataSet:=DSP_ActTotalCXC.DataSet; //May 22/17
         FrmAplicacionPago.dsConCXCPendientes.DataSet.Open;
@@ -345,9 +329,6 @@ begin
 
         FrmAplicacionPago.DSAplicacion.DataSet:=DSAplicacion.DataSet;
         FrmAplicacionPago.DSAuxiliar.Dataset:= DSAuxiliar.DataSet; //Abr 3/17
-
-        FrmAplicacionPago.DSMoratoriosDet.dataset:=DSMoratoriosdet.dataset;//Mar 31/17
-
         FrmAplicacionPago.DSP_CalcMoratorioNueva.DataSet:= DSP_CalcMoratorioNueva.DataSet; //Abr 6/17
         FrmAplicacionPago.DSP_ActTotalCXC.DataSet:=DSP_ActTotalCXC.DataSet; //May 22/17
         FrmAplicacionPago.dsConCXCPendientes.DataSet.Open;
@@ -453,7 +434,6 @@ const  //Dic 20/16
    TxtSQL='select  IdPago, IdBanco, IdPersonaCliente, IdCuentaBancariaEstadoCuenta,'+
           'FechaPago, FolioPago, SeriePago, Referencia, Importe, Saldo, Observaciones,' +
           'PA.IdMetodoPago, CuentaPago, OrigenPago, IDContrato, IDAnexo, ESdeposito from Pagos PA ';
-
 begin
   inherited;
   PoneFiltro;
@@ -464,11 +444,8 @@ begin
   begin
     Tadodataset(datasource.DataSet).Parameters.ParamByName('FIni').Value:=cxDtEdtDesde.Date;
     Tadodataset(datasource.DataSet).Parameters.ParamByName('FFin').Value:=cxDtEdtHasta.Date+1;
-
   end;
-
   Tadodataset(datasource.DataSet).open;
-
 end;
 
 end.

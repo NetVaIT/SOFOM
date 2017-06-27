@@ -29,9 +29,13 @@ type
     procedure dsMasterDataChange(Sender: TObject; Field: TField);
   private
     { Private declarations }
+    FIdCuentaXCobrar: Integer;
     procedure CalcularImportes;
+    procedure SetIdCuentaXCobrar(const Value: Integer);
+    property IdCuentaXCobrar: Integer read FIdCuentaXCobrar write SetIdCuentaXCobrar;
   public
     { Public declarations }
+    constructor CreateWCXC(AOwner: TComponent; IdCuentaXCobrar: Integer); virtual;
   end;
 
 implementation
@@ -63,11 +67,25 @@ begin
   end;
 end;
 
+constructor TdmAnexosMoratorios.CreateWCXC(AOwner: TComponent;
+  IdCuentaXCobrar: Integer);
+begin
+  FIdCuentaXCobrar:= IdCuentaXCobrar;
+  inherited Create(AOwner);
+end;
+
 procedure TdmAnexosMoratorios.DataModuleCreate(Sender: TObject);
 begin
   inherited;
   gGridForm:= TfrmAnexosMoratorios.Create(Self);
   gGridForm.DataSet := adodsMaster;
+  // Filtrar
+  SQLSelect:= 'select IdAnexoMoratorio, IdAnexoAmortizacion, IdAnexoMoratorioEstatus, IdCuentaXCobrar, Fecha, ImporteBase, Importe, Descuento, Impuesto, ImporteAplicado, Cancelacion from AnexosMoratorios';
+  SQLOrderBy:= 'ORDER BY Fecha ';
+  if IdCuentaXCobrar <> 0 then
+    SQLWhere:= Format('WHERE IdCuentaXCobrar = %d', [IdCuentaXCobrar])
+  else
+    SQLWhere:= EmptyStr;
 end;
 
 procedure TdmAnexosMoratorios.dsMasterDataChange(Sender: TObject;
@@ -84,6 +102,11 @@ begin
     gGridForm.DatasetInsert.Visible := False;
     gGridForm.DatasetDelete.Visible := False;
   end;
+end;
+
+procedure TdmAnexosMoratorios.SetIdCuentaXCobrar(const Value: Integer);
+begin
+  FIdCuentaXCobrar := Value;
 end;
 
 end.

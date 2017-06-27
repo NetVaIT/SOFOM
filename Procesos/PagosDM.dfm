@@ -1,7 +1,7 @@
 inherited dmPagos: TdmPagos
   OldCreateOrder = True
-  Height = 715
-  Width = 1167
+  Height = 669
+  Width = 900
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     AfterOpen = adodsMasterAfterOpen
@@ -258,16 +258,21 @@ inherited dmPagos: TdmPagos
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'Select cxc.*, CI.SaldoDocumento, Ci.SaldoFactoraje as SaldoFacto' +
-      'rajeCFDI'#13#10' from CuentasXCobrar CXC  '#13#10'left Join CFDI CI on CI.Id' +
-      'CFDI= CXC.IdCFDI where '#13#10' Saldo >0 and IDPersona=:IdPersonaClien' +
-      'te '#13#10'and ((IdCuentaXCobrarEstatus=0 and  ESMoratorio=0)'#13#10'or( Esm' +
-      'oratorio=1)'#13#10'or (exists (select * from CuentasXCobrarDetalle CXC' +
-      'D where CXCD.descripcion like'#39'%Abono Capital%'#39' and CXC.IdCuentaX' +
-      'Cobrar=CXCD.idcuentaXCobrar )'#13#10'and CXC.IdCFDI is null) )-- IdCue' +
-      'ntaXCobrarEstatus=-1 and puede que esten facturadas'#13#10' and CXC.ID' +
-      'Anexo=:IdAnexo'#13#10'order by CXC.idanexosamortizaciones,EsMoratorio ' +
-      'DEsc, CXC.FechaVencimiento'
+      'Select CXC.IdCuentaXCobrar, CXC.IdCuentaXCobrarBase, CXC.IdCuent' +
+      'aXCobrarEstatus, CXC.IdPersona, CXC.IdAnexosAmortizaciones AS Id' +
+      'AnexoAmortizacion, CXC.IdAnexo, CXC.IdEstadoCuenta, CXC.IdCFDI, ' +
+      #13#10'CXC.Fecha, CXC.FechaVencimiento, CXC.Importe, CXC.Impuesto, CX' +
+      'C.Interes, CXC.Total, CXC.Saldo, CXC.SaldoFactoraje, CXC.EsMorat' +
+      'orio, CI.SaldoDocumento, Ci.SaldoFactoraje as SaldoFactorajeCFDI' +
+      #13#10' from CuentasXCobrar CXC  '#13#10'left Join CFDI CI on CI.IdCFDI= CX' +
+      'C.IdCFDI where '#13#10' Saldo >0 and IDPersona=:IdPersonaCliente '#13#10'and' +
+      ' ((IdCuentaXCobrarEstatus=0 and  ESMoratorio=0)'#13#10'or( Esmoratorio' +
+      '=1)'#13#10'or (exists (select * from CuentasXCobrarDetalle CXCD where ' +
+      'CXCD.descripcion like'#39'%Abono Capital%'#39' and CXC.IdCuentaXCobrar=C' +
+      'XCD.idcuentaXCobrar )'#13#10'and CXC.IdCFDI is null) )-- IdCuentaXCobr' +
+      'arEstatus=-1 and puede que esten facturadas'#13#10' and CXC.IDAnexo=:I' +
+      'dAnexo'#13#10'order by CXC.idanexosamortizaciones,EsMoratorio DEsc, CX' +
+      'C.FechaVencimiento'
     DataSource = DSMaster
     IndexFieldNames = 'IdPersona;IdAnexo'
     MasterFields = 'IdPersonaCliente;IdAnexo'
@@ -301,8 +306,8 @@ inherited dmPagos: TdmPagos
     object ADODtStCXCPendientesIdPersona: TIntegerField
       FieldName = 'IdPersona'
     end
-    object ADODtStCXCPendientesIdAnexosAmortizaciones: TIntegerField
-      FieldName = 'IdAnexosAmortizaciones'
+    object ADODtStCXCPendientesIdAnexoAmortizacion: TIntegerField
+      FieldName = 'IdAnexoAmortizacion'
     end
     object ADODtStCXCPendientesIdAnexo: TIntegerField
       FieldName = 'IdAnexo'
@@ -1616,71 +1621,6 @@ inherited dmPagos: TdmPagos
       FieldName = 'IdPersona'
     end
   end
-  object ADODtStAnexoMoratorios: TADODataSet
-    Connection = _dmConection.ADOConnection
-    CursorType = ctStatic
-    CommandText = 
-      'select IdAnexoAmortizacion, IdAnexoMoratorioEstatus, '#13#10'IdCuentaX' +
-      'Cobrar, Fecha, ImporteBase, Importe, Descuento,'#13#10' Impuesto, Impo' +
-      'rteAplicado from AnexosMoratorios'#13#10'Where IdCuentaXCobrar=:IdCuen' +
-      'taXCobrar '#13#10'and IdAnexoMoratorioEstatus =1'
-    DataSource = DSCXCPendientes
-    IndexFieldNames = 'IdCuentaXCobrar'
-    MasterFields = 'IdCuentaXCobrar'
-    Parameters = <
-      item
-        Name = 'IdCuentaXCobrar'
-        Attributes = [paSigned, paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Size = 4
-        Value = Null
-      end>
-    Left = 492
-    Top = 459
-    object ADODtStAnexoMoratoriosIdAnexoAmortizacion: TIntegerField
-      FieldName = 'IdAnexoAmortizacion'
-    end
-    object ADODtStAnexoMoratoriosIdAnexoMoratorioEstatus: TIntegerField
-      FieldName = 'IdAnexoMoratorioEstatus'
-    end
-    object ADODtStAnexoMoratoriosIdCuentaXCobrar: TIntegerField
-      FieldName = 'IdCuentaXCobrar'
-    end
-    object ADODtStAnexoMoratoriosFecha: TDateTimeField
-      FieldName = 'Fecha'
-    end
-    object ADODtStAnexoMoratoriosImporteBase: TFMTBCDField
-      FieldName = 'ImporteBase'
-      currency = True
-      Precision = 18
-      Size = 6
-    end
-    object ADODtStAnexoMoratoriosImporte: TFMTBCDField
-      FieldName = 'Importe'
-      currency = True
-      Precision = 18
-      Size = 6
-    end
-    object ADODtStAnexoMoratoriosDescuento: TFMTBCDField
-      FieldName = 'Descuento'
-      currency = True
-      Precision = 18
-      Size = 6
-    end
-    object ADODtStAnexoMoratoriosImpuesto: TFMTBCDField
-      FieldName = 'Impuesto'
-      currency = True
-      Precision = 18
-      Size = 6
-    end
-    object ADODtStAnexoMoratoriosImporteAplicado: TFMTBCDField
-      FieldName = 'ImporteAplicado'
-      currency = True
-      Precision = 18
-      Size = 6
-    end
-  end
   object DetallesCXCParaFacturarMora: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
@@ -1896,12 +1836,14 @@ inherited dmPagos: TdmPagos
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@IdAnexoAmortizacion'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end
       item
         Name = '@IdCuentaXCobrar'
@@ -1909,6 +1851,7 @@ inherited dmPagos: TdmPagos
         DataType = ftInteger
         Direction = pdInputOutput
         Precision = 10
+        Value = Null
       end>
     Left = 504
     Top = 592

@@ -519,6 +519,7 @@ begin
       ScreenCursorProc(crSQLWait);
       try
         adopSetCXCPorAnexo.Parameters.ParamByName('@IdAnexo').Value:= IdAnexo;
+        adopSetCXCPorAnexo.Parameters.ParamByName('@Fase').Value:= 0;
         adopSetCXCPorAnexo.ExecProc;
       finally
         ScreenCursorProc(crDefault);
