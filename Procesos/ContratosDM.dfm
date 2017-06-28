@@ -97,6 +97,12 @@ inherited dmContratos: TdmContratos
       OnExecute = actGenerarExecute
       OnUpdate = actGenerarUpdate
     end
+    object actOpcionCompra: TAction
+      Caption = 'Opci'#243'n de compra'
+      ImageIndex = 10
+      OnExecute = actOpcionCompraExecute
+      OnUpdate = actOpcionCompraUpdate
+    end
     object actPreAmortizaciones: TAction
       Caption = 'Prever'
       Hint = 'Prever amortizaciones'
@@ -116,7 +122,7 @@ inherited dmContratos: TdmContratos
       OnUpdate = actCrearPagoInicialUpdate
     end
     object actAbonarCapital: TAction
-      Caption = 'Abono a capital'
+      Caption = 'Abonar al capital'
       Visible = False
       OnExecute = actAbonarCapitalExecute
     end
@@ -182,8 +188,8 @@ inherited dmContratos: TdmContratos
       'orcentaje, ValorResidual, MontoFinanciar, TasaAnual, Plazo, Pago' +
       'Mensual, ImpactoISR, '#13#10'FechaCorte, FechaVencimiento, TasaMorator' +
       'iaAnual, PagoInicialCreado, CapitalCobrado, SaldoInsoluto, Monto' +
-      'Vencido, CartaCompensacion'#13#10'from Anexos'#13#10'where IdContrato = :IdC' +
-      'ontrato'
+      'Vencido, CartaCompensacion, ValorResidualCreado, OpcionCompraCre' +
+      'ado'#13#10'from Anexos'#13#10'where IdContrato = :IdContrato'
     DataSource = dsMaster
     MasterFields = 'IdContrato'
     Parameters = <
@@ -450,6 +456,12 @@ inherited dmContratos: TdmContratos
     object adodsAnexosPagoInicialCreado: TBooleanField
       FieldName = 'PagoInicialCreado'
     end
+    object adodsAnexosValorResidualCreado: TBooleanField
+      FieldName = 'ValorResidualCreado'
+    end
+    object adodsAnexosOpcionCompraCreado: TBooleanField
+      FieldName = 'OpcionCompraCreado'
+    end
     object adodsAnexosCapitalCobrado: TFMTBCDField
       DisplayLabel = 'Capital cobrado'
       FieldName = 'CapitalCobrado'
@@ -494,6 +506,7 @@ inherited dmContratos: TdmContratos
     end
   end
   object adodsMonedas: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdMoneda, Descripcion from Monedas'#13#10'order by Descripcion'
@@ -502,6 +515,7 @@ inherited dmContratos: TdmContratos
     Top = 144
   end
   object adodsAnexosEstatus: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdAnexoEstatus, Descripcion from AnexosEstatus'
@@ -985,18 +999,21 @@ inherited dmContratos: TdmContratos
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@IdAnexo'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end
       item
         Name = '@Fase'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end
       item
         Name = '@IdCuentaXCobrar'
@@ -1004,6 +1021,7 @@ inherited dmContratos: TdmContratos
         DataType = ftInteger
         Direction = pdInputOutput
         Precision = 10
+        Value = Null
       end>
     Left = 224
     Top = 400
@@ -1118,6 +1136,7 @@ inherited dmContratos: TdmContratos
     Top = 352
   end
   object adodsEmpleado: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 

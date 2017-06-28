@@ -2,39 +2,40 @@ inherited frmAnexos: TfrmAnexos
   BorderStyle = bsToolWindow
   Caption = 'Anexos'
   ClientHeight = 428
-  ClientWidth = 645
-  ExplicitWidth = 651
+  ClientWidth = 678
+  ExplicitWidth = 684
   ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
     Top = 343
-    Width = 645
+    Width = 678
     ExplicitTop = 343
     ExplicitWidth = 645
   end
   inherited splDetail1: TSplitter
     Top = 255
-    Width = 645
+    Width = 678
     ExplicitTop = 255
     ExplicitWidth = 645
   end
   inherited splDetail2: TSplitter
     Top = 299
-    Width = 645
+    Width = 678
     ExplicitTop = 299
     ExplicitWidth = 645
   end
   inherited pnlMaster: TPanel
-    Width = 645
-    Height = 224
+    Width = 678
+    Height = 229
+    ExplicitTop = 26
     ExplicitWidth = 645
-    ExplicitHeight = 224
+    ExplicitHeight = 229
     inherited cxGrid: TcxGrid
-      Width = 645
-      Height = 224
+      Width = 678
+      Height = 229
       ExplicitWidth = 645
-      ExplicitHeight = 224
+      ExplicitHeight = 229
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdAnexo: TcxGridDBColumn
           DataBinding.FieldName = 'IdAnexo'
@@ -170,6 +171,12 @@ inherited frmAnexos: TfrmAnexos
         object tvMasterPagoInicialCreado: TcxGridDBColumn
           DataBinding.FieldName = 'PagoInicialCreado'
         end
+        object tvMasterValorResidualCreado: TcxGridDBColumn
+          DataBinding.FieldName = 'ValorResidualCreado'
+        end
+        object tvMasterOpcionCompraCreado: TcxGridDBColumn
+          DataBinding.FieldName = 'OpcionCompraCreado'
+        end
         object tvMasterCapitalCobrado: TcxGridDBColumn
           DataBinding.FieldName = 'CapitalCobrado'
         end
@@ -184,29 +191,29 @@ inherited frmAnexos: TfrmAnexos
   end
   inherited pnlDetail3: TPanel
     Top = 346
-    Width = 645
+    Width = 678
     ExplicitTop = 346
     ExplicitWidth = 645
   end
   inherited pnlDetail2: TPanel
     Top = 302
-    Width = 645
+    Width = 678
     ExplicitTop = 302
     ExplicitWidth = 645
   end
   inherited pnlDetail1: TPanel
     Top = 258
-    Width = 645
+    Width = 678
     ExplicitTop = 258
     ExplicitWidth = 645
   end
   inherited pnlClose: TPanel
     Top = 387
-    Width = 645
+    Width = 678
     ExplicitTop = 387
     ExplicitWidth = 645
     inherited btnClose: TButton
-      Left = 560
+      Left = 593
       ExplicitLeft = 560
     end
   end
@@ -214,9 +221,13 @@ inherited frmAnexos: TfrmAnexos
     DockControlHeights = (
       0
       0
-      31
+      26
       0)
+    inherited dxbNavigator: TdxBar
+      DockedLeft = 104
+    end
     inherited dxbTools: TdxBar
+      DockedLeft = 231
       ItemLinks = <
         item
           Visible = True
@@ -229,6 +240,10 @@ inherited frmAnexos: TfrmAnexos
         item
           Visible = True
           ItemName = 'dxbbGenerar'
+        end
+        item
+          Visible = True
+          ItemName = 'dxbbOpcionCompra'
         end
         item
           Visible = True
@@ -247,7 +262,7 @@ inherited frmAnexos: TfrmAnexos
       PaintStyle = psCaptionGlyph
     end
     object dxbbAbonar: TdxBarButton
-      Caption = 'Abono a capital'
+      Caption = 'Abonar al capital'
       Category = 0
       Visible = ivNever
     end
@@ -256,6 +271,13 @@ inherited frmAnexos: TfrmAnexos
       Category = 0
       Visible = ivAlways
       ImageIndex = 13
+      PaintStyle = psCaptionGlyph
+    end
+    object dxbbOpcionCompra: TdxBarButton
+      Caption = 'Opci'#243'n de compra'
+      Category = 0
+      Visible = ivAlways
+      ImageIndex = 10
       PaintStyle = psCaptionGlyph
     end
   end
@@ -268,6 +290,7 @@ inherited frmAnexos: TfrmAnexos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42683.688746423620000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

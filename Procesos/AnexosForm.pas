@@ -78,6 +78,9 @@ type
     tvMasterCartaCompensacion: TcxGridDBColumn;
     tvMasterIdPersonaEmpleado: TcxGridDBColumn;
     tvMasterEmpleado: TcxGridDBColumn;
+    dxbbOpcionCompra: TdxBarButton;
+    tvMasterValorResidualCreado: TcxGridDBColumn;
+    tvMasterOpcionCompraCreado: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
@@ -86,15 +89,18 @@ type
     FactGetTipoCambio: TBasicAction;
     FactAbonar: TBasicAction;
     FactRestructurar: TBasicAction;
+    FactOpcionCompra: TbasicAction;
     procedure SetactGenerar(const Value: TBasicAction);
     procedure SetactAbonar(const Value: TBasicAction);
     procedure SetactRestructurar(const Value: TBasicAction);
+    procedure SetactOpcionCompra(const Value: TbasicAction);
   public
     { Public declarations }
     property actGenerar: TBasicAction read FactGenerar write SetactGenerar;
     property actRestructurar: TBasicAction read FactRestructurar write SetactRestructurar;
     property actGetTipoCambio: TBasicAction read FactGetTipoCambio write FactGetTipoCambio;
     property actAbonar: TBasicAction read FactAbonar write SetactAbonar;
+    property actOpcionCompra: TbasicAction read FactOpcionCompra write SetactOpcionCompra;
   end;
 
 implementation
@@ -125,6 +131,12 @@ procedure TfrmAnexos.SetactGenerar(const Value: TBasicAction);
 begin
   FactGenerar := Value;
   dxbbGenerar.Action := Value;
+end;
+
+procedure TfrmAnexos.SetactOpcionCompra(const Value: TbasicAction);
+begin
+  FactOpcionCompra := Value;
+  dxbbOpcionCompra.Action := Value;
 end;
 
 procedure TfrmAnexos.SetactRestructurar(const Value: TBasicAction);

@@ -10,6 +10,7 @@ uses
 resourcestring
   strAllowGenAnexo = '¿Deseas crear el anexo en base a la cotización %s?';
   strGenPagoIncial = '¿Deseas crear los pagos inciales de este anexo?';
+  strGenOpcionCompra = '¿Deseas crear la opción de compra de este anexo?';
   strNeedProduct   = 'Necesita agregar uno o más productos al anexo';
   strProductsPercentage = 'La suma de porcentajes totales de los productos en el anexo debe ser igual al 100%';
   strRestructureAnexo = '¿Deseas restructurar el anexo?';
@@ -156,6 +157,9 @@ type
     adodsEmpleado: TADODataSet;
     adodsAnexosEmpleado: TStringField;
     adodsAmortizacionesSaldo: TFMTBCDField;
+    actOpcionCompra: TAction;
+    adodsAnexosValorResidualCreado: TBooleanField;
+    adodsAnexosOpcionCompraCreado: TBooleanField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsAnexosPrecioMonedaChange(Sender: TField);
     procedure adodsAnexosNewRecord(DataSet: TDataSet);
@@ -177,6 +181,8 @@ type
     procedure actMoratoriosExecute(Sender: TObject);
     procedure actRestructurarExecute(Sender: TObject);
     procedure adodsCreditosFechaChange(Sender: TField);
+    procedure actOpcionCompraExecute(Sender: TObject);
+    procedure actOpcionCompraUpdate(Sender: TObject);
   private
     { Private declarations }
     FPaymentTime: TPaymentTime;
@@ -192,6 +198,7 @@ type
     procedure CalcularImporteEnganche;
     procedure CalcularImportesCredito;
     function CrearPagoInicial: Boolean;
+    function CrearOpcionCompra: Boolean;
     function GetFechaDia(Fecha: TDateTime; Dia: Integer): TDateTime;
     procedure Restructurar;
     function ProductosValido(IdAnexo: Integer): Boolean;
@@ -298,6 +305,18 @@ begin
   finally
     dmAnexosMoratorios.Free;
   end;
+end;
+
+procedure TdmContratos.actOpcionCompraExecute(Sender: TObject);
+begin
+  inherited;
+  CrearOpcionCompra;
+end;
+
+procedure TdmContratos.actOpcionCompraUpdate(Sender: TObject);
+begin
+  inherited;
+  TAction(Sender).Enabled := (adodsAnexosOpcionCompra.Value > 0) and (not adodsAnexosOpcionCompraCreado.Value);
 end;
 
 procedure TdmContratos.actAbonarCapitalExecute(Sender: TObject);
@@ -509,6 +528,26 @@ begin
   end;
 end;
 
+function TdmContratos.CrearOpcionCompra: Boolean;
+begin
+  Result:= False;
+  if IdAnexo <> 0 then
+  begin
+    if MessageDlg(strGenOpcionCompra, mtConfirmation, mbYesNo, 0) = mrYes then
+    begin
+      ScreenCursorProc(crSQLWait);
+      try
+        adopSetCXCPorAnexo.Parameters.ParamByName('@IdAnexo').Value:= IdAnexo;
+        adopSetCXCPorAnexo.Parameters.ParamByName('@Fase').Value:= 4;
+        adopSetCXCPorAnexo.ExecProc;
+      finally
+        ScreenCursorProc(crDefault);
+      end;
+      Result:= True;
+    end;
+  end;
+end;
+
 function TdmContratos.CrearPagoInicial: Boolean;
 begin
   Result:= False;
@@ -543,6 +582,7 @@ begin
   TfrmAnexos(gFormDeatil1).actGenerar := actGenerar;
   TfrmAnexos(gFormDeatil1).actRestructurar := actRestructurar;
   TfrmAnexos(gFormDeatil1).actAbonar := actAbonarCapital;
+  TfrmAnexos(gFormDeatil1).actOpcionCompra := actOpcionCompra;
   TfrmAnexos(gFormDeatil1).actGetTipoCambio := actGetTipoCambio;
   if adodsCreditos.CommandText <> EmptyStr then adodsCreditos.Open;
   gFormDeatil2:= TfrmAnexosCreditos.Create(Self);
