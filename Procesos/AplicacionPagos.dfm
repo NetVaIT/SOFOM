@@ -211,12 +211,12 @@ object FrmAplicacionPago: TFrmAplicacionPago
       ParentFont = False
       OnClick = SpdBtnActMoraFechaPagoClick
     end
-    object SpdBtnAbonoCapital: TSpeedButton
+    object SpdBtnSaldoAFavor: TSpeedButton
       Left = 837
       Top = 98
       Width = 127
       Height = 25
-      Caption = 'Abono a Capital'
+      Caption = 'Saldo A Favor'
       Enabled = False
       Font.Charset = ANSI_CHARSET
       Font.Color = clNavy
@@ -238,7 +238,7 @@ object FrmAplicacionPago: TFrmAplicacionPago
         03333337777777F7F33333330000000003333337777777773333}
       NumGlyphs = 2
       ParentFont = False
-      OnClick = SpdBtnAbonoCapitalClick
+      OnClick = SpdBtnSaldoAFavorClick
     end
     object cxDBTxtEdtImporteAplicar: TcxDBTextEdit
       Left = 376
@@ -624,6 +624,18 @@ object FrmAplicacionPago: TFrmAplicacionPago
       NumGlyphs = 2
       ParentFont = False
       OnClick = SpdBtnMostrarDetalleMoraClick
+    end
+    object cxChckBxCambioconsulta: TcxCheckBox
+      Left = 24
+      Top = 11
+      Hint = 
+        'Proceso '#250'nicamente en versi'#243'n de pruebas. '#13#10'Desglosa unicamente ' +
+        'las CXC asociadas a anexos . '#13#10'Seleccione la cuenta por cobrar p' +
+        'ara colocar el valor a pagar.'
+      Caption = 'S'#243'lo CXC asociadas a anexos'
+      TabOrder = 0
+      OnClick = cxChckBxCambioconsultaClick
+      Width = 257
     end
   end
   object Panel1: TPanel

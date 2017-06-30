@@ -225,7 +225,10 @@ uses
   CuentasBancariasMovimientosDM in 'Procesos\CuentasBancariasMovimientosDM.pas' {DMCuentasBancariasMovimientos: TDataModule},
   CuentasBancariasMovimientosForm in 'Procesos\CuentasBancariasMovimientosForm.pas' {FrmCuentasBancariasMovimientos},
   MovimientosXCuentaForm in 'Procesos\MovimientosXCuentaForm.pas' {FrmMovimientosXCtaBan},
-  ListaNotaCreditoForm in 'Procesos\ListaNotaCreditoForm.pas' {frmListaNotasCredito};
+  ListaNotaCreditoForm in 'Procesos\ListaNotaCreditoForm.pas' {frmListaNotasCredito},
+  ConceptoOpcionCEdt in 'Procesos\ConceptoOpcionCEdt.pas' {FrmConcFacturaOpcCompra},
+  SeleccionAplicacionForm in 'Procesos\SeleccionAplicacionForm.pas' {FrmSeleccionAplicacion},
+  ClaveAutorizacionForm in 'Procesos\ClaveAutorizacionForm.pas' {FrmClaveAutorizacion};
 
 {$R *.res}
 

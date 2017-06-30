@@ -54,7 +54,7 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses rptReporteCarteraForm, PDFReporteCarteraDM;
+uses rptReporteCarteraForm, PDFReporteCarteraDM, _ConectionDmod;
 
 {$R *.dfm}
 
@@ -82,7 +82,7 @@ begin
      TxtSQL:=TxtSQL+Fecha;
   TxtSQL:=TxtSQL +GrupoSQL;
 
-  TExto:= '_' +FormatDateTime('ddmmmyyyy',Date);
+  TExto:= '_' +FormatDateTime('ddmmmyyyy',_DmConection.LaFechaActual);//Date); jun 30/17
   ArchiPDF:='CarteraXCliente'+Texto+'.PDF';
   dmReporteCarteraPDF:= TdmReporteCarteraPDF.Create(Self);
   try
@@ -167,7 +167,7 @@ begin
   else
     TxtSql:='';
 
-  TExto:= '_' +FormatDateTime('ddmmmyyyy',Date);
+  TExto:= '_' +FormatDateTime('ddmmmyyyy',_DmConection.LaFechaActual);//Date); //Jun 30/17
   ArchiPDF:='HojaControlGral'+Texto+'.PDF';
   dmReporteCarteraPDF:= TdmReporteCarteraPDF.Create(Self);
   try

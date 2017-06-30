@@ -49,7 +49,7 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses rptAntiguedadSaldosForm, PDFAntiguedadSaldosDM;
+uses rptAntiguedadSaldosForm, PDFAntiguedadSaldosDM, _ConectionDmod;
 
 {$R *.dfm}
 
@@ -68,7 +68,7 @@ begin
   FechaIni:=  TfrmrptantiguedadSaldos(gGridForm).AFecIni;
   FechaFin:=  TfrmrptantiguedadSaldos(gGridForm).AFecFin;
 
-  TExto:= '_' +FormatDateTime('ddmmmyyyy',Date);
+  TExto:= '_' +FormatDateTime('ddmmmyyyy',_DmConection.LaFechaActual);// jun30 /17  Date);
   ArchiPDF:='AntiguedadSaldos'+Texto+'.PDF';
   dmAntiguedadSaldosPDF:= TdmAntiguedadSaldosPDF.Create(Self);
   try
@@ -81,7 +81,7 @@ begin
       TExto:= ' DEL ' + DAteToSTR(FEchaIni) + ' AL '+ DAteToSTR(FEchaFin);//+FormatDateTime('mmm-dd-yyyy',FechaIni)+ ' AL: '+FormatDateTime('dd mmm del aaaa',FechaFin);
     end
     else
-      TExto:=  'AL '+upperCASE(FormatDateTime('dd ''de'' mmmm ''del'' yyyy',Date));
+      TExto:=  'AL '+upperCASE(FormatDateTime('dd ''de'' mmmm ''del'' yyyy',_DmConection.LaFechaActual));//Date)); //Jun 30/17
 
     dmAntiguedadSaldosPDF.dsReport.DataSet.Open;
     dmAntiguedadSaldosPDF.Title:= 'ANTIGUEDAD DE SALDOS ' +Texto;
@@ -119,7 +119,7 @@ begin
      TxtSQL:=TxtSQL+Fecha;
   TxtSQL:=TxtSQL +GrupoSQL;
 
-  TExto:= '_' +FormatDateTime('ddmmmyyyy',Date);
+  TExto:= '_' +FormatDateTime('ddmmmyyyy', _DmConection.LaFechaActual);//Date); Jun 30/17
   ArchiPDF:='AntiguedadXCliente'+Texto+'.PDF';
   dmAntiguedadSaldosPDF:= TdmAntiguedadSaldosPDF.Create(Self);
   try
@@ -132,7 +132,7 @@ begin
       TExto:= ' DEL ' + DAteToSTR(FEchaIni) + ' AL '+ DAteToSTR(FEchaFin);//+FormatDateTime('mmm-dd-yyyy',FechaIni)+ ' AL: '+FormatDateTime('dd mmm del aaaa',FechaFin);
     end
     else
-      TExto:=  'AL '+upperCASE(FormatDateTime('dd ''de'' mmmm ''del'' yyyy',Date));
+      TExto:=  'AL '+upperCASE(FormatDateTime('dd ''de'' mmmm ''del'' yyyy',_DmConection.LaFechaActual));//Date)); Jun 30/17
 
     dmAntiguedadSaldosPDF.DSAntXCliente.DataSet.Open;
 

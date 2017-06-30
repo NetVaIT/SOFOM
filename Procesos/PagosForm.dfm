@@ -270,6 +270,15 @@ inherited FrmConPagos: TFrmConPagos
         TabOrder = 3
         WordWrap = True
       end
+      object ChckBxDeposito: TCheckBox
+        Left = 541
+        Top = 10
+        Width = 140
+        Height = 33
+        Caption = 'S'#243'lo Dep'#243'sito en Garant'#237'a'
+        TabOrder = 4
+        WordWrap = True
+      end
     end
   end
   inherited ActionList: TActionList
@@ -1127,7 +1136,7 @@ inherited FrmConPagos: TFrmConPagos
   end
   object DSDetalleMostrar: TDataSource
     DataSet = dmPagos.ADODtStDetalleCXCMostrar
-    Left = 788
+    Left = 932
     Top = 5
   end
   object DSAnexos: TDataSource

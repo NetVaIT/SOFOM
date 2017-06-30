@@ -342,6 +342,23 @@ type
     ADOStrdPrcGenCXCXAmortiza: TADOStoredProc;
     ADOQryVerificaSaldoFinal: TADOQuery;
     ADODtStCXCPendientesIdAnexoAmortizacion: TIntegerField;
+    ADODtStCFDINotaCredito: TADODataSet;
+    ADODtStCFDINotaCreditoIdCFDI: TLargeintField;
+    ADODtStCFDINotaCreditoIdCFDITipoDocumento: TIntegerField;
+    ADODtStCFDINotaCreditoIdPersonaReceptor: TIntegerField;
+    ADODtStCFDINotaCreditoIdCFDIEstatus: TIntegerField;
+    ADODtStCFDINotaCreditoIdClienteDomicilio: TIntegerField;
+    ADODtStCFDINotaCreditoSerie: TStringField;
+    ADODtStCFDINotaCreditoFolio: TLargeintField;
+    ADODtStCFDINotaCreditoFecha: TDateTimeField;
+    ADODtStCFDINotaCreditoSubTotal: TFloatField;
+    ADODtStCFDINotaCreditoTotal: TFMTBCDField;
+    ADODtStCFDINotaCreditoTotalImpuestoTrasladado: TFloatField;
+    ADODtStCFDINotaCreditoSaldoDocumento: TFMTBCDField;
+    ADODtStCFDINotaCreditoObservaciones: TStringField;
+    ADODtStCFDINotaCreditoSaldoFactoraje: TFMTBCDField;
+    adodsMasterIdCFDI_NCR: TLargeintField;
+    ActPagosAnticipados: TAction;
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsMasterAfterPost(DataSet: TDataSet);
     procedure adodsMasterBeforePost(DataSet: TDataSet);
@@ -361,6 +378,7 @@ type
     procedure adodsMasterBeforeInsert(DataSet: TDataSet);
     procedure actCrearCXCAbonoCapitalExecute(Sender: TObject);
     procedure ActAjusteAmortizaExecute(Sender: TObject);
+    procedure ActPagosAnticipadosExecute(Sender: TObject);
   private
     { Private declarations }
     Inserto:Boolean;
@@ -405,7 +423,11 @@ type
     function CrearPagoXDeposito(Importe: Double; ADatosPago: TADODataSet): Boolean;
     function VerificaYCreaCXCFinales(idAnexo:Integer): Boolean;
     function CreaMoratoriosAFechaActual: Boolean;
-    function CrearCuentasFinales: Boolean;//Jun 8/17
+    function CrearCuentasFinales: Boolean;
+    procedure ActualizaSaldoNC(idCFDIAct: Integer);
+    function NotaCreditoenUso(idCFDI,IdPago: Integer): Boolean;
+    function CrearSiguienteCXC(idAnexo: integer;var idCxc:integer): Boolean;
+    function SacaSaldoApagar(SaldoPago: Double; IdCXC: integer): Double;//Jun 8/17
     property PaymentTime: TPaymentTime read FPaymentTime write SetPaymentTime;
   public
     { Public declarations }
@@ -465,12 +487,30 @@ begin
     ADODtStConfiguraciones.FieldByName('UltimoFolioPago').AsInteger :=FolioAct;
     ADODtStConfiguraciones.Post;
   end;
+  if not adoDSMaster.FieldByName('IDCFDI_NCR').isnull then //Jun 27/17
+  begin
+    ActualizaSaldoNC(adoDSMaster.FieldByName('IDCFDI_NCR').asinteger); //Monto completo no puede ser parcial
+  end;
+
+
 end;
+
+procedure TdmPagos.ActualizaSaldoNC(idCFDIAct:Integer);
+begin //Jun 28/17
+//  Programar la    actualizacion
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.SQL.Clear;
+  ADOQryAuxiliar.SQL.Add('UPDATE CFDI set SaldoDocumento=0 where IDCFDITipoDocumento=2 and IDCFDI='+intToStr(IdCFDIAct));
+  ADOQryAuxiliar.ExecSQL;
+
+end;
+
+
 procedure TdmPagos.adodsMasterBeforeInsert(DataSet: TDataSet);
 const      // mar 10/17
    TxtSQL='select  IdPago, IdBanco, IdPersonaCliente, IdCuentaBancariaEstadoCuenta, '+
    'FechaPago, FolioPago, SeriePago, Referencia, Importe, Saldo,Observaciones,'+
-   'IdMetodoPago, CuentaPago, OrigenPago,IdContrato, IdAnexo, EsDeposito from Pagos';
+   'IdMetodoPago, CuentaPago, OrigenPago,IdContrato, IdAnexo, EsDeposito, IDCFDI_NCR from Pagos';
 
 var Txt:String;
 begin
@@ -486,8 +526,10 @@ begin
 end;
 
 procedure TdmPagos.adodsMasterBeforePost(DataSet: TDataSet);
+var IdPago:Integer;
 begin
   inherited;
+  IdPago:=-1;
   Inserto:=dataset.state=dsInsert;
   if dataset.State = dsInsert then
   begin
@@ -498,7 +540,31 @@ begin
     end;
 
     adodsMaster.FieldByName('Saldo').Value:=adodsMaster.FieldByName('Importe').Value;  //Se debe usar value cuando tiene mas de 4 decimales para que no lo redondee.. sino no quedan iguales
+  end
+  else
+    IDPago:=adodsMasterIdPago.AsInteger;
+  if not adodsMaster.FieldByName('IDCFDI_NCR').isnull and NotaCreditoenUso(adodsMaster.FieldByName('IDCFDI_NCR').asinteger,IdPago) then
+  begin //Verificar que nadie mas lo esta usando.. por si dos estan actualizando un pago a la vez
+    ShowMessage('Nota de crédito usada por otro pago');
+    adodsMaster.FieldByName('IDCFDI_NCR').Clear;
+    adodsMaster.FieldByName('IdMetodoPAgo').asInteger:=5;// Otro
+    adodsMaster.FieldByName('Referencia').asString:='';
+    abort;
+
   end;
+
+
+end;
+
+function TdmPagos.NotaCreditoenUso(idCFDI, IdPago:Integer):Boolean; //Jun 28/17
+begin
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.SQL.Clear;
+  ADOQryAuxiliar.SQL.Add('Select * from Pagos where IDCFDI_NCR ='+ intToSTR(idcfdi));
+  if IDPAgo<>-1 then
+    ADOQryAuxiliar.SQL.Add(' and IdPago<>'+intTosTR(IdPago)); //Por si esta editando //En teoria no deberia editar la pero puede ser que no era dce NCRy se convirtio
+  ADOQryAuxiliar.Open;
+  result:=not ADOQryAuxiliar.eof;   //Verificar si es vacio cuando
 end;
 
 procedure TdmPagos.adodsMasterNewRecord(DataSet: TDataSet);
@@ -827,7 +893,7 @@ begin
   DataSet.FieldByName('TipoComp').AsString:=SacaTipoComp(1); //DataSet.FieldByName('TipoComprobante').AsString;//'ingreso'; //columna TipoComprobante de Tabla CFDItipoDocumento
   //Verificar si serie yFolio se colocan aca o se colocan justo antes de generar el CFDI
   DataSet.FieldByName('Folio').AsInteger:=0; //Sin asignar aun
-  DataSet.FieldByName('Fecha').AsDateTime:=now; //Se supondría que se van a generar inmediatamente pero hay que verificar(por si se requiere cambio de fecha antes de generar)
+  DataSet.FieldByName('Fecha').AsDateTime:=now; //CFDI Se supondría que se van a generar inmediatamente pero hay que verificar(por si se requiere cambio de fecha antes de generar)
   DataSet.FieldByName('LugarExpedicion').AsString:=ADODtStPersonaEmisorMunicipio.Value +', '+ADODtStPersonaEmisorEstado.Value;//'Zapopan, Jalisco' ; //Verificar si se saca de  la direccion del emisor?
 
 // DataSet.FieldByName('Serie').AsString:=
@@ -952,6 +1018,7 @@ begin
   0:  tipoTxt:='CXC';
   1:  tipoTxt:='MORA';
   2:  tipoTxt:='ABOCAP'; //Abr 19/17
+  3:  tipoTxt:='PAGANT'; //Jun 29/17
   end;
 
   ADOQryAuxiliar.Close;
@@ -1003,7 +1070,7 @@ end;
 
 Function TdmPagos.CrearFacturaCXC(IdCXC:Integer):Integer; //Abr 18/17 Regresa IDCFDI
 begin
-  ADODtStCXCPendientes.Close;
+  ADODtStCXCPendientes.Close;      //Consulta ajustada para que muestre -1 de pagos adelantados jun 30/17
   ADODtStCXCPendientes.Open;
   if ADODtStCXCPendientes.Locate('IdCuentaXCobrar',IdCXC,[]) then
   begin
@@ -1076,6 +1143,67 @@ begin
     end;
   end;
 
+end;
+
+procedure TdmPagos.ActPagosAnticipadosExecute(Sender: TObject);
+var IdCxc:Integer;
+    ImportePago:Double;
+    Existen:Boolean;
+    obsBitacora:String;
+begin
+  inherited;
+  Existen:=true;
+  IdCFDIActual:=-1;
+  while (adodsMasterSaldo.AsFloat >0.01) and Existen do //tiene saldo.. verificar si en un ciclo.
+  begin
+    if CrearSiguienteCXC(adodsMasterIdAnexo.AsInteger,Idcxc)then
+    begin
+      if idcxc<>-1 then  //DEberia siempre serlo
+         IdCFDIActual:= CrearFacturaCXC(IDCXC); //Aunque ya lo trae
+      if IdCFDIActual<>-1 then
+      begin
+        ImportePago:=SacaSaldoApagar(adodsMasterSaldo.AsFloat,IDCXC);
+        if AplicaPago(adodsMasterIdPago.AsInteger,idcxc,idcfdiactual,ImportePago) then
+        //no hace ajuste porque no es abono a capital  if  AjustarAmortizaciones(IdAnexoAct,TipoContrato,ImportePago,TipoAbono,frmAbonarCapitalEdit.Fecha ) then //Ajustar Amortizacion
+          begin                                                                                    //Abr 19/17
+            ADODtStCXCPendientes.Close;
+            ADODtStCXCPendientes.Open;
+            ADODtStCXCPendientes.Locate('IdCuentaXCobrar', IDCXC,[]);
+            adodsMaster.Refresh; //Pago
+
+            ObsBitacora:='IDPago:'+ intToSTr(adodsMasterIdPago.AsInteger)+' IdAnexo: '+intToSTR(IdAnexoAct)
+                         +' IdCXC:'+ intToStr(idcxc)+' Importe:'+floatToStr(ImportePago)+'. Pago Anticipado ';
+            RegistraBitacora(3,ObsBitacora);
+
+         end;
+      end;
+
+    end
+    else
+      Existen:=False;
+  end;
+
+end;
+
+function TdmPagos.SacaSaldoApagar(SaldoPago:Double;IdCXC: integer):Double;
+Var SaldoCXC:Double;
+begin
+  SaldoCXC:=0;
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.SQL.Clear;
+  ADOQryAuxiliar.SQL.Add('SElect * from CuentasXCobrar where idCuentaXCobrar='+intTosTR(idcxc));
+  ADOQryAuxiliar.open;
+  if not ADOQryAuxiliar.eof then
+  begin
+    SaldoCXC:= ADOQryAuxiliar.FieldByName('Saldo').AsFloat;
+  end;
+  if SaldoCXC>0 then
+  begin
+    if SaldoCXC<= SaldoPago then
+       Result:=SaldoCXC
+    else
+       Result:= SaldoPago;
+  end;
 end;
 
 function TdmPagos.ActualizaEstatusCXC(idCxC,IdCFDIAct:Integer):Boolean;   //Abr 6/17
@@ -1607,7 +1735,8 @@ begin
   begin
     ADOStrdPrcGenCXCXAmortiza.Parameters.ParamByName('@IdAnexoAmortizacion').value:=  ADOQryAuxiliar.fieldbyname('IdAnexoAmortizacion').AsInteger;
     ADOStrdPrcGenCXCXAmortiza.ExecProc;
-    res:= ADOStrdPrcGenCXCXAmortiza.Parameters.ParamByName('@RETURNVALUE').Value;
+    if ADOStrdPrcGenCXCXAmortiza.Parameters.ParamByName('@IDCuentaXCobrar').Value>0 then //Ajustado Jun 30/17
+      res:=1;
     if res<>0  then
       Result:=True;
     ADOQryAuxiliar.Next;
@@ -1644,6 +1773,36 @@ begin
 
 
 end;
+
+function  TdmPagos.CrearSiguienteCXC(idAnexo:integer; var idCxc:integer): Boolean; //Jun 29/17 //Crear sólo si tiene saldo
+var REs:integer;
+begin
+  Res:=0;
+  IdCXC:=-1;
+  REsult:=FAlse;
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.sql.Clear;
+  ADOQryAuxiliar.sql.Add(' Select aa.IdAnexoAmortizacion, c.idanexo,aa.IdAnexoCredito, aa.PagoTotal from AnexosAmortizaciones aa '
+  +' inner join AnexosCreditos C on C.IdAnexoCredito=aa.IdAnexoCredito and c.IdAnexoCreditoEstatus=1 '
+  +' where c.IdAnexo='+intToSTR(idAnexo)+' and (not Exists (select * from CuentasXCobrar cxc where cxc.IdAnexosAmortizaciones=aa.idanexoamortizacion))' );
+
+  ADOQryAuxiliar.Open; //TRae todas las siguientes
+
+  if not ADOQryAuxiliar.eof then
+  begin
+    ADOStrdPrcGenCXCXAmortiza.Parameters.ParamByName('@IdAnexoAmortizacion').value:=  ADOQryAuxiliar.fieldbyname('IdAnexoAmortizacion').AsInteger;
+    ADOStrdPrcGenCXCXAmortiza.ExecProc;
+    if ADOStrdPrcGenCXCXAmortiza.Parameters.ParamByName('@IDCuentaXCobrar').Value>0 then //Ajustado Jun 30/17
+      res:=1;
+    if res<>0  then
+    begin
+      Result:=True;
+      IdCXC:=ADOStrdPrcGenCXCXAmortiza.Parameters.ParamByName('@IDCuentaXCobrar').Value;
+    end;
+  end;
+end;
+
+
 
 function TdmPagos.AplicaPago(idPago, IdCxc, IDCFDI: Integer;
   Monto: Double): Boolean; //abr 18/17      Abono Capital
@@ -1724,7 +1883,7 @@ procedure TdmPagos.ADODtStAplicacionesPagosNewRecord(DataSet: TDataSet);
 begin                   //Dic 9/16
   inherited;
 
-  ADODtStAplicacionesPagos.FieldByName('FechaAplicacion').asDAteTime:=now;
+  ADODtStAplicacionesPagos.FieldByName('FechaAplicacion').asDAteTime:=_DmConection.LaFechaActual;//now; jun 30/17
   ADODtStAplicacionesPagos.FieldByName('IDPago').asInteger:=adodsMaster.Fieldbyname('IDPago').AsInteger;
   if adodsMaster.FieldByName('OrigenPago').AsInteger=1 then //Ene 13/17
     ADODtStAplicacionesPagos.FieldByName('ImporteFactoraje').Value:=adodsMaster.FieldByName('Saldo').Value // ene13/17   //Value feb 19/17
@@ -1767,7 +1926,9 @@ begin
    TFrmConPagos(gGridForm).DSP_CalcMoratorioNueva.DataSet:=adopSetCXCUPMoratorio; //Abr 6/17
    TFrmConPagos(gGridForm).actAbonarCapital:=actCrearCXCAbonoCapital; //Abr 18/17
 
-    TFrmConPagos(gGridForm).actAjustePrueba:=ActAjusteAmortiza; //Abr 20/17 auxiliar && borrar
+   TFrmConPagos(gGridForm).actAjustePrueba:=ActAjusteAmortiza; //Abr 20/17 auxiliar && borrar
+
+   TFrmConPagos(gGridForm).ActPagoAnticipado :=ActPagosAnticipados;//Jun 29/17
 
  //  TfrmFacturasGrid(gGridForm).ActGenerarCFDI := actProcesaFactura;  //Nov29/16
   PaymentTime := ptEndOfPeriod; //Para ajuste amortizaciones abr 18/17

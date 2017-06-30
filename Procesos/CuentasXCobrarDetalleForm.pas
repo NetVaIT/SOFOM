@@ -41,6 +41,8 @@ type
     tvMasterSaldoFactoraje: TcxGridDBColumn;
     tvMasterPagosAplicados: TcxGridDBColumn;
     tvMasterPagosAplicadosFactoraje: TcxGridDBColumn;
+    procedure FormCreate(Sender: TObject);
+    procedure DataSourceDataChange(Sender: TObject; Field: TField);
   private
     { Private declarations }
   public
@@ -54,6 +56,19 @@ implementation
 
 {$R *.dfm}
 
-uses CuentasXCobrarDM;
+uses CuentasXCobrarDM, CuentasXCobrarConceptosEdit;
+
+procedure TFrmCXCDetalle.DataSourceDataChange(Sender: TObject; Field: TField);
+begin
+  inherited;
+  edit1.Enabled:= pos('Opción de compra', datasource.DataSet.FieldByName('Descripcion').AsString)>0;
+
+end;
+
+procedure TFrmCXCDetalle.FormCreate(Sender: TObject);
+begin
+  inherited;
+//  gEditForm:= TfrmCuentasXCobrarConceptosEdit.Create(Self);
+end;
 
 end.

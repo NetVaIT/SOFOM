@@ -3,21 +3,21 @@ inherited frmCuentasXCobrarConceptosEdit: TfrmCuentasXCobrarConceptosEdit
   ClientHeight = 222
   ClientWidth = 657
   ExplicitWidth = 663
-  ExplicitHeight = 250
+  ExplicitHeight = 251
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
     Width = 657
     Height = 181
-    ExplicitWidth = 711
-    ExplicitHeight = 168
+    ExplicitWidth = 657
+    ExplicitHeight = 181
     ClientRectBottom = 179
     ClientRectRight = 655
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 2
-      ExplicitTop = 28
-      ExplicitWidth = 707
-      ExplicitHeight = 138
+      ExplicitLeft = -3
+      ExplicitTop = 58
+      ExplicitWidth = 653
+      ExplicitHeight = 153
       object Label1: TLabel
         Left = 16
         Top = 24
@@ -57,16 +57,19 @@ inherited frmCuentasXCobrarConceptosEdit: TfrmCuentasXCobrarConceptosEdit
   inherited pmlMain: TPanel
     Top = 181
     Width = 657
-    ExplicitTop = 168
-    ExplicitWidth = 711
-    inherited btnOk: TButton
-      Left = 494
-      ExplicitLeft = 548
-    end
+    ExplicitTop = 181
+    ExplicitWidth = 657
     inherited btnCancel: TButton
       Left = 575
-      ExplicitLeft = 629
+      ExplicitLeft = 575
     end
+    inherited btnOk: TButton
+      Left = 494
+      ExplicitLeft = 494
+    end
+  end
+  inherited DataSource: TDataSource
+    DataSet = dmCuentasXCobrar.ADOdsCXCDetalle
   end
   inherited cxImageList: TcxImageList
     FormatVersion = 1

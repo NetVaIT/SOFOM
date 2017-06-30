@@ -25,19 +25,17 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
     ExplicitWidth = 1198
   end
   inherited pnlMaster: TPanel
-    Top = 75
+    Top = 73
     Width = 1363
-    Height = 180
-    ExplicitTop = 75
+    Height = 182
+    ExplicitTop = 73
     ExplicitWidth = 1363
-    ExplicitHeight = 180
+    ExplicitHeight = 182
     inherited cxGrid: TcxGrid
       Width = 1363
-      Height = 180
-      ExplicitLeft = 16
-      ExplicitTop = 6
+      Height = 182
       ExplicitWidth = 1363
-      ExplicitHeight = 180
+      ExplicitHeight = 182
       inherited tvMaster: TcxGridDBTableView
         DataController.Options = [dcoAssignGroupingValues, dcoAssignMasterDetailKeys]
         DataController.Summary.DefaultGroupSummaryItems = <
@@ -254,8 +252,7 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
   inherited pnlDetail1: TPanel
     Top = 255
     Width = 1363
-    ExplicitLeft = 217
-    ExplicitTop = -38
+    ExplicitTop = 255
     ExplicitWidth = 1363
   end
   inherited pnlClose: TPanel
@@ -273,7 +270,7 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
   end
   object PnlFiltros: TPanel [8]
     Left = 0
-    Top = 28
+    Top = 26
     Width = 1363
     Height = 47
     Align = alTop
@@ -407,7 +404,7 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
     DockControlHeights = (
       0
       0
-      28
+      26
       0)
     inherited dxbTools: TdxBar
       ItemLinks = <
@@ -1262,6 +1259,7 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42585.483476608800000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

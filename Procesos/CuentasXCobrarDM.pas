@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, _StandarDMod, System.Actions, Vcl.ActnList,
-  Data.DB, Data.Win.ADODB, dialogs;
+  Data.DB, Data.Win.ADODB, dialogs, vcl.controls,forms, winapi.windows;
 
 type
   TdmCuentasXCobrar = class(T_dmStandar)
@@ -208,7 +208,8 @@ type
     procedure Facturar(IDCFDIGen: Integer; var CFDICreado: Boolean;
       IDGenTipoDoc: integer);
     procedure RegistraBitacora(tipoRegistro: Integer);
-    function GetFFechaActual: TDAteTime;    //May 26/17
+    function GetFFechaActual: TDAteTime;
+    function EsOpcionCompra(idCXC: Integer;var ConceptoNvo:String; var idCXCDet :integer): Boolean;    //May 26/17
 
     { Private declarations }
   public
@@ -224,7 +225,7 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses CuentasXCobrarForm, FacturasDM, _ConectionDmod;
+uses CuentasXCobrarForm, FacturasDM, _ConectionDmod, ConceptoOpcionCEdt;
 
 {$R *.dfm}
 
@@ -272,7 +273,8 @@ begin
     ADOStrdPrcGeneraCXC.ExecProc;
 
  // deshabilitado ab 11/17   ShowMessage('Ejecutó proceso con fecha '+dateTimeToSTR(FechaAux));
-    Res:=Res+ADOStrdPrcGeneraCXC.Parameters.ParamByName('@RETURN_Value').Value;;  //Movido aca abr 12/17
+    if ADOStrdPrcGeneraCXC.Parameters.ParamByName('@IDCuentaXCobrar').Value>0 then //Ajustado Jun 30/17
+      Res:=Res+1;  //Movido aca abr 12/17
     ADOQryAuxiliar.Next;
   end;
   ADOQryAuxiliar.Close;
@@ -310,11 +312,48 @@ begin
   AdodsMaster.Refresh;
 end;
 
+function TdmCuentasXCobrar.EsOpcionCompra(idCXC:Integer;var ConceptoNvo:String; var idCXCDet :integer ):Boolean; //Jun 28/17
+begin                                                                          //Para traer la que se va a cambiar
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.SQL.Clear;
+  ADOQryAuxiliar.sql.Add('Select * from CuentasXcobrarDetalle  where idCuentaXCobrar=' +intToStr(idcxc)+
+                         ' and IdCuentaXCobrarTipo in (92,96,100)' );
+
+  ADOQryAuxiliar.open;
+  if not ADOQryAuxiliar.eof then         //Solo debe ria haber una
+  begin
+    idCXCDet:=ADOQryAuxiliar.FieldByName('IDCuentaXCobrarDetalle').AsInteger;
+    ConceptoNvo:= ADOQryAuxiliar.FieldByName('Descripcion').AsString;
+    FrmConcFacturaOpcCompra:=TFrmConcFacturaOpcCompra.Create(self);
+    FrmConcFacturaOpcCompra.cxMmConceptoFactura.Text:= ConceptoNvo;
+    FrmConcFacturaOpcCompra.ShowModal;
+    if FrmConcFacturaOpcCompra.ModalResult=mrOk then
+       ConceptoNvo:= FrmConcFacturaOpcCompra.cxMmConceptoFactura.Text;
+    FrmConcFacturaOpcCompra.Free;
+    result:=true;
+  end
+  else
+  begin
+    Result:=False;
+    idCXCDet:=-1;
+  end;
+end;
 
 procedure TdmCuentasXCobrar.actGeneraPreFacturasExecute(Sender: TObject);
-var CFDICreado:Boolean;
+var CFDICreado, ParaCompra :Boolean;
+    ConceptoOC:String;
+    IdCXCDet:Integer;
 begin
   inherited;
+  //Jun 28/17
+  ParaCompra:= EsOpcionCompra(adodsMasterIdCuentaXCobrar.asinteger,ConceptoOC,IdCXCDet ); //Verificar si es opcion de compra y pedir Concepto de Facturación
+  if (idcxcdet <>-1)  and ParaCompra then
+  begin
+    if Application.messagebox(pchar('La factura se generará con el siguiente Concepto: "'+ConceptoOC+'". ¿Continuar? '),'Confirmación', MB_YESNO)=id_No then
+      Exit;  //Verificar   //DEtener
+  end;
+  //HAsta aca jun 28/17
+
   DetallesCXCParaFacturar.Open;
 
   if DetallesCXCParaFacturar.eof then
@@ -337,7 +376,13 @@ begin
    // abr 7/17 DEshabilitado porque  van en cxc aparte  if not DetallesCXCParaFacturar.FieldByName('EsMoratorios').AsBoolean then    //FEb 2/17 Nuevo para que sólo facture lo que no es moratorio, porque el moratorio se debe facturarse cuando se pague
      begin
       ADODtStCFDIConceptosPref.Insert;
-      ADODtStCFDIConceptosPrefDescripcion.AsString:= DetallesCXCParaFacturar.fieldbyname('Descripcion').asString;
+
+      if ParaCompra and (IdCXCDet = DetallesCXCParaFacturar.fieldbyname('IdCuentaXCobrarDEtalle').asinteger)then //Jun 28/17
+        ADODtStCFDIConceptosPrefDescripcion.AsString:=  ConceptoOC
+      else
+        ADODtStCFDIConceptosPrefDescripcion.AsString:= DetallesCXCParaFacturar.fieldbyname('Descripcion').asString;
+
+
       ADODtStCFDIConceptosPrefIdCuentaXCobrarDetalle.AsInteger:=DetallesCXCParaFacturar.fieldbyname('IDCuentaXCobrarDEtalle').AsInteger;  //Sin a Dic 7/16
       ADODtStCFDIConceptosPrefValorUnitario.Value:= DetallesCXCParaFacturar.fieldbyname('Importe').asFloat;
                                             //Value Feb 19/17

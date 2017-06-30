@@ -1,6 +1,8 @@
 inherited frmConceptos: TfrmConceptos
   Caption = 'frmConceptosGrid'
   ClientWidth = 885
+  OnClose = FormClose
+  OnCloseQuery = FormCloseQuery
   ExplicitWidth = 885
   ExplicitHeight = 457
   PixelsPerInch = 96
@@ -19,10 +21,14 @@ inherited frmConceptos: TfrmConceptos
   end
   inherited pnlMaster: TPanel
     Width = 885
+    ExplicitTop = 26
     ExplicitWidth = 885
+    ExplicitHeight = 258
     inherited cxGrid: TcxGrid
       Width = 885
+      Height = 258
       ExplicitWidth = 885
+      ExplicitHeight = 258
       inherited tvMaster: TcxGridDBTableView
         OptionsBehavior.IncSearch = False
         OptionsData.Deleting = True
@@ -94,7 +100,7 @@ inherited frmConceptos: TfrmConceptos
     DockControlHeights = (
       0
       0
-      31
+      26
       0)
     inherited dxbNavigator: TdxBar
       DockedLeft = 107
@@ -112,6 +118,7 @@ inherited frmConceptos: TfrmConceptos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42699.356933969910000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

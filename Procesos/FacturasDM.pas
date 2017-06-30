@@ -198,21 +198,6 @@ type
     adodsMasterIdCuentaXCobrar: TIntegerField;
     adodsMasterSaldoFactoraje: TFMTBCDField;
     ActCancelarCFDI: TAction;
-    ADODtStCFDINotaCredito_PonerenPagos: TADODataSet;
-    ADODtStCFDINotaCredito_PonerenPagosIdCFDI: TLargeintField;
-    ADODtStCFDINotaCredito_PonerenPagosIdCFDITipoDocumento: TIntegerField;
-    ADODtStCFDINotaCredito_PonerenPagosIdPersonaReceptor: TIntegerField;
-    ADODtStCFDINotaCredito_PonerenPagosIdCFDIEstatus: TIntegerField;
-    ADODtStCFDINotaCredito_PonerenPagosIdClienteDomicilio: TIntegerField;
-    ADODtStCFDINotaCredito_PonerenPagosSerie: TStringField;
-    ADODtStCFDINotaCredito_PonerenPagosFolio: TLargeintField;
-    ADODtStCFDINotaCredito_PonerenPagosFecha: TDateTimeField;
-    ADODtStCFDINotaCredito_PonerenPagosSubTotal: TFloatField;
-    ADODtStCFDINotaCredito_PonerenPagosTotal: TFMTBCDField;
-    ADODtStCFDINotaCredito_PonerenPagosTotalImpuestoTrasladado: TFloatField;
-    ADODtStCFDINotaCredito_PonerenPagosSaldoDocumento: TFMTBCDField;
-    ADODtStCFDINotaCredito_PonerenPagosObservaciones: TStringField;
-    ADODtStCFDINotaCredito_PonerenPagosSaldoFactoraje: TFMTBCDField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actProcesaFacturaExecute(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
@@ -245,7 +230,8 @@ type
     function InformacionContrato(IdCXC: Integer): String;
     procedure ReadFile(FileName: TFileName);
     function CrearArchivos_TimbrePrueba(var Ruta: String;
-      var TimbradoCFDI: TTimbreCFDI; Adicional: String): Boolean; //Regresado
+      var TimbradoCFDI: TTimbreCFDI; Adicional: String): Boolean;
+    procedure RefreshCFDI; //Regresado
   public
     { Public declarations }
      EsProduccion:Boolean;
@@ -960,7 +946,7 @@ var        //Este sólo debe usarse si sehace factura manual.. No para la que vie
   Existe:Boolean;
 begin
   inherited;  //Mar 29/16     //Verificar que no intertfiera con el  proceso normal de facturacion
-  Showmessage('Proceso manual. Calculará IVA de subtotal'); //feb 7/17
+  Showmessage('Se actualizarán totales e IVA para este comprobante'); //feb 7/17
   idImp:=-1;
   //Verificar si aca actualizar el item respectivo del detalle del documento
   IDDocItem:=DataSet.FieldByName('IDCFDIConcepto').AsInteger;
@@ -1015,7 +1001,17 @@ begin
                             +' where IDCFDIImpuesto ='+IntToStr(idImp));
     ADOQryAuxiliar.ExecSQL;
   end;  //Hasta aca
-  AdoDSMaster.Refresh;
+  RefreshCFDI; //jun 27/17
+end;
+
+procedure TdmFacturas.RefreshCFDI; //jun 27/17
+var
+  IdCFDI: Integer;
+begin
+    IdCFDI:= ADODtStCFDIConceptos.FieldByName('IdCFDI').AsInteger;
+    ADODsmaster.Close;
+    ADODsmaster.Open;
+    ADODsmaster.Locate('IdCFDI', IdCFDI, []);
 end;
 
 procedure TdmFacturas.ADODtStCFDIConceptosBeforeInsert(DataSet: TDataSet);
@@ -1124,6 +1120,8 @@ begin
   TfrmFacturasGrid(gGridForm).ActGenerarCFDI := actProcesaFactura;  //Nov29/16
   TfrmFacturasGrid(gGridForm).ActImprimePDF := ActImprimeFactura;  //Dic 15/16
   TfrmFacturasGrid(gGridForm).ActCancelaCFDI := ActCancelarCFDI;//Mar 23/17
+
+
 end;
 
 procedure TdmFacturas.ReadFileCERKEY(FileNameCER, FileNameKEY: TFileName);

@@ -41,6 +41,8 @@ type
     tvMasterImporte: TcxGridDBColumn;
     tvMasterIdCFDIConcepto: TcxGridDBColumn;
     tvMasterIdCuentaXCobrarDetalle: TcxGridDBColumn;
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
   public
@@ -55,5 +57,18 @@ implementation
 {$R *.dfm}
 
 uses FacturasDM;
+
+procedure TfrmConceptos.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  inherited;
+  if datasource.DataSet.State in [dsEdit, dsInsert] then
+    datasource.DataSet.post;
+end;
+
+procedure TfrmConceptos.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+begin
+  inherited;
+   //O verificar si se pregunta
+end;
 
 end.

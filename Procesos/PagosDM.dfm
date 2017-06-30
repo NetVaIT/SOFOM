@@ -14,7 +14,7 @@ inherited dmPagos: TdmPagos
       'select  IdPago, IdBanco, IdPersonaCliente, IdCuentaBancariaEstad' +
       'oCuenta, '#13#10'FechaPago, FolioPago, SeriePago, Referencia, Importe,' +
       ' Saldo, '#13#10'Observaciones, IdMetodoPago, CuentaPago, OrigenPago ,'#13 +
-      #10' IdContrato, IdAnexo, EsDeposito'#13#10'from Pagos'
+      #10' IdContrato, IdAnexo, EsDeposito, IdCFDI_NCR'#13#10'from Pagos'
     Left = 48
     object adodsMasterIdPago: TAutoIncField
       FieldName = 'IdPago'
@@ -116,6 +116,9 @@ inherited dmPagos: TdmPagos
     object adodsMasterEsDeposito: TBooleanField
       FieldName = 'EsDeposito'
     end
+    object adodsMasterIdCFDI_NCR: TLargeintField
+      FieldName = 'IdCFDI_NCR'
+    end
   end
   inherited adodsUpdate: TADODataSet
     Left = 328
@@ -138,6 +141,10 @@ inherited dmPagos: TdmPagos
     object ActAjusteAmortiza: TAction
       Caption = 'ActAjusteAmortiza'
       OnExecute = ActAjusteAmortizaExecute
+    end
+    object ActPagosAnticipados: TAction
+      Caption = 'ActPagosAnticipados'
+      OnExecute = ActPagosAnticipadosExecute
     end
   end
   object ADOSPersonas: TADODataSet
@@ -265,14 +272,16 @@ inherited dmPagos: TdmPagos
       'C.Interes, CXC.Total, CXC.Saldo, CXC.SaldoFactoraje, CXC.EsMorat' +
       'orio, CI.SaldoDocumento, Ci.SaldoFactoraje as SaldoFactorajeCFDI' +
       #13#10' from CuentasXCobrar CXC  '#13#10'left Join CFDI CI on CI.IdCFDI= CX' +
-      'C.IdCFDI where '#13#10' Saldo >0 and IDPersona=:IdPersonaCliente '#13#10'and' +
-      ' ((IdCuentaXCobrarEstatus=0 and  ESMoratorio=0)'#13#10'or( Esmoratorio' +
-      '=1)'#13#10'or (exists (select * from CuentasXCobrarDetalle CXCD where ' +
-      'CXCD.descripcion like'#39'%Abono Capital%'#39' and CXC.IdCuentaXCobrar=C' +
-      'XCD.idcuentaXCobrar )'#13#10'and CXC.IdCFDI is null) )-- IdCuentaXCobr' +
-      'arEstatus=-1 and puede que esten facturadas'#13#10' and CXC.IDAnexo=:I' +
-      'dAnexo'#13#10'order by CXC.idanexosamortizaciones,EsMoratorio DEsc, CX' +
-      'C.FechaVencimiento'
+      'C.IdCFDI where '#13#10'-- CXC.idanexosamortizaciones is not null and -' +
+      '- jun 30/17 '#13#10' Saldo >0 and IDPersona=:IdPersonaCliente '#13#10'and ((' +
+      'IdCuentaXCobrarEstatus=0 and  ESMoratorio=0)'#13#10'or( Esmoratorio=1)' +
+      #13#10'or (CXC.Fecha<dbo.GetDateAux() and IdCuentaXCobrarEstatus=-1) ' +
+      '-- para poder facturar addelantados'#13#10'or (exists (select * from C' +
+      'uentasXCobrarDetalle CXCD where CXCD.descripcion like'#39'%Abono Cap' +
+      'ital%'#39' and CXC.IdCuentaXCobrar=CXCD.idcuentaXCobrar )'#13#10'and CXC.I' +
+      'dCFDI is null) )-- IdCuentaXCobrarEstatus=-1 and puede que esten' +
+      ' facturadas'#13#10' and CXC.IDAnexo=:IdAnexo'#13#10'order by CXC.idanexosamo' +
+      'rtizaciones,EsMoratorio DEsc, CXC.FechaVencimiento'
     DataSource = DSMaster
     IndexFieldNames = 'IdPersona;IdAnexo'
     MasterFields = 'IdPersonaCliente;IdAnexo'
@@ -1886,5 +1895,73 @@ inherited dmPagos: TdmPagos
       'Group by c.IdAnexo, aa.IdAnexoCredito')
     Left = 660
     Top = 595
+  end
+  object ADODtStCFDINotaCredito: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'Select * from CFDI where idcfdiTipoDocumento=2 and '#13#10'SaldoDocume' +
+      'nto>0 and IdCFDIEstatus <>3 and '#13#10'IdPersonaReceptor=:Idpersona'
+    Parameters = <
+      item
+        Name = 'Idpersona'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 799
+    Top = 593
+    object ADODtStCFDINotaCreditoIdCFDI: TLargeintField
+      FieldName = 'IdCFDI'
+      ReadOnly = True
+    end
+    object ADODtStCFDINotaCreditoIdCFDITipoDocumento: TIntegerField
+      FieldName = 'IdCFDITipoDocumento'
+    end
+    object ADODtStCFDINotaCreditoIdPersonaReceptor: TIntegerField
+      FieldName = 'IdPersonaReceptor'
+    end
+    object ADODtStCFDINotaCreditoIdCFDIEstatus: TIntegerField
+      FieldName = 'IdCFDIEstatus'
+    end
+    object ADODtStCFDINotaCreditoIdClienteDomicilio: TIntegerField
+      FieldName = 'IdClienteDomicilio'
+    end
+    object ADODtStCFDINotaCreditoSerie: TStringField
+      FieldName = 'Serie'
+    end
+    object ADODtStCFDINotaCreditoFolio: TLargeintField
+      FieldName = 'Folio'
+    end
+    object ADODtStCFDINotaCreditoFecha: TDateTimeField
+      FieldName = 'Fecha'
+    end
+    object ADODtStCFDINotaCreditoSubTotal: TFloatField
+      FieldName = 'SubTotal'
+    end
+    object ADODtStCFDINotaCreditoTotal: TFMTBCDField
+      FieldName = 'Total'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStCFDINotaCreditoTotalImpuestoTrasladado: TFloatField
+      FieldName = 'TotalImpuestoTrasladado'
+    end
+    object ADODtStCFDINotaCreditoSaldoDocumento: TFMTBCDField
+      FieldName = 'SaldoDocumento'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStCFDINotaCreditoObservaciones: TStringField
+      FieldName = 'Observaciones'
+      Size = 300
+    end
+    object ADODtStCFDINotaCreditoSaldoFactoraje: TFMTBCDField
+      FieldName = 'SaldoFactoraje'
+      Precision = 18
+      Size = 6
+    end
   end
 end

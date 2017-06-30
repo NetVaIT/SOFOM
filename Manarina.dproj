@@ -5,7 +5,7 @@
         <FrameworkType>VCL</FrameworkType>
         <MainSource>Manarina.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Debug</Config>
+        <Config Condition="'$(Config)'==''">Release</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Application</AppType>
@@ -1011,6 +1011,18 @@
         </DCCReference>
         <DCCReference Include="Procesos\ListaNotaCreditoForm.pas">
             <Form>frmListaNotasCredito</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Procesos\ConceptoOpcionCEdt.pas">
+            <Form>FrmConcFacturaOpcCompra</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Procesos\SeleccionAplicacionForm.pas">
+            <Form>FrmSeleccionAplicacion</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Procesos\ClaveAutorizacionForm.pas">
+            <Form>FrmClaveAutorizacion</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Release">

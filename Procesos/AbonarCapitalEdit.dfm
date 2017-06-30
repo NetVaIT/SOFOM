@@ -14,10 +14,10 @@ inherited frmAbonarCapitalEdit: TfrmAbonarCapitalEdit
     ClientRectBottom = 337
     ClientRectRight = 692
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 3
-      ExplicitTop = 30
+      ExplicitLeft = 2
+      ExplicitTop = 26
       ExplicitWidth = 690
-      ExplicitHeight = 309
+      ExplicitHeight = 311
       object cxLabel3: TcxLabel
         Left = 453
         Top = 218
@@ -132,7 +132,7 @@ inherited frmAbonarCapitalEdit: TfrmAbonarCapitalEdit
   inherited pmlMain: TPanel
     Top = 339
     Width = 694
-    ExplicitTop = 343
+    ExplicitTop = 339
     ExplicitWidth = 694
     DesignSize = (
       694

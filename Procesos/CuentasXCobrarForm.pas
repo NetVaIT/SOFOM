@@ -78,6 +78,7 @@ type
     tvMasterEsMoratorio: TcxGridDBColumn;
     tvMasterAnexo: TcxGridDBColumn;
     tvMasterContrato: TcxGridDBColumn;
+    ChckBxOpcionCompra: TCheckBox;
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
     procedure FormCreate(Sender: TObject);
     procedure SpdBtnBuscarClick(Sender: TObject);
@@ -130,6 +131,17 @@ uses CuentasXCobrarDM, CuentasXCobrarEdit, _ConectionDmod;
 procedure TFrmConCuentasXCobrar.ConsultarClick(Sender: TObject);
 begin
   inherited;
+  if (Sender is TCheckbox) then
+  case (Sender as TCheckbox).tag of
+      3:
+          if (Sender as TCheckbox).checked then
+            ChckBxOpcionCompra.Checked:=False;
+
+      4:
+          if (Sender as TCheckbox).checked then
+            ChckBxMostrarMoratorios.Checked:=False;
+  end;
+
   SpdBtnBuscarClick(SpdBtnBuscar);//Abr 12/17
 end;
 
@@ -305,12 +317,15 @@ end;
 
 procedure TFrmConCuentasXCobrar.SpdBtnBuscarClick(Sender: TObject);
 const  //Mar 9/17
-   TxtSQL='select IdCuentaXCobrar, IdCuentaXCobrarEstatus, CXC.IdPersona,'+
+   TxtSQL='select CXC.IdCuentaXCobrar, IdCuentaXCobrarEstatus, CXC.IdPersona,'+
           'IdAnexosAmortizaciones, Fecha, FechaVencimiento, Importe, Impuesto, Interes,' +  //FV ab 11/17
           'Total, CXC.Saldo, SaldoFactoraje, IdCFDI, IDAnexo, CXC.IdCuentaXCobrarBase, '
           +' ''Interés Moratorio'' as Descripcion, EsMoratorio from CuentasXCobrar CXC ';
    whereNoMora=' EsMoratorio=0';
    whereMora=' EsMoratorio=1';
+
+   whereOpcionCompra=' exists (Select * from CuentasXCobrarDetalle CXCD where CXCD.IdCuentaXCobrar=CXC.idcuentaXCobrar and '
+                     +' idcuentaXCobrarTipo in (92,96,100) ) ';
 
    orden=' order by   IdAnexo, IDAnexosAmortizaciones'; //Mar 27/17
 begin
@@ -333,6 +348,16 @@ begin
       FFiltro:=' where '+WhereNoMora;
   end;
      //Mar 30/17 hasta
+
+  //Jun 28/17
+  if ChckBxOpcionCompra.Checked then    // deben ser exclusivos opcioncompra y moratorios
+  begin
+    if ffiltro<>'' then
+       Ffiltro:=Ffiltro +' and '+whereOpcionCompra
+    else
+       FFiltro:=' where '+ whereOpcionCompra;
+  end;
+  //hasta Jun 28/17
 
   Tadodataset(datasource.DataSet).Close;
   Tadodataset(datasource.DataSet).CommandText:=TxtSQL+ ffiltroNombre+ffiltro+ orden; //Mar 27/17

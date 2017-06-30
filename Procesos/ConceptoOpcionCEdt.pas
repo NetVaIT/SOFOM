@@ -1,12 +1,12 @@
-unit CuentasXCobrarConceptosEdit;
+unit ConceptoOpcionCEdt;
 
 interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, _EditForm, dxSkinsCore, dxSkinBlack,
-  dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom,
-  dxSkinDarkSide, dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, dxSkinsCore, dxSkinBlack, dxSkinBlue,
+  dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide,
+  dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
   dxSkinGlassOceans, dxSkinHighContrast, dxSkiniMaginary, dxSkinLilian,
   dxSkinLiquidSky, dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinMoneyTwins,
   dxSkinOffice2007Black, dxSkinOffice2007Blue, dxSkinOffice2007Green,
@@ -16,26 +16,29 @@ uses
   dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
   dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine, dxSkinVS2010,
   dxSkinWhiteprint, dxSkinXmas2008Blue, dxSkinscxPCPainter, cxPCdxBarPopupMenu,
-  cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, Vcl.ImgList,
-  System.Actions, Vcl.ActnList, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls, cxPC,
-  cxContainer, cxEdit, cxTextEdit, cxDBEdit;
+  cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, cxContainer,
+  cxEdit, cxTextEdit, cxMemo, Vcl.StdCtrls, cxPC, Vcl.ExtCtrls;
 
 type
-  TfrmCuentasXCobrarConceptosEdit = class(T_frmEdit)
-    Label1: TLabel;
-    cxDBTextEdit1: TcxDBTextEdit;
+  TFrmConcFacturaOpcCompra = class(TForm)
+    pmlMain: TPanel;
+    btnCancel: TButton;
+    btnOk: TButton;
+    pcMain: TcxPageControl;
+    tsGeneral: TcxTabSheet;
     Label2: TLabel;
-    cxDBTextEdit2: TcxDBTextEdit;
+    cxMmConceptoFactura: TcxMemo;
   private
     { Private declarations }
   public
     { Public declarations }
   end;
 
+var
+  FrmConcFacturaOpcCompra: TFrmConcFacturaOpcCompra;
+
 implementation
 
 {$R *.dfm}
-
-uses CuentasXCobrarDM;
 
 end.

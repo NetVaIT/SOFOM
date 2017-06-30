@@ -53,6 +53,7 @@ type
     Label13: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
   public
@@ -68,15 +69,21 @@ implementation
 
 uses FacturasDM, ConceptosFacturaForm;
 
+procedure TfrmEdFactura.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  inherited;
+  if FrmConceptos.DataSource.State in [dsEdit,DSInsert] then //Jun 27/17
+     FrmConceptos.DataSource.dataset.Post;
+
+end;
+
 procedure TfrmEdFactura.FormCreate(Sender: TObject);
-var frmConceptos:TfrmConceptos;
 begin
   inherited;
   frmConceptos:=TfrmConceptos.Create(self);
   FrmConceptos.Parent:= PnlDetalleFact;
   FrmConceptos.Align:=alClient;
   FrmConceptos.Show;
-
 end;
 
 procedure TfrmEdFactura.FormShow(Sender: TObject);

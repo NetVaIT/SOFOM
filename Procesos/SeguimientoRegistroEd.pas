@@ -354,7 +354,7 @@ end;
 procedure TFrmSeguimientoRegistro.FormCreate(Sender: TObject);
 begin
   DtTmDesde.Date:=_DmConection.LaFechaActual;//May 26/17 Date;
-  DtTmHasta.Date:=date+1;
+  DtTmHasta.Date:=_DmConection.LaFechaActual+1;//date+1; //Jun 30/17
   dsDatossuc.DataSet.open;
   DSFuncXCli.DataSet.open;
 end;

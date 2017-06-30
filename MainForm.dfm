@@ -11,7 +11,6 @@ inherited frmMain: TfrmMain
     OnApplicationMenuClick = dxRibbon1ApplicationMenuClick
     ExplicitWidth = 1020
     inherited dxRibbon1Tab1: TdxRibbonTab
-      Active = False
       Index = 0
     end
     object dxRibbon1Tab2: TdxRibbonTab
@@ -36,7 +35,6 @@ inherited frmMain: TfrmMain
       Index = 1
     end
     object dxRibbon1Tab3: TdxRibbonTab
-      Active = True
       Caption = 'Procesos'
       Groups = <
         item
@@ -82,7 +80,7 @@ inherited frmMain: TfrmMain
   end
   inherited pnlMain: TPanel
     Width = 1020
-    ExplicitTop = 153
+    ExplicitTop = 159
     ExplicitWidth = 1020
     ExplicitHeight = 298
   end
@@ -302,7 +300,7 @@ inherited frmMain: TfrmMain
       FloatLeft = 1133
       FloatTop = 8
       FloatClientWidth = 178
-      FloatClientHeight = 324
+      FloatClientHeight = 378
       ItemLinks = <
         item
           Visible = True

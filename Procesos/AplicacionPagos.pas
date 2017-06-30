@@ -21,7 +21,7 @@ uses
   cxGridLevel, cxClasses, cxGridCustomView, cxGridCustomTableView,
   cxGridTableView, cxGridDBTableView, cxGrid, Vcl.ExtCtrls, cxContainer,
   cxLabel, cxDBLabel, Vcl.StdCtrls, Vcl.Buttons, cxTextEdit, cxDBEdit,
-  cxMaskEdit, cxDropDownEdit, cxCalendar, Data.Win.ADODB;
+  cxMaskEdit, cxDropDownEdit, cxCalendar, Data.Win.ADODB, cxCheckBox;
 
 type
   TFrmAplicacionPago = class(TForm)
@@ -98,9 +98,10 @@ type
     Label8: TLabel;
     cxDBLabel8: TcxDBLabel;
     tvMasterFechaVencimiento: TcxGridDBColumn;
-    SpdBtnAbonoCapital: TSpeedButton;
+    SpdBtnSaldoAFavor: TSpeedButton;
     DSP_ActTotalCXC: TDataSource;
     tvMasterIdAnexoAmortizacion: TcxGridDBColumn;
+    cxChckBxCambioconsulta: TcxCheckBox;
     procedure BtBtnAplicarClick(Sender: TObject);
     procedure DSAplicacionStateChange(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -114,11 +115,13 @@ type
     procedure FormShow(Sender: TObject);
     procedure SpdBtnActMoraFechaPagoClick(Sender: TObject);
     procedure dsConCXCPendientesUpdateData(Sender: TObject);
-    procedure SpdBtnAbonoCapitalClick(Sender: TObject);
+    procedure SpdBtnSaldoAFavorClick(Sender: TObject);
+    procedure cxChckBxCambioconsultaClick(Sender: TObject);
   private
     { Private declarations }
     FActFacturaMora: TBasicAction;
     FActAbonoCApital: TBasicAction;
+    FActPagoAnticipado: TBasicAction;
     function Quitasignos(TextoPesos: String): String;
     function EsCuentaXCobrarAntigua(IdCxCAct, IDPersona, IDAnexo: integer): Boolean;    //Ajuste anexo mar 9/17
     function ActualizaMoratorios(IdCxCAct: integer;FechaPago:TDateTime;var ValorMora:Double; var FechaAct:TDateTime): Boolean;
@@ -132,11 +135,13 @@ type
     procedure SetFActAbonoCapital(const Value: TBasicAction);
     function FechaSinHora(FechaHora: TDAteTime): TDAteTime;
     procedure RefreshCXCPendientes;
+    procedure SetFPagoAnticipado(const Value: TBasicAction);
   public
     { Public declarations }
     EsFactoraje:Boolean;
     property ActFacturaMora : TBasicAction read FActFacturaMora write SetFActFacturaMora;  //Feb 8/17
     property ActAbonoCapital : TBasicAction read FActAbonoCApital write SetFActAbonoCapital;
+    property ActPagoAnticipado : TBasicAction read FActPagoAnticipado write SetFPagoAnticipado;
   end;
 
 //var
@@ -146,7 +151,7 @@ implementation
 
 {$R *.dfm}
 
-uses _ConectionDmod, PagosDM, AnexosMoratoriosDM;
+uses _ConectionDmod, PagosDM, AnexosMoratoriosDM, SeleccionAplicacionForm;
 
 procedure TFrmAplicacionPago.BtBtnAgregarClick(Sender: TObject);
 begin
@@ -276,8 +281,8 @@ begin
             if (not dsConCXCpendientes.DataSet.eof) then   //Tiene CXC pendeintes
               DSAplicacion.DataSet.Insert // ahi se coloca el dato de importe posible de pago
             else
-            begin
-              SpdBtnAbonoCapital.Enabled:=(dsPago.dataset.Fieldbyname('Saldo').AsExtended>0); //Habilitar boton para abono a Capital.
+            begin   //CAmbio de nombre
+              SpdBtnSaldoAFavor.Enabled:=(dsPago.dataset.Fieldbyname('Saldo').AsExtended>0); //Habilitar boton para abono a Capital.
              // SpdBtnAbonoCapital.Action:= FActAbonoCApital; //Para ver si lo deja usar?? abr 19/17
             end;
           end;
@@ -344,7 +349,7 @@ begin       //Sin uso abr /17
   dsAuxiliar.dataset.close;
 
 end;
-//Verificar si tendra moratorios para mandar facturar moratorios
+
 procedure TFrmAplicacionPago.RefreshCXCPendientes;
 var
   IdCuentaXCobrar: Integer;
@@ -354,7 +359,7 @@ begin
     dsConCXCpendientes.DataSet.Open;
     dsConCXCpendientes.Dataset.Locate('IdCuentaXCobrar', IdCuentaXCobrar, []);
 end;
-
+//Verificar si tendra moratorios para mandar facturar moratorios
 function TFrmAplicacionPago.ActualizaMoratorios(IdCxCAct:integer;FechaPago:TDateTime; var ValorMora:Double; var FechaAct:TDateTime):Boolean;
 var               //FEb 7/17    //DEjdo de usar abr 6/17
    MoratorioAct:Double;
@@ -412,6 +417,42 @@ begin
   Result:=not dsAuxiliar.dataset.Eof;  //Existe y está al menos prefacturada..  //feb 10/17
 end;
 
+procedure TFrmAplicacionPago.cxChckBxCambioconsultaClick(Sender: TObject);
+begin
+  //CAmbiar consulta
+  TAdoDataset(DsconCXCPendientes.DataSet).Close;
+  if cxChckBxCambioconsulta.Checked then
+  begin
+
+    TAdoDataset(DsconCXCPendientes.DataSet).commandtext:='Select CXC.IdCuentaXCobrar, CXC.IdCuentaXCobrarBase, CXC.IdCuentaXCobrarEstatus, CXC.IdPersona,'
+    + 'CXC.IdAnexosAmortizaciones AS IdAnexoAmortizacion, CXC.IdAnexo, CXC.IdEstadoCuenta, CXC.IdCFDI,  CXC.Fecha, CXC.FechaVencimiento, '
+    +' CXC.Importe, CXC.Impuesto, CXC.Interes, CXC.Total, CXC.Saldo, CXC.SaldoFactoraje, CXC.EsMoratorio, CI.SaldoDocumento, '
+    +' Ci.SaldoFactoraje as SaldoFactorajeCFDI  from CuentasXCobrar CXC left Join CFDI CI on CI.IdCFDI= CXC.IdCFDI where '
+    +' CXC.idanexosamortizaciones is not null and  Saldo >0 and IDPersona=:IdPersonaCliente and '
+    +' ((IdCuentaXCobrarEstatus=0 and  ESMoratorio=0) or( Esmoratorio=1) or '
+    +' (exists (select * from CuentasXCobrarDetalle CXCD where CXCD.descripcion like''%Abono Capital%'' and CXC.IdCuentaXCobrar=CXCD.idcuentaXCobrar )'
+    +' and CXC.IdCFDI is null) ) and CXC.IDAnexo=:IdAnexo'           //-- IdCuentaXCobrarEstatus=-1 and puede que esten facturadas
+    +'  order by CXC.idanexosamortizaciones,EsMoratorio DEsc, CXC.FechaVencimiento' ;
+
+  end
+  else
+  begin
+
+    TAdoDataset(DsconCXCPendientes.DataSet).commandtext:='Select CXC.IdCuentaXCobrar, CXC.IdCuentaXCobrarBase, CXC.IdCuentaXCobrarEstatus, CXC.IdPersona,'
+    + 'CXC.IdAnexosAmortizaciones AS IdAnexoAmortizacion, CXC.IdAnexo, CXC.IdEstadoCuenta, CXC.IdCFDI,  CXC.Fecha, CXC.FechaVencimiento, '
+    +' CXC.Importe, CXC.Impuesto, CXC.Interes, CXC.Total, CXC.Saldo, CXC.SaldoFactoraje, CXC.EsMoratorio, CI.SaldoDocumento, '
+    +' Ci.SaldoFactoraje as SaldoFactorajeCFDI  from CuentasXCobrar CXC left Join CFDI CI on CI.IdCFDI= CXC.IdCFDI where '
+    +' Saldo >0 and IDPersona=:IdPersonaCliente and '
+    +' ((IdCuentaXCobrarEstatus=0 and  ESMoratorio=0) or( Esmoratorio=1) or '
+    +' (exists (select * from CuentasXCobrarDetalle CXCD where CXCD.descripcion like''%Abono Capital%'' and CXC.IdCuentaXCobrar=CXCD.idcuentaXCobrar )'
+    +' and CXC.IdCFDI is null) ) and CXC.IDAnexo=:IdAnexo'           //-- IdCuentaXCobrarEstatus=-1 and puede que esten facturadas
+    +'  order by CXC.idanexosamortizaciones,EsMoratorio DEsc, CXC.FechaVencimiento' ;
+  end;
+
+  TAdoDataset(DsconCXCPendientes.DataSet).open;
+
+end;
+
 function TFrmAplicacionPago.Quitasignos(TextoPesos:String):String;//Ago 15/16
 var 
   i:integer;
@@ -441,6 +482,11 @@ begin
 
 end;
 
+procedure TFrmAplicacionPago.SetFPagoAnticipado(const Value: TBasicAction);
+begin
+  FActPagoAnticipado := Value;
+end;
+
 function  TFrmAplicacionPago.UltimaFechaPagoAplicado(FechaPagoAct:TDateTime; IdAnexoAct:Integer):Boolean;   //Abr 5/17
 begin
   //Verificar Si Fecha Pago
@@ -468,9 +514,19 @@ begin
   Result:=EncodeDAte(a,m,d);
 end;
 
-procedure TFrmAplicacionPago.SpdBtnAbonoCapitalClick(Sender: TObject);
+procedure TFrmAplicacionPago.SpdBtnSaldoAFavorClick(Sender: TObject);
+var TipoAp:integer;
 begin
-  ActAbonoCapital.Execute;
+  // Seleccion entre pagos anticipados o Abono a Capital
+  FrmSeleccionAplicacion:= TFrmSeleccionAplicacion.Create(self);
+  FrmSeleccionAplicacion.showmodal;
+  TipoAP:=  FrmSeleccionAplicacion.TipoAplica; //Poner valor inicial
+  FrmSeleccionAplicacion.Free;
+  case tipoAp  of
+  1: ActAbonoCapital.Execute;  // deberia ser sólo para los que tienen null en anexoamortizacion  y que no sea opcion de compra()
+  2: ActPagoAnticipado.Execute; //Verificar monto  e ir creandoCXC
+  end;
+
 end;
 
 procedure TFrmAplicacionPago.SpdBtnActMoraFechaPagoClick(Sender: TObject);
@@ -556,19 +612,29 @@ begin
 end;
 
 procedure TFrmAplicacionPago.dsConCXCPendientesUpdateData(Sender: TObject);
-begin
-  SpdBtnAbonoCapital.Enabled:=(dsConCXCpendientes.DataSet.eof) and(dsPago.dataset.Fieldbyname('Saldo').AsExtended>0); //Habilitar boton para abono a Capital.
+begin //CAmbio de Nombre
+  SpdBtnSaldoAFavor.Enabled:=(dsConCXCpendientes.DataSet.eof) and(dsPago.dataset.Fieldbyname('Saldo').AsExtended>0); //Habilitar boton para abono a Capital.
   //SpdBtnAbonoCapital.Action:= FActAbonoCApital; //Para ver si lo deja usar?? abr 19/17
 end;
 
 function TFrmAplicacionPago.EsProximoAPagar(IDCXC, idpersonaCliente, IdAnexo:Integer):Boolean;  //Abr 3/17
+var
+   Auxiliar:String;
 begin
+  Auxiliar :='';
+  if cxChckBxCambioconsulta.Checked then       //Jun 30/17
+  begin
+    Auxiliar :=' and CXC.idanexosamortizaciones is not null  ' ;
+  end;
+
+
   Result:=False;
   DSAuxiliar.DataSet.Close;
 
   TADOQuery(dsAuxiliar.dataset).SQL.clear;
   TADOQuery(dsAuxiliar.dataset).SQL.Add('Select cxc.*, CI.SaldoDocumento, Ci.SaldoFactoraje as SaldoFactorajeCFD from CuentasXCobrar CXC ' +
                                         ' left Join CFDI CI on CI.IdCFDI= CXC.IdCFDI where  Saldo >0 and IDPersona=:IdPersonaCliente '  +
+                                            auxiliar +  //Jun 30/17
                                         '  and ((IdCuentaXCobrarEstatus=0 and  ESMoratorio=0) or( Esmoratorio=1)) '+
                                         ' and CXC.IDAnexo=:IdAnexo order by CXC.idanexosamortizaciones,EsMoratorio DEsc, CXC.FechaVencimiento ');   //FV abr 11/17 Ajuste
   TADOQuery(dsAuxiliar.dataset).parameters.ParamByName('IDPersonaCliente').Value:= idpersonaCliente;
@@ -608,7 +674,8 @@ begin
   if dsConCXCPendientes.DataSet.eof then
   begin
     DSAplicacion.DataSet.Close;
-    SpdBtnAbonoCapital.Enabled:=(dsConCXCpendientes.DataSet.eof) and(dsPago.dataset.Fieldbyname('Saldo').AsExtended>0); //Habilitar boton para abono a Capital.
+    //jun 29/!7 Cambio nombre
+    SpdBtnSaldoAFavor.Enabled:=(dsConCXCpendientes.DataSet.eof) and(dsPago.dataset.Fieldbyname('Saldo').AsExtended>0); //Habilitar boton para abono a Capital.
 //    SpdBtnAbonoCapital.Action:= FActAbonoCApital; //Para ver si lo deja usar?? abr 19/17
   end;
 end;

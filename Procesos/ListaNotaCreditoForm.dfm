@@ -1,25 +1,37 @@
 inherited frmListaNotasCredito: TfrmListaNotasCredito
-  Caption = 'frmListaNotasCredito'
-  ClientWidth = 799
+  BorderStyle = bsDialog
+  Caption = 'Lista Notas Cr'#233'dito'
+  ClientHeight = 428
+  ClientWidth = 793
   ExplicitWidth = 799
+  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Width = 799
+    Top = 343
+    Width = 793
+    ExplicitWidth = 799
   end
   inherited splDetail1: TSplitter
-    Width = 799
+    Top = 255
+    Width = 793
+    ExplicitWidth = 799
   end
   inherited splDetail2: TSplitter
-    Width = 799
+    Top = 299
+    Width = 793
+    ExplicitWidth = 799
   end
   inherited pnlMaster: TPanel
-    Width = 799
+    Width = 793
+    Height = 229
     ExplicitTop = 26
+    ExplicitWidth = 799
     ExplicitHeight = 258
     inherited cxGrid: TcxGrid
-      Width = 799
-      Height = 258
+      Width = 793
+      Height = 229
+      ExplicitWidth = 799
       ExplicitHeight = 258
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdCFDI: TcxGridDBColumn
@@ -54,6 +66,7 @@ inherited frmListaNotasCredito: TfrmListaNotasCredito
         end
         object tvMasterSubTotal: TcxGridDBColumn
           DataBinding.FieldName = 'SubTotal'
+          Width = 75
         end
         object tvMasterTotalImpuestoTrasladado: TcxGridDBColumn
           Caption = 'Total IVA'
@@ -80,20 +93,39 @@ inherited frmListaNotasCredito: TfrmListaNotasCredito
     end
   end
   inherited pnlDetail3: TPanel
-    Width = 799
+    Top = 346
+    Width = 793
+    ExplicitWidth = 799
   end
   inherited pnlDetail2: TPanel
-    Width = 799
+    Top = 302
+    Width = 793
+    ExplicitWidth = 799
   end
   inherited pnlDetail1: TPanel
-    Width = 799
+    Top = 258
+    Width = 793
+    ExplicitWidth = 799
   end
   inherited pnlClose: TPanel
-    Width = 799
-    ExplicitTop = 422
+    Top = 387
+    Width = 793
+    Visible = True
     ExplicitWidth = 799
     inherited btnClose: TButton
-      Left = 714
+      Left = 708
+      ExplicitLeft = 714
+    end
+    object BtnAceptar: TButton
+      Left = 596
+      Top = 6
+      Width = 75
+      Height = 25
+      Anchors = [akTop, akRight]
+      Caption = 'Aceptar'
+      ModalResult = 1
+      TabOrder = 1
+      OnClick = BtnAceptarClick
     end
   end
   inherited DataSource: TDataSource
@@ -124,7 +156,6 @@ inherited frmListaNotasCredito: TfrmListaNotasCredito
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42913.417505358800000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

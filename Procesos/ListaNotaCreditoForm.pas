@@ -45,10 +45,21 @@ type
     tvMasterSaldoDocumento: TcxGridDBColumn;
     tvMasterObservaciones: TcxGridDBColumn;
     tvMasterSaldoFactoraje: TcxGridDBColumn;
+    BtnAceptar: TButton;
+    procedure tvMasterCellDblClick(Sender: TcxCustomGridTableView;
+      ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
+      AShift: TShiftState; var AHandled: Boolean);
+    procedure BtnAceptarClick(Sender: TObject);
   private
+    fIDCFDIActual: integer;
+    fMontoAct: Double;
+    FSerieFolioNC: String;
     { Private declarations }
   public
     { Public declarations }
+    Property IdCFDIAct:integer read fIDCFDIActual write fidcfdiActual;
+    property MontoActual: Double read fMontoAct write fMontoAct;
+    property SerieFolioNC:String read FSerieFolioNC write fserieFolioNC;
   end;
 
 var
@@ -59,5 +70,21 @@ implementation
 {$R *.dfm}
 
 uses PagosDM;
+
+procedure TfrmListaNotasCredito.BtnAceptarClick(Sender: TObject);
+begin
+  inherited;
+  fIDCFDIActual:=DataSource.DataSet.FieldByName('IdCFDI').AsInteger;
+  fMontoAct:=DataSource.DataSet.FieldByName('SaldoDocumento').AsFloat;
+  fSerieFolioNC:=DataSource.DataSet.FieldByName('Serie').AsString+'-'+DataSource.DataSet.FieldByName('Folio').AsString; //Si estuviese vacio esta sin timbrar.
+end;
+
+procedure TfrmListaNotasCredito.tvMasterCellDblClick(
+  Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo;
+  AButton: TMouseButton; AShift: TShiftState; var AHandled: Boolean);
+begin
+  inherited;
+  BtnAceptar.Click;
+end;
 
 end.

@@ -42,8 +42,6 @@ inherited FrmEdPagos: TFrmEdPagos
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitLeft = -224
-        ExplicitTop = 120
         object Label1: TLabel
           Left = 27
           Top = 119
@@ -81,7 +79,7 @@ inherited FrmEdPagos: TFrmEdPagos
           Width = 38
           Height = 13
           Caption = 'Importe'
-          FocusControl = cxDBTextEdit3
+          FocusControl = cxDBTxtEdtImporte
         end
         object Label6: TLabel
           Left = 211
@@ -112,7 +110,7 @@ inherited FrmEdPagos: TFrmEdPagos
           Width = 78
           Height = 13
           Caption = 'M'#233'todo de Pago'
-          FocusControl = DBLookupComboBox3
+          FocusControl = DBLkpCmbBxMetodoPago
         end
         object Label11: TLabel
           Left = 340
@@ -171,13 +169,13 @@ inherited FrmEdPagos: TFrmEdPagos
           TabOrder = 8
           Width = 205
         end
-        object cxDBTextEdit3: TcxDBTextEdit
+        object cxDBTxtEdtImporte: TcxDBTextEdit
           Left = 27
           Top = 288
           DataBinding.DataField = 'Importe'
           DataBinding.DataSource = DataSource
           TabOrder = 9
-          OnExit = cxDBTextEdit3Exit
+          OnExit = cxDBTxtEdtImporteExit
           Width = 121
         end
         object DBLookupComboBox1: TDBLookupComboBox
@@ -222,7 +220,7 @@ inherited FrmEdPagos: TFrmEdPagos
           Height = 21
           Width = 121
         end
-        object DBLookupComboBox3: TDBLookupComboBox
+        object DBLkpCmbBxMetodoPago: TDBLookupComboBox
           Left = 27
           Top = 182
           Width = 302

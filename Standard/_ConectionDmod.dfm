@@ -28,7 +28,7 @@ object _dmConection: T_dmConection
       'INNER JOIN Personas ON Usuarios.IdPersona = Personas.IdPersona'
       'WHERE Usuarios.IdUsuarioEstatus = 1')
     Left = 32
-    Top = 72
+    Top = 64
     object adoqUsuariosIdUsuario: TAutoIncField
       FieldName = 'IdUsuario'
       ReadOnly = True
@@ -55,8 +55,8 @@ object _dmConection: T_dmConection
     Parameters = <>
     SQL.Strings = (
       'SELECT [dbo].[GetDateAux] ()  as FechaAct ')
-    Left = 147
-    Top = 48
+    Left = 136
+    Top = 56
     object ADOQryFechaActualFechaAct: TDateTimeField
       FieldName = 'FechaAct'
       ReadOnly = True

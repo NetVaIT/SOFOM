@@ -25,17 +25,17 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
     ExplicitWidth = 1078
   end
   inherited pnlMaster: TPanel
-    Top = 72
+    Top = 70
     Width = 1072
-    Height = 183
-    ExplicitTop = 72
+    Height = 185
+    ExplicitTop = 70
     ExplicitWidth = 1072
-    ExplicitHeight = 183
+    ExplicitHeight = 185
     inherited cxGrid: TcxGrid
       Width = 1072
-      Height = 183
+      Height = 185
       ExplicitWidth = 1072
-      ExplicitHeight = 183
+      ExplicitHeight = 185
       inherited tvMaster: TcxGridDBTableView
         object tvMasterContrato: TcxGridDBColumn
           DataBinding.FieldName = 'Contrato'
@@ -147,7 +147,7 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
   end
   object PnlBusqueda: TPanel [8]
     Left = 0
-    Top = 28
+    Top = 26
     Width = 1072
     Height = 44
     Align = alTop
@@ -249,6 +249,7 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
         Width = 137
       end
       object ChckBxXFecha: TCheckBox
+        Tag = 1
         Left = 373
         Top = 9
         Width = 82
@@ -260,6 +261,7 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
         OnClick = ConsultarClick
       end
       object ChckBxConSaldo: TCheckBox
+        Tag = 2
         Left = 461
         Top = 9
         Width = 74
@@ -270,12 +272,24 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
         OnClick = ConsultarClick
       end
       object ChckBxMostrarMoratorios: TCheckBox
+        Tag = 3
         Left = 541
         Top = 9
         Width = 108
         Height = 29
         Caption = 'S'#243'lo Moratorios'
         TabOrder = 4
+        WordWrap = True
+        OnClick = ConsultarClick
+      end
+      object ChckBxOpcionCompra: TCheckBox
+        Tag = 4
+        Left = 645
+        Top = 9
+        Width = 148
+        Height = 29
+        Caption = 'S'#243'lo Opci'#243'n de Compra'
+        TabOrder = 5
         WordWrap = True
         OnClick = ConsultarClick
       end
@@ -297,7 +311,7 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
     DockControlHeights = (
       0
       0
-      28
+      26
       0)
     inherited dxbTools: TdxBar
       ItemLinks = <
@@ -1539,12 +1553,13 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42709.621321724540000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end
   object DSAuxiliar: TDataSource
     DataSet = dmCuentasXCobrar.ADOQryAuxiliar
-    Left = 964
+    Left = 988
     Top = 16
   end
 end

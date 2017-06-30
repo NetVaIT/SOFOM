@@ -41,12 +41,12 @@ type
     cxDBDateEdit1: TcxDBDateEdit;
     cxDBTextEdit1: TcxDBTextEdit;
     cxDBTextEdit2: TcxDBTextEdit;
-    cxDBTextEdit3: TcxDBTextEdit;
+    cxDBTxtEdtImporte: TcxDBTextEdit;
     DBLookupComboBox1: TDBLookupComboBox;
     DBLkpCmbBxCliente: TDBLookupComboBox;
     cxDBTextEdit5: TcxDBTextEdit;
     cxDBLabel1: TcxDBLabel;
-    DBLookupComboBox3: TDBLookupComboBox;
+    DBLkpCmbBxMetodoPago: TDBLookupComboBox;
     cxDBTextEdit4: TcxDBTextEdit;
     cxDBRdGrpOrigenPago: TcxDBRadioGroup;
     Label12: TLabel;
@@ -58,7 +58,7 @@ type
     DSNotasCredito: TDataSource;
     procedure DBLkpCmbBxClienteClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure cxDBTextEdit3Exit(Sender: TObject);
+    procedure cxDBTxtEdtImporteExit(Sender: TObject);
     procedure DBLkpCmbBxAnexosClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure cxDBLblAnexoClick(Sender: TObject);
@@ -81,11 +81,36 @@ uses PagosDM, ListaNotaCreditoForm;
 procedure TFrmEdPagos.cxBtnUsaNotaCreditoClick(Sender: TObject);
 begin                             //Jun 27/17
   inherited;
- (* frmListaNotasCredito:=TfrmListaNotasCredito.Create(self);
-  frmListaNotasCredito.ShowModal;
-  //Tomar datos //Solo ajustar daldo dela nota cuanso se Guarde el pago
 
-  frmListaNotasCredito.Free;*)
+  if not datasource.dataset.FieldByName('IdPersonaCliente').Isnull then
+  begin
+    frmListaNotasCredito:=TfrmListaNotasCredito.Create(self);
+    TadoDAtaset(frmListaNotasCredito.datasource.DataSet).close;
+    TadoDAtaset(frmListaNotasCredito.datasource.DataSet).Parameters.ParamByName('IDPersona').Value:= datasource.dataset.FieldByName('IdPersonaCliente').AsInteger;
+    TadoDAtaset(frmListaNotasCredito.datasource.DataSet).open;
+    if not TadoDAtaset(frmListaNotasCredito.datasource.DataSet).eof then
+    begin
+      frmListaNotasCredito.ShowModal;
+      if frmListaNotasCredito.ModalResult=mrOk then
+      begin
+        datasource.dataset.fieldbyname('IDCFDI_NCR').AsInteger:= frmListaNotasCredito.IdCFDIAct;
+        datasource.dataset.fieldbyname('Importe').AsFloat:= frmListaNotasCredito.MontoActual; //VErificar que se ajuste el saldo
+        datasource.dataset.fieldbyname('IDMetodoPago').AsInteger:= 0; //Tipo Nota credito
+        datasource.dataset.fieldbyname('CuentaPago').Asstring:=''; //SE limpia
+        datasource.dataset.fieldbyname('Referencia').AsString:= 'NC:'+frmListaNotasCredito.SerieFolioNC;
+
+    //Tomar datos //Solo ajustar daldo dela nota cuanso se Guarde el pago
+        DBLkpCmbBxMetodoPago.Enabled:=false; //Porque  uso nota crédito  Jun 28/17
+        cxDBTxtEdtImporte.Enabled:=False;
+//        cxBtnUsaNotaCredito.Enabled:=False; //Verificar si se deja
+      end;
+    end
+    else
+      ShowMessage('No existen Notas de crédito disponibles para este cliente');
+    frmListaNotasCredito.Free;
+  end
+  else
+    ShowMessage('Debe seleccionar el cliente');
 end;
 
 procedure TFrmEdPagos.cxDBLblAnexoClick(Sender: TObject);
@@ -98,7 +123,7 @@ begin            //Mar 9/17 Siempre esta editando.
   cxDBLblAnexo.Visible:=FAlse;
 end;
 
-procedure TFrmEdPagos.cxDBTextEdit3Exit(Sender: TObject);
+procedure TFrmEdPagos.cxDBTxtEdtImporteExit(Sender: TObject);
 begin
   inherited;
   if datasource.State in [dsinsert,dsEdit] then //Feb 16/17
@@ -143,7 +168,9 @@ end;
 procedure TFrmEdPagos.FormShow(Sender: TObject);
 begin
   inherited;             //SE cambio por si son diferntes a mas de 3 decimales                                               //0.001
-  PnlDatosBase.Enabled:=abs(DataSource.DataSet.FieldByName('Saldo').AsFloat- DataSource.DataSet.FieldByName('Importe').AsFloat)<0.01;
+  PnlDatosBase.Enabled:=(abs(DataSource.DataSet.FieldByName('Saldo').AsFloat- DataSource.DataSet.FieldByName('Importe').AsFloat)<0.01)
+                        and DataSource.DataSet.FieldByName('IDCFDI_NCR').IsNULL ; //Ajustado paera que no se pueda modificar una de Nota de crédito
+  cxBtnUsaNotaCredito.Enabled:= PnlDatosBase.Enabled and  not DataSource.DataSet.FieldByName('EsDeposito').asBoolean;
 end;
 
 end.

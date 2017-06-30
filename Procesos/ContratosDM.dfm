@@ -145,7 +145,7 @@ inherited dmContratos: TdmContratos
   object dsMaster: TDataSource
     AutoEdit = False
     DataSet = adodsMaster
-    Left = 128
+    Left = 136
     Top = 16
   end
   object adodsPersonas: TADODataSet
@@ -506,7 +506,6 @@ inherited dmContratos: TdmContratos
     end
   end
   object adodsMonedas: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdMoneda, Descripcion from Monedas'#13#10'order by Descripcion'
@@ -515,7 +514,6 @@ inherited dmContratos: TdmContratos
     Top = 144
   end
   object adodsAnexosEstatus: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdAnexoEstatus, Descripcion from AnexosEstatus'
@@ -757,7 +755,7 @@ inherited dmContratos: TdmContratos
         Size = 4
         Value = Null
       end>
-    Left = 200
+    Left = 216
     Top = 144
     object adodsCreditosIdAnexoCredito: TAutoIncField
       FieldName = 'IdAnexoCredito'
@@ -1136,7 +1134,6 @@ inherited dmContratos: TdmContratos
     Top = 352
   end
   object adodsEmpleado: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
