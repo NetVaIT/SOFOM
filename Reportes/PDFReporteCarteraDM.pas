@@ -308,6 +308,9 @@ type
     adodsReportAlias: TStringField;
     ppLabel22: TppLabel;
     ppDBText66: TppDBText;
+    adodsReportValorResidual: TFMTBCDField;
+    adodsReportSaldoInsoluto: TFMTBCDField;
+    adodsReportSaldoTotal: TFMTBCDField;
     procedure CuotasReportCalcFields(DataSet: TDataSet);
   private
     { Private declarations }

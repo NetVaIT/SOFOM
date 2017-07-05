@@ -13,8 +13,9 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       'VencidoA90/1000 as VencidoA90, VencidoMas120/1000 as VencidoMas1' +
       '20,'#13#10'DiasRetraso, Cantidad, atrasados, atiempo, CuotasPendientes' +
       ', DiasPagoTotal, '#13#10'DiasPagoRetraso, PorcentajeAtrasados, Porcent' +
-      'ajeATiempo, CalificacionInicial'#13#10'from vw_ReporteCarteraCompleto'#13 +
-      #10'order by TotalCobradoVencido desc , TotalPorCobrar DEsc'
+      'ajeATiempo, CalificacionInicial'#13#10', ValorResidual, SaldoInsoluto,' +
+      ' SaldoTotal'#13#10'from vw_ReporteCarteraCompleto'#13#10'order by TotalCobra' +
+      'doVencido desc , TotalPorCobrar DEsc'
     Left = 40
     object adodsReportIdAnexo: TIntegerField
       FieldName = 'IdAnexo'
@@ -157,6 +158,21 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
     object adodsReportAlias: TStringField
       FieldName = 'Alias'
       Size = 5
+    end
+    object adodsReportValorResidual: TFMTBCDField
+      FieldName = 'ValorResidual'
+      Precision = 18
+      Size = 6
+    end
+    object adodsReportSaldoInsoluto: TFMTBCDField
+      FieldName = 'SaldoInsoluto'
+      Precision = 18
+      Size = 6
+    end
+    object adodsReportSaldoTotal: TFMTBCDField
+      FieldName = 'SaldoTotal'
+      Precision = 18
+      Size = 6
     end
   end
   inherited ppReport: TppReport

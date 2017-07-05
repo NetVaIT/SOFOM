@@ -273,7 +273,7 @@ begin
     ADOStrdPrcGeneraCXC.ExecProc;
 
  // deshabilitado ab 11/17   ShowMessage('Ejecutó proceso con fecha '+dateTimeToSTR(FechaAux));
-    if ADOStrdPrcGeneraCXC.Parameters.ParamByName('@IDCuentaXCobrar').Value>0 then //Ajustado Jun 30/17
+// verificar con Jesus para que mande algun valor  if ADOStrdPrcGeneraCXC.Parameters.ParamByName('@IDCuentaXCobrar').Value>0 then //Ajustado Jun 30/17
       Res:=Res+1;  //Movido aca abr 12/17
     ADOQryAuxiliar.Next;
   end;
@@ -283,7 +283,7 @@ begin
   if res=0  then
      Showmessage('No existian Cuentas X Cobrar pendientes de generar')
   else
-     Showmessage('Actualizó '+intToStr(res)+' Cuentas X Cobrar');
+     Showmessage('Actualizó  Cuentas X Cobrar de '+intToStr(res)+' Amortizaciones');  //Puede que no de todas actualice
   RegistraBitacora(0);//CuentasXCobrar
 end;
 
@@ -297,6 +297,7 @@ begin
   0:  tipoTxt:='CXC';
   1:  tipoTxt:='MORA';
   2:  tipoTxt:='ABOCAP'; //Abr 19/17
+
   end;
 
   ADOQryAuxiliar.Close;

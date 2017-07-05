@@ -1,7 +1,9 @@
 inherited FrmReporteCarteraGrid: TFrmReporteCarteraGrid
   Caption = 'FrmReporteCarteraGrid'
   ClientWidth = 1295
+  ExplicitLeft = -57
   ExplicitWidth = 1295
+  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -18,15 +20,14 @@ inherited FrmReporteCarteraGrid: TFrmReporteCarteraGrid
   end
   inherited pnlMaster: TPanel
     Width = 1295
-    ExplicitTop = 28
-    ExplicitWidth = 1027
-    ExplicitHeight = 256
+    ExplicitTop = 26
+    ExplicitWidth = 1295
+    ExplicitHeight = 258
     inherited cxGrid: TcxGrid
       Width = 1295
-      Height = 256
-      ExplicitTop = -3
+      Height = 258
       ExplicitWidth = 1295
-      ExplicitHeight = 256
+      ExplicitHeight = 258
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdAnexo: TcxGridDBColumn
           DataBinding.FieldName = 'IdAnexo'
@@ -61,46 +62,68 @@ inherited FrmReporteCarteraGrid: TFrmReporteCarteraGrid
           Visible = False
           Width = 98
         end
+        object tvMasterSaldoInsoluto: TcxGridDBColumn
+          Caption = 'Saldo Insoluto'
+          DataBinding.FieldName = 'SaldoInsoluto'
+          HeaderHint = 'Capital No pagado'
+        end
         object tvMasterSaldoTotal: TcxGridDBColumn
+          Caption = 'Saldo Total'
           DataBinding.FieldName = 'SaldoTotal'
+          HeaderHint = 'Saldo Amortizaciones  + Valor Residual'
           Width = 148
         end
         object tvMasterCobradoCXC: TcxGridDBColumn
           DataBinding.FieldName = 'CobradoCXC'
           Visible = False
         end
+        object tvMasterSaldoAmortizaciones: TcxGridDBColumn
+          Caption = 'Saldo Amortizaciones'
+          DataBinding.FieldName = 'SaldoAmortizaciones'
+          HeaderHint = 'Todas las Amortizaciones No Pagadas'
+          Width = 183
+        end
         object tvMasterTotalPorCobrar: TcxGridDBColumn
-          Caption = 'Total Por Cobrar'
+          Caption = 'Saldo Futuro'
           DataBinding.FieldName = 'TotalPorCobrar'
+          HeaderHint = 'Amortizaciones Pendientes X Cobrar'
           Width = 131
         end
         object tvMasterSaldopendiente: TcxGridDBColumn
           Caption = 'Saldo Pendiente'
           DataBinding.FieldName = 'Saldopendiente'
+          HeaderHint = 'CXC pendientes de Pago vencidas y no vencidas'
           Width = 133
         end
         object tvMasterTotalCobradoVencido: TcxGridDBColumn
+          Caption = 'Saldo Vencido'
           DataBinding.FieldName = 'TotalCobradoVencido'
+          HeaderHint = 'CXC no pagadas vencidas > 1 d'#237'a'
           Width = 126
         end
         object tvMasterTotalVigente: TcxGridDBColumn
           DataBinding.FieldName = 'TotalVigente'
+          HeaderHint = 'Vencidas entre 1 y 30 d'#237'as'
           Width = 132
         end
         object tvMasterVencidoA30: TcxGridDBColumn
           DataBinding.FieldName = 'VencidoA30'
+          HeaderHint = 'Vencidas entre 31 y 60 d'#237'as'
           Width = 105
         end
         object tvMasterVencidoA60: TcxGridDBColumn
           DataBinding.FieldName = 'VencidoA60'
+          HeaderHint = 'Vencidas entre 61 y 90 d'#237'as'
           Width = 77
         end
         object tvMasterVencidoA90: TcxGridDBColumn
           DataBinding.FieldName = 'VencidoA90'
+          HeaderHint = 'Vencidas entre 91 y 120 d'#237'as'
           Width = 118
         end
         object tvMasterVencidoMas120: TcxGridDBColumn
           DataBinding.FieldName = 'VencidoMas120'
+          HeaderHint = 'Vencidas por m'#225's de 120 d'#237'as'
           Width = 92
         end
         object tvMasterDiasRetraso: TcxGridDBColumn
@@ -125,7 +148,7 @@ inherited FrmReporteCarteraGrid: TFrmReporteCarteraGrid
         end
         object tvMasterDiasPagoTotal: TcxGridDBColumn
           DataBinding.FieldName = 'DiasPagoTotal'
-          Width = 76
+          Width = 87
         end
         object tvMasterDiasPagoRetraso: TcxGridDBColumn
           DataBinding.FieldName = 'DiasPagoRetraso'
@@ -139,27 +162,34 @@ inherited FrmReporteCarteraGrid: TFrmReporteCarteraGrid
           DataBinding.FieldName = 'PorcentajeATiempo'
           Width = 100
         end
+        object tvMasterValorResidual: TcxGridDBColumn
+          DataBinding.FieldName = 'ValorResidual'
+        end
+        object tvMasterSaldoTBD: TcxGridDBColumn
+          DataBinding.FieldName = 'SaldoTBD'
+          Visible = False
+        end
       end
     end
   end
   inherited pnlDetail3: TPanel
     Width = 1295
-    ExplicitWidth = 1027
+    ExplicitWidth = 1295
   end
   inherited pnlDetail2: TPanel
     Width = 1295
-    ExplicitWidth = 1027
+    ExplicitWidth = 1295
   end
   inherited pnlDetail1: TPanel
     Width = 1295
-    ExplicitWidth = 1027
+    ExplicitWidth = 1295
   end
   inherited pnlClose: TPanel
     Width = 1295
-    ExplicitWidth = 1027
+    ExplicitWidth = 1295
     inherited btnClose: TButton
       Left = 1210
-      ExplicitLeft = 942
+      ExplicitLeft = 1210
     end
   end
   inherited DataSource: TDataSource
@@ -169,7 +199,7 @@ inherited FrmReporteCarteraGrid: TFrmReporteCarteraGrid
     DockControlHeights = (
       0
       0
-      28
+      26
       0)
     inherited dxbTools: TdxBar
       ItemLinks = <
@@ -1070,6 +1100,7 @@ inherited FrmReporteCarteraGrid: TFrmReporteCarteraGrid
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42867.572603240740000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

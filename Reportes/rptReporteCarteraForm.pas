@@ -61,6 +61,10 @@ type
     dxBrBtnHojaControlCliente: TdxBarButton;
     dxBrBtnHojaControlTodos: TdxBarButton;
     tvMasterSaldoTotal: TcxGridDBColumn;
+    tvMasterValorResidual: TcxGridDBColumn;
+    tvMasterSaldoInsoluto: TcxGridDBColumn;
+    tvMasterSaldoTBD: TcxGridDBColumn;
+    tvMasterSaldoAmortizaciones: TcxGridDBColumn;
     procedure dxBrBtnHojaControlClienteClick(Sender: TObject);
     procedure dxBrBtnHojaControlTodosClick(Sender: TObject);
   private

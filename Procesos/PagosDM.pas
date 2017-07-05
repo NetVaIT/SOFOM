@@ -687,15 +687,32 @@ begin
 
     ADODtStPagosAuxiliar.Post;
   end;
-  //Verificar si es un Deposito en garantia   y crear un pago correspondiente Jun 8/17
-  if (Pos('Deposito en garantia',ADODtStCxCDetallePendDescripCXC.AsString)>0)
-  and (ADODtStCxCDetallePendSaldo.AsFloat=0)//Jun 21/17
+  //Verificar si es un Deposito en garantia   y crear un pago correspondiente Jun 8/17      //verificar por que no lo hizo....????jul 4/17
+  if (Pos('Deposito en garantia',ADODtStCxCDetallePendDescripCXC.AsString)>0)  //Jun 21/17
+ // deshabilitado por que puede no estar en Cero  and (ADODtStCxCDetallePendSaldo.AsFloat=0)  //Si estuviese actualizado no se veria
 //No debe existir por que no habia la alicacion interna   and NoExistePagoXDeposito(ADODtstAplicacionesInternasIDPagoAplicacionInterna.asinteger,adodsMasterIDAnexo.AsInteger )
 
   then // verificar si asi o con sus id(56,66,76)
   begin
-    if CrearPagoXDeposito(DataSet.FieldByName('IMPORTE').AsFloat,AdoDsMaster) then
-      ShowMessage('Se creó pago correspondiente al Depósito en Garantía');
+    //verificar saldo 0 o menor que 0.01
+    //Solo para aplicar lo del depósito cuando se pago todo el depósito Jul 4/17  Lo de mas se aplica a nivel CXC
+    ADOQryAuxiliar.SQL.Clear;
+    ADOQryAuxiliar.SQL.Add('UPDATE ANEXOS SET SALDOTOTAL=SALDOTOTAL - '+DataSet.FieldByName('Importe').AsString   //Anexos actualizacion saldos nuevos
+                              +', PagadoTotal = PagadoTotal+ '+DataSet.FieldByName('Importe').AsString
+                            +' where IDAnexo ='+adodsMasterIdAnexo.ASString); //debe tener valor.
+    ADOQryAuxiliar.ExecSQL;   //Verificar porue par el deposito en Garantia  del inicio tiene más cosas que no deben descontarse
+    ADOQryAuxiliar.Close;
+    ///hasta aca jul 4/17
+    //// jul 5/17
+    ADOQryAuxiliar.Close;
+    ADOQryAuxiliar.SQl.Clear;
+    ADOQryAuxiliar.SQL.Add('Select * from CuentasXCobrarDetalle  where idcuentaXCobrarDetalle='+  ADODtStCxCDetallePendIdCuentaXCobrarDetalle.AsString);
+    ADOQryAuxiliar.open;
+    if ADOQryAuxiliar.FieldByName('Saldo').AsExtended<0.01 then //Ya se pago todo el enganche //jul 5/17
+    begin
+      if CrearPagoXDeposito(DataSet.FieldByName('IMPORTE').AsFloat,AdoDsMaster) then
+        ShowMessage('Se creó pago correspondiente al Depósito en Garantía');
+    end;
   end;
 
   //HAsta aca jun 8/17
@@ -732,7 +749,7 @@ begin
   ADOQryAuxiliar.SQl.Clear;
   ADOQryAuxiliar.SQL.Add(' Insert Into Pagos(idPersonaCliente,FechaPago,IdAnexo, IdContrato, IDMetodoPago,  ' +
                          ' SeriePago, FolioPago,Importe, Saldo,Referencia, Observaciones, EsDeposito) Values (  '+
-                         ' :idPersonaCliente,:FechaPago,:IdAnexo,:IdContrato, :IDMetododePago,  ' +
+                         ' :idPersonaCliente,:FechaPago,:IdAnexo,:IdContrato, :IDMetodoPago,  ' +
                          ' :SeriePago, :FolioPago,:Importe, :Saldo,:Referencia, :Observaciones,:EsDeposito)');
 
   ADOQryAuxiliar.Parameters.ParamByName('idPersonaCliente').value:=ADatosPago.FieldByName('IdPersonaCliente').asInteger;
@@ -741,8 +758,10 @@ begin
   ADOQryAuxiliar.Parameters.ParamByName('IdAnexo').value:=ADatosPago.FieldByName('IDAnexo').asInteger;
   ADOQryAuxiliar.Parameters.ParamByName('IdContrato').value:=ADatosPago.FieldByName('IdContrato').asInteger;
   if not aDatosPago.FieldByName('IDMetodoPago').isnull then
-     ADOQryAuxiliar.Parameters.ParamByName('IDMetodoPago').value:=aDatosPago.FieldByName('IDMetodoPago').asInteger;
-  
+     ADOQryAuxiliar.Parameters.ParamByName('IDMetodoPago').value:=aDatosPago.FieldByName('IDMetodoPago').asInteger
+  else
+     ADOQryAuxiliar.Parameters.ParamByName('IDMetodoPago').value:= 5 ;// jul 5/17 Otro
+
   ADOQryAuxiliar.Parameters.ParamByName('SeriePago').value:=serieAct;
   ADOQryAuxiliar.Parameters.ParamByName('FolioPago').value:= FolioAct;
   ADOQryAuxiliar.Parameters.ParamByName('Importe').value:=simpleroundto(Importe,-2); //REdondeado para evitar centavos  negativo sobre centavos .. otro sobre pesos
@@ -1170,8 +1189,8 @@ begin
             ADODtStCXCPendientes.Open;
             ADODtStCXCPendientes.Locate('IdCuentaXCobrar', IDCXC,[]);
             adodsMaster.Refresh; //Pago
-
-            ObsBitacora:='IDPago:'+ intToSTr(adodsMasterIdPago.AsInteger)+' IdAnexo: '+intToSTR(IdAnexoAct)
+                                                                                                 //No tiene valor  IdAnexoAct Jul 4/17
+            ObsBitacora:='IDPago:'+ intToSTr(adodsMasterIdPago.AsInteger)+' IdAnexo: '+intToSTR(adodsMasterIdAnexo.AsInteger)
                          +' IdCXC:'+ intToStr(idcxc)+' Importe:'+floatToStr(ImportePago)+'. Pago Anticipado ';
             RegistraBitacora(3,ObsBitacora);
 
@@ -1635,6 +1654,21 @@ begin        //FEb 10/17                 //No requerido aca
     ADOQryAuxiliar.ExecSQL;
 
     ADOQryAuxiliar.Close;
+
+    if Not EsInicial then //Para que no reste todo lo asociado con Pagos iniciales//hay que ver cuando se le resta el deposito en Garantia?
+    begin//**********Para poner pagos en Anexos y SaldoTotal************** //Jul 4/17
+      ADOQryAuxiliar.SQL.Clear;
+                                                        // SET '+CampoSaldo+' = '+CampoSaldo +' - '
+      ADOQryAuxiliar.SQL.Add('UPDATE ANEXOS SET SALDOTOTAL=SALDOTOTAL - '+DataSet.FieldByName('Importe').AsString   //Anexos actualizacion saldos nuevos
+                              +', PagadoTotal = PagadoTotal+ '+DataSet.FieldByName('Importe').AsString
+                            +' where IDAnexo ='+adodsMasterIdAnexo.ASString); //debe tener valor.
+      ADOQryAuxiliar.ExecSQL;   //Verificar porue par el deposito en Garantia  del inicio tiene más cosas que no deben descontarse
+
+      ADOQryAuxiliar.Close;
+    end;
+
+    //HAsta aca Jul 4/17
+
 
     ADOQryAuxiliar.SQL.Clear;     //Abr 19/17
     ADOQryAuxiliar.SQL.Add('UPDATE CuentasXCobrar SET IdCuentaXCobrarEstatus = 3 ' +

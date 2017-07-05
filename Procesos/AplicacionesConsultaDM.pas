@@ -186,7 +186,10 @@ begin
   ADOQryAuxiliar.Parameters.ParamByName('IdAnexo').value:=ADatosPago.FieldByName('IDAnexo').asInteger;
   ADOQryAuxiliar.Parameters.ParamByName('IdContrato').value:=ADatosPago.FieldByName('IdContrato').asInteger;
   if not aDatosPago.FieldByName('IDMetodoPago').isnull then
-     ADOQryAuxiliar.Parameters.ParamByName('IDMetodoPago').value:=aDatosPago.FieldByName('IDMetodoPago').asInteger;
+     ADOQryAuxiliar.Parameters.ParamByName('IDMetodoPago').value:=aDatosPago.FieldByName('IDMetodoPago').asInteger
+  else
+     ADOQryAuxiliar.Parameters.ParamByName('IDMetodoPago').value:= 5 ;// jul 5/17 Otro
+
 
   ADOQryAuxiliar.Parameters.ParamByName('SeriePago').value:=serieAct;
   ADOQryAuxiliar.Parameters.ParamByName('FolioPago').value:= FolioAct;

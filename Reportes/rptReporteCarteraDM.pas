@@ -37,6 +37,10 @@ type
     ActPDFCartera: TAction;
     ActPDFHojaControl: TAction;
     adodsMasterSaldoTotal: TFMTBCDField;
+    adodsMasterValorResidual: TFMTBCDField;
+    adodsMasterSaldoInsoluto: TFMTBCDField;
+    adodsMasterSaldoTBD: TFMTBCDField;
+    adodsMasterSaldoAmortizaciones: TFMTBCDField;
     procedure adodsMasterCalcFields(DataSet: TDataSet);
     procedure DataModuleCreate(Sender: TObject);
     procedure ActPDFCarteraExecute(Sender: TObject);

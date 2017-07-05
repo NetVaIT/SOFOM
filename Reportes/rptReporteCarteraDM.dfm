@@ -7,13 +7,15 @@ inherited dmrptReporteCartera: TdmrptReporteCartera
       'SElect IdAnexo, Contrato, Anexo, CLiente, Tc, Plazo, Total as To' +
       'tal, '#13#10'CobradoCXC as CobradoCXC, TotalPorCobrar as TotalPorCobra' +
       'r, Saldopendiente  as Saldopendiente,'#13#10' TotalVigente  as TotalVi' +
-      'gente,'#13#10' TotalPorVencer as SaldoTotal, TotalCobradoVencido as To' +
-      'talCobradoVencido,'#13#10' VencidoA30 as VencidoA30, VencidoA60 as Ven' +
-      'cidoA60, VencidoA90 as VencidoA90, '#13#10'VencidoMas120 as VencidoMas' +
-      '120,'#13#10'DiasRetraso, Cantidad, atrasados, atiempo, CuotasPendiente' +
-      's, DiasPagoTotal, '#13#10'DiasPagoRetraso, PorcentajeAtrasados, Porcen' +
-      'tajeATiempo'#13#10'from vw_ReporteCarteraCompleto'#13#10'order by  TotalCobr' +
-      'adoVencido desc, TotalPorVencer desc'
+      'gente,'#13#10' TotalPorVencer + ValorResidual as SaldoTotal,'#13#10'TotalPor' +
+      'Vencer as SaldoAmortizaciones,'#13#10' TotalCobradoVencido as TotalCob' +
+      'radoVencido,'#13#10' VencidoA30 as VencidoA30, VencidoA60 as VencidoA6' +
+      '0, VencidoA90 as VencidoA90, '#13#10'VencidoMas120 as VencidoMas120,'#13#10 +
+      'DiasRetraso, Cantidad, atrasados, atiempo, CuotasPendientes, Dia' +
+      'sPagoTotal, '#13#10'DiasPagoRetraso, PorcentajeAtrasados, PorcentajeAT' +
+      'iempo'#13#10', ValorResidual, SaldoInsoluto, SaldoTotal as SaldoTBD '#13#10 +
+      #13#10#13#10'from vw_ReporteCarteraCompleto'#13#10'order by  TotalCobradoVencid' +
+      'o desc, TotalPorVencer desc'
     Left = 32
     object adodsMasterIdAnexo: TIntegerField
       FieldName = 'IdAnexo'
@@ -155,6 +157,31 @@ inherited dmrptReporteCartera: TdmrptReporteCartera
     end
     object adodsMasterSaldoTotal: TFMTBCDField
       FieldName = 'SaldoTotal'
+      ReadOnly = True
+      DisplayFormat = '###,##0.00'
+      Precision = 38
+      Size = 6
+    end
+    object adodsMasterValorResidual: TFMTBCDField
+      FieldName = 'ValorResidual'
+      DisplayFormat = '###,##0.00'
+      Precision = 18
+      Size = 6
+    end
+    object adodsMasterSaldoInsoluto: TFMTBCDField
+      FieldName = 'SaldoInsoluto'
+      DisplayFormat = '###,##0.00'
+      Precision = 18
+      Size = 6
+    end
+    object adodsMasterSaldoTBD: TFMTBCDField
+      FieldName = 'SaldoTBD'
+      DisplayFormat = '###,##0.00'
+      Precision = 18
+      Size = 6
+    end
+    object adodsMasterSaldoAmortizaciones: TFMTBCDField
+      FieldName = 'SaldoAmortizaciones'
       ReadOnly = True
       DisplayFormat = '###,##0.00'
       Precision = 38

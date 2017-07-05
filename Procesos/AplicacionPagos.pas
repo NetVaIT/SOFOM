@@ -250,8 +250,8 @@ begin
                  +'2. El valor a aplicar no debe ser mayor que el valor de la CXC '+#13
                  +'3. Canceló pago de moratorios.')
     else
-    begin
-      if Valor > 0 then
+    begin        //Era 0 Jul 4/17
+      if Valor > 0.01 then
       begin            //Sobraria   and Seguir
         if (TieneMora)or //FEb 14/17 Para evitar q pregunte si es moratorios  moratorios  ya que debe aplicarlos
             (Application.MessageBox(pChar('Esta seguro de aplicar el importe '+FloatTostrF(DSAplicacion.DataSet.FieldByName(CampoImporte).ASFloat,ffCurrency,10,2) //Abr 17/17
@@ -275,14 +275,14 @@ begin
           end;
           RefreshCXCPendientes;
           dsPago.dataset.Refresh;
-          //Abr 17/17
-          if (dsPago.dataset.Fieldbyname('Saldo').AsExtended>0) then     //Queda saldo
+          //Abr 17/17                                       //Ajustado Jul 4/17
+          if (dsPago.dataset.Fieldbyname('Saldo').AsExtended>0.01) then     //Queda saldo
           begin
             if (not dsConCXCpendientes.DataSet.eof) then   //Tiene CXC pendeintes
               DSAplicacion.DataSet.Insert // ahi se coloca el dato de importe posible de pago
             else
-            begin   //CAmbio de nombre
-              SpdBtnSaldoAFavor.Enabled:=(dsPago.dataset.Fieldbyname('Saldo').AsExtended>0); //Habilitar boton para abono a Capital.
+            begin   //CAmbio de nombre                                        //Ajustado Jul 4/17
+              SpdBtnSaldoAFavor.Enabled:=(dsPago.dataset.Fieldbyname('Saldo').AsExtended>0.01); //Habilitar boton para abono a Capital.
              // SpdBtnAbonoCapital.Action:= FActAbonoCApital; //Para ver si lo deja usar?? abr 19/17
             end;
           end;
@@ -290,8 +290,8 @@ begin
       end
       else                                                                                                           //Ene 13/17 'Importe'                                                  'Saldo'
         ShowMessage('No se puede aplicar un valor de 0');
-      //showmessage(quitasignos (cxDBLblDisponible.Caption) ); //Ago 15/16
-      BtBtnAplicar.Enabled:= (strtoFLoat(quitasignos(cxDBLblDisponible.Caption))>0) and (DSAplicacion.DataSet.state =dsInsert);
+      //showmessage(quitasignos (cxDBLblDisponible.Caption) ); //Ago 15/16    //Ajustado Jul 4/17
+      BtBtnAplicar.Enabled:= (strtoFLoat(quitasignos(cxDBLblDisponible.Caption))>0.01) and (DSAplicacion.DataSet.state =dsInsert);
    //DH Abr 17/17   BtBtnAgregar.Enabled:= (strtoFLoat(quitasignos(cxDBLblDisponible.Caption))>0) and (DsAplicacion.state =dsBrowse)and (not dsConCXCpendientes.dataset.eof);
       cxDBTxtEdtImporteAplicar.Enabled:= (DSAplicacion.DataSet.state =dsInsert);//Ago 15/16
 
@@ -419,7 +419,7 @@ end;
 
 procedure TFrmAplicacionPago.cxChckBxCambioconsultaClick(Sender: TObject);
 begin
-  //CAmbiar consulta
+  //CAmbiar consulta                                                       //Verifiar lo de los adelantados  -- para poder facturar addelantados
   TAdoDataset(DsconCXCPendientes.DataSet).Close;
   if cxChckBxCambioconsulta.Checked then
   begin
@@ -430,6 +430,7 @@ begin
     +' Ci.SaldoFactoraje as SaldoFactorajeCFDI  from CuentasXCobrar CXC left Join CFDI CI on CI.IdCFDI= CXC.IdCFDI where '
     +' CXC.idanexosamortizaciones is not null and  Saldo >0 and IDPersona=:IdPersonaCliente and '
     +' ((IdCuentaXCobrarEstatus=0 and  ESMoratorio=0) or( Esmoratorio=1) or '
+    +' (CXC.Fecha<dbo.GetDateAux() and IdCuentaXCobrarEstatus=-1) or '     //jul 4/17
     +' (exists (select * from CuentasXCobrarDetalle CXCD where CXCD.descripcion like''%Abono Capital%'' and CXC.IdCuentaXCobrar=CXCD.idcuentaXCobrar )'
     +' and CXC.IdCFDI is null) ) and CXC.IDAnexo=:IdAnexo'           //-- IdCuentaXCobrarEstatus=-1 and puede que esten facturadas
     +'  order by CXC.idanexosamortizaciones,EsMoratorio DEsc, CXC.FechaVencimiento' ;
@@ -444,6 +445,7 @@ begin
     +' Ci.SaldoFactoraje as SaldoFactorajeCFDI  from CuentasXCobrar CXC left Join CFDI CI on CI.IdCFDI= CXC.IdCFDI where '
     +' Saldo >0 and IDPersona=:IdPersonaCliente and '
     +' ((IdCuentaXCobrarEstatus=0 and  ESMoratorio=0) or( Esmoratorio=1) or '
+    +' (CXC.Fecha<dbo.GetDateAux() and IdCuentaXCobrarEstatus=-1) or '     //jul 4/17
     +' (exists (select * from CuentasXCobrarDetalle CXCD where CXCD.descripcion like''%Abono Capital%'' and CXC.IdCuentaXCobrar=CXCD.idcuentaXCobrar )'
     +' and CXC.IdCFDI is null) ) and CXC.IDAnexo=:IdAnexo'           //-- IdCuentaXCobrarEstatus=-1 and puede que esten facturadas
     +'  order by CXC.idanexosamortizaciones,EsMoratorio DEsc, CXC.FechaVencimiento' ;
