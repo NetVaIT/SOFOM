@@ -189,7 +189,8 @@ inherited dmContratos: TdmContratos
       'Mensual, ImpactoISR, '#13#10'FechaCorte, FechaVencimiento, TasaMorator' +
       'iaAnual, PagoInicialCreado, CapitalCobrado, SaldoInsoluto, Monto' +
       'Vencido, CartaCompensacion, ValorResidualCreado, OpcionCompraCre' +
-      'ado'#13#10'from Anexos'#13#10'where IdContrato = :IdContrato'
+      'ado, FechaTermino, MontoTermino, ContratadoTotal, PagadoTotal, S' +
+      'aldoTotal'#13#10'from Anexos'#13#10'where IdContrato = :IdContrato'
     DataSource = dsMaster
     MasterFields = 'IdContrato'
     Parameters = <
@@ -479,6 +480,38 @@ inherited dmContratos: TdmContratos
     object adodsAnexosMontoVencido: TFMTBCDField
       DisplayLabel = 'Monto vencido'
       FieldName = 'MontoVencido'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object adodsAnexosFechaTermino: TDateTimeField
+      DisplayLabel = 'Fecha de termino'
+      FieldName = 'FechaTermino'
+    end
+    object adodsAnexosMontoTermino: TFMTBCDField
+      DisplayLabel = 'Monto de termino'
+      FieldName = 'MontoTermino'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object adodsAnexosContratadoTotal: TFMTBCDField
+      DisplayLabel = 'Total contratado'
+      FieldName = 'ContratadoTotal'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object adodsAnexosPagadoTotal: TFMTBCDField
+      DisplayLabel = 'Total pagado'
+      FieldName = 'PagadoTotal'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object adodsAnexosSaldoTotal: TFMTBCDField
+      DisplayLabel = 'Saldo total'
+      FieldName = 'SaldoTotal'
       currency = True
       Precision = 18
       Size = 6
@@ -1142,5 +1175,23 @@ inherited dmContratos: TdmContratos
     Parameters = <>
     Left = 104
     Top = 264
+  end
+  object adocSetAnexoSaldo: TADOCommand
+    CommandText = 
+      'DECLARE @IdAnexo int'#13#10'DECLARE @PagoTotal decimal(18,6)'#13#10'DECLARE ' +
+      '@MontoVencido decimal(18,6)'#13#10'DECLARE @SaldoActual decimal(18,6)'#13 +
+      #10'SET @IdAnexo = :IdAnexo'#13#10'SELECT @PagoTotal = dbo.GetPagoTotal(@' +
+      'IdAnexo) '#13#10'UPDATE Anexos'#13#10'SET MontoTermino = @PagoTotal,'#13#10'Contra' +
+      'tadoTotal = @PagoTotal + ValorResidual,'#13#10'SaldoTotal = (@PagoTota' +
+      'l + ValorResidual) - PagadoTotal'#13#10'WHERE IdAnexo = @IdAnexo'#13#10
+    Connection = _dmConection.ADOConnection
+    Parameters = <
+      item
+        Name = 'IdAnexo'
+        Size = -1
+        Value = Null
+      end>
+    Left = 472
+    Top = 352
   end
 end

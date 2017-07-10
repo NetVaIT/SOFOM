@@ -8,6 +8,7 @@ uses
 
 resourcestring
   strUpdateDepreciacion = '¿Desea actualizar la deprecición de los productos?';
+  strDeleteRelacionado = 'El producto ya se encuentra asignado a un anexo, por lo que no se permite eliminarlo';
 
 type
   TdmProductos = class(T_dmStandar)

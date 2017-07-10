@@ -251,7 +251,6 @@ begin
        (RolTipo = rSocio) then
     begin
       cmbTipoPersona.Enabled := False;
-      cmbTipoPersona.EditValue := 1;
     end;
     if cmbTipoPersona.EditValue = 1 then
     begin

@@ -27,14 +27,15 @@ inherited frmProductos: TfrmProductos
   end
   inherited pnlMaster: TPanel
     Width = 645
-    Height = 224
+    Height = 229
+    ExplicitTop = 26
     ExplicitWidth = 645
-    ExplicitHeight = 224
+    ExplicitHeight = 229
     inherited cxGrid: TcxGrid
       Width = 645
-      Height = 224
+      Height = 229
       ExplicitWidth = 645
-      ExplicitHeight = 224
+      ExplicitHeight = 229
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdProducto: TcxGridDBColumn
           DataBinding.FieldName = 'IdProducto'
@@ -208,7 +209,7 @@ inherited frmProductos: TfrmProductos
     DockControlHeights = (
       0
       0
-      31
+      26
       0)
     inherited dxbTools: TdxBar
       ItemLinks = <
@@ -242,7 +243,6 @@ inherited frmProductos: TfrmProductos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42681.569967037040000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

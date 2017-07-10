@@ -160,6 +160,12 @@ type
     actOpcionCompra: TAction;
     adodsAnexosValorResidualCreado: TBooleanField;
     adodsAnexosOpcionCompraCreado: TBooleanField;
+    adocSetAnexoSaldo: TADOCommand;
+    adodsAnexosFechaTermino: TDateTimeField;
+    adodsAnexosMontoTermino: TFMTBCDField;
+    adodsAnexosContratadoTotal: TFMTBCDField;
+    adodsAnexosPagadoTotal: TFMTBCDField;
+    adodsAnexosSaldoTotal: TFMTBCDField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsAnexosPrecioMonedaChange(Sender: TField);
     procedure adodsAnexosNewRecord(DataSet: TDataSet);
@@ -202,6 +208,7 @@ type
     function GetFechaDia(Fecha: TDateTime; Dia: Integer): TDateTime;
     procedure Restructurar;
     function ProductosValido(IdAnexo: Integer): Boolean;
+    procedure SetAnexoSaldo(IdAnexo: Integer);
   public
     { Public declarations }
     property PaymentTime: TPaymentTime read FPaymentTime write SetPaymentTime;
@@ -271,6 +278,8 @@ begin
       adodsAmortizaciones.Close;
       adodsAmortizaciones.Open;
     end;
+    // Actualiza saldo incial del anexo
+    SetAnexoSaldo(IdAnexo);
     // Generar Pago Inicial
     if CrearPagoInicial then
       RefreshADODS(adodsAnexos, adodsAnexosIdAnexo);
@@ -718,12 +727,20 @@ begin
           adodsAmortizaciones.Close;
           adodsAmortizaciones.Open;
         end;
+        // Actualiza saldo incial del anexo
+        SetAnexoSaldo(IdAnexo);
         // Cancelar credito anterior
         CancelarCredito(IdAnexoCreditoAnterior);
         RefreshADODS(adodsCreditos, adodsCreditosIdAnexoCredito);
       end;
     end;
   end;
+end;
+
+procedure TdmContratos.SetAnexoSaldo(IdAnexo: Integer);
+begin
+  adocSetAnexoSaldo.Parameters.ParamByName('IdAnexo').Value := IdAnexo;
+  adocSetAnexoSaldo.Execute;
 end;
 
 procedure TdmContratos.SetPaymentTime(const Value: TPaymentTime);

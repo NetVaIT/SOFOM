@@ -72,10 +72,11 @@ type
     tvMasterIdProductoDestino: TcxGridDBColumn;
     tvMasterDestino: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
+    procedure DatasetDeleteExecute(Sender: TObject);
   private
+    { Private declarations }
     FactActualizarDepreciacion: TBasicAction;
     procedure SetactActualizarDepreciacion(const Value: TBasicAction);
-    { Private declarations }
   public
     { Public declarations }
     property actActualizarDepreciacion: TBasicAction read FactActualizarDepreciacion write SetactActualizarDepreciacion;
@@ -86,6 +87,15 @@ implementation
 {$R *.dfm}
 
 uses ProductosEdit, ProductosDM;
+
+procedure TfrmProductos.DatasetDeleteExecute(Sender: TObject);
+begin
+  // Si no se encuentra relacionado a un Anexo podra ser eliminado
+  if DataSource.DataSet.FieldByName('IdAnexo').IsNull then
+    inherited
+  else
+    MessageDlg(strDeleteRelacionado, mtInformation, [mbOk], 0);
+end;
 
 procedure TfrmProductos.FormCreate(Sender: TObject);
 begin

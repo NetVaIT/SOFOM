@@ -29,12 +29,12 @@ inherited frmAnexos: TfrmAnexos
     Width = 678
     Height = 229
     ExplicitTop = 26
-    ExplicitWidth = 645
+    ExplicitWidth = 678
     ExplicitHeight = 229
     inherited cxGrid: TcxGrid
       Width = 678
       Height = 229
-      ExplicitWidth = 645
+      ExplicitWidth = 678
       ExplicitHeight = 229
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdAnexo: TcxGridDBColumn
@@ -186,6 +186,21 @@ inherited frmAnexos: TfrmAnexos
         object tvMasterMontoVencido: TcxGridDBColumn
           DataBinding.FieldName = 'MontoVencido'
         end
+        object tvMasterFechaTermino: TcxGridDBColumn
+          DataBinding.FieldName = 'FechaTermino'
+        end
+        object tvMasterMontoTermino: TcxGridDBColumn
+          DataBinding.FieldName = 'MontoTermino'
+        end
+        object tvMasterContratadoTotal: TcxGridDBColumn
+          DataBinding.FieldName = 'ContratadoTotal'
+        end
+        object tvMasterPagadoTotal: TcxGridDBColumn
+          DataBinding.FieldName = 'PagadoTotal'
+        end
+        object tvMasterSaldoTotal: TcxGridDBColumn
+          DataBinding.FieldName = 'SaldoTotal'
+        end
       end
     end
   end
@@ -193,28 +208,28 @@ inherited frmAnexos: TfrmAnexos
     Top = 346
     Width = 678
     ExplicitTop = 346
-    ExplicitWidth = 645
+    ExplicitWidth = 678
   end
   inherited pnlDetail2: TPanel
     Top = 302
     Width = 678
     ExplicitTop = 302
-    ExplicitWidth = 645
+    ExplicitWidth = 678
   end
   inherited pnlDetail1: TPanel
     Top = 258
     Width = 678
     ExplicitTop = 258
-    ExplicitWidth = 645
+    ExplicitWidth = 678
   end
   inherited pnlClose: TPanel
     Top = 387
     Width = 678
     ExplicitTop = 387
-    ExplicitWidth = 645
+    ExplicitWidth = 678
     inherited btnClose: TButton
       Left = 593
-      ExplicitLeft = 560
+      ExplicitLeft = 593
     end
   end
   inherited dxBarManager: TdxBarManager
@@ -290,7 +305,6 @@ inherited frmAnexos: TfrmAnexos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42683.688746423620000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

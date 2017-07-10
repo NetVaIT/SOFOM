@@ -150,6 +150,11 @@ begin
   adodsMasterIdRolTipo.Value :=Ord(RolTipo);
   adodsMasterIdPersonaEstatus.Value :=1;
   adodsMasterIdRiesgoTipo.Value := 1;
+  if (RolTipo = rEmpleado) or (RolTipo = rComisionista)
+  or (RolTipo = rSocio) then
+  begin
+    adodsMasterIdPersonaTipo.Value := 1;
+  end;
 end;
 
 procedure TdmPersona.adodsPersonaRolesNewRecord(DataSet: TDataSet);

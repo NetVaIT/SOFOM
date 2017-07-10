@@ -81,6 +81,11 @@ type
     dxbbOpcionCompra: TdxBarButton;
     tvMasterValorResidualCreado: TcxGridDBColumn;
     tvMasterOpcionCompraCreado: TcxGridDBColumn;
+    tvMasterFechaTermino: TcxGridDBColumn;
+    tvMasterMontoTermino: TcxGridDBColumn;
+    tvMasterContratadoTotal: TcxGridDBColumn;
+    tvMasterPagadoTotal: TcxGridDBColumn;
+    tvMasterSaldoTotal: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
