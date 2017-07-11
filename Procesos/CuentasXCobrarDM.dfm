@@ -252,6 +252,7 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
   end
   object DSMaster: TDataSource
     DataSet = adodsMaster
+    OnDataChange = DSMasterDataChange
     Left = 168
     Top = 24
   end
@@ -1044,5 +1045,33 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     Parameters = <>
     Left = 740
     Top = 305
+  end
+  object ADODtStSelMetPago: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdMetodoPago, Identificador, Descripcion, ExigeCuenta, '#13#10 +
+      'ClaveSAT2016 from MetodosPago'#13#10'where idmetodoPago>0'
+    Parameters = <>
+    Left = 600
+    Top = 304
+    object ADODtStSelMetPagoIdMetodoPago: TIntegerField
+      FieldName = 'IdMetodoPago'
+    end
+    object ADODtStSelMetPagoIdentificador: TStringField
+      FieldName = 'Identificador'
+      Size = 10
+    end
+    object ADODtStSelMetPagoDescripcion: TStringField
+      FieldName = 'Descripcion'
+      Size = 50
+    end
+    object ADODtStSelMetPagoExigeCuenta: TIntegerField
+      FieldName = 'ExigeCuenta'
+    end
+    object ADODtStSelMetPagoClaveSAT2016: TStringField
+      FieldName = 'ClaveSAT2016'
+      Size = 10
+    end
   end
 end

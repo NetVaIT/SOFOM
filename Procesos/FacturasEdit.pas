@@ -46,11 +46,12 @@ type
     cxDBLabel4: TcxDBLabel;
     cxDBLabel5: TcxDBLabel;
     cxDBLabel6: TcxDBLabel;
-    cxDBLabel7: TcxDBLabel;
-    cxDBLabel8: TcxDBLabel;
     cxDBLabel9: TcxDBLabel;
     DBLookupComboBox2: TDBLookupComboBox;
     Label13: TLabel;
+    cxDBLabel7: TcxDBLabel;
+    cxDBLabel8: TcxDBLabel;
+    Label14: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);

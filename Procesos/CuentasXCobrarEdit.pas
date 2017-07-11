@@ -45,11 +45,17 @@ type
     pnlMoratorios: TPanel;
     Label2: TLabel;
     cxDBDateEdit2: TcxDBDateEdit;
+    cxLabel1: TcxLabel;
+    cxLblTotalConMora: TcxLabel;
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
+    FTotalConMora: Double;
+    function GetFTotalConMora: Double;
     { Private declarations }
   public
     { Public declarations }
+     Property TotalConMora  :Double read GetFTotalConMora write FTotalConMora ;
   end;
 
 var
@@ -77,6 +83,18 @@ begin
   frmConCXCMoratorios.Align:=alClient;
   frmConCXCMoratorios.Show;
 
+end;
+
+procedure TFrmEdCuentasXCobrar.FormShow(Sender: TObject);
+begin
+  inherited;
+  cxLblTotalConMora.Caption:=FormatFloat('$#,##0.00', TotalConMora);
+end;
+
+function TFrmEdCuentasXCobrar.GetFTotalConMora: Double;
+begin
+
+  Result := FTotalConMora;
 end;
 
 end.

@@ -313,7 +313,11 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
       0
       26
       0)
+    inherited dxbNavigator: TdxBar
+      DockedLeft = 107
+    end
     inherited dxbTools: TdxBar
+      DockedLeft = 238
       ItemLinks = <
         item
           Visible = True
@@ -690,7 +694,7 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
       Caption = 'Totales CXC'
       Category = 0
       Hint = 'Totales CXC'
-      Visible = ivAlways
+      Visible = ivNever
     end
   end
   inherited cxStyleRepository: TcxStyleRepository

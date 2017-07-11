@@ -15,9 +15,9 @@ inherited FrmEdCuentasXCobrar: TFrmEdCuentasXCobrar
     ClientRectRight = 722
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 2
-      ExplicitTop = 28
+      ExplicitTop = 26
       ExplicitWidth = 720
-      ExplicitHeight = 628
+      ExplicitHeight = 630
       object Label1: TLabel
         Left = 24
         Top = 23
@@ -165,7 +165,7 @@ inherited FrmEdCuentasXCobrar: TFrmEdCuentasXCobrar
       end
       object PnlDetalleFact: TPanel
         Left = 0
-        Top = 232
+        Top = 234
         Width = 720
         Height = 204
         Align = alBottom
@@ -182,7 +182,7 @@ inherited FrmEdCuentasXCobrar: TFrmEdCuentasXCobrar
       end
       object pnlMoratorios: TPanel
         Left = 0
-        Top = 436
+        Top = 438
         Width = 720
         Height = 192
         Align = alBottom
@@ -211,6 +211,28 @@ inherited FrmEdCuentasXCobrar: TFrmEdCuentasXCobrar
     inherited btnOk: TButton
       Left = 561
       ExplicitLeft = 561
+    end
+    object cxLabel1: TcxLabel
+      Left = 26
+      Top = 16
+      Caption = 'Total con Moratorios '
+      ParentFont = False
+      Style.Font.Charset = DEFAULT_CHARSET
+      Style.Font.Color = clWindowText
+      Style.Font.Height = -11
+      Style.Font.Name = 'Tahoma'
+      Style.Font.Style = [fsBold]
+      Style.IsFontAssigned = True
+    end
+    object cxLblTotalConMora: TcxLabel
+      Left = 156
+      Top = 16
+      AutoSize = False
+      Caption = '$25.00'
+      Properties.Alignment.Horz = taRightJustify
+      Height = 17
+      Width = 86
+      AnchorX = 242
     end
   end
   inherited DataSource: TDataSource

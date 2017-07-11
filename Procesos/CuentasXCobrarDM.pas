@@ -189,6 +189,12 @@ type
     adodsMasterAnexo: TStringField;
     adodsMasterContrato: TStringField;
     ADOQryAux2: TADOQuery;
+    ADODtStSelMetPago: TADODataSet;
+    ADODtStSelMetPagoIdMetodoPago: TIntegerField;
+    ADODtStSelMetPagoIdentificador: TStringField;
+    ADODtStSelMetPagoDescripcion: TStringField;
+    ADODtStSelMetPagoExigeCuenta: TIntegerField;
+    ADODtStSelMetPagoClaveSAT2016: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actGeneraPreFacturasExecute(Sender: TObject);
     procedure ADODtStPrefacturasCFDINewRecord(DataSet: TDataSet);
@@ -200,8 +206,11 @@ type
     procedure ActGeneraCuentasXCobrarExecute(Sender: TObject);
     procedure adodsMasterBeforeInsert(DataSet: TDataSet);
     procedure ActTotalesCXCExecute(Sender: TObject);
+    procedure DSMasterDataChange(Sender: TObject; Field: TField);
+
   private
     FFacturando: boolean;
+    FTotalConMora: Double;
     function SacaTipoComp(TipoDoc: Integer): String;
     function SacaDireccion(IDCliente: Integer): Integer;
     function SacaMetodo(IDCliente: Integer; var CtaPago:String): Integer;
@@ -209,13 +218,18 @@ type
       IDGenTipoDoc: integer);
     procedure RegistraBitacora(tipoRegistro: Integer);
     function GetFFechaActual: TDAteTime;
-    function EsOpcionCompra(idCXC: Integer;var ConceptoNvo:String; var idCXCDet :integer): Boolean;    //May 26/17
+    function EsOpcionCompra(idCXC: Integer;var ConceptoNvo:String; var idCXCDet :integer): Boolean;
+    function GetFTotalConMora: Double;  //May 26/17
+    function CambiarMetodoPago(var IDMetodoPago: Integer;
+      var Cuenta: String): Boolean;
 
     { Private declarations }
   public
     { Public declarations }
     Property Facturando:boolean read FFacturando write FFacturando; //Abr 7/17 copiado de Pagos
     Property FFechaActual:TDAteTime read GetFFechaActual;
+
+    Property TotalConMora : Double read GetFTotalConMora ;//Jul 10/17    write FTotalConMora
   end;
 
 var
@@ -225,7 +239,8 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses CuentasXCobrarForm, FacturasDM, _ConectionDmod, ConceptoOpcionCEdt;
+uses CuentasXCobrarForm, FacturasDM, _ConectionDmod, ConceptoOpcionCEdt, MetodoPagoFacturaEdt;
+
 
 {$R *.dfm}
 
@@ -329,7 +344,7 @@ begin                                                                          /
     FrmConcFacturaOpcCompra.cxMmConceptoFactura.Text:= ConceptoNvo;
     FrmConcFacturaOpcCompra.ShowModal;
     if FrmConcFacturaOpcCompra.ModalResult=mrOk then
-       ConceptoNvo:= FrmConcFacturaOpcCompra.cxMmConceptoFactura.Text;
+       ConceptoNvo:= FrmConcFacturaOpcCompra.cxMmConceptoFactura.Text; //verificar si se toman las lineas y se coloca un enter entre una y otra en el texto Jul 10/17
     FrmConcFacturaOpcCompra.Free;
     result:=true;
   end
@@ -340,14 +355,38 @@ begin                                                                          /
   end;
 end;
 
+function TdmCuentasXCobrar.CambiarMetodoPago(var IDMetodoPago:Integer; var Cuenta:String):Boolean;
+begin  //Jul 10/17
+  Cuenta:=''; //Para que al menos este vacia
+  IDMetodoPago:=SacaMetodo(adodsMasterIdPersona.AsInteger, Cuenta);
+  FrmMetodoPagoFactura:=TFrmMetodoPagoFactura.Create(self);
+  FrmMetodoPagoFactura.IdMetSeleccion:=IDMetodoPago;
+  FrmMetodoPagoFactura.CuentaSeleccion:= Cuenta;
+  FrmMetodoPagoFactura.DSMetodoPago.DataSet:=ADODtStSelMetPago;
+
+  FrmMetodoPagoFactura.ShowModal;
+  Result:= FrmMetodoPagoFactura.ModalResult=mrOk ;
+  if result then
+  begin
+    IDMetodoPago:= FrmMetodoPagoFactura.IdMetSeleccion;
+    Cuenta:= FrmMetodoPagoFactura.CuentaSeleccion;
+  end;
+
+  FrmMetodoPagoFactura.Free;
+
+
+end;
 procedure TdmCuentasXCobrar.actGeneraPreFacturasExecute(Sender: TObject);
-var CFDICreado, ParaCompra :Boolean;
-    ConceptoOC:String;
-    IdCXCDet:Integer;
+var CFDICreado, ParaCompra, CambioMetPago :Boolean;
+    ConceptoOC, CtaNvaPago:String;
+    IdCXCDet, IdNvoMetPago:Integer;
 begin
   inherited;
-  //Jun 28/17
-  ParaCompra:= EsOpcionCompra(adodsMasterIdCuentaXCobrar.asinteger,ConceptoOC,IdCXCDet ); //Verificar si es opcion de compra y pedir Concepto de Facturación
+  IdNvoMetPago:=0;
+  CambioMetPago:=CambiarMetodoPago(IdNvoMetPago,CtaNvaPago);  //Jul 10/17
+
+   //Jun 28/17
+   ParaCompra:= EsOpcionCompra(adodsMasterIdCuentaXCobrar.asinteger,ConceptoOC,IdCXCDet ); //Verificar si es opcion de compra y pedir Concepto de Facturación
   if (idcxcdet <>-1)  and ParaCompra then
   begin
     if Application.messagebox(pchar('La factura se generará con el siguiente Concepto: "'+ConceptoOC+'". ¿Continuar? '),'Confirmación', MB_YESNO)=id_No then
@@ -369,6 +408,12 @@ begin
     ADODtStPrefacturasCFDI.open;
     ADODtStCFDIConceptosPref.open;
     ADODtStPrefacturasCFDI.Insert; //ver que va en el evento..
+    if CambioMetPago then
+    begin
+      ADODtStPrefacturasCFDIIdMetodoPago.AsInteger:=  IdNvoMetPago;
+      //if CtaNvaPago<>'' then
+        ADODtStPrefacturasCFDINumCtaPago.AsString:=CtaNvaPago;
+    end;
     ADODtStPrefacturasCFDI.Post;
     DetallesCXCParaFacturar.First;
 
@@ -393,7 +438,7 @@ begin
      end;
       DetallesCXCParaFacturar.Next;
     end;
-    adodsmaster.Edit;
+    adodsmaster.Edit;    //dejo de funcionar........
     adodsmaster.FieldByName('IdCuentaXCobrarEstatus').AsInteger:=0; //CAmbia a pendiente
     adodsmaster.FieldByName('IdCFDI').AsInteger:= ADODtStPrefacturasCFDI.FieldByName('IDCFDI').AsInteger; //Feb 9/17
     adodsmaster.post;            //ERa CFDInormal.. mar 30/17
@@ -442,6 +487,16 @@ begin
   Result := ADOQryAux2.Fieldbyname('FechaAct').AsDateTime;
   DEcodedate(Result,a,m,d);
   result:=Encodedate(a,m,d);
+end;
+
+function TdmCuentasXCobrar.GetFTotalConMora: Double;
+begin //Jul 10/17 Calcular si tiene mora
+ if not ADODTSTCXCMoratorios.eof then
+    FTotalConMora:=adodsMasterSaldo.AsCurrency + ADODTSTCXCMoratoriosSaldo.AsCurrency
+  else
+    FTotalConMora:=adodsMasterSaldo.AsCurrency;
+
+  Result := FTotalConMora;
 end;
 
 procedure TdmCuentasXCobrar.adodsMasterAfterOpen(DataSet: TDataSet);
@@ -621,13 +676,25 @@ begin
   inherited;
   gGridForm:= TfrmConCuentasXCobrar.Create(Self);     //Dic 5/16
 
+
   gGridForm.DataSet:= adodsMaster;
+  TFrmConCuentasXCobrar(gGridForm).TotalConMora:=totalconMora;//
+
   TFrmConCuentasXCobrar(gGridForm).ActGenerarPrefactura := actGeneraPreFacturas; //Dic 7/16
   TFrmConCuentasXCobrar(gGridForm).ActActualizaMoratorios:= ActActualizaMoratorios;//Feb 8/17
   TFrmConCuentasXCobrar(gGridForm).ActGenerarCXCs:=ActGeneraCuentasXCobrar;//Feb 15/17
   TFrmConCuentasXCobrar(gGridForm).ActTotalesCXC:=ActTotalesCXC;//abr  17/17
-   TFrmConCuentasXCobrar(gGridForm).DSAuxiliar.DataSet:=ADOQryAuxiliar; //Abr 11/17
+  TFrmConCuentasXCobrar(gGridForm).DSAuxiliar.DataSet:=ADOQryAuxiliar; //Abr 11/17
 end;
+
+procedure TdmCuentasXCobrar.DSMasterDataChange(Sender: TObject; Field: TField);
+begin
+  inherited;          //Verificar que no interfiera
+  if not ( gGridForm=nil)  then
+    TFrmConCuentasXCobrar(gGridForm).TotalConMora:=totalconMora;
+end;
+
+(*  //  *)
 
 function TdmCuentasXCobrar.SacaTipoComp (TipoDoc:Integer) :String;
 begin

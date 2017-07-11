@@ -88,6 +88,7 @@ type
     procedure dxBrBtnPuntoCXCClick(Sender: TObject);
     procedure dxBrBtnPuntoMoraClick(Sender: TObject);
     procedure ConsultarClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     FActGeneraPrefactura: TBasicAction;
     FActActualizaMoratorios: TBasicAction;
@@ -96,13 +97,16 @@ type
     ffiltroFecha: String;
     ffiltro: String;
     FActTotalesCXC: TBasicAction;
+    FTotalConMora: Double;   //Jul 10/17
     procedure SetActGeneraPrefactura(const Value: TBasicAction);
     procedure SetActActualizaMoratorios(const Value: TBasicAction);
     procedure SetActGeneraCXC(const Value: TBasicAction);
     function GetFFiltroNombre: String;//Feb 8/17
     procedure PoneFiltro;
     function VerificaCreacionHoy(tipo: Integer): TdxbarItemvisible;
-    procedure SetActTotalesCXC(const Value: TBasicAction); //Mar 9/17
+    procedure SetActTotalesCXC(const Value: TBasicAction);
+    function GetFTotalConMora: Double;//Mar 9/17
+
     { Private declarations }
   public
     { Public declarations }
@@ -115,6 +119,8 @@ type
     property FiltroFecha: String read ffiltroFecha write ffiltroFecha; //Mar 9/17
     property FiltroNombre:String read GetFFiltroNombre write ffiltroNombre;
     property FiltroCon:String read ffiltro write ffiltro;
+
+    Property TotalConMora  :Double read GetFTotalConMora write FTotalConMora ;  //Jul 10/17
   end;
 
 var
@@ -161,6 +167,8 @@ begin
   dxBrBtnPuntoCXC.Visible :=  VerificaCreacionHoy(0);
 
   dxBrBtnPuntoMora.Visible := VerificaCreacionHoy(1);
+   if not ( gEditForm=nil)  then                  //Jul 10/17
+    TFrmEdCuentasXCobrar(gEditForm).TotalConMora:= TotalConMora;
 end;
 
 procedure TFrmConCuentasXCobrar.DataSourceUpdateData(Sender: TObject);
@@ -231,6 +239,7 @@ var         //mar 9/17
 begin
   inherited;
   gEditForm:= TFrmEdCuentasXCobrar.Create(Self);
+
   //Desde aca Mar 9/17 Date //May 26/17
   DEcodeDate(_DmConection.LafechaActual,a,m,d);
   cxDtEdtDesde.Date:=EncodeDate(a,m,1);
@@ -251,9 +260,22 @@ begin
 
 end;
 
+procedure TFrmConCuentasXCobrar.FormShow(Sender: TObject);
+begin
+  inherited;
+   TFrmEdCuentasXCobrar(gEditForm).TotalConMora:= TotalConMora;
+end;
+
 function TFrmConCuentasXCobrar.GetFFiltroNombre: String;
 begin
   Result := ffiltroNombre;
+end;
+
+
+function TFrmConCuentasXCobrar.GetFTotalConMora: Double;
+begin
+
+  Result := FTotalConMora;
 end;
 
 procedure TFrmConCuentasXCobrar.PoneFiltro; //Mar 9/17

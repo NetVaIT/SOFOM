@@ -228,7 +228,8 @@ uses
   ListaNotaCreditoForm in 'Procesos\ListaNotaCreditoForm.pas' {frmListaNotasCredito},
   ConceptoOpcionCEdt in 'Procesos\ConceptoOpcionCEdt.pas' {FrmConcFacturaOpcCompra},
   SeleccionAplicacionForm in 'Procesos\SeleccionAplicacionForm.pas' {FrmSeleccionAplicacion},
-  ClaveAutorizacionForm in 'Procesos\ClaveAutorizacionForm.pas' {FrmClaveAutorizacion};
+  ClaveAutorizacionForm in 'Procesos\ClaveAutorizacionForm.pas' {FrmClaveAutorizacion},
+  MetodoPagoFacturaEdt in 'Procesos\MetodoPagoFacturaEdt.pas' {FrmMetodoPagoFactura};
 
 {$R *.res}
 

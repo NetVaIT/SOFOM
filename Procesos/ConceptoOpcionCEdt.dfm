@@ -3,7 +3,7 @@ object FrmConcFacturaOpcCompra: TFrmConcFacturaOpcCompra
   Top = 0
   Caption = 'Concepto Opci'#243'n de Compra'
   ClientHeight = 228
-  ClientWidth = 600
+  ClientWidth = 509
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,18 +17,17 @@ object FrmConcFacturaOpcCompra: TFrmConcFacturaOpcCompra
   object pmlMain: TPanel
     Left = 0
     Top = 187
-    Width = 600
+    Width = 509
     Height = 41
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitTop = 204
-    ExplicitWidth = 1063
+    ExplicitWidth = 600
     DesignSize = (
-      600
+      509
       41)
     object btnCancel: TButton
-      Left = 518
+      Left = 427
       Top = 6
       Width = 75
       Height = 25
@@ -37,10 +36,10 @@ object FrmConcFacturaOpcCompra: TFrmConcFacturaOpcCompra
       Caption = 'Cancelar'
       ModalResult = 2
       TabOrder = 1
-      ExplicitLeft = 575
+      ExplicitLeft = 518
     end
     object btnOk: TButton
-      Left = 437
+      Left = 346
       Top = 6
       Width = 75
       Height = 25
@@ -49,28 +48,27 @@ object FrmConcFacturaOpcCompra: TFrmConcFacturaOpcCompra
       Default = True
       ModalResult = 1
       TabOrder = 0
-      ExplicitLeft = 494
+      ExplicitLeft = 437
     end
   end
   object pcMain: TcxPageControl
     Left = 0
     Top = 0
-    Width = 600
+    Width = 509
     Height = 187
     Align = alClient
     TabOrder = 1
     Properties.ActivePage = tsGeneral
     Properties.CustomButtons.Buttons = <>
-    ExplicitTop = -6
+    ExplicitWidth = 600
     ClientRectBottom = 185
     ClientRectLeft = 2
-    ClientRectRight = 598
+    ClientRectRight = 507
     ClientRectTop = 26
     object tsGeneral: TcxTabSheet
       Caption = 'General'
       ImageIndex = 0
-      ExplicitLeft = 1
-      ExplicitTop = 28
+      ExplicitWidth = 596
       object Label2: TLabel
         Left = 16
         Top = 16
@@ -85,7 +83,7 @@ object FrmConcFacturaOpcCompra: TFrmConcFacturaOpcCompra
           'cxMmConceptoFactura')
         TabOrder = 0
         Height = 94
-        Width = 564
+        Width = 481
       end
     end
   end
