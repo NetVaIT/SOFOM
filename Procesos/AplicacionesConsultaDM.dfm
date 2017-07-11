@@ -7,11 +7,13 @@ inherited dmAplicacionesConsulta: TdmAplicacionesConsulta
       ','#13#10' PR.FolioPago, Pr.SeriePago,Cc.IdCuentaXCobrar NoCuentaXCobra' +
       'r,'#13#10' CC.FechaVencimiento as FechaCXC ,P.RazonSocial as Cliente,C' +
       'C.IDAnexo,A.DEscripcion Anexo,'#13#10'PA.IdPagoAplicacion, Pa.IdPago, ' +
-      'PA.IdCFDI, PA.IdPersonaCliente,'#13#10'A.IdContrato, P.idMetodoPago '#13#10 +
-      'from PagosAplicaciones PA'#13#10'inner join Pagos PR on PA.IdPago=PR.I' +
-      'dPago'#13#10'inner join CuentasXCobrar CC on PA.IdCuentaXCobrar =Cc.Id' +
-      'cuentaXCobrar'#13#10' inner join Anexos A on A.IdAnexo=cc.IdAnexo '#13#10'in' +
-      'ner join Personas P on P.IdPersona =Cc.IdPersona'
+      'PA.IdPersonaCliente,'#13#10'A.IdContrato, P.idMetodoPago , CC.IdCFDI, ' +
+      #13#10'Ci.Serie SerieFactura, Ci.Folio FolioFactura -- jul 11/17'#13#10'fro' +
+      'm PagosAplicaciones PA'#13#10'inner join Pagos PR on PA.IdPago=PR.IdPa' +
+      'go'#13#10'inner join CuentasXCobrar CC on PA.IdCuentaXCobrar =Cc.Idcue' +
+      'ntaXCobrar'#13#10'inner join CFDI Ci on Ci.IdCFDI =CC.IdCFDI -- jul 11' +
+      '/17'#13#10' inner join Anexos A on A.IdAnexo=cc.IdAnexo '#13#10'inner join P' +
+      'ersonas P on P.IdPersona =Cc.IdPersona'
     object adodsMasterCliente: TStringField
       FieldName = 'Cliente'
       Size = 300
@@ -73,6 +75,12 @@ inherited dmAplicacionesConsulta: TdmAplicacionesConsulta
     end
     object adodsMasteridMetodoPago: TIntegerField
       FieldName = 'idMetodoPago'
+    end
+    object adodsMasterSerieFactura: TStringField
+      FieldName = 'SerieFactura'
+    end
+    object adodsMasterFolioFactura: TLargeintField
+      FieldName = 'FolioFactura'
     end
   end
   inherited adodsUpdate: TADODataSet

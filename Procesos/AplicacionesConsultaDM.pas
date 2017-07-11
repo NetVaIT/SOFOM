@@ -41,6 +41,8 @@ type
     ADODtStConfiguracionesUltimaSeriePago: TStringField;
     adodsMasterIdContrato: TIntegerField;
     adodsMasteridMetodoPago: TIntegerField;
+    adodsMasterSerieFactura: TStringField;
+    adodsMasterFolioFactura: TLargeintField;
     procedure DataModuleCreate(Sender: TObject);
     procedure ActAplicaMoratorioIntenoExecute(Sender: TObject);
     procedure ActCreaPagoDepositoExecute(Sender: TObject);

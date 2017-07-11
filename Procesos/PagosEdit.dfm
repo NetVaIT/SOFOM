@@ -265,7 +265,7 @@ inherited FrmEdPagos: TFrmEdPagos
           DataField = 'IdAnexo'
           DataSource = DataSource
           KeyField = 'IdAnexo'
-          ListField = 'Descripcion'
+          ListField = 'identificadorCompleto'
           ListSource = DSAnexos
           TabOrder = 1
           Visible = False

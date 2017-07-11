@@ -104,13 +104,14 @@ inherited dmPagos: TdmPagos
       FieldName = 'IdAnexo'
     end
     object adodsMasterAnexo: TStringField
+      DisplayWidth = 250
       FieldKind = fkLookup
       FieldName = 'Anexo'
       LookupDataSet = ADODtStAnexos
       LookupKeyFields = 'IdAnexo'
-      LookupResultField = 'Descripcion'
+      LookupResultField = 'identificadorCompleto'
       KeyFields = 'IdAnexo'
-      Size = 150
+      Size = 250
       Lookup = True
     end
     object adodsMasterEsDeposito: TBooleanField
@@ -271,17 +272,18 @@ inherited dmPagos: TdmPagos
       #13#10'CXC.Fecha, CXC.FechaVencimiento, CXC.Importe, CXC.Impuesto, CX' +
       'C.Interes, CXC.Total, CXC.Saldo, CXC.SaldoFactoraje, CXC.EsMorat' +
       'orio, CI.SaldoDocumento, Ci.SaldoFactoraje as SaldoFactorajeCFDI' +
-      #13#10' from CuentasXCobrar CXC  '#13#10'left Join CFDI CI on CI.IdCFDI= CX' +
-      'C.IdCFDI where '#13#10'-- CXC.idanexosamortizaciones is not null and -' +
-      '- jun 30/17 '#13#10' Saldo >0 and IDPersona=:IdPersonaCliente '#13#10'and ((' +
-      'IdCuentaXCobrarEstatus=0 and  ESMoratorio=0)'#13#10'or( Esmoratorio=1)' +
-      #13#10'or (CXC.Fecha<dbo.GetDateAux() and IdCuentaXCobrarEstatus=-1) ' +
-      '-- para poder facturar addelantados'#13#10'or (exists (select * from C' +
-      'uentasXCobrarDetalle CXCD where CXCD.descripcion like'#39'%Abono Cap' +
-      'ital%'#39' and CXC.IdCuentaXCobrar=CXCD.idcuentaXCobrar )'#13#10'and CXC.I' +
-      'dCFDI is null) )-- IdCuentaXCobrarEstatus=-1 and puede que esten' +
-      ' facturadas'#13#10' and CXC.IDAnexo=:IdAnexo'#13#10'order by CXC.idanexosamo' +
-      'rtizaciones,EsMoratorio DEsc, CXC.FechaVencimiento'
+      ', '#13#10'ci.serie, Ci.folio'#13#10' from CuentasXCobrar CXC  '#13#10'left Join CF' +
+      'DI CI on CI.IdCFDI= CXC.IdCFDI where '#13#10'-- CXC.idanexosamortizaci' +
+      'ones is not null and -- jun 30/17 '#13#10' Saldo >0 and IDPersona=:IdP' +
+      'ersonaCliente '#13#10'and ((IdCuentaXCobrarEstatus=0 and  ESMoratorio=' +
+      '0)'#13#10'or( Esmoratorio=1)'#13#10'or (CXC.Fecha<dbo.GetDateAux() and IdCue' +
+      'ntaXCobrarEstatus=-1) -- para poder facturar addelantados'#13#10'or (e' +
+      'xists (select * from CuentasXCobrarDetalle CXCD where CXCD.descr' +
+      'ipcion like'#39'%Abono Capital%'#39' and CXC.IdCuentaXCobrar=CXCD.idcuen' +
+      'taXCobrar )'#13#10'and CXC.IdCFDI is null) )-- IdCuentaXCobrarEstatus=' +
+      '-1 and puede que esten facturadas'#13#10' and CXC.IDAnexo=:IdAnexo'#13#10'or' +
+      'der by CXC.idanexosamortizaciones,EsMoratorio DEsc, CXC.FechaVen' +
+      'cimiento'
     DataSource = DSMaster
     IndexFieldNames = 'IdPersona;IdAnexo'
     MasterFields = 'IdPersonaCliente;IdAnexo'
@@ -387,6 +389,12 @@ inherited dmPagos: TdmPagos
     object ADODtStCXCPendientesFechaVencimiento: TDateTimeField
       DisplayLabel = 'Fecha Vencimiento'
       FieldName = 'FechaVencimiento'
+    end
+    object ADODtStCXCPendientesserie: TStringField
+      FieldName = 'serie'
+    end
+    object ADODtStCXCPendientesfolio: TLargeintField
+      FieldName = 'folio'
     end
   end
   object ADODtStCxCDetallePend: TADODataSet
@@ -1551,8 +1559,10 @@ inherited dmPagos: TdmPagos
     CursorType = ctStatic
     CommandText = 
       'select a.IdAnexo, A.IdContrato,A.IdAnexoEstatus, A.Identificador' +
-      ','#13#10' A.Descripcion, A.Fecha, C.IdPersona from Anexos A , Contrato' +
-      's C '#13#10'where a.idcontrato=C.idcontrato and A.idanexoEstatus<>5'
+      ','#13#10'C.Identificador +'#39' - '#39'+A.Identificador+'#39':'#39'+ A.Descripcion as ' +
+      'identificadorCompleto,'#13#10' A.Descripcion, A.Fecha, C.IdPersona fro' +
+      'm Anexos A , Contratos C '#13#10'where a.idcontrato=C.idcontrato and A' +
+      '.idanexoEstatus<>5'
     Parameters = <>
     Left = 52
     Top = 131
@@ -1580,6 +1590,12 @@ inherited dmPagos: TdmPagos
     object ADODtStAnexosIdPersona: TIntegerField
       FieldName = 'IdPersona'
     end
+    object ADODtStAnexosidentificadorCompleto: TStringField
+      DisplayWidth = 250
+      FieldName = 'identificadorCompleto'
+      ReadOnly = True
+      Size = 250
+    end
   end
   object DSPersonas: TDataSource
     DataSet = ADOSPersonas
@@ -1591,9 +1607,10 @@ inherited dmPagos: TdmPagos
     CursorType = ctStatic
     CommandText = 
       'select a.IdAnexo, A.IdContrato,A.IdAnexoEstatus, A.Identificador' +
-      ','#13#10' A.Descripcion, A.Fecha, C.IdPersona from Anexos A , Contrato' +
-      's C '#13#10'where a.idcontrato=C.idcontrato and A.idanexoEstatus<>5'#13#10'a' +
-      'nd C.idPersona=:IdPersona'
+      ','#13#10'C.Identificador +'#39' - '#39'+A.Identificador+'#39':'#39'+ A.Descripcion as ' +
+      'identificadorCompleto,'#13#10' A.Descripcion, A.Fecha, C.IdPersona fro' +
+      'm Anexos A , Contratos C '#13#10'where a.idcontrato=C.idcontrato and A' +
+      '.idanexoEstatus<>5'#13#10'and C.idPersona=:IdPersona'
     Parameters = <
       item
         Name = 'IdPersona'
@@ -1628,6 +1645,12 @@ inherited dmPagos: TdmPagos
     end
     object IntegerField13: TIntegerField
       FieldName = 'IdPersona'
+    end
+    object ADODtStAnexoSeleccionidentificadorCompleto: TStringField
+      DisplayWidth = 250
+      FieldName = 'identificadorCompleto'
+      ReadOnly = True
+      Size = 250
     end
   end
   object DetallesCXCParaFacturarMora: TADODataSet

@@ -403,10 +403,6 @@ object FrmAplicacionPago: TFrmAplicacionPago
         DataBinding.FieldName = 'SaldoFactoraje'
         Visible = False
       end
-      object tvMasterSaldoDocumento: TcxGridDBColumn
-        DataBinding.FieldName = 'SaldoDocumento'
-        Width = 147
-      end
       object tvMasterSaldoFactorajeCFDI: TcxGridDBColumn
         DataBinding.FieldName = 'SaldoFactorajeCFDI'
         Visible = False
@@ -423,6 +419,19 @@ object FrmAplicacionPago: TFrmAplicacionPago
       object tvMasterEsMoratorio: TcxGridDBColumn
         DataBinding.FieldName = 'EsMoratorio'
         Visible = False
+      end
+      object tvMasterserie: TcxGridDBColumn
+        Caption = 'Serie Factura'
+        DataBinding.FieldName = 'serie'
+      end
+      object tvMasterfolio: TcxGridDBColumn
+        Caption = 'Folio Factura'
+        DataBinding.FieldName = 'folio'
+      end
+      object tvMasterSaldoDocumento: TcxGridDBColumn
+        Caption = 'Saldo Factura'
+        DataBinding.FieldName = 'SaldoDocumento'
+        Width = 147
       end
     end
     object cxGridLevel1: TcxGridLevel

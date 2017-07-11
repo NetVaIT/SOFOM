@@ -359,6 +359,10 @@ type
     ADODtStCFDINotaCreditoSaldoFactoraje: TFMTBCDField;
     adodsMasterIdCFDI_NCR: TLargeintField;
     ActPagosAnticipados: TAction;
+    ADODtStAnexoSeleccionidentificadorCompleto: TStringField;
+    ADODtStAnexosidentificadorCompleto: TStringField;
+    ADODtStCXCPendientesserie: TStringField;
+    ADODtStCXCPendientesfolio: TLargeintField;
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsMasterAfterPost(DataSet: TDataSet);
     procedure adodsMasterBeforePost(DataSet: TDataSet);

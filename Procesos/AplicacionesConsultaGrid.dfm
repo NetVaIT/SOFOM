@@ -2,39 +2,39 @@ inherited frmConaplicaciones: TfrmConaplicaciones
   BorderStyle = bsToolWindow
   Caption = 'Consulta Aplicaciones'
   ClientHeight = 580
-  ClientWidth = 1019
-  ExplicitWidth = 1025
+  ClientWidth = 1206
+  ExplicitWidth = 1212
   ExplicitHeight = 609
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
     Top = 507
-    Width = 1019
+    Width = 1206
     ExplicitTop = 536
     ExplicitWidth = 1025
   end
   inherited splDetail1: TSplitter
     Top = 264
-    Width = 1019
+    Width = 1206
     ExplicitTop = 293
     ExplicitWidth = 1025
   end
   inherited splDetail2: TSplitter
     Top = 469
-    Width = 1019
+    Width = 1206
     ExplicitLeft = -10
     ExplicitTop = 337
     ExplicitWidth = 1025
   end
   inherited pnlMaster: TPanel
     Top = 68
-    Width = 1019
+    Width = 1206
     Height = 196
     ExplicitTop = 68
     ExplicitWidth = 1019
     ExplicitHeight = 196
     inherited cxGrid: TcxGrid
-      Width = 1019
+      Width = 1206
       Height = 196
       ExplicitWidth = 1019
       ExplicitHeight = 196
@@ -71,6 +71,14 @@ inherited frmConaplicaciones: TfrmConaplicaciones
         object tvMasterimporte: TcxGridDBColumn
           DataBinding.FieldName = 'importe'
         end
+        object tvMasterSerieFactura: TcxGridDBColumn
+          Caption = 'Serie Factura'
+          DataBinding.FieldName = 'SerieFactura'
+        end
+        object tvMasterFolioFactura: TcxGridDBColumn
+          Caption = 'Folio Factura'
+          DataBinding.FieldName = 'FolioFactura'
+        end
         object tvMasterIdPagoAplicacion: TcxGridDBColumn
           DataBinding.FieldName = 'IdPagoAplicacion'
           Visible = False
@@ -91,12 +99,20 @@ inherited frmConaplicaciones: TfrmConaplicaciones
           DataBinding.FieldName = 'IDAnexo'
           Visible = False
         end
+        object tvMasterIdContrato: TcxGridDBColumn
+          DataBinding.FieldName = 'IdContrato'
+          Visible = False
+        end
+        object tvMasteridMetodoPago: TcxGridDBColumn
+          DataBinding.FieldName = 'idMetodoPago'
+          Visible = False
+        end
       end
     end
   end
   inherited pnlDetail3: TPanel
     Top = 510
-    Width = 1019
+    Width = 1206
     Height = 35
     ExplicitTop = 510
     ExplicitWidth = 1019
@@ -104,7 +120,7 @@ inherited frmConaplicaciones: TfrmConaplicaciones
   end
   inherited pnlDetail2: TPanel
     Top = 472
-    Width = 1019
+    Width = 1206
     Height = 35
     ExplicitTop = 472
     ExplicitWidth = 1019
@@ -112,7 +128,7 @@ inherited frmConaplicaciones: TfrmConaplicaciones
   end
   inherited pnlDetail1: TPanel
     Top = 267
-    Width = 1019
+    Width = 1206
     Height = 202
     ExplicitTop = 267
     ExplicitWidth = 1019
@@ -120,24 +136,25 @@ inherited frmConaplicaciones: TfrmConaplicaciones
   end
   inherited pnlClose: TPanel
     Top = 545
-    Width = 1019
+    Width = 1206
     Height = 35
     ExplicitTop = 545
     ExplicitWidth = 1019
     ExplicitHeight = 35
     inherited btnClose: TButton
-      Left = 934
+      Left = 1121
       ExplicitLeft = 934
     end
   end
   object Panel1: TPanel [8]
     Left = 0
     Top = 26
-    Width = 1019
+    Width = 1206
     Height = 42
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 9
+    ExplicitWidth = 1019
     object RdGrpSeleccion: TRadioGroup
       Left = 0
       Top = 0
@@ -1051,6 +1068,7 @@ inherited frmConaplicaciones: TfrmConaplicaciones
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42738.400515763890000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

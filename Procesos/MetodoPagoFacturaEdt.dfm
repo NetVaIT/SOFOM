@@ -11,6 +11,7 @@ object FrmMetodoPagoFactura: TFrmMetodoPagoFactura
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poOwnerFormCenter
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
@@ -25,9 +26,6 @@ object FrmMetodoPagoFactura: TFrmMetodoPagoFactura
     TabOrder = 0
     Properties.ActivePage = tsGeneral
     Properties.CustomButtons.Buttons = <>
-    ExplicitLeft = -91
-    ExplicitWidth = 509
-    ExplicitHeight = 187
     ClientRectBottom = 134
     ClientRectLeft = 2
     ClientRectRight = 396
@@ -35,10 +33,6 @@ object FrmMetodoPagoFactura: TFrmMetodoPagoFactura
     object tsGeneral: TcxTabSheet
       Caption = 'General'
       ImageIndex = 0
-      ExplicitLeft = 3
-      ExplicitTop = 28
-      ExplicitWidth = 502
-      ExplicitHeight = 212
       object Label2: TLabel
         Left = 16
         Top = 16
@@ -88,9 +82,6 @@ object FrmMetodoPagoFactura: TFrmMetodoPagoFactura
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitLeft = -91
-    ExplicitTop = 187
-    ExplicitWidth = 509
     DesignSize = (
       398
       41)
@@ -104,7 +95,6 @@ object FrmMetodoPagoFactura: TFrmMetodoPagoFactura
       Caption = 'Cancelar'
       ModalResult = 2
       TabOrder = 1
-      ExplicitLeft = 427
     end
     object btnOk: TButton
       Left = 235
@@ -117,7 +107,6 @@ object FrmMetodoPagoFactura: TFrmMetodoPagoFactura
       ModalResult = 1
       TabOrder = 0
       OnClick = btnOkClick
-      ExplicitLeft = 346
     end
   end
   object DSMetodoPago: TDataSource

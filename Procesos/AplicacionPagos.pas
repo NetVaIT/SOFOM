@@ -102,6 +102,8 @@ type
     DSP_ActTotalCXC: TDataSource;
     tvMasterIdAnexoAmortizacion: TcxGridDBColumn;
     cxChckBxCambioconsulta: TcxCheckBox;
+    tvMasterserie: TcxGridDBColumn;
+    tvMasterfolio: TcxGridDBColumn;
     procedure BtBtnAplicarClick(Sender: TObject);
     procedure DSAplicacionStateChange(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -427,7 +429,7 @@ begin
     TAdoDataset(DsconCXCPendientes.DataSet).commandtext:='Select CXC.IdCuentaXCobrar, CXC.IdCuentaXCobrarBase, CXC.IdCuentaXCobrarEstatus, CXC.IdPersona,'
     + 'CXC.IdAnexosAmortizaciones AS IdAnexoAmortizacion, CXC.IdAnexo, CXC.IdEstadoCuenta, CXC.IdCFDI,  CXC.Fecha, CXC.FechaVencimiento, '
     +' CXC.Importe, CXC.Impuesto, CXC.Interes, CXC.Total, CXC.Saldo, CXC.SaldoFactoraje, CXC.EsMoratorio, CI.SaldoDocumento, '
-    +' Ci.SaldoFactoraje as SaldoFactorajeCFDI  from CuentasXCobrar CXC left Join CFDI CI on CI.IdCFDI= CXC.IdCFDI where '
+    +' Ci.SaldoFactoraje as SaldoFactorajeCFDI, ci.serie, Ci.folio  from CuentasXCobrar CXC left Join CFDI CI on CI.IdCFDI= CXC.IdCFDI where '
     +' CXC.idanexosamortizaciones is not null and  Saldo >0 and IDPersona=:IdPersonaCliente and '
     +' ((IdCuentaXCobrarEstatus=0 and  ESMoratorio=0) or( Esmoratorio=1) or '
     +' (CXC.Fecha<dbo.GetDateAux() and IdCuentaXCobrarEstatus=-1) or '     //jul 4/17
@@ -442,7 +444,7 @@ begin
     TAdoDataset(DsconCXCPendientes.DataSet).commandtext:='Select CXC.IdCuentaXCobrar, CXC.IdCuentaXCobrarBase, CXC.IdCuentaXCobrarEstatus, CXC.IdPersona,'
     + 'CXC.IdAnexosAmortizaciones AS IdAnexoAmortizacion, CXC.IdAnexo, CXC.IdEstadoCuenta, CXC.IdCFDI,  CXC.Fecha, CXC.FechaVencimiento, '
     +' CXC.Importe, CXC.Impuesto, CXC.Interes, CXC.Total, CXC.Saldo, CXC.SaldoFactoraje, CXC.EsMoratorio, CI.SaldoDocumento, '
-    +' Ci.SaldoFactoraje as SaldoFactorajeCFDI  from CuentasXCobrar CXC left Join CFDI CI on CI.IdCFDI= CXC.IdCFDI where '
+    +' Ci.SaldoFactoraje as SaldoFactorajeCFDI , ci.serie, Ci.folio from CuentasXCobrar CXC left Join CFDI CI on CI.IdCFDI= CXC.IdCFDI where '
     +' Saldo >0 and IDPersona=:IdPersonaCliente and '
     +' ((IdCuentaXCobrarEstatus=0 and  ESMoratorio=0) or( Esmoratorio=1) or '
     +' (CXC.Fecha<dbo.GetDateAux() and IdCuentaXCobrarEstatus=-1) or '     //jul 4/17

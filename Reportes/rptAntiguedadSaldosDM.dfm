@@ -153,5 +153,10 @@
       Caption = 'ActPDFAntiguedadXCliente'
       OnExecute = ActPDFAntiguedadXClienteExecute
     end
+    object ActPDFCtasActualCliente: TAction
+      Caption = 'Adeudo Actual Cliente'
+      Hint = 'Adeudo Actual Cliente'
+      OnExecute = ActPDFCtasActualClienteExecute
+    end
   end
 end
