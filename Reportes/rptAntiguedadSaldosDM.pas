@@ -33,10 +33,12 @@ type
     adodsMasterFechaVencimiento: TDateTimeField;
     adodsMasterCobroX: TStringField;
     ActPDFCtasActualCliente: TAction;
+    ActPDFXContratosVencidos: TAction;
     procedure DataModuleCreate(Sender: TObject);
     procedure ActGenPDFAntigSaldosExecute(Sender: TObject);
     procedure ActPDFAntiguedadXClienteExecute(Sender: TObject);
     procedure ActPDFCtasActualClienteExecute(Sender: TObject);
+    procedure ActPDFXContratosVencidosExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -100,6 +102,41 @@ begin        //Jul 11/17
   end;
   if FileExists(ArchiPDF) then
       ShellExecute(application.Handle, 'open', PChar(ArchiPDF), nil, nil, SW_SHOWNORMAL);
+end;
+
+procedure TdmRptAntiguedadSaldos.ActPDFXContratosVencidosExecute(
+  Sender: TObject);        //Jul 16/17
+var
+  dmAntiguedadSaldosPDF:TdmAntiguedadSaldosPDF;
+  ArchiPDF:TFileName;
+  Texto,TxtSQL:String;
+begin
+  inherited;
+  TExto:= '_' +FormatDateTime('ddmmmyyyy',_DmConection.LaFechaActual);// jun30 /17  Date);
+  ArchiPDF:='AntiguedadSaldos'+Texto+'.PDF';
+  dmAntiguedadSaldosPDF:= TdmAntiguedadSaldosPDF.Create(Self);
+  try
+    dmAntiguedadSaldosPDF.ADODtStXContratosVencidos.Close;
+    TExto:=  'AL '+upperCASE(FormatDateTime('dd ''de'' mmmm ''del'' yyyy',_DmConection.LaFechaActual));//Date)); //Jun 30/17
+
+    dmAntiguedadSaldosPDF.ADODtStXContratosVencidos.Open;
+    dmAntiguedadSaldosPDF.ppRptXContratosVencidos.ShowPrintDialog:= False;
+    dmAntiguedadSaldosPDF.ppRptXContratosVencidos.ShowCancelDialog:= False;
+
+
+    dmAntiguedadSaldosPDF.ppRptXContratosVencidos.PrinterSetup.DocumentName:=  'CONTRATOS VENCIDOS POR CLIENTE '+#13 +Texto;
+    dmAntiguedadSaldosPDF.ppTituloXConVen.Caption:= dmAntiguedadSaldosPDF.ppTituloXConVen.Caption +Texto;
+
+    dmAntiguedadSaldosPDF.ppRptXContratosVencidos.DeviceType:= 'PDF';
+    dmAntiguedadSaldosPDF.ppRptXContratosVencidos.TextFileName:= ArchiPDF;
+
+    dmAntiguedadSaldosPDF.ppRptXContratosVencidos.print;
+  finally
+    dmAntiguedadSaldosPDF.Free;
+  end;
+    if FileExists(ArchiPDF) then
+      ShellExecute(application.Handle, 'open', PChar(ArchiPDF), nil, nil, SW_SHOWNORMAL);
+//
 end;
 
 procedure TdmRptAntiguedadSaldos.ActGenPDFAntigSaldosExecute(Sender: TObject);
@@ -212,6 +249,8 @@ begin
   TfrmrptantiguedadSaldos(gGridForm).ActPDFAntXCliente:=ActPDFAntiguedadXCliente;
   TfrmrptantiguedadSaldos(gGridForm).ActPDFAdeudoActualCliente:=ActPDFCtasActualCliente;
 
+  //Jul 14/17
+  TfrmrptantiguedadSaldos(gGridForm).ActPDFxContratosVenc:=ActPDFXContratosVencidos;
 
 end;
 
