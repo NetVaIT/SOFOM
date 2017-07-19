@@ -1030,6 +1030,19 @@
             <Form>FrmMetodoPagoFactura</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Procesos\PLDAlertasDM.pas">
+            <Form>dmPLDAlertas</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Procesos\PLDAlertasForm.pas">
+            <Form>frmPLDAlertas</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Procesos\PLDAlertasEdit.pas">
+            <Form>frmPLDAlertasEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

@@ -118,8 +118,6 @@ inherited frmMain: TfrmMain
         end>
     end
     inherited dxbArchivo: TdxBar
-      DockedDockControl = nil
-      DockedDockingStyle = dsNone
       FloatClientWidth = 51
       FloatClientHeight = 76
     end
@@ -337,6 +335,10 @@ inherited frmMain: TfrmMain
         item
           Visible = True
           ItemName = 'dxBrLrgBtnSeguimiento'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton41'
         end>
       OneOnRow = True
       Row = 0
@@ -658,6 +660,10 @@ inherited frmMain: TfrmMain
       Category = 0
       SyncImageIndex = False
       ImageIndex = -1
+    end
+    object dxBarLargeButton41: TdxBarLargeButton
+      Action = actAlertasPLD
+      Category = 0
     end
     object dxBarButton13: TdxBarButton
       Action = actRptPlaza
@@ -11456,6 +11462,13 @@ inherited frmMain: TfrmMain
       Category = 'Procesos'
       Caption = 'Notas Cr'#233'dito'
       ImageIndex = 56
+      OnExecute = actCatalogoExecute
+    end
+    object actAlertasPLD: TAction
+      Tag = 39
+      Category = 'Procesos'
+      Caption = 'Alertas PLD'
+      ImageIndex = 19
       OnExecute = actCatalogoExecute
     end
   end

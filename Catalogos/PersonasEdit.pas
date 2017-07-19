@@ -22,7 +22,7 @@ uses
   Vcl.DBCtrls, cxTextEdit, cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox,
   PersonasDM, TelefonosDM, EmailsDM, PersonasDomiciliosDM, PersonasContactoDM,
   CuentasBancariasDM, ShellApi, PersonasCSDDM, PersonasDocumentosDM, cxLabel,
-  cxDBLabel, PersonasPerfilesDM;
+  cxDBLabel, PersonasPerfilesDM, cxCheckBox, cxGroupBox;
 
 type
   TfrmPersonaEdit = class(T_frmEdit)
@@ -99,6 +99,16 @@ type
     Label27: TLabel;
     cxDBTextEdit7: TcxDBTextEdit;
     Label28: TLabel;
+    cxGroupBox1: TcxGroupBox;
+    Label29: TLabel;
+    cxDBTextEdit8: TcxDBTextEdit;
+    Label30: TLabel;
+    cxDBTextEdit9: TcxDBTextEdit;
+    Label31: TLabel;
+    cxDBTextEdit10: TcxDBTextEdit;
+    cxDBCheckBox1: TcxDBCheckBox;
+    Label32: TLabel;
+    cxDBTextEdit11: TcxDBTextEdit;
     procedure FormShow(Sender: TObject);
     procedure cxDBLookupComboBox1PropertiesChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);

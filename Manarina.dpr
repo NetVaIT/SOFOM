@@ -229,7 +229,10 @@ uses
   ConceptoOpcionCEdt in 'Procesos\ConceptoOpcionCEdt.pas' {FrmConcFacturaOpcCompra},
   SeleccionAplicacionForm in 'Procesos\SeleccionAplicacionForm.pas' {FrmSeleccionAplicacion},
   ClaveAutorizacionForm in 'Procesos\ClaveAutorizacionForm.pas' {FrmClaveAutorizacion},
-  MetodoPagoFacturaEdt in 'Procesos\MetodoPagoFacturaEdt.pas' {FrmMetodoPagoFactura};
+  MetodoPagoFacturaEdt in 'Procesos\MetodoPagoFacturaEdt.pas' {FrmMetodoPagoFactura},
+  PLDAlertasDM in 'Procesos\PLDAlertasDM.pas' {dmPLDAlertas: TDataModule},
+  PLDAlertasForm in 'Procesos\PLDAlertasForm.pas' {frmPLDAlertas},
+  PLDAlertasEdit in 'Procesos\PLDAlertasEdit.pas' {frmPLDAlertasEdit};
 
 {$R *.res}
 

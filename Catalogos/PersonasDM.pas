@@ -97,6 +97,12 @@ type
     adodsMasterActividad1: TStringField;
     adodsMasterActividad2: TStringField;
     adodsMasterActividad3: TStringField;
+    adodsMasterPLDOrigenRecurso: TStringField;
+    adodsMasterPLDDestinoRecurso: TStringField;
+    adodsMasterPLDMontoMaximo: TFMTBCDField;
+    adodsMasterPLDPagarEfectivo: TBooleanField;
+    adodsMasterPLDMontoMaximoEfectivo: TFMTBCDField;
+    adodsMasterPLDNumeroPagos: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsPersonaRolesNewRecord(DataSet: TDataSet);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
@@ -155,6 +161,7 @@ begin
   begin
     adodsMasterIdPersonaTipo.Value := 1;
   end;
+  adodsMasterPLDPagarEfectivo.Value := False;
 end;
 
 procedure TdmPersona.adodsPersonaRolesNewRecord(DataSet: TDataSet);
@@ -179,7 +186,7 @@ begin
   // Busqueda
   SQLSelect:= 'SELECT IdPersona, IdPersonaTipo, IdRolTipo, IdRazonSocialTipo, IdSexo, IdEstadoCivil, IdPais, IdPoblacion, IdRiesgoTipo, IdBCCalificacion, IdBCActividad1, IdBCActividad2, IdBCActividad3, RFC, CURP, RazonSocial, ' +
   'Nombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, LugarNacimiento, VigenciaFM34, IdMetodoPago, IdRegimenFiscal, IdDocumentoLogo, IdPersonaEstatus, Identificador, NumCtaPagoCliente, ' +
-  'SaldoCliente, CalificacionInicial, CalificacionActual ' +
+  'SaldoCliente, CalificacionInicial, CalificacionActual, PLDOrigenRecurso, PLDDestinoRecurso, PLDMontoMaximo, PLDPagarEfectivo, PLDMontoMaximoEfectivo, PLDNumeroPagos ' +
   'FROM Personas';
   SQLOrderBy:= 'ORDER BY RazonSocial';
   actSearch.Execute;

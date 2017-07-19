@@ -159,6 +159,8 @@ type
     actBuroCredito: TAction;
     dxBarLargeButton37: TdxBarLargeButton;
     ActNotasCredito: TAction;
+    actAlertasPLD: TAction;
+    dxBarLargeButton41: TdxBarLargeButton;
     procedure actCatalogoExecute(Sender: TObject);
     procedure actIntervaCXPExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -195,7 +197,7 @@ uses UbicacionesDM, BancosDM, MonedasDM, PuestosDM, PlazasTurnosDM,
   SeguimientoCobranzaDM, rptInformacionContratosDM, MonedasCotizacionesDM,
   RptCoberturaDM, RptExpedientesRecibidosDM, rptReporteCarteraDM,
   RptAnexosProductosDM, RptColocacionAcumuladoDM, PonerFechaActualForm,
-  BuroCreditoDM;
+  BuroCreditoDM, PLDAlertasDM;
 //  EsquemaPagosDM, FormulasDM, ReglasNegocioDM,
 //  MovimientosTiposDM, RolesDM, InstruccionesDM,
 //  IncidenciasDM, InstruccionesTiposDM, PeriodosDM, MovimientosDM,
@@ -247,7 +249,6 @@ begin
    25: gModulo := TdmPersona.CreateWRol(Self, rOutSourcing);
    26: gModulo := TdmPersona.CreateWRol(Self, rComisionista);
    27: gModulo := TdmPersona.CreateWRol(Self, rSocio);
-
    28: gModulo := TdmPersona.CreateWRol(Self, rEmisor); //Nov 28/16
    30: gModulo := TdmContratos.Create(Self);
    31: gModulo := TdmAmortizaciones.Create(Self);
@@ -256,10 +257,9 @@ begin
    34: gModulo := TdmPagos.Create(Self);
    35: gModulo := TdmAplicacionesConsulta.Create(Self); //Ene 5/17
    36: gModulo := TdmCotizaciones.Create(Self);
-
    37: gModulo := TdmSeguimientoCobranza.Create(Self);  //Feb 15/17
-
    38: gModulo := TDMFacturas.CreateWMostrar(Self,True,2); //jun 26/17   Notas Credito
+   39: gModulo := TdmPLDAlertas.Create(Self);
 
    50: gModulo := TdmRptAntiguedadSaldos.Create(Self);
    51: gModulo := TdmEstadosCuenta.Create(Self);
