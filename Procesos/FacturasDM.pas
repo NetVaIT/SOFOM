@@ -1115,6 +1115,7 @@ begin
   1:  gGridForm.Caption:='Facturas';
   2:  gGridForm.Caption:='Notas de Crédito';
   end;
+  TfrmFacturasGrid(gGridForm).DSQryAuxiliar.DataSet:=ADOQryAuxiliar;
   TfrmFacturasGrid(gGridForm).ChckBxFactVivas.Caption:= gGridForm.Caption+' con Saldo';
   TfrmFacturasGrid(gGridForm).TipoD := TipoDocumento;
   TfrmFacturasGrid(gGridForm).ActGenerarCFDI := actProcesaFactura;  //Nov29/16

@@ -117,7 +117,7 @@ begin
   dmAntiguedadSaldosPDF:= TdmAntiguedadSaldosPDF.Create(Self);
   try
     dmAntiguedadSaldosPDF.ADODtStXContratosVencidos.Close;
-    TExto:=  'AL '+upperCASE(FormatDateTime('dd ''de'' mmmm ''del'' yyyy',_DmConection.LaFechaActual));//Date)); //Jun 30/17
+    TExto:=  ' AL '+upperCASE(FormatDateTime('dd ''de'' mmmm ''del'' yyyy',_DmConection.LaFechaActual));//Date)); //Jun 30/17
 
     dmAntiguedadSaldosPDF.ADODtStXContratosVencidos.Open;
     dmAntiguedadSaldosPDF.ppRptXContratosVencidos.ShowPrintDialog:= False;
@@ -125,7 +125,7 @@ begin
 
 
     dmAntiguedadSaldosPDF.ppRptXContratosVencidos.PrinterSetup.DocumentName:=  'CONTRATOS VENCIDOS POR CLIENTE '+#13 +Texto;
-    dmAntiguedadSaldosPDF.ppTituloXConVen.Caption:= dmAntiguedadSaldosPDF.ppTituloXConVen.Caption +Texto;
+  //  dmAntiguedadSaldosPDF.ppTituloXConVen.Caption:= dmAntiguedadSaldosPDF.ppTituloXConVen.Caption +Texto;
 
     dmAntiguedadSaldosPDF.ppRptXContratosVencidos.DeviceType:= 'PDF';
     dmAntiguedadSaldosPDF.ppRptXContratosVencidos.TextFileName:= ArchiPDF;

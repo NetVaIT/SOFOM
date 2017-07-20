@@ -198,7 +198,6 @@ type
     ppLabel51: TppLabel;
     ppLabel52: TppLabel;
     ppLabel53: TppLabel;
-    ppSystemVariable5: TppSystemVariable;
     ppDetailBand4: TppDetailBand;
     ppDBText26: TppDBText;
     ppDBText32: TppDBText;

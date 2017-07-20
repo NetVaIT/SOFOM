@@ -5,35 +5,34 @@
     CommandText = 
       'SELECT     Cc.IdCuentaXCobrar,cc.IDAnexo,a.Identificador as Anex' +
       'o, A.IDContrato, Con.IdContratoTipo,Con.Identificador as Contrat' +
-      'o,'#13#10' CT.Identificador as TC, ct.Descripcion as TipoContrato, CAS' +
-      'E WHEN CC.Esmoratorio=1 then '#39'Moratorio'#39' else '#39'Amortizaci'#243'n'#39' end' +
-      ' as CobroX, Cc.Fecha, cc.FechaVencimiento,  Cc.IdPersona, cc.IdC' +
-      'uentaXCobrarEstatus, Cc.Total, CC.Saldo, '#13#10'                     ' +
-      ' PR.RazonSocial AS Cliente, CASE WHEN [dbo].getdateAux() -  cc.F' +
-      'echaVencimiento<= 30 THEN Cc.Saldo END AS '#39'Vigentes'#39','#13#10'         ' +
-      '           CASE WHEN  [dbo].getdateAux() -  cc.FechaVencimiento>' +
-      '= 0 THEN Cc.Saldo END as '#39'Saldo Total Vencido'#39', -- abr28/17 --ju' +
-      'n19/17 ap los del dia'#13#10'                       CASE WHEN ( [dbo].' +
-      'getdateAux() -  cc.FechaVencimiento<= 60 ) AND ( [dbo].getdateAu' +
-      'x() -  cc.FechaVencimiento> 30 ) '#13#10'                      THEN Cc' +
-      '.Saldo END AS '#39'Vencidos a 30 d'#237'as'#39', CASE WHEN ( [dbo].getdateAux' +
-      '() -  cc.FechaVencimiento<= 90 ) AND ( [dbo].getdateAux() '#13#10'    ' +
-      '                  -  cc.FechaVencimiento> 60 ) THEN Cc.Saldo END' +
-      ' AS '#39'Vencidos a 60 d'#237'as'#39', CASE WHEN ( [dbo].getdateAux() -  cc.F' +
-      'echaVencimiento> 90 ) AND '#13#10'                      ( [dbo].getdat' +
-      'eAux() -  cc.FechaVencimiento<= 120 ) THEN Cc.Saldo END AS '#39'Venc' +
-      'idos a 90 d'#237'as'#39', CASE WHEN  [dbo].getdateAux() '#13#10'               ' +
-      '       -  cc.FechaVencimiento> 120 THEN Cc.Saldo END AS '#39'Vencido' +
-      's m'#225's de 120 d'#237'as'#39' --jun16  cc.FechaVencimiento'#13#10'FROM         Cu' +
-      'entasXCobrar AS Cc INNER JOIN'#13#10'                      Personas AS' +
-      ' PR ON Cc.IdPersona = PR.IdPersona'#13#10'             left join  Anex' +
-      'os As A ON Cc.IdAnexo=A.IdAnexo       -- Por si hubiese algo sin' +
-      ' anexo.. aunque no deber'#237'a'#13#10'             inner join Contratos as' +
-      ' Con ON A.IdContrato=Con.IdContrato'#13#10'             inner join Con' +
-      'tratosTipos as CT On Con.IdContratoTipo =CT.IdContratoTipo'#13#10' WHE' +
-      'RE    (Cc.Saldo > 0) --  AND  -- mientras para que muestre todo'#13 +
-      #10'    '#13#10'ORDER BY Cliente'
-    Left = 40
+      'o,'#13#10' CT.Identificador as TC, ct.Descripcion as TipoContrato, CC.' +
+      'dESCRIPCION as CobroX, Cc.Fecha, cc.FechaVencimiento,  Cc.IdPers' +
+      'ona, cc.IdCuentaXCobrarEstatus, Cc.Total, CC.Saldo, '#13#10'          ' +
+      '            PR.RazonSocial AS Cliente, CASE WHEN [dbo].getdateAu' +
+      'x() -  cc.FechaVencimiento<= 30 THEN Cc.Saldo END AS '#39'Vigentes'#39',' +
+      #13#10'                    CASE WHEN  [dbo].getdateAux() -  cc.FechaV' +
+      'encimiento>= 0 THEN Cc.Saldo END as '#39'Saldo Total Vencido'#39', -- ab' +
+      'r28/17 --jun19/17 ap los del dia'#13#10'                       CASE WH' +
+      'EN ( [dbo].getdateAux() -  cc.FechaVencimiento<= 60 ) AND ( [dbo' +
+      '].getdateAux() -  cc.FechaVencimiento> 30 ) '#13#10'                  ' +
+      '    THEN Cc.Saldo END AS '#39'Vencidos a 30 d'#237'as'#39', CASE WHEN ( [dbo]' +
+      '.getdateAux() -  cc.FechaVencimiento<= 90 ) AND ( [dbo].getdateA' +
+      'ux() '#13#10'                      -  cc.FechaVencimiento> 60 ) THEN C' +
+      'c.Saldo END AS '#39'Vencidos a 60 d'#237'as'#39', CASE WHEN ( [dbo].getdateAu' +
+      'x() -  cc.FechaVencimiento> 90 ) AND '#13#10'                      ( [' +
+      'dbo].getdateAux() -  cc.FechaVencimiento<= 120 ) THEN Cc.Saldo E' +
+      'ND AS '#39'Vencidos a 90 d'#237'as'#39', CASE WHEN  [dbo].getdateAux() '#13#10'    ' +
+      '                  -  cc.FechaVencimiento> 120 THEN Cc.Saldo END ' +
+      'AS '#39'Vencidos m'#225's de 120 d'#237'as'#39' --jun16  cc.FechaVencimiento'#13#10'FROM' +
+      '         CuentasXCobrar AS Cc INNER JOIN'#13#10'                      ' +
+      'Personas AS PR ON Cc.IdPersona = PR.IdPersona'#13#10'             left' +
+      ' join  Anexos As A ON Cc.IdAnexo=A.IdAnexo       -- Por si hubie' +
+      'se algo sin anexo.. aunque no deber'#237'a'#13#10'             inner join C' +
+      'ontratos as Con ON A.IdContrato=Con.IdContrato'#13#10'             inn' +
+      'er join ContratosTipos as CT On Con.IdContratoTipo =CT.IdContrat' +
+      'oTipo'#13#10' WHERE    (Cc.Saldo > 0) --  AND  -- mientras para que mu' +
+      'estre todo'#13#10'    '#13#10'ORDER BY Cliente'
+    Left = 48
     object adodsMasterIdCuentaXCobrar: TAutoIncField
       DisplayLabel = 'No.CuentaXCobrar'
       FieldName = 'IdCuentaXCobrar'
@@ -139,9 +138,10 @@
       FieldName = 'FechaVencimiento'
     end
     object adodsMasterCobroX: TStringField
+      DisplayWidth = 100
       FieldName = 'CobroX'
       ReadOnly = True
-      Size = 12
+      Size = 100
     end
   end
   inherited ActionList: TActionList

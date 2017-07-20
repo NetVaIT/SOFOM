@@ -388,6 +388,10 @@ object FrmAplicacionPago: TFrmAplicacionPago
         DataBinding.FieldName = 'Interes'
         Visible = False
       end
+      object tvMasterDescripcion: TcxGridDBColumn
+        DataBinding.FieldName = 'Descripcion'
+        Width = 202
+      end
       object tvMasterTotal: TcxGridDBColumn
         DataBinding.FieldName = 'Total'
       end

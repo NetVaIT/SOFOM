@@ -114,7 +114,6 @@ inherited dmPLDAlertas: TdmPLDAlertas
     end
   end
   object adodsOperacionTipo: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdPLDOperacionTipo, Descripcion from PLDOperacionesTipos'
@@ -123,7 +122,6 @@ inherited dmPLDAlertas: TdmPLDAlertas
     Top = 152
   end
   object adodsTipo: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdPLDAlertaTipo, Descripcion from PLDAlertasTipos'
@@ -132,7 +130,6 @@ inherited dmPLDAlertas: TdmPLDAlertas
     Top = 208
   end
   object adodsEstatus: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdPLDAlertaEstatus, Descripcion from PLDAlertasEstatus'

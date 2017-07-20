@@ -266,24 +266,24 @@ inherited dmPagos: TdmPagos
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'Select CXC.IdCuentaXCobrar, CXC.IdCuentaXCobrarBase, CXC.IdCuent' +
-      'aXCobrarEstatus, CXC.IdPersona, CXC.IdAnexosAmortizaciones AS Id' +
-      'AnexoAmortizacion, CXC.IdAnexo, CXC.IdEstadoCuenta, CXC.IdCFDI, ' +
-      #13#10'CXC.Fecha, CXC.FechaVencimiento, CXC.Importe, CXC.Impuesto, CX' +
-      'C.Interes, CXC.Total, CXC.Saldo, CXC.SaldoFactoraje, CXC.EsMorat' +
-      'orio, CI.SaldoDocumento, Ci.SaldoFactoraje as SaldoFactorajeCFDI' +
-      ', '#13#10'ci.serie, Ci.folio'#13#10' from CuentasXCobrar CXC  '#13#10'left Join CF' +
-      'DI CI on CI.IdCFDI= CXC.IdCFDI where '#13#10'-- CXC.idanexosamortizaci' +
-      'ones is not null and -- jun 30/17 '#13#10' Saldo >0 and IDPersona=:IdP' +
-      'ersonaCliente '#13#10'and ((IdCuentaXCobrarEstatus=0 and  ESMoratorio=' +
-      '0)'#13#10'or( Esmoratorio=1)'#13#10'or (CXC.Fecha<dbo.GetDateAux() and IdCue' +
-      'ntaXCobrarEstatus=-1) -- para poder facturar addelantados'#13#10'or (e' +
-      'xists (select * from CuentasXCobrarDetalle CXCD where CXCD.descr' +
-      'ipcion like'#39'%Abono Capital%'#39' and CXC.IdCuentaXCobrar=CXCD.idcuen' +
-      'taXCobrar )'#13#10'and CXC.IdCFDI is null) )-- IdCuentaXCobrarEstatus=' +
-      '-1 and puede que esten facturadas'#13#10' and CXC.IDAnexo=:IdAnexo'#13#10'or' +
-      'der by CXC.idanexosamortizaciones,EsMoratorio DEsc, CXC.FechaVen' +
-      'cimiento'
+      'Select CXC.Descripcion, CXC.IdCuentaXCobrar, CXC.IdCuentaXCobrar' +
+      'Base, CXC.IdCuentaXCobrarEstatus, CXC.IdPersona, CXC.IdAnexosAmo' +
+      'rtizaciones AS IdAnexoAmortizacion, CXC.IdAnexo, CXC.IdEstadoCue' +
+      'nta, CXC.IdCFDI, '#13#10'CXC.Fecha, CXC.FechaVencimiento, CXC.Importe,' +
+      ' CXC.Impuesto, CXC.Interes, CXC.Total, CXC.Saldo, CXC.SaldoFacto' +
+      'raje, CXC.EsMoratorio, CI.SaldoDocumento, Ci.SaldoFactoraje as S' +
+      'aldoFactorajeCFDI, '#13#10'ci.serie, Ci.folio'#13#10' from CuentasXCobrar CX' +
+      'C  '#13#10'left Join CFDI CI on CI.IdCFDI= CXC.IdCFDI where '#13#10'-- CXC.i' +
+      'danexosamortizaciones is not null and -- jun 30/17 '#13#10' Saldo >0 a' +
+      'nd IDPersona=:IdPersonaCliente '#13#10'and ((IdCuentaXCobrarEstatus=0 ' +
+      'and  ESMoratorio=0)'#13#10'or( Esmoratorio=1)'#13#10'or (CXC.Fecha<dbo.GetDa' +
+      'teAux() and IdCuentaXCobrarEstatus=-1) -- para poder facturar ad' +
+      'delantados'#13#10'or (exists (select * from CuentasXCobrarDetalle CXCD' +
+      ' where CXCD.descripcion like'#39'%Abono Capital%'#39' and CXC.IdCuentaXC' +
+      'obrar=CXCD.idcuentaXCobrar )'#13#10'and CXC.IdCFDI is null) )-- IdCuen' +
+      'taXCobrarEstatus=-1 and puede que esten facturadas'#13#10' and CXC.IDA' +
+      'nexo=:IdAnexo'#13#10'order by CXC.idanexosamortizaciones,EsMoratorio D' +
+      'Esc, CXC.FechaVencimiento'
     DataSource = DSMaster
     IndexFieldNames = 'IdPersona;IdAnexo'
     MasterFields = 'IdPersonaCliente;IdAnexo'
@@ -395,6 +395,10 @@ inherited dmPagos: TdmPagos
     end
     object ADODtStCXCPendientesfolio: TLargeintField
       FieldName = 'folio'
+    end
+    object ADODtStCXCPendientesDescripcion: TStringField
+      FieldName = 'Descripcion'
+      Size = 100
     end
   end
   object ADODtStCxCDetallePend: TADODataSet

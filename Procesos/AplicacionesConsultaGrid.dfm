@@ -31,25 +31,29 @@ inherited frmConaplicaciones: TfrmConaplicaciones
     Width = 1206
     Height = 196
     ExplicitTop = 68
-    ExplicitWidth = 1019
+    ExplicitWidth = 1206
     ExplicitHeight = 196
     inherited cxGrid: TcxGrid
       Width = 1206
       Height = 196
-      ExplicitWidth = 1019
+      ExplicitWidth = 1206
       ExplicitHeight = 196
       inherited tvMaster: TcxGridDBTableView
         object tvMasterCliente: TcxGridDBColumn
           DataBinding.FieldName = 'Cliente'
-          Width = 300
+          Width = 224
         end
         object tvMasterAnexo: TcxGridDBColumn
           DataBinding.FieldName = 'Anexo'
-          Width = 318
+          Width = 308
         end
         object tvMasterNoCuentaXCobrar: TcxGridDBColumn
           DataBinding.FieldName = 'NoCuentaXCobrar'
           Width = 101
+        end
+        object tvMasterDescripcion: TcxGridDBColumn
+          DataBinding.FieldName = 'Descripcion'
+          Width = 230
         end
         object tvMasterFechaCXC: TcxGridDBColumn
           DataBinding.FieldName = 'FechaCXC'
@@ -115,7 +119,7 @@ inherited frmConaplicaciones: TfrmConaplicaciones
     Width = 1206
     Height = 35
     ExplicitTop = 510
-    ExplicitWidth = 1019
+    ExplicitWidth = 1206
     ExplicitHeight = 35
   end
   inherited pnlDetail2: TPanel
@@ -123,7 +127,7 @@ inherited frmConaplicaciones: TfrmConaplicaciones
     Width = 1206
     Height = 35
     ExplicitTop = 472
-    ExplicitWidth = 1019
+    ExplicitWidth = 1206
     ExplicitHeight = 35
   end
   inherited pnlDetail1: TPanel
@@ -131,7 +135,7 @@ inherited frmConaplicaciones: TfrmConaplicaciones
     Width = 1206
     Height = 202
     ExplicitTop = 267
-    ExplicitWidth = 1019
+    ExplicitWidth = 1206
     ExplicitHeight = 202
   end
   inherited pnlClose: TPanel
@@ -139,11 +143,11 @@ inherited frmConaplicaciones: TfrmConaplicaciones
     Width = 1206
     Height = 35
     ExplicitTop = 545
-    ExplicitWidth = 1019
+    ExplicitWidth = 1206
     ExplicitHeight = 35
     inherited btnClose: TButton
       Left = 1121
-      ExplicitLeft = 934
+      ExplicitLeft = 1121
     end
   end
   object Panel1: TPanel [8]
@@ -154,7 +158,6 @@ inherited frmConaplicaciones: TfrmConaplicaciones
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 9
-    ExplicitWidth = 1019
     object RdGrpSeleccion: TRadioGroup
       Left = 0
       Top = 0
@@ -1074,7 +1077,6 @@ inherited frmConaplicaciones: TfrmConaplicaciones
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42738.400515763890000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

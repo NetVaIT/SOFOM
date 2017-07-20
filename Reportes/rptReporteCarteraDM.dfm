@@ -16,7 +16,7 @@ inherited dmrptReporteCartera: TdmrptReporteCartera
       'iempo'#13#10', ValorResidual, SaldoInsoluto, SaldoTotal as SaldoTBD '#13#10 +
       #13#10#13#10'from vw_ReporteCarteraCompleto'#13#10'order by  TotalCobradoVencid' +
       'o desc, TotalPorVencer desc'
-    Left = 32
+    Left = 40
     object adodsMasterIdAnexo: TIntegerField
       FieldName = 'IdAnexo'
     end
@@ -197,6 +197,11 @@ inherited dmrptReporteCartera: TdmrptReporteCartera
     object ActPDFHojaControl: TAction
       Caption = 'PDF Hoja Control'
       OnExecute = ActPDFHojaControlExecute
+    end
+    object ActPDFAmortizaYPago: TAction
+      Caption = 'ActPDFAmortizaYPago'
+      Hint = 'Hoja Amortizaciones y Pagos'
+      OnExecute = ActPDFAmortizaYPagoExecute
     end
   end
 end

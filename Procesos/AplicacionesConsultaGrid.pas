@@ -62,6 +62,7 @@ type
     tvMasteridMetodoPago: TcxGridDBColumn;
     tvMasterSerieFactura: TcxGridDBColumn;
     tvMasterFolioFactura: TcxGridDBColumn;
+    tvMasterDescripcion: TcxGridDBColumn;
     procedure SpdBtnConsultaClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure RdGrpSeleccionClick(Sender: TObject);
@@ -134,6 +135,7 @@ const
           ' CC.FechaVencimiento as FechaCXC ,P.RazonSocial as Cliente,CC.IDAnexo,A.DEscripcion Anexo,'+   //FV abr 11/17
           ' PA.IdPagoAplicacion, Pa.IdPago,  PA.IdPersonaCliente, A.IdContrato, P.idMetodoPago, ' +  //  jun 21/17 A.IdContrato, P.idMetodoPago
           ' CC.IdCFDI, Ci.Serie SerieFactura, Ci.Folio FolioFactura '+   //-- jul 11/17  se quito no tiene dato PA.IdCFDI,
+          ' ,cc.Descripcion '+ //jul 17/17
           ' from PagosAplicaciones PA inner join Pagos PR on PA.IdPago=PR.IdPago' +
           ' inner join CuentasXCobrar CC on PA.IdCuentaXCobrar =Cc.IdcuentaXCobrar' +
           ' inner join CFDI Ci on Ci.IdCFDI =CC.IdCFDI ' +  // -- jul 11/17

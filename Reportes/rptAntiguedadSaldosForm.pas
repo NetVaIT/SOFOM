@@ -179,6 +179,7 @@ begin
   FPDFAntigSaldos := Value;
   dxBrBtnPDF.Action:=Value;
   dxBrBtnPDF.ImageIndex:=17;
+  dxBrBtnPDF.Hint:='Antigüedad de saldos Por Cuenta X Cobrar';
 end;
 
 procedure TfrmRptAntiguedadSaldos.SetPDFAntXCliente(const Value: TBasicAction);
@@ -186,6 +187,7 @@ begin
   FPDFAntiXcliente := Value;
   dxBrBtnAntXCliente.Action:=Value;
   dxBrBtnAntXCliente.ImageIndex:=18;
+  dxBrBtnAntXCliente.Hint:='Antigüedad de Saldos Acumulada por Cliente';
 end;
 
 procedure TfrmRptAntiguedadSaldos.SetPDFXContratoVenc(
@@ -194,7 +196,7 @@ begin
   FPDFXContratoVenc := Value;
   dxBrBtnRepXContAtrasa.Action:= Value;
   dxBrBtnRepXContAtrasa.ImageIndex:=20;
-
+  dxBrBtnRepXContAtrasa.Hint:='Antigüedad de Saldos Por Contratos Atrasados';
 end;
 
 procedure TfrmRptAntiguedadSaldos.SpdBtnConsultaClick(Sender: TObject);

@@ -43,6 +43,7 @@ type
     adodsMasteridMetodoPago: TIntegerField;
     adodsMasterSerieFactura: TStringField;
     adodsMasterFolioFactura: TLargeintField;
+    adodsMasterDescripcion: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure ActAplicaMoratorioIntenoExecute(Sender: TObject);
     procedure ActCreaPagoDepositoExecute(Sender: TObject);

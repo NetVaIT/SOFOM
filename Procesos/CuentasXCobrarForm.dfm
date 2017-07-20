@@ -4,6 +4,7 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
   ClientHeight = 428
   ClientWidth = 1072
   ExplicitWidth = 1078
+  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -41,6 +42,10 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
           DataBinding.FieldName = 'Contrato'
           Visible = False
         end
+        object tvMasterCliente: TcxGridDBColumn
+          DataBinding.FieldName = 'Cliente'
+          Width = 284
+        end
         object tvMasterAnexo: TcxGridDBColumn
           DataBinding.FieldName = 'Anexo'
           Width = 132
@@ -67,9 +72,10 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
           DataBinding.FieldName = 'IdPersona'
           Visible = False
         end
-        object tvMasterCliente: TcxGridDBColumn
-          DataBinding.FieldName = 'Cliente'
-          Width = 284
+        object tvMasterDescripcion: TcxGridDBColumn
+          Caption = 'Descripci'#243'n'
+          DataBinding.FieldName = 'Descripcion'
+          Width = 250
         end
         object tvMasterFechaVencimiento: TcxGridDBColumn
           Caption = 'Fecha Vencimiento'

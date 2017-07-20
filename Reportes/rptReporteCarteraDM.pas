@@ -41,10 +41,12 @@ type
     adodsMasterSaldoInsoluto: TFMTBCDField;
     adodsMasterSaldoTBD: TFMTBCDField;
     adodsMasterSaldoAmortizaciones: TFMTBCDField;
+    ActPDFAmortizaYPago: TAction;
     procedure adodsMasterCalcFields(DataSet: TDataSet);
     procedure DataModuleCreate(Sender: TObject);
     procedure ActPDFCarteraExecute(Sender: TObject);
     procedure ActPDFHojaControlExecute(Sender: TObject);
+    procedure ActPDFAmortizaYPagoExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -61,6 +63,59 @@ implementation
 uses rptReporteCarteraForm, PDFReporteCarteraDM, _ConectionDmod;
 
 {$R *.dfm}
+
+procedure TdmrptReporteCartera.ActPDFAmortizaYPagoExecute(Sender: TObject);
+var                                                //Jul 19/17
+  dmReporteCarteraPDF:TDmReporteCarteraPDF;
+  ArchiPDF:TFileName;
+  Texto,TxtSQL, GrupoSQL, Fecha:String;
+  FechaIni, FechaFin:TDAteTime;
+begin
+  inherited;
+ if  TFrmReporteCarteraGrid(gGridForm).AEsIndividual then
+  begin
+    TxtSQL:=' IdAnexo = ' + intTostr(TFrmReporteCarteraGrid(gGridForm).AIdAnexoAct);
+  end
+  else
+    TxtSql:='';
+
+  TExto:= '_' +FormatDateTime('ddmmmyyyy',_DmConection.LaFechaActual);//Date); //Jun 30/17
+  ArchiPDF:='HojaAmortizacionesYPagos'+Texto+'.PDF';
+  dmReporteCarteraPDF:= TdmReporteCarteraPDF.Create(Self);
+  try
+
+
+    dmReporteCarteraPDF.ADODtStRepHojaControlCte.Open;
+    if TxtSql<>'' then    //May 22/17
+    begin
+      dmReporteCarteraPDF.ADODtStRepHojaControlCte.Filter:= TxtSql;
+      dmReporteCarteraPDF.ADODtStRepHojaControlCte.Filtered:=True;
+    end
+    else
+      dmReporteCarteraPDF.ADODtStRepHojaControlCte.Filtered:=False;
+
+    dmReporteCarteraPDF.ADODtStRepAmortiza.Close;
+    dmReporteCarteraPDF.ADODtStRepAmortiza.Parameters.ParamByName('IDAnexo1').Value:=TFrmReporteCarteraGrid(gGridForm).AIdAnexoAct;
+    dmReporteCarteraPDF.ADODtStRepAmortiza.Parameters.ParamByName('IDAnexo2').Value:=TFrmReporteCarteraGrid(gGridForm).AIdAnexoAct;
+    dmReporteCarteraPDF.ADODtStRepAmortiza.OPen;
+
+    dmReporteCarteraPDF.ppRprtRepAmortizayPagos.ShowPrintDialog:= False;
+    dmReporteCarteraPDF.ppRprtRepAmortizayPagos.ShowCancelDialog:= False;
+    dmReporteCarteraPDF.ppRprtRepAmortizayPagos.PrinterSetup.DocumentName:=  'HOJA AMORTIZACIONES Y PAGOS '+#13 +Texto;
+
+    dmReporteCarteraPDF.ppRprtRepAmortizayPagos.DeviceType:= 'PDF';
+    dmReporteCarteraPDF.ppRprtRepAmortizayPagos.TextFileName:= ArchiPDF;
+
+    dmReporteCarteraPDF.ppRprtRepAmortizayPagos.print;
+
+     dmReporteCarteraPDF.ADODtStRepHojaControlCte.Close;
+  finally
+    dmReporteCarteraPDF.Free;
+  end;
+  if FileExists(ArchiPDF) then
+      ShellExecute(application.Handle, 'open', PChar(ArchiPDF), nil, nil, SW_SHOWNORMAL);
+
+end;
 
 procedure TdmrptReporteCartera.ActPDFCarteraExecute(Sender: TObject);
 var
@@ -229,6 +284,7 @@ begin
 
   TFrmReporteCarteraGrid(gGridForm).ActPDFReporteCartera:=ActPDFCartera;
   TFrmReporteCarteraGrid(gGridForm).ActPDFHojaControlGral:=ActPDFHojaControl;
+  TFrmReporteCarteraGrid(gGridForm).ActPDFHojaAmorYpago:=ActPDFAmortizayPago;
 end;
 
 end.

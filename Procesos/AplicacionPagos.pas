@@ -104,6 +104,7 @@ type
     cxChckBxCambioconsulta: TcxCheckBox;
     tvMasterserie: TcxGridDBColumn;
     tvMasterfolio: TcxGridDBColumn;
+    tvMasterDescripcion: TcxGridDBColumn;
     procedure BtBtnAplicarClick(Sender: TObject);
     procedure DSAplicacionStateChange(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);

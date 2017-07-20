@@ -195,6 +195,7 @@ type
     ADODtStSelMetPagoDescripcion: TStringField;
     ADODtStSelMetPagoExigeCuenta: TIntegerField;
     ADODtStSelMetPagoClaveSAT2016: TStringField;
+    adodsMasterDescripcion: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actGeneraPreFacturasExecute(Sender: TObject);
     procedure ADODtStPrefacturasCFDINewRecord(DataSet: TDataSet);
@@ -222,6 +223,7 @@ type
     function GetFTotalConMora: Double;  //May 26/17
     function CambiarMetodoPago(var IDMetodoPago: Integer;
       var Cuenta: String): Boolean;
+    procedure verificaYCambiaEstatusCXC(IDCFDIACT, NvoEstatus, IdCXCAct:integer; CFDICreado:Boolean );
 
     { Private declarations }
   public
@@ -438,8 +440,8 @@ begin
      end;
       DetallesCXCParaFacturar.Next;
     end;
-    adodsmaster.Edit;    //dejo de funcionar........
-    adodsmaster.FieldByName('IdCuentaXCobrarEstatus').AsInteger:=0; //CAmbia a pendiente
+    adodsmaster.Edit;
+    adodsmaster.FieldByName('IdCuentaXCobrarEstatus').AsInteger:=0; //CAmbia a pendiente// NOMPRE ESTATUS PREFACTURADA  jul 19/17
     adodsmaster.FieldByName('IdCFDI').AsInteger:= ADODtStPrefacturasCFDI.FieldByName('IDCFDI').AsInteger; //Feb 9/17
     adodsmaster.post;            //ERa CFDInormal.. mar 30/17
 
@@ -447,10 +449,23 @@ begin
 
     Facturar(ADODtStPrefacturasCFDI.FieldByName('IDCFDI').AsInteger,CFDICreado, 1); //Timbra factura
     //DEntro del proceso de facturacion se muestraPDF //Abr 7/17
-
+    VerificaYCambiaEstatusCXC(ADODtStPrefacturasCFDI.FieldByName('IDCFDI').AsInteger,1,adodsmaster.FieldByName('IdCuentaXCobrar').ASinteger,CFDICreado); //A EstatusFActurada (1)
   end;
 end;
-
+procedure TdmCuentasXCobrar.verificaYCambiaEstatusCXC(IDCFDIACT, NvoEstatus, IdCXCAct:integer; CFDICreado:Boolean );
+begin                                //Jul 19/17
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.SQL.Clear;
+  ADOQryAuxiliar.SQL.Add('Select * from CFDI where IDCFDI='+intTostr(IDCFDIACT));
+  ADOQryAuxiliar.Open;
+  if (ADOQryAuxiliar.FieldByName('IdCFDIEstatus').asInteger=2)      //vigente
+      and (ADOQryAuxiliar.FieldByName('IdCuentaXCobrar').asInteger=IDCXCAct)  and (adodsmaster.fieldbyname('IdcuentaXCobrarEstatus').AsInteger=0) then  
+  begin
+    adodsmaster.Edit;
+    adodsmaster.FieldByName('IdCuentaXCobrarEstatus').AsInteger:=NvoEstatus;// FACTURADA  jul 19/17
+    adodsmaster.post;
+  end;
+end;
 procedure TdmCuentasXCobrar.ActTotalesCXCExecute(Sender: TObject);
 begin
   inherited;

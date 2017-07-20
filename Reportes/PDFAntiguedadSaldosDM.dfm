@@ -5182,25 +5182,26 @@
       'orio=1  then '#39'Moratorio '#39'+cast(AA.Periodo as varchar(10))+'#39'/'#39'+ca' +
       'st(A.Plazo as varchar(10))'#13#10'    else '#39'Amortizaci'#243'n '#39'+cast(AA.Per' +
       'iodo as varchar(10))+'#39'/'#39'+cast(A.Plazo as varchar(10))'#13#10'    end '#13 +
-      #10' else '#39'Otro '#39' end     as CobroX, '#13#10'  CASE WHEN CC.Esmoratorio=1' +
-      ' then cc.IdCuentaXCobrarBase else CC.idCuentaXCobrar end as CxcB' +
-      'ase, '#13#10'Cc.Fecha, cc.FechaVencimiento,  Cc.IdPersona, cc.IdCuenta' +
-      'XCobrarEstatus, Cc.Total, CC.Saldo, '#13#10'                      PR.R' +
-      'azonSocial AS Cliente,'#13#10'                      AA.Periodo        ' +
-      '     '#13#10'                      '#13#10'FROM         CuentasXCobrar AS Cc' +
-      ' INNER JOIN'#13#10'                      Personas AS PR ON Cc.IdPerson' +
-      'a = PR.IdPersona '#13#10'             left  join  Anexos As A ON Cc.Id' +
-      'Anexo=A.IdAnexo       -- Por si hubiese algo sin anexo.. aunque ' +
-      'no deber'#237'a'#13#10'             left join AnexosCreditos as aC on aC.Id' +
-      'Anexo=A.IdAnexo and aC.IdAnexoCreditoEstatus =1'#13#10'             le' +
-      'ft join AnexosAmortizaciones as AA on AA.IdAnexoCredito=AC.IdAne' +
-      'xoCredito and Cc.IdAnexosAmortizaciones=AA.IdAnexoAmortizacion '#13 +
-      #10'             inner join Contratos as Con ON A.IdContrato=Con.Id' +
-      'Contrato'#13#10'             inner join ContratosTipos as CT On Con.Id' +
-      'ContratoTipo =CT.IdContratoTipo'#13#10'             '#13#10'             '#13#10' ' +
-      'WHERE    (Cc.Saldo > 0.01)  and Cc.IDPersona=:IdPersona  '#13#10#13#10'-- ' +
-      ' AND  -- mientras para que muestre todo'#13#10#13#10'ORDER BY Cliente,cc.I' +
-      'dAnexo, CXCBase, cobrox, cc.FechaVencimiento'
+      #10' else '#39'Otro '#39' end      as CAnterior, '#13#10'Cc.Descripcion  '#13#10'as Cob' +
+      'roX, '#13#10'  CASE WHEN CC.Esmoratorio=1 then cc.IdCuentaXCobrarBase ' +
+      'else CC.idCuentaXCobrar end as CxcBase, '#13#10'Cc.Fecha, cc.FechaVenc' +
+      'imiento,  Cc.IdPersona, cc.IdCuentaXCobrarEstatus, Cc.Total, CC.' +
+      'Saldo, '#13#10'                      PR.RazonSocial AS Cliente,'#13#10'     ' +
+      '                 AA.Periodo             '#13#10'                      ' +
+      #13#10'FROM         CuentasXCobrar AS Cc INNER JOIN'#13#10'                ' +
+      '      Personas AS PR ON Cc.IdPersona = PR.IdPersona '#13#10'          ' +
+      '   left  join  Anexos As A ON Cc.IdAnexo=A.IdAnexo       -- Por ' +
+      'si hubiese algo sin anexo.. aunque no deber'#237'a'#13#10'             left' +
+      ' join AnexosCreditos as aC on aC.IdAnexo=A.IdAnexo and aC.IdAnex' +
+      'oCreditoEstatus =1'#13#10'             left join AnexosAmortizaciones ' +
+      'as AA on AA.IdAnexoCredito=AC.IdAnexoCredito and Cc.IdAnexosAmor' +
+      'tizaciones=AA.IdAnexoAmortizacion '#13#10'             inner join Cont' +
+      'ratos as Con ON A.IdContrato=Con.IdContrato'#13#10'             inner ' +
+      'join ContratosTipos as CT On Con.IdContratoTipo =CT.IdContratoTi' +
+      'po'#13#10'             '#13#10'             '#13#10' WHERE    (Cc.Saldo > 0.01)  a' +
+      'nd Cc.IDPersona=:IdPersona  '#13#10#13#10'--  AND  -- mientras para que mu' +
+      'estre todo'#13#10#13#10'ORDER BY Cliente,cc.IdAnexo, CXCBase, cobrox, cc.F' +
+      'echaVencimiento'
     Parameters = <
       item
         Name = 'IdPersona'
@@ -9345,7 +9346,6 @@
     Top = 248
   end
   object ADODtStXContratosVencidos: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -9363,7 +9363,7 @@
       #13#10#13#10'ORDER BY sumavencida desc ,v2.totalcobradoVencido  DESC'#13#10
     Parameters = <>
     Left = 48
-    Top = 352
+    Top = 344
   end
   object DSPorContratosVencidos: TDataSource
     DataSet = ADODtStXContratosVencidos
@@ -9446,19 +9446,19 @@
         UserName = 'Titulo'
         AutoSize = False
         Caption = 
-          '                Antig'#252'edad de Saldos (000 pesos)                ' +
-          '                           Por Contratos Vencidos'
+          '                         ANTIG'#220'EDAD DE SALDOS                   ' +
+          '                        POR CONTRATOS VENCIDOS (000 PESOS) '
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clNavy
-        Font.Name = 'Arial'
+        Font.Name = 'Times New Roman'
         Font.Size = 20
-        Font.Style = []
+        Font.Style = [fsBold, fsItalic]
         Transparent = True
         WordWrap = True
         mmHeight = 18521
-        mmLeft = 44979
+        mmLeft = 44450
         mmTop = 0
-        mmWidth = 179123
+        mmWidth = 190236
         BandType = 0
         LayerName = Foreground2
       end
@@ -12855,9 +12855,9 @@
         Transparent = True
         VerticalAlignment = avCenter
         mmHeight = 4763
-        mmLeft = 42610
-        mmTop = 23285
-        mmWidth = 48948
+        mmLeft = 42598
+        mmTop = 23283
+        mmWidth = 54240
         BandType = 0
         LayerName = Foreground2
       end
@@ -12877,7 +12877,7 @@
         Transparent = True
         VerticalAlignment = avCenter
         mmHeight = 4763
-        mmLeft = 93367
+        mmLeft = 102112
         mmTop = 23283
         mmWidth = 14023
         BandType = 0
@@ -12899,7 +12899,7 @@
         Transparent = True
         VerticalAlignment = avCenter
         mmHeight = 4763
-        mmLeft = 137331
+        mmLeft = 146076
         mmTop = 23284
         mmWidth = 14552
         BandType = 0
@@ -12921,7 +12921,7 @@
         Transparent = True
         VerticalAlignment = avCenter
         mmHeight = 4763
-        mmLeft = 154264
+        mmLeft = 163009
         mmTop = 23283
         mmWidth = 10054
         BandType = 0
@@ -12943,7 +12943,7 @@
         Transparent = True
         VerticalAlignment = avCenter
         mmHeight = 4763
-        mmLeft = 166170
+        mmLeft = 174915
         mmTop = 23283
         mmWidth = 10054
         BandType = 0
@@ -12965,7 +12965,7 @@
         Transparent = True
         VerticalAlignment = avCenter
         mmHeight = 4763
-        mmLeft = 189983
+        mmLeft = 198728
         mmTop = 23283
         mmWidth = 10054
         BandType = 0
@@ -12987,7 +12987,7 @@
         Transparent = True
         VerticalAlignment = avCenter
         mmHeight = 4763
-        mmLeft = 178077
+        mmLeft = 186822
         mmTop = 23283
         mmWidth = 10054
         BandType = 0
@@ -13009,7 +13009,7 @@
         Transparent = True
         VerticalAlignment = avCenter
         mmHeight = 4763
-        mmLeft = 202154
+        mmLeft = 210899
         mmTop = 23283
         mmWidth = 10054
         BandType = 0
@@ -13032,7 +13032,7 @@
         WordWrap = True
         VerticalAlignment = avCenter
         mmHeight = 6879
-        mmLeft = 215113
+        mmLeft = 223858
         mmTop = 20638
         mmWidth = 8467
         BandType = 0
@@ -13055,7 +13055,7 @@
         WordWrap = True
         VerticalAlignment = avCenter
         mmHeight = 6879
-        mmLeft = 224638
+        mmLeft = 233383
         mmTop = 20638
         mmWidth = 13229
         BandType = 0
@@ -13078,7 +13078,7 @@
         Visible = False
         VerticalAlignment = avCenter
         mmHeight = 4763
-        mmLeft = 249238
+        mmLeft = 257983
         mmTop = 22754
         mmWidth = 9525
         BandType = 0
@@ -13101,26 +13101,9 @@
         WordWrap = True
         VerticalAlignment = avCenter
         mmHeight = 6879
-        mmLeft = 238925
+        mmLeft = 247670
         mmTop = 20638
         mmWidth = 11642
-        BandType = 0
-        LayerName = Foreground2
-      end
-      object ppSystemVariable5: TppSystemVariable
-        UserName = 'lblPrintDate1'
-        VarType = vtPrintDateTime
-        DisplayFormat = #39'Fecha: '#39'dd/mmm/yyyy '
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Name = 'Arial'
-        Font.Size = 11
-        Font.Style = [fsBold]
-        Transparent = True
-        mmHeight = 4763
-        mmLeft = 226219
-        mmTop = 1058
-        mmWidth = 37571
         BandType = 0
         LayerName = Foreground2
       end
@@ -13182,7 +13165,7 @@
         Transparent = True
         VerticalAlignment = avCenter
         mmHeight = 4763
-        mmLeft = 109549
+        mmLeft = 118294
         mmTop = 23284
         mmWidth = 24871
         BandType = 0
@@ -13208,9 +13191,9 @@
         VerticalAlignment = avCenter
         DataPipelineName = 'ppXContratosVencidos'
         mmHeight = 4763
-        mmLeft = 42610
+        mmLeft = 42598
         mmTop = 265
-        mmWidth = 48948
+        mmWidth = 54240
         BandType = 4
         LayerName = Foreground2
       end
@@ -13229,7 +13212,7 @@
         VerticalAlignment = avCenter
         DataPipelineName = 'ppXContratosVencidos'
         mmHeight = 4763
-        mmLeft = 93367
+        mmLeft = 102112
         mmTop = 265
         mmWidth = 14023
         BandType = 4
@@ -13251,7 +13234,7 @@
         VerticalAlignment = avCenter
         DataPipelineName = 'ppXContratosVencidos'
         mmHeight = 4763
-        mmLeft = 137333
+        mmLeft = 146078
         mmTop = 265
         mmWidth = 14552
         BandType = 4
@@ -13273,7 +13256,7 @@
         VerticalAlignment = avCenter
         DataPipelineName = 'ppXContratosVencidos'
         mmHeight = 4763
-        mmLeft = 154264
+        mmLeft = 163009
         mmTop = 265
         mmWidth = 10054
         BandType = 4
@@ -13295,7 +13278,7 @@
         VerticalAlignment = avCenter
         DataPipelineName = 'ppXContratosVencidos'
         mmHeight = 4763
-        mmLeft = 166170
+        mmLeft = 174915
         mmTop = 265
         mmWidth = 10054
         BandType = 4
@@ -13317,7 +13300,7 @@
         VerticalAlignment = avCenter
         DataPipelineName = 'ppXContratosVencidos'
         mmHeight = 4763
-        mmLeft = 178077
+        mmLeft = 186822
         mmTop = 265
         mmWidth = 10054
         BandType = 4
@@ -13339,7 +13322,7 @@
         VerticalAlignment = avCenter
         DataPipelineName = 'ppXContratosVencidos'
         mmHeight = 4763
-        mmLeft = 189983
+        mmLeft = 198728
         mmTop = 265
         mmWidth = 10054
         BandType = 4
@@ -13361,7 +13344,7 @@
         VerticalAlignment = avCenter
         DataPipelineName = 'ppXContratosVencidos'
         mmHeight = 4763
-        mmLeft = 202154
+        mmLeft = 210899
         mmTop = 265
         mmWidth = 10054
         BandType = 4
@@ -13383,7 +13366,7 @@
         VerticalAlignment = avCenter
         DataPipelineName = 'ppXContratosVencidos'
         mmHeight = 4763
-        mmLeft = 214055
+        mmLeft = 222800
         mmTop = 0
         mmWidth = 9525
         BandType = 4
@@ -13404,7 +13387,7 @@
         VerticalAlignment = avCenter
         DataPipelineName = 'ppXContratosVencidos'
         mmHeight = 4763
-        mmLeft = 224638
+        mmLeft = 233383
         mmTop = 0
         mmWidth = 13229
         BandType = 4
@@ -13425,7 +13408,7 @@
         VerticalAlignment = avCenter
         DataPipelineName = 'ppXContratosVencidos'
         mmHeight = 4763
-        mmLeft = 238925
+        mmLeft = 247670
         mmTop = 0
         mmWidth = 11642
         BandType = 4
@@ -13446,7 +13429,7 @@
         VerticalAlignment = avCenter
         DataPipelineName = 'ppXContratosVencidos'
         mmHeight = 4763
-        mmLeft = 249238
+        mmLeft = 257983
         mmTop = 0
         mmWidth = 9525
         BandType = 4
@@ -13505,7 +13488,7 @@
         VerticalAlignment = avCenter
         DataPipelineName = 'ppXContratosVencidos'
         mmHeight = 4763
-        mmLeft = 109549
+        mmLeft = 118294
         mmTop = 265
         mmWidth = 24871
         BandType = 4
@@ -13945,107 +13928,5 @@
     UserName = 'dbpRptXContratosVencidos'
     Left = 248
     Top = 352
-    object ppXContratosVencidosppField1: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'idAnexo'
-      FieldName = 'idAnexo'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 0
-    end
-    object ppXContratosVencidosppField2: TppField
-      FieldAlias = 'contrato'
-      FieldName = 'contrato'
-      FieldLength = 20
-      DisplayWidth = 20
-      Position = 1
-    end
-    object ppXContratosVencidosppField3: TppField
-      FieldAlias = 'anexo'
-      FieldName = 'anexo'
-      FieldLength = 5
-      DisplayWidth = 5
-      Position = 2
-    end
-    object ppXContratosVencidosppField4: TppField
-      FieldAlias = 'Cliente'
-      FieldName = 'Cliente'
-      FieldLength = 300
-      DisplayWidth = 300
-      Position = 3
-    end
-    object ppXContratosVencidosppField5: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'TotalCobradoVencido'
-      FieldName = 'TotalCobradoVencido'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 39
-      Position = 4
-    end
-    object ppXContratosVencidosppField6: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'sumavencida'
-      FieldName = 'sumavencida'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 39
-      Position = 5
-    end
-    object ppXContratosVencidosppField7: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'Totalvigente'
-      FieldName = 'Totalvigente'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 39
-      Position = 6
-    end
-    object ppXContratosVencidosppField8: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'vencidoa30'
-      FieldName = 'vencidoa30'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 39
-      Position = 7
-    end
-    object ppXContratosVencidosppField9: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'vencidoa60'
-      FieldName = 'vencidoa60'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 39
-      Position = 8
-    end
-    object ppXContratosVencidosppField10: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'vencidoa90'
-      FieldName = 'vencidoa90'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 39
-      Position = 9
-    end
-    object ppXContratosVencidosppField11: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'vencidomas120'
-      FieldName = 'vencidomas120'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 39
-      Position = 10
-    end
-    object ppXContratosVencidosppField12: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'saldototal'
-      FieldName = 'saldototal'
-      FieldLength = 11
-      DataType = dtDouble
-      DisplayWidth = 24
-      Position = 11
-    end
   end
 end

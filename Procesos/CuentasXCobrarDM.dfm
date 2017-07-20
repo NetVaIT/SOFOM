@@ -10,11 +10,11 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       'select IdCuentaXCobrar, IdCuentaXCobrarEstatus, IdPersona,'#13#10' IdA' +
       'nexosAmortizaciones, CXC.Fecha, Importe, CXC.Impuesto,'#13#10'CXC. Int' +
       'eres, CXC.Total, Saldo, SaldoFactoraje, IdCFDI ,'#13#10'CXC.IdAnexo, C' +
-      'XC.IdCuentaXCobrarBase,CXC.FechaVencimiento, EsMoratorio'#13#10'from C' +
-      'uentasXCobrar CXC '#13#10'where EsMoratorio=0'#13#10#13#10'order by   IdAnexo, I' +
-      'DAnexosAmortizaciones'#13#10#13#10'--where idcuentaxcobrarEstatus =-1 -- p' +
-      'recargada'
-    Left = 48
+      'XC.IdCuentaXCobrarBase,CXC.FechaVencimiento, EsMoratorio'#13#10', CXC.' +
+      'Descripcion'#13#10'from CuentasXCobrar CXC '#13#10'where EsMoratorio=0'#13#10#13#10'or' +
+      'der by   IdAnexo, IDAnexosAmortizaciones'#13#10#13#10'--where idcuentaxcob' +
+      'rarEstatus =-1 -- precargada'
+    Left = 56
     Top = 24
     object adodsMasterIdCuentaXCobrar: TAutoIncField
       DisplayLabel = 'No.Cuenta X Cobrar'
@@ -123,6 +123,10 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       KeyFields = 'IdAnexo'
       Size = 100
       Lookup = True
+    end
+    object adodsMasterDescripcion: TStringField
+      FieldName = 'Descripcion'
+      Size = 100
     end
   end
   inherited adodsUpdate: TADODataSet

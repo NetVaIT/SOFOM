@@ -79,6 +79,7 @@ type
     tvMasterAnexo: TcxGridDBColumn;
     tvMasterContrato: TcxGridDBColumn;
     ChckBxOpcionCompra: TCheckBox;
+    tvMasterDescripcion: TcxGridDBColumn;
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
     procedure FormCreate(Sender: TObject);
     procedure SpdBtnBuscarClick(Sender: TObject);
@@ -341,8 +342,8 @@ procedure TFrmConCuentasXCobrar.SpdBtnBuscarClick(Sender: TObject);
 const  //Mar 9/17
    TxtSQL='select CXC.IdCuentaXCobrar, IdCuentaXCobrarEstatus, CXC.IdPersona,'+
           'IdAnexosAmortizaciones, Fecha, FechaVencimiento, Importe, Impuesto, Interes,' +  //FV ab 11/17
-          'Total, CXC.Saldo, SaldoFactoraje, IdCFDI, IDAnexo, CXC.IdCuentaXCobrarBase, '
-          +' ''Interés Moratorio'' as Descripcion, EsMoratorio from CuentasXCobrar CXC ';
+          'Total, CXC.Saldo, SaldoFactoraje, IdCFDI, IDAnexo, CXC.IdCuentaXCobrarBase, '                            //  ''Interés Moratorio'' as Descripcion,
+          +' EsMoratorio, CXC.Descripcion  from CuentasXCobrar CXC ';   //Agregada Descripcion de CXC   Jul 17/17
    whereNoMora=' EsMoratorio=0';
    whereMora=' EsMoratorio=1';
 

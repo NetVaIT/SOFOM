@@ -13,7 +13,7 @@ object _dmConection: T_dmConection
     Provider = 'SQLOLEDB.1'
     OnDisconnect = ADOConnectionDisconnect
     OnConnectComplete = ADOConnectionConnectComplete
-    Left = 40
+    Left = 48
     Top = 8
   end
   object adoqUsuarios: TADOQuery
@@ -27,7 +27,7 @@ object _dmConection: T_dmConection
       'FROM Usuarios'
       'INNER JOIN Personas ON Usuarios.IdPersona = Personas.IdPersona'
       'WHERE Usuarios.IdUsuarioEstatus = 1')
-    Left = 32
+    Left = 40
     Top = 64
     object adoqUsuariosIdUsuario: TAutoIncField
       FieldName = 'IdUsuario'

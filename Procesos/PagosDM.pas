@@ -363,6 +363,7 @@ type
     ADODtStAnexosidentificadorCompleto: TStringField;
     ADODtStCXCPendientesserie: TStringField;
     ADODtStCXCPendientesfolio: TLargeintField;
+    ADODtStCXCPendientesDescripcion: TStringField;
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsMasterAfterPost(DataSet: TDataSet);
     procedure adodsMasterBeforePost(DataSet: TDataSet);
@@ -406,7 +407,7 @@ type
       IDGenTipoDoc: integer);
     function EncuentraFacturaconSaldo(var IdEstado, IDCFDIAct: Integer; idcxc: Integer;
       Valor: Double): Boolean;
-    function ActualizaEstatusCXC(idCxC, IdCFDIAct: Integer): Boolean;
+    function ActualizaEstatusCXC(idCxC, IdCFDIAct, NvoEstatus, AntEstatus: Integer): Boolean; //Ajustado jul 20/17
     function AplicarMoratorioInterno(idCXC: integer;
       ImporteAplicado: Double): Double;
     procedure SetFFechaAct(const Value: TDateTime);
@@ -431,7 +432,9 @@ type
     procedure ActualizaSaldoNC(idCFDIAct: Integer);
     function NotaCreditoenUso(idCFDI,IdPago: Integer): Boolean;
     function CrearSiguienteCXC(idAnexo: integer;var idCxc:integer): Boolean;
-    function SacaSaldoApagar(SaldoPago: Double; IdCXC: integer): Double;//Jun 8/17
+    function SacaSaldoApagar(SaldoPago: Double; IdCXC: integer): Double;
+    procedure VerificaYCambiaEstatusCXC(IDCFDIACT, NvoEstatus,
+      IdCXCAct: integer; CFDICreado: Boolean);//Jun 8/17
     property PaymentTime: TPaymentTime read FPaymentTime write SetPaymentTime;
   public
     { Public declarations }
@@ -1153,11 +1156,11 @@ begin
     if (idCFDIMora<>-1) or ((IDCFDIEnc<>-1)and(Estado=1)) then //Creo prefactura de moratorios feb 8/17
     begin
       if IdCFDIMora=-1 then      //Para que verifique si esta creada y la timbre Abr 18/17
-        IdCFDIMora:=  IDCFDIEnc;
-      ActualizaEstatusCXC(AdoDtStCXCPendientesidcuentaXCobrar.asInteger, idCFDIMora ); //Para que se ponga el IDCFDI en CXC
+        IdCFDIMora:=  IDCFDIEnc;                                                     //Jul 20 /17 Agregar estatus
+      ActualizaEstatusCXC(AdoDtStCXCPendientesidcuentaXCobrar.asInteger, idCFDIMora,0,-1 ); //Para que se ponga el IDCFDI en CXC
                                                                                     //Abr 18/17 Se movio aca por si tiene que actualizar una que existìa
       Facturar(idCFDIMora , CFDIcreado , 1); //Timbra factura  y muestra PDF
-
+      VerificaYCambiaEstatusCXC(idCFDIMora,1,AdoDtStCXCPendientesidcuentaXCobrar.asInteger,CFDICreado);
       if CFDICreado then
       begin
         IdCFDIActual:=  idCFDIMora;   //Abr 18/17
@@ -1167,6 +1170,20 @@ begin
   end;
 
 end;
+
+procedure TdmPagos.VerificaYCambiaEstatusCXC(IDCFDIACT, NvoEstatus, IdCXCAct:integer; CFDICreado:Boolean );
+begin                                //Jul 20/17
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.SQL.Clear;
+  ADOQryAuxiliar.SQL.Add('Select * from CFDI where IDCFDI='+intTostr(IDCFDIACT));
+  ADOQryAuxiliar.Open;
+  if (ADOQryAuxiliar.FieldByName('IdCFDIEstatus').asInteger=2)      //vigente
+      and (ADOQryAuxiliar.FieldByName('IdCuentaXCobrar').asInteger=IDCXCAct)  and (adodsmaster.fieldbyname('IdcuentaXCobrarEstatus').AsInteger=0) then
+  begin
+    ActualizaEstatusCXC(IdCXCAct, IDCFDIACT,1,0 );
+  end;
+end;
+
 
 procedure TdmPagos.ActPagosAnticipadosExecute(Sender: TObject);
 var IdCxc:Integer;
@@ -1228,13 +1245,13 @@ begin
        Result:= SaldoPago;
   end;
 end;
-
-function TdmPagos.ActualizaEstatusCXC(idCxC,IdCFDIAct:Integer):Boolean;   //Abr 6/17
+                                                      //Jul 20/17
+function TdmPagos.ActualizaEstatusCXC(idCxC,IdCFDIAct,NvoEstatus, AntEstatus:Integer):Boolean;   //Abr 6/17
 var i:integer;
 begin
   AdoQryAuxiliar.Close;
   AdoQryAuxiliar.SQL.Clear;                                                                                                                 //Verificar si asi
-  AdoQryAuxiliar.SQL.Add('UPDATE CuentasXCobrar SET IDCuentaXCobrarEstatus =0 , IDCFDI ='+intTostr(IdCFDIAct)+' where  IDCuentaXCobrar= '+intToSTR(IdCXC)+' and IDCuentaXCobrarEstatus=-1');
+  AdoQryAuxiliar.SQL.Add('UPDATE CuentasXCobrar SET IDCuentaXCobrarEstatus ='+intToStr(NvoEstatus)+' , IDCFDI ='+intTostr(IdCFDIAct)+' where  IDCuentaXCobrar= '+intToSTR(IdCXC)+' and IDCuentaXCobrarEstatus='+intToStr(antEstatus));
   i:=AdoQryAuxiliar.ExecSql;
   Result:=i>0; //SE supone que regresa cantidad de registros con cambios.
 

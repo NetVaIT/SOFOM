@@ -101,11 +101,13 @@ type
     tvMasterDireccionC: TcxGridDBColumn;
     tvMasterIdCuentaXCobrar: TcxGridDBColumn;
     tvMasterSaldoFactoraje: TcxGridDBColumn;
+    DSQryAuxiliar: TDataSource;
     procedure FormCreate(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
     procedure SpdBtnBuscarClick(Sender: TObject);
     procedure EdtNombreChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure dxBrBtnCFDIClick(Sender: TObject);
   private
     FActGenerarCFDI: TBasicAction;
     FActImprimePDF: TBasicAction;
@@ -119,6 +121,8 @@ type
     function GetFFiltroNombre: String;
     procedure PoneRangoFechas;
     procedure SetActCancelaCFDI(const Value: TBasicAction);
+    procedure VerificaYCambiaEstatusCXC(IDCFDIACT, NvoEstatus, AntEstatus,
+      IdCXCAct: integer); //Jul 20/17
     { Private declarations }
   public
     { Public declarations }
@@ -152,6 +156,39 @@ begin
                                (datasource.DataSet.FieldByName('SaldoDocumento').Value=datasource.DataSet.FieldByName('SaldoFactoraje').VAlue);
 
 
+end;
+
+procedure TfrmFacturasGrid.dxBrBtnCFDIClick(Sender: TObject);
+var idcxcAct, IdCFDIAct:Integer;
+begin
+  inherited;
+  idcxcAct:=-1;
+  if not(DAtasource.DataSet.FieldByName('IDCuentaXCobrar').isnull) then
+    idcxcAct :=DAtasource.DataSet.FieldByName('IDCuentaXCobrar').asinteger;
+  IdCFDIAct:=  DAtasource.DataSet.FieldByName('Idcfdi').asinteger; //Ya existe por ques desde la lista y no esta generada //Jul 20/17
+  ActGenerarCFDI.Execute;
+
+  if idcxcAct<>-1 then
+     VerificaYCambiaEstatusCXC(IDCFDIACT, 1, 0, IdCXCAct);
+
+end;
+
+procedure TfrmFacturasGrid.VerificaYCambiaEstatusCXC(IDCFDIACT, NvoEstatus, AntEstatus, IdCXCAct:integer); //Se quito el creado por que siempre esta creado..
+begin                                //Jul 20/17
+  dsQryAuxiliar.dataset.Close;
+  TAdoQuery(dsQryAuxiliar.dataset).sql.clear;
+  TAdoQuery(dsQryAuxiliar.dataset).sql.Add('Select * from CFDI where IDCFDI='+intTostr(IDCFDIACT));
+  dsQryAuxiliar.dataset.Open;
+  if ( dsQryAuxiliar.dataset.FieldByName('IdCFDIEstatus').asInteger=2)      //vigente   and (adodsmaster.fieldbyname('IdcuentaXCobrarEstatus').AsInteger=0)
+      and ( dsQryAuxiliar.dataset.FieldByName('IdCuentaXCobrar').asInteger=IDCXCAct)  then
+  begin
+    dsQryAuxiliar.dataset.Close;
+    TAdoQuery(dsQryAuxiliar.dataset).sql.clear;
+    TAdoQuery(dsQryAuxiliar.dataset).sql.Add('UPDATE CuentasXCobrar SET IDCuentaXCobrarEstatus ='+intToStr(NvoEstatus)+
+     ' , IDCFDI ='+intTostr(IdCFDIAct)+' where  IDCuentaXCobrar= '+intToSTR(IdCXCAct)+' and IDCuentaXCobrarEstatus='+intToStr(antEstatus));
+
+   TAdoQuery(dsQryAuxiliar.dataset).ExecSQL;
+  end;
 end;
 
 procedure TfrmFacturasGrid.EdtNombreChange(Sender: TObject);
@@ -210,8 +247,8 @@ end;
 procedure TfrmFacturasGrid.SetActGenerarCFDI(const Value: TBasicAction);
 begin           //Nov 29/16
   FActGenerarCFDI := Value;
-  dxBrBtnCFDI.Action:=Value;
-  dxBrBtnCFDI.ImageIndex:=17;
+ // dxBrBtnCFDI.Action:=Value;    //PAra poder llamarlo y generar  el ajuste de estatus este es manual despues de un intento jul 20/17
+ // dxBrBtnCFDI.ImageIndex:=17;
 end;
 
 procedure TfrmFacturasGrid.SetActImprimePDF(const Value: TBasicAction);

@@ -435,6 +435,7 @@ inherited frmFacturasGrid: TfrmFacturasGrid
       Hint = 'Generar CFDI'
       Visible = ivAlways
       ImageIndex = 17
+      OnClick = dxBrBtnCFDIClick
     end
     object dxBrBtnImprimePDF: TdxBarButton
       Caption = 'ImprimePDF'
@@ -1306,7 +1307,13 @@ inherited frmFacturasGrid: TfrmFacturasGrid
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42699.643536909720000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
+  end
+  object DSQryAuxiliar: TDataSource
+    DataSet = dmFacturas.ADOQryAuxiliar
+    Left = 816
+    Top = 88
   end
 end
