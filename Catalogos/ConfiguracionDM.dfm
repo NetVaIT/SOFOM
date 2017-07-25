@@ -5,8 +5,13 @@ inherited dmConfiguracion: TdmConfiguracion
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     CommandText = 
-      'SELECT IdPais, IdMoneda, RutaBaseFacturas, RutaBasePagos, Ultimo' +
-      'FolioPago, UltimaSeriePago FROM Configuraciones'
+      'SELECT        IdPais, IdMoneda, PorcentajeImpuestoIVA, RutaBaseF' +
+      'acturas, RutaBasePagos, UltimoFolioPago, UltimaSeriePago, BCClav' +
+      'eInstitucion, BCInstitucion, BCTipo, PLDPerfilTransaccional, PLD' +
+      'InicioOperaciones, PLDCodigoCASFIM, '#13#10'                         P' +
+      'LDSupervisorCNBV, PLDArchivoRuta, PLDArchivoExtension, PLDMontoR' +
+      'elevante, PLDLocalidad, PLDCodigoPostal'#13#10'FROM            Configu' +
+      'raciones'
     object adodsMasterIdPais: TIntegerField
       FieldName = 'IdPais'
       Visible = False
@@ -36,6 +41,13 @@ inherited dmConfiguracion: TdmConfiguracion
       Size = 80
       Lookup = True
     end
+    object adodsMasterPorcentajeImpuestoIVA: TBCDField
+      DisplayLabel = 'Porcentaje impuesto IVA'
+      FieldName = 'PorcentajeImpuestoIVA'
+      DisplayFormat = '0.00 %'
+      EditFormat = '0.00'
+      Precision = 19
+    end
     object adodsMasterRutaBaseFacturas: TStringField
       DisplayLabel = 'Ruta Base para Facturas'
       FieldName = 'RutaBaseFacturas'
@@ -53,6 +65,65 @@ inherited dmConfiguracion: TdmConfiguracion
     object adodsMasterUltimaSeriePago: TStringField
       DisplayLabel = #218'ltima serie de pago'
       FieldName = 'UltimaSeriePago'
+    end
+    object adodsMasterBCClaveInstitucion: TStringField
+      DisplayLabel = 'BC Clave instituci'#243'n'
+      FieldName = 'BCClaveInstitucion'
+      Size = 4
+    end
+    object adodsMasterBCInstitucion: TStringField
+      DisplayLabel = 'BC Instituci'#243'n'
+      FieldName = 'BCInstitucion'
+      Size = 300
+    end
+    object adodsMasterBCTipo: TStringField
+      DisplayLabel = 'BC Tipo'
+      FieldName = 'BCTipo'
+      Size = 3
+    end
+    object adodsMasterPLDPerfilTransaccional: TIntegerField
+      FieldName = 'PLDPerfilTransaccional'
+      Visible = False
+    end
+    object adodsMasterPLDInicioOperaciones: TStringField
+      DisplayLabel = 'PLD Inicio operaciones'
+      FieldName = 'PLDInicioOperaciones'
+      Size = 10
+    end
+    object adodsMasterPLDCodigoCASFIM: TStringField
+      DisplayLabel = 'PLD C'#243'digo CASFIM'
+      FieldName = 'PLDCodigoCASFIM'
+      Size = 10
+    end
+    object adodsMasterPLDSupervisorCNBV: TStringField
+      DisplayLabel = 'PLD Supervisor CNBV'
+      FieldName = 'PLDSupervisorCNBV'
+      Size = 10
+    end
+    object adodsMasterPLDArchivoRuta: TStringField
+      DisplayLabel = 'PLD Ruta archivo'
+      FieldName = 'PLDArchivoRuta'
+      Size = 255
+    end
+    object adodsMasterPLDArchivoExtension: TStringField
+      DisplayLabel = 'PLD Extensi'#243'n archivo'
+      FieldName = 'PLDArchivoExtension'
+      Size = 5
+    end
+    object adodsMasterPLDMontoRelevante: TBCDField
+      DisplayLabel = 'PLD Monto relevante'
+      FieldName = 'PLDMontoRelevante'
+      Precision = 19
+    end
+    object adodsMasterPLDLocalidad: TStringField
+      DisplayLabel = 'PLD Localidad'
+      FieldName = 'PLDLocalidad'
+      Size = 10
+    end
+    object adodsMasterPLDCodigoPostal: TStringField
+      DisplayLabel = 'PLD C'#243'digo postal'
+      FieldName = 'PLDCodigoPostal'
+      Size = 5
     end
   end
   object adoqGetIdPeriodoActual: TADOQuery
@@ -83,6 +154,7 @@ inherited dmConfiguracion: TdmConfiguracion
     end
   end
   object adodsPaises: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdPais, Descripcion from Paises'
@@ -91,6 +163,7 @@ inherited dmConfiguracion: TdmConfiguracion
     Top = 16
   end
   object adodsMonedas: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdMoneda, Descripcion from Monedas'

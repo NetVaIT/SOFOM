@@ -5,7 +5,11 @@ inherited frmConfiguraciones: TfrmConfiguraciones
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlMaster: TPanel
+    ExplicitTop = 26
+    ExplicitHeight = 258
     inherited cxGrid: TcxGrid
+      Height = 258
+      ExplicitHeight = 258
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdPais: TcxGridDBColumn
           DataBinding.FieldName = 'IdPais'
@@ -23,6 +27,9 @@ inherited frmConfiguraciones: TfrmConfiguraciones
           DataBinding.FieldName = 'Moneda'
           Width = 200
         end
+        object tvMasterPorcentajeImpuestoIVA: TcxGridDBColumn
+          DataBinding.FieldName = 'PorcentajeImpuestoIVA'
+        end
         object tvMasterRutaBaseFacturas: TcxGridDBColumn
           DataBinding.FieldName = 'RutaBaseFacturas'
           Width = 200
@@ -37,6 +44,50 @@ inherited frmConfiguraciones: TfrmConfiguraciones
         end
         object tvMasterUltimaSeriePago: TcxGridDBColumn
           DataBinding.FieldName = 'UltimaSeriePago'
+        end
+        object tvMasterBCClaveInstitucion: TcxGridDBColumn
+          DataBinding.FieldName = 'BCClaveInstitucion'
+        end
+        object tvMasterBCInstitucion: TcxGridDBColumn
+          DataBinding.FieldName = 'BCInstitucion'
+          Width = 200
+        end
+        object tvMasterBCTipo: TcxGridDBColumn
+          DataBinding.FieldName = 'BCTipo'
+          Width = 53
+        end
+        object tvMasterPLDPerfilTransaccional: TcxGridDBColumn
+          DataBinding.FieldName = 'PLDPerfilTransaccional'
+          Visible = False
+        end
+        object tvMasterPLDInicioOperaciones: TcxGridDBColumn
+          DataBinding.FieldName = 'PLDInicioOperaciones'
+          Width = 124
+        end
+        object tvMasterPLDCodigoCASFIM: TcxGridDBColumn
+          DataBinding.FieldName = 'PLDCodigoCASFIM'
+          Width = 112
+        end
+        object tvMasterPLDSupervisorCNBV: TcxGridDBColumn
+          DataBinding.FieldName = 'PLDSupervisorCNBV'
+        end
+        object tvMasterPLDArchivoRuta: TcxGridDBColumn
+          DataBinding.FieldName = 'PLDArchivoRuta'
+          Width = 200
+        end
+        object tvMasterPLDArchivoExtension: TcxGridDBColumn
+          DataBinding.FieldName = 'PLDArchivoExtension'
+          Width = 111
+        end
+        object tvMasterPLDMontoRelevante: TcxGridDBColumn
+          DataBinding.FieldName = 'PLDMontoRelevante'
+        end
+        object tvMasterPLDLocalidad: TcxGridDBColumn
+          DataBinding.FieldName = 'PLDLocalidad'
+        end
+        object tvMasterPLDCodigoPostal: TcxGridDBColumn
+          DataBinding.FieldName = 'PLDCodigoPostal'
+          Width = 103
         end
       end
     end
@@ -53,7 +104,7 @@ inherited frmConfiguraciones: TfrmConfiguraciones
     DockControlHeights = (
       0
       0
-      31
+      26
       0)
   end
   inherited cxStyleRepository: TcxStyleRepository
@@ -65,7 +116,6 @@ inherited frmConfiguraciones: TfrmConfiguraciones
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42790.505809502310000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

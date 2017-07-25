@@ -32,28 +32,41 @@ uses
 type
   TfrmPLDAlertas = class(T_frmGrid)
     tvMasterIdPLDAlerta: TcxGridDBColumn;
+    tvMasterIdPersona: TcxGridDBColumn;
     tvMasterIdPago: TcxGridDBColumn;
     tvMasterIdPLDOperacionTipo: TcxGridDBColumn;
     tvMasterIdPLDAlertaTipo: TcxGridDBColumn;
     tvMasterIdPLDAlertaEstatus: TcxGridDBColumn;
+    tvMasterCliente: TcxGridDBColumn;
+    tvMasterContrato: TcxGridDBColumn;
+    tvMasterPeriodoMes: TcxGridDBColumn;
+    tvMasterPeriodoAnio: TcxGridDBColumn;
+    tvMasterSoloEfectivo: TcxGridDBColumn;
+    tvMasterFechaPago: TcxGridDBColumn;
+    tvMasterMetodoPago: TcxGridDBColumn;
     tvMasterFechaDeteccion: TcxGridDBColumn;
-    tvMasterOperacionTipo: TcxGridDBColumn;
-    tvMasterTipo: TcxGridDBColumn;
-    tvMasterEstatus: TcxGridDBColumn;
+    tvMasterTotal: TcxGridDBColumn;
+    tvMasterTotalUSD: TcxGridDBColumn;
+    tvMasterTotalPagos: TcxGridDBColumn;
     tvMasterDescripcion: TcxGridDBColumn;
     tvMasterRazon: TcxGridDBColumn;
     tvMasterR24: TcxGridDBColumn;
-    tvMasterFechaPago: TcxGridDBColumn;
-    tvMasterCliente: TcxGridDBColumn;
-    tvMasterFolioPago: TcxGridDBColumn;
-    tvMasterSeriePago: TcxGridDBColumn;
-    tvMasterMetodoPago: TcxGridDBColumn;
-    tvMasterImportePago: TcxGridDBColumn;
+    tvMasterOperacionTipo: TcxGridDBColumn;
+    tvMasterTipo: TcxGridDBColumn;
+    tvMasterEstatus: TcxGridDBColumn;
+    dxbbGenerar: TdxBarButton;
+    dxbbArchivo: TdxBarButton;
     procedure FormCreate(Sender: TObject);
   private
+    FactGenerarAlertas: TBasicAction;
+    FactGenerarArchivo: TBasicAction;
+    procedure SetactGenerarAlertas(const Value: TBasicAction);
+    procedure SetactGenerarArchivo(const Value: TBasicAction);
     { Private declarations }
   public
     { Public declarations }
+    property actGenerarAlertas: TBasicAction read FactGenerarAlertas write SetactGenerarAlertas;
+    property actGenerarArchivo: TBasicAction read FactGenerarArchivo write SetactGenerarArchivo;
   end;
 
 implementation
@@ -66,6 +79,18 @@ procedure TfrmPLDAlertas.FormCreate(Sender: TObject);
 begin
   inherited;
   gEditForm:= TfrmPLDAlertasEdit.Create(Self);
+end;
+
+procedure TfrmPLDAlertas.SetactGenerarAlertas(const Value: TBasicAction);
+begin
+  FactGenerarAlertas := Value;
+  dxbbGenerar.Action :=  Value;
+end;
+
+procedure TfrmPLDAlertas.SetactGenerarArchivo(const Value: TBasicAction);
+begin
+  FactGenerarArchivo := Value;
+  dxbbArchivo.Action := Value;
 end;
 
 end.

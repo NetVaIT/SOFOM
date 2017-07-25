@@ -28,14 +28,15 @@ inherited frmPersonas: TfrmPersonas
   end
   inherited pnlMaster: TPanel
     Width = 645
-    Height = 221
+    Height = 226
+    ExplicitTop = 26
     ExplicitWidth = 645
-    ExplicitHeight = 221
+    ExplicitHeight = 226
     inherited cxGrid: TcxGrid
       Width = 645
-      Height = 221
+      Height = 226
       ExplicitWidth = 645
-      ExplicitHeight = 221
+      ExplicitHeight = 226
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdPersona: TcxGridDBColumn
           DataBinding.FieldName = 'IdPersona'
@@ -226,6 +227,30 @@ inherited frmPersonas: TfrmPersonas
           DataBinding.FieldName = 'CalificacionActual'
           Visible = False
         end
+        object tvMasterPLDOrigenRecurso: TcxGridDBColumn
+          DataBinding.FieldName = 'PLDOrigenRecurso'
+          Visible = False
+        end
+        object tvMasterPLDDestinoRecurso: TcxGridDBColumn
+          DataBinding.FieldName = 'PLDDestinoRecurso'
+          Visible = False
+        end
+        object tvMasterPLDMontoMaximo: TcxGridDBColumn
+          DataBinding.FieldName = 'PLDMontoMaximo'
+          Visible = False
+        end
+        object tvMasterPLDPagarEfectivo: TcxGridDBColumn
+          DataBinding.FieldName = 'PLDPagarEfectivo'
+          Visible = False
+        end
+        object tvMasterPLDMontoMaximoEfectivo: TcxGridDBColumn
+          DataBinding.FieldName = 'PLDMontoMaximoEfectivo'
+          Visible = False
+        end
+        object tvMasterPLDNumeroPagos: TcxGridDBColumn
+          DataBinding.FieldName = 'PLDNumeroPagos'
+          Visible = False
+        end
       end
     end
   end
@@ -262,7 +287,7 @@ inherited frmPersonas: TfrmPersonas
     DockControlHeights = (
       0
       0
-      31
+      26
       0)
     inherited dxbNavigator: TdxBar
       DockedLeft = 107
@@ -298,7 +323,6 @@ inherited frmPersonas: TfrmPersonas
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42664.566576585640000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

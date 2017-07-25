@@ -15,6 +15,10 @@ inherited frmPLDAlertas: TfrmPLDAlertas
           DataBinding.FieldName = 'IdPLDAlerta'
           Visible = False
         end
+        object tvMasterIdPersona: TcxGridDBColumn
+          DataBinding.FieldName = 'IdPersona'
+          Visible = False
+        end
         object tvMasterIdPago: TcxGridDBColumn
           DataBinding.FieldName = 'IdPago'
           Visible = False
@@ -31,42 +35,54 @@ inherited frmPLDAlertas: TfrmPLDAlertas
           DataBinding.FieldName = 'IdPLDAlertaEstatus'
           Visible = False
         end
-        object tvMasterFechaDeteccion: TcxGridDBColumn
-          DataBinding.FieldName = 'FechaDeteccion'
-        end
-        object tvMasterFechaPago: TcxGridDBColumn
-          DataBinding.FieldName = 'FechaPago'
-        end
         object tvMasterCliente: TcxGridDBColumn
           DataBinding.FieldName = 'Cliente'
           Width = 300
         end
-        object tvMasterFolioPago: TcxGridDBColumn
-          DataBinding.FieldName = 'FolioPago'
-          Visible = False
+        object tvMasterContrato: TcxGridDBColumn
+          DataBinding.FieldName = 'Contrato'
         end
-        object tvMasterSeriePago: TcxGridDBColumn
-          DataBinding.FieldName = 'SeriePago'
-          Visible = False
-          Width = 64
+        object tvMasterPeriodoMes: TcxGridDBColumn
+          DataBinding.FieldName = 'PeriodoMes'
+        end
+        object tvMasterPeriodoAnio: TcxGridDBColumn
+          DataBinding.FieldName = 'PeriodoAnio'
+        end
+        object tvMasterSoloEfectivo: TcxGridDBColumn
+          DataBinding.FieldName = 'SoloEfectivo'
+          Width = 67
+        end
+        object tvMasterFechaPago: TcxGridDBColumn
+          DataBinding.FieldName = 'FechaPago'
         end
         object tvMasterMetodoPago: TcxGridDBColumn
           DataBinding.FieldName = 'MetodoPago'
+          Width = 200
         end
-        object tvMasterImportePago: TcxGridDBColumn
-          DataBinding.FieldName = 'ImportePago'
+        object tvMasterFechaDeteccion: TcxGridDBColumn
+          DataBinding.FieldName = 'FechaDeteccion'
         end
         object tvMasterOperacionTipo: TcxGridDBColumn
           DataBinding.FieldName = 'OperacionTipo'
-          Width = 300
+          Width = 200
         end
         object tvMasterTipo: TcxGridDBColumn
           DataBinding.FieldName = 'Tipo'
-          Width = 300
+          Width = 200
         end
         object tvMasterEstatus: TcxGridDBColumn
           DataBinding.FieldName = 'Estatus'
-          Width = 300
+          Width = 200
+        end
+        object tvMasterTotal: TcxGridDBColumn
+          DataBinding.FieldName = 'Total'
+        end
+        object tvMasterTotalUSD: TcxGridDBColumn
+          DataBinding.FieldName = 'TotalUSD'
+        end
+        object tvMasterTotalPagos: TcxGridDBColumn
+          DataBinding.FieldName = 'TotalPagos'
+          Width = 84
         end
         object tvMasterDescripcion: TcxGridDBColumn
           DataBinding.FieldName = 'Descripcion'
@@ -78,12 +94,10 @@ inherited frmPLDAlertas: TfrmPLDAlertas
         end
         object tvMasterR24: TcxGridDBColumn
           DataBinding.FieldName = 'R24'
+          Visible = False
         end
       end
     end
-  end
-  inherited DataSource: TDataSource
-    DataSet = dmPLDAlertas.adodsMaster
   end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
@@ -91,6 +105,41 @@ inherited frmPLDAlertas: TfrmPLDAlertas
       0
       26
       0)
+    inherited dxbTools: TdxBar
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'dxBarButton6'
+        end
+        item
+          Visible = True
+          ItemName = 'dxbbPreview'
+        end
+        item
+          Visible = True
+          ItemName = 'dxbbGenerar'
+        end
+        item
+          Visible = True
+          ItemName = 'dxbbArchivo'
+        end>
+    end
+    object dxbbGenerar: TdxBarButton
+      Caption = 'Generar'
+      Category = 0
+      Hint = 'Generar las alertas del periodo'
+      Visible = ivAlways
+      ImageIndex = 13
+      PaintStyle = psCaptionGlyph
+    end
+    object dxbbArchivo: TdxBarButton
+      Caption = 'Archivo'
+      Category = 0
+      Hint = 'Generar el archivo'
+      Visible = ivAlways
+      ImageIndex = 14
+      PaintStyle = psCaptionGlyph
+    end
   end
   inherited cxStyleRepository: TcxStyleRepository
     PixelsPerInch = 96
@@ -101,6 +150,7 @@ inherited frmPLDAlertas: TfrmPLDAlertas
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42899.653800057880000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

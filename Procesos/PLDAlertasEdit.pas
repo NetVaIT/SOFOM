@@ -29,13 +29,8 @@ type
     cxDBDateEdit2: TcxDBDateEdit;
     Label3: TLabel;
     cxDBTextEdit1: TcxDBTextEdit;
-    Label4: TLabel;
-    Label5: TLabel;
-    cxDBTextEdit2: TcxDBTextEdit;
     Label6: TLabel;
     cxDBTextEdit3: TcxDBTextEdit;
-    Label7: TLabel;
-    cxDBTextEdit4: TcxDBTextEdit;
     Label8: TLabel;
     DBLookupComboBox1: TDBLookupComboBox;
     Label9: TLabel;
@@ -45,9 +40,21 @@ type
     Label11: TLabel;
     Label12: TLabel;
     cxDBCheckBox1: TcxDBCheckBox;
-    cxDBTextEdit7: TcxDBTextEdit;
     cxDBMemo1: TcxDBMemo;
     cxDBMemo2: TcxDBMemo;
+    Label13: TLabel;
+    cxDBTextEdit5: TcxDBTextEdit;
+    Label14: TLabel;
+    cxDBSpinEdit1: TcxDBSpinEdit;
+    Label15: TLabel;
+    cxDBSpinEdit2: TcxDBSpinEdit;
+    cxDBCheckBox2: TcxDBCheckBox;
+    Label4: TLabel;
+    cxDBTextEdit2: TcxDBTextEdit;
+    Label5: TLabel;
+    cxDBTextEdit4: TcxDBTextEdit;
+    Label7: TLabel;
+    cxDBSpinEdit3: TcxDBSpinEdit;
   private
     { Private declarations }
   public

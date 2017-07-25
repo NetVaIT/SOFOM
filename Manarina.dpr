@@ -232,7 +232,8 @@ uses
   MetodoPagoFacturaEdt in 'Procesos\MetodoPagoFacturaEdt.pas' {FrmMetodoPagoFactura},
   PLDAlertasDM in 'Procesos\PLDAlertasDM.pas' {dmPLDAlertas: TDataModule},
   PLDAlertasForm in 'Procesos\PLDAlertasForm.pas' {frmPLDAlertas},
-  PLDAlertasEdit in 'Procesos\PLDAlertasEdit.pas' {frmPLDAlertasEdit};
+  PLDAlertasEdit in 'Procesos\PLDAlertasEdit.pas' {frmPLDAlertasEdit},
+  PLDAlertasFiltroForm in 'Procesos\PLDAlertasFiltroForm.pas' {frmPLDAlertasFiltro};
 
 {$R *.res}
 
@@ -245,5 +246,6 @@ begin
   Application.CreateForm(T_frmMainRibbon, _frmMainRibbon);
   Application.CreateForm(T_frmProgress, _frmProgress);
   Application.CreateForm(T_dmReportSOFOM, _dmReportSOFOM);
+  Application.CreateForm(TdmConfiguracion, dmConfiguracion);
   Application.Run;
 end.

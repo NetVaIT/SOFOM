@@ -4,34 +4,101 @@ interface
 
 uses
   System.SysUtils, System.Classes, _StandarDMod, System.Actions, Vcl.ActnList,
-  Data.DB, Data.Win.ADODB;
+  Data.DB, Data.Win.ADODB, System.StrUtils, System.DateUtils, Vcl.Dialogs,
+  System.UITypes;
+
+resourcestring
+  strCreateFile    = 'Se creo el archivo %s, con %d registro(s).';
+  strNotCreateFile = 'No se encontraron información, por lo que no se genero el archivo.';
 
 type
   TdmPLDAlertas = class(T_dmStandar)
     adodsOperacionTipo: TADODataSet;
     adodsTipo: TADODataSet;
     adodsEstatus: TADODataSet;
-    adodsMasterIdPLDAlerta: TIntegerField;
+    adodsMasterIdPLDAlerta: TAutoIncField;
+    adodsMasterIdPersona: TIntegerField;
     adodsMasterIdPago: TIntegerField;
     adodsMasterIdPLDOperacionTipo: TIntegerField;
     adodsMasterIdPLDAlertaTipo: TIntegerField;
     adodsMasterIdPLDAlertaEstatus: TIntegerField;
+    adodsMasterCliente: TStringField;
+    adodsMasterContrato: TStringField;
+    adodsMasterPeriodoMes: TIntegerField;
+    adodsMasterPeriodoAnio: TIntegerField;
+    adodsMasterSoloEfectivo: TBooleanField;
+    adodsMasterFechaPago: TDateTimeField;
+    adodsMasterMetodoPago: TStringField;
     adodsMasterFechaDeteccion: TDateTimeField;
+    adodsMasterTotal: TFMTBCDField;
+    adodsMasterTotalUSD: TFMTBCDField;
+    adodsMasterTotalPagos: TIntegerField;
     adodsMasterDescripcion: TStringField;
     adodsMasterRazon: TStringField;
     adodsMasterR24: TBooleanField;
     adodsMasterOperacionTipo: TStringField;
     adodsMasterTipo: TStringField;
     adodsMasterEstatus: TStringField;
-    adodsMasterFechaPago: TDateTimeField;
-    adodsMasterCliente: TStringField;
-    adodsMasterFolioPago: TIntegerField;
-    adodsMasterSeriePago: TStringField;
-    adodsMasterMetodoPago: TStringField;
-    adodsMasterImportePago: TFMTBCDField;
+    actGenerarAlertas: TAction;
+    actGenerarArchivo: TAction;
+    adopGenPLDAlertas: TADOStoredProc;
+    adoqPLDAlertas: TADOQuery;
+    adoqPLDAlertasIdPLDAlerta: TIntegerField;
+    adoqPLDAlertasIdPersona: TIntegerField;
+    adoqPLDAlertasIdPago: TIntegerField;
+    adoqPLDAlertasC01_TIPO_DE_REPORTE: TStringField;
+    adoqPLDAlertasC02_PERIODO_DEL_REPORTE: TStringField;
+    adoqPLDAlertasC03_FOLIO: TStringField;
+    adoqPLDAlertasC04_ORGANO_SUPERVISOR: TStringField;
+    adoqPLDAlertasC05_CLAVE_INTITUCION: TStringField;
+    adoqPLDAlertasC06_LOCALIDAD: TStringField;
+    adoqPLDAlertasC07_CP_SUCURSAL: TStringField;
+    adoqPLDAlertasC08_TIPO_OPERACION: TStringField;
+    adoqPLDAlertasC09_INSTRUMENTO_MONETARIO: TStringField;
+    adoqPLDAlertasC10_CONTRATO: TStringField;
+    adoqPLDAlertasC11_MONTO: TFMTBCDField;
+    adoqPLDAlertasC12_MONEDA: TStringField;
+    adoqPLDAlertasC13_FECHA_OPERACION: TStringField;
+    adoqPLDAlertasC14_FECHA_DETECCION: TStringField;
+    adoqPLDAlertasC15_NACIONALIDAD: TStringField;
+    adoqPLDAlertasC16_TIPO_DE_PERSONA: TStringField;
+    adoqPLDAlertasC17_RAZON_SOCIAL: TStringField;
+    adoqPLDAlertasC18_NOMBRE: TStringField;
+    adoqPLDAlertasC19_APELLIDO_PATERNO: TStringField;
+    adoqPLDAlertasC20_APELIIDO_MATERNO: TStringField;
+    adoqPLDAlertasC21_RFC: TStringField;
+    adoqPLDAlertasC22_CURP: TStringField;
+    adoqPLDAlertasC23_FECHA_NACIMIENTO_CONSTITUCION: TStringField;
+    adoqPLDAlertasC24_DOMICILIO: TStringField;
+    adoqPLDAlertasC25_COLONIA: TStringField;
+    adoqPLDAlertasC26_POBLACION: TStringField;
+    adoqPLDAlertasC27_TELEFONO: TStringField;
+    adoqPLDAlertasC28_ACTIVADAD_ECONOMICA: TStringField;
+    adoqPLDAlertasC29_CONSECUTIVO_RELACIONADO: TStringField;
+    adoqPLDAlertasC30_CONTRATO_RELACIONADO: TStringField;
+    adoqPLDAlertasC31_CLAVE_INTITUCION_RELACIONADO: TStringField;
+    adoqPLDAlertasC32_NOMBRE_RELACIONADO: TStringField;
+    adoqPLDAlertasC33_PATERNO__RELACIONADO: TStringField;
+    adoqPLDAlertasC34_MATERNO_RELACIONADO: TStringField;
+    adoqPLDAlertasC35_DESCRIPCION: TStringField;
+    adoqPLDAlertasC36_RAZON: TStringField;
+    adoqConfiguracion: TADOQuery;
+    adoqConfiguracionPLDAlertaTipo: TStringField;
+    adoqConfiguracionPLDCodigoCASFIM: TStringField;
+    adoqConfiguracionPLDArchivoRuta: TStringField;
+    adoqConfiguracionPLDArchivoExtension: TStringField;
+    adcUpdPLDAlertas: TADOCommand;
+    daMaster: TDataSource;
     procedure DataModuleCreate(Sender: TObject);
+    procedure actGenerarAlertasExecute(Sender: TObject);
+    procedure actGenerarArchivoExecute(Sender: TObject);
+    procedure daMasterDataChange(Sender: TObject; Field: TField);
   private
     { Private declarations }
+    function GenerarAlertas(Month, Year: Word): Boolean;
+    function GenerarArchivo(IdPLDALertaTipo, Month, Year: Word;
+      FileName: TFileName): Integer;
+    function GetNombreArchivo(IdPLDALertaTipo, Month, Year: Word): TFileName;
   public
     { Public declarations }
   end;
@@ -40,15 +107,191 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses PLDAlertasForm;
+uses PLDAlertasForm, PLDAlertasFiltroForm, _Utils;
 
 {$R *.dfm}
+
+  function PreparaCadena(Origen, Justifica, Relleno: string; Longitud: integer): String;
+  var
+    Falta : integer;
+    Nueva : string;
+  begin
+    if Length(Origen) <> Longitud then
+    begin
+      Falta := Longitud - Length(Origen);
+      if Justifica = 'I' then
+        Nueva := Origen + DupeString(Relleno,Falta);
+      if Justifica = 'D' then
+        Nueva := DupeString(Relleno,Falta) + Origen;
+    end
+    else
+      Nueva := Origen;
+    Result := Nueva;
+  end;
+
+procedure TdmPLDAlertas.actGenerarAlertasExecute(Sender: TObject);
+var
+  frmFiltro: TfrmPLDAlertasFiltro;
+begin
+  inherited;
+  frmFiltro := TfrmPLDAlertasFiltro.Create(Self);
+  try
+    if frmFiltro.Execute(False) then
+    begin
+      if GenerarAlertas(frmFiltro.PeriodoMes, frmFiltro.PeriodoAnio) then
+        RefreshADODS(adodsMaster, adodsMasterIdPLDAlerta);
+    end;
+  finally
+    frmFiltro.Free;
+  end;
+end;
+
+procedure TdmPLDAlertas.actGenerarArchivoExecute(Sender: TObject);
+var
+  frmFiltro: TfrmPLDAlertasFiltro;
+  NombreArchivo: TFileName;
+  NoRegistros: Integer;
+begin
+  inherited;
+  frmFiltro := TfrmPLDAlertasFiltro.Create(Self);
+  try
+    if frmFiltro.Execute(True) then
+    begin
+      NombreArchivo:= GetNombreArchivo(frmFiltro.IdTipo, frmFiltro.PeriodoMes, frmFiltro.PeriodoAnio);
+      NoRegistros:= GenerarArchivo(frmFiltro.IdTipo, frmFiltro.PeriodoMes, frmFiltro.PeriodoAnio, NombreArchivo);
+      if (NoRegistros>0) then
+      begin
+        RefreshADODS(adodsMaster, adodsMasterIdPLDAlerta);
+        MessageDlg(Format(strCreateFile, [NombreArchivo, NoRegistros]), mtInformation, [mbOK], 0);
+      end
+      else
+        MessageDlg(Format(strNotCreateFile, []), mtInformation, [mbOK], 0);
+    end;
+  finally
+    frmFiltro.Free;
+  end;
+end;
+
+procedure TdmPLDAlertas.daMasterDataChange(Sender: TObject; Field: TField);
+begin
+  inherited;
+  if adodsMaster.State in [dsBrowse] then
+    if Assigned(gGridForm) then
+      gGridForm.ReadOnlyGrid := (adodsMasterIdPLDAlertaEstatus.Value = 3) or
+      (adodsMasterIdPLDAlertaEstatus.Value = 5);
+end;
+
+function TdmPLDAlertas.GenerarAlertas(Month, Year: Word): Boolean;
+begin
+  Result:= False;
+  ScreenCursorProc(crSQLWait);
+  try
+    adopGenPLDAlertas.Parameters.ParamByName('@PeriodoMes').Value:= Month;
+    adopGenPLDAlertas.Parameters.ParamByName('@PeriodoAnio').Value:= Year;
+    adopGenPLDAlertas.ExecProc;
+  finally
+    ScreenCursorProc(crDefault);
+  end;
+  Result:= True;
+end;
+
+function TdmPLDAlertas.GenerarArchivo(IdPLDALertaTipo, Month, Year: Word;
+  FileName: TFileName): Integer;
+const
+  cSeparador = ';';
+var
+  TXTArchivo: TextFile;
+  Registro: String;
+  NoRegistros: Integer;
+begin
+  Result := 0;
+  NoRegistros := 0;
+  AssignFile(TXTArchivo, FileName);
+  try
+    Rewrite(TXTArchivo);
+    adoqPLDAlertas.Close;
+    adoqPLDAlertas.Parameters.ParamByName('IdPLDAlertaTipo').Value := IdPLDALertaTipo;
+    adoqPLDAlertas.Parameters.ParamByName('PeriodoMes').Value := Month;
+    adoqPLDAlertas.Parameters.ParamByName('PeriodoAnio').Value := Year;
+    adoqPLDAlertas.Open;
+    adoqPLDAlertas.First;
+    while not adoqPLDAlertas.Eof do
+    begin
+      Registro := adoqPLDAlertasC01_TIPO_DE_REPORTE.Value + cSeparador;
+      Registro := Registro + adoqPLDAlertasC02_PERIODO_DEL_REPORTE.Value + cSeparador;
+      Registro := Registro + adoqPLDAlertasC03_FOLIO.Value + cSeparador;
+      Registro := Registro + adoqPLDAlertasC04_ORGANO_SUPERVISOR.Value + cSeparador;
+      Registro := Registro + adoqPLDAlertasC05_CLAVE_INTITUCION.Value + cSeparador;
+      Registro := Registro + adoqPLDAlertasC06_LOCALIDAD.Value + cSeparador;
+      Registro := Registro + adoqPLDAlertasC07_CP_SUCURSAL.Value + cSeparador;
+      Registro := Registro + adoqPLDAlertasC08_TIPO_OPERACION.Value + cSeparador;
+      Registro := Registro + adoqPLDAlertasC09_INSTRUMENTO_MONETARIO.Value + cSeparador;
+      Registro := Registro + adoqPLDAlertasC10_CONTRATO.Value + cSeparador;
+      Registro := Registro + FormatFloat('0.00', adoqPLDAlertasC11_MONTO.AsFloat) + cSeparador;
+      Registro := Registro + adoqPLDAlertasC12_MONEDA.Value + cSeparador;
+      Registro := Registro + adoqPLDAlertasC13_FECHA_OPERACION.Value + cSeparador;
+      Registro := Registro + adoqPLDAlertasC14_FECHA_DETECCION.Value + cSeparador;
+      Registro := Registro + adoqPLDAlertasC15_NACIONALIDAD.Value + cSeparador;
+      Registro := Registro + adoqPLDAlertasC16_TIPO_DE_PERSONA.Value + cSeparador;
+      Registro := Registro + adoqPLDAlertasC17_RAZON_SOCIAL.Value + cSeparador;
+      Registro := Registro + adoqPLDAlertasC18_NOMBRE.Value + cSeparador;
+      Registro := Registro + adoqPLDAlertasC19_APELLIDO_PATERNO.Value + cSeparador;
+      Registro := Registro + adoqPLDAlertasC20_APELIIDO_MATERNO.Value + cSeparador;
+      Registro := Registro + adoqPLDAlertasC21_RFC.Value + cSeparador;
+      Registro := Registro + adoqPLDAlertasC22_CURP.Value + cSeparador;
+      Registro := Registro + adoqPLDAlertasC23_FECHA_NACIMIENTO_CONSTITUCION.Value + cSeparador;
+      Registro := Registro + adoqPLDAlertasC24_DOMICILIO.Value + cSeparador;
+      Registro := Registro + adoqPLDAlertasC25_COLONIA.Value + cSeparador;
+      Registro := Registro + adoqPLDAlertasC26_POBLACION.Value + cSeparador;
+      Registro := Registro + adoqPLDAlertasC27_TELEFONO.Value + cSeparador;
+      Registro := Registro + adoqPLDAlertasC28_ACTIVADAD_ECONOMICA.Value + cSeparador;
+      Registro := Registro + adoqPLDAlertasC29_CONSECUTIVO_RELACIONADO.Value + cSeparador;
+      Registro := Registro + adoqPLDAlertasC30_CONTRATO_RELACIONADO.Value + cSeparador;
+      Registro := Registro + adoqPLDAlertasC31_CLAVE_INTITUCION_RELACIONADO.Value + cSeparador;
+      Registro := Registro + adoqPLDAlertasC32_NOMBRE_RELACIONADO.Value + cSeparador;
+      Registro := Registro + adoqPLDAlertasC33_PATERNO__RELACIONADO.Value + cSeparador;
+      Registro := Registro + adoqPLDAlertasC34_MATERNO_RELACIONADO.Value + cSeparador;
+      Registro := Registro + adoqPLDAlertasC35_DESCRIPCION.Value + cSeparador;
+      Registro := Registro + adoqPLDAlertasC36_RAZON.Value + cSeparador;
+      Write(TXTArchivo, Registro);
+      // Actualiza estatus de la alerta
+      adcUpdPLDAlertas.Parameters.ParamByName('IdPLDAlerta').Value := adoqPLDAlertasIdPLDAlerta.Value;
+      adcUpdPLDAlertas.Execute;
+      Inc(NoRegistros);
+      adoqPLDAlertas.Next;
+    end;
+    adoqPLDAlertas.Close;
+  finally
+    CloseFile(TXTArchivo);
+  end;
+  Result:= NoRegistros;
+end;
 
 procedure TdmPLDAlertas.DataModuleCreate(Sender: TObject);
 begin
   inherited;
   gGridForm:= TfrmPLDAlertas.Create(Self);
   gGridForm.DataSet:= adodsMaster;
+  TfrmPLDAlertas(gGridForm).actGenerarAlertas := actGenerarAlertas;
+  TfrmPLDAlertas(gGridForm).actGenerarArchivo := actGenerarArchivo;
+end;
+
+function TdmPLDAlertas.GetNombreArchivo(IdPLDALertaTipo, Month, Year: Word): TFileName;
+var
+  Periodo: string;
+begin
+  if IdPLDALertaTipo = 1 then
+    Periodo := Copy(IntToStr(Year),3,4) + PreparaCadena(IntToStr(Month),'D','0',2)
+  else
+    Periodo := Copy(IntToStr(Year),3,4) + PreparaCadena(IntToStr(Month),'D','0',2) + '01';
+  adoqConfiguracion.Close;
+  adoqConfiguracion.Parameters.ParamByName('IdPLDAlertaTipo').Value := IdPLDALertaTipo;
+  adoqConfiguracion.Open;
+  Result:= adoqConfiguracionPLDArchivoRuta.AsString +
+  adoqConfiguracionPLDAlertaTipo.AsString +
+  adoqConfiguracionPLDCodigoCASFIM.AsString + Periodo +
+  '.' + adoqConfiguracionPLDArchivoExtension.AsString;
+  adoqConfiguracion.Close;
 end;
 
 end.

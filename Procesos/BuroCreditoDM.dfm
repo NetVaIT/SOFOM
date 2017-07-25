@@ -232,7 +232,7 @@ inherited dmBuroCredito: TdmBuroCredito
         'cacionCartera, '
       
         '                         BCActividades1.Identificador AS Activid' +
-        'ad1, BCActividades3.Identificador AS Actividad2, BCActividades2.' +
+        'ad1, BCActividades2.Identificador AS Actividad2, BCActividades3.' +
         'Identificador AS Actividad3,'
       
         '                         Domicilios.Dirrecion1, Domicilios.Dirre' +

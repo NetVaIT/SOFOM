@@ -18,7 +18,8 @@ uses
   dxSkinWhiteprint, dxSkinXmas2008Blue, dxSkinscxPCPainter, cxPCdxBarPopupMenu,
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, Vcl.ImgList,
   System.Actions, Vcl.ActnList, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls, cxPC,
-  Vcl.DBCtrls, cxContainer, cxEdit, cxTextEdit, cxDBEdit, cxMaskEdit, cxSpinEdit;
+  Vcl.DBCtrls, cxContainer, cxEdit, cxTextEdit, cxDBEdit, cxMaskEdit, cxSpinEdit,
+  cxCurrencyEdit;
 
 type
   TfrmConfiguracionesEdit = class(T_frmEdit)
@@ -34,6 +35,32 @@ type
     cxDBSpinEdit1: TcxDBSpinEdit;
     Label4: TLabel;
     cxDBTextEdit3: TcxDBTextEdit;
+    Label5: TLabel;
+    cxDBCurrencyEdit1: TcxDBCurrencyEdit;
+    cxTabSheet1: TcxTabSheet;
+    cxTabSheet2: TcxTabSheet;
+    Label6: TLabel;
+    cxDBTextEdit4: TcxDBTextEdit;
+    Label7: TLabel;
+    cxDBTextEdit5: TcxDBTextEdit;
+    Label9: TLabel;
+    cxDBTextEdit6: TcxDBTextEdit;
+    Label10: TLabel;
+    cxDBTextEdit7: TcxDBTextEdit;
+    Label11: TLabel;
+    cxDBTextEdit8: TcxDBTextEdit;
+    Label13: TLabel;
+    cxDBTextEdit9: TcxDBTextEdit;
+    Label14: TLabel;
+    cxDBTextEdit10: TcxDBTextEdit;
+    Label15: TLabel;
+    cxDBTextEdit11: TcxDBTextEdit;
+    Label16: TLabel;
+    cxDBCurrencyEdit2: TcxDBCurrencyEdit;
+    Label17: TLabel;
+    cxDBTextEdit12: TcxDBTextEdit;
+    Label18: TLabel;
+    cxDBTextEdit13: TcxDBTextEdit;
   private
     { Private declarations }
   public

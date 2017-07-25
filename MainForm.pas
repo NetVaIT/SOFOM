@@ -158,7 +158,7 @@ type
     dxBarLargeButton36: TdxBarLargeButton;
     actBuroCredito: TAction;
     dxBarLargeButton37: TdxBarLargeButton;
-    ActNotasCredito: TAction;
+    actNotasCredito: TAction;
     actAlertasPLD: TAction;
     dxBarLargeButton41: TdxBarLargeButton;
     procedure actCatalogoExecute(Sender: TObject);
@@ -189,7 +189,7 @@ implementation
 
 {$R *.dfm}
 
-uses UbicacionesDM, BancosDM, MonedasDM, PuestosDM, PlazasTurnosDM,
+uses ConfiguracionDM, UbicacionesDM, BancosDM, MonedasDM, PuestosDM, PlazasTurnosDM,
   EstablecimientosDM,   CapacitacionDM, PersonasDM, RptPlazasDM, ProductosDM,
   MarcasDM, FamiliasDM, ContratosDM, AmortizacionesDM, FacturasDM,
   CuentasXCobrarDM, PagosDM, CotizacionesDM, rptAntiguedadSaldosDM,
@@ -198,14 +198,6 @@ uses UbicacionesDM, BancosDM, MonedasDM, PuestosDM, PlazasTurnosDM,
   RptCoberturaDM, RptExpedientesRecibidosDM, rptReporteCarteraDM,
   RptAnexosProductosDM, RptColocacionAcumuladoDM, PonerFechaActualForm,
   BuroCreditoDM, PLDAlertasDM;
-//  EsquemaPagosDM, FormulasDM, ReglasNegocioDM,
-//  MovimientosTiposDM, RolesDM, InstruccionesDM,
-//  IncidenciasDM, InstruccionesTiposDM, PeriodosDM, MovimientosDM,
-//  CuentasContablesDM, CuentasInternasDM, CuentasXPagarDM,
-//  CuentasXCobrarConceptosDM, MovimientosDDM, CuentasXCobrarDM,
-//  RptDetalleMovimientosPersonaDmod, RptMovimientosPeriodoDM,
-//  PrestamosDM, ConfiguracionDM, RptPagosDmod, RptCXPPagosDmod,
-//  RptMovimientosPersonaDM, ExportarPagosDocumentosDM;
 
 procedure TfrmMain.actCatalogoExecute(Sender: TObject);
 begin
@@ -225,22 +217,12 @@ begin
     4: gModulo := TdmPlazasTurnos.Create(Self);
     5: gModulo := TdmListasRestringidas.Create(Self);
     6: gModulo := TdmMonedasCotizaciones.Create(Self);
-//    6: gModulo := TdmFormulas.Create(Self);
-//    7: gModulo := TdmReglasNegocio.Create(Self);
     8: gModulo := TdmPuestos.Create(Self);
     9: gModulo := TdmEstablecimientos.Create(Self);
    10: gModulo := TdmCapacitacion.Create(Self);
    11: gModulo := TdmProductos.Create(Self);
    12: gModulo := TdmMarcas.Create(Self);
    13: gModulo := TdmFamilias.Create(Self);
-//   11: gModulo := TdmRoles.Create(Self);
-//   12: gModulo := TdmEsquemaPagos.Create(Self);
-//   13: gModulo := TdmMovimientosTipo.Create(Self);
-//   14: gModulo := TdmInstruccionesTipos.Create(Self);
-//   15: gModulo := TdmCuentasContables.Create(Self);
-//   16: gModulo := TdmCuentasInternas.Create(Self);
-//   17: gModulo := TdmCuentasXCobrarConceptos.Create(Self);
-//   19: gModulo := TdmPrestamos.Create(Self);
    20: gModulo := TdmPersona.CreateWRol(Self, rNone);
    21: gModulo := TdmPersona.CreateWRol(Self, rEmpleado);
    22: gModulo := TdmPersona.CreateWRol(Self, rCliente);
@@ -260,7 +242,6 @@ begin
    37: gModulo := TdmSeguimientoCobranza.Create(Self);  //Feb 15/17
    38: gModulo := TDMFacturas.CreateWMostrar(Self,True,2); //jun 26/17   Notas Credito
    39: gModulo := TdmPLDAlertas.Create(Self);
-
    50: gModulo := TdmRptAntiguedadSaldos.Create(Self);
    51: gModulo := TdmEstadosCuenta.Create(Self);
    52: gModulo := TdmRptInformacionContratos.Create(Self);  //Abr 20/17
@@ -289,44 +270,6 @@ begin
          gModulo := TdmBuroCredito.Create(Self);
          TdmBuroCredito(gModulo).Execute;
        end;
-//   51: begin
-//         gModulo := TdmMovimientosD.Create(Self);
-//         TdmMovimientosD(gModulo).TipoReporte:= trDispercion;
-//         TdmMovimientosD(gModulo).actSearch.Execute;
-//       end;
-//   52: begin
-//         gModulo := TdmMovimientosD.Create(Self);
-//         TdmMovimientosD(gModulo).TipoReporte:= trNomina;
-//         TdmMovimientosD(gModulo).actSearch.Execute;
-//       end;
-//   53: begin
-//         gModulo := TdmMovimientosD.Create(Self);
-//         TdmMovimientosD(gModulo).TipoReporte:= trPrestamos;
-//         TdmMovimientosD(gModulo).actSearch.Execute;
-//       end;
-//   54: begin
-//         gModulo := TdmRptCXPPagos.Create(Self);
-//         TdmRptCXPPagos(gModulo).actSearch.Execute;
-//       end;
-//   55: begin
-//         gReport := TdmRptPagos.Create(Self);
-//         gReport.Title := pCaption;
-//         gReport.Execute;
-//       end;
-//   56: begin
-//         gReport := TdmRptMovimientosPersona.Create(Self);
-//         gReport.Title := pCaption;
-//         gReport.Execute;
-//       end;
-//   57: begin
-//         gReport := TdmRptDetalleMovimientosPersona.Create(Self);
-//         gReport.Title := pCaption;
-//         gReport.Execute;
-//       end;
-//   58: begin
-//         gModulo := TdmRptMovimientosPeriodo.Create(Self);
-//         TdmRptMovimientosPeriodo(gModulo).Execute;
-//       end;
    59: begin
          gModulo := TdmRptPlazas.Create(Self);
        end;
@@ -351,7 +294,6 @@ begin
   FrmPoneFechaActual:=TFrmPoneFechaActual.Create(self);
   FrmPoneFechaActual.ShowModal;
   FrmPoneFechaActual.Free;
-
 end;
 
 procedure TfrmMain.ConfigControls;
@@ -401,8 +343,14 @@ begin
   actRptAntiguedadSaldos.Enabled:= Conected;
   actEstadoCuenta.Enabled       := Conected;
   actInformacionContratos.Enabled:= Conected;
+  actReporteCartera.Enabled:=   Conected;
   actRptCobertura.Enabled       := Conected;
   actRptExpecientes.Enabled     := Conected;
+  actRptColocacion.Enabled      := Conected;
+  actColocacionAcumulado.Enabled:= Conected;
+  actBuroCredito.Enabled        := Conected;
+  actNotasCredito.Enabled       := Conected;
+  actAlertasPLD.Enabled         := Conected;
 end;
 
 procedure TfrmMain.DestroyModule;
@@ -414,10 +362,10 @@ procedure TfrmMain.dxRibbon1ApplicationMenuClick(Sender: TdxCustomRibbon;
   var AHandled: Boolean);
 begin
   inherited;
-//  if Conected then
-//    dmConfiguracion.OpenDataSet
-//  else
-//    dmConfiguracion.CloseDataSet;
+  if Conected then
+    dmConfiguracion.OpenDataSet
+  else
+    dmConfiguracion.CloseDataSet;
   if Conected then
     dmUsuarios.OpenDataSet
   else
@@ -439,7 +387,7 @@ end;
 procedure TfrmMain.FormShow(Sender: TObject);
 begin
   inherited;
-//  dmConfiguracion.ShowModule(dxtshConfiguracion, '');
+  dmConfiguracion.ShowModule(dxtshConfiguracion, '');
   dmUsuarios.ShowModule(dxtshUsuarios, '');
 end;
 

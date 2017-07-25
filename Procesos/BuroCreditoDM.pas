@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, _StandarDMod, System.Actions, Vcl.ActnList,
-  Data.DB, Data.Win.ADODB, System.StrUtils, System.DateUtils, Vcl.Dialogs ;
+  Data.DB, Data.Win.ADODB, System.StrUtils, System.DateUtils, Vcl.Dialogs;
 
 const
   cFormatDate = 'ddmmyyyy';

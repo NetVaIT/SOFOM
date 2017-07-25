@@ -118,6 +118,8 @@ inherited frmMain: TfrmMain
         end>
     end
     inherited dxbArchivo: TdxBar
+      DockedDockControl = nil
+      DockedDockingStyle = dsNone
       FloatClientWidth = 51
       FloatClientHeight = 76
     end
@@ -298,7 +300,7 @@ inherited frmMain: TfrmMain
       FloatLeft = 1133
       FloatTop = 8
       FloatClientWidth = 178
-      FloatClientHeight = 378
+      FloatClientHeight = 432
       ItemLinks = <
         item
           Visible = True
@@ -656,7 +658,7 @@ inherited frmMain: TfrmMain
       Category = 0
     end
     object dxBarLargeButton37: TdxBarLargeButton
-      Action = ActNotasCredito
+      Action = actNotasCredito
       Category = 0
       SyncImageIndex = False
       ImageIndex = -1
@@ -11457,7 +11459,7 @@ inherited frmMain: TfrmMain
       ImageIndex = 55
       OnExecute = actCatalogoExecute
     end
-    object ActNotasCredito: TAction
+    object actNotasCredito: TAction
       Tag = 38
       Category = 'Procesos'
       Caption = 'Notas Cr'#233'dito'

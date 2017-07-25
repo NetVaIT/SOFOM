@@ -11,14 +11,14 @@ inherited frmPersonaEdit: TfrmPersonaEdit
     Width = 654
     Height = 646
     ExplicitWidth = 654
-    ExplicitHeight = 553
+    ExplicitHeight = 646
     ClientRectBottom = 644
     ClientRectRight = 652
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 2
       ExplicitTop = 26
       ExplicitWidth = 650
-      ExplicitHeight = 525
+      ExplicitHeight = 618
       object PnlEmisor: TPanel
         Left = 0
         Top = 351
@@ -28,7 +28,6 @@ inherited frmPersonaEdit: TfrmPersonaEdit
         BevelOuter = bvNone
         TabOrder = 5
         Visible = False
-        ExplicitHeight = 174
         object Label20: TLabel
           Left = 16
           Top = 4
@@ -90,7 +89,7 @@ inherited frmPersonaEdit: TfrmPersonaEdit
           Top = 24
           DataBinding.DataField = 'RFC'
           DataBinding.DataSource = DataSource
-          TabOrder = 0
+          TabOrder = 1
           Width = 150
         end
         object cmbTipoPersona: TcxDBLookupComboBox
@@ -100,7 +99,7 @@ inherited frmPersonaEdit: TfrmPersonaEdit
           DataBinding.DataSource = DataSource
           Properties.ListColumns = <>
           Properties.OnChange = cxDBLookupComboBox1PropertiesChange
-          TabOrder = 1
+          TabOrder = 0
           Width = 170
         end
         object DBLookupComboBox1: TDBLookupComboBox
@@ -146,11 +145,19 @@ inherited frmPersonaEdit: TfrmPersonaEdit
           Caption = 'Tipo de Razon Social'
         end
         object Label11: TLabel
-          Left = 332
-          Top = 50
+          Left = 398
+          Top = 51
           Width = 19
           Height = 13
           Caption = 'Pais'
+        end
+        object Label33: TLabel
+          Left = 224
+          Top = 50
+          Width = 104
+          Height = 13
+          Caption = 'Fecha de constituci'#243'n'
+          FocusControl = cxDBDateEdit2
         end
         object edtRazonSocial: TcxDBTextEdit
           Left = 16
@@ -167,16 +174,24 @@ inherited frmPersonaEdit: TfrmPersonaEdit
           DataBinding.DataSource = DataSource
           Properties.ListColumns = <>
           TabOrder = 1
-          Width = 300
+          Width = 200
         end
         object cxDBLookupComboBox1: TcxDBLookupComboBox
-          Left = 332
+          Left = 398
           Top = 65
           DataBinding.DataField = 'Pais'
           DataBinding.DataSource = DataSource
           Properties.ListColumns = <>
+          TabOrder = 3
+          Width = 234
+        end
+        object cxDBDateEdit2: TcxDBDateEdit
+          Left = 222
+          Top = 65
+          DataBinding.DataField = 'FechaNacimiento'
+          DataBinding.DataSource = DataSource
           TabOrder = 2
-          Width = 300
+          Width = 170
         end
       end
       object pnlPersonaFisica: TPanel
@@ -369,7 +384,6 @@ inherited frmPersonaEdit: TfrmPersonaEdit
         BevelOuter = bvNone
         TabOrder = 3
         Visible = False
-        ExplicitHeight = 174
       end
       object PnlCliente: TPanel
         Left = 0
@@ -380,7 +394,6 @@ inherited frmPersonaEdit: TfrmPersonaEdit
         BevelOuter = bvNone
         TabOrder = 4
         Visible = False
-        ExplicitHeight = 174
         object Label17: TLabel
           Left = 16
           Top = 80
@@ -475,7 +488,7 @@ inherited frmPersonaEdit: TfrmPersonaEdit
           Height = 21
           DataField = 'MetodoPago'
           DataSource = DataSource
-          TabOrder = 5
+          TabOrder = 7
         end
         object cxDBLabel1: TcxDBLabel
           Left = 432
@@ -525,7 +538,7 @@ inherited frmPersonaEdit: TfrmPersonaEdit
               Width = 300
               FieldName = 'Descripcion'
             end>
-          TabOrder = 2
+          TabOrder = 4
           Width = 200
         end
         object DBLookupComboBox7: TcxDBLookupComboBox
@@ -543,7 +556,7 @@ inherited frmPersonaEdit: TfrmPersonaEdit
               Width = 300
               FieldName = 'Descripcion'
             end>
-          TabOrder = 3
+          TabOrder = 5
           Width = 200
         end
         object DBLookupComboBox8: TcxDBLookupComboBox
@@ -561,7 +574,7 @@ inherited frmPersonaEdit: TfrmPersonaEdit
               Width = 300
               FieldName = 'Descripcion'
             end>
-          TabOrder = 4
+          TabOrder = 6
           Width = 200
         end
         object cxDBTextEdit4: TcxDBTextEdit
@@ -569,7 +582,7 @@ inherited frmPersonaEdit: TfrmPersonaEdit
           Top = 96
           DataBinding.DataField = 'NumCtaPagoCliente'
           DataBinding.DataSource = DataSource
-          TabOrder = 6
+          TabOrder = 8
           Width = 200
         end
         object cxDBTextEdit6: TcxDBTextEdit
@@ -577,7 +590,7 @@ inherited frmPersonaEdit: TfrmPersonaEdit
           Top = 16
           DataBinding.DataField = 'CalificacionInicial'
           DataBinding.DataSource = dmPersona.dsMaster
-          TabOrder = 8
+          TabOrder = 2
           Width = 45
         end
         object cxDBTextEdit7: TcxDBTextEdit
@@ -585,7 +598,7 @@ inherited frmPersonaEdit: TfrmPersonaEdit
           Top = 16
           DataBinding.DataField = 'CalificacionActual'
           DataBinding.DataSource = dmPersona.dsMaster
-          TabOrder = 9
+          TabOrder = 3
           Width = 44
         end
         object cxGroupBox1: TcxGroupBox
@@ -620,12 +633,20 @@ inherited frmPersonaEdit: TfrmPersonaEdit
             FocusControl = cxDBTextEdit10
           end
           object Label32: TLabel
-            Left = 292
+            Left = 272
             Top = 56
             Width = 126
             Height = 13
             Caption = 'Monto m'#225'ximo en efectivo'
             FocusControl = cxDBTextEdit11
+          end
+          object Label34: TLabel
+            Left = 408
+            Top = 56
+            Width = 84
+            Height = 13
+            Caption = 'N'#250'mero de pagos'
+            FocusControl = cxDBSpinEdit1
           end
           object cxDBTextEdit8: TcxDBTextEdit
             Left = 16
@@ -649,10 +670,10 @@ inherited frmPersonaEdit: TfrmPersonaEdit
             DataBinding.DataField = 'PLDMontoMaximo'
             DataBinding.DataSource = DataSource
             TabOrder = 2
-            Width = 121
+            Width = 130
           end
           object cxDBCheckBox1: TcxDBCheckBox
-            Left = 165
+            Left = 152
             Top = 72
             Caption = 'Pagara en efectivo'
             DataBinding.DataField = 'PLDPagarEfectivo'
@@ -661,12 +682,20 @@ inherited frmPersonaEdit: TfrmPersonaEdit
             Width = 121
           end
           object cxDBTextEdit11: TcxDBTextEdit
-            Left = 292
+            Left = 272
             Top = 72
             DataBinding.DataField = 'PLDMontoMaximoEfectivo'
             DataBinding.DataSource = DataSource
             TabOrder = 4
-            Width = 121
+            Width = 130
+          end
+          object cxDBSpinEdit1: TcxDBSpinEdit
+            Left = 408
+            Top = 72
+            DataBinding.DataField = 'PLDNumeroPagos'
+            DataBinding.DataSource = DataSource
+            TabOrder = 5
+            Width = 114
           end
         end
       end
@@ -674,48 +703,40 @@ inherited frmPersonaEdit: TfrmPersonaEdit
     object tsDomicilio: TcxTabSheet
       Caption = 'Domicilio'
       ImageIndex = 1
-      ExplicitHeight = 525
     end
     object tsTelefono: TcxTabSheet
       Caption = 'Telefono'
       ImageIndex = 2
-      ExplicitHeight = 525
     end
     object tsCorreo: TcxTabSheet
       Caption = 'Correo Electronico'
       ImageIndex = 3
-      ExplicitHeight = 525
     end
     object tsContacto: TcxTabSheet
       Caption = 'Contactos'
       ImageIndex = 4
-      ExplicitHeight = 525
     end
     object tsPerfil: TcxTabSheet
       Caption = 'Perfil'
       ImageIndex = 8
-      ExplicitHeight = 525
     end
     object tsDocumentos: TcxTabSheet
       Caption = 'Documentos'
       ImageIndex = 7
-      ExplicitHeight = 525
     end
     object tsCuentasBancarias: TcxTabSheet
       Caption = 'Cuentas Bancarias'
       ImageIndex = 5
-      ExplicitHeight = 525
     end
     object tsCSD: TcxTabSheet
       Caption = 'Sello digital'
       ImageIndex = 6
-      ExplicitHeight = 525
     end
   end
   inherited pmlMain: TPanel
     Top = 646
     Width = 654
-    ExplicitTop = 553
+    ExplicitTop = 646
     ExplicitWidth = 654
     inherited btnCancel: TButton
       Left = 572

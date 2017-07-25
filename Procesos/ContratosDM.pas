@@ -562,18 +562,15 @@ begin
   Result:= False;
   if IdAnexo <> 0 then
   begin
-//    if MessageDlg(strGenPagoIncial, mtConfirmation, mbYesNo, 0) = mrYes then
-//    begin
-      ScreenCursorProc(crSQLWait);
-      try
-        adopSetCXCPorAnexo.Parameters.ParamByName('@IdAnexo').Value:= IdAnexo;
-        adopSetCXCPorAnexo.Parameters.ParamByName('@Fase').Value:= 0;
-        adopSetCXCPorAnexo.ExecProc;
-      finally
-        ScreenCursorProc(crDefault);
-//      end;
-      Result:= True;
+    ScreenCursorProc(crSQLWait);
+    try
+      adopSetCXCPorAnexo.Parameters.ParamByName('@IdAnexo').Value:= IdAnexo;
+      adopSetCXCPorAnexo.Parameters.ParamByName('@Fase').Value:= 0;
+      adopSetCXCPorAnexo.ExecProc;
+    finally
+      ScreenCursorProc(crDefault);
     end;
+    Result:= True;
   end;
 end;
 

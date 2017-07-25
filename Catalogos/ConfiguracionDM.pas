@@ -28,6 +28,19 @@ type
     adodsMasterUltimaSeriePago: TStringField;
     adoqTipoCambio: TADOQuery;
     adoqTipoCambioValor: TFMTBCDField;
+    adodsMasterPorcentajeImpuestoIVA: TBCDField;
+    adodsMasterBCClaveInstitucion: TStringField;
+    adodsMasterBCInstitucion: TStringField;
+    adodsMasterBCTipo: TStringField;
+    adodsMasterPLDPerfilTransaccional: TIntegerField;
+    adodsMasterPLDInicioOperaciones: TStringField;
+    adodsMasterPLDCodigoCASFIM: TStringField;
+    adodsMasterPLDSupervisorCNBV: TStringField;
+    adodsMasterPLDArchivoRuta: TStringField;
+    adodsMasterPLDArchivoExtension: TStringField;
+    adodsMasterPLDMontoRelevante: TBCDField;
+    adodsMasterPLDLocalidad: TStringField;
+    adodsMasterPLDCodigoPostal: TStringField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }

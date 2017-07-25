@@ -79,6 +79,12 @@ type
     tvMasterActividad3: TcxGridDBColumn;
     tvMasterCalificacionInicial: TcxGridDBColumn;
     tvMasterCalificacionActual: TcxGridDBColumn;
+    tvMasterPLDOrigenRecurso: TcxGridDBColumn;
+    tvMasterPLDDestinoRecurso: TcxGridDBColumn;
+    tvMasterPLDMontoMaximo: TcxGridDBColumn;
+    tvMasterPLDPagarEfectivo: TcxGridDBColumn;
+    tvMasterPLDMontoMaximoEfectivo: TcxGridDBColumn;
+    tvMasterPLDNumeroPagos: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private

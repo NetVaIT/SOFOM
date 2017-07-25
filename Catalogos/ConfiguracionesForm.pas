@@ -39,6 +39,19 @@ type
     tvMasterRutaBasePagos: TcxGridDBColumn;
     tvMasterUltimoFolioPago: TcxGridDBColumn;
     tvMasterUltimaSeriePago: TcxGridDBColumn;
+    tvMasterPorcentajeImpuestoIVA: TcxGridDBColumn;
+    tvMasterBCClaveInstitucion: TcxGridDBColumn;
+    tvMasterBCInstitucion: TcxGridDBColumn;
+    tvMasterBCTipo: TcxGridDBColumn;
+    tvMasterPLDPerfilTransaccional: TcxGridDBColumn;
+    tvMasterPLDInicioOperaciones: TcxGridDBColumn;
+    tvMasterPLDCodigoCASFIM: TcxGridDBColumn;
+    tvMasterPLDSupervisorCNBV: TcxGridDBColumn;
+    tvMasterPLDArchivoRuta: TcxGridDBColumn;
+    tvMasterPLDArchivoExtension: TcxGridDBColumn;
+    tvMasterPLDMontoRelevante: TcxGridDBColumn;
+    tvMasterPLDLocalidad: TcxGridDBColumn;
+    tvMasterPLDCodigoPostal: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
