@@ -275,15 +275,15 @@ inherited dmPagos: TdmPagos
       'aldoFactorajeCFDI, '#13#10'ci.serie, Ci.folio'#13#10' from CuentasXCobrar CX' +
       'C  '#13#10'left Join CFDI CI on CI.IdCFDI= CXC.IdCFDI where '#13#10'-- CXC.i' +
       'danexosamortizaciones is not null and -- jun 30/17 '#13#10' Saldo >0 a' +
-      'nd IDPersona=:IdPersonaCliente '#13#10'and ((IdCuentaXCobrarEstatus=0 ' +
-      'and  ESMoratorio=0)'#13#10'or( Esmoratorio=1)'#13#10'or (CXC.Fecha<dbo.GetDa' +
-      'teAux() and IdCuentaXCobrarEstatus=-1) -- para poder facturar ad' +
-      'delantados'#13#10'or (exists (select * from CuentasXCobrarDetalle CXCD' +
-      ' where CXCD.descripcion like'#39'%Abono Capital%'#39' and CXC.IdCuentaXC' +
-      'obrar=CXCD.idcuentaXCobrar )'#13#10'and CXC.IdCFDI is null) )-- IdCuen' +
-      'taXCobrarEstatus=-1 and puede que esten facturadas'#13#10' and CXC.IDA' +
-      'nexo=:IdAnexo'#13#10'order by CXC.idanexosamortizaciones,EsMoratorio D' +
-      'Esc, CXC.FechaVencimiento'
+      'nd IDPersona=:IdPersonaCliente '#13#10'and (((IdCuentaXCobrarEstatus=0' +
+      ' or (IdCuentaXCobrarEstatus=1))  and  ESMoratorio=0)'#13#10'or( Esmora' +
+      'torio=1)'#13#10'or (CXC.Fecha<dbo.GetDateAux() and IdCuentaXCobrarEsta' +
+      'tus=-1) -- para poder facturar addelantados'#13#10'or (exists (select ' +
+      '* from CuentasXCobrarDetalle CXCD where CXCD.descripcion like'#39'%A' +
+      'bono Capital%'#39' and CXC.IdCuentaXCobrar=CXCD.idcuentaXCobrar )'#13#10'a' +
+      'nd CXC.IdCFDI is null) )-- IdCuentaXCobrarEstatus=-1 and puede q' +
+      'ue esten facturadas'#13#10' and CXC.IDAnexo=:IdAnexo'#13#10'order by CXC.ida' +
+      'nexosamortizaciones,EsMoratorio DEsc, CXC.FechaVencimiento'
     DataSource = DSMaster
     IndexFieldNames = 'IdPersona;IdAnexo'
     MasterFields = 'IdPersonaCliente;IdAnexo'

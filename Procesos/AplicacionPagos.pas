@@ -432,14 +432,14 @@ begin
     +' CXC.Importe, CXC.Impuesto, CXC.Interes, CXC.Total, CXC.Saldo, CXC.SaldoFactoraje, CXC.EsMoratorio, CI.SaldoDocumento, '
     +' Ci.SaldoFactoraje as SaldoFactorajeCFDI, ci.serie, Ci.folio  from CuentasXCobrar CXC left Join CFDI CI on CI.IdCFDI= CXC.IdCFDI where '
     +' CXC.idanexosamortizaciones is not null and  Saldo >0 and IDPersona=:IdPersonaCliente and '
-    +' ((IdCuentaXCobrarEstatus=0 and  ESMoratorio=0) or( Esmoratorio=1) or '
+    +' (((IdCuentaXCobrarEstatus=0 or (IdCuentaXCobrarEstatus=1)) and  ESMoratorio=0) or( Esmoratorio=1) or '  //Ajustado jul 31/17
     +' (CXC.Fecha<dbo.GetDateAux() and IdCuentaXCobrarEstatus=-1) or '     //jul 4/17
     +' (exists (select * from CuentasXCobrarDetalle CXCD where CXCD.descripcion like''%Abono Capital%'' and CXC.IdCuentaXCobrar=CXCD.idcuentaXCobrar )'
     +' and CXC.IdCFDI is null) ) and CXC.IDAnexo=:IdAnexo'           //-- IdCuentaXCobrarEstatus=-1 and puede que esten facturadas
     +'  order by CXC.idanexosamortizaciones,EsMoratorio DEsc, CXC.FechaVencimiento' ;
 
   end
-  else
+  else       //  (((IdCuentaXCobrarEstatus=0 or (IdCuentaXCobrarEstatus=1))
   begin
 
     TAdoDataset(DsconCXCPendientes.DataSet).commandtext:='Select CXC.IdCuentaXCobrar, CXC.IdCuentaXCobrarBase, CXC.IdCuentaXCobrarEstatus, CXC.IdPersona,'
@@ -447,7 +447,7 @@ begin
     +' CXC.Importe, CXC.Impuesto, CXC.Interes, CXC.Total, CXC.Saldo, CXC.SaldoFactoraje, CXC.EsMoratorio, CI.SaldoDocumento, '
     +' Ci.SaldoFactoraje as SaldoFactorajeCFDI , ci.serie, Ci.folio from CuentasXCobrar CXC left Join CFDI CI on CI.IdCFDI= CXC.IdCFDI where '
     +' Saldo >0 and IDPersona=:IdPersonaCliente and '
-    +' ((IdCuentaXCobrarEstatus=0 and  ESMoratorio=0) or( Esmoratorio=1) or '
+    +' (((IdCuentaXCobrarEstatus=0 or (IdCuentaXCobrarEstatus=1)) and  ESMoratorio=0) or( Esmoratorio=1) or ' //Jul 31/17
     +' (CXC.Fecha<dbo.GetDateAux() and IdCuentaXCobrarEstatus=-1) or '     //jul 4/17
     +' (exists (select * from CuentasXCobrarDetalle CXCD where CXCD.descripcion like''%Abono Capital%'' and CXC.IdCuentaXCobrar=CXCD.idcuentaXCobrar )'
     +' and CXC.IdCFDI is null) ) and CXC.IDAnexo=:IdAnexo'           //-- IdCuentaXCobrarEstatus=-1 and puede que esten facturadas
@@ -639,8 +639,8 @@ begin
   TADOQuery(dsAuxiliar.dataset).SQL.clear;
   TADOQuery(dsAuxiliar.dataset).SQL.Add('Select cxc.*, CI.SaldoDocumento, Ci.SaldoFactoraje as SaldoFactorajeCFD from CuentasXCobrar CXC ' +
                                         ' left Join CFDI CI on CI.IdCFDI= CXC.IdCFDI where  Saldo >0 and IDPersona=:IdPersonaCliente '  +
-                                            auxiliar +  //Jun 30/17
-                                        '  and ((IdCuentaXCobrarEstatus=0 and  ESMoratorio=0) or( Esmoratorio=1)) '+
+                                            auxiliar +  //Jun 30/17           //Ajustado Jul 31/17
+                                        '  and (((IdCuentaXCobrarEstatus=0 or (IdCuentaXCobrarEstatus=1)) and  ESMoratorio=0) or( Esmoratorio=1)) '+
                                         ' and CXC.IDAnexo=:IdAnexo order by CXC.idanexosamortizaciones,EsMoratorio DEsc, CXC.FechaVencimiento ');   //FV abr 11/17 Ajuste
   TADOQuery(dsAuxiliar.dataset).parameters.ParamByName('IDPersonaCliente').Value:= idpersonaCliente;
   TADOQuery(dsAuxiliar.dataset).parameters.ParamByName('IDAnexo').Value:= IdAnexo;
