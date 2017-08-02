@@ -434,7 +434,8 @@ type
     function CrearSiguienteCXC(idAnexo: integer;var idCxc:integer): Boolean;
     function SacaSaldoApagar(SaldoPago: Double; IdCXC: integer): Double;
     procedure VerificaYCambiaEstatusCXC(IDCFDIACT, NvoEstatus,
-      IdCXCAct: integer; CFDICreado: Boolean);//Jun 8/17
+      IdCXCAct: integer; CFDICreado: Boolean);
+    procedure RefreshAplicaPago;//Jun 8/17
     property PaymentTime: TPaymentTime read FPaymentTime write SetPaymentTime;
   public
     { Public declarations }
@@ -809,7 +810,7 @@ begin
   ADOSumaIVAMora.Close;
   ADOSumaIVAMora.Parameters.ParamByName('IdCuentaXCobrar').Value:=ADODtStCXCPendientesIdCuentaXCobrar.AsInteger; // ya que no tierne mas campos ino la suma ene 28/17
   ADOSumaIVAMora.Open; // SE supone esta amarrado a la CuentaXCobrar
-  if not ADOSumaIVAMora.eof then // Pendiente de terminar
+  if not ADOSumaIVAMora.eof then
   begin
     IVAReg:= ADOSumaIVAMora.fieldbyname('IVAREG').asFloat;
   end;
@@ -1015,6 +1016,7 @@ begin
       if IDCXC<>0 then
         IdCFDIActual:= CrearFacturaCXC(IDCXC); //Aunque ya lo trae
       if IdCFDIActual<>-1 then
+      begin
         if AplicaPago(adodsMasterIdPago.AsInteger,idcxc,idcfdiactual,frmAbonarCapitalEdit.Importe) then
           if  AjustarAmortizaciones(IdAnexoAct,TipoContrato,frmAbonarCapitalEdit.Importe,TipoAbono,frmAbonarCapitalEdit.Fecha ) then //Ajustar Amortizacion
           begin                                                                                    //Abr 19/17
@@ -1028,6 +1030,9 @@ begin
             RegistraBitacora(2,ObsBitacora);
             ShowMessage('Proceso completo de Abono a Capital');
           end;
+      end
+      else
+         ShowMessage('Proceso no relizado Factura no generada.'); //Ago 1/17
     end;
   finally
     frmAbonarCapitalEdit.Free;
@@ -1102,7 +1107,9 @@ begin
   begin
     ActGeneraPrefMoratorios.Execute; //Crea y timbra
     result:=IdCFDIActual;
-  end;
+  end
+  else
+    result:=-1; //ago 1/17 Por si por algono se encuentra
   //No deberia haber dos Facturas de la misma CXC
 
 end;
@@ -1216,13 +1223,30 @@ begin
             RegistraBitacora(3,ObsBitacora);
 
          end;
+      end
+      else  //ago 1/17
+      begin
+        Existen:=False;
+        Showmessage('Proceso no realizado. Factura no generada de CXC('+intToStr(IDCXC));
       end;
-
     end
     else
       Existen:=False;
   end;
+  if adodsMasterSaldo.AsFloat<=0.01  then   //Ago 2/17
+  begin
+    RefreshAplicaPago;
+  end;
+end;
 
+procedure TdmPagos.RefreshAplicaPago;  //Ago 2/17
+var
+  IdPagoAp: Integer;
+begin
+    IdPagoAp:=  ADODtStAplicacionesPagos.FieldByName('IDPagoAplicacion').AsInteger;
+    ADODtStAplicacionesPagos.Close;
+    ADODtStAplicacionesPagos.Open;
+    ADODtStAplicacionesPagos.Locate('IDPagoAplicacion', IDPagoAp, []);
 end;
 
 function TdmPagos.SacaSaldoApagar(SaldoPago:Double;IdCXC: integer):Double;

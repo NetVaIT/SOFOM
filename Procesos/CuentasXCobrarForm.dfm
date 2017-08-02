@@ -260,10 +260,11 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
         Top = 9
         Width = 82
         Height = 29
-        Caption = 'Usar Fecha'
+        Caption = 'Usar Fecha Vencimiento'
         Checked = True
         State = cbChecked
         TabOrder = 2
+        WordWrap = True
         OnClick = ConsultarClick
       end
       object ChckBxConSaldo: TCheckBox
@@ -699,6 +700,7 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
     object dxBrBtnActTotalesCXC: TdxBarButton
       Caption = 'Totales CXC'
       Category = 0
+      Enabled = False
       Hint = 'Totales CXC'
       Visible = ivNever
     end
@@ -1563,6 +1565,7 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42709.621321724540000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

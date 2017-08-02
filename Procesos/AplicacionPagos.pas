@@ -531,7 +531,11 @@ begin
   1: ActAbonoCapital.Execute;  // deberia ser sólo para los que tienen null en anexoamortizacion  y que no sea opcion de compra()
   2: ActPagoAnticipado.Execute; //Verificar monto  e ir creandoCXC
   end;
+  if DSPago.DataSet.FieldByName('saldo').AsFloat<=0.01  then   //Ago 2/17
+  begin
 
+    Close;
+  end;
 end;
 
 procedure TFrmAplicacionPago.SpdBtnActMoraFechaPagoClick(Sender: TObject);

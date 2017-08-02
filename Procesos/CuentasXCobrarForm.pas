@@ -333,8 +333,8 @@ end;
 
 procedure TFrmConCuentasXCobrar.SetActTotalesCXC(const Value: TBasicAction);
 begin
-  FActTotalesCXC := Value;
-  dxBrBtnActTotalesCXC.Action:=value;     //TEmporal para ajustar Abr 17/17
+//  FActTotalesCXC := Value;
+ // dxBrBtnActTotalesCXC.Action:=value;     //TEmporal para ajustar Abr 17/17
 
 end;
 

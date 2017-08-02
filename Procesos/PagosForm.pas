@@ -303,6 +303,7 @@ begin
 end;
 
 
+
 procedure TFrmConPagos.dxBrBtnAplicaiconesClick(Sender: TObject);
 var FrmAplicacionPago:TFrmAplicacionPago;
     Mensaje:String;
@@ -470,7 +471,7 @@ begin
 
   Aux:='where';
   if ChckBxXFecha.Checked then
-    ffiltroFecha:=' FechaPago >:Fini and FechaPago<:FFin '
+    ffiltroFecha:=' FechaPago >=:Fini and FechaPago<:FFin '
   else
     ffiltroFecha:='';
   Aux:=Aux+ffiltroFecha;

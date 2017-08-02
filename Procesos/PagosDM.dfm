@@ -277,13 +277,13 @@ inherited dmPagos: TdmPagos
       'danexosamortizaciones is not null and -- jun 30/17 '#13#10' Saldo >0 a' +
       'nd IDPersona=:IdPersonaCliente '#13#10'and (((IdCuentaXCobrarEstatus=0' +
       ' or (IdCuentaXCobrarEstatus=1))  and  ESMoratorio=0)'#13#10'or( Esmora' +
-      'torio=1)'#13#10'or (CXC.Fecha<dbo.GetDateAux() and IdCuentaXCobrarEsta' +
-      'tus=-1) -- para poder facturar addelantados'#13#10'or (exists (select ' +
-      '* from CuentasXCobrarDetalle CXCD where CXCD.descripcion like'#39'%A' +
-      'bono Capital%'#39' and CXC.IdCuentaXCobrar=CXCD.idcuentaXCobrar )'#13#10'a' +
-      'nd CXC.IdCFDI is null) )-- IdCuentaXCobrarEstatus=-1 and puede q' +
-      'ue esten facturadas'#13#10' and CXC.IDAnexo=:IdAnexo'#13#10'order by CXC.ida' +
-      'nexosamortizaciones,EsMoratorio DEsc, CXC.FechaVencimiento'
+      'torio=1)'#13#10'or (CXC.Fecha<=dbo.GetDateAux() and IdCuentaXCobrarEst' +
+      'atus=-1) -- para poder facturar addelantados'#13#10'or (exists (select' +
+      ' * from CuentasXCobrarDetalle CXCD where CXCD.descripcion like'#39'%' +
+      'Abono Capital%'#39' and CXC.IdCuentaXCobrar=CXCD.idcuentaXCobrar )'#13#10 +
+      'and CXC.IdCFDI is null) )-- IdCuentaXCobrarEstatus=-1 and puede ' +
+      'que esten facturadas'#13#10' and CXC.IDAnexo=:IdAnexo'#13#10'order by CXC.id' +
+      'anexosamortizaciones,EsMoratorio DEsc, CXC.FechaVencimiento'
     DataSource = DSMaster
     IndexFieldNames = 'IdPersona;IdAnexo'
     MasterFields = 'IdPersonaCliente;IdAnexo'
@@ -1354,9 +1354,9 @@ inherited dmPagos: TdmPagos
       'SElect SUM(CXCD.Saldo) as IVAReg  from CuentasXCobrarDetalle  CX' +
       'CD   -- para confirmar valor de IVA'#13#10'inner join CuentasXCobrarTi' +
       'posConceptos CXCTC on CXCD.IdCuentaXCobrarTipo=CXCTC.IdCuentaXCo' +
-      'brarTipo'#13#10' where CXCTC.Facturar=1 and CXCTC.EsIVA =1 and'#13#10' ((CXC' +
-      'TC.EsMoratorios=1) or(CXCTC.Descripcion like '#39'%Abono Capital%'#39'))' +
-      #13#10'and CXCD.IdCuentaXCobrar =:IDCuentaXCobrar'
+      'brarTipo'#13#10' where CXCTC.Facturar=1 and CXCTC.EsIVA =1 '#13#10'-- des ag' +
+      'o 1/17 and ((CXCTC.EsMoratorios=1) or(CXCTC.Descripcion like '#39'%A' +
+      'bono Capital%'#39'))'#13#10'and CXCD.IdCuentaXCobrar =:IDCuentaXCobrar'
     Parameters = <
       item
         Name = 'IDCuentaXCobrar'
