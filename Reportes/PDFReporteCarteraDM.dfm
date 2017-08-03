@@ -16,7 +16,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       'ajeATiempo, CalificacionInicial'#13#10', ValorResidual, SaldoInsoluto,' +
       ' SaldoTotal'#13#10'from vw_ReporteCarteraCompleto'#13#10'order by TotalCobra' +
       'doVencido desc , TotalPorCobrar DEsc'
-    Left = 48
+    Left = 40
     object adodsReportIdAnexo: TIntegerField
       FieldName = 'IdAnexo'
     end
@@ -12033,9 +12033,9 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Transparent = True
         DataPipelineName = 'ppDBPplnAmortiza'
         mmHeight = 4763
-        mmLeft = 211941
+        mmLeft = 214048
         mmTop = 0
-        mmWidth = 15081
+        mmWidth = 13494
         BandType = 4
         LayerName = BandLayer8
       end
@@ -13365,6 +13365,28 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               end
             end
           end
+        end
+        object ppDBCalc15: TppDBCalc
+          UserName = 'DBCalc15'
+          DataField = 'TotalMora'
+          DataPipeline = ppDBPplnAmortiza
+          DisplayFormat = '#,0.00;-#,0.00'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Name = 'Arial'
+          Font.Size = 7
+          Font.Style = []
+          ResetGroup = ppGroup2
+          TextAlignment = taRightJustified
+          Transparent = True
+          DataPipelineName = 'ppDBPplnAmortiza'
+          mmHeight = 4498
+          mmLeft = 211932
+          mmTop = 2117
+          mmWidth = 14552
+          BandType = 5
+          GroupNo = 0
+          LayerName = BandLayer8
         end
       end
     end

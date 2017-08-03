@@ -149,6 +149,11 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       Caption = 'TotalesCXC'
       OnExecute = ActTotalesCXCExecute
     end
+    object ActRepCxCEstatusFactPendiente: TAction
+      Caption = 'CXC Pendiente Factura'
+      Hint = 'Reporte CXC pendientes de prefacturar o de emisi'#243'n de Factura'
+      OnExecute = ActRepCxCEstatusFactPendienteExecute
+    end
   end
   object ADOdsCXCDetalle: TADODataSet
     Connection = _dmConection.ADOConnection

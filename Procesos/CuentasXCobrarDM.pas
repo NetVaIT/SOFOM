@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, _StandarDMod, System.Actions, Vcl.ActnList,
-  Data.DB, Data.Win.ADODB, dialogs, vcl.controls,forms, winapi.windows;
+  Data.DB, Data.Win.ADODB, dialogs, vcl.controls,forms, winapi.windows, shellapi;
 
 type
   TdmCuentasXCobrar = class(T_dmStandar)
@@ -196,6 +196,7 @@ type
     ADODtStSelMetPagoExigeCuenta: TIntegerField;
     ADODtStSelMetPagoClaveSAT2016: TStringField;
     adodsMasterDescripcion: TStringField;
+    ActRepCxCEstatusFactPendiente: TAction;
     procedure DataModuleCreate(Sender: TObject);
     procedure actGeneraPreFacturasExecute(Sender: TObject);
     procedure ADODtStPrefacturasCFDINewRecord(DataSet: TDataSet);
@@ -208,6 +209,7 @@ type
     procedure adodsMasterBeforeInsert(DataSet: TDataSet);
     procedure ActTotalesCXCExecute(Sender: TObject);
     procedure DSMasterDataChange(Sender: TObject; Field: TField);
+    procedure ActRepCxCEstatusFactPendienteExecute(Sender: TObject);
 
   private
     FFacturando: boolean;
@@ -241,10 +243,64 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses CuentasXCobrarForm, FacturasDM, _ConectionDmod, ConceptoOpcionCEdt, MetodoPagoFacturaEdt;
+uses CuentasXCobrarForm, FacturasDM, _ConectionDmod, ConceptoOpcionCEdt, MetodoPagoFacturaEdt,
+  PDFReporteEstatusCXC;
 
 
 {$R *.dfm}
+
+procedure TdmCuentasXCobrar.ActRepCxCEstatusFactPendienteExecute(
+  Sender: TObject);
+var
+  DMListaCXCPendFactPDF:TDMListaCXCPendFactPDF;
+  ArchiPDF:TFileName;
+  Texto:String;//,TxtSQL:String;
+  FechaIni, FechaFin:TDAteTime;
+begin        //Jul 11/17
+  inherited;
+//  FechaIni:=  TfrmrptantiguedadSaldos(gGridForm).AFecIni;
+//  FechaFin:=  TfrmrptantiguedadSaldos(gGridForm).AFecFin;
+  //Ajustado para que no cambie l consulta
+
+  TExto:= '_' +FormatDateTime('ddmmmyyyy', _DmConection.LaFechaActual);//Date); Jun 30/17
+  ArchiPDF:='ListaCXCPendFacturas'+Texto+'.PDF';
+  DMListaCXCPendFactPDF:= TDMListaCXCPendFactPDF.Create(Self);
+  try
+ //    DMListaCXCPendFactPDF.ADODtStCtaActCliente.Close;
+  //   TAdoDAtaset(dmAntiguedadSaldosPDF.ADODtStCtaActCliente).CommandText:=  TxtSQL;
+   // if pos(':FIni',TxtSQL)>0 then
+    begin                                                                                        //Jul 11/17
+  //    TADoDAtaset(dmAntiguedadSaldosPDF.ADODtStCtaActCliente).Parameters.ParamByName('IdPersona').Value:=adodsMasterIdPersona.AsInteger; //DEl que tenga actualmente  siempre usa fechas
+//      TADoDAtaset(dmAntiguedadSaldosPDF.ADODtStCtaActCliente).Parameters.ParamByName('Fini').Value:= FechaIni;
+//      TADoDAtaset(dmAntiguedadSaldosPDF.ADODtStCtaActCliente).Parameters.ParamByName('FFin').Value:= FechaFin;
+   //   TExto:= ' DEL ' + DAteToSTR(FEchaIni) + ' AL '+ DAteToSTR(FEchaFin);//+FormatDateTime('mmm-dd-yyyy',FechaIni)+ ' AL: '+FormatDateTime('dd mmm del aaaa',FechaFin);
+    end;
+ //   else             //
+   // TExto:=  'AL '+upperCASE(FormatDateTime('dd ''de'' mmmm ''del'' yyyy',_DmConection.LaFechaActual));//Date)); Jul 11/17 para que muestre todo lo adeudado
+
+   // DMListaCXCPendFactPDF.ADODtStCtaActCliente.Open;
+
+
+
+    DMListaCXCPendFactPDF.adodsReport.Open;
+
+    DMListaCXCPendFactPDF.ppReport.ShowPrintDialog:= False;
+    DMListaCXCPendFactPDF.ppReport.ShowCancelDialog:= False;
+
+    DMListaCXCPendFactPDF.ppReport.PrinterSetup.DocumentName:=  'LISTADO DE CXC CON FACTURAS PENDIENTES '+#13 +Texto;
+
+    DMListaCXCPendFactPDF.ppReport.DeviceType:= 'PDF';
+    DMListaCXCPendFactPDF.ppReport.TextFileName:= ArchiPDF;
+   // dmAntiguedadSaldosPDF.ppLblTitulo2.caption:= 'ANTIGUEDAD DE SALDOS COBRADOS POR CLIENTE '+#13 +Texto;
+    DMListaCXCPendFactPDF.ppReport.print;
+
+     DMListaCXCPendFactPDF.adodsReport.Close;
+  finally
+    DMListaCXCPendFactPDF.Free;
+  end;
+  if FileExists(ArchiPDF) then
+      ShellExecute(application.Handle, 'open', PChar(ArchiPDF), nil, nil, SW_SHOWNORMAL);
+end;
 
 procedure TdmCuentasXCobrar.ActActualizaMoratoriosExecute(Sender: TObject);
 begin
@@ -700,6 +756,7 @@ begin
   TFrmConCuentasXCobrar(gGridForm).ActGenerarCXCs:=ActGeneraCuentasXCobrar;//Feb 15/17
   TFrmConCuentasXCobrar(gGridForm).ActTotalesCXC:=ActTotalesCXC;//abr  17/17
   TFrmConCuentasXCobrar(gGridForm).DSAuxiliar.DataSet:=ADOQryAuxiliar; //Abr 11/17
+  TFrmConCuentasXCobrar(gGridForm).ActListaCXCPendFact:=ActRepCxCEstatusFactPendiente; //Ago 3/17
 end;
 
 procedure TdmCuentasXCobrar.DSMasterDataChange(Sender: TObject; Field: TField);

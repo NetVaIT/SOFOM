@@ -80,6 +80,7 @@ type
     tvMasterContrato: TcxGridDBColumn;
     ChckBxOpcionCompra: TCheckBox;
     tvMasterDescripcion: TcxGridDBColumn;
+    dxBrBtnEstatus: TdxBarButton;
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
     procedure FormCreate(Sender: TObject);
     procedure SpdBtnBuscarClick(Sender: TObject);
@@ -98,7 +99,8 @@ type
     ffiltroFecha: String;
     ffiltro: String;
     FActTotalesCXC: TBasicAction;
-    FTotalConMora: Double;   //Jul 10/17
+    FTotalConMora: Double;
+    FActCXCPendFact: TBasicAction;   //Jul 10/17
     procedure SetActGeneraPrefactura(const Value: TBasicAction);
     procedure SetActActualizaMoratorios(const Value: TBasicAction);
     procedure SetActGeneraCXC(const Value: TBasicAction);
@@ -106,7 +108,8 @@ type
     procedure PoneFiltro;
     function VerificaCreacionHoy(tipo: Integer): TdxbarItemvisible;
     procedure SetActTotalesCXC(const Value: TBasicAction);
-    function GetFTotalConMora: Double;//Mar 9/17
+    function GetFTotalConMora: Double;
+    procedure SetActCXCPendFact(const Value: TBasicAction);//Mar 9/17
 
     { Private declarations }
   public
@@ -122,6 +125,8 @@ type
     property FiltroCon:String read ffiltro write ffiltro;
 
     Property TotalConMora  :Double read GetFTotalConMora write FTotalConMora ;  //Jul 10/17
+
+     property ActListaCXCPendFact : TBasicAction read FActCXCPendFact write SetActCXCPendFact;  //Feb 14/17
   end;
 
 var
@@ -313,6 +318,14 @@ begin
   FActActualizaMoratorios := Value;
   dxBrBtnMoratorios.Action:=VAlue;
   dxBrBtnMoratorios.ImageIndex:=18;
+end;
+
+procedure TFrmConCuentasXCobrar.SetActCXCPendFact(const Value: TBasicAction);
+begin
+  FActCXCPendFact := Value;
+  dxBrBtnEstatus.Action:=VAlue;
+  dxBrBtnEstatus.ImageIndex:=20;
+
 end;
 
 procedure TFrmConCuentasXCobrar.SetActGeneraCXC(const Value: TBasicAction);

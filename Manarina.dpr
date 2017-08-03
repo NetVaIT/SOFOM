@@ -233,7 +233,8 @@ uses
   PLDAlertasDM in 'Procesos\PLDAlertasDM.pas' {dmPLDAlertas: TDataModule},
   PLDAlertasForm in 'Procesos\PLDAlertasForm.pas' {frmPLDAlertas},
   PLDAlertasEdit in 'Procesos\PLDAlertasEdit.pas' {frmPLDAlertasEdit},
-  PLDAlertasFiltroForm in 'Procesos\PLDAlertasFiltroForm.pas' {frmPLDAlertasFiltro};
+  PLDAlertasFiltroForm in 'Procesos\PLDAlertasFiltroForm.pas' {frmPLDAlertasFiltro},
+  PDFReporteEstatusCXC in 'Reportes\PDFReporteEstatusCXC.pas' {DMListaCXCPendFactPDF: TDataModule};
 
 {$R *.res}
 
@@ -247,5 +248,6 @@ begin
   Application.CreateForm(T_frmProgress, _frmProgress);
   Application.CreateForm(T_dmReportSOFOM, _dmReportSOFOM);
   Application.CreateForm(TdmConfiguracion, dmConfiguracion);
+  Application.CreateForm(TDMListaCXCPendFactPDF, DMListaCXCPendFactPDF);
   Application.Run;
 end.

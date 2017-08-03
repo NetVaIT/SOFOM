@@ -467,6 +467,7 @@ type
     ppDBText106: TppDBText;
     ppLine9: TppLine;
     ppDBText107: TppDBText;
+    ppDBCalc15: TppDBCalc;
     procedure CuotasReportCalcFields(DataSet: TDataSet);
   private
     { Private declarations }
