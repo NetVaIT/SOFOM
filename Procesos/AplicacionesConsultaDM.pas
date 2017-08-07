@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, _StandarDMod, System.Actions, Vcl.ActnList,
-  Data.DB, Data.Win.ADODB, dialogs, math;
+  Data.DB, Data.Win.ADODB, dialogs, math, SHELLAPI,Forms,  winapi.windows;
 
 type
   TdmAplicacionesConsulta = class(T_dmStandar)
@@ -44,9 +44,13 @@ type
     adodsMasterSerieFactura: TStringField;
     adodsMasterFolioFactura: TLargeintField;
     adodsMasterDescripcion: TStringField;
+    ActRepAplicacionesPagos: TAction;
+    adodsMasterSaldoCXC: TFMTBCDField;
+    adodsMasterTotalFactura: TFMTBCDField;
     procedure DataModuleCreate(Sender: TObject);
     procedure ActAplicaMoratorioIntenoExecute(Sender: TObject);
     procedure ActCreaPagoDepositoExecute(Sender: TObject);
+    procedure ActRepAplicacionesPagosExecute(Sender: TObject);
   private
     function AplicarMoratorioInterno(idCXC: integer;
       ImporteAplicado: Double): Double;
@@ -66,7 +70,8 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses AplicacionesConsultaGrid, AplicacionesInternasCon;
+uses AplicacionesConsultaGrid, AplicacionesInternasCon, _ConectionDmod,
+  PDFAplicacionSaldosDM;
 
 
 {$R *.dfm}
@@ -81,6 +86,8 @@ begin
   gGridForm.DataSet:= adodsMaster;
 
   TfrmConaplicaciones(gGridForm).ActAplicaMoraInterno:=ActAplicaMoratorioInteno; //Abr 17/17
+  TfrmConaplicaciones(gGridForm).ActRepApliacionesPDF:=ActRepAplicacionesPagos; //Ago 7/17
+
 
   gFormDeatil1:=TfrmConAplicacionesInternas.Create(self);
   gFormDeatil1.DataSet:=ADODtstAplicacionesInternas;
@@ -123,6 +130,47 @@ begin//Sólo para probar creacion de los no creados en aplicacion Jun 21/17
     if CrearPagoXDeposito(ADODtstAplicacionesInternas.FieldByName('IMPORTEPAGADO').AsFloat,AdoDsMaster) then
       ShowMessage('Se creó pago correspondiente al Depósito en Garantía. Auxiliar');
   end;
+end;
+
+procedure TdmAplicacionesConsulta.ActRepAplicacionesPagosExecute(
+  Sender: TObject);
+var                   //AGO 7/17
+  DmRptAplicacionPagospdf:TDmRptAplicacionPagospdf;
+  ArchiPDF:TFileName;
+  Texto,TxtSQL:String;
+  FechaIni, FechaFin:TDAteTime;
+//  Monto, Total,ValMax,ValMin:Double;
+//  Cantidad:integer;
+begin
+  inherited;
+  TxtSQL:= AdoDSMaster.CommandText;
+
+  FechaIni:=  TfrmConaplicaciones(gGridForm).AFecIni;
+  FechaFin:=  TfrmConaplicaciones(gGridForm).AFecFin;
+  TExto:= '_' +FormatDateTime('ddmmmyyyy',_DmConection.LaFechaActual);// jun30 /17  Date);
+  ArchiPDF:='AplicacionesPagos'+Texto+'.PDF';
+  DmRptAplicacionPagospdf:= TDmRptAplicacionPagospdf.Create(Self);
+  try
+     DmRptAplicacionPagospdf.dsReport.DataSet.Close;
+     TAdoDAtaset(DmRptAplicacionPagospdf.dsReport.DataSet).CommandText:=  TxtSQL;
+    if pos(':Fini',TxtSQL)>0 then
+    begin
+      TADoDAtaset(DmRptAplicacionPagospdf.dsReport.DataSet).Parameters.ParamByName('Fini').Value:= FechaIni;
+      TADoDAtaset(DmRptAplicacionPagospdf.dsReport.DataSet).Parameters.ParamByName('FFin').Value:= FechaFin+1;
+      TExto:= ' DEL ' + DAteToSTR(FEchaIni) + ' AL '+ DAteToSTR(FEchaFin);//+FormatDateTime('mmm-dd-yyyy',FechaIni)+ ' AL: '+FormatDateTime('dd mmm del aaaa',FechaFin);
+    end
+    else
+      TExto:=  'AL '+upperCASE(FormatDateTime('dd ''de'' mmmm ''del'' yyyy',_DmConection.LaFechaActual));//Date)); //Jun 30/17
+
+    DmRptAplicacionPagospdf.dsReport.DataSet.Open;
+    DmRptAplicacionPagospdf.Title:= 'REPORTE DE APLICACIONES DE PAGOS ' +#13+Texto;
+    DmRptAplicacionPagospdf.PDFFileName:= ArchiPDF;
+    DmRptAplicacionPagospdf.Execute
+  finally
+    DmRptAplicacionPagospdf.Free;
+  end;
+    if FileExists(ArchiPDF) then
+      ShellExecute(application.Handle, 'open', PChar(ArchiPDF), nil, nil, SW_SHOWNORMAL);
 end;
 
 function TdmAplicacionesConsulta.NoExistePagoXDeposito (IdPagoAplicaInt, idanexo :integer):boolean;

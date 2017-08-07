@@ -42,11 +42,13 @@ type
     adodsMasterSaldoTBD: TFMTBCDField;
     adodsMasterSaldoAmortizaciones: TFMTBCDField;
     ActPDFAmortizaYPago: TAction;
+    ActAmorYPago2: TAction;
     procedure adodsMasterCalcFields(DataSet: TDataSet);
     procedure DataModuleCreate(Sender: TObject);
     procedure ActPDFCarteraExecute(Sender: TObject);
     procedure ActPDFHojaControlExecute(Sender: TObject);
     procedure ActPDFAmortizaYPagoExecute(Sender: TObject);
+    procedure ActAmorYPago2Execute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -64,11 +66,77 @@ uses rptReporteCarteraForm, PDFReporteCarteraDM, _ConectionDmod;
 
 {$R *.dfm}
 
+procedure TdmrptReporteCartera.ActAmorYPago2Execute(Sender: TObject);
+var                                                //Jul 19/17
+  dmReporteCarteraPDF:TDmReporteCarteraPDF;
+  ArchiPDF:TFileName;
+  Texto:String;// TxtSQL, GrupoSQL,, Fecha
+ // FechaIni, FechaFin:TDAteTime;
+begin
+  inherited;
+ //if  TFrmReporteCarteraGrid(gGridForm).AEsIndividual then
+
+  //  TxtSQL:=' IdAnexo = ' + intTostr(TFrmReporteCarteraGrid(gGridForm).AIdAnexoAct);
+
+//  else
+//    TxtSql:='';
+
+  TExto:= '_' +FormatDateTime('ddmmmyyyy',_DmConection.LaFechaActual);//Date); //Jun 30/17
+  ArchiPDF:='AmortizacionesYPagos2'+Texto+'.PDF';
+  dmReporteCarteraPDF:= TdmReporteCarteraPDF.Create(Self);
+  try
+  dmReporteCarteraPDF.ADODtStAnexoCliente.Close;
+  dmReporteCarteraPDF.ADODtStAnexoCliente.Parameters.ParamByName('IDAnexo').Value:= TFrmReporteCarteraGrid(gGridForm).AIdAnexoAct;
+  dmReporteCarteraPDF.ADODtStAnexoCliente.open;
+
+ (*   dmReporteCarteraPDF.ADODtStRepHojaControlCte.Open;
+    if TxtSql<>'' then    //May 22/17
+    begin
+      dmReporteCarteraPDF.ADODtStRepHojaControlCte.Filter:= TxtSql;
+      dmReporteCarteraPDF.ADODtStRepHojaControlCte.Filtered:=True;
+    end
+    else
+      dmReporteCarteraPDF.ADODtStRepHojaControlCte.Filtered:=False;  *)
+
+    dmReporteCarteraPDF.ADODtStAmortiza.Close;
+    dmReporteCarteraPDF.ADODtStAmortiza.Parameters.ParamByName('IDAnexo1').Value:=TFrmReporteCarteraGrid(gGridForm).AIdAnexoAct;
+   // dmReporteCarteraPDF.ADODtStAmortiza.Parameters.ParamByName('IDAnexo2').Value:=TFrmReporteCarteraGrid(gGridForm).AIdAnexoAct;
+    dmReporteCarteraPDF.ADODtStAmortiza.OPen;
+    dmReporteCarteraPDF.ADODtStAmortiza2.Close;
+    dmReporteCarteraPDF.ADODtStAmortiza2.Parameters.ParamByName('IDAnexo1').Value:=TFrmReporteCarteraGrid(gGridForm).AIdAnexoAct;
+    dmReporteCarteraPDF.ADODtStAmortiza2.Parameters.ParamByName('IDAnexo2').Value:=TFrmReporteCarteraGrid(gGridForm).AIdAnexoAct;
+    dmReporteCarteraPDF.ADODtStAmortiza2.OPen;
+
+    dmReporteCarteraPDF.ADODtStProd2.Close;
+    dmReporteCarteraPDF.adodtstProd2.Parameters.ParamByName('IdAnexo').Value:= TFrmReporteCarteraGrid(gGridForm).AIdAnexoAct;
+    dmReporteCarteraPDF.adodtstProd2.open;
+
+    dmReporteCarteraPDF.ADODtStPago2.Open;
+
+    dmReporteCarteraPDF.ppRprtAmoryPagos2.ShowPrintDialog:= False;
+    dmReporteCarteraPDF.ppRprtAmoryPagos2.ShowCancelDialog:= False;
+    dmReporteCarteraPDF.ppRprtAmoryPagos2.PrinterSetup.DocumentName:=  'AMORTIZACIONES Y PAGOS 2'+#13 +Texto;
+
+    dmReporteCarteraPDF.ppRprtAmoryPagos2.DeviceType:= 'PDF';
+    dmReporteCarteraPDF.ppRprtAmoryPagos2.TextFileName:= ArchiPDF;
+
+    dmReporteCarteraPDF.ppRprtAmoryPagos2.print;
+
+    // dmReporteCarteraPDF.ADODtStRepHojaControlCte.Close;
+  finally
+    dmReporteCarteraPDF.Free;
+  end;
+  if FileExists(ArchiPDF) then
+      ShellExecute(application.Handle, 'open', PChar(ArchiPDF), nil, nil, SW_SHOWNORMAL);
+
+
+end;
+
 procedure TdmrptReporteCartera.ActPDFAmortizaYPagoExecute(Sender: TObject);
 var                                                //Jul 19/17
   dmReporteCarteraPDF:TDmReporteCarteraPDF;
   ArchiPDF:TFileName;
-  Texto,TxtSQL, GrupoSQL, Fecha:String;
+  Texto ,TxtSQL:String; //   , GrupoSQL, Fecha
   FechaIni, FechaFin:TDAteTime;
 begin
   inherited;
@@ -122,7 +190,7 @@ var
   dmReporteCarteraPDF:TDmReporteCarteraPDF;
   ArchiPDF:TFileName;
   Texto,TxtSQL, GrupoSQL, Fecha:String;
-  FechaIni, FechaFin:TDAteTime;
+ // FechaIni, FechaFin:TDAteTime;
   Monto, Total,ValMax,ValMin:Double;    //jun 1/17
   Cantidad:integer;  //jun 1/17
 begin
@@ -200,8 +268,8 @@ procedure TdmrptReporteCartera.ActPDFHojaControlExecute(Sender: TObject);
 var
   dmReporteCarteraPDF:TDmReporteCarteraPDF;
   ArchiPDF:TFileName;
-  Texto,TxtSQL, GrupoSQL, Fecha:String;
-  FechaIni, FechaFin:TDAteTime;
+  Texto,TxtSQL:String;       //   , GrupoSQL, Fecha
+ // FechaIni, FechaFin:TDAteTime;
 begin
   inherited;
 (*  TxtSQL:= 'SElect Cliente,sum("Saldo")  as SaldoTotal,  Sum ("Saldo Total Vencido")as TotalVencido, Sum (vigentes)as TotalVigentes, SUM ("vencidos a 30 días") as Total30Dias,'
@@ -285,6 +353,7 @@ begin
   TFrmReporteCarteraGrid(gGridForm).ActPDFReporteCartera:=ActPDFCartera;
   TFrmReporteCarteraGrid(gGridForm).ActPDFHojaControlGral:=ActPDFHojaControl;
   TFrmReporteCarteraGrid(gGridForm).ActPDFHojaAmorYpago:=ActPDFAmortizayPago;
+  TFrmReporteCarteraGrid(gGridForm).ActPDFNuevoAmoryPago2:=ActAmorYPago2;
 end;
 
 end.

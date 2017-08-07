@@ -8,12 +8,13 @@ inherited dmAplicacionesConsulta: TdmAplicacionesConsulta
       'r,'#13#10' CC.FechaVencimiento as FechaCXC ,P.RazonSocial as Cliente,C' +
       'C.IDAnexo,A.DEscripcion Anexo,'#13#10'PA.IdPagoAplicacion, Pa.IdPago, ' +
       'PA.IdPersonaCliente,'#13#10'A.IdContrato, P.idMetodoPago , CC.IdCFDI, ' +
-      #13#10'Ci.Serie SerieFactura, Ci.Folio FolioFactura -- jul 11/17'#13#10',CC' +
-      '.Descripcion '#13#10'from PagosAplicaciones PA'#13#10'inner join Pagos PR on' +
-      ' PA.IdPago=PR.IdPago'#13#10'inner join CuentasXCobrar CC on PA.IdCuent' +
-      'aXCobrar =Cc.IdcuentaXCobrar'#13#10'inner join CFDI Ci on Ci.IdCFDI =C' +
-      'C.IdCFDI -- jul 11/17'#13#10' inner join Anexos A on A.IdAnexo=cc.IdAn' +
-      'exo '#13#10'inner join Personas P on P.IdPersona =Cc.IdPersona'
+      'cc.Saldo SaldoCXC,'#13#10'Ci.Serie SerieFactura, Ci.Folio FolioFactura' +
+      ', Ci.Total TotalFactura -- jul 11/17'#13#10',CC.Descripcion '#13#10'from Pag' +
+      'osAplicaciones PA'#13#10'inner join Pagos PR on PA.IdPago=PR.IdPago'#13#10'i' +
+      'nner join CuentasXCobrar CC on PA.IdCuentaXCobrar =Cc.IdcuentaXC' +
+      'obrar'#13#10'inner join CFDI Ci on Ci.IdCFDI =CC.IdCFDI -- jul 11/17'#13#10 +
+      ' inner join Anexos A on A.IdAnexo=cc.IdAnexo '#13#10'inner join Person' +
+      'as P on P.IdPersona =Cc.IdPersona'
     object adodsMasterCliente: TStringField
       FieldName = 'Cliente'
       Size = 300
@@ -86,6 +87,16 @@ inherited dmAplicacionesConsulta: TdmAplicacionesConsulta
       FieldName = 'Descripcion'
       Size = 100
     end
+    object adodsMasterSaldoCXC: TFMTBCDField
+      FieldName = 'SaldoCXC'
+      Precision = 18
+      Size = 6
+    end
+    object adodsMasterTotalFactura: TFMTBCDField
+      FieldName = 'TotalFactura'
+      Precision = 18
+      Size = 6
+    end
   end
   inherited adodsUpdate: TADODataSet
     Left = 328
@@ -98,6 +109,11 @@ inherited dmAplicacionesConsulta: TdmAplicacionesConsulta
     object ActCreaPagoDeposito: TAction
       Caption = 'Crea Pago Dep'#243'sito'
       OnExecute = ActCreaPagoDepositoExecute
+    end
+    object ActRepAplicacionesPagos: TAction
+      Caption = 'Reporte de Aplicaci'#243'n de Pagos'
+      Hint = 'Reporte de Aplicaci'#243'n de Pagos'
+      OnExecute = ActRepAplicacionesPagosExecute
     end
   end
   object ADOQryAuxiliar: TADOQuery

@@ -250,6 +250,16 @@ inherited dmFacturas: TdmFacturas
       Precision = 18
       Size = 6
     end
+    object adodsMasterRFCEmisor: TStringField
+      FieldKind = fkLookup
+      FieldName = 'RFCEmisor'
+      LookupDataSet = ADODtStPersonaEmisor
+      LookupKeyFields = 'idpersona'
+      LookupResultField = 'RFC'
+      KeyFields = 'IdPersonaEmisor'
+      Size = 13
+      Lookup = True
+    end
   end
   inherited adodsUpdate: TADODataSet
     Left = 344

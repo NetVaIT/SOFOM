@@ -198,6 +198,7 @@ type
     adodsMasterIdCuentaXCobrar: TIntegerField;
     adodsMasterSaldoFactoraje: TFMTBCDField;
     ActCancelarCFDI: TAction;
+    adodsMasterRFCEmisor: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actProcesaFacturaExecute(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
@@ -231,7 +232,9 @@ type
     procedure ReadFile(FileName: TFileName);
     function CrearArchivos_TimbrePrueba(var Ruta: String;
       var TimbradoCFDI: TTimbreCFDI; Adicional: String): Boolean;
-    procedure RefreshCFDI; //Regresado
+    procedure RefreshCFDI;
+    procedure DesAsociarCFDIdeCXC(Idcfdi: Integer);
+    procedure RegistraBitacora(tipoRegistro: Integer; Observacion: String); //Regresado
   public
     { Public declarations }
      EsProduccion:Boolean;
@@ -249,25 +252,198 @@ implementation
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
 uses FacturasForm, ConceptosFacturaForm, DocComprobanteFiscal, FacturaTipos,
-  XMLtoPDFDmod, _Utils;
+  XMLtoPDFDmod, _Utils, _ConectionDmod;
 
 {$R *.dfm}
 
 procedure TdmFacturas.ActCancelarCFDIExecute(Sender: TObject);
-var
-  f:String;
-begin
+var               //Solo se permite si es el ultimo movimiento...    //AGo 3/17
+  txt:String;
+
+  Certificado: TFECertificado;
+  FileCertificado, FileKey : TFileName;
+  Clave, RutaBase, carpeta, Respuesta, ArchivoSal,dato, motivo : String;
+  Anio,dia,mes:Word;
+  F:TextFile;
+begin          //Agregado Ago 3/17
   inherited;
+  //Verificar que sea el  CFDI  de la ultima amortización.., si es un moratorio requiere que ya se haya desaplicado(proceso aun no realizado).. y dejar las
+  // amortizaciones moratorios habilitadas nuevamente
+
 //Cancelar CFDI
-
-  f:='Serie: '+adodsMasterserie.asstring+' Folio:'+adodsMasterFolio.AsString;
-  if (Application.MessageBox(pChar('Esta seguro de cancelar el CFDI con '+f +' ?'),'Confirmación',MB_YESNO)=IDYES) then
+  dato:= '¿Está seguro CANCELAR el documento con Folio:'
+           +adodsMaster.fieldbyname('Folio').ASString+' Serie: '
+           +adodsMaster.fieldbyname('Serie').ASString +'?';
+      //Borrar luego
+      motivo:= ' ';
+  if (Application.MessageBox(pChar(dato),'Confirmación',MB_YESNO)=IDYES) and(inputQuery('Motivo Cancelación','Motivo cancelacion',motivo)) then
   begin
-    //REgistrar en Bitacora... VErificar que tipo de Factura es.. y que impplica cancelar...
+    adodsArchivosCerKey.Close;
+
+    adodsArchivosCerKey.Parameters.ParamByName('IdPersona').Value := adodsMaster.FieldByName('IdPersonaEmisor').asInteger;
+    adodsArchivosCerKey.Open;
+
+    DecodeDate(Now, Anio, Mes, Dia);
+
+    //Poner Proceso para Cancelar
+    FileCertificado := ExtractFilePath(application.ExeName)+ adodsArchivosCerKeyNomCert.AsString;
+    FileKey := ExtractFilePath(application.ExeName)+  adodsArchivosCerKeyNomKey.AsString;  //  TPath.GetTempPath +
+    ReadFileCERKEY(FileCertificado,FileKey);
+
+    Clave := adodsArchivosCerKeyClave.AsString;
+    Certificado.RFCAlQuePertenece:= adodsMasterRFCEmisor.AsString;
+    Certificado.Ruta := FileCertificado;
+    Certificado.LlavePrivada.Ruta := FileKey;
+    Certificado.LlavePrivada.Clave := Clave;
+
+    RutaBase:=ExtractFilePath(application.ExeName);
+    Carpeta := RutaBase+'Canceladas\';
+    ArchivoSal:= UpperCase(System.SysUtils.FormatSettings.ShortMonthNames[MonthOfTheYear(Now)]) +
+                IntToStr(Anio) +'_'+adodsmasterserie.AsString +adodsMasterFolio.asstring+'.txt' ;
 
 
+    Esproduccion:=FileExists(RutaBase+'EnProduccion.txt'); //Temporal Dic 8/15
+    // := RutaBase + ADODtStPersonaEmisorRFC.AsString + SubCarpeta;
+    if not DirectoryExists (Carpeta) then
+       ForceDirectories(Carpeta);
+    if DirectoryExists (Carpeta) then
+    begin
+      if cancelarCFDI(adodsMasterUUID_TB.Value,carpeta+ArchivoSal,Certificado,Respuesta,Esproduccion) then
+      begin
+        dato:=Respuesta;
+
+        Assignfile(F,carpeta+ArchivoSal);
+        reset(F);
+        readln(F,Respuesta);
+        CloseFile(F);
+        if pos('previamente',Respuesta)>0 then
+        begin
+          adodsMaster.Edit;
+          adodsMasterFechaCancelacion.AsDateTime:=Now;
+          adodsMasterIdCFDIEstatus.AsInteger:=3;
+          if adodsMasterIdCuentaXCobrar.IsNull then //Ajuste Ago 3/17par aque guarde la asociacion quese va a quitar
+            adodsMasterObservaciones.asString:= adodsMasterObservaciones.asString+' Previo '+ motivo+' '+ respuesta+' Sin IdCXC'
+          else
+            adodsMasterObservaciones.asString:= adodsMasterObservaciones.asString+' '+ motivo+' '+ respuesta+' IdCXCPrevia:'+adodsMasterIdCuentaXCobrar.AsString;
+
+         // adodsMasterObservaciones.asString:= adodsMasterObservaciones.asString+' Previo '+ motivo+' '+ respuesta;
+          adodsMaster.Post;
+           //Actualiza Inventario y demás   //Mar 7/16
+          if (adodsMasterIdCFDITipoDocumento.AsInteger=1)  then //abr 15/16 Solo Factura o Notas Ventas (No Notas Credito ni Cargo)
+            DesAsociarCFDIdeCXC(adodsMasterIdCFDI.AsInteger); //VErificar si se  quita la relacion de la CXC y se le cambi ael estatus a -1 (Pendiente (sin prefactura)  RevertirInventario(adodsMasterIdOrdenSalida.value,adodsMasterIdCFDI.value); //Mar 10/16     //Cancelado Antes   FActuras (No entra si es REmision)
+
+
+          //Actualiza datos   //Verificar que no sea tipo2 (nota Credito)  Abr 28/16                    NCArgo
+          if  (adodsMasterIdCFDITipoDocumento.AsInteger=1) or (adodsMasterIdCFDITipoDocumento.AsInteger=3) then //Dic 29/16
+          // verificar que más se deshace..
+             ActualizaSaldoCliente(adodsMasterIdCFDI.value,adodsMasterIdPersonaReceptor.Value,adodsMasterIdClienteDomicilio.value, adodsMasterTotal.Value,'- ');//Mar 7/16
+          //Actualizar Saldo Cliente //No debio actualizar antes
+
+          ShowMessage('El comprobante ya habia sido cancelado anteriormente');
+        end
+        else                                      //Ajuste por si acaso cambio Abr 18/16
+           if pos('UUID CANCELADO CORRECTAMENTE' ,UpperCase(Respuesta))>0 then
+           begin
+             adodsMaster.Edit;
+             adodsMasterFechaCancelacion.AsDateTime:=Now;
+             adodsMasterIdCFDIEstatus.AsInteger:=3;
+             if adodsMasterIdCuentaXCobrar.IsNull then //Ajuste Ago 3/17par aque guarde la asociacion quese va a quitar
+                adodsMasterObservaciones.asString:= adodsMasterObservaciones.asString+' '+ motivo+' '+ respuesta+' Sin IdCXC'
+             else
+               adodsMasterObservaciones.asString:= adodsMasterObservaciones.asString+' '+ motivo+' '+ respuesta+' IdCXCPrevia:'+adodsMasterIdCuentaXCobrar.AsString;
+             adodsMaster.Post;
+
+               //Actualiza Inventario y demás   //Mar 7/16
+             if (adodsMasterIdCFDITipoDocumento.AsInteger=1) then
+                DesAsociarCFDIdeCXC(adodsMasterIdCFDI.AsInteger); //VErificar si se  quita la relacion de la CXC y se le cambi ael estatus a -1 (Pendiente (sin prefactura) RevertirInventario(adodsMasterIdOrdenSalida.value,adodsMasterIdCFDI.value); //Mar 10/16   Normal cancelacion
+              //Actualizar Saldo Cliente
+            if (adodsMasterIdCFDITipoDocumento.AsInteger=1) or (adodsMasterIdCFDITipoDocumento.AsInteger=3) then //CancelandoCFDI   Canceladop anterior //Dic 2916
+             ActualizaSaldoCliente(adodsMasterIdCFDI.value,adodsMasterIdPersonaReceptor.Value,adodsMasterIdClienteDomicilio.value, adodsMasterTotal.Value,'- ');//Mar 7/16
+
+             ShowMessage(adodsMasterUUID_TB.Value + #13+'Documento cancelado en SAT. Recuerde que debe descargar del SAT, los acuses de cancelación');
+
+           end
+           else                                                                                    //Antes lo mandaba en la respuesta  ago 19/16
+             if (not EsProduccion) and ((pos('205 - El',respuesta)>0) or (pos('74305F11-FFFF-FFFF-FFFF-BD200698C5EA', adodsMasterUUID_TB.Value)>0)) then
+             begin  //Pruebas..
+               adodsMaster.Edit;
+               adodsMasterFechaCancelacion.AsDateTime:=Now;
+               adodsMasterIdCFDIEstatus.AsInteger:=3;
+             if adodsMasterIdCuentaXCobrar.IsNull then //Ajuste Ago 3/17par aque guarde la asociacion quese va a quitar
+                adodsMasterObservaciones.asString:= adodsMasterObservaciones.asString+' '+ motivo+' '+ respuesta+' Sin IdCXC'
+             else
+               adodsMasterObservaciones.asString:= adodsMasterObservaciones.asString+' '+ motivo+' '+ respuesta+' IdCXCPrevia:'+adodsMasterIdCuentaXCobrar.AsString;
+               adodsMaster.Post;
+                 //Actualiza Inventario y demás   //Mar 7/16
+               if (adodsMasterIdCFDITipoDocumento.AsInteger=1)  then
+                 DesAsociarCFDIdeCXC(adodsMasterIdCFDI.AsInteger); //VErificar si se  quita la relacion de la CXC y se le cambi ael estatus a -1 (Pendiente (sin prefactura)    RevertirInventario(adodsMasterIdOrdenSalida.value,adodsMasterIdCFDI.value); //Mar 10/16    PruebaCancelacion
+              //Ajuste
+              if (adodsMasterIdCFDITipoDocumento.AsInteger=1) or (adodsMasterIdCFDITipoDocumento.AsInteger=3) then //CancelandoCFDI   Pruebas //Dic 2916
+                 ActualizaSaldoCliente(adodsMasterIdCFDI.value,adodsMasterIdPersonaReceptor.Value,adodsMasterIdClienteDomicilio.value, adodsMasterTotal.Value,'- ');//Mar 7/16
+               ShowMessage(adodsMasterUUID_TB.Value + #13+'Prueba de Cancelación ');
+             end
+             else
+               ShowMessage(Respuesta);
+      end
+      else
+        ShowMessage('Ocurrio un error Cancelando el CFDI . Error '+DAto);
+    end; // No existe carpeta. nDS
+  end; //else Cancelada por usuario
+
+end;
+
+Procedure TdmFacturas.DesAsociarCFDIdeCXC (Idcfdi:Integer);
+var
+   Texto:String;
+begin
+  //Guardar en Bitacora
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.Sql.Clear;
+  ADOQryAuxiliar.SQL.Add('SElect CFDI where Idcfdi ='+intTostr(idcfdi));
+  ADOQryAuxiliar.open;
+
+  if not ADOQryAuxiliar.eof and ADOQryAuxiliar.fieldbyname('IdCuentaXCobrar').IsNull then   //Solo debe  haber uno
+    Texto:='CFDI '+intTostr(idcfdi)+' Sin CuentaxCobrar '
+  else
+    Texto:='CFDI '+intTostr(idcfdi)+' IdCXC:'+ ADOQryAuxiliar.fieldbyname('IdCuentaXCobrar').asstring;
+  REgistraBitacora(4,Texto) ;
+
+
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.Sql.Clear;
+  ADOQryAuxiliar.SQL.Add('Update CuentasXCobrar SET IdCFDI= NULL where IdCFDI='+intTostr(idcfdi));
+  ADOQryAuxiliar.ExecSQL;
+
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.Sql.Clear;
+  ADOQryAuxiliar.SQL.Add('Update CFDI SET IdCuentaXCobrar= NULL where IdCFDI='+intTostr(idcfdi));
+  ADOQryAuxiliar.ExecSQL;
+
+end;
+
+Procedure TdmFacturas.RegistraBitacora(tipoRegistro:Integer;Observacion:String); //Abr 19/17
+var
+   tipoTxt:String;
+   REsp:Integer;
+begin
+  case TipoRegistro of
+  0:  tipoTxt:='CXC';
+  1:  tipoTxt:='MORA';
+  2:  tipoTxt:='ABOCAP'; //Abr 19/17
+  3:  tipoTxt:='PAGANT'; //Jun 29/17
+  4:  tipoTXT:='CANFAC'; //Ago 3/17
   end;
 
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.SQL.Clear;
+  ADOQryAuxiliar.sql.Add('Insert into BitacoraGeneracion (Tipo, FechaGeneracion, IdUsuario, Observaciones) Values('''+tipotxt+''',:IdFechaHoy1, '  +
+                         intToSTR(_DMConection.idUsuario)+','''+Observacion+''' ) ' );
+  ADOQryAuxiliar.Parameters.ParamByName('IdFechaHoy1').Value:=_DmConection.LaFechaActual;//date; May 26/17
+
+  Resp:=ADOQryAuxiliar.ExecSQL;
+//  if Resp=1 then
+  //  showmessage('Lo creó');
+  AdodsMaster.Refresh;
 end;
 
 procedure TdmFacturas.ActImprimeFacturaExecute(Sender: TObject);

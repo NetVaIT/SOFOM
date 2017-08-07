@@ -172,8 +172,6 @@ inherited FrmReporteCarteraGrid: TFrmReporteCarteraGrid
   end
   inherited pnlDetail3: TPanel
     Width = 1295
-    ExplicitLeft = 16
-    ExplicitTop = 369
     ExplicitWidth = 1295
   end
   inherited pnlDetail2: TPanel
@@ -226,6 +224,10 @@ inherited FrmReporteCarteraGrid: TFrmReporteCarteraGrid
         item
           Visible = True
           ItemName = 'dxBrBtnHojaAmortizaYPago'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBrBtnRepPagos'
         end>
     end
     object dxBrBtnReporteCarteraPDF: TdxBarButton
@@ -255,9 +257,16 @@ inherited FrmReporteCarteraGrid: TFrmReporteCarteraGrid
       Caption = 'Hoja Amortizaciones y Pagos'
       Category = 0
       Hint = 'Hoja Amortizaciones y Pagos'
-      Visible = ivAlways
+      Visible = ivNever
       ImageIndex = 20
       OnClick = dxBrBtnHojaAmortizaYPagoClick
+    end
+    object dxBrBtnRepPagos: TdxBarButton
+      Caption = 'Nuevo Reporte Pagos'
+      Category = 0
+      Hint = 'Nuevo Reporte Pagos'
+      Visible = ivAlways
+      ImageIndex = 20
     end
   end
   inherited cxStyleRepository: TcxStyleRepository
@@ -1149,6 +1158,7 @@ inherited FrmReporteCarteraGrid: TFrmReporteCarteraGrid
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42867.572603240740000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

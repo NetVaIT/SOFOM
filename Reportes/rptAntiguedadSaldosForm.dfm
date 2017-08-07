@@ -4,7 +4,6 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
   ClientHeight = 428
   ClientWidth = 1363
   ExplicitWidth = 1369
-  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -1361,6 +1360,7 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42585.483476608800000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

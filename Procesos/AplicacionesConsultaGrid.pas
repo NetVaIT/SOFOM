@@ -63,18 +63,31 @@ type
     tvMasterSerieFactura: TcxGridDBColumn;
     tvMasterFolioFactura: TcxGridDBColumn;
     tvMasterDescripcion: TcxGridDBColumn;
+    dxBrBtnAplicaPagos: TdxBarButton;
     procedure SpdBtnConsultaClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure RdGrpSeleccionClick(Sender: TObject);
   private
     ffiltroFec: String;
     FAplicaMoraInt: TBasicAction;
+    FAFecIni: TDateTime;
+    FAFecFin: TDateTime;
+    FRepAplicaPDF: TBasicAction;
     procedure SetAplicaMoraInt(const Value: TBasicAction);
+    function GetFAFecFin: TDateTime;
+    function GetFAFecIni: TDateTime;
+    procedure SetRepAplicaPDF(const Value: TBasicAction);
     { Private declarations }
   public
     { Public declarations }
     property filtroFecha:String read ffiltroFec write ffiltroFec; //Ene 5/17
-     property ActAplicaMoraInterno : TBasicAction read FAplicaMoraInt write SetAplicaMoraInt;
+    property ActAplicaMoraInterno : TBasicAction read FAplicaMoraInt write SetAplicaMoraInt;
+
+    property AFecIni :TDateTime read GetFAFecIni write FAFecIni; // Ago 7/17
+    property AFecFin :TDateTime read GetFAFecFin write FAFecFin;  // Ago 7/17
+
+     property ActRepApliacionesPDF : TBasicAction read FRepAplicaPDF write SetRepAplicaPDF;
+
   end;
 
 var
@@ -110,6 +123,18 @@ begin
   SpdBtnConsultaClick(SpdBtnConsulta); //Mar 14/17
 end;
 
+function TfrmConaplicaciones.GetFAFecFin: TDateTime;
+begin              //Ago 7/17
+  FAFecFin:= cxDtEdtFin.Date;  //Se le envia la que se ve Ago 7/17
+  Result := FAFecFin;
+end;
+
+function TfrmConaplicaciones.GetFAFecIni: TDateTime;
+begin  //Ago 7/17
+  FAFecIni:=cxDtEdtInicio.Date;
+  Result := FAFecIni;
+end;
+
 procedure TfrmConaplicaciones.RdGrpSeleccionClick(Sender: TObject);
 begin
   inherited;
@@ -127,6 +152,14 @@ begin
   SpdBtnAplicaMoraInt.Action:=Value;
 end;
 
+procedure TfrmConaplicaciones.SetRepAplicaPDF(const Value: TBasicAction);
+begin
+  FRepAplicaPDF := Value;
+  dxBrBtnAplicaPagos.Action:=VAlue;
+  dxBrBtnAplicaPagos.ImageIndex:=18;
+
+end;
+
 procedure TfrmConaplicaciones.SpdBtnConsultaClick(Sender: TObject);
 
 const
@@ -134,8 +167,8 @@ const
           ' PR.FolioPago, Pr.SeriePago,Cc.IdCuentaXCobrar NoCuentaXCobrar, '+
           ' CC.FechaVencimiento as FechaCXC ,P.RazonSocial as Cliente,CC.IDAnexo,A.DEscripcion Anexo,'+   //FV abr 11/17
           ' PA.IdPagoAplicacion, Pa.IdPago,  PA.IdPersonaCliente, A.IdContrato, P.idMetodoPago, ' +  //  jun 21/17 A.IdContrato, P.idMetodoPago
-          ' CC.IdCFDI, Ci.Serie SerieFactura, Ci.Folio FolioFactura '+   //-- jul 11/17  se quito no tiene dato PA.IdCFDI,
-          ' ,cc.Descripcion '+ //jul 17/17
+          ' CC.IdCFDI, Ci.Serie SerieFactura, Ci.Folio FolioFactura, ci.Total TotalFActura, CC.SAldo SaldoCXC'+   //-- jul 11/17  se quito no tiene dato PA.IdCFDI,
+          ' ,cc.Descripcion '+ //jul 17/17                          //Ago 7/17 total y Saldo CXC
           ' from PagosAplicaciones PA inner join Pagos PR on PA.IdPago=PR.IdPago' +
           ' inner join CuentasXCobrar CC on PA.IdCuentaXCobrar =Cc.IdcuentaXCobrar' +
           ' inner join CFDI Ci on Ci.IdCFDI =CC.IdCFDI ' +  // -- jul 11/17

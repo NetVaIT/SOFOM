@@ -203,5 +203,9 @@ inherited dmrptReporteCartera: TdmrptReporteCartera
       Hint = 'Hoja Amortizaciones y Pagos'
       OnExecute = ActPDFAmortizaYPagoExecute
     end
+    object ActAmorYPago2: TAction
+      Caption = 'Amortizacion y Pagos V2'
+      OnExecute = ActAmorYPago2Execute
+    end
   end
 end

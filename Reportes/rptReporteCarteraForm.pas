@@ -66,6 +66,7 @@ type
     tvMasterSaldoTBD: TcxGridDBColumn;
     tvMasterSaldoAmortizaciones: TcxGridDBColumn;
     dxBrBtnHojaAmortizaYPago: TdxBarButton;
+    dxBrBtnRepPagos: TdxBarButton;
     procedure dxBrBtnHojaControlClienteClick(Sender: TObject);
     procedure dxBrBtnHojaControlTodosClick(Sender: TObject);
     procedure dxBrBtnHojaAmortizaYPagoClick(Sender: TObject);
@@ -75,12 +76,14 @@ type
     FIdAnexoAct: Integer;
     FEsIndividual: Boolean;
     FPDFHojaAmorYPago: TBasicAction;
+    FPDFNvoAmorYPago2: TBasicAction;
 
     procedure SetPDFREporteCartera(const Value: TBasicAction);
     procedure SetPDFHojaControl(const Value: TBasicAction);
     function GetFIdAnexoAct: Integer;
     function GetFEsIndividual: Boolean;
     procedure SetPDFHojaAmorYpago(const Value: TBasicAction);
+    procedure SetPDFNvoAmorYpago2(const Value: TBasicAction);
 
     { Private declarations }
   public
@@ -93,6 +96,8 @@ type
     property AEsIndividual :Boolean read GetFEsIndividual write FEsIndividual;   //May22/17
 
     Property ActPDFHojaAmoryPago: TBasicAction read FPDFHojaAmorYPago write SetPDFHojaAmorYpago;
+    Property ActPDFNuevoAmoryPago2: TBasicAction read FPDFNvoAmorYPago2 write SetPDFNvoAmorYpago2;
+
 
 
   end;
@@ -145,7 +150,7 @@ end;
 
 procedure TFrmReporteCarteraGrid.SetPDFHojaAmorYpago(const Value: TBasicAction);
 begin//Jul 19/17
-  FPDFHojaAmorYPago := Value;
+//DEshabiliotado para que no aparezca por ahora  FPDFHojaAmorYPago := Value;
 //  dxBrBtnHojaAmortizaYPago.Action:=value;     //Posiblementer no
 //  dxBrBtnHojaAmortizaYPago.ImageIndex:=20;
 
@@ -157,6 +162,13 @@ begin
   FPDFHojaControl := Value;
  // dxBrBtnHojaControlTodos.Action:=value;
  // dxBrBtnHojaControlTodos.ImageIndex:=19;
+end;
+
+procedure TFrmReporteCarteraGrid.SetPDFNvoAmorYpago2(const Value: TBasicAction);
+begin                          //Ago 5/17
+  FPDFNvoAmorYPago2 := Value;
+  dxBrBtnRepPagos.Action:=Value;
+  dxBrBtnRepPagos.ImageIndex:=20;
 end;
 
 procedure TFrmReporteCarteraGrid.SetPDFREporteCartera(

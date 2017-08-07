@@ -4,7 +4,6 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
   ClientHeight = 428
   ClientWidth = 1072
   ExplicitWidth = 1078
-  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter

@@ -324,14 +324,15 @@ begin
   { feb 15/17
   //SAca lo pendiente al dia para poder usar las fechas de corte pendientes y generar
   }
+ // si debe ir deshabilitado Ago 4/17
   ADOQryAuxiliar.Close;
   ADOQryAuxiliar.SQL.Clear;
   ADOQryAuxiliar.SQL.Add('SELECT    IdAnexoAmortizacion, IdAnexoCredito, IdAnexoSegmento, Periodo, FechaCorte, FechaVencimiento, '+
                          ' TasaAnual, SaldoInicial, Pago, Capital, CapitalImpuesto, CapitalTotal, Interes, InteresImpuesto,'+
                          ' InteresTotal, ImpactoISR, PagoTotal, SaldoFinal, FechaMoratorio, MoratorioBase, Moratorio,'+
                          ' MoratorioImpuesto FROM  AnexosAmortizaciones AA where FechaCorte <=:FEchaCorte and '+
-                         ' not Exists(Select * from CuentasXCobrar CXC where CXC.IdAnexosAmortizaciones=AA.IdAnexoAmortizacion '+
-                         '            and CXC.Fecha=AA.FechaCorte)'+
+                         ' not Exists(Select * from CuentasXCobrar CXC where CXC.IdAnexosAmortizaciones=AA.IdAnexoAmortizacion) '+
+//                         '       //     and CXC.Fecha=AA.FechaCorte)'+ no debe filtrar poresto
                          ' order by FechaCorte');
 
   ADOQryAuxiliar.Parameters.ParamByName('FechaCorte').value:= FFechaActual;// may 26/17 date;      //Se buscan a al dìa de hoy  (Fecha Tabla)
@@ -342,21 +343,24 @@ begin
 
     FechaAux:= ADOQryAuxiliar.FieldByName('FechaCorte').AsDateTime;
 
-    ADOStrdPrcGeneraCXC.Parameters.ParamByName('@FechaCorte').Value:=FechaAux;
+    ADOStrdPrcGeneraCXC.Parameters.ParamByName('@FechaCorte').Value:=FechaAux;   //FFechaActual
     ADOStrdPrcGeneraCXC.ExecProc;
 
  // deshabilitado ab 11/17   ShowMessage('Ejecutó proceso con fecha '+dateTimeToSTR(FechaAux));
 // verificar con Jesus para que mande algun valor  if ADOStrdPrcGeneraCXC.Parameters.ParamByName('@IDCuentaXCobrar').Value>0 then //Ajustado Jun 30/17
-      Res:=Res+1;  //Movido aca abr 12/17
+
+    Res:=Res+1;  //Movido aca abr 12/17
     ADOQryAuxiliar.Next;
   end;
   ADOQryAuxiliar.Close;
+
   adoDSMaster.Close;
   adoDSMaster.Open;
   if res=0  then
      Showmessage('No existian Cuentas X Cobrar pendientes de generar')
   else
      Showmessage('Actualizó  Cuentas X Cobrar de '+intToStr(res)+' Amortizaciones');  //Puede que no de todas actualice
+
   RegistraBitacora(0);//CuentasXCobrar
 end;
 
