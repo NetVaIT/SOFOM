@@ -183,7 +183,7 @@ end;
 
 function TdmPLDAlertas.GenerarAlertas(Month, Year: Word): Boolean;
 begin
-  Result:= False;
+//  Result:= False;
   ScreenCursorProc(crSQLWait);
   try
     adopGenPLDAlertas.Parameters.ParamByName('@PeriodoMes').Value:= Month;
@@ -204,7 +204,7 @@ var
   Registro: String;
   NoRegistros: Integer;
 begin
-  Result := 0;
+//  Result := 0;
   NoRegistros := 0;
   AssignFile(TXTArchivo, FileName);
   try
@@ -217,42 +217,42 @@ begin
     adoqPLDAlertas.First;
     while not adoqPLDAlertas.Eof do
     begin
-      Registro := adoqPLDAlertasC01_TIPO_DE_REPORTE.Value + cSeparador;
-      Registro := Registro + adoqPLDAlertasC02_PERIODO_DEL_REPORTE.Value + cSeparador;
-      Registro := Registro + adoqPLDAlertasC03_FOLIO.Value + cSeparador;
-      Registro := Registro + adoqPLDAlertasC04_ORGANO_SUPERVISOR.Value + cSeparador;
-      Registro := Registro + adoqPLDAlertasC05_CLAVE_INTITUCION.Value + cSeparador;
-      Registro := Registro + adoqPLDAlertasC06_LOCALIDAD.Value + cSeparador;
-      Registro := Registro + adoqPLDAlertasC07_CP_SUCURSAL.Value + cSeparador;
-      Registro := Registro + adoqPLDAlertasC08_TIPO_OPERACION.Value + cSeparador;
-      Registro := Registro + adoqPLDAlertasC09_INSTRUMENTO_MONETARIO.Value + cSeparador;
-      Registro := Registro + adoqPLDAlertasC10_CONTRATO.Value + cSeparador;
+      Registro := adoqPLDAlertasC01_TIPO_DE_REPORTE.AsString + cSeparador;
+      Registro := Registro + adoqPLDAlertasC02_PERIODO_DEL_REPORTE.AsString + cSeparador;
+      Registro := Registro + adoqPLDAlertasC03_FOLIO.AsString + cSeparador;
+      Registro := Registro + adoqPLDAlertasC04_ORGANO_SUPERVISOR.AsString + cSeparador;
+      Registro := Registro + adoqPLDAlertasC05_CLAVE_INTITUCION.AsString + cSeparador;
+      Registro := Registro + adoqPLDAlertasC06_LOCALIDAD.AsString + cSeparador;
+      Registro := Registro + adoqPLDAlertasC07_CP_SUCURSAL.AsString + cSeparador;
+      Registro := Registro + adoqPLDAlertasC08_TIPO_OPERACION.AsString + cSeparador;
+      Registro := Registro + adoqPLDAlertasC09_INSTRUMENTO_MONETARIO.AsString + cSeparador;
+      Registro := Registro + adoqPLDAlertasC10_CONTRATO.AsString + cSeparador;
       Registro := Registro + FormatFloat('0.00', adoqPLDAlertasC11_MONTO.AsFloat) + cSeparador;
-      Registro := Registro + adoqPLDAlertasC12_MONEDA.Value + cSeparador;
-      Registro := Registro + adoqPLDAlertasC13_FECHA_OPERACION.Value + cSeparador;
-      Registro := Registro + adoqPLDAlertasC14_FECHA_DETECCION.Value + cSeparador;
-      Registro := Registro + adoqPLDAlertasC15_NACIONALIDAD.Value + cSeparador;
-      Registro := Registro + adoqPLDAlertasC16_TIPO_DE_PERSONA.Value + cSeparador;
-      Registro := Registro + adoqPLDAlertasC17_RAZON_SOCIAL.Value + cSeparador;
-      Registro := Registro + adoqPLDAlertasC18_NOMBRE.Value + cSeparador;
-      Registro := Registro + adoqPLDAlertasC19_APELLIDO_PATERNO.Value + cSeparador;
-      Registro := Registro + adoqPLDAlertasC20_APELIIDO_MATERNO.Value + cSeparador;
-      Registro := Registro + adoqPLDAlertasC21_RFC.Value + cSeparador;
-      Registro := Registro + adoqPLDAlertasC22_CURP.Value + cSeparador;
-      Registro := Registro + adoqPLDAlertasC23_FECHA_NACIMIENTO_CONSTITUCION.Value + cSeparador;
-      Registro := Registro + adoqPLDAlertasC24_DOMICILIO.Value + cSeparador;
-      Registro := Registro + adoqPLDAlertasC25_COLONIA.Value + cSeparador;
-      Registro := Registro + adoqPLDAlertasC26_POBLACION.Value + cSeparador;
-      Registro := Registro + adoqPLDAlertasC27_TELEFONO.Value + cSeparador;
-      Registro := Registro + adoqPLDAlertasC28_ACTIVADAD_ECONOMICA.Value + cSeparador;
-      Registro := Registro + adoqPLDAlertasC29_CONSECUTIVO_RELACIONADO.Value + cSeparador;
-      Registro := Registro + adoqPLDAlertasC30_CONTRATO_RELACIONADO.Value + cSeparador;
-      Registro := Registro + adoqPLDAlertasC31_CLAVE_INTITUCION_RELACIONADO.Value + cSeparador;
-      Registro := Registro + adoqPLDAlertasC32_NOMBRE_RELACIONADO.Value + cSeparador;
-      Registro := Registro + adoqPLDAlertasC33_PATERNO__RELACIONADO.Value + cSeparador;
-      Registro := Registro + adoqPLDAlertasC34_MATERNO_RELACIONADO.Value + cSeparador;
-      Registro := Registro + adoqPLDAlertasC35_DESCRIPCION.Value + cSeparador;
-      Registro := Registro + adoqPLDAlertasC36_RAZON.Value + cSeparador;
+      Registro := Registro + adoqPLDAlertasC12_MONEDA.AsString + cSeparador;
+      Registro := Registro + adoqPLDAlertasC13_FECHA_OPERACION.AsString + cSeparador;
+      Registro := Registro + adoqPLDAlertasC14_FECHA_DETECCION.AsString + cSeparador;
+      Registro := Registro + adoqPLDAlertasC15_NACIONALIDAD.AsString + cSeparador;
+      Registro := Registro + adoqPLDAlertasC16_TIPO_DE_PERSONA.AsString + cSeparador;
+      Registro := Registro + adoqPLDAlertasC17_RAZON_SOCIAL.AsString + cSeparador;
+      Registro := Registro + adoqPLDAlertasC18_NOMBRE.AsString + cSeparador;
+      Registro := Registro + adoqPLDAlertasC19_APELLIDO_PATERNO.AsString + cSeparador;
+      Registro := Registro + adoqPLDAlertasC20_APELIIDO_MATERNO.AsString + cSeparador;
+      Registro := Registro + adoqPLDAlertasC21_RFC.AsString + cSeparador;
+      Registro := Registro + adoqPLDAlertasC22_CURP.AsString + cSeparador;
+      Registro := Registro + adoqPLDAlertasC23_FECHA_NACIMIENTO_CONSTITUCION.AsString + cSeparador;
+      Registro := Registro + adoqPLDAlertasC24_DOMICILIO.AsString + cSeparador;
+      Registro := Registro + adoqPLDAlertasC25_COLONIA.AsString + cSeparador;
+      Registro := Registro + adoqPLDAlertasC26_POBLACION.AsString + cSeparador;
+      Registro := Registro + adoqPLDAlertasC27_TELEFONO.AsString + cSeparador;
+      Registro := Registro + adoqPLDAlertasC28_ACTIVADAD_ECONOMICA.AsString + cSeparador;
+      Registro := Registro + adoqPLDAlertasC29_CONSECUTIVO_RELACIONADO.AsString + cSeparador;
+      Registro := Registro + adoqPLDAlertasC30_CONTRATO_RELACIONADO.AsString + cSeparador;
+      Registro := Registro + adoqPLDAlertasC31_CLAVE_INTITUCION_RELACIONADO.AsString + cSeparador;
+      Registro := Registro + adoqPLDAlertasC32_NOMBRE_RELACIONADO.AsString + cSeparador;
+      Registro := Registro + adoqPLDAlertasC33_PATERNO__RELACIONADO.AsString + cSeparador;
+      Registro := Registro + adoqPLDAlertasC34_MATERNO_RELACIONADO.AsString + cSeparador;
+      Registro := Registro + adoqPLDAlertasC35_DESCRIPCION.AsString + cSeparador;
+      Registro := Registro + adoqPLDAlertasC36_RAZON.AsString + cSeparador;
       Write(TXTArchivo, Registro);
       // Actualiza estatus de la alerta
       adcUpdPLDAlertas.Parameters.ParamByName('IdPLDAlerta').Value := adoqPLDAlertasIdPLDAlerta.Value;

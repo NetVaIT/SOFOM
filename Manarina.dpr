@@ -235,7 +235,10 @@ uses
   PLDAlertasEdit in 'Procesos\PLDAlertasEdit.pas' {frmPLDAlertasEdit},
   PLDAlertasFiltroForm in 'Procesos\PLDAlertasFiltroForm.pas' {frmPLDAlertasFiltro},
   PDFReporteEstatusCXC in 'Reportes\PDFReporteEstatusCXC.pas' {DMListaCXCPendFactPDF: TDataModule},
-  PDFAplicacionSaldosDM in 'Reportes\PDFAplicacionSaldosDM.pas' {DmRptAplicacionPagospdf: TDataModule};
+  PDFAplicacionSaldosDM in 'Reportes\PDFAplicacionSaldosDM.pas' {DmRptAplicacionPagospdf: TDataModule},
+  RptPagoAplicacionesMensualDM in 'Reportes\RptPagoAplicacionesMensualDM.pas' {dmRptPagoAplicacionesMensual: TDataModule},
+  RptPagoAplicacionesMensualForm in 'Reportes\RptPagoAplicacionesMensualForm.pas' {frmRptPagoAplicacionesMensual},
+  RptCoberturaForm in 'Reportes\RptCoberturaForm.pas' {frmRptCobertura};
 
 {$R *.res}
 
@@ -249,7 +252,5 @@ begin
   Application.CreateForm(T_frmProgress, _frmProgress);
   Application.CreateForm(T_dmReportSOFOM, _dmReportSOFOM);
   Application.CreateForm(TdmConfiguracion, dmConfiguracion);
-  Application.CreateForm(TDMListaCXCPendFactPDF, DMListaCXCPendFactPDF);
-  Application.CreateForm(TDmRptAplicacionPagospdf, DmRptAplicacionPagospdf);
   Application.Run;
 end.

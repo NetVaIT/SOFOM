@@ -3,6 +3,7 @@ inherited frmMain: TfrmMain
   ClientWidth = 1020
   OnDestroy = FormDestroy
   ExplicitWidth = 1036
+  ExplicitHeight = 519
   PixelsPerInch = 96
   TextHeight = 13
   inherited dxRibbon1: TdxRibbon
@@ -75,7 +76,6 @@ inherited frmMain: TfrmMain
   end
   inherited dxRibbonStatusBar1: TdxRibbonStatusBar
     Width = 1020
-    ExplicitTop = 32000
     ExplicitWidth = 1020
   end
   inherited pnlMain: TPanel
@@ -118,8 +118,6 @@ inherited frmMain: TfrmMain
         end>
     end
     inherited dxbArchivo: TdxBar
-      DockedDockControl = nil
-      DockedDockingStyle = dsNone
       FloatClientWidth = 51
       FloatClientHeight = 76
     end
@@ -356,7 +354,7 @@ inherited frmMain: TfrmMain
       FloatLeft = 1054
       FloatTop = 8
       FloatClientWidth = 155
-      FloatClientHeight = 432
+      FloatClientHeight = 486
       ItemLinks = <
         item
           Visible = True
@@ -389,6 +387,10 @@ inherited frmMain: TfrmMain
         item
           Visible = True
           ItemName = 'dxBrLrgBtnReporteCartera'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton42'
         end>
       OneOnRow = False
       Row = 0
@@ -399,7 +401,7 @@ inherited frmMain: TfrmMain
     object dxBarManagerBar2: TdxBar [9]
       Caption = 'Exportar'
       CaptionButtons = <>
-      DockedLeft = 620
+      DockedLeft = 703
       DockedTop = 0
       FloatLeft = 1054
       FloatTop = 8
@@ -665,6 +667,10 @@ inherited frmMain: TfrmMain
     end
     object dxBarLargeButton41: TdxBarLargeButton
       Action = actAlertasPLD
+      Category = 0
+    end
+    object dxBarLargeButton42: TdxBarLargeButton
+      Action = actRptPagoAplicacionesMensual
       Category = 0
     end
     object dxBarButton13: TdxBarButton
@@ -11451,6 +11457,13 @@ inherited frmMain: TfrmMain
       Caption = 'Establecer Fecha Actual'
       ImageIndex = 43
       OnExecute = ActPoneFechaActualExecute
+    end
+    object actRptPagoAplicacionesMensual: TAction
+      Tag = 60
+      Category = 'Reportes'
+      Caption = 'Aplicaciones mensuales'
+      ImageIndex = 49
+      OnExecute = actCatalogoExecute
     end
     object actBuroCredito: TAction
       Tag = 58

@@ -8,21 +8,21 @@ inherited frmContratos: TfrmContratos
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Top = 537
+    Top = 432
     Width = 645
     Align = alTop
     ExplicitTop = 571
     ExplicitWidth = 645
   end
   inherited splDetail1: TSplitter
-    Top = 231
+    Top = 126
     Width = 645
     Align = alTop
     ExplicitTop = 293
     ExplicitWidth = 645
   end
   inherited splDetail2: TSplitter
-    Top = 384
+    Top = 279
     Width = 645
     Align = alTop
     ExplicitTop = 487
@@ -30,13 +30,14 @@ inherited frmContratos: TfrmContratos
   end
   inherited pnlMaster: TPanel
     Width = 645
-    Height = 200
+    Height = 100
     Align = alTop
+    ExplicitTop = 26
     ExplicitWidth = 645
-    ExplicitHeight = 200
+    ExplicitHeight = 100
     inherited cxGrid: TcxGrid
       Width = 645
-      Height = 200
+      Height = 100
       ExplicitWidth = 645
       ExplicitHeight = 200
       inherited tvMaster: TcxGridDBTableView
@@ -89,29 +90,29 @@ inherited frmContratos: TfrmContratos
     end
   end
   inherited pnlDetail3: TPanel
-    Top = 540
+    Top = 435
     Width = 645
-    Height = 95
+    Height = 200
     Align = alClient
-    ExplicitTop = 540
+    ExplicitTop = 535
     ExplicitWidth = 645
-    ExplicitHeight = 95
+    ExplicitHeight = 100
   end
   inherited pnlDetail2: TPanel
-    Top = 387
+    Top = 282
     Width = 645
     Height = 150
     Align = alTop
-    ExplicitTop = 387
+    ExplicitTop = 282
     ExplicitWidth = 645
     ExplicitHeight = 150
   end
   inherited pnlDetail1: TPanel
-    Top = 234
+    Top = 129
     Width = 645
     Height = 150
     Align = alTop
-    ExplicitTop = 234
+    ExplicitTop = 129
     ExplicitWidth = 645
     ExplicitHeight = 150
   end
@@ -129,7 +130,7 @@ inherited frmContratos: TfrmContratos
     DockControlHeights = (
       0
       0
-      31
+      26
       0)
     inherited dxbTools: TdxBar
       ItemLinks = <
@@ -163,7 +164,6 @@ inherited frmContratos: TfrmContratos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42683.590026041670000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

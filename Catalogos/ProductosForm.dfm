@@ -243,6 +243,7 @@ inherited frmProductos: TfrmProductos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42681.569967037040000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

@@ -26,12 +26,24 @@ inherited dmRptCobertura: TdmRptCobertura
       'ER JOIN'#13#10'                         Contratos ON Anexos.IdContrato' +
       ' = Contratos.IdContrato INNER JOIN'#13#10'                         Per' +
       'sonas ON Contratos.IdPersona = Personas.IdPersona LEFT OUTER JOI' +
-      'N'#13#10'                             (SELECT        IdAnexo, MAX(Tipo' +
-      'Cambio) AS TipoCambioOriginal, SUM(ValorComercial) AS ValorComer' +
-      'cial, SUM(ValorComercialActualizado) AS ValorComercialActualizad' +
-      'o'#13#10'                               FROM            Productos'#13#10'   ' +
-      '                            GROUP BY IdAnexo) AS P ON Anexos.IdA' +
-      'nexo = P.IdAnexo'#13#10'ORDER BY Cobertura'#13#10
+      'N'#13#10'                         vw_RetrasoDiasXAnexo ON Anexos.IdAne' +
+      'xo = vw_RetrasoDiasXAnexo.IdAnexo LEFT OUTER JOIN'#13#10'             ' +
+      '                (SELECT        IdAnexo, MAX(TipoCambio) AS TipoC' +
+      'ambioOriginal, SUM(ValorComercial) AS ValorComercial, SUM(ValorC' +
+      'omercialActualizado) AS ValorComercialActualizado'#13#10'             ' +
+      '                  FROM            Productos'#13#10'                   ' +
+      '            GROUP BY IdAnexo) AS P ON Anexos.IdAnexo = P.IdAnexo' +
+      #13#10'WHERE ISNULL(vw_RetrasoDiasXAnexo.MayorAtraso, 0) >= :Vencidos' +
+      #13#10'ORDER BY Cobertura'#13#10
+    Parameters = <
+      item
+        Name = 'Vencidos'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
     object adodsReportIdAnexo: TAutoIncField
       FieldName = 'IdAnexo'
       ReadOnly = True
@@ -366,7 +378,7 @@ inherited dmRptCobertura: TdmRptCobertura
         AutoSize = False
         Border.BorderPositions = [bpBottom]
         Border.Visible = True
-        Border.Weight = 0.748799979686737100
+        Border.Weight = 0.748799979686737000
         Caption = 'Contrato'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clNavy
@@ -604,7 +616,7 @@ inherited dmRptCobertura: TdmRptCobertura
           PrinterSetup.DocumentName = 'Report'
           PrinterSetup.Duplex = dpVertical
           PrinterSetup.Orientation = poLandscape
-          PrinterSetup.PaperName = 'Carta'
+          PrinterSetup.PaperName = 'Letter (8,5" x 11")'
           PrinterSetup.PrinterName = 'Default'
           PrinterSetup.SaveDeviceSettings = False
           PrinterSetup.mmMarginBottom = 6350
@@ -983,6 +995,12 @@ inherited dmRptCobertura: TdmRptCobertura
         mmLeft = 254794
         LayerName = Foreground
       end
+    end
+  end
+  inherited mdParams: TdxMemData
+    OnNewRecord = mdParamsNewRecord
+    object mdParamsVencidos: TIntegerField
+      FieldName = 'Vencidos'
     end
   end
   object adodsParidad: TADODataSet

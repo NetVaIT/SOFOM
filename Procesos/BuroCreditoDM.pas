@@ -4,7 +4,8 @@ interface
 
 uses
   System.SysUtils, System.Classes, _StandarDMod, System.Actions, Vcl.ActnList,
-  Data.DB, Data.Win.ADODB, System.StrUtils, System.DateUtils, Vcl.Dialogs;
+  Data.DB, Data.Win.ADODB, System.StrUtils, System.DateUtils, Vcl.Dialogs,
+  System.UITypes;
 
 const
   cFormatDate = 'ddmmyyyy';
@@ -105,7 +106,6 @@ type
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
-    FFilename: TFileName;
     FFormato: Word;
     FVersion: String;
     procedure SetFormato(const Value: Word);
@@ -343,7 +343,7 @@ var
   end;
 
 begin
-  Result := 0;
+//  Result := 0;
   IdAnexo := 0;
   TotalEmpresas := 0;
   TotalSaldo := 0;

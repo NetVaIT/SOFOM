@@ -76,6 +76,9 @@ type
     ppDetailBand2: TppDetailBand;
     ppDBText16: TppDBText;
     ppDBText17: TppDBText;
+    mdParamsVencidos: TIntegerField;
+    procedure DataModuleCreate(Sender: TObject);
+    procedure mdParamsNewRecord(DataSet: TDataSet);
   private
     { Private declarations }
   public
@@ -87,12 +90,30 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
+uses RptCoberturaForm;
+
 {$R *.dfm}
 
 procedure TdmRptCobertura.AssignParam;
 begin
   inherited;
+  case mdParamsVencidos.Value of
+    0: adodsReport.Parameters.ParamByName('Vencidos').Value := 0;
+    1: adodsReport.Parameters.ParamByName('Vencidos').Value := 30;
+  end;
+//  adodsReport.Parameters.ParamByName('Year').Value := mdParamsYear.Value;
+end;
 
+procedure TdmRptCobertura.DataModuleCreate(Sender: TObject);
+begin
+  inherited;
+  gReportForm := TfrmRptCobertura.Create(Self);
+end;
+
+procedure TdmRptCobertura.mdParamsNewRecord(DataSet: TDataSet);
+begin
+  inherited;
+  mdParamsVencidos.Value := 0;
 end;
 
 end.

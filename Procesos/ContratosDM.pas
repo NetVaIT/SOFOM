@@ -105,7 +105,7 @@ type
     actGenAmortizaciones: TAction;
     adodsAnexosOpcionCompraPorcentaje: TFMTBCDField;
     adodsAnexosOpcionCompra: TFMTBCDField;
-    adodsAnexosValorResidualPorcentaje: TBCDField;
+    adodsAnexosValorResidualPorcentaje: TFMTBCDField;
     adodsAnexosValorResidual: TFMTBCDField;
     adodsAnexosImpactoISR: TFMTBCDField;
     adodsCreditosValorResidual: TFMTBCDField;
@@ -189,6 +189,10 @@ type
     procedure adodsCreditosFechaChange(Sender: TField);
     procedure actOpcionCompraExecute(Sender: TObject);
     procedure actOpcionCompraUpdate(Sender: TObject);
+    procedure adodsAnexosValorResidualPorcentajeChange(Sender: TField);
+    procedure adodsAnexosValorResidualChange(Sender: TField);
+    procedure adodsAnexosOpcionCompraPorcentajeChange(Sender: TField);
+    procedure adodsAnexosOpcionCompraChange(Sender: TField);
   private
     { Private declarations }
     FPaymentTime: TPaymentTime;
@@ -200,8 +204,9 @@ type
     procedure SetPaymentTime(const Value: TPaymentTime);
     function GetTipoContrato: TCTipoContrato;
     function GetIdAnexo: Integer;
+    function GetImporte(Total, Pocentaje: Extended): Extended;
+    function GetPocentaje(Total, Importe: Extended): Extended;
     procedure CalcularImportes;
-    procedure CalcularImporteEnganche;
     procedure CalcularImportesCredito;
     function CrearPagoInicial: Boolean;
     function CrearOpcionCompra: Boolean;
@@ -329,16 +334,18 @@ begin
 end;
 
 procedure TdmContratos.actAbonarCapitalExecute(Sender: TObject);
-var
-  dmAbonarCapital: TdmAbonarCapital;
+//var
+//  dmAbonarCapital: TdmAbonarCapital;
 begin
   inherited;
-  dmAbonarCapital := TdmAbonarCapital.Create(Self);
-  try
-    dmAbonarCapital.Execute;
-  finally
-    dmAbonarCapital.Free;
-  end;
+//  dmAbonarCapital := TdmAbonarCapital.Create(Self);
+//  try
+//    dmAbonarCapital.Execute;
+//  finally
+//    dmAbonarCapital.Free;
+//  end;
+  dmAmortizaciones.TipoContrato := TipoContrato;
+  dmAmortizaciones.SetAmortizaciones(IdAnexo,0, acReducirCuota, adodsAmortizacionesFechaVencimiento.Value);
 end;
 
 procedure TdmContratos.actCrearAnexoExecute(Sender: TObject);
@@ -407,36 +414,33 @@ end;
 
 procedure TdmContratos.adodsAnexosEngancheChange(Sender: TField);
 var
-  a: Extended;
+  Porcentaje: Extended;
 begin
   inherited;
   if adodsAnexos.State in [dsInsert, dsEdit] then
   begin
-//    adodsAnexosEnganche.Value := adodsAnexosPrecioTotal.Value * (adodsAnexosEnganchePorcentaje.Value/100);
-    if adodsAnexosPrecioTotal.AsExtended <> 0 then
-      a := (adodsAnexosEnganche.AsExtended*100)/ adodsAnexosPrecioTotal.AsExtended
-    else
-      a:= 0;
-    if a <> adodsAnexosEnganchePorcentaje.Value then
-      adodsAnexosEnganchePorcentaje.Value := a;
+    Porcentaje := GetPocentaje(adodsAnexosPrecioTotal.AsExtended, adodsAnexosEnganche.AsExtended);
+    if Porcentaje <> adodsAnexosEnganchePorcentaje.Value then
+      adodsAnexosEnganchePorcentaje.Value := Porcentaje;
   end;
-  CalcularImportes
+  CalcularImportes;
 end;
 
 procedure TdmContratos.adodsAnexosEnganchePorcentajeChange(Sender: TField);
 begin
   inherited;
-  CalcularImporteEnganche;
+  if adodsAnexos.State in [dsInsert, dsEdit] then
+    adodsAnexosEnganche.Value := GetImporte(adodsAnexosPrecioTotal.AsExtended, adodsAnexosEnganchePorcentaje.AsExtended);
 end;
 
 procedure TdmContratos.adodsAnexosFechaChange(Sender: TField);
 begin
   inherited;
-  if adodsAnexos.State in [dsInsert, dsEdit] then
-  begin
-    adodsAnexosFechaCorte.Value := GetFechaDia(adodsAnexosFecha.Value, adodsMasterDiaCorte.Value);
-    adodsAnexosFechaVencimiento.Value := GetFechaDia(adodsAnexosFecha.Value, adodsMasterDiaVencimiento.Value);
-  end;
+//  if adodsAnexos.State in [dsInsert, dsEdit] then
+//  begin
+//    adodsAnexosFechaCorte.Value := GetFechaDia(adodsAnexosFecha.Value, adodsMasterDiaCorte.Value);
+//    adodsAnexosFechaVencimiento.Value := GetFechaDia(adodsAnexosFecha.Value, adodsMasterDiaVencimiento.Value);
+//  end;
 end;
 
 procedure TdmContratos.adodsAnexosNewRecord(DataSet: TDataSet);
@@ -454,14 +458,58 @@ begin
   adodsAnexosOpcionCompraPorcentaje.Value := 0;
   adodsAnexosValorResidualPorcentaje.Value := 0;
   adodsAnexosImpactoISR.Value := 0;
+  adodsAnexosFechaCorte.Value := GetFechaDia(adodsAnexosFecha.Value, adodsMasterDiaCorte.Value);
+  adodsAnexosFechaVencimiento.Value := GetFechaDia(adodsAnexosFecha.Value, adodsMasterDiaVencimiento.Value);
   adodsAnexosTasaMoratoriaAnual.Value := 0;
   adodsAnexosCartaCompensacion.Value := False;
+end;
+
+procedure TdmContratos.adodsAnexosOpcionCompraChange(Sender: TField);
+var
+  Porcentaje: Extended;
+begin
+  inherited;
+  if adodsAnexos.State in [dsInsert, dsEdit] then
+  begin
+    Porcentaje := GetPocentaje(adodsAnexosPrecioTotal.AsExtended, adodsAnexosOpcionCompra.AsExtended);
+    if Porcentaje <> adodsAnexosOpcionCompraPorcentaje.Value then
+      adodsAnexosOpcionCompraPorcentaje.Value := Porcentaje;
+  end;
+  CalcularImportes;
+end;
+
+procedure TdmContratos.adodsAnexosOpcionCompraPorcentajeChange(Sender: TField);
+begin
+  inherited;
+  if adodsAnexos.State in [dsInsert, dsEdit] then
+    adodsAnexosOpcionCompra.Value := GetImporte(adodsAnexosPrecioTotal.AsExtended, adodsAnexosOpcionCompraPorcentaje.AsExtended);
 end;
 
 procedure TdmContratos.adodsAnexosPrecioMonedaChange(Sender: TField);
 begin
   inherited;
   CalcularImportes;
+end;
+
+procedure TdmContratos.adodsAnexosValorResidualChange(Sender: TField);
+var
+  Porcentaje: Extended;
+begin
+  inherited;
+  if adodsAnexos.State in [dsInsert, dsEdit] then
+  begin
+    Porcentaje := GetPocentaje(adodsAnexosPrecioTotal.AsExtended, adodsAnexosValorResidual.AsExtended);
+    if Porcentaje <> adodsAnexosValorResidualPorcentaje.Value then
+      adodsAnexosValorResidualPorcentaje.Value := Porcentaje;
+  end;
+  CalcularImportes;
+end;
+
+procedure TdmContratos.adodsAnexosValorResidualPorcentajeChange(Sender: TField);
+begin
+  inherited;
+  if adodsAnexos.State in [dsInsert, dsEdit] then
+    adodsAnexosValorResidual.Value := GetImporte(adodsAnexosPrecioTotal.AsExtended, adodsAnexosValorResidualPorcentaje.AsExtended);
 end;
 
 procedure TdmContratos.adodsCreditosFechaChange(Sender: TField);
@@ -495,18 +543,13 @@ begin
   adodsCreditosFechaCorte.Value := FCreditosFechaCorte;
 end;
 
-procedure TdmContratos.CalcularImporteEnganche;
-begin
-  if adodsAnexos.State in [dsInsert, dsEdit] then
-  begin
-    adodsAnexosEnganche.Value := adodsAnexosPrecioTotal.Value * (adodsAnexosEnganchePorcentaje.Value/100);
-  end;
-end;
-
 procedure TdmContratos.CalcularImportes;
 begin
   if adodsAnexos.State in [dsInsert, dsEdit] then
   begin
+    adodsAnexosPagoMensual.Value := dmAmortizaciones.Pago(adodsAnexosTasaAnual.Value,
+    adodsAnexosPlazo.Value, adodsAnexosMontoFinanciar.AsExtended,
+    adodsAnexosValorResidual.AsExtended) + adodsAnexosImpactoISR.AsExtended;
     adodsAnexosPrecio.Value := adodsAnexosPrecioMoneda.Value * adodsAnexosTipoCambio.Value;
     adodsAnexosImpuesto.Value := adodsAnexosPrecio.Value * (_IMPUESTOS_IVA/100);
     adodsAnexosPrecioTotal.Value := adodsAnexosPrecio.Value + adodsAnexosImpuesto.Value;
@@ -516,14 +559,8 @@ begin
     adodsAnexosDepositos.Value := adodsAnexosPagoMensual.Value * adodsAnexosDespositosNumero.Value;
     adodsAnexosPagoIncial.Value := (adodsAnexosEnganche.Value+adodsAnexosComision.Value+adodsAnexosComisionImpuesto.Value+
     adodsAnexosGastos.Value+adodsAnexosGastosImpuestos.Value+adodsAnexosDepositos.Value);
-    adodsAnexosOpcionCompra.Value := adodsAnexosPrecioTotal.Value * (adodsAnexosOpcionCompraPorcentaje.Value/100);
-    adodsAnexosValorResidual.Value := adodsAnexosPrecioTotal.Value * (adodsAnexosValorResidualPorcentaje.Value/100);
     adodsAnexosMontoFinanciar.Value:= adodsAnexosPrecioTotal.Value-adodsAnexosEnganche.Value;
     adodsAnexosSaldoInsoluto.Value := adodsAnexosMontoFinanciar.Value - adodsAnexosCapitalCobrado.Value;
-//    adodsAnexosMontoVencido.Value:=
-    adodsAnexosPagoMensual.Value := dmAmortizaciones.Pago(adodsAnexosTasaAnual.Value,
-    adodsAnexosPlazo.Value, adodsAnexosMontoFinanciar.AsExtended,
-    adodsAnexosValorResidual.AsExtended)+ adodsAnexosImpactoISR.AsExtended;
   end;
 end;
 
@@ -637,6 +674,19 @@ function TdmContratos.GetIdAnexo: Integer;
 begin
   if adodsAnexos.Active then
     Result := adodsAnexosIdAnexo.Value
+  else
+    Result := 0;
+end;
+
+function TdmContratos.GetImporte(Total, Pocentaje: Extended): Extended;
+begin
+  Result:= Total * (Pocentaje/100);
+end;
+
+function TdmContratos.GetPocentaje(Total, Importe: Extended): Extended;
+begin
+  if Total <> 0 then
+    Result := (Importe*100)/ Total
   else
     Result := 0;
 end;

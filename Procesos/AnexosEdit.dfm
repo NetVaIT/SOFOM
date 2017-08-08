@@ -16,9 +16,9 @@ inherited frmAnexosEdit: TfrmAnexosEdit
     ClientRectRight = 680
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 2
-      ExplicitTop = 28
+      ExplicitTop = 26
       ExplicitWidth = 678
-      ExplicitHeight = 590
+      ExplicitHeight = 592
       object cxGroupBox1: TcxGroupBox
         Left = 3
         Top = -1
@@ -428,7 +428,6 @@ inherited frmAnexosEdit: TfrmAnexosEdit
           Top = 16
           DataBinding.DataField = 'Enganche'
           DataBinding.DataSource = DataSource
-          Enabled = False
           TabOrder = 1
           Width = 121
         end
@@ -538,7 +537,6 @@ inherited frmAnexosEdit: TfrmAnexosEdit
           Top = 37
           DataBinding.DataField = 'OpcionCompra'
           DataBinding.DataSource = DataSource
-          Enabled = False
           TabOrder = 1
           Width = 121
         end
@@ -579,7 +577,6 @@ inherited frmAnexosEdit: TfrmAnexosEdit
           Top = 36
           DataBinding.DataField = 'ValorResidual'
           DataBinding.DataSource = DataSource
-          Enabled = False
           TabOrder = 1
           Width = 121
         end

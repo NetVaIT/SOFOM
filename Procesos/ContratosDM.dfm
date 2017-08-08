@@ -106,7 +106,6 @@ inherited dmContratos: TdmContratos
     object actPreAmortizaciones: TAction
       Caption = 'Prever'
       Hint = 'Prever amortizaciones'
-      Visible = False
       OnExecute = actPreAmortizacionesExecute
     end
     object actGenAmortizaciones: TAction
@@ -153,7 +152,7 @@ inherited dmContratos: TdmContratos
     CursorType = ctStatic
     CommandText = 
       'select IdPersona, RazonSocial AS Cliente from Personas'#13#10'WHERE Id' +
-      'RolTipo = 3'
+      'RolTipo = 3'#13#10'order by RazonSocial '
     Parameters = <>
     Left = 24
     Top = 72
@@ -364,7 +363,7 @@ inherited dmContratos: TdmContratos
     object adodsAnexosOpcionCompraPorcentaje: TFMTBCDField
       DisplayLabel = 'Porcentaje opci'#243'n de compra'
       FieldName = 'OpcionCompraPorcentaje'
-      OnChange = adodsAnexosPrecioMonedaChange
+      OnChange = adodsAnexosOpcionCompraPorcentajeChange
       DisplayFormat = '0.00 %'
       EditFormat = '0.00'
       Precision = 18
@@ -373,14 +372,15 @@ inherited dmContratos: TdmContratos
     object adodsAnexosOpcionCompra: TFMTBCDField
       DisplayLabel = 'Opci'#243'n de compra'
       FieldName = 'OpcionCompra'
+      OnChange = adodsAnexosOpcionCompraChange
       currency = True
       Precision = 18
       Size = 6
     end
-    object adodsAnexosValorResidualPorcentaje: TBCDField
+    object adodsAnexosValorResidualPorcentaje: TFMTBCDField
       DisplayLabel = 'Porcentaje valor residual'
       FieldName = 'ValorResidualPorcentaje'
-      OnChange = adodsAnexosPrecioMonedaChange
+      OnChange = adodsAnexosValorResidualPorcentajeChange
       DisplayFormat = '0.00 %'
       EditFormat = '0.00'
       Precision = 18
@@ -389,6 +389,7 @@ inherited dmContratos: TdmContratos
     object adodsAnexosValorResidual: TFMTBCDField
       DisplayLabel = 'Valor residual'
       FieldName = 'ValorResidual'
+      OnChange = adodsAnexosValorResidualChange
       currency = True
       Precision = 18
       Size = 6

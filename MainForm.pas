@@ -161,6 +161,8 @@ type
     actNotasCredito: TAction;
     actAlertasPLD: TAction;
     dxBarLargeButton41: TdxBarLargeButton;
+    actRptPagoAplicacionesMensual: TAction;
+    dxBarLargeButton42: TdxBarLargeButton;
     procedure actCatalogoExecute(Sender: TObject);
     procedure actIntervaCXPExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -197,7 +199,7 @@ uses ConfiguracionDM, UbicacionesDM, BancosDM, MonedasDM, PuestosDM, PlazasTurno
   SeguimientoCobranzaDM, rptInformacionContratosDM, MonedasCotizacionesDM,
   RptCoberturaDM, RptExpedientesRecibidosDM, rptReporteCarteraDM,
   RptAnexosProductosDM, RptColocacionAcumuladoDM, PonerFechaActualForm,
-  BuroCreditoDM, PLDAlertasDM;
+  BuroCreditoDM, PLDAlertasDM, RptPagoAplicacionesMensualDM;
 
 procedure TfrmMain.actCatalogoExecute(Sender: TObject);
 begin
@@ -272,6 +274,11 @@ begin
        end;
    59: begin
          gModulo := TdmRptPlazas.Create(Self);
+       end;
+   60: begin
+         gReport := TdmRptPagoAplicacionesMensual.Create(Self);
+         gReport.Title := pCaption;
+         gReport.Execute;
        end;
   end;
   if Assigned(gModulo) then
