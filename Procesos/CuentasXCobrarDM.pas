@@ -333,6 +333,7 @@ begin
                          ' MoratorioImpuesto FROM  AnexosAmortizaciones AA where FechaCorte <=:FEchaCorte and '+
                          ' not Exists(Select * from CuentasXCobrar CXC where CXC.IdAnexosAmortizaciones=AA.IdAnexoAmortizacion) '+
 //                         '       //     and CXC.Fecha=AA.FechaCorte)'+ no debe filtrar poresto
+                         ' and not Exists (Select * from AnexosCreditos Ac where Ac.IdAnexoCredito =AA.IdAnexoCredito and AC.IdAnexoCreditoEstatus =2)-- no Cancelado'+
                          ' order by FechaCorte');
 
   ADOQryAuxiliar.Parameters.ParamByName('FechaCorte').value:= FFechaActual;// may 26/17 date;      //Se buscan a al dìa de hoy  (Fecha Tabla)
