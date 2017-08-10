@@ -6,7 +6,7 @@ uses
   System.SysUtils, System.Classes, _ReportDMod, dxGDIPlusClasses, ppCtrls,
   dxmdaset, ppParameter, ppDesignLayer, ppVar, ppBands, ppPrnabl, ppClass,
   ppCache, ppProd, ppReport, ppComm, ppRelatv, ppDB, ppDBPipe, Data.DB,
-  Data.Win.ADODB;
+  Data.Win.ADODB, ppStrtch, ppMemo;
 
 type
   T_dmReportSOFOM = class(T_dmReport)

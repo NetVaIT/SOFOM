@@ -138,11 +138,17 @@ inherited dmRptCobertura: TdmRptCobertura
     end
     inherited ppHeaderBand1: TppHeaderBand
       PrintHeight = phDynamic
-      mmHeight = 42863
+      mmHeight = 47361
+      inherited pplblFilters: TppLabel
+        SaveOrder = -1
+        mmTop = 11377
+        mmWidth = 219075
+        LayerName = Foreground
+      end
       inherited pplblTitle: TppLabel
         SaveOrder = -1
         VerticalAlignment = avCenter
-        mmWidth = 198702
+        mmWidth = 219075
         LayerName = Foreground
       end
       inherited ppImage1: TppImage
@@ -378,7 +384,7 @@ inherited dmRptCobertura: TdmRptCobertura
         AutoSize = False
         Border.BorderPositions = [bpBottom]
         Border.Visible = True
-        Border.Weight = 0.748799979686737000
+        Border.Weight = 0.748799979686737100
         Caption = 'Contrato'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clNavy
@@ -634,7 +640,7 @@ inherited dmRptCobertura: TdmRptCobertura
             Background1.Brush.Style = bsClear
             Background2.Brush.Style = bsClear
             mmBottomOffset = 0
-            mmHeight = 10583
+            mmHeight = 8202
             mmPrintPosition = 0
             object ppDBText16: TppDBText
               UserName = 'DBText16'
@@ -669,8 +675,8 @@ inherited dmRptCobertura: TdmRptCobertura
               Transparent = True
               DataPipelineName = 'dbpParidad'
               mmHeight = 4233
-              mmLeft = 246064
-              mmTop = 3967
+              mmLeft = 246063
+              mmTop = 3962
               mmWidth = 15875
               BandType = 4
               LayerName = Foreground1
@@ -992,7 +998,202 @@ inherited dmRptCobertura: TdmRptCobertura
       end
       inherited pplblPageNo: TppSystemVariable
         SaveOrder = -1
-        mmLeft = 254794
+        mmLeft = 247374
+        LayerName = Foreground
+      end
+    end
+    object ppSummaryBand1: TppSummaryBand [4]
+      Background.Brush.Style = bsClear
+      mmBottomOffset = 0
+      mmHeight = 6350
+      mmPrintPosition = 0
+      object ppLine2: TppLine
+        UserName = 'Line2'
+        Pen.Color = clGray
+        Pen.Width = 2
+        Weight = 1.500000000000000000
+        mmHeight = 1323
+        mmLeft = 0
+        mmTop = 0
+        mmWidth = 264055
+        BandType = 7
+        LayerName = Foreground
+      end
+      object ppDBCalc1: TppDBCalc
+        UserName = 'DBCalc1'
+        DataField = 'SaldoInsoluto'
+        DataPipeline = dbpReport
+        DisplayFormat = '#,0;-#,0'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        DataPipelineName = 'dbpReport'
+        mmHeight = 3705
+        mmLeft = 95338
+        mmTop = 1323
+        mmWidth = 15871
+        BandType = 7
+        LayerName = Foreground
+      end
+      object ppDBCalc2: TppDBCalc
+        UserName = 'DBCalc2'
+        DataField = 'MontoVencido'
+        DataPipeline = dbpReport
+        DisplayFormat = '#,0;-#,0'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        DataPipelineName = 'dbpReport'
+        mmHeight = 3705
+        mmLeft = 111147
+        mmTop = 1320
+        mmWidth = 15871
+        BandType = 7
+        LayerName = Foreground
+      end
+      object ppDBCalc3: TppDBCalc
+        UserName = 'DBCalc3'
+        DataField = 'Depositos'
+        DataPipeline = dbpReport
+        DisplayFormat = '#,0;-#,0'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        DataPipelineName = 'dbpReport'
+        mmHeight = 3705
+        mmLeft = 127022
+        mmTop = 1320
+        mmWidth = 15871
+        BandType = 7
+        LayerName = Foreground
+      end
+      object ppDBCalc4: TppDBCalc
+        UserName = 'DBCalc4'
+        DataField = 'OpcionCompra'
+        DataPipeline = dbpReport
+        DisplayFormat = '#,0;-#,0'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        DataPipelineName = 'dbpReport'
+        mmHeight = 3705
+        mmLeft = 142897
+        mmTop = 1320
+        mmWidth = 15871
+        BandType = 7
+        LayerName = Foreground
+      end
+      object ppDBCalc5: TppDBCalc
+        UserName = 'DBCalc5'
+        DataField = 'ValorResidual'
+        DataPipeline = dbpReport
+        DisplayFormat = '#,0;-#,0'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        DataPipelineName = 'dbpReport'
+        mmHeight = 3705
+        mmLeft = 158772
+        mmTop = 1320
+        mmWidth = 15871
+        BandType = 7
+        LayerName = Foreground
+      end
+      object ppDBCalc6: TppDBCalc
+        UserName = 'DBCalc6'
+        DataField = 'TotalLiquidar'
+        DataPipeline = dbpReport
+        DisplayFormat = '#,0;-#,0'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        DataPipelineName = 'dbpReport'
+        mmHeight = 3705
+        mmLeft = 174647
+        mmTop = 1320
+        mmWidth = 15871
+        BandType = 7
+        LayerName = Foreground
+      end
+      object ppDBCalc7: TppDBCalc
+        UserName = 'DBCalc7'
+        DataField = 'ValorComercial'
+        DataPipeline = dbpReport
+        DisplayFormat = '#,0;-#,0'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        DataPipelineName = 'dbpReport'
+        mmHeight = 3705
+        mmLeft = 190522
+        mmTop = 1320
+        mmWidth = 15871
+        BandType = 7
+        LayerName = Foreground
+      end
+      object ppDBCalc8: TppDBCalc
+        UserName = 'DBCalc8'
+        DataField = 'ValorComercialActualizado'
+        DataPipeline = dbpReport
+        DisplayFormat = '#,0;-#,0'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        DataPipelineName = 'dbpReport'
+        mmHeight = 3705
+        mmLeft = 219605
+        mmTop = 1320
+        mmWidth = 15871
+        BandType = 7
+        LayerName = Foreground
+      end
+      object ppLabel25: TppLabel
+        UserName = 'Label15'
+        Caption = 'Totales'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold, fsItalic]
+        TextAlignment = taCentered
+        Transparent = True
+        mmHeight = 3439
+        mmLeft = 81486
+        mmTop = 1587
+        mmWidth = 10584
+        BandType = 7
         LayerName = Foreground
       end
     end

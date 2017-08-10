@@ -8,13 +8,21 @@ inherited _dmReportSOFOM: T_dmReportSOFOM
     end
     inherited ppHeaderBand1: TppHeaderBand
       mmHeight = 18521
-      inherited pplblTitle: TppLabel
+      inherited pplblFilters: TppLabel [0]
+        SaveOrder = -1
+        mmHeight = 5292
+        mmLeft = 44979
+        mmTop = 11374
+        mmWidth = 156104
+        LayerName = Foreground
+      end
+      inherited pplblTitle: TppLabel [1]
         SaveOrder = -1
         Anchors = [atLeft, atTop]
-        mmHeight = 18521
+        mmHeight = 10583
         mmLeft = 44979
         mmTop = 0
-        mmWidth = 153723
+        mmWidth = 156104
         LayerName = Foreground
       end
       object ppImage1: TppImage

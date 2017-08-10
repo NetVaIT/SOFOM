@@ -5,7 +5,8 @@ interface
 uses
   System.SysUtils, System.Classes, ppParameter, ppProd, ppClass, ppReport,
   ppComm, ppRelatv, ppDB, ppDBPipe, Data.DB, Data.Win.ADODB, ppCache, ppBands,
-  ppDesignLayer, ppVar, ppCtrls, ppPrnabl, System.UITypes, _ReportForm, dxmdaset;
+  ppDesignLayer, ppVar, ppCtrls, ppPrnabl, System.UITypes, _ReportForm, dxmdaset,
+  ppStrtch, ppMemo;
 
 type
   T_dmReport = class(TDataModule)
@@ -25,13 +26,16 @@ type
     ppDesignLayer1: TppDesignLayer;
     ppParameterList1: TppParameterList;
     mdParams: TdxMemData;
+    pplblFilters: TppLabel;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
     FTitle: string;
     FPDFFileName: TFileName;
+    FFilters: string;
     procedure SetTitle(const Value: string);
     procedure SetPDFFileName(const Value: TFileName);
+    procedure SetFilters(const Value: string);
   protected
     gReportForm: T_frmReport;
   public
@@ -39,6 +43,7 @@ type
     procedure AssignParam; virtual; abstract;
     procedure Execute; virtual;
     property Title: string read FTitle write SetTitle;
+    property Filters: string read FFilters write SetFilters;
     property PDFFileName: TFileName read FPDFFileName write SetPDFFileName;
   end;
 
@@ -54,6 +59,7 @@ uses _ConectionDmod;
 
 procedure T_dmReport.DataModuleCreate(Sender: TObject);
 begin
+  Filters := EmptyStr;
   mdParams.Open;
   mdParams.Insert;
 end;
@@ -80,6 +86,12 @@ begin
       adodsReport.Close;
     end;
   end;
+end;
+
+procedure T_dmReport.SetFilters(const Value: string);
+begin
+  FFilters := Value;
+  pplblFilters.Caption := Value;
 end;
 
 procedure T_dmReport.SetPDFFileName(const Value: TFileName);

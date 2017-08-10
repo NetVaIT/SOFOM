@@ -6,7 +6,7 @@ uses
   System.SysUtils, System.Classes, _ReportSOFOMDM, ppCtrls, Data.DB, dxmdaset,
   ppParameter, ppDesignLayer, ppVar, ppBands, dxGDIPlusClasses, ppPrnabl,
   ppClass, ppCache, ppProd, ppReport, ppComm, ppRelatv, ppDB, ppDBPipe,
-  Data.Win.ADODB, ppStrtch, ppSubRpt;
+  Data.Win.ADODB, ppStrtch, ppSubRpt, ppMemo;
 
 type
   TdmRptCobertura = class(T_dmReportSOFOM)
@@ -77,6 +77,17 @@ type
     ppDBText16: TppDBText;
     ppDBText17: TppDBText;
     mdParamsVencidos: TIntegerField;
+    ppSummaryBand1: TppSummaryBand;
+    ppLine2: TppLine;
+    ppDBCalc1: TppDBCalc;
+    ppDBCalc2: TppDBCalc;
+    ppDBCalc3: TppDBCalc;
+    ppDBCalc4: TppDBCalc;
+    ppDBCalc5: TppDBCalc;
+    ppDBCalc6: TppDBCalc;
+    ppDBCalc7: TppDBCalc;
+    ppDBCalc8: TppDBCalc;
+    ppLabel25: TppLabel;
     procedure DataModuleCreate(Sender: TObject);
     procedure mdParamsNewRecord(DataSet: TDataSet);
   private
@@ -98,10 +109,15 @@ procedure TdmRptCobertura.AssignParam;
 begin
   inherited;
   case mdParamsVencidos.Value of
-    0: adodsReport.Parameters.ParamByName('Vencidos').Value := 0;
-    1: adodsReport.Parameters.ParamByName('Vencidos').Value := 30;
+    0: begin
+      adodsReport.Parameters.ParamByName('Vencidos').Value := 0;
+      Filters := 'Todos - miles de pesos';
+    end;
+    1: begin
+      adodsReport.Parameters.ParamByName('Vencidos').Value := 30;
+      Filters := 'Vencidos mayor a 30 días - miles de pesos';
+    end;
   end;
-//  adodsReport.Parameters.ParamByName('Year').Value := mdParamsYear.Value;
 end;
 
 procedure TdmRptCobertura.DataModuleCreate(Sender: TObject);

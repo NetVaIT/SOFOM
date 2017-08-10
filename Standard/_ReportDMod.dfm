@@ -28,7 +28,7 @@ object _dmReport: T_dmReport
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.Duplex = dpVertical
-    PrinterSetup.PaperName = 'Carta'
+    PrinterSetup.PaperName = 'Letter (8,5" x 11")'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350
@@ -106,6 +106,24 @@ object _dmReport: T_dmReport
         mmLeft = 1323
         mmTop = 1323
         mmWidth = 209021
+        BandType = 0
+        LayerName = Foreground
+      end
+      object pplblFilters: TppLabel
+        UserName = 'lblFilters'
+        AutoSize = False
+        Caption = 'lblFilters'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clNavy
+        Font.Name = 'TIMES NEW ROMAN'
+        Font.Size = 12
+        Font.Style = [fsBold, fsItalic]
+        TextAlignment = taCentered
+        Transparent = True
+        mmHeight = 5027
+        mmLeft = 1323
+        mmTop = 5292
+        mmWidth = 200555
         BandType = 0
         LayerName = Foreground
       end
