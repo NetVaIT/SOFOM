@@ -199,7 +199,11 @@ inherited FrmReporteCarteraGrid: TFrmReporteCarteraGrid
       0
       26
       0)
+    inherited dxbNavigator: TdxBar
+      DockedLeft = 107
+    end
     inherited dxbTools: TdxBar
+      DockedLeft = 238
       ItemLinks = <
         item
           Visible = True
@@ -1158,7 +1162,6 @@ inherited FrmReporteCarteraGrid: TFrmReporteCarteraGrid
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42867.572603240740000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

@@ -788,6 +788,7 @@ type
     ppDBText165: TppDBText;
     ppDesignLayers14: TppDesignLayers;
     ppDesignLayer14: TppDesignLayer;
+    ppDBCalc26: TppDBCalc;
     procedure CuotasReportCalcFields(DataSet: TDataSet);
   private
     { Private declarations }

@@ -205,6 +205,7 @@ inherited dmrptReporteCartera: TdmrptReporteCartera
     end
     object ActAmorYPago2: TAction
       Caption = 'Amortizacion y Pagos V2'
+      Hint = 'Amortizaciones Y Pagos '
       OnExecute = ActAmorYPago2Execute
     end
   end

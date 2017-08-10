@@ -70,7 +70,7 @@ procedure TdmrptReporteCartera.ActAmorYPago2Execute(Sender: TObject);
 var                                                //Jul 19/17
   dmReporteCarteraPDF:TDmReporteCarteraPDF;
   ArchiPDF:TFileName;
-  Texto:String;// TxtSQL, GrupoSQL,, Fecha
+  TxtSQL,Texto:String;//  GrupoSQL,, Fecha
  // FechaIni, FechaFin:TDAteTime;
 begin
   inherited;
@@ -89,14 +89,15 @@ begin
   dmReporteCarteraPDF.ADODtStAnexoCliente.Parameters.ParamByName('IDAnexo').Value:= TFrmReporteCarteraGrid(gGridForm).AIdAnexoAct;
   dmReporteCarteraPDF.ADODtStAnexoCliente.open;
 
- (*   dmReporteCarteraPDF.ADODtStRepHojaControlCte.Open;
+  dmReporteCarteraPDF.ADODtStRepHojaControlCte.Open;
+  TxtSQL:=' IdAnexo = ' + intTostr(TFrmReporteCarteraGrid(gGridForm).AIdAnexoAct);
     if TxtSql<>'' then    //May 22/17
     begin
       dmReporteCarteraPDF.ADODtStRepHojaControlCte.Filter:= TxtSql;
       dmReporteCarteraPDF.ADODtStRepHojaControlCte.Filtered:=True;
     end
     else
-      dmReporteCarteraPDF.ADODtStRepHojaControlCte.Filtered:=False;  *)
+      dmReporteCarteraPDF.ADODtStRepHojaControlCte.Filtered:=False;  // nunca va por aca en este reporte
 
     dmReporteCarteraPDF.ADODtStAmortiza.Close;
     dmReporteCarteraPDF.ADODtStAmortiza.Parameters.ParamByName('IDAnexo1').Value:=TFrmReporteCarteraGrid(gGridForm).AIdAnexoAct;
@@ -115,7 +116,7 @@ begin
 
     dmReporteCarteraPDF.ppRprtAmoryPagos2.ShowPrintDialog:= False;
     dmReporteCarteraPDF.ppRprtAmoryPagos2.ShowCancelDialog:= False;
-    dmReporteCarteraPDF.ppRprtAmoryPagos2.PrinterSetup.DocumentName:=  'AMORTIZACIONES Y PAGOS 2'+#13 +Texto;
+    dmReporteCarteraPDF.ppRprtAmoryPagos2.PrinterSetup.DocumentName:=  'AMORTIZACIONES Y PAGOS '+#13 +Texto;
 
     dmReporteCarteraPDF.ppRprtAmoryPagos2.DeviceType:= 'PDF';
     dmReporteCarteraPDF.ppRprtAmoryPagos2.TextFileName:= ArchiPDF;

@@ -1613,7 +1613,6 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42709.621321724540000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end
