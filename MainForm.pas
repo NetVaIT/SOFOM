@@ -289,7 +289,7 @@ begin
 end;
 
 procedure TfrmMain.actIntervaCXPExecute(Sender: TObject);
-begin
+begin   //Esto no deberia estar aca Ago 10/17
   inherited;
   ExecuteUntilFinish('IntervaCXP.exe');
 end;

@@ -1,22 +1,24 @@
 inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
   Height = 760
-  Width = 621
+  Width = 925
   inherited adodsReport: TADODataSet
     OnCalcFields = CuotasReportCalcFields
     CommandText = 
       'SElect IdAnexo, Contrato, Anexo, CLiente, Alias, Tc, Plazo, Tota' +
       'l/1000 as Total, '#13#10'CobradoCXC/1000 as CobradoCXC, TotalPorCobrar' +
       '/1000 as TotalPorCobrar, Saldopendiente  /1000 as Saldopendiente' +
-      ', TotalVigente /1000 as TotalVigente,'#13#10' TotalPorVencer/1000 as T' +
-      'otalPorVencer, TotalCobradoVencido/1000 as TotalCobradoVencido,'#13 +
-      #10' VencidoA30/1000 as VencidoA30, VencidoA60/1000 as VencidoA60, ' +
-      'VencidoA90/1000 as VencidoA90, VencidoMas120/1000 as VencidoMas1' +
-      '20,'#13#10'DiasRetraso, Cantidad, atrasados, atiempo, CuotasPendientes' +
-      ', DiasPagoTotal, '#13#10'DiasPagoRetraso, PorcentajeAtrasados, Porcent' +
-      'ajeATiempo, CalificacionInicial'#13#10', ValorResidual, SaldoInsoluto,' +
-      ' SaldoTotal'#13#10'from vw_ReporteCarteraCompleto'#13#10'order by TotalCobra' +
-      'doVencido desc , TotalPorCobrar DEsc'
+      ', TotalVigente /1000 as TotalVigente, Total0A30/1000 as Total0a3' +
+      '0,'#13#10' TotalPorVencer/1000 as TotalPorVencer, TotalCobradoVencido/' +
+      '1000 as TotalCobradoVencido,'#13#10' VencidoA30/1000 as VencidoA30, Ve' +
+      'ncidoA60/1000 as VencidoA60, VencidoA90/1000 as VencidoA90, Venc' +
+      'idoMas120/1000 as VencidoMas120,'#13#10'DiasRetraso, Cantidad, atrasad' +
+      'os, atiempo, CuotasPendientes, DiasPagoTotal, '#13#10'DiasPagoRetraso,' +
+      ' PorcentajeAtrasados, PorcentajeATiempo, CalificacionInicial'#13#10', ' +
+      'ValorResidual, SaldoInsoluto, SaldoTotal'#13#10'from vw_ReporteCartera' +
+      'Completo'#13#10'order by TotalCobradoVencido desc , TotalPorCobrar DEs' +
+      'c'
     Left = 40
+    Top = 16
     object adodsReportIdAnexo: TIntegerField
       FieldName = 'IdAnexo'
     end
@@ -174,8 +176,14 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       Precision = 18
       Size = 6
     end
+    object adodsReportTotal0a30: TFMTBCDField
+      FieldName = 'Total0a30'
+      ReadOnly = True
+      Precision = 38
+      Size = 6
+    end
   end
-  inherited ppReport: TppReport
+  inherited ppReport: TppReport [2]
     PrinterSetup.Orientation = poLandscape
     PrinterSetup.mmPaperHeight = 215900
     PrinterSetup.mmPaperWidth = 279400
@@ -186,6 +194,10 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
     DataPipelineName = 'dbpReport'
     inherited ppHeaderBand1: TppHeaderBand
       mmHeight = 28310
+      inherited pplblFilters: TppLabel
+        SaveOrder = -1
+        LayerName = Foreground
+      end
       inherited pplblTitle: TppLabel
         SaveOrder = -1
         Caption = 'CARTERA - ANTIG'#220'EDAD DE SALDOS (000 PESOS)'
@@ -301,8 +313,8 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Transparent = True
         VerticalAlignment = avCenter
         mmHeight = 4763
-        mmLeft = 123825
-        mmTop = 23018
+        mmLeft = 133879
+        mmTop = 23019
         mmWidth = 10054
         BandType = 0
         LayerName = Foreground
@@ -323,7 +335,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Transparent = True
         VerticalAlignment = avCenter
         mmHeight = 4763
-        mmLeft = 135732
+        mmLeft = 146597
         mmTop = 23018
         mmWidth = 10054
         BandType = 0
@@ -345,7 +357,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Transparent = True
         VerticalAlignment = avCenter
         mmHeight = 4763
-        mmLeft = 147638
+        mmLeft = 158503
         mmTop = 23018
         mmWidth = 10054
         BandType = 0
@@ -367,7 +379,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Transparent = True
         VerticalAlignment = avCenter
         mmHeight = 4763
-        mmLeft = 171450
+        mmLeft = 182315
         mmTop = 23018
         mmWidth = 10054
         BandType = 0
@@ -389,7 +401,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Transparent = True
         VerticalAlignment = avCenter
         mmHeight = 4763
-        mmLeft = 159544
+        mmLeft = 170409
         mmTop = 23018
         mmWidth = 10054
         BandType = 0
@@ -411,7 +423,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Transparent = True
         VerticalAlignment = avCenter
         mmHeight = 4763
-        mmLeft = 183621
+        mmLeft = 194486
         mmTop = 23018
         mmWidth = 10054
         BandType = 0
@@ -433,7 +445,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         WordWrap = True
         VerticalAlignment = avCenter
         mmHeight = 6879
-        mmLeft = 196321
+        mmLeft = 207186
         mmTop = 20902
         mmWidth = 8467
         BandType = 0
@@ -455,7 +467,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         WordWrap = True
         VerticalAlignment = avCenter
         mmHeight = 6879
-        mmLeft = 205846
+        mmLeft = 216711
         mmTop = 20902
         mmWidth = 13229
         BandType = 0
@@ -477,7 +489,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Transparent = True
         VerticalAlignment = avCenter
         mmHeight = 4763
-        mmLeft = 234421
+        mmLeft = 245286
         mmTop = 23018
         mmWidth = 9525
         BandType = 0
@@ -499,7 +511,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         WordWrap = True
         VerticalAlignment = avCenter
         mmHeight = 6879
-        mmLeft = 220134
+        mmLeft = 230999
         mmTop = 20902
         mmWidth = 11642
         BandType = 0
@@ -545,6 +557,28 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         mmLeft = 44979
         mmTop = 23019
         mmWidth = 11642
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel155: TppLabel
+        UserName = 'Label155'
+        AutoSize = False
+        Border.BorderPositions = [bpBottom]
+        Border.Visible = True
+        Border.Weight = 0.748799979686737100
+        Caption = 'Vigente'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        VerticalAlignment = avCenter
+        mmHeight = 4763
+        mmLeft = 122502
+        mmTop = 23019
+        mmWidth = 10054
         BandType = 0
         LayerName = Foreground
       end
@@ -609,27 +643,6 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         BandType = 4
         LayerName = Foreground
       end
-      object ppDBText6: TppDBText
-        UserName = 'DBText6'
-        DataField = 'TotalPorVencer'
-        DataPipeline = dbpReport
-        DisplayFormat = '#,0.00;-#,0.00'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 7
-        Font.Style = []
-        TextAlignment = taRightJustified
-        Transparent = True
-        VerticalAlignment = avCenter
-        DataPipelineName = 'dbpReport'
-        mmHeight = 4763
-        mmLeft = 92340
-        mmTop = 264
-        mmWidth = 14023
-        BandType = 4
-        LayerName = Foreground
-      end
       object ppDBText8: TppDBText
         UserName = 'DBText8'
         BlankWhenZero = True
@@ -646,30 +659,8 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
-        mmLeft = 123825
-        mmTop = 264
-        mmWidth = 10054
-        BandType = 4
-        LayerName = Foreground
-      end
-      object ppDBText9: TppDBText
-        UserName = 'DBText9'
-        BlankWhenZero = True
-        DataField = 'TotalVigente'
-        DataPipeline = dbpReport
-        DisplayFormat = '#,0.00;-#,0.00'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 7
-        Font.Style = []
-        TextAlignment = taRightJustified
-        Transparent = True
-        VerticalAlignment = avCenter
-        DataPipelineName = 'dbpReport'
-        mmHeight = 4763
-        mmLeft = 135732
-        mmTop = 264
+        mmLeft = 133879
+        mmTop = 265
         mmWidth = 10054
         BandType = 4
         LayerName = Foreground
@@ -690,7 +681,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
-        mmLeft = 147638
+        mmLeft = 158503
         mmTop = 264
         mmWidth = 10054
         BandType = 4
@@ -712,7 +703,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
-        mmLeft = 159544
+        mmLeft = 170409
         mmTop = 264
         mmWidth = 10054
         BandType = 4
@@ -734,7 +725,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
-        mmLeft = 171450
+        mmLeft = 182315
         mmTop = 264
         mmWidth = 10054
         BandType = 4
@@ -745,7 +736,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         BlankWhenZero = True
         DataField = 'VencidoMas120'
         DataPipeline = dbpReport
-        DisplayFormat = '#,0.00;-#,0.00'
+        DisplayFormat = '#,0;-#,0'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -756,7 +747,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
-        mmLeft = 183621
+        mmLeft = 194486
         mmTop = 264
         mmWidth = 10054
         BandType = 4
@@ -798,7 +789,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
-        mmLeft = 195263
+        mmLeft = 206128
         mmTop = 264
         mmWidth = 9525
         BandType = 4
@@ -818,7 +809,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
-        mmLeft = 205846
+        mmLeft = 216711
         mmTop = 264
         mmWidth = 13229
         BandType = 4
@@ -838,7 +829,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
-        mmLeft = 220134
+        mmLeft = 230999
         mmTop = 264
         mmWidth = 11642
         BandType = 4
@@ -858,7 +849,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
-        mmLeft = 234421
+        mmLeft = 245286
         mmTop = 264
         mmWidth = 9525
         BandType = 4
@@ -880,6 +871,71 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         mmLeft = 44979
         mmTop = 265
         mmWidth = 11642
+        BandType = 4
+        LayerName = Foreground
+      end
+      object ppDBText6: TppDBText
+        UserName = 'DBText6'
+        DataField = 'TotalPorVencer'
+        DataPipeline = dbpReport
+        DisplayFormat = '#,0;-#,0'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        VerticalAlignment = avCenter
+        DataPipelineName = 'dbpReport'
+        mmHeight = 4763
+        mmLeft = 92340
+        mmTop = 265
+        mmWidth = 14023
+        BandType = 4
+        LayerName = Foreground
+      end
+      object ppDBText177: TppDBText
+        UserName = 'DBText177'
+        BlankWhenZero = True
+        DataField = 'TotalVigente'
+        DataPipeline = dbpReport
+        DisplayFormat = '#,0;-#,0'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        VerticalAlignment = avCenter
+        DataPipelineName = 'dbpReport'
+        mmHeight = 4763
+        mmLeft = 122502
+        mmTop = 265
+        mmWidth = 10054
+        BandType = 4
+        LayerName = Foreground
+      end
+      object ppDBText9: TppDBText
+        UserName = 'DBText9'
+        BlankWhenZero = True
+        DataField = 'Total0a30'
+        DataPipeline = dbpReport
+        DisplayFormat = '#,0;-#,0'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        VerticalAlignment = avCenter
+        DataPipelineName = 'dbpReport'
+        mmHeight = 4763
+        mmLeft = 146579
+        mmTop = 265
+        mmWidth = 10054
         BandType = 4
         LayerName = Foreground
       end
@@ -918,8 +974,8 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Pen.Color = clDefault
         Style = lsDouble
         Weight = 0.500000000000000000
-        mmHeight = 16933
-        mmLeft = 79111
+        mmHeight = 6879
+        mmLeft = 89959
         mmTop = 0
         mmWidth = 114565
         BandType = 7
@@ -979,7 +1035,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4498
-        mmLeft = 123800
+        mmLeft = 133870
         mmTop = 1058
         mmWidth = 10054
         BandType = 7
@@ -999,7 +1055,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4498
-        mmLeft = 135706
+        mmLeft = 145776
         mmTop = 1058
         mmWidth = 10054
         BandType = 7
@@ -1019,7 +1075,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4498
-        mmLeft = 147612
+        mmLeft = 157708
         mmTop = 1058
         mmWidth = 10054
         BandType = 7
@@ -1039,7 +1095,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4498
-        mmLeft = 159519
+        mmLeft = 169589
         mmTop = 1058
         mmWidth = 10054
         BandType = 7
@@ -1059,7 +1115,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4498
-        mmLeft = 171425
+        mmLeft = 181495
         mmTop = 1058
         mmWidth = 10054
         BandType = 7
@@ -1079,7 +1135,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4498
-        mmLeft = 183596
+        mmLeft = 193666
         mmTop = 1058
         mmWidth = 10054
         BandType = 7
@@ -1107,7 +1163,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       end
       object ppDBText36: TppDBText
         UserName = 'DBText36'
-        DataField = 'PorcentajeVig1_30'
+        DataField = 'PorcentajeVenc0_30'
         DataPipeline = ppDBSumasTotales
         DisplayFormat = '0 %'
         Font.Charset = DEFAULT_CHARSET
@@ -1121,7 +1177,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         DataPipelineName = 'ppDBSumasTotales'
         mmHeight = 4763
-        mmLeft = 135734
+        mmLeft = 145804
         mmTop = 12171
         mmWidth = 10054
         BandType = 7
@@ -1143,7 +1199,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         DataPipelineName = 'ppDBSumasTotales'
         mmHeight = 4763
-        mmLeft = 147640
+        mmLeft = 157710
         mmTop = 12171
         mmWidth = 10054
         BandType = 7
@@ -1164,7 +1220,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Transparent = True
         VerticalAlignment = avCenter
         mmHeight = 4763
-        mmLeft = 123828
+        mmLeft = 111654
         mmTop = 12171
         mmWidth = 10054
         BandType = 7
@@ -1186,7 +1242,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         DataPipelineName = 'ppDBSumasTotales'
         mmHeight = 4763
-        mmLeft = 159547
+        mmLeft = 169617
         mmTop = 12171
         mmWidth = 10054
         BandType = 7
@@ -1208,7 +1264,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         DataPipelineName = 'ppDBSumasTotales'
         mmHeight = 4763
-        mmLeft = 171453
+        mmLeft = 181523
         mmTop = 12171
         mmWidth = 10054
         BandType = 7
@@ -1230,7 +1286,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         DataPipelineName = 'ppDBSumasTotales'
         mmHeight = 4763
-        mmLeft = 183624
+        mmLeft = 193694
         mmTop = 12171
         mmWidth = 10054
         BandType = 7
@@ -1251,8 +1307,8 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Transparent = True
         VerticalAlignment = avCenter
         mmHeight = 4763
-        mmLeft = 92340
-        mmTop = 5821
+        mmLeft = 74877
+        mmTop = 6879
         mmWidth = 14023
         BandType = 7
         LayerName = Foreground
@@ -1273,8 +1329,8 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         DataPipelineName = 'ppDBSumasTotales'
         mmHeight = 4763
-        mmLeft = 111657
-        mmTop = 5821
+        mmLeft = 111654
+        mmTop = 6879
         mmWidth = 10054
         BandType = 7
         LayerName = Foreground
@@ -1295,7 +1351,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         DataPipelineName = 'ppDBSumasTotales'
         mmHeight = 4763
-        mmLeft = 123828
+        mmLeft = 133898
         mmTop = 5821
         mmWidth = 10054
         BandType = 7
@@ -1422,7 +1478,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               TextAlignment = taRightJustified
               Transparent = True
               mmHeight = 3439
-              mmLeft = 123825
+              mmLeft = 134690
               mmTop = 794
               mmWidth = 10054
               BandType = 1
@@ -1434,7 +1490,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Border.BorderPositions = [bpBottom]
               Border.Visible = True
               Border.Weight = 0.748799979686737100
-              Caption = '1-30'
+              Caption = '0-30'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
               Font.Name = 'Arial'
@@ -1443,7 +1499,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               TextAlignment = taRightJustified
               Transparent = True
               mmHeight = 3439
-              mmLeft = 135732
+              mmLeft = 146597
               mmTop = 794
               mmWidth = 10054
               BandType = 1
@@ -1464,7 +1520,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               TextAlignment = taRightJustified
               Transparent = True
               mmHeight = 3440
-              mmLeft = 147638
+              mmLeft = 158503
               mmTop = 794
               mmWidth = 10054
               BandType = 1
@@ -1485,7 +1541,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               TextAlignment = taRightJustified
               Transparent = True
               mmHeight = 3440
-              mmLeft = 159544
+              mmLeft = 170409
               mmTop = 794
               mmWidth = 10054
               BandType = 1
@@ -1506,7 +1562,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               TextAlignment = taRightJustified
               Transparent = True
               mmHeight = 3440
-              mmLeft = 171450
+              mmLeft = 182315
               mmTop = 794
               mmWidth = 10054
               BandType = 1
@@ -1527,8 +1583,29 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               TextAlignment = taRightJustified
               Transparent = True
               mmHeight = 3439
-              mmLeft = 183621
+              mmLeft = 194486
               mmTop = 794
+              mmWidth = 10054
+              BandType = 1
+              LayerName = Foreground3
+            end
+            object ppLabel157: TppLabel
+              UserName = 'Label157'
+              AutoSize = False
+              Border.BorderPositions = [bpBottom]
+              Border.Visible = True
+              Border.Weight = 0.748799979686737100
+              Caption = 'Vigente'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 7
+              Font.Style = []
+              TextAlignment = taRightJustified
+              Transparent = True
+              mmHeight = 3440
+              mmLeft = 123031
+              mmTop = 795
               mmWidth = 10054
               BandType = 1
               LayerName = Foreground3
@@ -1543,9 +1620,9 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
             object ppShape1: TppShape
               UserName = 'Shape1'
               mmHeight = 20373
-              mmLeft = 55563
-              mmTop = 0
-              mmWidth = 142875
+              mmLeft = 54238
+              mmTop = 529
+              mmWidth = 155310
               BandType = 4
               LayerName = Foreground3
             end
@@ -1644,7 +1721,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               VerticalAlignment = avCenter
               DataPipelineName = 'ppDBPplnSumasXCalifica'
               mmHeight = 4763
-              mmLeft = 123825
+              mmLeft = 134690
               mmTop = 1323
               mmWidth = 10054
               BandType = 4
@@ -1665,7 +1742,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               VerticalAlignment = avCenter
               DataPipelineName = 'ppDBPplnSumasXCalifica'
               mmHeight = 4763
-              mmLeft = 147638
+              mmLeft = 158503
               mmTop = 1588
               mmWidth = 10054
               BandType = 4
@@ -1686,7 +1763,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               VerticalAlignment = avCenter
               DataPipelineName = 'ppDBPplnSumasXCalifica'
               mmHeight = 4763
-              mmLeft = 159544
+              mmLeft = 170409
               mmTop = 1323
               mmWidth = 10054
               BandType = 4
@@ -1707,7 +1784,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               VerticalAlignment = avCenter
               DataPipelineName = 'ppDBPplnSumasXCalifica'
               mmHeight = 4763
-              mmLeft = 171450
+              mmLeft = 182315
               mmTop = 1323
               mmWidth = 10054
               BandType = 4
@@ -1727,16 +1804,16 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Transparent = True
               VerticalAlignment = avCenter
               DataPipelineName = 'ppDBPplnSumasXCalifica'
-              mmHeight = 4763
-              mmLeft = 183621
-              mmTop = 1323
+              mmHeight = 4498
+              mmLeft = 194471
+              mmTop = 1588
               mmWidth = 10054
               BandType = 4
               LayerName = Foreground3
             end
             object ppDBText57: TppDBText
               UserName = 'DBText57'
-              DataField = 'sumaVigente'
+              DataField = 'suma0a30'
               DataPipeline = ppDBPplnSumasXCalifica
               DisplayFormat = '#,0;-#,0'
               Font.Charset = DEFAULT_CHARSET
@@ -1749,7 +1826,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               VerticalAlignment = avCenter
               DataPipelineName = 'ppDBPplnSumasXCalifica'
               mmHeight = 4763
-              mmLeft = 135732
+              mmLeft = 146597
               mmTop = 1323
               mmWidth = 10054
               BandType = 4
@@ -1791,7 +1868,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               VerticalAlignment = avCenter
               DataPipelineName = 'ppDBPplnSumasXCalifica'
               mmHeight = 4763
-              mmLeft = 123825
+              mmLeft = 134690
               mmTop = 7938
               mmWidth = 10054
               BandType = 4
@@ -1799,7 +1876,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
             end
             object ppDBText60: TppDBText
               UserName = 'DBText60'
-              DataField = 'PorcVenc1A30'
+              DataField = 'PorcVenc0A30'
               DataPipeline = ppDBPplnSumasXCalifica
               DisplayFormat = '0 %'
               Font.Charset = DEFAULT_CHARSET
@@ -1812,7 +1889,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               VerticalAlignment = avCenter
               DataPipelineName = 'ppDBPplnSumasXCalifica'
               mmHeight = 4763
-              mmLeft = 135732
+              mmLeft = 146597
               mmTop = 14022
               mmWidth = 10054
               BandType = 4
@@ -1833,7 +1910,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               VerticalAlignment = avCenter
               DataPipelineName = 'ppDBPplnSumasXCalifica'
               mmHeight = 4763
-              mmLeft = 147638
+              mmLeft = 158503
               mmTop = 14023
               mmWidth = 10054
               BandType = 4
@@ -1854,7 +1931,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               VerticalAlignment = avCenter
               DataPipelineName = 'ppDBPplnSumasXCalifica'
               mmHeight = 4763
-              mmLeft = 159544
+              mmLeft = 170409
               mmTop = 14023
               mmWidth = 10054
               BandType = 4
@@ -1875,7 +1952,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               VerticalAlignment = avCenter
               DataPipelineName = 'ppDBPplnSumasXCalifica'
               mmHeight = 4763
-              mmLeft = 171450
+              mmLeft = 182315
               mmTop = 14022
               mmWidth = 10054
               BandType = 4
@@ -1896,7 +1973,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               VerticalAlignment = avCenter
               DataPipelineName = 'ppDBPplnSumasXCalifica'
               mmHeight = 4763
-              mmLeft = 183621
+              mmLeft = 194486
               mmTop = 14022
               mmWidth = 10054
               BandType = 4
@@ -1915,7 +1992,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Transparent = True
               VerticalAlignment = avCenter
               mmHeight = 4763
-              mmLeft = 123825
+              mmLeft = 134690
               mmTop = 14022
               mmWidth = 10054
               BandType = 4
@@ -1957,6 +2034,48 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               mmLeft = 57149
               mmTop = 528
               mmWidth = 5292
+              BandType = 4
+              LayerName = Foreground3
+            end
+            object ppDBText179: TppDBText
+              UserName = 'DBText179'
+              DataField = 'sumaVigente'
+              DataPipeline = ppDBPplnSumasXCalifica
+              DisplayFormat = '#,0;-#,0'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 7
+              Font.Style = []
+              TextAlignment = taRightJustified
+              Transparent = True
+              VerticalAlignment = avCenter
+              DataPipelineName = 'ppDBPplnSumasXCalifica'
+              mmHeight = 4763
+              mmLeft = 123031
+              mmTop = 1588
+              mmWidth = 10054
+              BandType = 4
+              LayerName = Foreground3
+            end
+            object ppDBText180: TppDBText
+              UserName = 'DBText180'
+              DataField = 'PorcVigente'
+              DataPipeline = ppDBPplnSumasXCalifica
+              DisplayFormat = '0 %'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 7
+              Font.Style = []
+              TextAlignment = taRightJustified
+              Transparent = True
+              VerticalAlignment = avCenter
+              DataPipelineName = 'ppDBPplnSumasXCalifica'
+              mmHeight = 4763
+              mmLeft = 123031
+              mmTop = 7938
+              mmWidth = 10054
               BandType = 4
               LayerName = Foreground3
             end
@@ -2529,12 +2648,54 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
           end
         end
       end
+      object ppDBCalc27: TppDBCalc
+        UserName = 'DBCalc27'
+        DataField = 'TotalVigente'
+        DataPipeline = dbpReport
+        DisplayFormat = '#,0;-#,0'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        DataPipelineName = 'dbpReport'
+        mmHeight = 4498
+        mmLeft = 122502
+        mmTop = 1058
+        mmWidth = 10054
+        BandType = 7
+        LayerName = Foreground
+      end
+      object ppDBText178: TppDBText
+        UserName = 'DBText178'
+        DataField = 'PorcentajeVigente'
+        DataPipeline = ppDBSumasTotales
+        DisplayFormat = '0 %'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = []
+        ParentDataPipeline = False
+        TextAlignment = taRightJustified
+        Transparent = True
+        VerticalAlignment = avCenter
+        DataPipelineName = 'ppDBSumasTotales'
+        mmHeight = 4763
+        mmLeft = 122502
+        mmTop = 12171
+        mmWidth = 10054
+        BandType = 7
+        LayerName = Foreground
+      end
     end
   end
-  inherited mdParams: TdxMemData
+  inherited mdParams: TdxMemData [3]
     Left = 248
   end
-  object ADODtStRepHojaControlCte: TADODataSet
+  object ADODtStRepHojaControlCte: TADODataSet [4]
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -2686,12 +2847,12 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       Size = 12
     end
   end
-  object DSHojaControlCte: TDataSource
+  object DSHojaControlCte: TDataSource [5]
     DataSet = ADODtStRepHojaControlCte
     Left = 128
     Top = 240
   end
-  object ppRprtHojaControlCte: TppReport
+  object ppRprtHojaControlCte: TppReport [6]
     AutoStop = False
     DataPipeline = ppDBHojaControlCte
     PassSetting = psTwoPass
@@ -7376,7 +7537,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
     object ppParameterList2: TppParameterList
     end
   end
-  object ADODtdtProductos: TADODataSet
+  object ADODtdtProductos: TADODataSet [7]
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -7450,12 +7611,12 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       Size = 50
     end
   end
-  object dsProductos: TDataSource
+  object dsProductos: TDataSource [8]
     DataSet = ADODtdtProductos
     Left = 128
     Top = 304
   end
-  object ppDBProductos: TppDBPipeline
+  object ppDBProductos: TppDBPipeline [9]
     DataSource = dsProductos
     UserName = 'DBProductos'
     Left = 200
@@ -7468,7 +7629,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       DetailSortOrder = soAscending
     end
   end
-  object ADODtStSumasTotales: TADODataSet
+  object ADODtStSumasTotales: TADODataSet [10]
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     OnCalcFields = CuotasReportCalcFields
@@ -7477,24 +7638,27 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       'CXC, '#13#10'Sum(TotalPorCobrar) as SUMATotalPorCobrar, '#13#10'SUM(Saldopen' +
       'diente ) as SUMASaldopendiente,'#13#10'SUM(TotalVigente )as  SUMATotal' +
       'Vigente,'#13#10'SUM(TotalPorVencer) as SUMATotalPorVencer,'#13#10'--SUM( Tot' +
-      'alCobradoVencido/1000) as SUMATotalCobradoVencido,'#13#10'SUM( Vencido' +
-      'A30)as SUMAVencidoA30, '#13#10'SUM(VencidoA60) as SUMAVencidoA60,'#13#10'SUM' +
-      '( VencidoA90) as SUMAVencidoA90,'#13#10'SUM( VencidoMas120) as SUMAVen' +
-      'cidoMas120, '#13#10#13#10'case when SUM(Saldopendiente)/1000=0 then 0 else' +
-      ' (SUM( TotalVigente)/SUM(Saldopendiente))*100 end as PorcentajeV' +
-      'ig1_30 ,'#13#10'case when SUM(Saldopendiente)/1000=0 then 0 else (SUM(' +
-      ' VencidoA30)/SUM(Saldopendiente))*100 end as PorcentajeVenc31_60' +
-      ','#13#10'case when SUM(Saldopendiente)/1000=0 then 0 else (SUM( Vencid' +
-      'oA60)/SUM(Saldopendiente))*100 end as PorcentajeVenc61_90,'#13#10'case' +
-      ' when SUM(Saldopendiente)/1000=0 then 0 else (SUM( VencidoA90)/S' +
-      'UM(Saldopendiente))*100 end as PorcentajeVenc91_120, '#13#10'case when' +
-      ' SUM(Saldopendiente)/1000=0 then 0 else (SUM( VencidoMas120)/SUM' +
-      '(Saldopendiente))*100 end as PorcentajeVencMas120 , '#13#10#13#10'case whe' +
-      'n SUM(TotalPorVencer)/1000=0 then 0 else (SUM( SaldoPendiente)/S' +
-      'UM(TotalPorVencer))*100 end as PorcCobradoPendiente ,  '#13#10'case wh' +
-      'en SUM(TotalPorVencer)/1000=0 then 0 else (SUM( TotalPorCobrar)/' +
-      'SUM(TotalPorVencer))*100 end as PorcXCobrar'#13#10'from vw_ReporteCart' +
-      'eraCompleto'#13#10
+      'alCobradoVencido/1000) as SUMATotalCobradoVencido,'#13#10'SUM(Total0A3' +
+      '0)as SUMATotal0A30, '#13#10#13#10'SUM( VencidoA30)as SUMAVencidoA30, '#13#10'SUM' +
+      '(VencidoA60) as SUMAVencidoA60,'#13#10'SUM( VencidoA90) as SUMAVencido' +
+      'A90,'#13#10'SUM( VencidoMas120) as SUMAVencidoMas120, '#13#10'case when SUM(' +
+      'Saldopendiente)/1000=0 then 0 else (SUM( TotalVigente)/SUM(Saldo' +
+      'pendiente))*100 end as PorcentajeVenc0_30,--ago 21/17'#13#10'case when' +
+      ' SUM(Saldopendiente)/1000=0 then 0 else (SUM( TotalVigente)/SUM(' +
+      'Saldopendiente))*100 end as PorcentajeVigente ,  -- cambio nombr' +
+      'e ago 21/17'#13#10'case when SUM(Saldopendiente)/1000=0 then 0 else (S' +
+      'UM( VencidoA30)/SUM(Saldopendiente))*100 end as PorcentajeVenc31' +
+      '_60,'#13#10'case when SUM(Saldopendiente)/1000=0 then 0 else (SUM( Ven' +
+      'cidoA60)/SUM(Saldopendiente))*100 end as PorcentajeVenc61_90,'#13#10'c' +
+      'ase when SUM(Saldopendiente)/1000=0 then 0 else (SUM( VencidoA90' +
+      ')/SUM(Saldopendiente))*100 end as PorcentajeVenc91_120, '#13#10'case w' +
+      'hen SUM(Saldopendiente)/1000=0 then 0 else (SUM( VencidoMas120)/' +
+      'SUM(Saldopendiente))*100 end as PorcentajeVencMas120 , '#13#10#13#10'case ' +
+      'when SUM(TotalPorVencer)/1000=0 then 0 else (SUM( SaldoPendiente' +
+      ')/SUM(TotalPorVencer))*100 end as PorcCobradoPendiente ,  '#13#10'case' +
+      ' when SUM(TotalPorVencer)/1000=0 then 0 else (SUM( TotalPorCobra' +
+      'r)/SUM(TotalPorVencer))*100 end as PorcXCobrar'#13#10'from vw_ReporteC' +
+      'arteraCompleto'#13#10
     Parameters = <>
     Left = 32
     Top = 80
@@ -7558,12 +7722,6 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       Precision = 38
       Size = 6
     end
-    object ADODtStSumasTotalesPorcentajeVig1_30: TFMTBCDField
-      FieldName = 'PorcentajeVig1_30'
-      ReadOnly = True
-      Precision = 38
-      Size = 6
-    end
     object ADODtStSumasTotalesPorcentajeVenc31_60: TFMTBCDField
       FieldName = 'PorcentajeVenc31_60'
       ReadOnly = True
@@ -7600,66 +7758,87 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       Precision = 38
       Size = 6
     end
+    object ADODtStSumasTotalesSUMATotal0A30: TFMTBCDField
+      FieldName = 'SUMATotal0A30'
+      ReadOnly = True
+      Precision = 38
+      Size = 6
+    end
+    object ADODtStSumasTotalesPorcentajeVenc0_30: TFMTBCDField
+      FieldName = 'PorcentajeVenc0_30'
+      ReadOnly = True
+      Precision = 38
+      Size = 6
+    end
+    object ADODtStSumasTotalesPorcentajeVigente: TFMTBCDField
+      FieldName = 'PorcentajeVigente'
+      ReadOnly = True
+      Precision = 38
+      Size = 6
+    end
   end
-  object DSSumasTotales: TDataSource
+  object DSSumasTotales: TDataSource [11]
     DataSet = ADODtStSumasTotales
     Left = 104
     Top = 80
   end
-  object ppDBSumasTotales: TppDBPipeline
+  object ppDBSumasTotales: TppDBPipeline [12]
     DataSource = DSSumasTotales
     UserName = 'dbpReport2'
     Left = 176
     Top = 80
   end
-  object ppDBHojaControlCte: TppDBPipeline
+  object ppDBHojaControlCte: TppDBPipeline [13]
     DataSource = DSHojaControlCte
     UserName = 'DBHojaControlCte'
     Left = 216
     Top = 240
   end
-  object ADODtStSumasXCalificacion: TADODataSet
+  object ADODtStSumasXCalificacion: TADODataSet [14]
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     OnCalcFields = CuotasReportCalcFields
     CommandText = 
       'SElect Calificacioninicial, Count(IdAnexo) cantidad ,SUM(TotalVi' +
-      'gente)/1000 as sumaVigente,  Sum (VencidoA30)/1000 Suma30, sum(V' +
-      'encidoA60)/1000 suma60 , '#13#10'sum(VencidoA90)/1000  suma90, SUM(Ven' +
-      'cidoMas120)/1000 sumamas120,Sum(TotalPorVencer) /1000 as SumTota' +
-      'lPendiente,'#13#10' Sum(TotalCobradoVencido)/1000  SumCobradoVencido, ' +
-      #13#10'SUM(TotalPorCobrar)/1000  sumXCobrar ,'#13#10#13#10'CAse when Sum(TotalP' +
-      'orVencer)>0 then (SUM(TotalPorCobrar)/Sum(TotalPorVencer))*100 e' +
-      'lse 0 end as  '#13#10' PorcXVencer,'#13#10' CAse when Sum(TotalPorVencer)>0 ' +
-      'then( SUM(TotalCobradoVencido)/Sum(TotalPorVencer))*100 else 0 e' +
-      'nd as  '#13#10' PorcVencido, '#13#10'  CAse when Sum(TotalCobradoVencido)>0 ' +
-      'then( SUM(TotalVigente)/Sum(TotalCobradoVencido))*100 else 0 end' +
-      ' as  '#13#10' PorcVenc1A30,'#13#10' CAse when Sum(TotalCobradoVencido)>0 the' +
-      'n( SUM(VencidoA30)/Sum(TotalCobradoVencido))*100 else 0 end as  ' +
-      #13#10' PorcVenc31a60,'#13#10'  CAse when Sum(TotalCobradoVencido)>0 then (' +
-      'SUM(VencidoA60)/Sum(TotalCobradoVencido))*100 else 0 end as  '#13#10' ' +
-      'PorcVenc61a90,'#13#10'   CAse when Sum(TotalCobradoVencido)>0 then (SU' +
-      'M(VencidoA90)/Sum(TotalCobradoVencido))*100 else 0 end as  '#13#10' Po' +
-      'rcVenc91a120,'#13#10'   CAse when Sum(TotalCobradoVencido)>0 then (SUM' +
-      '(VencidoMas120)/Sum(TotalCobradoVencido))*100 else 0 end as  '#13#10' ' +
-      'PorcVencidoMas120'#13#10#13#10#13#10'from vw_ReporteCarteraCompleto'#13#10#13#10'Group b' +
-      'y CalificacionInicial'
+      'gente)/1000 as sumaVigente, '#13#10'SUM(Total0A30)/1000 as suma0a30, '#13 +
+      #10' Sum (VencidoA30)/1000 Suma30, sum(VencidoA60)/1000 suma60 , '#13#10 +
+      'sum(VencidoA90)/1000  suma90, SUM(VencidoMas120)/1000 sumamas120' +
+      ',Sum(TotalPorVencer) /1000 as SumTotalPendiente,'#13#10' Sum(TotalCobr' +
+      'adoVencido)/1000  SumCobradoVencido, '#13#10'SUM(TotalPorCobrar)/1000 ' +
+      ' sumXCobrar ,'#13#10#13#10#13#10'CAse when Sum(TotalPorVencer)>0 then (SUM(Tot' +
+      'alPorCobrar)/Sum(TotalPorVencer))*100 else 0 end as  '#13#10' PorcXVen' +
+      'cer,'#13#10' CAse when Sum(TotalPorVencer)>0 then( SUM(TotalCobradoVen' +
+      'cido)/Sum(TotalPorVencer))*100 else 0 end as  '#13#10' PorcVencido, '#13#10 +
+      ' CAse when Sum(TotalCobradoVencido)>0 then( SUM(TotalVigente)/Su' +
+      'm(TotalPorVencer))*100 else 0 end as  -- ago 21/17  no esta venc' +
+      'ido'#13#10' PorcVigente,'#13#10'  CAse when Sum(TotalCobradoVencido)>0 then(' +
+      ' SUM(Total0A30)/Sum(TotalCobradoVencido))*100 else 0 end as  '#13#10' ' +
+      'PorcVenc0A30,'#13#10' CAse when Sum(TotalCobradoVencido)>0 then( SUM(V' +
+      'encidoA30)/Sum(TotalCobradoVencido))*100 else 0 end as  '#13#10' PorcV' +
+      'enc31a60,'#13#10'  CAse when Sum(TotalCobradoVencido)>0 then (SUM(Venc' +
+      'idoA60)/Sum(TotalCobradoVencido))*100 else 0 end as  '#13#10' PorcVenc' +
+      '61a90,'#13#10'   CAse when Sum(TotalCobradoVencido)>0 then (SUM(Vencid' +
+      'oA90)/Sum(TotalCobradoVencido))*100 else 0 end as  '#13#10' PorcVenc91' +
+      'a120,'#13#10'   CAse when Sum(TotalCobradoVencido)>0 then (SUM(Vencido' +
+      'Mas120)/Sum(TotalCobradoVencido))*100 else 0 end as  '#13#10' PorcVenc' +
+      'idoMas120'#13#10#13#10#13#10'from vw_ReporteCarteraCompleto'#13#10#13#10'Group by Califi' +
+      'cacionInicial'
     Parameters = <>
     Left = 32
     Top = 144
   end
-  object DSSumasXCalifica: TDataSource
+  object DSSumasXCalifica: TDataSource [15]
     DataSet = ADODtStSumasXCalificacion
     Left = 104
     Top = 144
   end
-  object ppDBPplnSumasXCalifica: TppDBPipeline
+  object ppDBPplnSumasXCalifica: TppDBPipeline [16]
     DataSource = DSSumasXCalifica
     UserName = 'DBPplnSumasXCalifica'
     Left = 176
     Top = 144
   end
-  object AdoDtstPercentiles: TADODataSet
+  object AdoDtstPercentiles: TADODataSet [17]
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     OnCalcFields = CuotasReportCalcFields
@@ -7672,7 +7851,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
     Left = 312
     Top = 144
   end
-  object ADODtStMediana: TADODataSet
+  object ADODtStMediana: TADODataSet [18]
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     OnCalcFields = CuotasReportCalcFields
@@ -7693,18 +7872,18 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       Size = 6
     end
   end
-  object DSMediana: TDataSource
+  object DSMediana: TDataSource [19]
     DataSet = ADODtStMediana
     Left = 416
     Top = 200
   end
-  object ppDBPplnMediana: TppDBPipeline
+  object ppDBPplnMediana: TppDBPipeline [20]
     DataSource = DSMediana
     UserName = 'DBMediana'
     Left = 480
     Top = 200
   end
-  object ADODtStRepAmortiza: TADODataSet
+  object ADODtStRepAmortiza: TADODataSet [21]
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -7955,12 +8134,12 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       ReadOnly = True
     end
   end
-  object DSRepAmortiza: TDataSource
+  object DSRepAmortiza: TDataSource [22]
     DataSet = ADODtStRepAmortiza
     Left = 128
     Top = 400
   end
-  object ppRprtRepAmortizayPagos: TppReport
+  object ppRprtRepAmortizayPagos: TppReport [23]
     AutoStop = False
     DataPipeline = ppDBPplnAmortiza
     PassSetting = psTwoPass
@@ -8015,7 +8194,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
     XLSSettings.Author = 'ReportBuilder'
     XLSSettings.Subject = 'Report'
     XLSSettings.Title = 'Report'
-    Left = 336
+    Left = 352
     Top = 400
     Version = '15.0'
     mmColumnWidth = 203200
@@ -13606,13 +13785,13 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
     object ppParameterList3: TppParameterList
     end
   end
-  object ppDBPplnAmortiza: TppDBPipeline
+  object ppDBPplnAmortiza: TppDBPipeline [24]
     DataSource = DSRepAmortiza
     UserName = 'DBAmortizacionPagos'
     Left = 216
     Top = 400
   end
-  object ADODtStPagos: TADODataSet
+  object ADODtStPagos: TADODataSet [25]
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -13672,28 +13851,28 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       FieldName = 'SeriePago'
     end
   end
-  object DSPagos: TDataSource
+  object DSPagos: TDataSource [26]
     DataSet = ADODtStPagos
     Left = 136
     Top = 464
   end
-  object ppDBPpPagos: TppDBPipeline
+  object ppDBPpPagos: TppDBPipeline [27]
     DataSource = DSPagos
     UserName = 'DBPagos'
     Left = 208
     Top = 464
     MasterDataPipelineName = 'ppDBPplnAmortiza'
   end
-  object ADODtStAnexoCliente: TADODataSet
+  object ADODtStAnexoCliente: TADODataSet [28]
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
       'Select A.IdAnexo, A.Identificador as Anexo , C.identificador as ' +
-      'Contrato ,'#13#10'CT.identificador as Tipocontrato, P.RazonSocial'#13#10#13#10'f' +
-      'rom Anexos A'#13#10'  inner join Contratos C on C.IdContrato=A.IdContr' +
-      'ato'#13#10'  inner join ContratosTipos CT on CT.IdContratoTipo=C.idcon' +
-      'tratotipo '#13#10'  inner join Personas P on P.IdPersona=C.idpersona'#13#10 +
-      'where a.idAnexo =:IDAnexo'
+      'Contrato ,'#13#10'CT.identificador as Tipocontrato, P.RazonSocial, A.C' +
+      'ontratadoTotal'#13#10#13#10'from Anexos A'#13#10'  inner join Contratos C on C.I' +
+      'dContrato=A.IdContrato'#13#10'  inner join ContratosTipos CT on CT.IdC' +
+      'ontratoTipo=C.idcontratotipo '#13#10'  inner join Personas P on P.IdPe' +
+      'rsona=C.idpersona'#13#10'where a.idAnexo =:IDAnexo'
     Parameters = <
       item
         Name = 'IDAnexo'
@@ -13724,13 +13903,18 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       FieldName = 'RazonSocial'
       Size = 300
     end
+    object ADODtStAnexoClienteContratadoTotal: TFMTBCDField
+      FieldName = 'ContratadoTotal'
+      Precision = 18
+      Size = 6
+    end
   end
-  object dsAnexoCliente: TDataSource
+  object dsAnexoCliente: TDataSource [29]
     DataSet = ADODtStAnexoCliente
     Left = 136
     Top = 552
   end
-  object ppRprtAmoryPagos2: TppReport
+  object ppRprtAmoryPagos2: TppReport [30]
     AutoStop = False
     DataPipeline = ppDBPpAnexoCliente
     PassSetting = psTwoPass
@@ -13748,7 +13932,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
     PrinterSetup.mmPaperHeight = 215900
     PrinterSetup.mmPaperWidth = 279400
     PrinterSetup.PaperSize = 1
-    Template.FileName = 'C:\Desarrollo\SOFOM\Reportes\rptResAmorYPagoTipo2V2.rtm'
+    Template.FileName = 'C:\Desarrollo\SOFOM\Reportes\rptResAmorYPagoVAgo16_17AC.rtm'
     Units = utMillimeters
     ArchiveFileName = '($MyDocuments)\ReportArchive.raf'
     DeviceType = 'Screen'
@@ -13793,7 +13977,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
     object ppTitleBand11: TppTitleBand
       Background.Brush.Style = bsClear
       mmBottomOffset = 0
-      mmHeight = 3440
+      mmHeight = 1058
       mmPrintPosition = 0
     end
     object ppHeaderBand4: TppHeaderBand
@@ -13816,8 +14000,8 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Transparent = True
         VerticalAlignment = avCenter
         mmHeight = 4763
-        mmLeft = 56088
-        mmTop = 13761
+        mmLeft = 186002
+        mmTop = 13758
         mmWidth = 12435
         BandType = 0
         LayerName = BandLayer19
@@ -13836,8 +14020,8 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Transparent = True
         VerticalAlignment = avCenter
         mmHeight = 4763
-        mmLeft = 94981
-        mmTop = 13761
+        mmLeft = 224896
+        mmTop = 13758
         mmWidth = 11642
         BandType = 0
         LayerName = BandLayer19
@@ -13857,8 +14041,8 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Transparent = True
         VerticalAlignment = avCenter
         mmHeight = 4763
-        mmLeft = 56088
-        mmTop = 20111
+        mmLeft = 186002
+        mmTop = 20108
         mmWidth = 15875
         BandType = 0
         LayerName = BandLayer19
@@ -13877,7 +14061,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         DataPipelineName = 'ppDBPpAnexoCliente'
         mmHeight = 11906
-        mmLeft = 56092
+        mmLeft = 186002
         mmTop = 2117
         mmWidth = 78846
         BandType = 0
@@ -13896,8 +14080,8 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         DataPipelineName = 'ppDBPpAnexoCliente'
         mmHeight = 4763
-        mmLeft = 69846
-        mmTop = 13761
+        mmLeft = 199761
+        mmTop = 13758
         mmWidth = 23548
         BandType = 0
         LayerName = BandLayer19
@@ -13915,8 +14099,8 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         DataPipelineName = 'ppDBPpAnexoCliente'
         mmHeight = 4763
-        mmLeft = 108740
-        mmTop = 13761
+        mmLeft = 238655
+        mmTop = 13758
         mmWidth = 26194
         BandType = 0
         LayerName = BandLayer19
@@ -13934,16 +14118,16 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         DataPipelineName = 'ppDBPpAnexoCliente'
         mmHeight = 4763
-        mmLeft = 74608
-        mmTop = 20111
-        mmWidth = 46038
+        mmLeft = 204523
+        mmTop = 20108
+        mmWidth = 18785
         BandType = 0
         LayerName = BandLayer19
       end
       object ppLabel116: TppLabel
         UserName = 'Titulo'
         AutoSize = False
-        Caption = 'RESUMEN AMORTIZACIONES Y PAGOS'
+        Caption = 'RESUMEN FACTURACI'#211'N Y PAGOS'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clNavy
         Font.Name = 'times new Roman'
@@ -17363,10 +17547,10 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Font.Style = []
         Transparent = True
         WordWrap = True
-        mmHeight = 6613
-        mmLeft = 235988
-        mmTop = 35454
-        mmWidth = 10054
+        mmHeight = 8202
+        mmLeft = 251355
+        mmTop = 34396
+        mmWidth = 11642
         BandType = 0
         LayerName = BandLayer19
       end
@@ -17379,7 +17563,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         TraverseAllData = False
         DataPipelineName = 'ppDBPpProd2'
         mmHeight = 23548
-        mmLeft = 136525
+        mmLeft = 55298
         mmTop = 2117
         mmWidth = 126471
         BandType = 0
@@ -17571,7 +17755,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Font.Style = []
         Transparent = True
         mmHeight = 3968
-        mmLeft = 4763
+        mmLeft = 2113
         mmTop = 38631
         mmWidth = 11113
         BandType = 0
@@ -17588,7 +17772,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Font.Style = []
         Transparent = True
         mmHeight = 3968
-        mmLeft = 16669
+        mmLeft = 14019
         mmTop = 38631
         mmWidth = 16933
         BandType = 0
@@ -17606,7 +17790,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 3968
-        mmLeft = 73290
+        mmLeft = 70640
         mmTop = 38631
         mmWidth = 17992
         BandType = 0
@@ -17624,7 +17808,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 3968
-        mmLeft = 96023
+        mmLeft = 93373
         mmTop = 38631
         mmWidth = 16404
         BandType = 0
@@ -17642,7 +17826,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 3968
-        mmLeft = 114015
+        mmLeft = 111365
         mmTop = 38631
         mmWidth = 20108
         BandType = 0
@@ -17657,12 +17841,12 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Font.Name = 'Arial'
         Font.Size = 8
         Font.Style = []
+        TextAlignment = taRightJustified
         Transparent = True
-        VerticalAlignment = avBottom
-        mmHeight = 3968
-        mmLeft = 200269
-        mmTop = 38101
-        mmWidth = 13760
+        mmHeight = 3969
+        mmLeft = 207430
+        mmTop = 38100
+        mmWidth = 21700
         BandType = 0
         LayerName = BandLayer19
       end
@@ -17677,7 +17861,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Font.Style = []
         Transparent = True
         mmHeight = 3968
-        mmLeft = 35719
+        mmLeft = 33069
         mmTop = 38631
         mmWidth = 18521
         BandType = 0
@@ -17694,7 +17878,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Font.Style = []
         Transparent = True
         mmHeight = 3968
-        mmLeft = 55563
+        mmLeft = 52913
         mmTop = 38631
         mmWidth = 15875
         BandType = 0
@@ -17707,15 +17891,15 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 7
+        Font.Size = 8
         Font.Style = []
         Transparent = True
         WordWrap = True
-        VerticalAlignment = avBottom
-        mmHeight = 7673
-        mmLeft = 186267
-        mmTop = 34397
-        mmWidth = 10848
+        VerticalAlignment = avCenter
+        mmHeight = 9525
+        mmLeft = 197909
+        mmTop = 33073
+        mmWidth = 9790
         BandType = 0
         LayerName = BandLayer19
       end
@@ -17730,10 +17914,10 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Font.Style = []
         Transparent = True
         WordWrap = True
-        mmHeight = 6351
-        mmLeft = 216165
-        mmTop = 35718
-        mmWidth = 14552
+        mmHeight = 7680
+        mmLeft = 232040
+        mmTop = 34396
+        mmWidth = 15081
         BandType = 0
         LayerName = BandLayer19
       end
@@ -17741,10 +17925,10 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         UserName = 'Line10'
         Style = lsDouble
         Weight = 0.750000000000000000
-        mmHeight = 1323
-        mmLeft = 4770
-        mmTop = 42604
-        mmWidth = 256382
+        mmHeight = 1058
+        mmLeft = 1323
+        mmTop = 42598
+        mmWidth = 264848
         BandType = 0
         LayerName = BandLayer19
       end
@@ -17759,10 +17943,10 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Font.Style = []
         TextAlignment = taRightJustified
         Transparent = True
-        mmHeight = 3968
-        mmLeft = 152909
-        mmTop = 38631
-        mmWidth = 15875
+        mmHeight = 3969
+        mmLeft = 154517
+        mmTop = 38100
+        mmWidth = 20638
         BandType = 0
         LayerName = BandLayer19
       end
@@ -17778,9 +17962,68 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 3968
-        mmLeft = 136504
+        mmLeft = 133854
         mmTop = 38631
         mmWidth = 15875
+        BandType = 0
+        LayerName = BandLayer19
+      end
+      object ppLabel156: TppLabel
+        UserName = 'Label156'
+        AutoSize = False
+        Caption = 'FechaPago'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 3704
+        mmLeft = 177006
+        mmTop = 38100
+        mmWidth = 16400
+        BandType = 0
+        LayerName = BandLayer19
+      end
+      object ppLabel105: TppLabel
+        UserName = 'Label3'
+        AutoSize = False
+        Border.BorderPositions = [bpBottom]
+        Border.Weight = 0.748799979686737100
+        Caption = 'Valor:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        VerticalAlignment = avCenter
+        mmHeight = 4763
+        mmLeft = 224896
+        mmTop = 20108
+        mmWidth = 11642
+        BandType = 0
+        LayerName = BandLayer19
+      end
+      object ppDBText125: TppDBText
+        UserName = 'DBText125'
+        DataField = 'ContratadoTotal'
+        DataPipeline = ppDBPpAnexoCliente
+        DisplayFormat = '#,0.00;-#,0.00'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        Transparent = True
+        VerticalAlignment = avCenter
+        DataPipelineName = 'ppDBPpAnexoCliente'
+        mmHeight = 4763
+        mmLeft = 239978
+        mmTop = 20108
+        mmWidth = 18785
         BandType = 0
         LayerName = BandLayer19
       end
@@ -17842,7 +18085,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
             Background2.Brush.Style = bsClear
             PrintHeight = phDynamic
             mmBottomOffset = 0
-            mmHeight = 9790
+            mmHeight = 18785
             mmPrintPosition = 0
             object ppDBText122: TppDBText
               UserName = 'DBText122'
@@ -17858,7 +18101,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Transparent = True
               DataPipelineName = 'ppDBPpAmortiza'
               mmHeight = 4763
-              mmLeft = 5292
+              mmLeft = 2642
               mmTop = 0
               mmWidth = 9785
               BandType = 4
@@ -17868,6 +18111,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               UserName = 'DBText123'
               DataField = 'FechaVencimiento'
               DataPipeline = ppDBPpAmortiza
+              DisplayFormat = 'dd/mmm/yy'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
               Font.Name = 'Arial'
@@ -17877,7 +18121,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Transparent = True
               DataPipelineName = 'ppDBPpAmortiza'
               mmHeight = 4763
-              mmLeft = 19315
+              mmLeft = 15870
               mmTop = 0
               mmWidth = 16933
               BandType = 4
@@ -17898,29 +18142,9 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Transparent = True
               DataPipelineName = 'ppDBPpAmortiza'
               mmHeight = 4763
-              mmLeft = 75936
+              mmLeft = 73286
               mmTop = 0
               mmWidth = 17992
-              BandType = 4
-              LayerName = Foreground8
-            end
-            object ppDBText125: TppDBText
-              UserName = 'DBText125'
-              DataField = 'Dias'
-              DataPipeline = ppDBPpAmortiza
-              Font.Charset = DEFAULT_CHARSET
-              Font.Color = clBlack
-              Font.Name = 'Arial'
-              Font.Size = 8
-              Font.Style = []
-              ParentDataPipeline = False
-              TextAlignment = taRightJustified
-              Transparent = True
-              DataPipelineName = 'ppDBPpAmortiza'
-              mmHeight = 4763
-              mmLeft = 186775
-              mmTop = 0
-              mmWidth = 10848
               BandType = 4
               LayerName = Foreground8
             end
@@ -17939,7 +18163,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Transparent = True
               DataPipelineName = 'ppDBPpAmortiza'
               mmHeight = 4763
-              mmLeft = 96573
+              mmLeft = 93923
               mmTop = 0
               mmWidth = 16404
               BandType = 4
@@ -17960,30 +18184,9 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Transparent = True
               DataPipelineName = 'ppDBPpAmortiza'
               mmHeight = 4763
-              mmLeft = 114565
+              mmLeft = 111915
               mmTop = 0
               mmWidth = 20638
-              BandType = 4
-              LayerName = Foreground8
-            end
-            object ppDBText129: TppDBText
-              UserName = 'DBText129'
-              DataField = 'TotalMora'
-              DataPipeline = ppDBPpAmortiza
-              DisplayFormat = '#,0.00;-#,0.00'
-              Font.Charset = DEFAULT_CHARSET
-              Font.Color = clBlack
-              Font.Name = 'Arial'
-              Font.Size = 7
-              Font.Style = []
-              ParentDataPipeline = False
-              TextAlignment = taRightJustified
-              Transparent = True
-              DataPipelineName = 'ppDBPpAmortiza'
-              mmHeight = 4763
-              mmLeft = 200798
-              mmTop = 0
-              mmWidth = 13494
               BandType = 4
               LayerName = Foreground8
             end
@@ -17991,6 +18194,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               UserName = 'DBText131'
               DataField = 'ultimaFechaCFDIBase'
               DataPipeline = ppDBPpAmortiza
+              DisplayFormat = 'dd/mmm/yy'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
               Font.Name = 'Arial'
@@ -18000,7 +18204,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Transparent = True
               DataPipelineName = 'ppDBPpAmortiza'
               mmHeight = 4763
-              mmLeft = 38365
+              mmLeft = 34920
               mmTop = 0
               mmWidth = 15081
               BandType = 4
@@ -18020,29 +18224,9 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Transparent = True
               DataPipelineName = 'ppDBPpAmortiza'
               mmHeight = 4763
-              mmLeft = 58208
+              mmLeft = 55558
               mmTop = 0
               mmWidth = 15875
-              BandType = 4
-              LayerName = Foreground8
-            end
-            object ppDBText133: TppDBText
-              UserName = 'DBText133'
-              DataField = 'ultFEchaMora'
-              DataPipeline = ppDBPpAmortiza
-              Font.Charset = DEFAULT_CHARSET
-              Font.Color = clBlack
-              Font.Name = 'Arial'
-              Font.Size = 8
-              Font.Style = []
-              ParentDataPipeline = False
-              TextAlignment = taRightJustified
-              Transparent = True
-              DataPipelineName = 'ppDBPpAmortiza'
-              mmHeight = 4763
-              mmLeft = 216673
-              mmTop = 0
-              mmWidth = 17198
               BandType = 4
               LayerName = Foreground8
             end
@@ -18055,15 +18239,16 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Font.Color = clBlack
               Font.Name = 'Arial'
               Font.Size = 8
-              Font.Style = []
+              Font.Style = [fsBold]
               ParentDataPipeline = False
               TextAlignment = taRightJustified
               Transparent = True
+              Visible = False
               DataPipelineName = 'ppDBPpAmortiza'
               mmHeight = 4763
-              mmLeft = 153459
+              mmLeft = 154517
               mmTop = 0
-              mmWidth = 21696
+              mmWidth = 20638
               BandType = 4
               LayerName = Foreground8
             end
@@ -18082,29 +18267,9 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Transparent = True
               DataPipelineName = 'ppDBPpAmortiza'
               mmHeight = 4763
-              mmLeft = 137054
+              mmLeft = 134404
               mmTop = 0
               mmWidth = 15081
-              BandType = 4
-              LayerName = Foreground8
-            end
-            object ppDBText134: TppDBText
-              UserName = 'DBText134'
-              DataField = 'FolioUltimoMora'
-              DataPipeline = ppDBPpAmortiza
-              Font.Charset = DEFAULT_CHARSET
-              Font.Color = clBlack
-              Font.Name = 'Arial'
-              Font.Size = 8
-              Font.Style = []
-              ParentDataPipeline = False
-              TextAlignment = taCentered
-              Transparent = True
-              DataPipelineName = 'ppDBPpAmortiza'
-              mmHeight = 4763
-              mmLeft = 234930
-              mmTop = 0
-              mmWidth = 12171
               BandType = 4
               LayerName = Foreground8
             end
@@ -18150,97 +18315,8 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                 object ppTitleBand14: TppTitleBand
                   Background.Brush.Style = bsClear
                   mmBottomOffset = 0
-                  mmHeight = 3969
+                  mmHeight = 0
                   mmPrintPosition = 0
-                  object ppLabel135: TppLabel
-                    UserName = 'Label135'
-                    AutoSize = False
-                    Caption = 'FolioPago'
-                    Font.Charset = DEFAULT_CHARSET
-                    Font.Color = clBlack
-                    Font.Name = 'Arial'
-                    Font.Size = 7
-                    Font.Style = []
-                    TextAlignment = taCentered
-                    Transparent = True
-                    mmHeight = 3703
-                    mmLeft = 209815
-                    mmTop = 265
-                    mmWidth = 20373
-                    BandType = 1
-                    LayerName = Foreground9
-                  end
-                  object ppLabel136: TppLabel
-                    UserName = 'Label136'
-                    AutoSize = False
-                    Caption = 'SeriePago'
-                    Font.Charset = DEFAULT_CHARSET
-                    Font.Color = clBlack
-                    Font.Name = 'Arial'
-                    Font.Size = 7
-                    Font.Style = []
-                    Transparent = True
-                    mmHeight = 3703
-                    mmLeft = 231246
-                    mmTop = 261
-                    mmWidth = 21167
-                    BandType = 1
-                    LayerName = Foreground9
-                  end
-                  object ppLabel137: TppLabel
-                    UserName = 'Label137'
-                    AutoSize = False
-                    Caption = 'Importe'
-                    Font.Charset = DEFAULT_CHARSET
-                    Font.Color = clBlack
-                    Font.Name = 'Arial'
-                    Font.Size = 7
-                    Font.Style = []
-                    TextAlignment = taRightJustified
-                    Transparent = True
-                    mmHeight = 3703
-                    mmLeft = 153459
-                    mmTop = 265
-                    mmWidth = 21696
-                    BandType = 1
-                    LayerName = Foreground9
-                  end
-                  object ppLabel111: TppLabel
-                    UserName = 'Label2'
-                    AutoSize = False
-                    Caption = 'FechaPago'
-                    Font.Charset = DEFAULT_CHARSET
-                    Font.Color = clBlack
-                    Font.Name = 'Arial'
-                    Font.Size = 7
-                    Font.Style = []
-                    TextAlignment = taRightJustified
-                    Transparent = True
-                    mmHeight = 3703
-                    mmLeft = 181505
-                    mmTop = 265
-                    mmWidth = 21696
-                    BandType = 1
-                    LayerName = Foreground9
-                  end
-                  object ppLabel105: TppLabel
-                    UserName = 'Label1'
-                    AutoSize = False
-                    Caption = 'Pagos'
-                    Font.Charset = DEFAULT_CHARSET
-                    Font.Color = clBlack
-                    Font.Name = 'Arial'
-                    Font.Size = 8
-                    Font.Style = []
-                    TextAlignment = taRightJustified
-                    Transparent = True
-                    mmHeight = 3704
-                    mmLeft = 131234
-                    mmTop = 265
-                    mmWidth = 21696
-                    BandType = 1
-                    LayerName = Foreground9
-                  end
                 end
                 object ppDetailBand14: TppDetailBand
                   Background1.Brush.Style = bsClear
@@ -18248,43 +18324,6 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                   mmBottomOffset = 0
                   mmHeight = 4233
                   mmPrintPosition = 0
-                  object ppDBText137: TppDBText
-                    UserName = 'DBText137'
-                    DataField = 'FolioPago'
-                    DataPipeline = ppDBPpPago2
-                    Font.Charset = DEFAULT_CHARSET
-                    Font.Color = clBlack
-                    Font.Name = 'Arial'
-                    Font.Size = 7
-                    Font.Style = []
-                    TextAlignment = taCentered
-                    Transparent = True
-                    DataPipelineName = 'ppDBPpPago2'
-                    mmHeight = 3968
-                    mmLeft = 207963
-                    mmTop = 0
-                    mmWidth = 22225
-                    BandType = 4
-                    LayerName = Foreground9
-                  end
-                  object ppDBText138: TppDBText
-                    UserName = 'DBText138'
-                    DataField = 'SeriePago'
-                    DataPipeline = ppDBPpPago2
-                    Font.Charset = DEFAULT_CHARSET
-                    Font.Color = clBlack
-                    Font.Name = 'Arial'
-                    Font.Size = 7
-                    Font.Style = []
-                    Transparent = True
-                    DataPipelineName = 'ppDBPpPago2'
-                    mmHeight = 3968
-                    mmLeft = 231246
-                    mmTop = 0
-                    mmWidth = 21167
-                    BandType = 4
-                    LayerName = Foreground9
-                  end
                   object ppDBText139: TppDBText
                     UserName = 'DBText139'
                     DataField = 'Importe'
@@ -18293,15 +18332,15 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                     Font.Charset = DEFAULT_CHARSET
                     Font.Color = clBlack
                     Font.Name = 'Arial'
-                    Font.Size = 7
+                    Font.Size = 8
                     Font.Style = []
                     TextAlignment = taRightJustified
                     Transparent = True
                     DataPipelineName = 'ppDBPpPago2'
                     mmHeight = 3968
-                    mmLeft = 153459
+                    mmLeft = 154517
                     mmTop = 0
-                    mmWidth = 21696
+                    mmWidth = 20638
                     BandType = 4
                     LayerName = Foreground9
                   end
@@ -18309,18 +18348,37 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                     UserName = 'DBText2'
                     DataField = 'FechaPago'
                     DataPipeline = ppDBPpPago2
+                    DisplayFormat = 'dd/mmm/yy'
                     Font.Charset = DEFAULT_CHARSET
                     Font.Color = clBlack
                     Font.Name = 'Arial'
-                    Font.Size = 7
+                    Font.Size = 8
                     Font.Style = []
                     TextAlignment = taRightJustified
                     Transparent = True
                     DataPipelineName = 'ppDBPpPago2'
-                    mmHeight = 3968
-                    mmLeft = 181505
-                    mmTop = 264
-                    mmWidth = 21696
+                    mmHeight = 3969
+                    mmLeft = 177006
+                    mmTop = 265
+                    mmWidth = 16400
+                    BandType = 4
+                    LayerName = Foreground9
+                  end
+                  object ppDBText137: TppDBText
+                    UserName = 'DBText137'
+                    DataField = 'DiasAtraso'
+                    DataPipeline = ppDBPpPago2
+                    Font.Charset = DEFAULT_CHARSET
+                    Font.Color = clBlack
+                    Font.Name = 'Arial'
+                    Font.Size = 8
+                    Font.Style = []
+                    Transparent = True
+                    DataPipelineName = 'ppDBPpPago2'
+                    mmHeight = 3969
+                    mmLeft = 197909
+                    mmTop = 265
+                    mmWidth = 9790
                     BandType = 4
                     LayerName = Foreground9
                   end
@@ -18328,7 +18386,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                 object ppSummaryBand11: TppSummaryBand
                   Background.Brush.Style = bsClear
                   mmBottomOffset = 0
-                  mmHeight = 3969
+                  mmHeight = 1058
                   mmPrintPosition = 0
                 end
                 object ppDesignLayers13: TppDesignLayers
@@ -18339,6 +18397,173 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                   end
                 end
               end
+            end
+            object ppSubReport13: TppSubReport
+              UserName = 'SubReport13'
+              ExpandAll = False
+              NewPrintJob = False
+              OutlineSettings.CreateNode = True
+              ShiftRelativeTo = ppSubReport10
+              TraverseAllData = False
+              DataPipelineName = 'DBPPPagosMora'
+              mmHeight = 5027
+              mmLeft = 0
+              mmTop = 11377
+              mmWidth = 269400
+              BandType = 4
+              LayerName = Foreground8
+              mmBottomOffset = 0
+              mmOverFlowOffset = 0
+              mmStopPosition = 0
+              mmMinHeight = 0
+              object ppChildReport13: TppChildReport
+                AutoStop = False
+                DataPipeline = DBPPPagosMora
+                PrinterSetup.BinName = 'Default'
+                PrinterSetup.DocumentName = 'Report'
+                PrinterSetup.Duplex = dpVertical
+                PrinterSetup.Orientation = poLandscape
+                PrinterSetup.PaperName = 'Carta'
+                PrinterSetup.PrinterName = 'Default'
+                PrinterSetup.SaveDeviceSettings = False
+                PrinterSetup.mmMarginBottom = 5000
+                PrinterSetup.mmMarginLeft = 5000
+                PrinterSetup.mmMarginRight = 5000
+                PrinterSetup.mmMarginTop = 6350
+                PrinterSetup.mmPaperHeight = 215900
+                PrinterSetup.mmPaperWidth = 279400
+                PrinterSetup.PaperSize = 1
+                Units = utMillimeters
+                Version = '15.0'
+                mmColumnWidth = 0
+                DataPipelineName = 'DBPPPagosMora'
+                object ppTitleBand17: TppTitleBand
+                  Background.Brush.Style = bsClear
+                  mmBottomOffset = 0
+                  mmHeight = 529
+                  mmPrintPosition = 0
+                end
+                object ppDetailBand17: TppDetailBand
+                  Background1.Brush.Style = bsClear
+                  Background2.Brush.Style = bsClear
+                  mmBottomOffset = 0
+                  mmHeight = 4763
+                  mmPrintPosition = 0
+                  object ppDBText138: TppDBText
+                    UserName = 'DBText138'
+                    DataField = 'Importe'
+                    DataPipeline = DBPPPagosMora
+                    DisplayFormat = '#,0.00;-#,0.00'
+                    Font.Charset = DEFAULT_CHARSET
+                    Font.Color = clBlack
+                    Font.Name = 'Arial'
+                    Font.Size = 8
+                    Font.Style = []
+                    ParentDataPipeline = False
+                    TextAlignment = taRightJustified
+                    Transparent = True
+                    DataPipelineName = 'DBPPPagosMora'
+                    mmHeight = 3969
+                    mmLeft = 207430
+                    mmTop = 265
+                    mmWidth = 21700
+                    BandType = 4
+                    LayerName = Foreground6
+                  end
+                  object ppDBText166: TppDBText
+                    UserName = 'DBText166'
+                    DataField = 'FechaPago'
+                    DataPipeline = DBPPPagosMora
+                    DisplayFormat = 'dd/mmm/yy'
+                    Font.Charset = DEFAULT_CHARSET
+                    Font.Color = clBlack
+                    Font.Name = 'Arial'
+                    Font.Size = 8
+                    Font.Style = []
+                    TextAlignment = taRightJustified
+                    Transparent = True
+                    DataPipelineName = 'DBPPPagosMora'
+                    mmHeight = 3969
+                    mmLeft = 232040
+                    mmTop = 265
+                    mmWidth = 15081
+                    BandType = 4
+                    LayerName = Foreground6
+                  end
+                  object ppDBText167: TppDBText
+                    UserName = 'DBText167'
+                    DataField = 'DiasAtraso'
+                    DataPipeline = DBPPPagosMora
+                    Font.Charset = DEFAULT_CHARSET
+                    Font.Color = clBlack
+                    Font.Name = 'Arial'
+                    Font.Size = 8
+                    Font.Style = []
+                    Transparent = True
+                    VerticalAlignment = avCenter
+                    DataPipelineName = 'DBPPPagosMora'
+                    mmHeight = 3969
+                    mmLeft = 197909
+                    mmTop = 265
+                    mmWidth = 9790
+                    BandType = 4
+                    LayerName = Foreground6
+                  end
+                  object ppDBText168: TppDBText
+                    UserName = 'DBText168'
+                    DataField = 'FactMora'
+                    DataPipeline = DBPPPagosMora
+                    Font.Charset = DEFAULT_CHARSET
+                    Font.Color = clBlack
+                    Font.Name = 'Arial'
+                    Font.Size = 8
+                    Font.Style = []
+                    Transparent = True
+                    DataPipelineName = 'DBPPPagosMora'
+                    mmHeight = 3969
+                    mmLeft = 251355
+                    mmTop = 265
+                    mmWidth = 11642
+                    BandType = 4
+                    LayerName = Foreground6
+                  end
+                end
+                object ppSummaryBand15: TppSummaryBand
+                  Background.Brush.Style = bsClear
+                  mmBottomOffset = 0
+                  mmHeight = 0
+                  mmPrintPosition = 0
+                end
+                object ppDesignLayers17: TppDesignLayers
+                  object ppDesignLayer17: TppDesignLayer
+                    UserName = 'Foreground6'
+                    LayerType = ltBanded
+                    Index = 0
+                  end
+                end
+              end
+            end
+            object ppDBText129: TppDBText
+              UserName = 'DBText129'
+              DataField = 'TotalMora'
+              DataPipeline = ppDBPpAmortiza
+              DisplayFormat = '#,0.00;-#,0.00'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 8
+              Font.Style = [fsBold]
+              ParentDataPipeline = False
+              TextAlignment = taRightJustified
+              Transparent = True
+              Visible = False
+              DataPipelineName = 'ppDBPpAmortiza'
+              mmHeight = 4763
+              mmLeft = 207434
+              mmTop = 0
+              mmWidth = 21700
+              BandType = 4
+              LayerName = Foreground8
             end
           end
           object ppSummaryBand10: TppSummaryBand
@@ -18351,9 +18576,9 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Style = lsDouble
               Weight = 0.750000000000000000
               mmHeight = 3175
-              mmLeft = 4770
+              mmLeft = 2646
               mmTop = 265
-              mmWidth = 256382
+              mmWidth = 261673
               BandType = 7
               LayerName = Foreground8
             end
@@ -18372,7 +18597,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Transparent = True
               DataPipelineName = 'ppDBPpAmortiza'
               mmHeight = 4498
-              mmLeft = 75936
+              mmLeft = 73286
               mmTop = 2117
               mmWidth = 17992
               BandType = 7
@@ -18393,7 +18618,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Transparent = True
               DataPipelineName = 'ppDBPpAmortiza'
               mmHeight = 4498
-              mmLeft = 96552
+              mmLeft = 93902
               mmTop = 2117
               mmWidth = 16404
               BandType = 7
@@ -18414,7 +18639,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Transparent = True
               DataPipelineName = 'ppDBPpAmortiza'
               mmHeight = 4498
-              mmLeft = 114565
+              mmLeft = 111915
               mmTop = 2117
               mmWidth = 20638
               BandType = 7
@@ -18456,7 +18681,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Transparent = True
               DataPipelineName = 'ppDBPpAmortiza'
               mmHeight = 4498
-              mmLeft = 137034
+              mmLeft = 134384
               mmTop = 2117
               mmWidth = 15081
               BandType = 7
@@ -18465,7 +18690,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
             object ppLabel139: TppLabel
               UserName = 'Label801'
               AutoSize = False
-              Caption = 'TOTALES CON PAGO: '
+              Caption = 'SUMAS FACTURADAS: '
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
               Font.Name = 'Arial'
@@ -18474,7 +18699,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               TextAlignment = taRightJustified
               Transparent = True
               mmHeight = 4763
-              mmLeft = 40481
+              mmLeft = 37831
               mmTop = 2117
               mmWidth = 31485
               BandType = 7
@@ -18495,9 +18720,9 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Transparent = True
               DataPipelineName = 'ppDBPpAmortiza'
               mmHeight = 4498
-              mmLeft = 200819
+              mmLeft = 207430
               mmTop = 2117
-              mmWidth = 13494
+              mmWidth = 21700
               BandType = 7
               LayerName = Foreground8
             end
@@ -18577,7 +18802,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Transparent = True
               DataPipelineName = 'ppDBPpAmortiza2'
               mmHeight = 4763
-              mmLeft = 5292
+              mmLeft = 3172
               mmTop = 0
               mmWidth = 9785
               BandType = 4
@@ -18587,6 +18812,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               UserName = 'DBText123'
               DataField = 'FechaVencimiento'
               DataPipeline = ppDBPpAmortiza2
+              DisplayFormat = 'dd/mmm /yy'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
               Font.Name = 'Arial'
@@ -18596,7 +18822,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Transparent = True
               DataPipelineName = 'ppDBPpAmortiza2'
               mmHeight = 4763
-              mmLeft = 19315
+              mmLeft = 15865
               mmTop = 0
               mmWidth = 16933
               BandType = 4
@@ -18617,7 +18843,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Transparent = True
               DataPipelineName = 'ppDBPpAmortiza2'
               mmHeight = 4763
-              mmLeft = 75936
+              mmLeft = 73280
               mmTop = 0
               mmWidth = 17992
               BandType = 4
@@ -18638,7 +18864,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Transparent = True
               DataPipelineName = 'ppDBPpAmortiza2'
               mmHeight = 4763
-              mmLeft = 96552
+              mmLeft = 93923
               mmTop = 0
               mmWidth = 16404
               BandType = 4
@@ -18659,7 +18885,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Transparent = True
               DataPipelineName = 'ppDBPpAmortiza2'
               mmHeight = 4763
-              mmLeft = 114544
+              mmLeft = 111915
               mmTop = 0
               mmWidth = 20638
               BandType = 4
@@ -18677,6 +18903,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               ParentDataPipeline = False
               TextAlignment = taRightJustified
               Transparent = True
+              Visible = False
               DataPipelineName = 'ppDBPpAmortiza2'
               mmHeight = 4763
               mmLeft = 216673
@@ -18698,6 +18925,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               ParentDataPipeline = False
               TextAlignment = taRightJustified
               Transparent = True
+              Visible = False
               DataPipelineName = 'ppDBPpAmortiza2'
               mmHeight = 4763
               mmLeft = 200803
@@ -18718,6 +18946,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               ParentDataPipeline = False
               TextAlignment = taRightJustified
               Transparent = True
+              Visible = False
               DataPipelineName = 'ppDBPpAmortiza2'
               mmHeight = 4763
               mmLeft = 186775
@@ -18741,9 +18970,50 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Transparent = True
               DataPipelineName = 'ppDBPpAmortiza2'
               mmHeight = 4763
-              mmLeft = 137034
+              mmLeft = 134000
               mmTop = 0
               mmWidth = 15081
+              BandType = 4
+              LayerName = PageLayer3
+            end
+            object ppDBText133: TppDBText
+              UserName = 'DBText133'
+              DataField = 'ultimaFechaCFDIBase'
+              DataPipeline = ppDBPpAmortiza2
+              DisplayFormat = 'dd/mmm/yy'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 8
+              Font.Style = []
+              ParentDataPipeline = False
+              TextAlignment = taRightJustified
+              Transparent = True
+              DataPipelineName = 'ppDBPpAmortiza2'
+              mmHeight = 4763
+              mmLeft = 34920
+              mmTop = 0
+              mmWidth = 15081
+              BandType = 4
+              LayerName = PageLayer3
+            end
+            object ppDBText134: TppDBText
+              UserName = 'DBText134'
+              DataField = 'FolioUltimoBase'
+              DataPipeline = ppDBPpAmortiza2
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 8
+              Font.Style = []
+              ParentDataPipeline = False
+              TextAlignment = taCentered
+              Transparent = True
+              DataPipelineName = 'ppDBPpAmortiza2'
+              mmHeight = 4763
+              mmLeft = 55558
+              mmTop = 0
+              mmWidth = 15875
               BandType = 4
               LayerName = PageLayer3
             end
@@ -18751,14 +19021,14 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
           object ppSummaryBand13: TppSummaryBand
             Background.Brush.Style = bsClear
             mmBottomOffset = 0
-            mmHeight = 13229
+            mmHeight = 17198
             mmPrintPosition = 0
             object ppLine13: TppLine
               UserName = 'Line12'
               Style = lsDouble
               Weight = 0.750000000000000000
               mmHeight = 3175
-              mmLeft = 4770
+              mmLeft = 3445
               mmTop = 0
               mmWidth = 256380
               BandType = 7
@@ -18779,7 +19049,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Transparent = True
               DataPipelineName = 'ppDBPpAmortiza2'
               mmHeight = 4498
-              mmLeft = 75936
+              mmLeft = 73280
               mmTop = 2117
               mmWidth = 17992
               BandType = 7
@@ -18800,7 +19070,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Transparent = True
               DataPipelineName = 'ppDBPpAmortiza2'
               mmHeight = 4498
-              mmLeft = 96552
+              mmLeft = 93923
               mmTop = 2117
               mmWidth = 16404
               BandType = 7
@@ -18821,7 +19091,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Transparent = True
               DataPipelineName = 'ppDBPpAmortiza2'
               mmHeight = 4498
-              mmLeft = 114544
+              mmLeft = 112448
               mmTop = 2117
               mmWidth = 20108
               BandType = 7
@@ -18830,7 +19100,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
             object ppLabel141: TppLabel
               UserName = 'Label801'
               AutoSize = False
-              Caption = 'TOTALES SIN PAGO: '
+              Caption = 'SUMAS SIN FACTURAR:'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
               Font.Name = 'Arial'
@@ -18839,7 +19109,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               TextAlignment = taRightJustified
               Transparent = True
               mmHeight = 4763
-              mmLeft = 36513
+              mmLeft = 35188
               mmTop = 2117
               mmWidth = 35454
               BandType = 7
@@ -18860,7 +19130,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Transparent = True
               DataPipelineName = 'ppDBPpAmortiza2'
               mmHeight = 4498
-              mmLeft = 137054
+              mmLeft = 133879
               mmTop = 2117
               mmWidth = 15081
               BandType = 7
@@ -18879,11 +19149,146 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               ParentDataPipeline = False
               TextAlignment = taRightJustified
               Transparent = True
+              Visible = False
               DataPipelineName = 'ppDBPpAmortiza2'
               mmHeight = 4498
-              mmLeft = 200819
+              mmLeft = 207434
               mmTop = 2117
-              mmWidth = 13494
+              mmWidth = 20902
+              BandType = 7
+              LayerName = PageLayer3
+            end
+            object ppLine16: TppLine
+              UserName = 'Line16'
+              Style = lsDouble
+              Weight = 0.750000000000000000
+              mmHeight = 3175
+              mmLeft = 71438
+              mmTop = 9525
+              mmWidth = 188119
+              BandType = 7
+              LayerName = PageLayer3
+            end
+            object ppLabel135: TppLabel
+              UserName = 'Label135'
+              AutoSize = False
+              Caption = 'TOTALES:'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 8
+              Font.Style = []
+              TextAlignment = taRightJustified
+              Transparent = True
+              mmHeight = 4763
+              mmLeft = 35190
+              mmTop = 11642
+              mmWidth = 35454
+              BandType = 7
+              LayerName = PageLayer3
+            end
+            object ppDBText169: TppDBText
+              UserName = 'DBText169'
+              DataField = 'SSubTotal'
+              DataPipeline = ppDBPpSumasAmor
+              DisplayFormat = '#,0.00;-#,0.00'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 8
+              Font.Style = []
+              ParentDataPipeline = False
+              TextAlignment = taRightJustified
+              Transparent = True
+              DataPipelineName = 'ppDBPpSumasAmor'
+              mmHeight = 4763
+              mmLeft = 73290
+              mmTop = 11642
+              mmWidth = 17992
+              BandType = 7
+              LayerName = PageLayer3
+            end
+            object ppDBText170: TppDBText
+              UserName = 'DBText170'
+              DataField = 'SImpuestoTotal'
+              DataPipeline = ppDBPpSumasAmor
+              DisplayFormat = '#,0.00;-#,0.00'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 8
+              Font.Style = []
+              ParentDataPipeline = False
+              TextAlignment = taRightJustified
+              Transparent = True
+              DataPipelineName = 'ppDBPpSumasAmor'
+              mmHeight = 4763
+              mmLeft = 93927
+              mmTop = 11642
+              mmWidth = 16404
+              BandType = 7
+              LayerName = PageLayer3
+            end
+            object ppDBText171: TppDBText
+              UserName = 'DBText171'
+              DataField = 'STotal'
+              DataPipeline = ppDBPpSumasAmor
+              DisplayFormat = '#,0.00;-#,0.00'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 8
+              Font.Style = []
+              ParentDataPipeline = False
+              TextAlignment = taRightJustified
+              Transparent = True
+              DataPipelineName = 'ppDBPpSumasAmor'
+              mmHeight = 4763
+              mmLeft = 112448
+              mmTop = 11642
+              mmWidth = 20108
+              BandType = 7
+              LayerName = PageLayer3
+            end
+            object ppDBText172: TppDBText
+              UserName = 'DBText172'
+              DataField = 'SSaldo'
+              DataPipeline = ppDBPpSumasAmor
+              DisplayFormat = '#,0.00;-#,0.00'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 8
+              Font.Style = []
+              ParentDataPipeline = False
+              TextAlignment = taRightJustified
+              Transparent = True
+              DataPipelineName = 'ppDBPpSumasAmor'
+              mmHeight = 4763
+              mmLeft = 133879
+              mmTop = 11642
+              mmWidth = 15081
+              BandType = 7
+              LayerName = PageLayer3
+            end
+            object ppDBText173: TppDBText
+              UserName = 'DBText173'
+              DataField = 'SMora'
+              DataPipeline = ppDBPpSumasAmor
+              DisplayFormat = '#,0.00;-#,0.00'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 8
+              Font.Style = []
+              ParentDataPipeline = False
+              TextAlignment = taRightJustified
+              Transparent = True
+              DataPipelineName = 'ppDBPpSumasAmor'
+              mmHeight = 4763
+              mmLeft = 207430
+              mmTop = 11642
+              mmWidth = 21000
               BandType = 7
               LayerName = PageLayer3
             end
@@ -18900,6 +19305,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       object ppSubReport6: TppSubReport
         UserName = 'SubReport1'
         ExpandAll = False
+        KeepTogether = True
         NewPrintJob = False
         OutlineSettings.CreateNode = True
         ShiftRelativeTo = ppSubReport11
@@ -18939,7 +19345,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
           object ppTitleBand9: TppTitleBand
             Background.Brush.Style = bsClear
             mmBottomOffset = 0
-            mmHeight = 4233
+            mmHeight = 7144
             mmPrintPosition = 0
           end
           object ppDetailBand9: TppDetailBand
@@ -19336,7 +19742,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
           object ppSummaryBand14: TppSummaryBand
             Background.Brush.Style = bsClear
             mmBottomOffset = 0
-            mmHeight = 38629
+            mmHeight = 44715
             mmPrintPosition = 0
             object ppLabel144: TppLabel
               UserName = 'Label89'
@@ -19354,7 +19760,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               VerticalAlignment = avCenter
               mmHeight = 4763
               mmLeft = 12435
-              mmTop = 6615
+              mmTop = 4760
               mmWidth = 37306
               BandType = 7
               LayerName = PageLayer4
@@ -19375,7 +19781,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               DataPipelineName = 'ppDBHojaControlCte'
               mmHeight = 4763
               mmLeft = 51858
-              mmTop = 6615
+              mmTop = 4760
               mmWidth = 21167
               BandType = 7
               LayerName = PageLayer4
@@ -19396,7 +19802,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               VerticalAlignment = avCenter
               mmHeight = 4763
               mmLeft = 8202
-              mmTop = 14288
+              mmTop = 12433
               mmWidth = 41540
               BandType = 7
               LayerName = PageLayer4
@@ -19417,7 +19823,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               DataPipelineName = 'ppDBHojaControlCte'
               mmHeight = 4763
               mmLeft = 51858
-              mmTop = 14288
+              mmTop = 12433
               mmWidth = 21167
               BandType = 7
               LayerName = PageLayer4
@@ -19427,7 +19833,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               AutoSize = False
               Border.BorderPositions = [bpBottom]
               Border.Weight = 0.748799979686737100
-              Caption = 'Cobrados a la Fecha:'
+              Caption = 'Vencidos a la Fecha:'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
               Font.Name = 'Arial'
@@ -19438,7 +19844,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               VerticalAlignment = avCenter
               mmHeight = 4763
               mmLeft = 89959
-              mmTop = 6615
+              mmTop = 12445
               mmWidth = 34660
               BandType = 7
               LayerName = PageLayer4
@@ -19459,7 +19865,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               DataPipelineName = 'ppDBHojaControlCte'
               mmHeight = 4763
               mmLeft = 126471
-              mmTop = 6615
+              mmTop = 12445
               mmWidth = 11113
               BandType = 7
               LayerName = PageLayer4
@@ -19469,7 +19875,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               AutoSize = False
               Border.BorderPositions = [bpBottom]
               Border.Weight = 0.748799979686737100
-              Caption = 'Pagados Con Retraso o Sin Pago:'
+              Caption = 'Pagados Con Retraso:'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
               Font.Name = 'Arial'
@@ -19480,7 +19886,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               VerticalAlignment = avCenter
               mmHeight = 4763
               mmLeft = 77258
-              mmTop = 14288
+              mmTop = 20118
               mmWidth = 47361
               BandType = 7
               LayerName = PageLayer4
@@ -19501,7 +19907,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               DataPipelineName = 'ppDBHojaControlCte'
               mmHeight = 4763
               mmLeft = 126471
-              mmTop = 14288
+              mmTop = 20118
               mmWidth = 11113
               BandType = 7
               LayerName = PageLayer4
@@ -19522,7 +19928,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               VerticalAlignment = avCenter
               mmHeight = 4763
               mmLeft = 91017
-              mmTop = 20902
+              mmTop = 26732
               mmWidth = 33602
               BandType = 7
               LayerName = PageLayer4
@@ -19543,7 +19949,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               DataPipelineName = 'ppDBHojaControlCte'
               mmHeight = 4763
               mmLeft = 126471
-              mmTop = 20902
+              mmTop = 26732
               mmWidth = 11113
               BandType = 7
               LayerName = PageLayer4
@@ -19553,7 +19959,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               AutoSize = False
               Border.BorderPositions = [bpBottom]
               Border.Weight = 0.748799979686737100
-              Caption = 'D'#237'as Pago con Retraso'
+              Caption = 'Pagos con Retraso'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
               Font.Name = 'Arial'
@@ -19564,7 +19970,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               VerticalAlignment = avCenter
               mmHeight = 4763
               mmLeft = 194205
-              mmTop = 6615
+              mmTop = 12445
               mmWidth = 30692
               BandType = 7
               LayerName = PageLayer4
@@ -19585,7 +19991,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               DataPipelineName = 'ppDBHojaControlCte'
               mmHeight = 4763
               mmLeft = 225690
-              mmTop = 6615
+              mmTop = 12445
               mmWidth = 15875
               BandType = 7
               LayerName = PageLayer4
@@ -19595,7 +20001,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               AutoSize = False
               Border.BorderPositions = [bpBottom]
               Border.Weight = 0.748799979686737100
-              Caption = 'D'#237'as/Pago Total'
+              Caption = 'Pagos Totales'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
               Font.Name = 'Arial'
@@ -19606,7 +20012,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               VerticalAlignment = avCenter
               mmHeight = 4763
               mmLeft = 200555
-              mmTop = 14288
+              mmTop = 20118
               mmWidth = 24342
               BandType = 7
               LayerName = PageLayer4
@@ -19627,7 +20033,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               DataPipelineName = 'ppDBHojaControlCte'
               mmHeight = 4763
               mmLeft = 225690
-              mmTop = 14288
+              mmTop = 20118
               mmWidth = 15875
               BandType = 7
               LayerName = PageLayer4
@@ -19648,7 +20054,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               DataPipelineName = 'ppDBHojaControlCte'
               mmHeight = 4763
               mmLeft = 140759
-              mmTop = 14288
+              mmTop = 20118
               mmWidth = 11377
               BandType = 7
               LayerName = PageLayer4
@@ -19669,7 +20075,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               DataPipelineName = 'ppDBHojaControlCte'
               mmHeight = 4763
               mmLeft = 140759
-              mmTop = 20902
+              mmTop = 26732
               mmWidth = 11377
               BandType = 7
               LayerName = PageLayer4
@@ -19690,7 +20096,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               DataPipelineName = 'ppDBHojaControlCte'
               mmHeight = 4763
               mmLeft = 126471
-              mmTop = 26988
+              mmTop = 32818
               mmWidth = 11113
               BandType = 7
               LayerName = PageLayer4
@@ -19700,7 +20106,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               AutoSize = False
               Border.BorderPositions = [bpBottom]
               Border.Weight = 0.748799979686737100
-              Caption = 'Cobrados Recientes sin Pago:'
+              Caption = 'Recientes sin Pago:'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
               Font.Name = 'Arial'
@@ -19711,7 +20117,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               VerticalAlignment = avCenter
               mmHeight = 4763
               mmLeft = 80698
-              mmTop = 26988
+              mmTop = 32818
               mmWidth = 43921
               BandType = 7
               LayerName = PageLayer4
@@ -19721,7 +20127,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               AutoSize = False
               Border.BorderPositions = [bpBottom]
               Border.Weight = 0.748799979686737100
-              Caption = 'D'#237'as de Mayor Atraso'
+              Caption = 'Mayor Atraso'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
               Font.Name = 'Arial'
@@ -19732,7 +20138,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               VerticalAlignment = avCenter
               mmHeight = 4763
               mmLeft = 175155
-              mmTop = 21696
+              mmTop = 27526
               mmWidth = 49742
               BandType = 7
               LayerName = PageLayer4
@@ -19753,7 +20159,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               DataPipelineName = 'ppDBHojaControlCte'
               mmHeight = 4763
               mmLeft = 225690
-              mmTop = 21696
+              mmTop = 27526
               mmWidth = 15875
               BandType = 7
               LayerName = PageLayer4
@@ -19763,7 +20169,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               AutoSize = False
               Border.BorderPositions = [bpBottom]
               Border.Weight = 0.748799979686737100
-              Caption = 'D'#237'as de Mayor Prepago'
+              Caption = 'Mayor Prepago'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
               Font.Name = 'Arial'
@@ -19774,7 +20180,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               VerticalAlignment = avCenter
               mmHeight = 4763
               mmLeft = 175155
-              mmTop = 29369
+              mmTop = 35199
               mmWidth = 49742
               BandType = 7
               LayerName = PageLayer4
@@ -19795,7 +20201,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               DataPipelineName = 'ppDBHojaControlCte'
               mmHeight = 4763
               mmLeft = 225690
-              mmTop = 29369
+              mmTop = 35199
               mmWidth = 15875
               BandType = 7
               LayerName = PageLayer4
@@ -19827,8 +20233,159 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               DataPipelineName = 'ppDBHojaControlCte'
               mmHeight = 4763
               mmLeft = 140759
-              mmTop = 26988
+              mmTop = 32818
               mmWidth = 11377
+              BandType = 7
+              LayerName = PageLayer4
+            end
+            object ppLabel111: TppLabel
+              UserName = 'Label1001'
+              AutoSize = False
+              Border.BorderPositions = [bpBottom]
+              Border.Visible = True
+              Border.Weight = 0.748799979686737100
+              Caption = 'D'#237'as '
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 8
+              Font.Style = []
+              TextAlignment = taRightJustified
+              Transparent = True
+              VerticalAlignment = avCenter
+              mmHeight = 4763
+              mmLeft = 225690
+              mmTop = 4757
+              mmWidth = 15875
+              BandType = 7
+              LayerName = PageLayer4
+            end
+            object ppLabel136: TppLabel
+              UserName = 'Label136'
+              AutoSize = False
+              Border.BorderPositions = [bpBottom]
+              Border.Weight = 0.748799979686737100
+              Caption = 'Facturadas:'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 8
+              Font.Style = []
+              TextAlignment = taRightJustified
+              Transparent = True
+              VerticalAlignment = avCenter
+              mmHeight = 4763
+              mmLeft = 16140
+              mmTop = 20108
+              mmWidth = 33602
+              BandType = 7
+              LayerName = PageLayer4
+            end
+            object ppDBText174: TppDBText
+              UserName = 'DBText174'
+              DataField = 'CantFacturadas'
+              DataPipeline = ppDBPpSumasAdicionales
+              DisplayFormat = '#,0;-#,0'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 8
+              Font.Style = []
+              ParentDataPipeline = False
+              TextAlignment = taRightJustified
+              Transparent = True
+              VerticalAlignment = avCenter
+              DataPipelineName = 'ppDBPpSumasAdicionales'
+              mmHeight = 4763
+              mmLeft = 61913
+              mmTop = 19050
+              mmWidth = 11113
+              BandType = 7
+              LayerName = PageLayer4
+            end
+            object ppDBText176: TppDBText
+              UserName = 'DBText176'
+              DataField = 'CantPagadas'
+              DataPipeline = ppDBPpSumasAdicionales
+              DisplayFormat = '#,0;-#,0'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 8
+              Font.Style = []
+              ParentDataPipeline = False
+              TextAlignment = taRightJustified
+              Transparent = True
+              VerticalAlignment = avCenter
+              DataPipelineName = 'ppDBPpSumasAdicionales'
+              mmHeight = 4763
+              mmLeft = 61913
+              mmTop = 25135
+              mmWidth = 11113
+              BandType = 7
+              LayerName = PageLayer4
+            end
+            object ppLabel137: TppLabel
+              UserName = 'Label137'
+              AutoSize = False
+              Border.BorderPositions = [bpBottom]
+              Border.Weight = 0.748799979686737100
+              Caption = 'Pagadas:'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 8
+              Font.Style = []
+              TextAlignment = taRightJustified
+              Transparent = True
+              VerticalAlignment = avCenter
+              mmHeight = 4763
+              mmLeft = 16140
+              mmTop = 26194
+              mmWidth = 33602
+              BandType = 7
+              LayerName = PageLayer4
+            end
+            object ppDBText175: TppDBText
+              UserName = 'DBText175'
+              DataField = 'CantXFacturar'
+              DataPipeline = ppDBPpSumasAdicionales
+              DisplayFormat = '#,0;-#,0'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 8
+              Font.Style = []
+              ParentDataPipeline = False
+              TextAlignment = taRightJustified
+              Transparent = True
+              VerticalAlignment = avCenter
+              DataPipelineName = 'ppDBPpSumasAdicionales'
+              mmHeight = 4763
+              mmLeft = 61913
+              mmTop = 31750
+              mmWidth = 11113
+              BandType = 7
+              LayerName = PageLayer4
+            end
+            object ppLabel154: TppLabel
+              UserName = 'Label154'
+              AutoSize = False
+              Border.BorderPositions = [bpBottom]
+              Border.Weight = 0.748799979686737100
+              Caption = 'Por Facturar:'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 8
+              Font.Style = []
+              TextAlignment = taRightJustified
+              Transparent = True
+              VerticalAlignment = avCenter
+              mmHeight = 4763
+              mmLeft = 16140
+              mmTop = 32808
+              mmWidth = 33602
               BandType = 7
               LayerName = PageLayer4
             end
@@ -19906,21 +20463,24 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
     object ppParameterList4: TppParameterList
     end
   end
-  object ppDBPpAnexoCliente: TppDBPipeline
+  object ppDBPpAnexoCliente: TppDBPipeline [31]
     DataSource = dsAnexoCliente
     UserName = 'DBAnexoCliente'
     Left = 224
     Top = 552
   end
-  object ADODtstPago2: TADODataSet
+  object ADODtstPago2: TADODataSet [32]
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
       'select  IdPagoAplicacion, Pa.IdPago, Pa.IdPersonaCliente,p.IdAne' +
-      'xo,'#13#10' IdCuentaXCobrar, FechaAplicacion, Pa.Importe, IDCFDI, '#13#10'ID' +
-      'CFDIConcepto, ImporteFactoraje,P.FechaPago, P.FolioPago, P.EsDep' +
-      'osito, P.SeriePago from PagosAplicaciones Pa'#13#10'inner join Pagos P' +
-      ' on P.IdPago=Pa.IdPago'#13#10'where idCuentaXCobrar =:IDCuentaXCobrar'
+      'xo,'#13#10'PA.IdCuentaXCobrar, FechaAplicacion, Pa.Importe, PA.IDCFDI,' +
+      ' '#13#10'IDCFDIConcepto, ImporteFactoraje,P.FechaPago, P.FolioPago, '#13#10 +
+      'P.EsDeposito, P.SeriePago,'#13#10' DATEDIFF(day, CXC.fechaVencimiento,' +
+      'P.FEchaPago) as DiasAtraso'#13#10'--cambio el orden de fechas'#13#10'from Pa' +
+      'gosAplicaciones Pa'#13#10'inner join Pagos P on P.IdPago=Pa.IdPago'#13#10'in' +
+      'ner join  CuentasXCobrar CXC on CXC.idcuentaXCobrar=Pa.IdCuentaX' +
+      'Cobrar'#13#10'where Pa.idCuentaXCobrar =:IDCuentaXCobrar'
     DataSource = DSAmortiza
     IndexFieldNames = 'IdCuentaXCobrar'
     MasterFields = 'IDCuentaXCobrar'
@@ -19930,64 +20490,69 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Attributes = [paSigned, paNullable]
         DataType = ftInteger
         Precision = 10
+        Size = 4
         Value = 235
       end>
     Left = 56
     Top = 656
-    object AutoIncField1: TAutoIncField
+    object ADODtstPago2IdPagoAplicacion: TAutoIncField
       FieldName = 'IdPagoAplicacion'
       ReadOnly = True
     end
-    object IntegerField8: TIntegerField
+    object ADODtstPago2IdPago: TIntegerField
       FieldName = 'IdPago'
     end
-    object IntegerField9: TIntegerField
+    object ADODtstPago2IdPersonaCliente: TIntegerField
       FieldName = 'IdPersonaCliente'
     end
-    object IntegerField10: TIntegerField
+    object ADODtstPago2IdAnexo: TIntegerField
       FieldName = 'IdAnexo'
     end
-    object IntegerField11: TIntegerField
+    object ADODtstPago2IdCuentaXCobrar: TIntegerField
       FieldName = 'IdCuentaXCobrar'
     end
-    object DateTimeField9: TDateTimeField
+    object ADODtstPago2FechaAplicacion: TDateTimeField
       FieldName = 'FechaAplicacion'
     end
-    object FMTBCDField14: TFMTBCDField
+    object ADODtstPago2Importe: TFMTBCDField
       FieldName = 'Importe'
       Precision = 18
       Size = 6
     end
-    object LargeintField3: TLargeintField
+    object ADODtstPago2IDCFDI: TLargeintField
       FieldName = 'IDCFDI'
     end
-    object LargeintField4: TLargeintField
+    object ADODtstPago2IDCFDIConcepto: TLargeintField
       FieldName = 'IDCFDIConcepto'
     end
-    object FMTBCDField15: TFMTBCDField
+    object ADODtstPago2ImporteFactoraje: TFMTBCDField
       FieldName = 'ImporteFactoraje'
       Precision = 18
       Size = 6
     end
-    object IntegerField12: TIntegerField
-      FieldName = 'FolioPago'
-    end
-    object BooleanField1: TBooleanField
-      FieldName = 'EsDeposito'
-    end
-    object StringField5: TStringField
-      FieldName = 'SeriePago'
-    end
     object ADODtstPago2FechaPago: TDateTimeField
       FieldName = 'FechaPago'
     end
+    object ADODtstPago2FolioPago: TIntegerField
+      FieldName = 'FolioPago'
+    end
+    object ADODtstPago2EsDeposito: TBooleanField
+      FieldName = 'EsDeposito'
+    end
+    object ADODtstPago2SeriePago: TStringField
+      FieldName = 'SeriePago'
+    end
+    object ADODtstPago2DiasAtraso: TIntegerField
+      FieldName = 'DiasAtraso'
+      ReadOnly = True
+    end
   end
-  object DSPago2: TDataSource
+  object DSPago2: TDataSource [33]
     DataSet = ADODtstPago2
     Left = 144
     Top = 648
   end
-  object ppDBPpPago2: TppDBPipeline
+  object ppDBPpPago2: TppDBPipeline [34]
     DataSource = DSPago2
     UserName = 'DBPagos2'
     Left = 216
@@ -20000,7 +20565,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       DetailSortOrder = soAscending
     end
   end
-  object ADODtStAmortiza: TADODataSet
+  object ADODtStAmortiza: TADODataSet [35]
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -20043,8 +20608,11 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       'Cobrar'#13#10'  '#13#10'  Left Join (Select IdCuentaXCobrar, SUM(Importe) Pa' +
       'gado , Max(FechaAplicacion)ultFEcha from PagosAplicaciones '#13#10'   ' +
       '           Group by  IdCuentaXCobrar) as VPagos '#13#10'            on' +
-      ' VPagos.IdCuentaXCobrar=CXC.IdCuentaXCobrar'#13#10'  where CXC.IdAnexo' +
-      '=:IdAnexo1'#13#10'   '#13#10
+      ' VPagos.IdCuentaXCobrar=CXC.IdCuentaXCobrar'#13#10'  where '#13#10'  ( Exist' +
+      's  (SElect * from PagosAplicaciones PA where Pa.IDcuentaXCobrar=' +
+      'CXC.IdCuentaXCobrar)'#13#10'   or  Exists (Select *  from CuentasXCobr' +
+      'ar CXCMora  where CXCMORA.IDCuentaXCobrarBAse =CXC.IDCuentaXCobr' +
+      'ar) )'#13#10'  and'#13#10'CXC.IdAnexo=:IdAnexo1'#13#10'   '#13#10
     Parameters = <
       item
         Name = 'IdAnexo1'
@@ -20221,19 +20789,19 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       ReadOnly = True
     end
   end
-  object DSAmortiza: TDataSource
+  object DSAmortiza: TDataSource [36]
     DataSet = ADODtStAmortiza
     Left = 136
     Top = 608
   end
-  object ppDBPpAmortiza: TppDBPipeline
+  object ppDBPpAmortiza: TppDBPipeline [37]
     DataSource = DSAmortiza
     UserName = 'DBPpAmortiza'
     Left = 224
     Top = 608
     MasterDataPipelineName = 'ppDBPpAnexoCliente'
   end
-  object ADODtStProd2: TADODataSet
+  object ADODtStProd2: TADODataSet [38]
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -20314,12 +20882,12 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       Size = 50
     end
   end
-  object DSProd2: TDataSource
+  object DSProd2: TDataSource [39]
     DataSet = ADODtStProd2
     Left = 432
     Top = 616
   end
-  object ppDBPpProd2: TppDBPipeline
+  object ppDBPpProd2: TppDBPipeline [40]
     DataSource = DSProd2
     UserName = 'DBProd2'
     Left = 504
@@ -20332,7 +20900,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       DetailSortOrder = soAscending
     end
   end
-  object ADODtStamortiza2: TADODataSet
+  object ADODtStamortiza2: TADODataSet [41]
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -20377,33 +20945,35 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       '         Group by  IdCuentaXCobrar) as VPagos '#13#10'            on V' +
       'Pagos.IdCuentaXCobrar=CXC.IdCuentaXCobrar'#13#10'  where'#13#10'not Exists  ' +
       '(SElect * from PagosAplicaciones PA where Pa.IDcuentaXCobrar=CXC' +
-      '.IdCuentaXCobrar)'#13#10#13#10'and CXC.IdAnexo=:IdAnexo1'#13#10'   '#13#10'Union'#13#10#13#10' s' +
-      'elect  IdAnexoAmortizacion, AA.IdAnexoCredito,  a.idanexo,'#13#10'Peri' +
-      'odo, aa.FechaCorte, aa.FechaVencimiento, '#13#10#13#10'AA.ImpactoISR, '#13#10'Pa' +
-      'goTotal, SaldoFinal, FechaMoratorio, MoratorioBase, DAteDiff(DAY' +
-      ', aa.Fechavencimiento,aa.FechaMoratorio) as Dias,'#13#10'Moratorio, Mo' +
-      'ratorioImpuesto,   ( InteresImpuesto+CapitalImpuesto) as  Impues' +
-      'toTotal, Capital + aa.interes as Subtotal'#13#10' ,NULL as FecVenCXC ,' +
-      'NULL as Total ,NULL as saldo,NULL as IdCuentaXCobrar,NULL IdAnex' +
-      'osAmortizaciones, '#13#10'  NULL Pagado,NULL FechaAplicacion, NULL tot' +
-      'almora,Null saldoMora,Null ultFEchaMora, Null ultimaFEcha,null F' +
-      'olioUltimoMora ,null FolioUltimoBase,null ultimaFechaCFDIBase '#13#10 +
-      #13#10',A.Identificador as Anexo,C.Identificador as Contrato, P.Razon' +
-      'Social, CT.Descripcion as TipoContrato'#13#10#13#10'--,CXC.FechaVencimient' +
-      'o, CXC.Total, CXC.Saldo,CXC.IdCuentaXCobrar,Cxc.IdAnexosAmortiza' +
-      'ciones --, Ac.IdAnexo A1, Cxc.IdAnexo A2 --, CXC.EsMoratorio'#13#10'--' +
-      ', VPagos.Pagado, VPagos.ultFEcha as FechaAplicacion, VCxcMora.To' +
-      'talMora,VCxcMora.SumaSaldoMora as saldoMora ,  VCxcMora.ultFEcha' +
-      'Mora, VCFDIMora.ultimaFEcha, VCFDIMora.FolioUltimoMora,'#13#10'--Vcfdi' +
-      'Normal.FolioUltimoBase, VCFDINormal.ultimaFechaCFDIBase'#13#10'  from ' +
-      'AnexosAmortizaciones aa'#13#10'  inner join AnexosCreditos AC  on AC.I' +
-      'dAnexoCredito=AA.IdAnexoCredito  '#13#10'    inner join Anexos A on A.' +
-      'IdAnexo=AC.IdAnexo'#13#10'  inner join Contratos C on C.IdContrato=A.I' +
-      'dContrato'#13#10'  inner join ContratosTipos CT on CT.IdContratoTipo=C' +
-      '.idcontratotipo '#13#10'  inner join Personas P on P.IdPersona=C.idper' +
-      'sona'#13#10'  Where not Exists  (SElect * from CuentasXCobrar Cc where' +
-      ' cc.IdAnexosAmortizaciones=aa.IdAnexoAmortizacion)'#13#10' and Ac.IdAn' +
-      'exo=:IdAnexo2'#13#10'  '
+      '.IdCuentaXCobrar) '#13#10'and not Exists (Select *  from CuentasXCobra' +
+      'r CXCMora  where CXCMORA.IDCuentaXCobrarBAse =CXC.IDCuentaXCobra' +
+      'r) '#13#10#13#10'and CXC.IdAnexo=:IdAnexo1'#13#10'   '#13#10'Union'#13#10#13#10' select  IdAnexo' +
+      'Amortizacion, AA.IdAnexoCredito,  a.idanexo,'#13#10'Periodo, aa.FechaC' +
+      'orte, aa.FechaVencimiento, '#13#10#13#10'AA.ImpactoISR, '#13#10'PagoTotal, Saldo' +
+      'Final, FechaMoratorio, MoratorioBase, DAteDiff(DAY, aa.Fechavenc' +
+      'imiento,aa.FechaMoratorio) as Dias,'#13#10'Moratorio, MoratorioImpuest' +
+      'o,   ( InteresImpuesto+CapitalImpuesto) as  ImpuestoTotal, Capit' +
+      'al + aa.interes as Subtotal'#13#10' ,NULL as FecVenCXC ,NULL as Total ' +
+      ',NULL as saldo,NULL as IdCuentaXCobrar,NULL IdAnexosAmortizacion' +
+      'es, '#13#10'  NULL Pagado,NULL FechaAplicacion, NULL totalmora,Null sa' +
+      'ldoMora,Null ultFEchaMora, Null ultimaFEcha,null FolioUltimoMora' +
+      ' ,null FolioUltimoBase,null ultimaFechaCFDIBase '#13#10#13#10',A.Identific' +
+      'ador as Anexo,C.Identificador as Contrato, P.RazonSocial, CT.Des' +
+      'cripcion as TipoContrato'#13#10#13#10'--,CXC.FechaVencimiento, CXC.Total, ' +
+      'CXC.Saldo,CXC.IdCuentaXCobrar,Cxc.IdAnexosAmortizaciones --, Ac.' +
+      'IdAnexo A1, Cxc.IdAnexo A2 --, CXC.EsMoratorio'#13#10'--, VPagos.Pagad' +
+      'o, VPagos.ultFEcha as FechaAplicacion, VCxcMora.TotalMora,VCxcMo' +
+      'ra.SumaSaldoMora as saldoMora ,  VCxcMora.ultFEchaMora, VCFDIMor' +
+      'a.ultimaFEcha, VCFDIMora.FolioUltimoMora,'#13#10'--VcfdiNormal.FolioUl' +
+      'timoBase, VCFDINormal.ultimaFechaCFDIBase'#13#10'  from AnexosAmortiza' +
+      'ciones aa'#13#10'  inner join AnexosCreditos AC  on AC.IdAnexoCredito=' +
+      'AA.IdAnexoCredito  '#13#10'    inner join Anexos A on A.IdAnexo=AC.IdA' +
+      'nexo'#13#10'  inner join Contratos C on C.IdContrato=A.IdContrato'#13#10'  i' +
+      'nner join ContratosTipos CT on CT.IdContratoTipo=C.idcontratotip' +
+      'o '#13#10'  inner join Personas P on P.IdPersona=C.idpersona'#13#10'  Where ' +
+      'not Exists  (SElect * from CuentasXCobrar Cc where cc.IdAnexosAm' +
+      'ortizaciones=aa.IdAnexoAmortizacion)'#13#10' and Ac.IdAnexo=:IdAnexo2'#13 +
+      #10'  '
     Parameters = <
       item
         Name = 'IdAnexo1'
@@ -20570,16 +21140,296 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       ReadOnly = True
     end
   end
-  object DSAmortiza2: TDataSource
+  object DSAmortiza2: TDataSource [42]
     DataSet = ADODtStamortiza2
     Left = 424
     Top = 664
   end
-  object ppDBPpAmortiza2: TppDBPipeline
+  object ppDBPpAmortiza2: TppDBPipeline [43]
     DataSource = DSAmortiza2
     UserName = 'DBPpAmortiza2'
     Left = 512
     Top = 664
     MasterDataPipelineName = 'ppDBPpAnexoCliente'
+  end
+  object ADODtStMoratoriosXCXC: TADODataSet [44]
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select  IdPagoAplicacion, Pa.IdPago, Pa.IdPersonaCliente,p.IdAne' +
+      'xo, cxc.IdCuentaXCobrarBase,'#13#10'PA.IdCuentaXCobrar, FechaAplicacio' +
+      'n, Pa.Importe, PA.IDCFDI, '#13#10'IDCFDIConcepto, ImporteFactoraje,P.F' +
+      'echaPago, P.FolioPago, P.EsDeposito, P.SeriePago,'#13#10' DATEDIFF(day' +
+      ', CXCbase.fechaVencimiento, P.FEchaPago) as DiasAtraso, CXCbase.' +
+      'fechaVencimiento fechaVencBAse, '#13#10' cxcBase.IdAnexosAmortizacione' +
+      's, CI.Folio as FactMora'#13#10#13#10'from PagosAplicaciones Pa'#13#10'inner join' +
+      ' Pagos P on P.IdPago=Pa.IdPago'#13#10'inner join  CuentasXCobrar CXC o' +
+      'n CXC.idcuentaXCobrar=Pa.IdCuentaXCobrar and CXC.EsMoratorio=1 a' +
+      'nd Total <>0 '#13#10'inner join  CuentasXCobrar CXCBase on CXCBase.idc' +
+      'uentaXCobrar=cxc.IdCuentaXCobrarBase'#13#10'inner join  CFDI CI on CI.' +
+      'IdCFDI=Cxc.IdCFDI'#13#10'Where  Cxc.IDCuentaXCobrarBase=:IdCuentaXCobr' +
+      'ar'
+    DataSource = DSAmortiza
+    IndexFieldNames = 'IdCuentaXCobrar'
+    MasterFields = 'IDCuentaXCobrar'
+    Parameters = <
+      item
+        Name = 'IDCuentaXCobrar'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 235
+      end>
+    Left = 48
+    Top = 712
+    object ADODtStMoratoriosXCXCIdPagoAplicacion: TAutoIncField
+      FieldName = 'IdPagoAplicacion'
+      ReadOnly = True
+    end
+    object ADODtStMoratoriosXCXCIdPago: TIntegerField
+      FieldName = 'IdPago'
+    end
+    object ADODtStMoratoriosXCXCIdPersonaCliente: TIntegerField
+      FieldName = 'IdPersonaCliente'
+    end
+    object ADODtStMoratoriosXCXCIdAnexo: TIntegerField
+      FieldName = 'IdAnexo'
+    end
+    object ADODtStMoratoriosXCXCIdCuentaXCobrarBase: TIntegerField
+      FieldName = 'IdCuentaXCobrarBase'
+    end
+    object ADODtStMoratoriosXCXCIdCuentaXCobrar: TIntegerField
+      FieldName = 'IdCuentaXCobrar'
+    end
+    object ADODtStMoratoriosXCXCFechaAplicacion: TDateTimeField
+      FieldName = 'FechaAplicacion'
+    end
+    object ADODtStMoratoriosXCXCImporte: TFMTBCDField
+      FieldName = 'Importe'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStMoratoriosXCXCIDCFDI: TLargeintField
+      FieldName = 'IDCFDI'
+    end
+    object ADODtStMoratoriosXCXCIDCFDIConcepto: TLargeintField
+      FieldName = 'IDCFDIConcepto'
+    end
+    object ADODtStMoratoriosXCXCImporteFactoraje: TFMTBCDField
+      FieldName = 'ImporteFactoraje'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStMoratoriosXCXCFechaPago: TDateTimeField
+      FieldName = 'FechaPago'
+    end
+    object ADODtStMoratoriosXCXCFolioPago: TIntegerField
+      FieldName = 'FolioPago'
+    end
+    object ADODtStMoratoriosXCXCEsDeposito: TBooleanField
+      FieldName = 'EsDeposito'
+    end
+    object ADODtStMoratoriosXCXCSeriePago: TStringField
+      FieldName = 'SeriePago'
+    end
+    object ADODtStMoratoriosXCXCDiasAtraso: TIntegerField
+      FieldName = 'DiasAtraso'
+      ReadOnly = True
+    end
+    object ADODtStMoratoriosXCXCfechaVencBAse: TDateTimeField
+      FieldName = 'fechaVencBAse'
+    end
+    object ADODtStMoratoriosXCXCIdAnexosAmortizaciones: TIntegerField
+      FieldName = 'IdAnexosAmortizaciones'
+    end
+    object ADODtStMoratoriosXCXCFactMora: TLargeintField
+      FieldName = 'FactMora'
+    end
+  end
+  object DSPagosMora: TDataSource [45]
+    DataSet = ADODtStMoratoriosXCXC
+    Left = 136
+    Top = 704
+  end
+  object DBPPPagosMora: TppDBPipeline [46]
+    DataSource = DSPagosMora
+    UserName = 'DBPPPagosMora'
+    Left = 216
+    Top = 712
+    MasterDataPipelineName = 'ppDBPpAmortiza'
+    object ppMasterFieldLink2: TppMasterFieldLink
+      MasterFieldName = 'IdAnexo'
+      GuidCollationType = gcString
+      DetailFieldName = 'IdAnexo'
+      DetailSortOrder = soAscending
+    end
+  end
+  object ADODtstSumasAmoryAmor2: TADODataSet [47]
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'SElect Conjunto.IdAnexo, Sum(Conjunto.sumaImpuestoTotal) as SImp' +
+      'uestoTotal,'#13#10'Sum(Conjunto.sumaSubTotal) as SSubTotal,'#13#10'Sum(Conju' +
+      'nto.sumaTotal) as STotal,'#13#10'Sum(Conjunto.sumaSaldo) as SSaldo,'#13#10'S' +
+      'um(Conjunto.sumaPagado) as SPagado,'#13#10'Sum(Conjunto.sumaMora) as S' +
+      'Mora, '#13#10'Sum(Conjunto.sumaSaldoMora) as SSaldoMora'#13#10' from'#13#10#13#10'(Sel' +
+      'ect IdAnexo, SumaImpuestoTotal, SumaSubtotal, SumaTotal, SumaSal' +
+      'do, SumaPagado, Case when SumaMora is null then 0 else SumaMora ' +
+      'end as sumaMora, '#13#10'Case when sumaSaldoMora is null then 0 else s' +
+      'umaSaldoMora end as sumaSaldoMora '#13#10'  from vw_SumaAmortizaConPag' +
+      'o'#13#10#13#10'union '#13#10'Select IdAnexo, SumaImpuestoTotal, SumaSubtotal, Su' +
+      'maTotal, SumaSaldo, 0 as SumaPagado, 0 as SumaMora, 0 as sumaSal' +
+      'doMora '#13#10'from vw_SumaAmortizaSinPago'#13#10') as Conjunto'#13#10'where Conju' +
+      'nto.IDAnexo=:IdAnexo'#13#10'group  by Conjunto.idAnexo'#13#10#13#10'  '
+    DataSource = dsAnexoCliente
+    IndexFieldNames = 'IdAnexo'
+    MasterFields = 'IdAnexo'
+    Parameters = <
+      item
+        Name = 'IdAnexo'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Value = 18
+      end>
+    Left = 488
+    Top = 552
+    object ADODtstSumasAmoryAmor2IdAnexo: TIntegerField
+      FieldName = 'IdAnexo'
+      ReadOnly = True
+    end
+    object ADODtstSumasAmoryAmor2SImpuestoTotal: TFMTBCDField
+      FieldName = 'SImpuestoTotal'
+      ReadOnly = True
+      Precision = 38
+      Size = 6
+    end
+    object ADODtstSumasAmoryAmor2SSubTotal: TFMTBCDField
+      FieldName = 'SSubTotal'
+      ReadOnly = True
+      Precision = 38
+      Size = 6
+    end
+    object ADODtstSumasAmoryAmor2STotal: TFMTBCDField
+      FieldName = 'STotal'
+      ReadOnly = True
+      Precision = 38
+      Size = 6
+    end
+    object ADODtstSumasAmoryAmor2SSaldo: TFMTBCDField
+      FieldName = 'SSaldo'
+      ReadOnly = True
+      Precision = 38
+      Size = 6
+    end
+    object ADODtstSumasAmoryAmor2SPagado: TFMTBCDField
+      FieldName = 'SPagado'
+      ReadOnly = True
+      Precision = 38
+      Size = 6
+    end
+    object ADODtstSumasAmoryAmor2SMora: TFMTBCDField
+      FieldName = 'SMora'
+      ReadOnly = True
+      Precision = 38
+      Size = 6
+    end
+    object ADODtstSumasAmoryAmor2SSaldoMora: TFMTBCDField
+      FieldName = 'SSaldoMora'
+      ReadOnly = True
+      Precision = 38
+      Size = 6
+    end
+  end
+  object ppDBPpSumasAmor: TppDBPipeline [48]
+    DataSource = DSSumasAmortizaciones
+    UserName = 'DBPpSumasAmor'
+    Left = 568
+    Top = 504
+    MasterDataPipelineName = 'ppDBPpAnexoCliente'
+    object ppMasterFieldLink4: TppMasterFieldLink
+      MasterFieldName = 'IdAnexo'
+      GuidCollationType = gcString
+      DetailFieldName = 'IdAnexo'
+      DetailSortOrder = soAscending
+    end
+  end
+  object DSSumasAmortizaciones: TDataSource [49]
+    DataSet = ADODtstSumasAmoryAmor2
+    Left = 488
+    Top = 504
+  end
+  object DSSumasAdicionales: TDataSource [50]
+    DataSet = ADODtStSumasAdicionales
+    Left = 832
+    Top = 544
+  end
+  object ADODtStSumasAdicionales: TADODataSet [51]
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'Select distinct CXC.IdAnexo,case when VFActurada.CantidadFActura' +
+      'da is null  then 0 else VFActurada.CantidadFActurada end as Cant' +
+      'Facturadas,'#13#10' case when (VPagadas.CantidadPagadas IS null) then ' +
+      '0 else VPagadas.CantidadPagadas end as CantPagadas ,'#13#10'  case whe' +
+      'n ( VXFacturar.XFacturar IS null) then 0 else  VXFacturar.XFactu' +
+      'rar end as CantXFacturar'#13#10'     from CuentasXCobrar CXC left join' +
+      #13#10#13#10'(select IdAnexo, Count(IdCFDI) as CantidadFActurada  from Cu' +
+      'entasXCobrar cxc'#13#10'where  IdAnexosAmortizaciones is not Null and ' +
+      'esmoratorio =0'#13#10'group  by cxc.idAnexo) VFActurada on VFActurada.' +
+      'IdAnexo =CXC.IdAnexo'#13#10'left join '#13#10'('#13#10'select IdAnexo, Count(IdAne' +
+      'xosAmortizaciones) as CantidadPagadas from CuentasXCobrar cxc'#13#10'w' +
+      'here  IdAnexosAmortizaciones is not Null and esmoratorio =0 and ' +
+      'Saldo =0'#13#10'group  by cxc.idAnexo) VPagadas on VPagadas.IdAnexo =C' +
+      'XC.IdAnexo '#13#10#13#10'Left Join  '#13#10'('#13#10'select IdAnexo, Count(IdAnexosAmo' +
+      'rtizaciones) as  XFacturar from CuentasXCobrar cxc'#13#10'where  IdAne' +
+      'xosAmortizaciones is not Null and esmoratorio =0 and IdCFDI is n' +
+      'ull'#13#10'group  by cxc.idAnexo) VXFacturar on VXFacturar.IdAnexo=CXC' +
+      '.IdAnexo'#13#10#13#10'where cxc.IdAnexosAmortizaciones is not Null and cxc' +
+      '.esmoratorio =0'#13#10' and cxc.IDAnexo=:IdAnexo'#13#10#13#10#13#10'  '
+    DataSource = dsAnexoCliente
+    IndexFieldNames = 'IdAnexo'
+    MasterFields = 'IdAnexo'
+    Parameters = <
+      item
+        Name = 'IdAnexo'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = 18
+      end>
+    Left = 736
+    Top = 544
+    object ADODtStSumasAdicionalesIdAnexo: TIntegerField
+      FieldName = 'IdAnexo'
+    end
+    object ADODtStSumasAdicionalesCantPagadas: TIntegerField
+      FieldName = 'CantPagadas'
+      ReadOnly = True
+    end
+    object ADODtStSumasAdicionalesCantXFacturar: TIntegerField
+      FieldName = 'CantXFacturar'
+      ReadOnly = True
+    end
+    object ADODtStSumasAdicionalesCantFacturadas: TIntegerField
+      FieldName = 'CantFacturadas'
+      ReadOnly = True
+    end
+  end
+  object ppDBPpSumasAdicionales: TppDBPipeline [52]
+    DataSource = DSSumasAdicionales
+    UserName = 'DBPpSumasAdicional'
+    Left = 744
+    Top = 608
+    MasterDataPipelineName = 'ppDBPpAnexoCliente'
+    object ppMasterFieldLink5: TppMasterFieldLink
+      MasterFieldName = 'IdAnexo'
+      GuidCollationType = gcString
+      DetailFieldName = 'IdAnexo'
+      DetailSortOrder = soAscending
+    end
+  end
+  inherited dbpReport: TppDBPipeline [53]
   end
 end

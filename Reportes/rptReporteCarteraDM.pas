@@ -114,6 +114,8 @@ begin
 
     dmReporteCarteraPDF.ADODtStPago2.Open;
 
+    dmReporteCarteraPDF.ADODtStMoratoriosXCXC.Open; // ago 16/17
+
     dmReporteCarteraPDF.ppRprtAmoryPagos2.ShowPrintDialog:= False;
     dmReporteCarteraPDF.ppRprtAmoryPagos2.ShowCancelDialog:= False;
     dmReporteCarteraPDF.ppRprtAmoryPagos2.PrinterSetup.DocumentName:=  'AMORTIZACIONES Y PAGOS '+#13 +Texto;
@@ -196,6 +198,7 @@ var
   Cantidad:integer;  //jun 1/17
 begin
   inherited;
+  //No se usa esto aca.. verificar... Ago 21 /17 Sum (Vencidos0a30)as Total0a30,  no colocado ???
   TxtSQL:= 'SElect Cliente,sum("Saldo")  as SaldoTotal,  Sum ("Saldo Total Vencido")as TotalVencido, Sum (vigentes)as TotalVigentes, SUM ("vencidos a 30 días") as Total30Dias,'
           +' SUM ("vencidos a 60 días") as Total60Dias, SUM ("vencidos a 90 días") as Total90Dias ,'
         //  +' SUM ("vencidos a 120 días") as Total120Dias ,Sum("Vencidos a mas de 120 días") as TotalMas120Dias,' //May 18/17
@@ -300,7 +303,7 @@ begin
   dmReporteCarteraPDF:= TdmReporteCarteraPDF.Create(Self);
   try
    (*  dmReporteCarteraPDF.DSAntXCliente.DataSet.Close;
-     TAdoDAtaset(dmReporteCarteraPDF.DSAntXCliente.DataSet).CommandText:=  TxtSQL;
+     TAdoDAtaset(dmReporteCarteraPDF.DSAntXCliente.DataSet).CommandText:=  TxtSQL;   //No usado     ago 21/17
     if pos(':FIni',TxtSQL)>0 then
     begin
       TADoDAtaset(dmAntiguedadSaldosPDF.DSAntXCliente.DataSet).Parameters.ParamByName('Fini').Value:= FechaIni;

@@ -181,7 +181,6 @@ type
     DSPorContratosVencidos: TDataSource;
     ppRptXContratosVencidos: TppReport;
     ppParameterList4: TppParameterList;
-    ppXContratosVencidos: TppDBPipeline;
     ppTitleBand4: TppTitleBand;
     ppHeaderBand4: TppHeaderBand;
     ppTituloXConVen: TppLabel;
@@ -241,6 +240,31 @@ type
     ppLabel33: TppLabel;
     ppLabel54: TppLabel;
     ppDBText39: TppDBText;
+    ppDBText51: TppDBText;
+    ADODtStXContratosVencidosidAnexo: TIntegerField;
+    ADODtStXContratosVencidoscontrato: TStringField;
+    ADODtStXContratosVencidosanexo: TStringField;
+    ADODtStXContratosVencidosCliente: TStringField;
+    ADODtStXContratosVencidosTotalCobradoVencido: TFMTBCDField;
+    ADODtStXContratosVencidossumavencida: TFMTBCDField;
+    ADODtStXContratosVencidosTotalvigente: TFMTBCDField;
+    ADODtStXContratosVencidosvencidoa30: TFMTBCDField;
+    ADODtStXContratosVencidosvencidoa60: TFMTBCDField;
+    ADODtStXContratosVencidosvencidoa90: TFMTBCDField;
+    ADODtStXContratosVencidosvencidomas120: TFMTBCDField;
+    ADODtStXContratosVencidosVencido0a30: TFMTBCDField;
+    ADODtStXContratosVencidossaldototal: TFMTBCDField;
+    ppXContratosVencidos: TppDBPipeline;
+    ppLabel29: TppLabel;
+    ppDBCalc25: TppDBCalc;
+    ppLabel58: TppLabel;
+    ppDBText52: TppDBText;
+    adodsReportVencidos0a30: TFMTBCDField;
+    ppDBCalc26: TppDBCalc;
+    ppDBCalc34: TppDBCalc;
+    ppLabel59: TppLabel;
+    ppDBText53: TppDBText;
+    ppDBCalc35: TppDBCalc;
   private
     { Private declarations }
   public

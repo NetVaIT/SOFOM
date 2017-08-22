@@ -83,6 +83,11 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
             Kind = skSum
             Position = spFooter
             Column = tvMasterSaldoTotalVencido
+          end
+          item
+            Kind = skSum
+            Position = spFooter
+            Column = tvMasterVencidos0a30
           end>
         DataController.Summary.FooterSummaryItems = <
           item
@@ -103,6 +108,7 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
           end
           item
             Kind = skSum
+            Column = tvMasterVencidos0a30
           end
           item
             Kind = skSum
@@ -194,9 +200,14 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
           Width = 104
         end
         object tvMasterVigentes: TcxGridDBColumn
-          Caption = 'Vigentes (0-30 d)'
+          Caption = 'Vigentes'
           DataBinding.FieldName = 'Vigentes'
-          Width = 120
+          Width = 114
+        end
+        object tvMasterVencidos0a30: TcxGridDBColumn
+          Caption = 'Vencidos < 30 d'#237'as(0-30)'
+          DataBinding.FieldName = 'Vencidos0a30'
+          Width = 129
         end
         object tvMasterVencidosa30das: TcxGridDBColumn
           DataBinding.FieldName = 'Vencidos a 30 d'#237'as'
@@ -1360,6 +1371,7 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42585.483476608800000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

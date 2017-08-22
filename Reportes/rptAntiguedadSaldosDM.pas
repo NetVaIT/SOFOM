@@ -34,6 +34,7 @@ type
     adodsMasterCobroX: TStringField;
     ActPDFCtasActualCliente: TAction;
     ActPDFXContratosVencidos: TAction;
+    adodsMasterVencidos0a30: TFMTBCDField;
     procedure DataModuleCreate(Sender: TObject);
     procedure ActGenPDFAntigSaldosExecute(Sender: TObject);
     procedure ActPDFAntiguedadXClienteExecute(Sender: TObject);
@@ -191,8 +192,8 @@ var
   FechaIni, FechaFin:TDAteTime;
 begin
   inherited;
-  TxtSQL:= 'SElect Cliente,sum("Saldo")  as SaldoTotal,  Sum ("Saldo Total Vencido")as TotalVencido, Sum (vigentes)as TotalVigentes, SUM ("vencidos a 30 días") as Total30Dias,'
-          +' SUM ("vencidos a 60 días") as Total60Dias, SUM ("vencidos a 90 días") as Total90Dias ,'
+  TxtSQL:= 'SElect Cliente,sum("Saldo")  as SaldoTotal,  Sum ("Saldo Total Vencido")as TotalVencido, Sum (vigentes)as TotalVigentes, Sum (Vencidos0a30)as Total0a30,  SUM ("vencidos a 30 días") as Total30Dias,'
+          +' SUM ("vencidos a 60 días") as Total60Dias, SUM ("vencidos a 90 días") as Total90Dias ,'                                 //Ago 21 /17 0a30
           // +' SUM ("vencidos a 120 días") as Total120Dias ,  //YA no va  //May 18/17
           +' SUM ("Vencidos a mas de 120 días") as TotalMas120Dias  from Vw_AntiguedadSaldosCXC ';
   Fecha:= ' where fecha>=:Fini and fecha<=:Ffin ';

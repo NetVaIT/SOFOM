@@ -72,6 +72,7 @@ type
     tvMasterCobroX: TcxGridDBColumn;
     dxBrBtnAdeudoActual: TdxBarButton;
     dxBrBtnRepXContAtrasa: TdxBarButton;
+    tvMasterVencidos0a30: TcxGridDBColumn;
     procedure SpdBtnConsultaClick(Sender: TObject);
     procedure EdtNombreKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
