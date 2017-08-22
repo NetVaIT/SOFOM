@@ -229,9 +229,10 @@ begin
   TADOQuery(dsAuxiliar.dataset).SQL.Add('Select c.idanexo,aa.IdAnexoCredito,aa.FechaCorte ,PagoTotal from AnexosAmortizaciones aa'+
   ' inner join AnexosCreditos C on C.IdAnexoCredito=aa.IdAnexoCredito and c.IdAnexoCreditoEstatus=1 ' +
   ' where idAnexo ='+ datasource.DataSet.FieldByName('IdAnexo').asstring+
-  ' and (not Exists (select * from CuentasXCobrar cxc where cxc.IdAnexosAmortizaciones=aa.idanexoamortizacion) '+
+  ' and (not Exists (select * from CuentasXCobrar cxc where cxc.IdAnexosAmortizaciones=aa.idanexoamortizacion and aa.Fechacorte<=dbo.GetDateAux()) '+   //Ago 22/17 si no esta que sea en rango de fecha corte
   ' or Exists (select * from CuentasXCobrar cc where cc.IdAnexosAmortizaciones=aa.idanexoamortizacion and '+
-  ' cc.IdCuentaXCobrarEstatus=-1 and EsMoratorio=0 ) ) and aa.FechaCorte<=dbo.GetDateAux() ');
+  ' cc.IdCuentaXCobrarEstatus=-1 and EsMoratorio=0  and aa.FechaVencimiento<=dbo.GetDateAux() ) )  '+       //Si esta que sea del rando de fec vencimiento     ago 22/17
+  ' and aa.FechaVencimiento<=dbo.GetDateAux() ');//' era ago 22/17 and aa.FechaCorte<=dbo.GetDateAux() ');    //Respecto al vencimiento
                                             // jun21/17
   dsAuxiliar.dataset.Open;
   if not dsAuxiliar.dataset.eof  then
@@ -258,7 +259,8 @@ begin
 
   TADOQuery(dsAuxiliar.dataset).SQL.Add('Select * from  CuentasXCobrar  where idAnexo ='+ datasource.DataSet.FieldByName('IdAnexo').asstring+
                                         ' and IDPersona='+  datasource.DataSet.FieldByName('IdPersonaCliente').asstring+
-                                      //Ago 18/17 Pendeiente de Habilitar para que no tome las que estan fuera de fecha  '  and dbo.getDateAux() >= FechaVencimiento'
+                                      //Ago 18/17 Pendiente de Habilitar para que no tome las que estan fuera de fecha
+                                       '  and dbo.getDateAux() >= FechaVencimiento ' +
                                        ' and Saldo >0 and IdCuentaXCobrarEstatus=-1  and  ESMoratorio=0' );
   dsAuxiliar.dataset.Open;
   if not dsAuxiliar.dataset.eof and  (dsAuxiliar.dataset.fieldbyname('IdCFDI').isnull) then

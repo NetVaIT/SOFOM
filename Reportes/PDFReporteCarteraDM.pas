@@ -865,6 +865,7 @@ type
     ppLabel157: TppLabel;
     ppDBText179: TppDBText;
     ppDBText180: TppDBText;
+    ppDBText181: TppDBText;
     procedure CuotasReportCalcFields(DataSet: TDataSet);
   private
     { Private declarations }

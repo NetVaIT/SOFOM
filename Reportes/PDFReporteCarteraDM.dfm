@@ -183,7 +183,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       Size = 6
     end
   end
-  inherited ppReport: TppReport [2]
+  inherited ppReport: TppReport
     PrinterSetup.Orientation = poLandscape
     PrinterSetup.mmPaperHeight = 215900
     PrinterSetup.mmPaperWidth = 279400
@@ -2692,10 +2692,10 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       end
     end
   end
-  inherited mdParams: TdxMemData [3]
+  inherited mdParams: TdxMemData
     Left = 248
   end
-  object ADODtStRepHojaControlCte: TADODataSet [4]
+  object ADODtStRepHojaControlCte: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -2847,12 +2847,12 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       Size = 12
     end
   end
-  object DSHojaControlCte: TDataSource [5]
+  object DSHojaControlCte: TDataSource
     DataSet = ADODtStRepHojaControlCte
     Left = 128
     Top = 240
   end
-  object ppRprtHojaControlCte: TppReport [6]
+  object ppRprtHojaControlCte: TppReport
     AutoStop = False
     DataPipeline = ppDBHojaControlCte
     PassSetting = psTwoPass
@@ -7537,7 +7537,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
     object ppParameterList2: TppParameterList
     end
   end
-  object ADODtdtProductos: TADODataSet [7]
+  object ADODtdtProductos: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -7611,12 +7611,12 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       Size = 50
     end
   end
-  object dsProductos: TDataSource [8]
+  object dsProductos: TDataSource
     DataSet = ADODtdtProductos
     Left = 128
     Top = 304
   end
-  object ppDBProductos: TppDBPipeline [9]
+  object ppDBProductos: TppDBPipeline
     DataSource = dsProductos
     UserName = 'DBProductos'
     Left = 200
@@ -7629,7 +7629,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       DetailSortOrder = soAscending
     end
   end
-  object ADODtStSumasTotales: TADODataSet [10]
+  object ADODtStSumasTotales: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     OnCalcFields = CuotasReportCalcFields
@@ -7777,24 +7777,24 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       Size = 6
     end
   end
-  object DSSumasTotales: TDataSource [11]
+  object DSSumasTotales: TDataSource
     DataSet = ADODtStSumasTotales
     Left = 104
     Top = 80
   end
-  object ppDBSumasTotales: TppDBPipeline [12]
+  object ppDBSumasTotales: TppDBPipeline
     DataSource = DSSumasTotales
     UserName = 'dbpReport2'
     Left = 176
     Top = 80
   end
-  object ppDBHojaControlCte: TppDBPipeline [13]
+  object ppDBHojaControlCte: TppDBPipeline
     DataSource = DSHojaControlCte
     UserName = 'DBHojaControlCte'
     Left = 216
     Top = 240
   end
-  object ADODtStSumasXCalificacion: TADODataSet [14]
+  object ADODtStSumasXCalificacion: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     OnCalcFields = CuotasReportCalcFields
@@ -7827,18 +7827,18 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
     Left = 32
     Top = 144
   end
-  object DSSumasXCalifica: TDataSource [15]
+  object DSSumasXCalifica: TDataSource
     DataSet = ADODtStSumasXCalificacion
     Left = 104
     Top = 144
   end
-  object ppDBPplnSumasXCalifica: TppDBPipeline [16]
+  object ppDBPplnSumasXCalifica: TppDBPipeline
     DataSource = DSSumasXCalifica
     UserName = 'DBPplnSumasXCalifica'
     Left = 176
     Top = 144
   end
-  object AdoDtstPercentiles: TADODataSet [17]
+  object AdoDtstPercentiles: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     OnCalcFields = CuotasReportCalcFields
@@ -7851,7 +7851,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
     Left = 312
     Top = 144
   end
-  object ADODtStMediana: TADODataSet [18]
+  object ADODtStMediana: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     OnCalcFields = CuotasReportCalcFields
@@ -7872,18 +7872,18 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       Size = 6
     end
   end
-  object DSMediana: TDataSource [19]
+  object DSMediana: TDataSource
     DataSet = ADODtStMediana
     Left = 416
     Top = 200
   end
-  object ppDBPplnMediana: TppDBPipeline [20]
+  object ppDBPplnMediana: TppDBPipeline
     DataSource = DSMediana
     UserName = 'DBMediana'
     Left = 480
     Top = 200
   end
-  object ADODtStRepAmortiza: TADODataSet [21]
+  object ADODtStRepAmortiza: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -8134,12 +8134,12 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       ReadOnly = True
     end
   end
-  object DSRepAmortiza: TDataSource [22]
+  object DSRepAmortiza: TDataSource
     DataSet = ADODtStRepAmortiza
     Left = 128
     Top = 400
   end
-  object ppRprtRepAmortizayPagos: TppReport [23]
+  object ppRprtRepAmortizayPagos: TppReport
     AutoStop = False
     DataPipeline = ppDBPplnAmortiza
     PassSetting = psTwoPass
@@ -8194,7 +8194,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
     XLSSettings.Author = 'ReportBuilder'
     XLSSettings.Subject = 'Report'
     XLSSettings.Title = 'Report'
-    Left = 352
+    Left = 360
     Top = 400
     Version = '15.0'
     mmColumnWidth = 203200
@@ -13785,13 +13785,13 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
     object ppParameterList3: TppParameterList
     end
   end
-  object ppDBPplnAmortiza: TppDBPipeline [24]
+  object ppDBPplnAmortiza: TppDBPipeline
     DataSource = DSRepAmortiza
     UserName = 'DBAmortizacionPagos'
     Left = 216
     Top = 400
   end
-  object ADODtStPagos: TADODataSet [25]
+  object ADODtStPagos: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -13851,19 +13851,19 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       FieldName = 'SeriePago'
     end
   end
-  object DSPagos: TDataSource [26]
+  object DSPagos: TDataSource
     DataSet = ADODtStPagos
     Left = 136
     Top = 464
   end
-  object ppDBPpPagos: TppDBPipeline [27]
+  object ppDBPpPagos: TppDBPipeline
     DataSource = DSPagos
     UserName = 'DBPagos'
     Left = 208
     Top = 464
     MasterDataPipelineName = 'ppDBPplnAmortiza'
   end
-  object ADODtStAnexoCliente: TADODataSet [28]
+  object ADODtStAnexoCliente: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -13909,12 +13909,12 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       Size = 6
     end
   end
-  object dsAnexoCliente: TDataSource [29]
+  object dsAnexoCliente: TDataSource
     DataSet = ADODtStAnexoCliente
     Left = 136
     Top = 552
   end
-  object ppRprtAmoryPagos2: TppReport [30]
+  object ppRprtAmoryPagos2: TppReport
     AutoStop = False
     DataPipeline = ppDBPpAnexoCliente
     PassSetting = psTwoPass
@@ -17562,9 +17562,9 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         ParentWidth = False
         TraverseAllData = False
         DataPipelineName = 'ppDBPpProd2'
-        mmHeight = 23548
+        mmHeight = 25665
         mmLeft = 55298
-        mmTop = 2117
+        mmTop = 794
         mmWidth = 126471
         BandType = 0
         LayerName = BandLayer19
@@ -17596,7 +17596,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
           object ppTitleBand12: TppTitleBand
             Background.Brush.Style = bsClear
             mmBottomOffset = 0
-            mmHeight = 4233
+            mmHeight = 7144
             mmPrintPosition = 0
             object ppLabel132: TppLabel
               UserName = 'Label105'
@@ -17613,7 +17613,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               VerticalAlignment = avCenter
               mmHeight = 3968
               mmLeft = 2910
-              mmTop = 264
+              mmTop = 2384
               mmWidth = 43392
               BandType = 1
               LayerName = BandLayer15
@@ -17621,19 +17621,18 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
             object ppLabel133: TppLabel
               UserName = 'Label111'
               AutoSize = False
-              Caption = 'Valor Factura'
+              Caption = ' Valor  Factura      IVA Incluido'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
               Font.Name = 'Arial'
               Font.Size = 8
               Font.Style = [fsBold]
-              TextAlignment = taRightJustified
               Transparent = True
-              VerticalAlignment = avCenter
-              mmHeight = 3969
+              WordWrap = True
+              mmHeight = 6879
               mmLeft = 83873
               mmTop = 265
-              mmWidth = 20373
+              mmWidth = 21431
               BandType = 1
               LayerName = BandLayer15
             end
@@ -17651,7 +17650,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               VerticalAlignment = avCenter
               mmHeight = 3969
               mmLeft = 105834
-              mmTop = 265
+              mmTop = 2385
               mmWidth = 12965
               BandType = 1
               LayerName = BandLayer15
@@ -18690,7 +18689,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
             object ppLabel139: TppLabel
               UserName = 'Label801'
               AutoSize = False
-              Caption = 'SUMAS FACTURADAS: '
+              Caption = 'SUMAS: '
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
               Font.Name = 'Arial'
@@ -19100,7 +19099,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
             object ppLabel141: TppLabel
               UserName = 'Label801'
               AutoSize = False
-              Caption = 'SUMAS SIN FACTURAR:'
+              Caption = 'SUMAS:'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
               Font.Name = 'Arial'
@@ -19289,6 +19288,27 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               mmLeft = 207430
               mmTop = 11642
               mmWidth = 21000
+              BandType = 7
+              LayerName = PageLayer3
+            end
+            object ppDBText181: TppDBText
+              UserName = 'DBText181'
+              DataField = 'SPagado'
+              DataPipeline = ppDBPpSumasAmor
+              DisplayFormat = '#,0.00;-#,0.00'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 8
+              Font.Style = []
+              ParentDataPipeline = False
+              TextAlignment = taRightJustified
+              Transparent = True
+              DataPipelineName = 'ppDBPpSumasAmor'
+              mmHeight = 4763
+              mmLeft = 153569
+              mmTop = 11642
+              mmWidth = 21696
               BandType = 7
               LayerName = PageLayer3
             end
@@ -19833,7 +19853,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               AutoSize = False
               Border.BorderPositions = [bpBottom]
               Border.Weight = 0.748799979686737100
-              Caption = 'Vencidos a la Fecha:'
+              Caption = 'Suma:'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
               Font.Name = 'Arial'
@@ -19843,9 +19863,9 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Transparent = True
               VerticalAlignment = avCenter
               mmHeight = 4763
-              mmLeft = 89959
-              mmTop = 12445
-              mmWidth = 34660
+              mmLeft = 16140
+              mmTop = 31750
+              mmWidth = 33602
               BandType = 7
               LayerName = PageLayer4
             end
@@ -19864,8 +19884,8 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               VerticalAlignment = avCenter
               DataPipelineName = 'ppDBHojaControlCte'
               mmHeight = 4763
-              mmLeft = 126471
-              mmTop = 12445
+              mmLeft = 61913
+              mmTop = 31750
               mmWidth = 11113
               BandType = 7
               LayerName = PageLayer4
@@ -20298,7 +20318,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               DataPipelineName = 'ppDBPpSumasAdicionales'
               mmHeight = 4763
               mmLeft = 61913
-              mmTop = 19050
+              mmTop = 20110
               mmWidth = 11113
               BandType = 7
               LayerName = PageLayer4
@@ -20316,11 +20336,12 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               ParentDataPipeline = False
               TextAlignment = taRightJustified
               Transparent = True
+              Visible = False
               VerticalAlignment = avCenter
               DataPipelineName = 'ppDBPpSumasAdicionales'
               mmHeight = 4763
               mmLeft = 61913
-              mmTop = 25135
+              mmTop = 37572
               mmWidth = 11113
               BandType = 7
               LayerName = PageLayer4
@@ -20338,10 +20359,11 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Font.Style = []
               TextAlignment = taRightJustified
               Transparent = True
+              Visible = False
               VerticalAlignment = avCenter
               mmHeight = 4763
-              mmLeft = 16140
-              mmTop = 26194
+              mmLeft = 16138
+              mmTop = 37572
               mmWidth = 33602
               BandType = 7
               LayerName = PageLayer4
@@ -20363,7 +20385,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               DataPipelineName = 'ppDBPpSumasAdicionales'
               mmHeight = 4763
               mmLeft = 61913
-              mmTop = 31750
+              mmTop = 25930
               mmWidth = 11113
               BandType = 7
               LayerName = PageLayer4
@@ -20384,7 +20406,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               VerticalAlignment = avCenter
               mmHeight = 4763
               mmLeft = 16140
-              mmTop = 32808
+              mmTop = 25929
               mmWidth = 33602
               BandType = 7
               LayerName = PageLayer4
@@ -20463,13 +20485,13 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
     object ppParameterList4: TppParameterList
     end
   end
-  object ppDBPpAnexoCliente: TppDBPipeline [31]
+  object ppDBPpAnexoCliente: TppDBPipeline
     DataSource = dsAnexoCliente
     UserName = 'DBAnexoCliente'
     Left = 224
     Top = 552
   end
-  object ADODtstPago2: TADODataSet [32]
+  object ADODtstPago2: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -20547,12 +20569,12 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       ReadOnly = True
     end
   end
-  object DSPago2: TDataSource [33]
+  object DSPago2: TDataSource
     DataSet = ADODtstPago2
     Left = 144
     Top = 648
   end
-  object ppDBPpPago2: TppDBPipeline [34]
+  object ppDBPpPago2: TppDBPipeline
     DataSource = DSPago2
     UserName = 'DBPagos2'
     Left = 216
@@ -20565,7 +20587,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       DetailSortOrder = soAscending
     end
   end
-  object ADODtStAmortiza: TADODataSet [35]
+  object ADODtStAmortiza: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -20789,19 +20811,19 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       ReadOnly = True
     end
   end
-  object DSAmortiza: TDataSource [36]
+  object DSAmortiza: TDataSource
     DataSet = ADODtStAmortiza
     Left = 136
     Top = 608
   end
-  object ppDBPpAmortiza: TppDBPipeline [37]
+  object ppDBPpAmortiza: TppDBPipeline
     DataSource = DSAmortiza
     UserName = 'DBPpAmortiza'
     Left = 224
     Top = 608
     MasterDataPipelineName = 'ppDBPpAnexoCliente'
   end
-  object ADODtStProd2: TADODataSet [38]
+  object ADODtStProd2: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -20882,12 +20904,12 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       Size = 50
     end
   end
-  object DSProd2: TDataSource [39]
+  object DSProd2: TDataSource
     DataSet = ADODtStProd2
     Left = 432
     Top = 616
   end
-  object ppDBPpProd2: TppDBPipeline [40]
+  object ppDBPpProd2: TppDBPipeline
     DataSource = DSProd2
     UserName = 'DBProd2'
     Left = 504
@@ -20900,7 +20922,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       DetailSortOrder = soAscending
     end
   end
-  object ADODtStamortiza2: TADODataSet [41]
+  object ADODtStamortiza2: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -21140,19 +21162,19 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       ReadOnly = True
     end
   end
-  object DSAmortiza2: TDataSource [42]
+  object DSAmortiza2: TDataSource
     DataSet = ADODtStamortiza2
     Left = 424
     Top = 664
   end
-  object ppDBPpAmortiza2: TppDBPipeline [43]
+  object ppDBPpAmortiza2: TppDBPipeline
     DataSource = DSAmortiza2
     UserName = 'DBPpAmortiza2'
     Left = 512
     Top = 664
     MasterDataPipelineName = 'ppDBPpAnexoCliente'
   end
-  object ADODtStMoratoriosXCXC: TADODataSet [44]
+  object ADODtStMoratoriosXCXC: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -21246,12 +21268,12 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       FieldName = 'FactMora'
     end
   end
-  object DSPagosMora: TDataSource [45]
+  object DSPagosMora: TDataSource
     DataSet = ADODtStMoratoriosXCXC
     Left = 136
     Top = 704
   end
-  object DBPPPagosMora: TppDBPipeline [46]
+  object DBPPPagosMora: TppDBPipeline
     DataSource = DSPagosMora
     UserName = 'DBPPPagosMora'
     Left = 216
@@ -21264,7 +21286,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       DetailSortOrder = soAscending
     end
   end
-  object ADODtstSumasAmoryAmor2: TADODataSet [47]
+  object ADODtstSumasAmoryAmor2: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -21341,7 +21363,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       Size = 6
     end
   end
-  object ppDBPpSumasAmor: TppDBPipeline [48]
+  object ppDBPpSumasAmor: TppDBPipeline
     DataSource = DSSumasAmortizaciones
     UserName = 'DBPpSumasAmor'
     Left = 568
@@ -21354,17 +21376,17 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       DetailSortOrder = soAscending
     end
   end
-  object DSSumasAmortizaciones: TDataSource [49]
+  object DSSumasAmortizaciones: TDataSource
     DataSet = ADODtstSumasAmoryAmor2
     Left = 488
     Top = 504
   end
-  object DSSumasAdicionales: TDataSource [50]
+  object DSSumasAdicionales: TDataSource
     DataSet = ADODtStSumasAdicionales
     Left = 832
     Top = 544
   end
-  object ADODtStSumasAdicionales: TADODataSet [51]
+  object ADODtStSumasAdicionales: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -21417,7 +21439,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       ReadOnly = True
     end
   end
-  object ppDBPpSumasAdicionales: TppDBPipeline [52]
+  object ppDBPpSumasAdicionales: TppDBPipeline
     DataSource = DSSumasAdicionales
     UserName = 'DBPpSumasAdicional'
     Left = 744
@@ -21429,7 +21451,5 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       DetailFieldName = 'IdAnexo'
       DetailSortOrder = soAscending
     end
-  end
-  inherited dbpReport: TppDBPipeline [53]
   end
 end

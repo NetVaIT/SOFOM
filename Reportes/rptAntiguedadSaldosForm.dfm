@@ -200,7 +200,6 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
           Width = 104
         end
         object tvMasterVigentes: TcxGridDBColumn
-          Caption = 'Vigentes'
           DataBinding.FieldName = 'Vigentes'
           Width = 114
         end

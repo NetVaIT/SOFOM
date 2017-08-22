@@ -452,7 +452,7 @@ begin
     +' (exists (select * from CuentasXCobrarDetalle CXCD where CXCD.descripcion like''%Abono Capital%'' and CXC.IdCuentaXCobrar=CXCD.idcuentaXCobrar )'
     +' and CXC.IdCFDI is null) ) and CXC.IDAnexo=:IdAnexo'           //-- IdCuentaXCobrarEstatus=-1 and puede que esten facturadas
     +'  order by CXC.idanexosamortizaciones,EsMoratorio DEsc, CXC.FechaVencimiento' ;
-  end;
+  end;   //Verificar si solo salen las que son....ago 22/127
 
   TAdoDataset(DsconCXCPendientes.DataSet).open;
 
@@ -607,7 +607,8 @@ end;
 procedure TFrmAplicacionPago.DSAplicacionStateChange(Sender: TObject);
 begin
   if Assigned(dsAplicacion.DataSet) then
-    BtBtnAplicar.Enabled:=(dsAplicacion.DataSet.State=dsInsert) and (not dsConCXCpendientes.DataSet.Eof);
+    BtBtnAplicar.Enabled:=(dsAplicacion.DataSet.State=dsInsert) and (not dsConCXCpendientes.DataSet.Eof)
+                           and (Not dsConCXCPendientes.DataSet.FieldByName('IdCFDI').IsNULL);
 end;
 
 procedure TFrmAplicacionPago.dsConCXCPendientesDataChange(Sender: TObject;
