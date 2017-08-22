@@ -36,7 +36,7 @@ type
     adoqCreditoNumeroPagos: TIntegerField;
     adoqCreditoFrecuenciaPagos: TStringField;
     adoqCreditoImportePagos: TFMTBCDField;
-    adoqCreditoFechaUltimoPago: TIntegerField;
+    adoqCreditoFechaUltimoPago: TDateTimeField;
     adoqCreditoFechaReestructura: TIntegerField;
     adoqCreditoPagoFinalMorosa: TIntegerField;
     adoqCreditoFechaLiquidacion: TIntegerField;
@@ -45,14 +45,10 @@ type
     adoqCreditoQuebranto: TIntegerField;
     adoqCreditoClaveObservacion: TStringField;
     adoqCreditoCreditoEspecial: TStringField;
-    adoqCreditoFechaPrimerIncumplimiento: TIntegerField;
+    adoqCreditoFechaPrimerIncumplimiento: TDateTimeField;
     adoqCreditoSaldoInsoluto: TFMTBCDField;
     adoqCreditoCreditoMaximo: TIntegerField;
-    adoqCreditoFechacarteraVencida: TIntegerField;
-    adoqCreditoFechaVencimiento: TDateTimeField;
-    adoqCreditoDiasVencimiento: TIntegerField;
-    adoqCreditoSaldo: TFMTBCDField;
-    adoqCreditoInteres: TFMTBCDField;
+    adoqCreditoFechacarteraVencida: TDateTimeField;
     adoqPersonas: TADOQuery;
     adoqPersonasIdPersona: TAutoIncField;
     adoqPersonasRFC: TStringField;
@@ -103,6 +99,12 @@ type
     adoqAccionistasTipo: TIntegerField;
     adoqAccionistasEstadoPaisExtranjero: TStringField;
     adoqAccionistasPais: TStringField;
+    adoqDetalle: TADOQuery;
+    adoqDetalleIdAnexo: TIntegerField;
+    adoqDetalleFechaVencimiento: TDateTimeField;
+    adoqDetalleDiasVencimiento: TIntegerField;
+    adoqDetalleSaldo: TFMTBCDField;
+    adoqDetalleInteres: TFMTBCDField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
@@ -177,7 +179,7 @@ const
 var
   TXTArchivo: TextFile;
   Registro: String;
-  IdAnexo: Integer;
+//  IdAnexo: Integer;
   FechaPeriodo: TDateTime;
   TotalEmpresas: Integer;
   TotalSaldo: Double;
@@ -210,7 +212,7 @@ var
       Result := Result + '02' + adoqConfiguracionBCTipo.AsString;
       Result := Result + '03' + IntToStr(Formato);
       Result := Result + '04' + FormatDateTime(cFormatDate, Date);
-      Result := Result + '05' + IntToStr(Month) + IntToStr(Year); // Periodo
+      Result := Result + '05' + PreparaCadena(IntToStr(Month), 'D', '0', 2) + IntToStr(Year); // Periodo
       Result := Result + '06' + Version;
       Result := Result + '07' + PreparaCadena(adoqConfiguracionBCInstitucion.AsString, 'I', ' ', 75);
       Result := Result + '08' + PreparaCadena(EmptyStr, 'I', ' ', 52);
@@ -329,6 +331,11 @@ var
     Result := Result + '25' + PreparaCadena(EmptyStr, 'I', ' ', 40);
   end;
 
+  function GetDE(IdAnexo: Integer; RFC, Contrato: String; FechaPeriodo: TDateTime) : String;
+  begin
+
+  end;
+
   function GetAV(IdPersona: Integer): String;
   begin
     Result := SAV
@@ -344,7 +351,7 @@ var
 
 begin
 //  Result := 0;
-  IdAnexo := 0;
+//  IdAnexo := 0;
   TotalEmpresas := 0;
   TotalSaldo := 0;
   FechaPeriodo := EncodeDate(Year,Month,DaysInAMonth(Year, Month));
@@ -353,28 +360,62 @@ begin
     Rewrite(TXTArchivo);
     Write(TXTArchivo, GetHD(Month, Year));
     adoqCredito.Close;
-    adoqCredito.Parameters.ParamByName('Fecha').Value := FechaPeriodo;
     adoqCredito.Open;
     adoqCredito.First;
     while not adoqCredito.Eof do
     begin
-      if (IdAnexo <> adoqCreditoIdAnexo.Value) then
+      Write(TXTArchivo, GetEM(adoqCreditoIdPersona.Value));
+      Write(TXTArchivo, GetAC(adoqCreditoIdPersona.Value));
+      Write(TXTArchivo, GetCR);
+      Inc(TotalEmpresas);
+      // Detalle
+      adoqDetalle.Close;
+      adoqDetalle.Parameters.ParamByName('IdAnexo').Value := adoqCreditoIdAnexo.Value;
+      adoqDetalle.Parameters.ParamByName('FechaVencimiento').Value := FechaPeriodo;
+      adoqDetalle.Open;
+      adoqDetalle.First;
+      if adoqDetalle.Eof then
       begin
-        IdAnexo := adoqCreditoIdAnexo.Value;
-        Write(TXTArchivo, GetEM(adoqCreditoIdPersona.Value));
-        Write(TXTArchivo, GetAC(adoqCreditoIdPersona.Value));
-        Write(TXTArchivo, GetCR);
-        Inc(TotalEmpresas);
+        Registro := SDE;
+        Registro := Registro + '00' + PreparaCadena(adoqCreditoRFC.AsString,'I',' ',13);
+        Registro := Registro + '01' + PreparaCadena(adoqCreditoContrato.AsString,'I',' ',25);
+        Registro := Registro + '02' + '000';
+        Registro := Registro + '03' + PreparaCadena(FormatFloat(cFormatFloat, 0),'D','0',20);
+        Registro := Registro + '04' + PreparaCadena(FormatFloat(cFormatFloat, 0),'D','0',20);
+        Registro := Registro + '05' + PreparaCadena(EmptyStr, 'I', ' ', 53);
+        Write(TXTArchivo, Registro);
       end;
-      Registro := SDE;
-      Registro := Registro + '00' + PreparaCadena(adoqCreditoRFC.AsString,'I',' ',13);
-      Registro := Registro + '01' + PreparaCadena(adoqCreditoContrato.AsString,'I',' ',25);
-      Registro := Registro + '02' + PreparaCadena(adoqCreditoDiasVencimiento.AsString,'D','0',3);
-      Registro := Registro + '03' + PreparaCadena(FormatFloat(cFormatFloat, adoqCreditoSaldo.AsFloat),'D','0',20);
-      Registro := Registro + '04' + PreparaCadena(FormatFloat(cFormatFloat, adoqCreditoInteres.AsFloat),'D','0',20);
-      Registro := Registro + '05' + PreparaCadena(EmptyStr, 'I', ' ', 53);
-      Write(TXTArchivo, Registro);
-      TotalSaldo := TotalSaldo + adoqCreditoSaldo.AsFloat;
+      while not adoqDetalle.Eof do
+      begin
+        Registro := SDE;
+        Registro := Registro + '00' + PreparaCadena(adoqCreditoRFC.AsString,'I',' ',13);
+        Registro := Registro + '01' + PreparaCadena(adoqCreditoContrato.AsString,'I',' ',25);
+        Registro := Registro + '02' + PreparaCadena(adoqDetalleDiasVencimiento.AsString,'D','0',3);
+        Registro := Registro + '03' + PreparaCadena(FormatFloat(cFormatFloat, adoqDetalleSaldo.AsFloat),'D','0',20);
+        Registro := Registro + '04' + PreparaCadena(FormatFloat(cFormatFloat, adoqDetalleInteres.AsFloat),'D','0',20);
+        Registro := Registro + '05' + PreparaCadena(EmptyStr, 'I', ' ', 53);
+        Write(TXTArchivo, Registro);
+        TotalSaldo := TotalSaldo + adoqDetalleSaldo.AsFloat;
+        adoqDetalle.Next;
+      end;
+      adoqDetalle.Close;
+//      if (IdAnexo <> adoqCreditoIdAnexo.Value) then
+//      begin
+//        IdAnexo := adoqCreditoIdAnexo.Value;
+//        Write(TXTArchivo, GetEM(adoqCreditoIdPersona.Value));
+//        Write(TXTArchivo, GetAC(adoqCreditoIdPersona.Value));
+//        Write(TXTArchivo, GetCR);
+//        Inc(TotalEmpresas);
+//      end;
+//      Registro := SDE;
+//      Registro := Registro + '00' + PreparaCadena(adoqCreditoRFC.AsString,'I',' ',13);
+//      Registro := Registro + '01' + PreparaCadena(adoqCreditoContrato.AsString,'I',' ',25);
+//      Registro := Registro + '02' + PreparaCadena(adoqCreditoDiasVencimiento.AsString,'D','0',3);
+//      Registro := Registro + '03' + PreparaCadena(FormatFloat(cFormatFloat, adoqCreditoSaldo.AsFloat),'D','0',20);
+//      Registro := Registro + '04' + PreparaCadena(FormatFloat(cFormatFloat, adoqCreditoInteres.AsFloat),'D','0',20);
+//      Registro := Registro + '05' + PreparaCadena(EmptyStr, 'I', ' ', 53);
+//      Write(TXTArchivo, Registro);
+//      TotalSaldo := TotalSaldo + adoqCreditoSaldo.AsFloat;
       adoqCredito.Next;
     end;
     adoqCredito.Close;

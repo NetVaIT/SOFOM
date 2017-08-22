@@ -26,41 +26,26 @@ inherited dmBuroCredito: TdmBuroCredito
   object adoqCredito: TADOQuery
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
-    Parameters = <
-      item
-        Name = 'Fecha'
-        DataType = ftDateTime
-        NumericScale = 3
-        Precision = 23
-        Size = 16
-        Value = Null
-      end>
+    Parameters = <>
     SQL.Strings = (
       
-        'SELECT        Anexos.IdAnexo, Contratos.IdPersona, Personas.RFC,' +
-        ' Contratos.Identificador+Anexos.Identificador AS Contrato, '#39#39' AS' +
-        ' ContratoAnterior, Anexos.Fecha AS FechaApertura, Anexos.Plazo, '
+        'SELECT Anexos.IdAnexo, Contratos.IdPersona, Personas.RFC, dbo.Ge' +
+        'tAnexoIdentificador(Anexos.IdAnexo) AS Contrato, '#39#39' AS ContratoA' +
+        'nterior, Anexos.Fecha AS FechaApertura, Anexos.Plazo, '
       
-        '                         BCTiposCreditos.Identificador AS TipoCr' +
-        'edito, Anexos.MontoFinanciar AS SaldoInicial, '#39'001'#39' AS Moneda, A' +
-        'nexos.Plazo AS NumeroPagos, '#39'30'#39' AS FrecuenciaPagos, Anexos.Pago' +
-        'Mensual AS ImportePagos, NULL '
+        'BCTiposCreditos.Identificador AS TipoCredito, Anexos.MontoFinanc' +
+        'iar AS SaldoInicial, '#39'001'#39' AS Moneda, Anexos.Plazo AS NumeroPago' +
+        's, '#39'30'#39' AS FrecuenciaPagos, Anexos.PagoMensual AS ImportePagos, '
       
-        '                         AS FechaUltimoPago, NULL AS FechaReestr' +
-        'uctura, 0 AS PagoFinalMorosa, NULL AS FechaLiquidacion, 0 AS Qui' +
-        'ta, 0 AS Dacion, 0 AS Quebranto, '#39'   '#39' AS ClaveObservacion, '#39' '#39' ' +
-        'AS CreditoEspecial, NULL '
+        'Pago.FechaPago AS FechaUltimoPago, NULL AS FechaReestructura, 0 ' +
+        'AS PagoFinalMorosa, NULL AS FechaLiquidacion, 0 AS Quita, 0 AS D' +
+        'acion, 0 AS Quebranto, '#39'   '#39' AS ClaveObservacion, '#39' '#39' AS Credito' +
+        'Especial, '
       
-        '                         AS FechaPrimerIncumplimiento, Anexos.Sa' +
-        'ldoInsoluto, 0 AS CreditoMaximo, NULL AS FechacarteraVencida,'
-      
-        #9#9#9#9#9#9' Amortizaciones.FechaVencimiento, Amortizaciones.DiasVenci' +
-        'miento, Amortizaciones.Saldo, Amortizaciones.Interes '
-      'FROM            v_AnexosAmortizaciones Amortizaciones'
-      
-        'INNER JOIN AnexosCreditos ON Amortizaciones.IdAnexoCredito = Ane' +
-        'xosCreditos.IdAnexoCredito'
-      'INNER JOIN Anexos ON AnexosCreditos.IdAnexo = Anexos.IdAnexo'
+        'I.FechaVencimiento AS FechaPrimerIncumplimiento, Anexos.SaldoIns' +
+        'oluto, 0 AS CreditoMaximo, V.FechaVencimiento AS FechacarteraVen' +
+        'cida'
+      'FROM Anexos '
       
         'INNER JOIN Contratos ON Anexos.IdContrato = Contratos.IdContrato' +
         ' '
@@ -71,9 +56,19 @@ inherited dmBuroCredito: TdmBuroCredito
       
         'INNER JOIN BCTiposCreditos ON ContratosTipos.IdBCTipoCredito = B' +
         'CTiposCreditos.IdBCTipoCredito '
-      'WHERE Amortizaciones.FechaVencimiento <= :Fecha'
-      'AND Amortizaciones.Saldo <> 0'
-      'ORDER BY Contrato, Amortizaciones.FechaVencimiento')
+      
+        'LEFT JOIN (SELECT IdAnexo, MAX(FechaPago) AS FechaPago FROM  vw_' +
+        'AnexoAmortizacionCXCDiasRetraso GROUP BY IdAnexo) AS Pago ON Pag' +
+        'o.IdAnexo = Anexos.IdAnexo'
+      
+        'LEFT JOIN (SELECT IdAnexo, MIN(FechaVencimiento) AS FechaVencimi' +
+        'ento FROM vw_AnexoAmortizacionCXCDiasRetraso WHERE DiasRetraso >' +
+        ' 0 GROUP BY IdAnexo) AS I ON I.IdAnexo = Anexos.IdAnexo'
+      
+        'LEFT JOIN (SELECT IdAnexo, MIN(FechaVencimiento) AS FechaVencimi' +
+        'ento FROM vw_AnexoAmortizacionCXCDiasRetraso WHERE Saldo <> 0 GR' +
+        'OUP BY IdAnexo) AS V ON V.IdAnexo = Anexos.IdAnexo'
+      'WHERE Anexos.SaldoInsoluto > 0')
     Left = 136
     Top = 88
     object adoqCreditoIdAnexo: TAutoIncField
@@ -129,7 +124,7 @@ inherited dmBuroCredito: TdmBuroCredito
       Precision = 18
       Size = 6
     end
-    object adoqCreditoFechaUltimoPago: TIntegerField
+    object adoqCreditoFechaUltimoPago: TDateTimeField
       FieldName = 'FechaUltimoPago'
       ReadOnly = True
     end
@@ -167,7 +162,7 @@ inherited dmBuroCredito: TdmBuroCredito
       ReadOnly = True
       Size = 1
     end
-    object adoqCreditoFechaPrimerIncumplimiento: TIntegerField
+    object adoqCreditoFechaPrimerIncumplimiento: TDateTimeField
       FieldName = 'FechaPrimerIncumplimiento'
       ReadOnly = True
     end
@@ -180,27 +175,9 @@ inherited dmBuroCredito: TdmBuroCredito
       FieldName = 'CreditoMaximo'
       ReadOnly = True
     end
-    object adoqCreditoFechacarteraVencida: TIntegerField
+    object adoqCreditoFechacarteraVencida: TDateTimeField
       FieldName = 'FechacarteraVencida'
       ReadOnly = True
-    end
-    object adoqCreditoFechaVencimiento: TDateTimeField
-      FieldName = 'FechaVencimiento'
-    end
-    object adoqCreditoDiasVencimiento: TIntegerField
-      FieldName = 'DiasVencimiento'
-      ReadOnly = True
-    end
-    object adoqCreditoSaldo: TFMTBCDField
-      FieldName = 'Saldo'
-      ReadOnly = True
-      Precision = 18
-      Size = 6
-    end
-    object adoqCreditoInteres: TFMTBCDField
-      FieldName = 'Interes'
-      Precision = 18
-      Size = 6
     end
   end
   object adoqPersonas: TADOQuery
@@ -599,6 +576,58 @@ inherited dmBuroCredito: TdmBuroCredito
     object adoqAccionistasPais: TStringField
       FieldName = 'Pais'
       Size = 2
+    end
+  end
+  object adoqDetalle: TADOQuery
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    Parameters = <
+      item
+        Name = 'IdAnexo'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end
+      item
+        Name = 'FechaVencimiento'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        NumericScale = 3
+        Precision = 23
+        Size = 16
+        Value = Null
+      end>
+    SQL.Strings = (
+      
+        'SELECT IdAnexo, FechaVencimiento, CASE WHEN DiasRetraso < 0 THEN' +
+        ' 0 ELSE DiasRetraso END AS DiasVencimiento, Saldo, Interes'
+      'FROM vw_AnexoAmortizacionCXCDiasRetraso '
+      'WHERE Saldo <> 0'
+      'AND IdAnexo = :IdAnexo'
+      'AND FechaVencimiento <= :FechaVencimiento')
+    Left = 224
+    Top = 88
+    object adoqDetalleIdAnexo: TIntegerField
+      FieldName = 'IdAnexo'
+    end
+    object adoqDetalleFechaVencimiento: TDateTimeField
+      FieldName = 'FechaVencimiento'
+    end
+    object adoqDetalleDiasVencimiento: TIntegerField
+      FieldName = 'DiasVencimiento'
+      ReadOnly = True
+    end
+    object adoqDetalleSaldo: TFMTBCDField
+      FieldName = 'Saldo'
+      Precision = 18
+      Size = 6
+    end
+    object adoqDetalleInteres: TFMTBCDField
+      FieldName = 'Interes'
+      Precision = 18
+      Size = 6
     end
   end
 end
