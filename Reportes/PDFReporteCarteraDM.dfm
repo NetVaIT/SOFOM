@@ -2702,26 +2702,29 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       'SELECT      A.IdAnexo, A.Identificador AS Anexo, A.Plazo, '#13#10'A.Sa' +
       'ldoInsoluto,VC.TotalPorVencer as SaldoTotal,'#13#10'C.Identificador AS' +
       ' Contrato, '#13#10'VR.*,(vr.cantCobRecNP+Vr.atrasados) as AtrasadoORec' +
-      ', CASE WHEN (Vr.atrasados > 0) THEN VR.DiasREtrasoXAnexo / Vr.at' +
-      'rasados ELSE 0 END AS DiasPagoTotal, '#13#10' CASE WHEN (Vr.atrasados ' +
-      '> 0) THEN VR.DiasSoloRetraso / Vr.atrasados ELSE 0 END AS DiasPa' +
-      'goRetraso, '#13#10' CASE WHEN (vr.CAntidad > 0) THEN (round((Vr.atrasa' +
-      'dos * 100.0 / VR.Cantidad),1 )) END AS PorcentajeAtrasados,'#13#10' CA' +
-      'SE WHEN (vr.CAntidad > 0) THEN (round((Vr.aTiempo * 100.0 / VR.C' +
-      'antidad), 1)) END AS PorcentajeATiempo, '#13#10'CASE WHEN (vr.CAntidad' +
-      ' > 0) THEN (round (((vr.cantCobRecNP* 100.0)/VR.Cantidad), 1)) E' +
-      'ND as PocAtraORec, -- jul 17/17'#13#10'PR.CalificacionInicial, PR.Razo' +
-      'nSocial AS cliente, '#13#10'CT.Identificador AS TC, AC.IdAnexoCreditoE' +
-      'status, A.PrecioMoneda,A.TipoCambio, A.PrecioTotal'#13#10'FROM        ' +
-      ' dbo.Anexos AS A INNER JOIN'#13#10'         vw_ReporteCarteraCompleto ' +
-      'VC on a.IdAnexo= VC.IdAnexo inner join '#13#10'           vw_RetrasoDi' +
-      'asXAnexo VR  on a.IdAnexo = VR.idanexo inner join'#13#10#13#10'           ' +
-      '           dbo.Contratos AS C ON C.IdContrato = A.IdContrato INN' +
-      'ER JOIN'#13#10'                      dbo.ContratosTipos AS CT ON C.IdC' +
-      'ontratoTipo = CT.IdContratoTipo INNER JOIN'#13#10'                    ' +
-      '  dbo.Personas AS PR ON PR.IdPersona = C.IdPersona INNER JOIN'#13#10' ' +
-      '                     dbo.AnexosCreditos AS AC ON A.IdAnexo = AC.' +
-      'IdAnexo AND AC.IdAnexoCreditoEstatus = 1 '#13#10'order by A.IdAnexo'
+      ', '#13#10'VR.atrasados+VR.TotalSinPago+Vr.aTiempo as Suma,'#13#10'CASE WHEN ' +
+      '(Vr.atrasados > 0) THEN VR.DiasREtrasoXAnexo / Vr.atrasados ELSE' +
+      ' 0 END AS DiasPagoTotal, '#13#10' CASE WHEN (Vr.atrasados > 0) THEN VR' +
+      '.DiasSoloRetraso / Vr.atrasados ELSE 0 END AS DiasPagoRetraso, '#13 +
+      #10' CASE WHEN (vr.CAntidad > 0) THEN (round((Vr.atrasados * 100.0 ' +
+      '/ VR.Cantidad),1 )) END AS PorcentajeAtrasados,'#13#10' CASE WHEN (vr.' +
+      'CAntidad > 0) THEN (round((Vr.aTiempo * 100.0 / VR.Cantidad), 1)' +
+      ') END AS PorcentajeATiempo, '#13#10'CASE WHEN (vr.CAntidad > 0) THEN (' +
+      'round (((vr.cantCobRecNP* 100.0)/VR.Cantidad), 1)) END as PocAtr' +
+      'aORec, -- jul 17/17'#13#10'CASE WHEN (vr.CAntidad > 0) THEN (round (((' +
+      'VR.TotalSinPago* 100.0)/VR.Cantidad),1)) END as PorSinPago, --ag' +
+      'o 23/17'#13#10#13#10'PR.CalificacionInicial, PR.RazonSocial AS cliente, '#13#10 +
+      'CT.Identificador AS TC, AC.IdAnexoCreditoEstatus, A.PrecioMoneda' +
+      ',A.TipoCambio, A.PrecioTotal'#13#10'FROM         dbo.Anexos AS A INNER' +
+      ' JOIN'#13#10'         vw_ReporteCarteraCompleto VC on a.IdAnexo= VC.Id' +
+      'Anexo inner join '#13#10'           vw_RetrasoDiasXAnexo VR  on a.IdAn' +
+      'exo = VR.idanexo inner join'#13#10#13#10'                      dbo.Contrat' +
+      'os AS C ON C.IdContrato = A.IdContrato INNER JOIN'#13#10'             ' +
+      '         dbo.ContratosTipos AS CT ON C.IdContratoTipo = CT.IdCon' +
+      'tratoTipo INNER JOIN'#13#10'                      dbo.Personas AS PR O' +
+      'N PR.IdPersona = C.IdPersona INNER JOIN'#13#10'                      d' +
+      'bo.AnexosCreditos AS AC ON A.IdAnexo = AC.IdAnexo AND AC.IdAnexo' +
+      'CreditoEstatus = 1 '#13#10'order by A.IdAnexo'
     Parameters = <>
     Left = 48
     Top = 224
@@ -2845,6 +2848,20 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       ReadOnly = True
       Precision = 26
       Size = 12
+    end
+    object ADODtStRepHojaControlCteTotalSinPago: TIntegerField
+      FieldName = 'TotalSinPago'
+      ReadOnly = True
+    end
+    object ADODtStRepHojaControlCtePorSinPago: TFMTBCDField
+      FieldName = 'PorSinPago'
+      ReadOnly = True
+      Precision = 26
+      Size = 12
+    end
+    object ADODtStRepHojaControlCteSuma: TIntegerField
+      FieldName = 'Suma'
+      ReadOnly = True
     end
   end
   object DSHojaControlCte: TDataSource
@@ -7967,7 +7984,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Value = 19
       end>
     Left = 48
-    Top = 400
+    Top = 392
     object ADODtStRepAmortizaIdAnexoAmortizacion: TIntegerField
       FieldName = 'IdAnexoAmortizacion'
       ReadOnly = True
@@ -19822,7 +19839,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               VerticalAlignment = avCenter
               mmHeight = 4763
               mmLeft = 8202
-              mmTop = 12433
+              mmTop = 11373
               mmWidth = 41540
               BandType = 7
               LayerName = PageLayer4
@@ -19843,7 +19860,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               DataPipelineName = 'ppDBHojaControlCte'
               mmHeight = 4763
               mmLeft = 51858
-              mmTop = 12433
+              mmTop = 11373
               mmWidth = 21167
               BandType = 7
               LayerName = PageLayer4
@@ -19864,13 +19881,15 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               VerticalAlignment = avCenter
               mmHeight = 4763
               mmLeft = 16140
-              mmTop = 31750
+              mmTop = 36520
               mmWidth = 33602
               BandType = 7
               LayerName = PageLayer4
             end
             object ppDBText155: TppDBText
               UserName = 'DBText91'
+              Border.BorderPositions = [bpTop]
+              Border.Visible = True
               DataField = 'Cantidad'
               DataPipeline = ppDBHojaControlCte
               DisplayFormat = '#,0;-#,0'
@@ -19885,7 +19904,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               DataPipelineName = 'ppDBHojaControlCte'
               mmHeight = 4763
               mmLeft = 61913
-              mmTop = 31750
+              mmTop = 36520
               mmWidth = 11113
               BandType = 7
               LayerName = PageLayer4
@@ -19906,7 +19925,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               VerticalAlignment = avCenter
               mmHeight = 4763
               mmLeft = 77258
-              mmTop = 20118
+              mmTop = 24868
               mmWidth = 47361
               BandType = 7
               LayerName = PageLayer4
@@ -19927,7 +19946,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               DataPipelineName = 'ppDBHojaControlCte'
               mmHeight = 4763
               mmLeft = 126471
-              mmTop = 20118
+              mmTop = 24868
               mmWidth = 11113
               BandType = 7
               LayerName = PageLayer4
@@ -19948,7 +19967,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               VerticalAlignment = avCenter
               mmHeight = 4763
               mmLeft = 91017
-              mmTop = 26732
+              mmTop = 19050
               mmWidth = 33602
               BandType = 7
               LayerName = PageLayer4
@@ -19969,7 +19988,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               DataPipelineName = 'ppDBHojaControlCte'
               mmHeight = 4763
               mmLeft = 126471
-              mmTop = 26732
+              mmTop = 19050
               mmWidth = 11113
               BandType = 7
               LayerName = PageLayer4
@@ -20074,7 +20093,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               DataPipelineName = 'ppDBHojaControlCte'
               mmHeight = 4763
               mmLeft = 140759
-              mmTop = 20118
+              mmTop = 24868
               mmWidth = 11377
               BandType = 7
               LayerName = PageLayer4
@@ -20095,7 +20114,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               DataPipelineName = 'ppDBHojaControlCte'
               mmHeight = 4763
               mmLeft = 140759
-              mmTop = 26732
+              mmTop = 19050
               mmWidth = 11377
               BandType = 7
               LayerName = PageLayer4
@@ -20112,11 +20131,12 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Font.Style = []
               TextAlignment = taRightJustified
               Transparent = True
+              Visible = False
               VerticalAlignment = avCenter
               DataPipelineName = 'ppDBHojaControlCte'
               mmHeight = 4763
               mmLeft = 126471
-              mmTop = 32818
+              mmTop = 4763
               mmWidth = 11113
               BandType = 7
               LayerName = PageLayer4
@@ -20134,11 +20154,12 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Font.Style = []
               TextAlignment = taRightJustified
               Transparent = True
+              Visible = False
               VerticalAlignment = avCenter
               mmHeight = 4763
-              mmLeft = 80698
-              mmTop = 32818
-              mmWidth = 43921
+              mmLeft = 93663
+              mmTop = 4763
+              mmWidth = 30956
               BandType = 7
               LayerName = PageLayer4
             end
@@ -20249,11 +20270,12 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Font.Style = []
               TextAlignment = taRightJustified
               Transparent = True
+              Visible = False
               VerticalAlignment = avCenter
               DataPipelineName = 'ppDBHojaControlCte'
               mmHeight = 4763
-              mmLeft = 140759
-              mmTop = 32818
+              mmLeft = 145786
+              mmTop = 4763
               mmWidth = 11377
               BandType = 7
               LayerName = PageLayer4
@@ -20296,7 +20318,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               VerticalAlignment = avCenter
               mmHeight = 4763
               mmLeft = 16140
-              mmTop = 20108
+              mmTop = 24878
               mmWidth = 33602
               BandType = 7
               LayerName = PageLayer4
@@ -20318,7 +20340,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               DataPipelineName = 'ppDBPpSumasAdicionales'
               mmHeight = 4763
               mmLeft = 61913
-              mmTop = 20110
+              mmTop = 24880
               mmWidth = 11113
               BandType = 7
               LayerName = PageLayer4
@@ -20340,8 +20362,8 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               VerticalAlignment = avCenter
               DataPipelineName = 'ppDBPpSumasAdicionales'
               mmHeight = 4763
-              mmLeft = 61913
-              mmTop = 37572
+              mmLeft = 126471
+              mmTop = 11377
               mmWidth = 11113
               BandType = 7
               LayerName = PageLayer4
@@ -20362,8 +20384,8 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Visible = False
               VerticalAlignment = avCenter
               mmHeight = 4763
-              mmLeft = 16138
-              mmTop = 37572
+              mmLeft = 91017
+              mmTop = 11377
               mmWidth = 33602
               BandType = 7
               LayerName = PageLayer4
@@ -20385,7 +20407,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               DataPipelineName = 'ppDBPpSumasAdicionales'
               mmHeight = 4763
               mmLeft = 61913
-              mmTop = 25930
+              mmTop = 30700
               mmWidth = 11113
               BandType = 7
               LayerName = PageLayer4
@@ -20406,7 +20428,114 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               VerticalAlignment = avCenter
               mmHeight = 4763
               mmLeft = 16140
-              mmTop = 25929
+              mmTop = 30699
+              mmWidth = 33602
+              BandType = 7
+              LayerName = PageLayer4
+            end
+            object ppLabel158: TppLabel
+              UserName = 'Label158'
+              AutoSize = False
+              Border.BorderPositions = [bpBottom]
+              Border.Weight = 0.748799979686737100
+              Caption = 'Pendientes de Pagar:'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 8
+              Font.Style = []
+              TextAlignment = taRightJustified
+              Transparent = True
+              VerticalAlignment = avCenter
+              mmHeight = 4763
+              mmLeft = 77258
+              mmTop = 30688
+              mmWidth = 47361
+              BandType = 7
+              LayerName = PageLayer4
+            end
+            object ppDBText182: TppDBText
+              UserName = 'DBText182'
+              DataField = 'TotalSinPago'
+              DataPipeline = ppDBHojaControlCte
+              DisplayFormat = '#,0;-#,0'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 8
+              Font.Style = []
+              TextAlignment = taRightJustified
+              Transparent = True
+              VerticalAlignment = avCenter
+              DataPipelineName = 'ppDBHojaControlCte'
+              mmHeight = 4763
+              mmLeft = 126471
+              mmTop = 30688
+              mmWidth = 11113
+              BandType = 7
+              LayerName = PageLayer4
+            end
+            object ppDBText183: TppDBText
+              UserName = 'DBText183'
+              DataField = 'PorSinPago'
+              DataPipeline = ppDBHojaControlCte
+              DisplayFormat = '0 %'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 8
+              Font.Style = []
+              TextAlignment = taRightJustified
+              Transparent = True
+              VerticalAlignment = avCenter
+              DataPipelineName = 'ppDBHojaControlCte'
+              mmHeight = 4763
+              mmLeft = 140759
+              mmTop = 30688
+              mmWidth = 11377
+              BandType = 7
+              LayerName = PageLayer4
+            end
+            object ppDBText184: TppDBText
+              UserName = 'DBText184'
+              Border.BorderPositions = [bpTop]
+              Border.Visible = True
+              DataField = 'Suma'
+              DataPipeline = ppDBHojaControlCte
+              DisplayFormat = '#,0;-#,0'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 8
+              Font.Style = []
+              TextAlignment = taRightJustified
+              Transparent = True
+              VerticalAlignment = avCenter
+              DataPipelineName = 'ppDBHojaControlCte'
+              mmHeight = 4763
+              mmLeft = 126471
+              mmTop = 36513
+              mmWidth = 11113
+              BandType = 7
+              LayerName = PageLayer4
+            end
+            object ppLabel159: TppLabel
+              UserName = 'Label159'
+              AutoSize = False
+              Border.BorderPositions = [bpBottom]
+              Border.Weight = 0.748799979686737100
+              Caption = 'Suma:'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 8
+              Font.Style = []
+              TextAlignment = taRightJustified
+              Transparent = True
+              VerticalAlignment = avCenter
+              mmHeight = 4763
+              mmLeft = 91017
+              mmTop = 36513
               mmWidth = 33602
               BandType = 7
               LayerName = PageLayer4

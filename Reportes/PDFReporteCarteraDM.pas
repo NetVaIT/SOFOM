@@ -866,6 +866,14 @@ type
     ppDBText179: TppDBText;
     ppDBText180: TppDBText;
     ppDBText181: TppDBText;
+    ADODtStRepHojaControlCteTotalSinPago: TIntegerField;
+    ADODtStRepHojaControlCtePorSinPago: TFMTBCDField;
+    ppLabel158: TppLabel;
+    ppDBText182: TppDBText;
+    ppDBText183: TppDBText;
+    ADODtStRepHojaControlCteSuma: TIntegerField;
+    ppDBText184: TppDBText;
+    ppLabel159: TppLabel;
     procedure CuotasReportCalcFields(DataSet: TDataSet);
   private
     { Private declarations }
