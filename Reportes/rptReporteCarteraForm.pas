@@ -67,6 +67,7 @@ type
     tvMasterSaldoAmortizaciones: TcxGridDBColumn;
     dxBrBtnHojaAmortizaYPago: TdxBarButton;
     dxBrBtnRepPagos: TdxBarButton;
+    tvMasterTotal0A30: TcxGridDBColumn;
     procedure dxBrBtnHojaControlClienteClick(Sender: TObject);
     procedure dxBrBtnHojaControlTodosClick(Sender: TObject);
     procedure dxBrBtnHojaAmortizaYPagoClick(Sender: TObject);

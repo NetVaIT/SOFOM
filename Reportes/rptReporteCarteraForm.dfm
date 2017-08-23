@@ -2,6 +2,7 @@ inherited FrmReporteCarteraGrid: TFrmReporteCarteraGrid
   Caption = 'FrmReporteCarteraGrid'
   ClientWidth = 1295
   ExplicitWidth = 1295
+  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -100,9 +101,15 @@ inherited FrmReporteCarteraGrid: TFrmReporteCarteraGrid
           Width = 126
         end
         object tvMasterTotalVigente: TcxGridDBColumn
+          Caption = 'Vigente(<0 d'#237'as)'
           DataBinding.FieldName = 'TotalVigente'
-          HeaderHint = 'Vencidas entre 1 y 30 d'#237'as'
+          HeaderHint = 'Vigente(<0 d'#237'as)'
           Width = 132
+        end
+        object tvMasterTotal0A30: TcxGridDBColumn
+          Caption = 'Vencido(0-30 d'#237'as)'
+          DataBinding.FieldName = 'Total0A30'
+          Width = 130
         end
         object tvMasterVencidoA30: TcxGridDBColumn
           DataBinding.FieldName = 'VencidoA30'
@@ -1162,6 +1169,7 @@ inherited FrmReporteCarteraGrid: TFrmReporteCarteraGrid
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42867.572603240740000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

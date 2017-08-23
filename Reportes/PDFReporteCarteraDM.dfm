@@ -13821,7 +13821,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
     IndexFieldNames = 'IdCuentaXCobrar'
     MasterFields = 'IdCuentaXCobrar'
     Parameters = <>
-    Left = 48
+    Left = 56
     Top = 464
     object ADODtStPagosIdPagoAplicacion: TAutoIncField
       FieldName = 'IdPagoAplicacion'
@@ -17578,7 +17578,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         OutlineSettings.CreateNode = True
         ParentWidth = False
         TraverseAllData = False
-        DataPipelineName = 'ppDBPpProd2'
+        DataPipelineName = 'ppDBProductos'
         mmHeight = 25665
         mmLeft = 55298
         mmTop = 794
@@ -17591,7 +17591,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         mmMinHeight = 0
         object ppChildReport8: TppChildReport
           AutoStop = False
-          DataPipeline = ppDBPpProd2
+          DataPipeline = ppDBProductos
           PrinterSetup.BinName = 'Default'
           PrinterSetup.DocumentName = 'Report'
           PrinterSetup.Duplex = dpVertical
@@ -17609,7 +17609,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
           Units = utMillimeters
           Version = '15.0'
           mmColumnWidth = 0
-          DataPipelineName = 'ppDBPpProd2'
+          DataPipelineName = 'ppDBProductos'
           object ppTitleBand12: TppTitleBand
             Background.Brush.Style = bsClear
             mmBottomOffset = 0

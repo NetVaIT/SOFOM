@@ -43,6 +43,7 @@ type
     adodsMasterSaldoAmortizaciones: TFMTBCDField;
     ActPDFAmortizaYPago: TAction;
     ActAmorYPago2: TAction;
+    adodsMasterTotal0A30: TFMTBCDField;
     procedure adodsMasterCalcFields(DataSet: TDataSet);
     procedure DataModuleCreate(Sender: TObject);
     procedure ActPDFCarteraExecute(Sender: TObject);

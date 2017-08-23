@@ -7,15 +7,15 @@ inherited dmrptReporteCartera: TdmrptReporteCartera
       'SElect IdAnexo, Contrato, Anexo, CLiente, Tc, Plazo, Total as To' +
       'tal, '#13#10'CobradoCXC as CobradoCXC, TotalPorCobrar as TotalPorCobra' +
       'r, Saldopendiente  as Saldopendiente,'#13#10' TotalVigente  as TotalVi' +
-      'gente,'#13#10' TotalPorVencer + ValorResidual as SaldoTotal,'#13#10'TotalPor' +
-      'Vencer as SaldoAmortizaciones,'#13#10' TotalCobradoVencido as TotalCob' +
-      'radoVencido,'#13#10' VencidoA30 as VencidoA30, VencidoA60 as VencidoA6' +
-      '0, VencidoA90 as VencidoA90, '#13#10'VencidoMas120 as VencidoMas120,'#13#10 +
-      'DiasRetraso, Cantidad, atrasados, atiempo, CuotasPendientes, Dia' +
-      'sPagoTotal, '#13#10'DiasPagoRetraso, PorcentajeAtrasados, PorcentajeAT' +
-      'iempo'#13#10', ValorResidual, SaldoInsoluto, SaldoTotal as SaldoTBD '#13#10 +
-      #13#10#13#10'from vw_ReporteCarteraCompleto'#13#10'order by  TotalCobradoVencid' +
-      'o desc, TotalPorVencer desc'
+      'gente,'#13#10#13#10' TotalPorVencer + ValorResidual as SaldoTotal,'#13#10'TotalP' +
+      'orVencer as SaldoAmortizaciones,'#13#10' TotalCobradoVencido as TotalC' +
+      'obradoVencido,'#13#10' Total0A30,'#13#10' VencidoA30 as VencidoA30, VencidoA' +
+      '60 as VencidoA60, VencidoA90 as VencidoA90, '#13#10'VencidoMas120 as V' +
+      'encidoMas120,'#13#10'DiasRetraso, Cantidad, atrasados, atiempo, Cuotas' +
+      'Pendientes, DiasPagoTotal, '#13#10'DiasPagoRetraso, PorcentajeAtrasado' +
+      's, PorcentajeATiempo'#13#10', ValorResidual, SaldoInsoluto, SaldoTotal' +
+      ' as SaldoTBD '#13#10#13#10#13#10'from vw_ReporteCarteraCompleto'#13#10'order by  Tot' +
+      'alCobradoVencido desc, TotalPorVencer desc'
     Left = 40
     object adodsMasterIdAnexo: TIntegerField
       FieldName = 'IdAnexo'
@@ -182,6 +182,13 @@ inherited dmrptReporteCartera: TdmrptReporteCartera
     end
     object adodsMasterSaldoAmortizaciones: TFMTBCDField
       FieldName = 'SaldoAmortizaciones'
+      ReadOnly = True
+      DisplayFormat = '###,##0.00'
+      Precision = 38
+      Size = 6
+    end
+    object adodsMasterTotal0A30: TFMTBCDField
+      FieldName = 'Total0A30'
       ReadOnly = True
       DisplayFormat = '###,##0.00'
       Precision = 38
