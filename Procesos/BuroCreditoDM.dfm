@@ -29,9 +29,10 @@ inherited dmBuroCredito: TdmBuroCredito
     Parameters = <>
     SQL.Strings = (
       
-        'SELECT Anexos.IdAnexo, Contratos.IdPersona, Personas.RFC, dbo.Ge' +
-        'tAnexoIdentificador(Anexos.IdAnexo) AS Contrato, '#39#39' AS ContratoA' +
-        'nterior, Anexos.Fecha AS FechaApertura, Anexos.Plazo, '
+        'SELECT Anexos.IdAnexo, Contratos.IdPersona, Personas.RFC, REPLAC' +
+        'E(dbo.GetAnexoIdentificador(Anexos.IdAnexo),'#39'-'#39','#39#39') AS Contrato,' +
+        ' '#39#39' AS ContratoAnterior, Anexos.Fecha AS FechaApertura, Anexos.P' +
+        'lazo,'
       
         'BCTiposCreditos.Identificador AS TipoCredito, Anexos.MontoFinanc' +
         'iar AS SaldoInicial, '#39'001'#39' AS Moneda, Anexos.Plazo AS NumeroPago' +
