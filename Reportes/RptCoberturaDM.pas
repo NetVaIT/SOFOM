@@ -41,8 +41,6 @@ type
     adodsReportAnexo: TStringField;
     adodsReportFecha: TDateTimeField;
     adodsReportCliente: TStringField;
-    adodsReportSaldoInsoluto: TFMTBCDField;
-    adodsReportMontoVencido: TFMTBCDField;
     adodsReportDepositos: TFMTBCDField;
     adodsReportOpcionCompra: TFMTBCDField;
     adodsReportValorResidual: TFMTBCDField;
@@ -88,6 +86,9 @@ type
     ppDBCalc7: TppDBCalc;
     ppDBCalc8: TppDBCalc;
     ppLabel25: TppLabel;
+    adodsReportPorVencer: TFMTBCDField;
+    adodsReportVencido: TFMTBCDField;
+    adodsReportDiasRetraso: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
     procedure mdParamsNewRecord(DataSet: TDataSet);
   private

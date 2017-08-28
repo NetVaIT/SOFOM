@@ -36,27 +36,25 @@ inherited dmBuroCredito: TdmBuroCredito
       
         'BCTiposCreditos.Identificador AS TipoCredito, Anexos.MontoFinanc' +
         'iar AS SaldoInicial, '#39'001'#39' AS Moneda, Anexos.Plazo AS NumeroPago' +
-        's, '#39'30'#39' AS FrecuenciaPagos, Anexos.PagoMensual AS ImportePagos, '
+        's, '#39'30'#39' AS FrecuenciaPagos, Anexos.PagoMensual AS ImportePagos,'
       
-        'Pago.FechaPago AS FechaUltimoPago, NULL AS FechaReestructura, 0 ' +
-        'AS PagoFinalMorosa, NULL AS FechaLiquidacion, 0 AS Quita, 0 AS D' +
-        'acion, 0 AS Quebranto, '#39'   '#39' AS ClaveObservacion, '#39' '#39' AS Credito' +
-        'Especial, '
+        'Pago.FechaPago AS FechaUltimoPago, Anexos.FechaTermino AS FechaR' +
+        'eestructura, 0 AS PagoFinalMorosa, Anexos.FechaTermino AS FechaL' +
+        'iquidacion, 0 AS Quita, 0 AS Dacion, 0 AS Quebranto, '#39'   '#39' AS Cl' +
+        'aveObservacion, '#39' '#39' AS CreditoEspecial,'
       
         'I.FechaVencimiento AS FechaPrimerIncumplimiento, Anexos.SaldoIns' +
         'oluto, 0 AS CreditoMaximo, V.FechaVencimiento AS FechacarteraVen' +
         'cida'
-      'FROM Anexos '
-      
-        'INNER JOIN Contratos ON Anexos.IdContrato = Contratos.IdContrato' +
-        ' '
-      'INNER JOIN Personas ON Contratos.IdPersona = Personas.IdPersona '
+      'FROM Anexos'
+      'INNER JOIN Contratos ON Anexos.IdContrato = Contratos.IdContrato'
+      'INNER JOIN Personas ON Contratos.IdPersona = Personas.IdPersona'
       
         'INNER JOIN ContratosTipos ON Contratos.IdContratoTipo = Contrato' +
-        'sTipos.IdContratoTipo '
+        'sTipos.IdContratoTipo'
       
         'INNER JOIN BCTiposCreditos ON ContratosTipos.IdBCTipoCredito = B' +
-        'CTiposCreditos.IdBCTipoCredito '
+        'CTiposCreditos.IdBCTipoCredito'
       
         'LEFT JOIN (SELECT IdAnexo, MAX(FechaPago) AS FechaPago FROM  vw_' +
         'AnexoAmortizacionCXCDiasRetraso GROUP BY IdAnexo) AS Pago ON Pag' +
@@ -129,7 +127,7 @@ inherited dmBuroCredito: TdmBuroCredito
       FieldName = 'FechaUltimoPago'
       ReadOnly = True
     end
-    object adoqCreditoFechaReestructura: TIntegerField
+    object adoqCreditoFechaReestructura: TDateTimeField
       FieldName = 'FechaReestructura'
       ReadOnly = True
     end
@@ -137,7 +135,7 @@ inherited dmBuroCredito: TdmBuroCredito
       FieldName = 'PagoFinalMorosa'
       ReadOnly = True
     end
-    object adoqCreditoFechaLiquidacion: TIntegerField
+    object adoqCreditoFechaLiquidacion: TDateTimeField
       FieldName = 'FechaLiquidacion'
       ReadOnly = True
     end
@@ -253,10 +251,11 @@ inherited dmBuroCredito: TdmBuroCredito
       '('
       
         'SELECT       PersonasDomicilios.IdPersona, dbo.BCTexto(Domicilio' +
-        's.Calle + '#39' '#39' + Domicilios.NoExterior + '#39' '#39' + Domicilios.NoInter' +
-        'ior) AS Dirrecion1, '#39#39' AS Dirrecion2, dbo.BCTexto(Domicilios.Col' +
-        'onia) AS Colonia, dbo.BCTexto(Municipios.Descripcion) AS Municip' +
-        'io, dbo.BCTexto(Poblaciones.Descripcion) AS Ciudad, '
+        's.Calle + '#39' '#39' + ISNULL(Domicilios.NoExterior,'#39#39') + '#39' '#39' + ISNULL(' +
+        'Domicilios.NoInterior,'#39#39')) AS Dirrecion1, '#39#39' AS Dirrecion2, dbo.' +
+        'BCTexto(Domicilios.Colonia) AS Colonia, dbo.BCTexto(Municipios.D' +
+        'escripcion) AS Municipio, dbo.BCTexto(Poblaciones.Descripcion) A' +
+        'S Ciudad, '
       
         '                         Estados.BCCodigo AS Estado, Paises.BCCo' +
         'digo AS Pais, Domicilios.CodigoPostal'
@@ -421,7 +420,9 @@ inherited dmBuroCredito: TdmBuroCredito
       
         '                         CASE WHEN IdPersonaTipo = 2 THEN '#39#39' ELS' +
         'E dbo.BCTexto(ApellidoMaterno) END AS ApellidoMaterno, '
-      #9#9#9#9#9#9' PersonasAccionistas.Porcentaje,'
+      
+        #9#9#9#9#9#9' CAST(FLOOR(PersonasAccionistas.Porcentaje) AS int) AS Por' +
+        'centaje, '
       
         '                         Domicilios.Dirrecion1, Domicilios.Dirre' +
         'cion2, Domicilios.Colonia, Domicilios.Municipio, Domicilios.Ciud' +
@@ -448,10 +449,11 @@ inherited dmBuroCredito: TdmBuroCredito
       '('
       
         'SELECT       PersonasDomicilios.IdPersona, dbo.BCTexto(Domicilio' +
-        's.Calle + '#39' '#39' + Domicilios.NoExterior + '#39' '#39' + Domicilios.NoInter' +
-        'ior) AS Dirrecion1, '#39#39' AS Dirrecion2, dbo.BCTexto(Domicilios.Col' +
-        'onia) AS Colonia, dbo.BCTexto(Municipios.Descripcion) AS Municip' +
-        'io, dbo.BCTexto(Poblaciones.Descripcion) AS Ciudad, '
+        's.Calle + '#39' '#39' + ISNULL(Domicilios.NoExterior,'#39#39') + '#39' '#39' + ISNULL(' +
+        'Domicilios.NoInterior,'#39#39')) AS Dirrecion1, '#39#39' AS Dirrecion2, dbo.' +
+        'BCTexto(Domicilios.Colonia) AS Colonia, dbo.BCTexto(Municipios.D' +
+        'escripcion) AS Municipio, dbo.BCTexto(Poblaciones.Descripcion) A' +
+        'S Ciudad, '
       
         '                         Estados.BCCodigo AS Estado, Paises.BCCo' +
         'digo AS Pais, Domicilios.CodigoPostal'
@@ -514,9 +516,9 @@ inherited dmBuroCredito: TdmBuroCredito
       ReadOnly = True
       Size = 255
     end
-    object adoqAccionistasPorcentaje: TBCDField
+    object adoqAccionistasPorcentaje: TIntegerField
       FieldName = 'Porcentaje'
-      Precision = 19
+      ReadOnly = True
     end
     object adoqAccionistasDirrecion1: TStringField
       FieldName = 'Dirrecion1'
@@ -585,29 +587,25 @@ inherited dmBuroCredito: TdmBuroCredito
     Parameters = <
       item
         Name = 'IdAnexo'
-        Attributes = [paSigned, paNullable]
+        Attributes = [paSigned]
         DataType = ftInteger
         Precision = 10
         Size = 4
         Value = Null
-      end
-      item
-        Name = 'FechaVencimiento'
-        Attributes = [paNullable]
-        DataType = ftDateTime
-        NumericScale = 3
-        Precision = 23
-        Size = 16
-        Value = Null
       end>
     SQL.Strings = (
       
-        'SELECT IdAnexo, FechaVencimiento, CASE WHEN DiasRetraso < 0 THEN' +
-        ' 0 ELSE DiasRetraso END AS DiasVencimiento, Saldo, Interes'
-      'FROM vw_AnexoAmortizacionCXCDiasRetraso '
-      'WHERE Saldo <> 0'
-      'AND IdAnexo = :IdAnexo'
-      'AND FechaVencimiento <= :FechaVencimiento')
+        'SELECT AC.IdAnexo, A.DiasRetraso, MAX(A.FechaVencimiento) AS Fec' +
+        'haVencimiento, SUM(A.PagoSaldo) AS Saldo, SUM(A.Interes) AS Inte' +
+        'res'
+      'FROM v_AnexosAmortizaciones AS A '
+      
+        'INNER JOIN AnexosCreditos AS AC ON A.IdAnexoCredito = AC.IdAnexo' +
+        'Credito'
+      'WHERE AC.IdAnexoCreditoEstatus = 1 AND A.PagoSaldo > 0.01'
+      'AND AC.IdAnexo = :IdAnexo'
+      'GROUP BY AC.IdAnexo, A.DiasRetraso'
+      'ORDER BY AC.IdAnexo, FechaVencimiento')
     Left = 224
     Top = 88
     object adoqDetalleIdAnexo: TIntegerField
@@ -616,8 +614,8 @@ inherited dmBuroCredito: TdmBuroCredito
     object adoqDetalleFechaVencimiento: TDateTimeField
       FieldName = 'FechaVencimiento'
     end
-    object adoqDetalleDiasVencimiento: TIntegerField
-      FieldName = 'DiasVencimiento'
+    object adoqDetalleDiasRetraso: TIntegerField
+      FieldName = 'DiasRetraso'
       ReadOnly = True
     end
     object adoqDetalleSaldo: TFMTBCDField
