@@ -89,6 +89,11 @@ type
     adodsReportPorVencer: TFMTBCDField;
     adodsReportVencido: TFMTBCDField;
     adodsReportDiasRetraso: TIntegerField;
+    ppDBCalc9: TppDBCalc;
+    adodsReportCoberturaN: TFMTBCDField;
+    adodsReportCoberturaP: TFMTBCDField;
+    ppDBCalc10: TppDBCalc;
+    ppDBCalc11: TppDBCalc;
     procedure DataModuleCreate(Sender: TObject);
     procedure mdParamsNewRecord(DataSet: TDataSet);
   private

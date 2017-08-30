@@ -2,47 +2,14 @@ inherited dmRptCobertura: TdmRptCobertura
   Height = 246
   inherited adodsReport: TADODataSet
     CommandText = 
-      'SELECT        Anexos.IdAnexo, Contratos.Identificador AS Contrat' +
-      'o, Anexos.Identificador AS Anexo, Anexos.Fecha, Personas.RazonSo' +
-      'cial AS Cliente, ISNULL(S.PorVencer / 1000, 0) AS PorVencer, ISN' +
-      'ULL(S.Vencido / 1000, 0) AS Vencido, '#13#10'                         ' +
-      'Anexos.Depositos / 1000 AS Depositos, Anexos.OpcionCompra / 1000' +
-      ' AS OpcionCompra, Anexos.ValorResidual / 1000 AS ValorResidual, ' +
-      '(ISNULL(S.PorVencer, 0) + ISNULL(S.Vencido, 0) '#13#10'               ' +
-      '          + Anexos.OpcionCompra + Anexos.ValorResidual - Anexos.' +
-      'Depositos) / 1000 AS TotalLiquidar, ISNULL(P.ValorComercial, 0) ' +
-      '/ 1000 AS ValorComercial, ISNULL(P.TipoCambioOriginal, 0) AS Tip' +
-      'oCambioOriginal, '#13#10'                         ISNULL(P.ValorComerc' +
-      'ialActualizado, 0) / 1000 AS ValorComercialActualizado, (ISNULL(' +
-      'P.ValorComercialActualizado, 0) - (ISNULL(S.PorVencer, 0) + ISNU' +
-      'LL(S.Vencido, 0) '#13#10'                         + Anexos.OpcionCompr' +
-      'a + Anexos.ValorResidual - Anexos.Depositos)) / 1000 AS Cobertur' +
-      'a, CASE WHEN (ISNULL(S.PorVencer, 0) + ISNULL(S.Vencido, 0) + An' +
-      'exos.OpcionCompra + Anexos.ValorResidual - Anexos.Depositos) '#13#10' ' +
-      '                        <> 0 THEN ISNULL(P.ValorComercialActuali' +
-      'zado, 0) / (ISNULL(S.PorVencer, 0) + ISNULL(S.Vencido, 0) + Anex' +
-      'os.OpcionCompra + Anexos.ValorResidual - Anexos.Depositos) ELSE ' +
-      '0 END AS Factor, ISNULL(S.DiasRetraso, 0) '#13#10'                    ' +
-      '     AS DiasRetraso'#13#10'FROM            Anexos INNER JOIN'#13#10'        ' +
-      '                 Contratos ON Anexos.IdContrato = Contratos.IdCo' +
-      'ntrato INNER JOIN'#13#10'                         Personas ON Contrato' +
-      's.IdPersona = Personas.IdPersona LEFT OUTER JOIN'#13#10'              ' +
-      '               (SELECT        AC.IdAnexo, MAX(A.DiasRetraso) AS ' +
-      'DiasRetraso, SUM(CASE WHEN A.DiasRetraso = 0 THEN A.PagoSaldo EL' +
-      'SE 0 END) AS PorVencer, SUM(A.Saldo) AS Vencido'#13#10'               ' +
-      '                FROM            v_AnexosAmortizaciones AS A INNE' +
-      'R JOIN'#13#10'                                                        ' +
-      ' AnexosCreditos AS AC ON A.IdAnexoCredito = AC.IdAnexoCredito'#13#10' ' +
-      '                              WHERE        (AC.IdAnexoCreditoEst' +
-      'atus = 1) AND (A.PagoSaldo > 0.01)'#13#10'                            ' +
-      '   GROUP BY AC.IdAnexo) AS S ON Anexos.IdAnexo = S.IdAnexo LEFT ' +
-      'OUTER JOIN'#13#10'                             (SELECT        IdAnexo,' +
-      ' MAX(TipoCambio) AS TipoCambioOriginal, SUM(ValorComercial) AS V' +
-      'alorComercial, SUM(ValorComercialActualizado) AS ValorComercialA' +
-      'ctualizado'#13#10'                               FROM            Produ' +
-      'ctos'#13#10'                               GROUP BY IdAnexo) AS P ON A' +
-      'nexos.IdAnexo = P.IdAnexo'#13#10'WHERE ISNULL(S.DiasRetraso, 0) >= :Ve' +
-      'ncidos'#13#10'ORDER BY Cobertura'
+      'SELECT     IdAnexo, Contrato, Anexo, Fecha, Cliente, PorVencer, ' +
+      'Vencido, Depositos, OpcionCompra, ValorResidual, TotalLiquidar, ' +
+      'ValorComercial, TipoCambioOriginal, '#13#10'                      Valo' +
+      'rComercialActualizado, Cobertura, CASE WHEN Cobertura < 0 THEN C' +
+      'obertura ELSE 0 END AS CoberturaN, CASE WHEN Cobertura >= 0 THEN' +
+      ' Cobertura ELSE 0 END AS CoberturaP,'#13#10'                      Fact' +
+      'or, DiasRetraso'#13#10'FROM         v_RptCobertura'#13#10'WHERE ISNULL(DiasR' +
+      'etraso, 0) >= :Vencidos'#13#10'ORDER BY Cobertura'
     Parameters = <
       item
         Name = 'Vencidos'
@@ -127,6 +94,18 @@ inherited dmRptCobertura: TdmRptCobertura
       Precision = 28
       Size = 11
     end
+    object adodsReportCoberturaN: TFMTBCDField
+      FieldName = 'CoberturaN'
+      ReadOnly = True
+      Precision = 38
+      Size = 6
+    end
+    object adodsReportCoberturaP: TFMTBCDField
+      FieldName = 'CoberturaP'
+      ReadOnly = True
+      Precision = 38
+      Size = 6
+    end
     object adodsReportFactor: TFMTBCDField
       FieldName = 'Factor'
       ReadOnly = True
@@ -136,154 +115,6 @@ inherited dmRptCobertura: TdmRptCobertura
     object adodsReportDiasRetraso: TIntegerField
       FieldName = 'DiasRetraso'
       ReadOnly = True
-    end
-  end
-  inherited dbpReport: TppDBPipeline
-    object dbpReportppField1: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdAnexo'
-      FieldName = 'IdAnexo'
-      FieldLength = 0
-      DataType = dtLongint
-      DisplayWidth = 0
-      Position = 0
-    end
-    object dbpReportppField2: TppField
-      FieldAlias = 'Contrato'
-      FieldName = 'Contrato'
-      FieldLength = 20
-      DisplayWidth = 20
-      Position = 1
-    end
-    object dbpReportppField3: TppField
-      FieldAlias = 'Anexo'
-      FieldName = 'Anexo'
-      FieldLength = 5
-      DisplayWidth = 5
-      Position = 2
-    end
-    object dbpReportppField4: TppField
-      FieldAlias = 'Fecha'
-      FieldName = 'Fecha'
-      FieldLength = 0
-      DataType = dtDateTime
-      DisplayWidth = 18
-      Position = 3
-    end
-    object dbpReportppField5: TppField
-      FieldAlias = 'Cliente'
-      FieldName = 'Cliente'
-      FieldLength = 300
-      DisplayWidth = 300
-      Position = 4
-    end
-    object dbpReportppField6: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'PorVencer'
-      FieldName = 'PorVencer'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 39
-      Position = 5
-    end
-    object dbpReportppField7: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'Vencido'
-      FieldName = 'Vencido'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 39
-      Position = 6
-    end
-    object dbpReportppField8: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'Depositos'
-      FieldName = 'Depositos'
-      FieldLength = 11
-      DataType = dtDouble
-      DisplayWidth = 24
-      Position = 7
-    end
-    object dbpReportppField9: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'OpcionCompra'
-      FieldName = 'OpcionCompra'
-      FieldLength = 11
-      DataType = dtDouble
-      DisplayWidth = 24
-      Position = 8
-    end
-    object dbpReportppField10: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'ValorResidual'
-      FieldName = 'ValorResidual'
-      FieldLength = 11
-      DataType = dtDouble
-      DisplayWidth = 24
-      Position = 9
-    end
-    object dbpReportppField11: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'TotalLiquidar'
-      FieldName = 'TotalLiquidar'
-      FieldLength = 11
-      DataType = dtDouble
-      DisplayWidth = 28
-      Position = 10
-    end
-    object dbpReportppField12: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'ValorComercial'
-      FieldName = 'ValorComercial'
-      FieldLength = 4
-      DataType = dtDouble
-      DisplayWidth = 20
-      Position = 11
-    end
-    object dbpReportppField13: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'TipoCambioOriginal'
-      FieldName = 'TipoCambioOriginal'
-      FieldLength = 4
-      DataType = dtDouble
-      DisplayWidth = 20
-      Position = 12
-    end
-    object dbpReportppField14: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'ValorComercialActualizado'
-      FieldName = 'ValorComercialActualizado'
-      FieldLength = 4
-      DataType = dtDouble
-      DisplayWidth = 20
-      Position = 13
-    end
-    object dbpReportppField15: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'Cobertura'
-      FieldName = 'Cobertura'
-      FieldLength = 11
-      DataType = dtDouble
-      DisplayWidth = 29
-      Position = 14
-    end
-    object dbpReportppField16: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'Factor'
-      FieldName = 'Factor'
-      FieldLength = 17
-      DataType = dtDouble
-      DisplayWidth = 39
-      Position = 15
-    end
-    object dbpReportppField17: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'DiasRetraso'
-      FieldName = 'DiasRetraso'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 16
     end
   end
   inherited ppReport: TppReport
@@ -1165,7 +996,7 @@ inherited dmRptCobertura: TdmRptCobertura
     object ppSummaryBand1: TppSummaryBand [4]
       Background.Brush.Style = bsClear
       mmBottomOffset = 0
-      mmHeight = 6350
+      mmHeight = 15081
       mmPrintPosition = 0
       object ppLine2: TppLine
         UserName = 'Line2'
@@ -1353,6 +1184,66 @@ inherited dmRptCobertura: TdmRptCobertura
         mmLeft = 81486
         mmTop = 1587
         mmWidth = 10584
+        BandType = 7
+        LayerName = Foreground
+      end
+      object ppDBCalc9: TppDBCalc
+        UserName = 'DBCalc9'
+        DataField = 'Cobertura'
+        DataPipeline = dbpReport
+        DisplayFormat = '#,0;-#,0'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        DataPipelineName = 'dbpReport'
+        mmHeight = 3704
+        mmLeft = 235480
+        mmTop = 1323
+        mmWidth = 15875
+        BandType = 7
+        LayerName = Foreground
+      end
+      object ppDBCalc10: TppDBCalc
+        UserName = 'DBCalc10'
+        DataField = 'CoberturaN'
+        DataPipeline = dbpReport
+        DisplayFormat = '#,0;-#,0'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        DataPipelineName = 'dbpReport'
+        mmHeight = 3704
+        mmLeft = 235480
+        mmTop = 5555
+        mmWidth = 15875
+        BandType = 7
+        LayerName = Foreground
+      end
+      object ppDBCalc11: TppDBCalc
+        UserName = 'DBCalc101'
+        DataField = 'CoberturaP'
+        DataPipeline = dbpReport
+        DisplayFormat = '#,0;-#,0'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        DataPipelineName = 'dbpReport'
+        mmHeight = 3704
+        mmLeft = 235476
+        mmTop = 9793
+        mmWidth = 15875
         BandType = 7
         LayerName = Foreground
       end
