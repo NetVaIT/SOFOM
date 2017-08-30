@@ -170,6 +170,7 @@ begin                          //Ago 5/17
   FPDFNvoAmorYPago2 := Value;
   dxBrBtnRepPagos.Action:=Value;
   dxBrBtnRepPagos.ImageIndex:=20;
+
 end;
 
 procedure TFrmReporteCarteraGrid.SetPDFREporteCartera(

@@ -19,7 +19,7 @@ uses
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, cxContainer,
   cxEdit, Data.DB, cxTextEdit, cxMaskEdit, cxDropDownEdit, cxLookupEdit,
   cxDBLookupEdit, cxDBLookupComboBox, Vcl.StdCtrls, Vcl.ExtCtrls, cxPC,
-  Vcl.DBCtrls;
+  Vcl.DBCtrls, cxMemo;
 
 type
   TFrmMetodoPagoFactura = class(TForm)
@@ -34,6 +34,8 @@ type
     Label1: TLabel;
     cxTxtEdtCuenta: TcxTextEdit;
     DBLkpCmbBxMetodoPago: TDBLookupComboBox;
+    Label3: TLabel;
+    cxMmObserva: TcxMemo;
     procedure cxDBLkpCmbBxMetodoPagoClick(Sender: TObject);
     procedure btnOkClick(Sender: TObject);
     procedure DBLkpCmbBxMetodoPagoClick(Sender: TObject);
@@ -43,11 +45,13 @@ type
   private
     FIDMetSeleccion: integer;
     FCuentaSeleccion: String;
+    FComplemConcepto: String;
     { Private declarations }
   public
     { Public declarations }
     property IdMetSeleccion: integer read FIDMetSeleccion write FIdMetSeleccion;
     Property CuentaSeleccion:String read FCuentaSeleccion write FCuentaSeleccion;
+    Property ComplemConcepto:String read FComplemConcepto write FComplemConcepto;  //Ago 30/17
   end;
 
 var
@@ -66,6 +70,8 @@ begin
    FCuentaSeleccion:= cxTxtEdtCuenta.Text
  else
    FCuentaSeleccion:='';
+
+
 end;
 
 procedure TFrmMetodoPagoFactura.cxDBLkpCmbBxMetodoPagoClick(Sender: TObject);

@@ -211,8 +211,8 @@ inherited dmrptReporteCartera: TdmrptReporteCartera
       OnExecute = ActPDFAmortizaYPagoExecute
     end
     object ActAmorYPago2: TAction
-      Caption = 'Amortizacion y Pagos V2'
-      Hint = 'Amortizaciones Y Pagos '
+      Caption = 'Amortizaciones, Facturas y Pagos V2'
+      Hint = 'Resumen Facturaci'#243'n y Pagos'
       OnExecute = ActAmorYPago2Execute
     end
   end

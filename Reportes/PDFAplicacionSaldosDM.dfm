@@ -1,5 +1,6 @@
 inherited DmRptAplicacionPagospdf: TDmRptAplicacionPagospdf
   inherited adodsReport: TADODataSet
+    Active = True
     CommandText = 
       'select PA.FechaAplicacion ,pa.importe, PR.FechaPago as FechaPago' +
       ','#13#10' PR.FolioPago, Pr.SeriePago,Cc.IdCuentaXCobrar NoCuentaXCobra' +
@@ -88,6 +89,182 @@ inherited DmRptAplicacionPagospdf: TDmRptAplicacionPagospdf
       Size = 6
     end
   end
+  inherited dbpReport: TppDBPipeline
+    object dbpReportppField1: TppField
+      FieldAlias = 'FechaAplicacion'
+      FieldName = 'FechaAplicacion'
+      FieldLength = 0
+      DataType = dtDateTime
+      DisplayWidth = 0
+      Position = 0
+    end
+    object dbpReportppField2: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'importe'
+      FieldName = 'importe'
+      FieldLength = 6
+      DataType = dtDouble
+      DisplayWidth = 19
+      Position = 1
+    end
+    object dbpReportppField3: TppField
+      FieldAlias = 'FechaPago'
+      FieldName = 'FechaPago'
+      FieldLength = 0
+      DataType = dtDateTime
+      DisplayWidth = 18
+      Position = 2
+    end
+    object dbpReportppField4: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'FolioPago'
+      FieldName = 'FolioPago'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 3
+    end
+    object dbpReportppField5: TppField
+      FieldAlias = 'SeriePago'
+      FieldName = 'SeriePago'
+      FieldLength = 20
+      DisplayWidth = 20
+      Position = 4
+    end
+    object dbpReportppField6: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'NoCuentaXCobrar'
+      FieldName = 'NoCuentaXCobrar'
+      FieldLength = 0
+      DataType = dtLongint
+      DisplayWidth = 10
+      Position = 5
+    end
+    object dbpReportppField7: TppField
+      FieldAlias = 'FechaCXC'
+      FieldName = 'FechaCXC'
+      FieldLength = 0
+      DataType = dtDateTime
+      DisplayWidth = 18
+      Position = 6
+    end
+    object dbpReportppField8: TppField
+      FieldAlias = 'Cliente'
+      FieldName = 'Cliente'
+      FieldLength = 300
+      DisplayWidth = 300
+      Position = 7
+    end
+    object dbpReportppField9: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'IDAnexo'
+      FieldName = 'IDAnexo'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 8
+    end
+    object dbpReportppField10: TppField
+      FieldAlias = 'Anexo'
+      FieldName = 'Anexo'
+      FieldLength = 100
+      DisplayWidth = 100
+      Position = 9
+    end
+    object dbpReportppField11: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'IdPagoAplicacion'
+      FieldName = 'IdPagoAplicacion'
+      FieldLength = 0
+      DataType = dtLongint
+      DisplayWidth = 10
+      Position = 10
+    end
+    object dbpReportppField12: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'IdPago'
+      FieldName = 'IdPago'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 11
+    end
+    object dbpReportppField13: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'IdPersonaCliente'
+      FieldName = 'IdPersonaCliente'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 12
+    end
+    object dbpReportppField14: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'IdContrato'
+      FieldName = 'IdContrato'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 13
+    end
+    object dbpReportppField15: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'idMetodoPago'
+      FieldName = 'idMetodoPago'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 14
+    end
+    object dbpReportppField16: TppField
+      FieldAlias = 'IdCFDI'
+      FieldName = 'IdCFDI'
+      FieldLength = 0
+      DataType = dtLargeInt
+      DisplayWidth = 15
+      Position = 15
+    end
+    object dbpReportppField17: TppField
+      FieldAlias = 'SerieFactura'
+      FieldName = 'SerieFactura'
+      FieldLength = 20
+      DisplayWidth = 20
+      Position = 16
+    end
+    object dbpReportppField18: TppField
+      FieldAlias = 'FolioFactura'
+      FieldName = 'FolioFactura'
+      FieldLength = 0
+      DataType = dtLargeInt
+      DisplayWidth = 15
+      Position = 17
+    end
+    object dbpReportppField19: TppField
+      FieldAlias = 'Descripcion'
+      FieldName = 'Descripcion'
+      FieldLength = 100
+      DisplayWidth = 100
+      Position = 18
+    end
+    object dbpReportppField20: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'saldoCXC'
+      FieldName = 'saldoCXC'
+      FieldLength = 6
+      DataType = dtDouble
+      DisplayWidth = 19
+      Position = 19
+    end
+    object dbpReportppField21: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'TotalFactura'
+      FieldName = 'TotalFactura'
+      FieldLength = 6
+      DataType = dtDouble
+      DisplayWidth = 19
+      Position = 20
+    end
+  end
   inherited ppReport: TppReport
     PrinterSetup.Orientation = poLandscape
     PrinterSetup.mmPaperHeight = 215900
@@ -96,11 +273,19 @@ inherited DmRptAplicacionPagospdf: TDmRptAplicacionPagospdf
     DataPipelineName = 'dbpReport'
     inherited ppHeaderBand1: TppHeaderBand
       mmHeight = 25400
+      inherited pplblFilters: TppLabel
+        SaveOrder = -1
+        TextAlignment = taRightJustified
+        mmTop = 8731
+        mmWidth = 215636
+        LayerName = Foreground
+      end
       inherited pplblTitle: TppLabel
         SaveOrder = -1
         Caption = 'REPORTE DE  APLICACIONES DE PAGOS'
         Font.Size = 18
         WordWrap = True
+        mmHeight = 7938
         mmWidth = 215636
         LayerName = Foreground
       end
@@ -124,24 +309,6 @@ inherited DmRptAplicacionPagospdf: TDmRptAplicacionPagospdf
         BandType = 0
         LayerName = Foreground
       end
-      object ppLabel2: TppLabel
-        UserName = 'Label2'
-        AutoSize = False
-        Caption = 'Anexo'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = []
-        Transparent = True
-        WordWrap = True
-        mmHeight = 4233
-        mmLeft = 50003
-        mmTop = 19845
-        mmWidth = 40217
-        BandType = 0
-        LayerName = Foreground
-      end
       object ppLabel3: TppLabel
         UserName = 'Label3'
         AutoSize = False
@@ -154,7 +321,7 @@ inherited DmRptAplicacionPagospdf: TDmRptAplicacionPagospdf
         TextAlignment = taCentered
         Transparent = True
         mmHeight = 4233
-        mmLeft = 109538
+        mmLeft = 93638
         mmTop = 19845
         mmWidth = 12435
         BandType = 0
@@ -172,7 +339,7 @@ inherited DmRptAplicacionPagospdf: TDmRptAplicacionPagospdf
         Transparent = True
         WordWrap = True
         mmHeight = 3965
-        mmLeft = 138907
+        mmLeft = 123007
         mmTop = 19847
         mmWidth = 15081
         BandType = 0
@@ -190,7 +357,7 @@ inherited DmRptAplicacionPagospdf: TDmRptAplicacionPagospdf
         Transparent = True
         WordWrap = True
         mmHeight = 3704
-        mmLeft = 169334
+        mmLeft = 153964
         mmTop = 19844
         mmWidth = 11377
         BandType = 0
@@ -208,7 +375,7 @@ inherited DmRptAplicacionPagospdf: TDmRptAplicacionPagospdf
         Transparent = True
         WordWrap = True
         mmHeight = 3435
-        mmLeft = 154782
+        mmLeft = 138882
         mmTop = 19847
         mmWidth = 13229
         BandType = 0
@@ -226,7 +393,7 @@ inherited DmRptAplicacionPagospdf: TDmRptAplicacionPagospdf
         TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 4233
-        mmLeft = 180983
+        mmLeft = 167468
         mmTop = 19844
         mmWidth = 21167
         BandType = 0
@@ -245,7 +412,7 @@ inherited DmRptAplicacionPagospdf: TDmRptAplicacionPagospdf
         Transparent = True
         WordWrap = True
         mmHeight = 3440
-        mmLeft = 219869
+        mmLeft = 214046
         mmTop = 19844
         mmWidth = 11113
         BandType = 0
@@ -263,10 +430,10 @@ inherited DmRptAplicacionPagospdf: TDmRptAplicacionPagospdf
         TextAlignment = taCentered
         Transparent = True
         WordWrap = True
-        mmHeight = 3435
-        mmLeft = 231775
-        mmTop = 19847
-        mmWidth = 11642
+        mmHeight = 3440
+        mmLeft = 227540
+        mmTop = 19844
+        mmWidth = 10054
         BandType = 0
         LayerName = Foreground
       end
@@ -282,8 +449,8 @@ inherited DmRptAplicacionPagospdf: TDmRptAplicacionPagospdf
         TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 4233
-        mmLeft = 243959
-        mmTop = 19845
+        mmLeft = 242092
+        mmTop = 19844
         mmWidth = 17198
         BandType = 0
         LayerName = Foreground
@@ -300,7 +467,7 @@ inherited DmRptAplicacionPagospdf: TDmRptAplicacionPagospdf
         TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 4233
-        mmLeft = 202412
+        mmLeft = 197112
         mmTop = 19844
         mmWidth = 15081
         BandType = 0
@@ -310,9 +477,9 @@ inherited DmRptAplicacionPagospdf: TDmRptAplicacionPagospdf
         UserName = 'Line1'
         Style = lsDouble
         Weight = 0.750000000000000000
-        mmHeight = 1843
-        mmLeft = 4499
-        mmTop = 23550
+        mmHeight = 1852
+        mmLeft = 3969
+        mmTop = 24342
         mmWidth = 256646
         BandType = 0
         LayerName = Foreground
@@ -330,7 +497,7 @@ inherited DmRptAplicacionPagospdf: TDmRptAplicacionPagospdf
         WordWrap = True
         VerticalAlignment = avCenter
         mmHeight = 6350
-        mmLeft = 122502
+        mmLeft = 106602
         mmTop = 16932
         mmWidth = 14288
         BandType = 0
@@ -341,6 +508,7 @@ inherited DmRptAplicacionPagospdf: TDmRptAplicacionPagospdf
         AutoSize = False
         Border.BorderPositions = [bpBottom]
         Border.Visible = True
+        Border.Weight = 0.748799979686737100
         Caption = 'PAGO'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -350,9 +518,9 @@ inherited DmRptAplicacionPagospdf: TDmRptAplicacionPagospdf
         Transparent = True
         WordWrap = True
         mmHeight = 3704
-        mmLeft = 138907
+        mmLeft = 123031
         mmTop = 14817
-        mmWidth = 41804
+        mmWidth = 42333
         BandType = 0
         LayerName = Foreground
       end
@@ -371,15 +539,15 @@ inherited DmRptAplicacionPagospdf: TDmRptAplicacionPagospdf
         Transparent = True
         WordWrap = True
         mmHeight = 3704
-        mmLeft = 222515
+        mmLeft = 219340
         mmTop = 14817
-        mmWidth = 38100
+        mmWidth = 39952
         BandType = 0
         LayerName = Foreground
       end
     end
     inherited ppDetailBand1: TppDetailBand
-      mmHeight = 9525
+      mmHeight = 5292
       object ppDBText1: TppDBText
         UserName = 'DBText1'
         DataField = 'Cliente'
@@ -390,31 +558,11 @@ inherited DmRptAplicacionPagospdf: TDmRptAplicacionPagospdf
         Font.Size = 8
         Font.Style = []
         Transparent = True
-        WordWrap = True
         DataPipelineName = 'dbpReport'
-        mmHeight = 8996
+        mmHeight = 4233
         mmLeft = 3969
         mmTop = 529
-        mmWidth = 44979
-        BandType = 4
-        LayerName = Foreground
-      end
-      object ppDBText2: TppDBText
-        UserName = 'DBText2'
-        DataField = 'Anexo'
-        DataPipeline = dbpReport
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = []
-        Transparent = True
-        WordWrap = True
-        DataPipelineName = 'dbpReport'
-        mmHeight = 8996
-        mmLeft = 50003
-        mmTop = 529
-        mmWidth = 58473
+        mmWidth = 88636
         BandType = 4
         LayerName = Foreground
       end
@@ -431,7 +579,7 @@ inherited DmRptAplicacionPagospdf: TDmRptAplicacionPagospdf
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4233
-        mmLeft = 109538
+        mmLeft = 93638
         mmTop = 529
         mmWidth = 12435
         BandType = 4
@@ -449,7 +597,7 @@ inherited DmRptAplicacionPagospdf: TDmRptAplicacionPagospdf
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4233
-        mmLeft = 138926
+        mmLeft = 123026
         mmTop = 529
         mmWidth = 15081
         BandType = 4
@@ -467,7 +615,7 @@ inherited DmRptAplicacionPagospdf: TDmRptAplicacionPagospdf
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4233
-        mmLeft = 169334
+        mmLeft = 153964
         mmTop = 529
         mmWidth = 11377
         BandType = 4
@@ -485,9 +633,9 @@ inherited DmRptAplicacionPagospdf: TDmRptAplicacionPagospdf
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4233
-        mmLeft = 154801
+        mmLeft = 138907
         mmTop = 529
-        mmWidth = 13226
+        mmWidth = 14817
         BandType = 4
         LayerName = Foreground
       end
@@ -505,7 +653,7 @@ inherited DmRptAplicacionPagospdf: TDmRptAplicacionPagospdf
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4233
-        mmLeft = 180983
+        mmLeft = 167468
         mmTop = 529
         mmWidth = 21167
         BandType = 4
@@ -524,7 +672,7 @@ inherited DmRptAplicacionPagospdf: TDmRptAplicacionPagospdf
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4233
-        mmLeft = 219869
+        mmLeft = 214039
         mmTop = 529
         mmWidth = 11113
         BandType = 4
@@ -543,7 +691,7 @@ inherited DmRptAplicacionPagospdf: TDmRptAplicacionPagospdf
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4233
-        mmLeft = 231779
+        mmLeft = 225949
         mmTop = 529
         mmWidth = 11642
         BandType = 4
@@ -563,9 +711,9 @@ inherited DmRptAplicacionPagospdf: TDmRptAplicacionPagospdf
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4233
-        mmLeft = 245006
+        mmLeft = 238123
         mmTop = 529
-        mmWidth = 16140
+        mmWidth = 21167
         BandType = 4
         LayerName = Foreground
       end
@@ -583,9 +731,9 @@ inherited DmRptAplicacionPagospdf: TDmRptAplicacionPagospdf
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4233
-        mmLeft = 202412
+        mmLeft = 191021
         mmTop = 529
-        mmWidth = 15081
+        mmWidth = 21167
         BandType = 4
         LayerName = Foreground
       end
@@ -601,7 +749,7 @@ inherited DmRptAplicacionPagospdf: TDmRptAplicacionPagospdf
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4233
-        mmLeft = 122510
+        mmLeft = 106610
         mmTop = 529
         mmWidth = 15611
         BandType = 4
@@ -624,7 +772,7 @@ inherited DmRptAplicacionPagospdf: TDmRptAplicacionPagospdf
       end
       inherited ppLineFooter: TppLine [2]
         mmHeight = 1060
-        mmLeft = 2646
+        mmLeft = 1321
         mmTop = 263
         mmWidth = 264055
         LayerName = Foreground
@@ -649,9 +797,9 @@ inherited DmRptAplicacionPagospdf: TDmRptAplicacionPagospdf
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4498
-        mmLeft = 178065
+        mmLeft = 167473
         mmTop = 1852
-        mmWidth = 24077
+        mmWidth = 21167
         BandType = 7
         LayerName = Foreground
       end
@@ -669,9 +817,9 @@ inherited DmRptAplicacionPagospdf: TDmRptAplicacionPagospdf
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4498
-        mmLeft = 202407
+        mmLeft = 191021
         mmTop = 1852
-        mmWidth = 15081
+        mmWidth = 21167
         BandType = 7
         LayerName = Foreground
       end
@@ -689,9 +837,9 @@ inherited DmRptAplicacionPagospdf: TDmRptAplicacionPagospdf
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4498
-        mmLeft = 243948
-        mmTop = 1854
-        mmWidth = 16669
+        mmLeft = 238125
+        mmTop = 1852
+        mmWidth = 21167
         BandType = 7
         LayerName = Foreground
       end
@@ -721,7 +869,7 @@ inherited DmRptAplicacionPagospdf: TDmRptAplicacionPagospdf
         Transparent = True
         VerticalAlignment = avCenter
         mmHeight = 4233
-        mmLeft = 154782
+        mmLeft = 143387
         mmTop = 1852
         mmWidth = 20902
         BandType = 7

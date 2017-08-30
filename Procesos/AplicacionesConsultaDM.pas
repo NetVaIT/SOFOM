@@ -157,13 +157,14 @@ begin
     begin
       TADoDAtaset(DmRptAplicacionPagospdf.dsReport.DataSet).Parameters.ParamByName('Fini').Value:= FechaIni;
       TADoDAtaset(DmRptAplicacionPagospdf.dsReport.DataSet).Parameters.ParamByName('FFin').Value:= FechaFin+1;
-      TExto:= ' DEL ' + DAteToSTR(FEchaIni) + ' AL '+ DAteToSTR(FEchaFin);//+FormatDateTime('mmm-dd-yyyy',FechaIni)+ ' AL: '+FormatDateTime('dd mmm del aaaa',FechaFin);
+      TExto:= FormatDateTime('dd/mmm/yyyy',FEchaIni) + '  -  '+ FormatDateTime('dd/mmm/yyyy',FEchaFin);//+FormatDateTime('mmm-dd-yyyy',FechaIni)+ ' AL: '+FormatDateTime('dd mmm del aaaa',FechaFin);
     end
     else
       TExto:=  'AL '+upperCASE(FormatDateTime('dd ''de'' mmmm ''del'' yyyy',_DmConection.LaFechaActual));//Date)); //Jun 30/17
 
     DmRptAplicacionPagospdf.dsReport.DataSet.Open;
     DmRptAplicacionPagospdf.Title:= 'REPORTE DE APLICACIONES DE PAGOS ' +#13+Texto;
+    DmRptAplicacionPagospdf.pplblFilters.Caption:=Texto;
     DmRptAplicacionPagospdf.PDFFileName:= ArchiPDF;
     DmRptAplicacionPagospdf.Execute
   finally

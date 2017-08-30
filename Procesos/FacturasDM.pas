@@ -410,8 +410,8 @@ begin
 
 
   ADOQryAuxiliar.Close;
-  ADOQryAuxiliar.Sql.Clear;
-  ADOQryAuxiliar.SQL.Add('Update CuentasXCobrar SET IdCFDI= NULL where IdCFDI='+intTostr(idcfdi));
+  ADOQryAuxiliar.Sql.Clear;                                      //Ago 30/17
+  ADOQryAuxiliar.SQL.Add('Update CuentasXCobrar SET IdCFDI= NULL, idCuentaXCobrarEstatus=-1 where IdCFDI='+intTostr(idcfdi));     //  DEberia estar en 1, deberia pasar  a -1 , porque = tiene prefactura y esta nop
   ADOQryAuxiliar.ExecSQL;
 
   ADOQryAuxiliar.Close;

@@ -31,8 +31,6 @@ type
     adodsReportDescripcion: TStringField;
     ppLabel1: TppLabel;
     ppDBText1: TppDBText;
-    ppDBText2: TppDBText;
-    ppLabel2: TppLabel;
     ppDBText3: TppDBText;
     ppLabel3: TppLabel;
     ppDBText4: TppDBText;
