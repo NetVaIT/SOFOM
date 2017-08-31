@@ -375,7 +375,7 @@ inherited dmRptCobertura: TdmRptCobertura
         AutoSize = False
         Border.BorderPositions = [bpBottom]
         Border.Visible = True
-        Border.Weight = 0.748799979686737000
+        Border.Weight = 0.748799979686737100
         Caption = 'Contrato'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clNavy
@@ -1254,6 +1254,9 @@ inherited dmRptCobertura: TdmRptCobertura
     object mdParamsVencidos: TIntegerField
       FieldName = 'Vencidos'
     end
+    object mdParamsDepreciacion: TBooleanField
+      FieldName = 'Depreciacion'
+    end
   end
   object adodsParidad: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -1280,5 +1283,19 @@ inherited dmRptCobertura: TdmRptCobertura
     UserName = 'dbpReport1'
     Left = 176
     Top = 160
+  end
+  object adospUpdProductosDepreciacion: TADOStoredProc
+    Connection = _dmConection.ADOConnection
+    ProcedureName = 'p_UpdProductosDepreciacion;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end>
+    Left = 80
+    Top = 94
   end
 end

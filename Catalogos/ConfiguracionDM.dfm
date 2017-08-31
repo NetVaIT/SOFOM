@@ -132,8 +132,8 @@ inherited dmConfiguracion: TdmConfiguracion
     Parameters = <>
     SQL.Strings = (
       'SELECT dbo.GetIdPeriodoActual() AS Valor')
-    Left = 320
-    Top = 160
+    Left = 48
+    Top = 152
     object adoqGetIdPeriodoActualValor: TIntegerField
       FieldName = 'Valor'
       ReadOnly = True
@@ -145,8 +145,8 @@ inherited dmConfiguracion: TdmConfiguracion
     Parameters = <>
     SQL.Strings = (
       'SELECT dbo.GetRutaBaseFacturas() AS Valor')
-    Left = 320
-    Top = 224
+    Left = 48
+    Top = 216
     object adoqGetRutaBaseFacturasValor: TStringField
       FieldName = 'Valor'
       ReadOnly = True
@@ -175,8 +175,8 @@ inherited dmConfiguracion: TdmConfiguracion
     Parameters = <>
     SQL.Strings = (
       'SELECT dbo.GetRutaBasePagos() AS Valor')
-    Left = 320
-    Top = 288
+    Left = 48
+    Top = 280
     object adoqGetRutaBasePagosValor: TStringField
       FieldName = 'Valor'
       ReadOnly = True
@@ -191,8 +191,8 @@ inherited dmConfiguracion: TdmConfiguracion
       
         'SELECT CAST(DATEADD(day, 4,FechaInicio) AS DATETIME) AS Valor FR' +
         'OM Periodos WHERE IdPeriodo = dbo.GetIdPeriodoActual();')
-    Left = 328
-    Top = 360
+    Left = 56
+    Top = 352
     object adoqGetDiaPagoActualValor: TDateTimeField
       FieldName = 'Valor'
       ReadOnly = True
@@ -216,6 +216,19 @@ inherited dmConfiguracion: TdmConfiguracion
       FieldName = 'Valor'
       ReadOnly = True
       Precision = 16
+    end
+  end
+  object adoqGetDateAux: TADOQuery
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'SELECT dbo.GetDateAux() AS Valor')
+    Left = 192
+    Top = 152
+    object adoqGetDateAuxValor: TDateTimeField
+      FieldName = 'Valor'
+      ReadOnly = True
     end
   end
 end

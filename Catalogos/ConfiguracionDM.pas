@@ -41,6 +41,8 @@ type
     adodsMasterPLDMontoRelevante: TBCDField;
     adodsMasterPLDLocalidad: TStringField;
     adodsMasterPLDCodigoPostal: TStringField;
+    adoqGetDateAux: TADOQuery;
+    adoqGetDateAuxValor: TDateTimeField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
@@ -48,13 +50,15 @@ type
     function GetRutaFactura: string;
     function GetRutaPago: string;
     function GetDiaPagoActual: TDateTime;
+    function GetFechaSistema: TDateTime;
     property IdPeridoActual: Integer read GetIdPeridoActual;
     property DiaPagoActual: TDateTime read GetDiaPagoActual;
   public
     { Public declarations }
+    function GetTipoCambio(IdMoneda: Integer): Currency;
     property RutaFacturas: string read GetRutaFactura;
     property RutaPagos: string read GetRutaPago;
-    function GetTipoCambio(IdMoneda: Integer): Currency;
+    property FechaSistema: TDateTime read GetFechaSistema;
   end;
 
 var
@@ -85,6 +89,17 @@ begin
     Result := adoqGetDiaPagoActualValor.Value;
   finally
     adoqGetDiaPagoActual.Close;
+  end;
+end;
+
+function TdmConfiguracion.GetFechaSistema: TDateTime;
+begin
+  adoqGetDateAux.Close;
+  try
+    adoqGetDateAux.Open;
+    Result := adoqGetDateAuxValor.Value;
+  finally
+    adoqGetDateAux.Close;
   end;
 end;
 

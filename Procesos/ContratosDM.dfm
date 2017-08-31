@@ -1,7 +1,7 @@
 inherited dmContratos: TdmContratos
   OldCreateOrder = True
   Height = 480
-  Width = 694
+  Width = 785
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     CommandText = 
@@ -86,7 +86,7 @@ inherited dmContratos: TdmContratos
     Top = 80
     object actCrearAnexo: TAction
       Caption = 'Crear anexo'
-      Hint = 'Crea anexo de una cotizacion'
+      Hint = 'Crea un anexo de una cotizaci'#243'n'
       ImageIndex = 10
       OnExecute = actCrearAnexoExecute
     end
@@ -97,11 +97,32 @@ inherited dmContratos: TdmContratos
       OnExecute = actGenerarExecute
       OnUpdate = actGenerarUpdate
     end
+    object actGenMoratorios: TAction
+      Caption = 'Generar moratorios'
+      Hint = 'Genera los moratorios de un anexo a la fecha'
+      ImageIndex = 10
+      OnExecute = actGenMoratoriosExecute
+    end
     object actOpcionCompra: TAction
       Caption = 'Opci'#243'n de compra'
       ImageIndex = 10
       OnExecute = actOpcionCompraExecute
       OnUpdate = actOpcionCompraUpdate
+    end
+    object actRestructurar: TAction
+      Caption = 'Restructurar'
+      ImageIndex = 13
+      OnExecute = actRestructurarExecute
+    end
+    object actAbonarCapital: TAction
+      Caption = 'Abonar al capital'
+      Visible = False
+      OnExecute = actAbonarCapitalExecute
+    end
+    object actMoratorios: TAction
+      Caption = 'Moratorios'
+      ImageIndex = 13
+      OnExecute = actMoratoriosExecute
     end
     object actPreAmortizaciones: TAction
       Caption = 'Prever'
@@ -120,25 +141,10 @@ inherited dmContratos: TdmContratos
       OnExecute = actCrearPagoInicialExecute
       OnUpdate = actCrearPagoInicialUpdate
     end
-    object actAbonarCapital: TAction
-      Caption = 'Abonar al capital'
-      Visible = False
-      OnExecute = actAbonarCapitalExecute
-    end
     object actGetTipoCambio: TAction
       Caption = '...'
       Hint = 'Obtiene la '#250'ltima cotizaci'#243'n de la moneda'
       OnExecute = actGetTipoCambioExecute
-    end
-    object actMoratorios: TAction
-      Caption = 'Moratorios'
-      ImageIndex = 13
-      OnExecute = actMoratoriosExecute
-    end
-    object actRestructurar: TAction
-      Caption = 'Restructurar'
-      ImageIndex = 13
-      OnExecute = actRestructurarExecute
     end
   end
   object dsMaster: TDataSource
@@ -189,7 +195,8 @@ inherited dmContratos: TdmContratos
       'iaAnual, PagoInicialCreado, CapitalCobrado, SaldoInsoluto, Monto' +
       'Vencido, CartaCompensacion, ValorResidualCreado, OpcionCompraCre' +
       'ado, FechaTermino, MontoTermino, ContratadoTotal, PagadoTotal, S' +
-      'aldoTotal'#13#10'from Anexos'#13#10'where IdContrato = :IdContrato'
+      'aldoTotal, FinanciarEnganche'#13#10'from Anexos'#13#10'where IdContrato = :I' +
+      'dContrato'
     DataSource = dsMaster
     MasterFields = 'IdContrato'
     Parameters = <
@@ -303,6 +310,10 @@ inherited dmContratos: TdmContratos
       currency = True
       Precision = 18
       Size = 6
+    end
+    object adodsAnexosFinanciarEnganche: TBooleanField
+      DisplayLabel = 'Financiar enganche'
+      FieldName = 'FinanciarEnganche'
     end
     object adodsAnexosComisionPorcentaje: TBCDField
       DisplayLabel = 'Porcentaje comisi'#243'n'
@@ -571,8 +582,8 @@ inherited dmContratos: TdmContratos
         Precision = 10
         Value = 1
       end>
-    Left = 616
-    Top = 168
+    Left = 704
+    Top = 176
     object adodsAnexosProductosIdAnexoProducto: TIntegerField
       FieldName = 'IdAnexoProducto'
       Visible = False
@@ -601,8 +612,8 @@ inherited dmContratos: TdmContratos
     CursorType = ctStatic
     CommandText = 'select IdProducto, Identificador, Descripcion from Productos'
     Parameters = <>
-    Left = 616
-    Top = 232
+    Left = 704
+    Top = 240
   end
   object dsAnexos: TDataSource
     AutoEdit = False
@@ -614,13 +625,14 @@ inherited dmContratos: TdmContratos
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'SELECT IdAnexoAmortizacion, IdAnexoCredito, IdAnexoSegmento, Per' +
-      'iodo, FechaCorte, FechaVencimiento, TasaAnual, SaldoInicial, Pag' +
-      'o, Capital, CapitalImpuesto, CapitalTotal, Interes, InteresImpue' +
-      'sto, InteresTotal, '#13#10'ImpactoISR, PagoTotal, SaldoFinal, FechaMor' +
-      'atorio, DiasVencimiento, Moratorio, MoratorioImpuesto, Saldo'#13#10'FR' +
-      'OM v_AnexosAmortizaciones'#13#10'WHERE IdAnexoCredito = :IdAnexoCredit' +
-      'o'
+      'SELECT        IdAnexoAmortizacion, IdAnexoCredito, IdAnexoSegmen' +
+      'to, Periodo, FechaCorte, FechaVencimiento, TasaAnual, SaldoInici' +
+      'al, Pago, Capital, CapitalImpuesto, CapitalTotal, Interes, Inter' +
+      'esImpuesto, InteresTotal, ImpactoISR, '#13#10'                        ' +
+      ' PagoTotal, SaldoFinal, PagoSaldo, FechaMoratorio, DiasVencimien' +
+      'to, Moratorio, MoratorioImpuesto, MoratorioTotal, Total, Saldo, ' +
+      'FechaPago, DiasRetraso'#13#10'FROM            v_AnexosAmortizaciones'#13#10 +
+      'WHERE IdAnexoCredito = :IdAnexoCredito'#13#10'ORDER BY Periodo'#13#10
     DataSource = dsCreditos
     MasterFields = 'IdAnexoCredito'
     Parameters = <
@@ -737,13 +749,21 @@ inherited dmContratos: TdmContratos
       Precision = 18
       Size = 6
     end
+    object adodsAmortizacionesPagoSaldo: TFMTBCDField
+      DisplayLabel = 'Saldo del pago'
+      FieldName = 'PagoSaldo'
+      ReadOnly = True
+      currency = True
+      Precision = 18
+      Size = 6
+    end
     object adodsAmortizacionesFechaMoratorio: TDateTimeField
       DisplayLabel = 'Fecha moratorio'
       FieldName = 'FechaMoratorio'
       Visible = False
     end
     object adodsAmortizacionesDiasVencimiento: TIntegerField
-      DisplayLabel = 'Dias de vencimiento'
+      DisplayLabel = 'D'#237'as de vencimiento'
       FieldName = 'DiasVencimiento'
       ReadOnly = True
     end
@@ -760,12 +780,37 @@ inherited dmContratos: TdmContratos
       Precision = 18
       Size = 6
     end
+    object adodsAmortizacionesMoratorioTotal: TFMTBCDField
+      DisplayLabel = 'Moratorio IVA incluido'
+      FieldName = 'MoratorioTotal'
+      ReadOnly = True
+      currency = True
+      Precision = 19
+      Size = 6
+    end
+    object adodsAmortizacionesTotal: TFMTBCDField
+      FieldName = 'Total'
+      ReadOnly = True
+      currency = True
+      Precision = 20
+      Size = 6
+    end
     object adodsAmortizacionesSaldo: TFMTBCDField
       FieldName = 'Saldo'
       ReadOnly = True
       currency = True
       Precision = 18
       Size = 6
+    end
+    object adodsAmortizacionesFechaPago: TDateTimeField
+      DisplayLabel = 'Fecha '#250'ltimo pago'
+      FieldName = 'FechaPago'
+      ReadOnly = True
+    end
+    object adodsAmortizacionesDiasRetraso: TIntegerField
+      DisplayLabel = 'D'#237'as de retraso'
+      FieldName = 'DiasRetraso'
+      ReadOnly = True
     end
   end
   object adodsCreditos: TADODataSet
@@ -1019,8 +1064,8 @@ inherited dmContratos: TdmContratos
         Precision = 10
         Value = Null
       end>
-    Left = 56
-    Top = 400
+    Left = 544
+    Top = 24
   end
   object adopSetCXCPorAnexo: TADOStoredProc
     Connection = _dmConection.ADOConnection
@@ -1055,8 +1100,8 @@ inherited dmContratos: TdmContratos
         Precision = 10
         Value = Null
       end>
-    Left = 224
-    Top = 400
+    Left = 544
+    Top = 80
   end
   object adoqGetFechaDia: TADOQuery
     Connection = _dmConection.ADOConnection
@@ -1076,8 +1121,8 @@ inherited dmContratos: TdmContratos
       end>
     SQL.Strings = (
       'SELECT dbo.GetFechaDia(:Fecha,:Dia) AS FechaNueva')
-    Left = 216
-    Top = 344
+    Left = 704
+    Top = 360
     object adoqGetFechaDiaFechaNueva: TDateTimeField
       FieldName = 'FechaNueva'
       ReadOnly = True
@@ -1111,8 +1156,8 @@ inherited dmContratos: TdmContratos
         Size = -1
         Value = Null
       end>
-    Left = 360
-    Top = 304
+    Left = 592
+    Top = 360
   end
   object adopCanAnexosCreditos: TADOStoredProc
     Connection = _dmConection.ADOConnection
@@ -1132,8 +1177,8 @@ inherited dmContratos: TdmContratos
         Precision = 10
         Value = Null
       end>
-    Left = 360
-    Top = 400
+    Left = 544
+    Top = 136
   end
   object adocGetSaldoActual: TADOCommand
     CommandText = 
@@ -1164,8 +1209,8 @@ inherited dmContratos: TdmContratos
         Size = -1
         Value = Null
       end>
-    Left = 360
-    Top = 352
+    Left = 592
+    Top = 408
   end
   object adodsEmpleado: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -1192,7 +1237,34 @@ inherited dmContratos: TdmContratos
         Size = -1
         Value = Null
       end>
-    Left = 472
-    Top = 352
+    Left = 704
+    Top = 408
+  end
+  object adopGenMoratorio: TADOStoredProc
+    Connection = _dmConection.ADOConnection
+    ProcedureName = 'p_GenMoratorio;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@IdAnexo'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@Fecha'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Value = Null
+      end>
+    Left = 544
+    Top = 192
   end
 end

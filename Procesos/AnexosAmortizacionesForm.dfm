@@ -27,14 +27,15 @@ inherited frmAnexosAmortizaciones: TfrmAnexosAmortizaciones
   end
   inherited pnlMaster: TPanel
     Width = 645
-    Height = 224
+    Height = 229
+    ExplicitTop = 26
     ExplicitWidth = 645
-    ExplicitHeight = 224
+    ExplicitHeight = 229
     inherited cxGrid: TcxGrid
       Width = 645
-      Height = 224
+      Height = 229
       ExplicitWidth = 645
-      ExplicitHeight = 224
+      ExplicitHeight = 229
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdAnexoAmortizacion: TcxGridDBColumn
           DataBinding.FieldName = 'IdAnexoAmortizacion'
@@ -94,6 +95,9 @@ inherited frmAnexosAmortizaciones: TfrmAnexosAmortizaciones
         object tvMasterSaldoFinal: TcxGridDBColumn
           DataBinding.FieldName = 'SaldoFinal'
         end
+        object tvMasterPagoSaldo: TcxGridDBColumn
+          DataBinding.FieldName = 'PagoSaldo'
+        end
         object tvMasterFechaMoratorio: TcxGridDBColumn
           DataBinding.FieldName = 'FechaMoratorio'
         end
@@ -107,8 +111,21 @@ inherited frmAnexosAmortizaciones: TfrmAnexosAmortizaciones
         object tvMasterMoratorioImpuesto: TcxGridDBColumn
           DataBinding.FieldName = 'MoratorioImpuesto'
         end
+        object tvMasterMoratorioTotal: TcxGridDBColumn
+          DataBinding.FieldName = 'MoratorioTotal'
+        end
+        object tvMasterTotal: TcxGridDBColumn
+          DataBinding.FieldName = 'Total'
+        end
         object tvMasterSaldo: TcxGridDBColumn
           DataBinding.FieldName = 'Saldo'
+        end
+        object tvMasterFechaPago: TcxGridDBColumn
+          DataBinding.FieldName = 'FechaPago'
+        end
+        object tvMasterDiasRetraso: TcxGridDBColumn
+          DataBinding.FieldName = 'DiasRetraso'
+          Width = 78
         end
       end
     end
@@ -145,7 +162,7 @@ inherited frmAnexosAmortizaciones: TfrmAnexosAmortizaciones
     DockControlHeights = (
       0
       0
-      31
+      26
       0)
     inherited dxbNavigator: TdxBar
       DockedLeft = 190
@@ -222,6 +239,7 @@ inherited frmAnexosAmortizaciones: TfrmAnexosAmortizaciones
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42691.490725081020000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

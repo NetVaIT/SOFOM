@@ -836,33 +836,6 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     Left = 628
     Top = 241
   end
-  object adopSetCXCMoratorio: TADOStoredProc
-    Connection = _dmConection.ADOConnection
-    ProcedureName = 'p_GenMoratorio;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-        Value = Null
-      end
-      item
-        Name = '@IdCuentaXCobrar'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = Null
-      end
-      item
-        Name = '@Fecha'
-        Attributes = [paNullable]
-        DataType = ftDateTime
-        Value = Null
-      end>
-    Left = 64
-    Top = 392
-  end
   object ADOStrprcActGralMoratorios: TADOStoredProc
     Connection = _dmConection.ADOConnection
     ProcedureName = 'p_GenMoratorios;1'

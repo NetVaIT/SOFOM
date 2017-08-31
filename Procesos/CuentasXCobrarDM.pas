@@ -149,7 +149,6 @@ type
     ADODtStPrefacturasCFDIIdCuentaXCobrar: TIntegerField;
     ADODtStPrefacturasCFDISaldoFactoraje: TFMTBCDField;
     DetallesCXCParaFacturarEsMoratorios: TBooleanField;
-    adopSetCXCMoratorio: TADOStoredProc;
     ADOStrprcActGralMoratorios: TADOStoredProc;
     ActActualizaMoratorios: TAction;
     adodsMasterSaldoFactoraje: TFMTBCDField;

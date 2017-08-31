@@ -11,6 +11,7 @@ resourcestring
   strAllowGenAnexo = '¿Deseas crear el anexo en base a la cotización %s?';
   strGenPagoIncial = '¿Deseas crear los pagos inciales de este anexo?';
   strGenOpcionCompra = '¿Deseas crear la opción de compra de este anexo?';
+  strGenMoratorios = '¿Deseas crear los moratorios de este anexo?';
   strNeedProduct   = 'Necesita agregar uno o más productos al anexo';
   strProductsPercentage = 'La suma de porcentajes totales de los productos en el anexo debe ser igual al 100%';
   strRestructureAnexo = '¿Deseas restructurar el anexo?';
@@ -166,6 +167,14 @@ type
     adodsAnexosContratadoTotal: TFMTBCDField;
     adodsAnexosPagadoTotal: TFMTBCDField;
     adodsAnexosSaldoTotal: TFMTBCDField;
+    adodsAmortizacionesPagoSaldo: TFMTBCDField;
+    adodsAmortizacionesMoratorioTotal: TFMTBCDField;
+    adodsAmortizacionesTotal: TFMTBCDField;
+    adodsAmortizacionesFechaPago: TDateTimeField;
+    adodsAmortizacionesDiasRetraso: TIntegerField;
+    actGenMoratorios: TAction;
+    adopGenMoratorio: TADOStoredProc;
+    adodsAnexosFinanciarEnganche: TBooleanField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsAnexosPrecioMonedaChange(Sender: TField);
     procedure adodsAnexosNewRecord(DataSet: TDataSet);
@@ -193,6 +202,7 @@ type
     procedure adodsAnexosValorResidualChange(Sender: TField);
     procedure adodsAnexosOpcionCompraPorcentajeChange(Sender: TField);
     procedure adodsAnexosOpcionCompraChange(Sender: TField);
+    procedure actGenMoratoriosExecute(Sender: TObject);
   private
     { Private declarations }
     FPaymentTime: TPaymentTime;
@@ -210,6 +220,7 @@ type
     procedure CalcularImportesCredito;
     function CrearPagoInicial: Boolean;
     function CrearOpcionCompra: Boolean;
+    function CrearMoratorios: Boolean;
     function GetFechaDia(Fecha: TDateTime; Dia: Integer): TDateTime;
     procedure Restructurar;
     function ProductosValido(IdAnexo: Integer): Boolean;
@@ -295,6 +306,13 @@ procedure TdmContratos.actGenerarUpdate(Sender: TObject);
 begin
   inherited;
   TAction(Sender).Enabled := not adodsAnexosPagoInicialCreado.Value;
+end;
+
+procedure TdmContratos.actGenMoratoriosExecute(Sender: TObject);
+begin
+  inherited;
+  if CrearMoratorios then
+    RefreshADODS(adodsAmortizaciones, adodsAmortizacionesIdAnexoAmortizacion);
 end;
 
 procedure TdmContratos.actGetTipoCambioExecute(Sender: TObject);
@@ -544,9 +562,18 @@ begin
 end;
 
 procedure TdmContratos.CalcularImportes;
+var
+  Enganche: Extended;
 begin
   if adodsAnexos.State in [dsInsert, dsEdit] then
   begin
+    // Si se financia el enganche el valor del calculo sera 0
+    // Caso especial: RENTA DE GRUAS Y PLANTAS DE LUZ SEREDRAL, SA DE CV
+    if (adodsAnexosFinanciarEnganche.Value) then
+      Enganche:= 0
+    else
+      Enganche:= adodsAnexosEnganche.AsExtended;
+    // Calculo
     adodsAnexosPagoMensual.Value := dmAmortizaciones.Pago(adodsAnexosTasaAnual.Value,
     adodsAnexosPlazo.Value, adodsAnexosMontoFinanciar.AsExtended,
     adodsAnexosValorResidual.AsExtended) + adodsAnexosImpactoISR.AsExtended;
@@ -557,7 +584,7 @@ begin
     adodsAnexosComisionImpuesto.Value := adodsAnexosComision.Value * (_IMPUESTOS_IVA/100);
     adodsAnexosGastosImpuestos.Value := adodsAnexosGastos.Value * (_IMPUESTOS_IVA/100);
     adodsAnexosDepositos.Value := adodsAnexosPagoMensual.Value * adodsAnexosDespositosNumero.Value;
-    adodsAnexosPagoIncial.Value := (adodsAnexosEnganche.Value+adodsAnexosComision.Value+adodsAnexosComisionImpuesto.Value+
+    adodsAnexosPagoIncial.Value := (Enganche+adodsAnexosComision.Value+adodsAnexosComisionImpuesto.Value+
     adodsAnexosGastos.Value+adodsAnexosGastosImpuestos.Value+adodsAnexosDepositos.Value);
     adodsAnexosMontoFinanciar.Value:= adodsAnexosPrecioTotal.Value-adodsAnexosEnganche.Value;
     adodsAnexosSaldoInsoluto.Value := adodsAnexosMontoFinanciar.Value - adodsAnexosCapitalCobrado.Value;
@@ -571,6 +598,26 @@ begin
     adodsCreditosPagoMensual.Value := dmAmortizaciones.Pago(adodsCreditosTasaAnual.Value,
     adodsCreditosPlazo.Value, adodsCreditosMontoFiananciar.AsExtended,
     adodsCreditosValorResidual.AsExtended) + adodsCreditosImpactoISR.AsExtended;
+  end;
+end;
+
+function TdmContratos.CrearMoratorios: Boolean;
+begin
+  Result:= False;
+  if IdAnexo <> 0 then
+  begin
+    if MessageDlg(strGenMoratorios, mtConfirmation, mbYesNo, 0) = mrYes then
+    begin
+      ScreenCursorProc(crSQLWait);
+      try
+        adopGenMoratorio.Parameters.ParamByName('@IdAnexo').Value:= IdAnexo;
+        adopGenMoratorio.Parameters.ParamByName('@Fecha').Value:= dmConfiguracion.FechaSistema;
+        adopGenMoratorio.ExecProc;
+      finally
+        ScreenCursorProc(crDefault);
+      end;
+      Result:= True;
+    end;
   end;
 end;
 
@@ -623,6 +670,7 @@ begin
 //  gFormDeatil1.ApplyBestFit := False;
   gFormDeatil1.DataSet:= adodsAnexos;
   TfrmAnexos(gFormDeatil1).actGenerar := actGenerar;
+  TfrmAnexos(gFormDeatil1).actGenMoratorios := actGenMoratorios;
   TfrmAnexos(gFormDeatil1).actRestructurar := actRestructurar;
   TfrmAnexos(gFormDeatil1).actAbonar := actAbonarCapital;
   TfrmAnexos(gFormDeatil1).actOpcionCompra := actOpcionCompra;

@@ -94,6 +94,8 @@ type
     adodsReportCoberturaP: TFMTBCDField;
     ppDBCalc10: TppDBCalc;
     ppDBCalc11: TppDBCalc;
+    mdParamsDepreciacion: TBooleanField;
+    adospUpdProductosDepreciacion: TADOStoredProc;
     procedure DataModuleCreate(Sender: TObject);
     procedure mdParamsNewRecord(DataSet: TDataSet);
   private
@@ -114,6 +116,8 @@ uses RptCoberturaForm;
 procedure TdmRptCobertura.AssignParam;
 begin
   inherited;
+  if mdParamsDepreciacion.Value then
+    adospUpdProductosDepreciacion.ExecProc;
   case mdParamsVencidos.Value of
     0: begin
       adodsReport.Parameters.ParamByName('Vencidos').Value := 0;
@@ -136,6 +140,7 @@ procedure TdmRptCobertura.mdParamsNewRecord(DataSet: TDataSet);
 begin
   inherited;
   mdParamsVencidos.Value := 0;
+  mdParamsDepreciacion.Value := True;
 end;
 
 end.

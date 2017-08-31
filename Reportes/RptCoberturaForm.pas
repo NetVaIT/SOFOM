@@ -18,11 +18,12 @@ uses
   dxSkinWhiteprint, dxSkinXmas2008Blue, dxSkinscxPCPainter, cxPCdxBarPopupMenu,
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, Vcl.ImgList,
   System.Actions, Vcl.ActnList, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls, cxPC,
-  cxContainer, cxEdit, cxGroupBox, cxRadioGroup, cxDBEdit;
+  cxContainer, cxEdit, cxGroupBox, cxRadioGroup, cxDBEdit, cxCheckBox;
 
 type
   TfrmRptCobertura = class(T_frmReport)
     cxDBRadioGroup1: TcxDBRadioGroup;
+    cxDBCheckBox1: TcxDBCheckBox;
   private
     { Private declarations }
   public

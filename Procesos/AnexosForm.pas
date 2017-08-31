@@ -86,6 +86,7 @@ type
     tvMasterContratadoTotal: TcxGridDBColumn;
     tvMasterPagadoTotal: TcxGridDBColumn;
     tvMasterSaldoTotal: TcxGridDBColumn;
+    dxbbGenMoratorios: TdxBarButton;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
@@ -95,13 +96,16 @@ type
     FactAbonar: TBasicAction;
     FactRestructurar: TBasicAction;
     FactOpcionCompra: TbasicAction;
+    FactGenMoratorios: TBasicAction;
     procedure SetactGenerar(const Value: TBasicAction);
     procedure SetactAbonar(const Value: TBasicAction);
     procedure SetactRestructurar(const Value: TBasicAction);
     procedure SetactOpcionCompra(const Value: TbasicAction);
+    procedure SetactGenMoratorios(const Value: TBasicAction);
   public
     { Public declarations }
     property actGenerar: TBasicAction read FactGenerar write SetactGenerar;
+    property actGenMoratorios: TBasicAction read FactGenMoratorios write SetactGenMoratorios;
     property actRestructurar: TBasicAction read FactRestructurar write SetactRestructurar;
     property actGetTipoCambio: TBasicAction read FactGetTipoCambio write FactGetTipoCambio;
     property actAbonar: TBasicAction read FactAbonar write SetactAbonar;
@@ -136,6 +140,12 @@ procedure TfrmAnexos.SetactGenerar(const Value: TBasicAction);
 begin
   FactGenerar := Value;
   dxbbGenerar.Action := Value;
+end;
+
+procedure TfrmAnexos.SetactGenMoratorios(const Value: TBasicAction);
+begin
+  FactGenMoratorios := Value;
+  dxbbGenMoratorios.Action := Value;
 end;
 
 procedure TfrmAnexos.SetactOpcionCompra(const Value: TbasicAction);

@@ -258,6 +258,10 @@ inherited frmAnexos: TfrmAnexos
         end
         item
           Visible = True
+          ItemName = 'dxbbGenMoratorios'
+        end
+        item
+          Visible = True
           ItemName = 'dxbbOpcionCompra'
         end
         item
@@ -295,6 +299,11 @@ inherited frmAnexos: TfrmAnexos
       ImageIndex = 10
       PaintStyle = psCaptionGlyph
     end
+    object dxbbGenMoratorios: TdxBarButton
+      Action = dmContratos.actGenMoratorios
+      Category = 0
+      PaintStyle = psCaptionGlyph
+    end
   end
   inherited cxStyleRepository: TcxStyleRepository
     PixelsPerInch = 96
@@ -305,6 +314,7 @@ inherited frmAnexos: TfrmAnexos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42683.688746423620000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end
