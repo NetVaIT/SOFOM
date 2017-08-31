@@ -1,40 +1,40 @@
 inherited frmFacturasGrid: TfrmFacturasGrid
   BorderStyle = bsToolWindow
   Caption = 'Facturas '
-  ClientHeight = 428
-  ClientWidth = 935
-  ExplicitWidth = 941
-  ExplicitHeight = 457
+  ClientHeight = 533
+  ClientWidth = 969
+  ExplicitWidth = 975
+  ExplicitHeight = 562
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Top = 343
-    Width = 935
+    Top = 448
+    Width = 969
     ExplicitTop = 343
     ExplicitWidth = 815
   end
   inherited splDetail1: TSplitter
-    Top = 255
-    Width = 935
+    Top = 360
+    Width = 969
     ExplicitTop = 255
     ExplicitWidth = 815
   end
   inherited splDetail2: TSplitter
-    Top = 299
-    Width = 935
+    Top = 404
+    Width = 969
     ExplicitTop = 299
     ExplicitWidth = 815
   end
   inherited pnlMaster: TPanel
     Top = 70
-    Width = 935
-    Height = 185
+    Width = 969
+    Height = 290
     ExplicitTop = 70
     ExplicitWidth = 935
     ExplicitHeight = 185
     inherited cxGrid: TcxGrid
-      Width = 935
-      Height = 185
+      Width = 969
+      Height = 290
       ExplicitWidth = 935
       ExplicitHeight = 185
       inherited tvMaster: TcxGridDBTableView
@@ -242,49 +242,50 @@ inherited frmFacturasGrid: TfrmFacturasGrid
     end
   end
   inherited pnlDetail3: TPanel
-    Top = 346
-    Width = 935
+    Top = 451
+    Width = 969
     ExplicitTop = 346
     ExplicitWidth = 935
   end
   inherited pnlDetail2: TPanel
-    Top = 302
-    Width = 935
+    Top = 407
+    Width = 969
     ExplicitTop = 302
     ExplicitWidth = 935
   end
   inherited pnlDetail1: TPanel
-    Top = 258
-    Width = 935
+    Top = 363
+    Width = 969
     ExplicitTop = 258
     ExplicitWidth = 935
   end
   inherited pnlClose: TPanel
-    Top = 387
-    Width = 935
+    Top = 492
+    Width = 969
     ExplicitTop = 387
     ExplicitWidth = 935
     DesignSize = (
-      935
+      969
       41)
     inherited btnClose: TButton
-      Left = 850
+      Left = 884
       ExplicitLeft = 850
     end
   end
   object PnlBusqueda: TPanel [8]
     Left = 0
     Top = 26
-    Width = 935
+    Width = 969
     Height = 44
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 9
+    ExplicitWidth = 935
     DesignSize = (
-      935
+      969
       44)
     object Button1: TButton
-      Left = 852
+      Left = 886
       Top = 6
       Width = 75
       Height = 25
@@ -293,6 +294,7 @@ inherited frmFacturasGrid: TfrmFacturasGrid
       Caption = 'Cerrar'
       TabOrder = 0
       OnClick = btnCloseClick
+      ExplicitLeft = 852
     end
     object Panel1: TPanel
       Left = 0
@@ -322,12 +324,13 @@ inherited frmFacturasGrid: TfrmFacturasGrid
     object PnlFechas: TPanel
       Left = 199
       Top = 0
-      Width = 736
+      Width = 770
       Height = 44
       Align = alClient
       BevelOuter = bvNone
       ParentBackground = False
       TabOrder = 2
+      ExplicitWidth = 736
       object Label1: TLabel
         Left = 21
         Top = 4
@@ -1318,7 +1321,7 @@ inherited frmFacturasGrid: TfrmFacturasGrid
   end
   object DSQryAuxiliar: TDataSource
     DataSet = dmFacturas.ADOQryAuxiliar
-    Left = 816
-    Top = 88
+    Left = 856
+    Top = 32
   end
 end

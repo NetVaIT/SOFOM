@@ -217,15 +217,16 @@ type
     function SacaTipoComp(TipoDoc: Integer): String;
     function SacaDireccion(IDCliente: Integer): Integer;
     function SacaMetodo(IDCliente: Integer; var CtaPago:String): Integer;
-    procedure Facturar(IDCFDIGen: Integer; var CFDICreado: Boolean;
+    procedure Facturar(IDCFDIGen: Integer; var CFDICreado, CFDITimbrado: Boolean;
       IDGenTipoDoc: integer);
     procedure RegistraBitacora(tipoRegistro: Integer);
     function GetFFechaActual: TDAteTime;
     function EsOpcionCompra(idCXC: Integer;var ConceptoNvo:String; var idCXCDet :integer): Boolean;
     function GetFTotalConMora: Double;  //May 26/17
     function CambiarMetodoPago(var IDMetodoPago: Integer;
-      var Cuenta: String): Boolean;
+      var Cuenta,CompConcepto: String): Boolean;
     procedure verificaYCambiaEstatusCXC(IDCFDIACT, NvoEstatus, IdCXCAct:integer; CFDICreado:Boolean );
+    function ConfirmarGeneracion(AMAster, AConceptos: TAdoDAtaSEt): Boolean;
 
     { Private declarations }
   public
@@ -244,7 +245,7 @@ implementation
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
 uses CuentasXCobrarForm, FacturasDM, _ConectionDmod, ConceptoOpcionCEdt, MetodoPagoFacturaEdt,
-  PDFReporteEstatusCXC;
+  PDFReporteEstatusCXC, FacturaConfirmacionForm;
 
 
 {$R *.dfm}
@@ -418,10 +419,11 @@ begin                                                                          /
   end;
 end;
 
-function TdmCuentasXCobrar.CambiarMetodoPago(var IDMetodoPago:Integer; var Cuenta:String):Boolean;
+function TdmCuentasXCobrar.CambiarMetodoPago(var IDMetodoPago:Integer; var Cuenta, CompConcepto:String):Boolean;
 begin  //Jul 10/17
   Cuenta:=''; //Para que al menos este vacia
-  IDMetodoPago:=SacaMetodo(adodsMasterIdPersona.AsInteger, Cuenta);
+  CompConcepto:=''; //ago 30/17
+  IDMetodoPago:=6;// No identificado SacaMetodo(adodsMasterIdPersona.AsInteger, Cuenta);   //CXC
   FrmMetodoPagoFactura:=TFrmMetodoPagoFactura.Create(self);
   FrmMetodoPagoFactura.IdMetSeleccion:=IDMetodoPago;
   FrmMetodoPagoFactura.CuentaSeleccion:= Cuenta;
@@ -433,6 +435,7 @@ begin  //Jul 10/17
   begin
     IDMetodoPago:= FrmMetodoPagoFactura.IdMetSeleccion;
     Cuenta:= FrmMetodoPagoFactura.CuentaSeleccion;
+    CompConcepto:=FrmMetodoPagoFactura.ComplemConcepto; //Ago 30/17
   end;
 
   FrmMetodoPagoFactura.Free;
@@ -440,13 +443,13 @@ begin  //Jul 10/17
 
 end;
 procedure TdmCuentasXCobrar.actGeneraPreFacturasExecute(Sender: TObject);
-var CFDICreado, ParaCompra, CambioMetPago :Boolean;
-    ConceptoOC, CtaNvaPago:String;
+var CFDICreado, ParaCompra, CambioMetPago , CFDITimbrado:Boolean; //Ago 31/17
+    ConceptoOC, CtaNvaPago, ComplementoConc:String; //Ago 30/17
     IdCXCDet, IdNvoMetPago:Integer;
 begin
   inherited;
-  IdNvoMetPago:=0;
-  CambioMetPago:=CambiarMetodoPago(IdNvoMetPago,CtaNvaPago);  //Jul 10/17
+  IdNvoMetPago:=0;                                         //Ago 30/17
+  CambioMetPago:=CambiarMetodoPago(IdNvoMetPago,CtaNvaPago,ComplementoConc );  //Jul 10/17
 
    //Jun 28/17
    ParaCompra:= EsOpcionCompra(adodsMasterIdCuentaXCobrar.asinteger,ConceptoOC,IdCXCDet ); //Verificar si es opcion de compra y pedir Concepto de Facturación
@@ -489,8 +492,10 @@ begin
       if ParaCompra and (IdCXCDet = DetallesCXCParaFacturar.fieldbyname('IdCuentaXCobrarDEtalle').asinteger)then //Jun 28/17
         ADODtStCFDIConceptosPrefDescripcion.AsString:=  ConceptoOC
       else
-        ADODtStCFDIConceptosPrefDescripcion.AsString:= DetallesCXCParaFacturar.fieldbyname('Descripcion').asString;
-
+      begin                                                                                                          //Ago 30/17
+        ADODtStCFDIConceptosPrefDescripcion.AsString:= DetallesCXCParaFacturar.fieldbyname('Descripcion').asString +' '+ ComplementoConc;
+        ComplementoConc:=''; //Solo el primer concepto lleva complemento Ago 30/17     //Es creacion.. no hay problema
+      end;
 
       ADODtStCFDIConceptosPrefIdCuentaXCobrarDetalle.AsInteger:=DetallesCXCParaFacturar.fieldbyname('IDCuentaXCobrarDEtalle').AsInteger;  //Sin a Dic 7/16
       ADODtStCFDIConceptosPrefValorUnitario.Value:= DetallesCXCParaFacturar.fieldbyname('Importe').asFloat;
@@ -507,10 +512,13 @@ begin
     adodsmaster.post;            //ERa CFDInormal.. mar 30/17
 
     //Facturar Abr 7/17
+                                                                                //Ago 31/17
+    Facturar(ADODtStPrefacturasCFDI.FieldByName('IDCFDI').AsInteger,CFDICreado, CFDITimbrado, 1); //Timbra factura
 
-    Facturar(ADODtStPrefacturasCFDI.FieldByName('IDCFDI').AsInteger,CFDICreado, 1); //Timbra factura
     //DEntro del proceso de facturacion se muestraPDF //Abr 7/17
     VerificaYCambiaEstatusCXC(ADODtStPrefacturasCFDI.FieldByName('IDCFDI').AsInteger,1,adodsmaster.FieldByName('IdCuentaXCobrar').ASinteger,CFDICreado); //A EstatusFActurada (1)
+    if CFDICreado  and not CFDITimbrado then
+       ShowMessage('Factura Creada Pendiente de Timbrar');
   end;
 end;
 procedure TdmCuentasXCobrar.verificaYCambiaEstatusCXC(IDCFDIACT, NvoEstatus, IdCXCAct:integer; CFDICreado:Boolean );
@@ -534,23 +542,46 @@ begin
   ADOPActualizaTotalesCXC.ExecProc;
 end;
 
-procedure TdmCuentasXCobrar.Facturar(IDCFDIGen: Integer;var CFDICreado:Boolean;IDGenTipoDoc:integer); //abr7/17 Copiado desde Pagos
+procedure TdmCuentasXCobrar.Facturar(IDCFDIGen: Integer;var CFDICreado, CFDITimbrado:Boolean;IDGenTipoDoc:integer); //abr7/17 Copiado desde Pagos
 var
    CreadaAntes:boolean;
+
 begin
   FFacturando:=True;
+  CFDITimbrado:=False; //En caso que estuvies etimbrada no debe entrar a la confirmación
                                                //Mar 29/16
   dmFacturas := TdmFacturas.CreateWMostrar(nil,True,IDGenTipoDoc);  //Era false pero verificar  a ver si no da el aV
   dmFActuras.PIDCFDIGen:=IDCFDIGen;
   dmFActuras.adodsMaster.open; //por si no esta abierta   //Feb12/17
   CFDICreado:=  dmFActuras.adodsMaster.Locate('IDCFDI',IDCFDIGen,[]);  //SE ubica en el CFDI feb 8/
   CreadaAntes:=dmFActuras.adodsMasterIdCFDIEstatus.AsInteger= 2;
-  if CFDICreado and (IDGenTipoDoc=1) and (not CreadaAntes)then  //Ajuste para que se mande crear si no esta Ene3/17 //Mod Mar 28/16
-    dmFacturas.ActProcesaFactura.Execute;
+  if CFDICreado and (IDGenTipoDoc=1) and (not CreadaAntes) then           //Ajuste para que se mande crear si no esta Ene3/17 //Mod Mar 28/16
+  begin
+    if ConfirmarGeneracion(dmFActuras.adodsMaster, dmFActuras.ADODtStCFDIConceptos)  then //Ago 31/17
+    begin
+      dmFacturas.ActProcesaFactura.Execute;
+      if dmFActuras.adodsMasterIdCFDIEstatus.AsInteger= 2 then //Se timbro en este momento //Ago 31/17
+        CFDITimbrado:=True;
+    end
+    else
+    begin
+      ShowMessage('Canceló Timbrado de Factura');
+    end;
+  end;
   FreeAndNil(dmFacturas);
   FFacturando:=False;
 end;
 
+function TdmCuentasXCobrar.ConfirmarGeneracion(AMaster, AConceptos:TAdoDAtaSEt):Boolean; //Ago 31/17
+begin
+   FrmDatosFacturaPrev:=TFrmDatosFacturaPrev.Create(self);
+   FrmDatosFacturaPrev.DSCFDIPrevio.DataSet:=AMASter;
+   FrmDatosFacturaPrev.DSConceptosPrevios.DataSet:=AConceptos;
+   FrmDAtosFActuraPrev.dsQryAuxiliar.DataSet:=ADOQryAuxiliar;
+   FrmDAtosFActuraPrev.VADODtStSelMetPago:=ADODtStSelMetPago;
+   FrmDatosFacturaPrev.ShowModal;
+   Result:= FrmDatosFacturaPrev.modalresult=mrok;
+end;
 
 function TdmCuentasXCobrar.GetFFechaActual: TDAteTime;   //May 26/17   //Obtener fecha Pruebas sin Hora
 var d,m,a:word;
@@ -737,7 +768,7 @@ begin
   if IDpersonaDomi<>-1 then
      DataSet.FieldByName('IdClienteDomicilio').AsInteger:= IDpersonaDomi;// SacaDireccion(adodsMasterIdPersona.AsInteger); // Ver si no tiene que pasa.... Dic 6/16   (Truena no lo deja crear)
 
-  DataSet.FieldByName('IDMetodoPago').AsInteger:= SacaMetodo(adodsMasterIdPersona.AsInteger, Cuenta); //  DataSet.FieldByName('IDMetodoPago').AsInteger:=5; //Otros  si no tiene
+  DataSet.FieldByName('IDMetodoPago').AsInteger:= SacaMetodo(adodsMasterIdPersona.AsInteger, Cuenta); //CXC   DataSet.FieldByName('IDMetodoPago').AsInteger:=5; //Otros  si no tiene
   if Cuenta <>'' then
      DataSet.FieldByName('NumCtaPago').asString:= cuenta;
   DataSet.FieldByName('IdCuentaXCobrar').AsInteger:=  adodsMasterIdCuentaXCobrar.AsInteger;  //Ajustado Ene 12/17 idcxc

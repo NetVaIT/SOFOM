@@ -66,11 +66,12 @@ uses CuentasXCobrarDM;
 procedure TFrmMetodoPagoFactura.btnOkClick(Sender: TObject);
 begin
   FIDMetSeleccion:= DBLkpCmbBxMetodoPago.keyvalue;
- if pnlcuenta.visible then
-   FCuentaSeleccion:= cxTxtEdtCuenta.Text
- else
-   FCuentaSeleccion:='';
+  if pnlcuenta.visible then
+    FCuentaSeleccion:= cxTxtEdtCuenta.Text
+  else
+    FCuentaSeleccion:='';
 
+  FComplemConcepto:= cxMmObserva.Text; //Ago 30/17
 
 end;
 
@@ -90,7 +91,8 @@ end;
 
 procedure TFrmMetodoPagoFactura.FormCreate(Sender: TObject);
 begin
-  dsmetodoPago.DataSet.Open;
+  if dsmetodoPago.DataSet <>nil then
+    dsmetodoPago.DataSet.Open;  //No tiene aun datos
 end;
 
 procedure TFrmMetodoPagoFactura.FormDestroy(Sender: TObject);
@@ -100,6 +102,7 @@ end;
 
 procedure TFrmMetodoPagoFactura.FormShow(Sender: TObject);
 begin
+  dsmetodoPago.DataSet.open; //Aca deberia traer valor
   DBLkpCmbBxMetodoPago.KeyValue:=IdMetSeleccion;
   pnlcuenta.Visible:= CuentaSeleccion <>'';
   cxTxtEdtCuenta.Text:=CuentaSeleccion;

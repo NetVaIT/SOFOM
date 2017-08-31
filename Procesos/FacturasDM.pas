@@ -199,6 +199,12 @@ type
     adodsMasterSaldoFactoraje: TFMTBCDField;
     ActCancelarCFDI: TAction;
     adodsMasterRFCEmisor: TStringField;
+    ADODtStSelMetPago: TADODataSet;
+    ADODtStSelMetPagoIdMetodoPago: TIntegerField;
+    ADODtStSelMetPagoIdentificador: TStringField;
+    ADODtStSelMetPagoDescripcion: TStringField;
+    ADODtStSelMetPagoExigeCuenta: TIntegerField;
+    ADODtStSelMetPagoClaveSAT2016: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actProcesaFacturaExecute(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
@@ -218,6 +224,7 @@ type
     FTipoDoc: Integer;
     FMuestra: Boolean;
     FIDCFDIGen: Integer;
+
     { Private declarations }
     procedure ReadFileCERKEY(FileNameCER,FileNameKEY: TFileName);
     function ConvierteFechaT_DT(Texto: String): TDateTime;
@@ -234,7 +241,8 @@ type
       var TimbradoCFDI: TTimbreCFDI; Adicional: String): Boolean;
     procedure RefreshCFDI;
     procedure DesAsociarCFDIdeCXC(Idcfdi: Integer);
-    procedure RegistraBitacora(tipoRegistro: Integer; Observacion: String); //Regresado
+    procedure RegistraBitacora(tipoRegistro: Integer; Observacion: String);    //Regresado
+
   public
     { Public declarations }
      EsProduccion:Boolean;
@@ -242,7 +250,9 @@ type
      property Muestra:Boolean read FMuestra write SetMuestra;
      property TipoDocumento:Integer read FTipoDoc write FTipoDoc;
      Property PIDCFDIGen:Integer read  FIDCFDIGen write FIDCFDIGen; //FEb 8/17
+    // property EsAjusteConcepto:boolean read FEsAjusteConcepto write SetFEsAjusteConcepto; //Ago 31/17
   end;
+
 
 var
   dmFacturas: TdmFacturas;
@@ -1122,61 +1132,64 @@ var        //Este sólo debe usarse si sehace factura manual.. No para la que vie
   Existe:Boolean;
 begin
   inherited;  //Mar 29/16     //Verificar que no intertfiera con el  proceso normal de facturacion
-  Showmessage('Se actualizarán totales e IVA para este comprobante'); //feb 7/17
-  idImp:=-1;
-  //Verificar si aca actualizar el item respectivo del detalle del documento
-  IDDocItem:=DataSet.FieldByName('IDCFDIConcepto').AsInteger;
-  idDocCFDI:=DataSet.FieldByName('IDCFDI').AsInteger;
-
-  //Siempre actualizar
-
-  ADOQryAuxiliar.Close;
-  ADOQryAuxiliar.SQL.Clear;
-  ADOQryAuxiliar.SQL.Add('Select Sum(Importe) as ValorST From CFDIConceptos where IDCFDI='+intToStr(idDocCFDI));
-  ADOQryAuxiliar.open;
-
-  Subtotal:= ADOQryAuxiliar.FieldByName('ValorST').AsFloat;
-
-  IVACal:= subtotal*0.16;
-  TotalCal:= Subtotal+IVACal; //subtotal*1.16 ;    //Ago 25/16
-
-  //Ver si va a ir decto?? Nov 29/16
-
-  ADOQryAuxiliar.Close;                                                                                       //   subtotal*0.16
-  ADOQryAuxiliar.SQL.Clear;                                                                                                                  //  subtotal*1.16                      //  subtotal*1.16
-  ADOQryAuxiliar.SQL.Add('UPDATE CFDI SET Subtotal='+FloattoSTR(subtotal)+' , TotalImpuestoTrasladado='+FloatToSTR(IVACal)+', Total='+FloatToSTR(TotalCal) +', SaldoDocumento='+FloatToSTR(TotalCal)
-                          +', SaldoFactoraje='+FloatToSTR(TotalCal)+' where IDCFDI ='+IntToStr(idDocCFDI));
-                          //feb 9/17 Manual
-  ADOQryAuxiliar.ExecSQL;
-
-  //Acualizar impuestos si no tiene Impuestos //Mar 30/16
-  //Si existe actualizar si no existe crear en tabla de impuestos          //Ago 31/16
-
-  ADOQryAuxiliar.Close;
-  ADOQryAuxiliar.SQL.Clear;
-  ADOQryAuxiliar.SQL.Add('SElect * from  CFDIImpuestos where IDCFDI ='+IntToStr(idDocCFDI)
-                         +' and TipoImp=''Trasladado'' and Impuesto=''IVA''');
-  ADOQryAuxiliar.Open;
-
-  if not ADOQryAuxiliar.eof then//No existe
-    idImp:=ADOQryAuxiliar.FieldByName('IDCFDIImpuesto').AsInteger;
-    // Mar 31/16
-  if idImp=-1 then //No existe
+  if adodsMasterIdCuentaXCobrar.IsNull then  // ago 31/17 Por si se esta modificando el concepto al vuelo , solo esto aplica a las que no tienen CXC
   begin
+    Showmessage('Se actualizarán totales e IVA para este comprobante'); //feb 7/17
+    idImp:=-1;
+    //Verificar si aca actualizar el item respectivo del detalle del documento
+    IDDocItem:=DataSet.FieldByName('IDCFDIConcepto').AsInteger;
+    idDocCFDI:=DataSet.FieldByName('IDCFDI').AsInteger;
+
+    //Siempre actualizar
+
     ADOQryAuxiliar.Close;
     ADOQryAuxiliar.SQL.Clear;
-    ADOQryAuxiliar.SQL.Add('Insert into CFDIImpuestos (IDCFDI, TipoIMP,Impuesto, Tasa, Importe) VAlues('
-                          +IntToStr(idDocCFDI) +', ''Trasladado'', ''IVA'', 16, '+FloatToSTR(IVACal)+')');
-    ADOQryAuxiliar.ExecSQL;                                                                 //  subtotal*0.16 Ago 30 /16 ajustado
-  end
-  else
-  begin
-    ADOQryAuxiliar.Close;
-    ADOQryAuxiliar.SQL.Clear;
-    ADOQryAuxiliar.SQL.Add('UPDATE CFDIImpuestos SET Importe='+FloatToSTR(IVACal)   //subtotal*0.16
-                            +' where IDCFDIImpuesto ='+IntToStr(idImp));
+    ADOQryAuxiliar.SQL.Add('Select Sum(Importe) as ValorST From CFDIConceptos where IDCFDI='+intToStr(idDocCFDI));
+    ADOQryAuxiliar.open;
+
+    Subtotal:= ADOQryAuxiliar.FieldByName('ValorST').AsFloat;
+
+    IVACal:= subtotal*0.16;
+    TotalCal:= Subtotal+IVACal; //subtotal*1.16 ;    //Ago 25/16
+
+    //Ver si va a ir decto?? Nov 29/16
+
+    ADOQryAuxiliar.Close;                                                                                       //   subtotal*0.16
+    ADOQryAuxiliar.SQL.Clear;                                                                                                                  //  subtotal*1.16                      //  subtotal*1.16
+    ADOQryAuxiliar.SQL.Add('UPDATE CFDI SET Subtotal='+FloattoSTR(subtotal)+' , TotalImpuestoTrasladado='+FloatToSTR(IVACal)+', Total='+FloatToSTR(TotalCal) +', SaldoDocumento='+FloatToSTR(TotalCal)
+                            +', SaldoFactoraje='+FloatToSTR(TotalCal)+' where IDCFDI ='+IntToStr(idDocCFDI));
+                            //feb 9/17 Manual
     ADOQryAuxiliar.ExecSQL;
-  end;  //Hasta aca
+
+    //Acualizar impuestos si no tiene Impuestos //Mar 30/16
+    //Si existe actualizar si no existe crear en tabla de impuestos          //Ago 31/16
+
+    ADOQryAuxiliar.Close;
+    ADOQryAuxiliar.SQL.Clear;
+    ADOQryAuxiliar.SQL.Add('SElect * from  CFDIImpuestos where IDCFDI ='+IntToStr(idDocCFDI)
+                           +' and TipoImp=''Trasladado'' and Impuesto=''IVA''');
+    ADOQryAuxiliar.Open;
+
+    if not ADOQryAuxiliar.eof then//No existe
+      idImp:=ADOQryAuxiliar.FieldByName('IDCFDIImpuesto').AsInteger;
+      // Mar 31/16
+    if idImp=-1 then //No existe
+    begin
+      ADOQryAuxiliar.Close;
+      ADOQryAuxiliar.SQL.Clear;
+      ADOQryAuxiliar.SQL.Add('Insert into CFDIImpuestos (IDCFDI, TipoIMP,Impuesto, Tasa, Importe) VAlues('
+                            +IntToStr(idDocCFDI) +', ''Trasladado'', ''IVA'', 16, '+FloatToSTR(IVACal)+')');
+      ADOQryAuxiliar.ExecSQL;                                                                 //  subtotal*0.16 Ago 30 /16 ajustado
+    end
+    else
+    begin
+      ADOQryAuxiliar.Close;
+      ADOQryAuxiliar.SQL.Clear;
+      ADOQryAuxiliar.SQL.Add('UPDATE CFDIImpuestos SET Importe='+FloatToSTR(IVACal)   //subtotal*0.16
+                              +' where IDCFDIImpuesto ='+IntToStr(idImp));
+      ADOQryAuxiliar.ExecSQL;
+    end;  //Hasta aca
+  end;
   RefreshCFDI; //jun 27/17
 end;
 
@@ -1284,6 +1297,7 @@ end;
 procedure TdmFacturas.DataModuleCreate(Sender: TObject);
 begin
   inherited;
+
   if ADODtStCFDIConceptos.CommandText <> EmptyStr then ADODtStCFDIConceptos.Open;
   gGridForm:= TfrmFacturasGrid.Create(Self);
   gGridForm.DataSet:= adodsMaster;
@@ -1297,7 +1311,8 @@ begin
   TfrmFacturasGrid(gGridForm).ActGenerarCFDI := actProcesaFactura;  //Nov29/16
   TfrmFacturasGrid(gGridForm).ActImprimePDF := ActImprimeFactura;  //Dic 15/16
   TfrmFacturasGrid(gGridForm).ActCancelaCFDI := ActCancelarCFDI;//Mar 23/17
-
+  TfrmFacturasGrid(gGridForm).VADODtStSelMetPago:=ADODtStSelMetPago; //Ago 31/17
+  TfrmFacturasGrid(gGridForm).VADODtStCFDIConceptos:=ADODtStCFDIConceptos; //Ago 31/17
 
 end;
 
@@ -1333,6 +1348,8 @@ begin
   end;
 
 end;
+
+
 
 procedure TdmFacturas.SetMuestra(const Value: Boolean);
 begin

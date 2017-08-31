@@ -1991,4 +1991,39 @@ inherited dmPagos: TdmPagos
       Size = 6
     end
   end
+  object ADOdsAuxiliar: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    Parameters = <>
+    Left = 816
+    Top = 528
+  end
+  object ADODtStSelMetPago: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdMetodoPago, Identificador, Descripcion, ExigeCuenta, '#13#10 +
+      'ClaveSAT2016 from MetodosPago'#13#10'where idmetodoPago>0'
+    Parameters = <>
+    Left = 720
+    Top = 528
+    object ADODtStSelMetPagoIdMetodoPago: TIntegerField
+      FieldName = 'IdMetodoPago'
+    end
+    object ADODtStSelMetPagoIdentificador: TStringField
+      FieldName = 'Identificador'
+      Size = 10
+    end
+    object ADODtStSelMetPagoDescripcion: TStringField
+      FieldName = 'Descripcion'
+      Size = 50
+    end
+    object ADODtStSelMetPagoExigeCuenta: TIntegerField
+      FieldName = 'ExigeCuenta'
+    end
+    object ADODtStSelMetPagoClaveSAT2016: TStringField
+      FieldName = 'ClaveSAT2016'
+      Size = 10
+    end
+  end
 end

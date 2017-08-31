@@ -116,13 +116,19 @@ type
     ffiltroFecha: String;
     FActCancelaCFDI: TBasicAction;
     FTipoDoc: Integer;
+    FADoSelMetPAgo: TAdoDAtaset;
+    FADoCFDIConceptos: TAdoDAtaset;
     procedure SetActGenerarCFDI(const Value: TBasicAction);
     procedure SetActImprimePDF(const Value: TBasicAction);
     function GetFFiltroNombre: String;
     procedure PoneRangoFechas;
     procedure SetActCancelaCFDI(const Value: TBasicAction);
     procedure VerificaYCambiaEstatusCXC(IDCFDIACT, NvoEstatus, AntEstatus,
-      IdCXCAct: integer); //Jul 20/17
+      IdCXCAct: integer);
+    function CambiarMetodoPago(var IDMetodoPago: Integer; var Cuenta,
+      CompConcepto: String): Boolean;
+    function SacaMetodo(IDCliente: Integer; var CtaPago: String): Integer;
+    function ConfirmarGeneracion(AMaster, AConceptos: TAdoDAtaSEt): Boolean; //Jul 20/17
     { Private declarations }
   public
     { Public declarations }
@@ -136,6 +142,8 @@ type
      property FiltroNombre:String read GetFFiltroNombre write ffiltroNombre;
      //Dic 20/16 hasta aca
      property TipoD:Integer read FTipoDoc write fTipoDoc; // Jun 26/17
+     property VADODtStSelMetPago :TAdoDAtaset read FADoSelMetPAgo  write FadoSElMetPago;  //Ago 31/17 para cargar la tabla
+     property VADODtStCFDIConceptos :TAdoDAtaset read FADoCFDIConceptos  write FADoCFDIConceptos;
   end;
 
 var
@@ -145,7 +153,8 @@ implementation
 
 {$R *.dfm}
 
-uses FacturasDM, FacturasEdit, _ConectionDmod;
+uses FacturasDM, FacturasEdit, _ConectionDmod, FacturaConfirmacionForm,
+  MetodoPagoFacturaEdt;
 
 procedure TfrmFacturasGrid.DataSourceDataChange(Sender: TObject; Field: TField);
 begin
@@ -160,18 +169,103 @@ end;
 
 procedure TfrmFacturasGrid.dxBrBtnCFDIClick(Sender: TObject);
 var idcxcAct, IdCFDIAct:Integer;
+   IdNvoMetPago:Integer; //D Ago 31/17
+    CtaNvaPago, ComplementoConc:String;
+     CambioMetPago , CFDITimbrado:Boolean; //Ago 31/17
+                         //HAgo 31/17
 begin
   inherited;
   idcxcAct:=-1;
   if not(DAtasource.DataSet.FieldByName('IDCuentaXCobrar').isnull) then
     idcxcAct :=DAtasource.DataSet.FieldByName('IDCuentaXCobrar').asinteger;
   IdCFDIAct:=  DAtasource.DataSet.FieldByName('Idcfdi').asinteger; //Ya existe por ques desde la lista y no esta generada //Jul 20/17
-  ActGenerarCFDI.Execute;
+  //D Ago 31/17
+
+  //Ver si se muestra primero  y luego otra vez
+(*  IdNvoMetPago:=0;
+  CambioMetPago:=CambiarMetodoPago(IdNvoMetPago,CtaNvaPago,ComplementoConc );
+  if cambioMetPago then
+  begin
+    DAtasource.DataSet.Edit;
+    DAtasource.DataSet.Fieldbyname('IDMetodoPago').asInteger:= IdNvoMetPago ;
+
+    DAtasource.DataSet.Fieldbyname('NumCtaPago').AsString:=CtaNvaPago;
+    DAtasource.DataSet.Post;
+   // if True then
+    VADODtStCFDIConceptos.Open;    //Verificar que es te en el primero de la factura
+    VADODtStCFDIConceptos.first;
+    if ComplementoConc<>'' and (not VADODtStCFDIConceptos.eof) and (VADODtStCFDIConceptos.FieldByName('IDCFDI').ASinteger = DAtasource.DataSet.Fieldbyname('IDCFDI').asInteger) then
+    begin
+      VADODtStCFDIConceptos.Edit;
+      VADODtStCFDIConceptos.FieldByName('Descripcion').ASString:= VADODtStCFDIConceptos.FieldByName('Descripcion').asString+ ComplementoConc;
+      VADODtStCFDIConceptos.post;
+    end;
+
+
+  end;   se mando alconfirmacion *)
+   if ConfirmarGeneracion(TADoDAtaSEt(DAtasource.DataSet), VADODtStCFDIConceptos)  then //Ago 31/17
+//    begin  //h Ago 31/17
+      ActGenerarCFDI.Execute;      //Equivale a ACtProcesaFActura
 
   if idcxcAct<>-1 then
      VerificaYCambiaEstatusCXC(IDCFDIACT, 1, 0, IdCXCAct);
 
 end;
+
+function TfrmFacturasGrid.CambiarMetodoPago(var IDMetodoPago:Integer; var Cuenta, CompConcepto:String):Boolean;
+begin  //Jul 10/17
+  Cuenta:=''; //Para que al menos este vacia
+  CompConcepto:=''; //ago 30/17
+  IDMetodoPago:=6;//DEshabilitado para que siempre ponga No identificado ---SacaMetodo(datasource.DataSet.FieldByName('IdPersonaReceptor').AsInteger, Cuenta); //CFDI
+  FrmMetodoPagoFactura:=TFrmMetodoPagoFactura.Create(self);
+  FrmMetodoPagoFactura.IdMetSeleccion:=IDMetodoPago;
+  FrmMetodoPagoFactura.CuentaSeleccion:= Cuenta;
+  FrmMetodoPagoFactura.DSMetodoPago.DataSet:=VADODtStSelMetPago;
+
+  FrmMetodoPagoFactura.ShowModal;
+  Result:= FrmMetodoPagoFactura.ModalResult=mrOk ;
+  if result then
+  begin
+    IDMetodoPago:= FrmMetodoPagoFactura.IdMetSeleccion;
+    Cuenta:= FrmMetodoPagoFactura.CuentaSeleccion;
+    CompConcepto:=FrmMetodoPagoFactura.ComplemConcepto; //Ago 30/17
+  end;
+
+  FrmMetodoPagoFactura.Free;
+
+
+end;
+
+function TfrmFacturasGrid.SacaMetodo (IDCliente:Integer; var CtaPago:String) :Integer;
+begin                             //Ajustado Ago 31/17      //Puede sobrar si se hace desde la ventana de confirmacion
+  CtaPago:='';
+  dsQryAuxiliar.dataset.Close;
+  TAdoQuery(dsQryAuxiliar.dataset).sql.clear;
+  TAdoQuery(dsQryAuxiliar.dataset).sql.Add('Select * from Personas where idPersona = '+ intToSTR(IDCliente));
+    dsQryAuxiliar.dataset.Open;
+  if (not   dsQryAuxiliar.dataset.eof)  and not ( dsQryAuxiliar.dataset.FieldByName('IdMetodoPago').isnull) then
+  begin
+    Result:=  dsQryAuxiliar.dataset.FieldByName('IdMetodoPago').asInteger;
+    if not   dsQryAuxiliar.dataset.FieldByName('NumCtaPagoCliente').isnull then
+       CtaPago:=   dsQryAuxiliar.dataset.FieldByName('NumCtaPagoCliente').asstring;
+  end
+  else
+      Result:=5; //Otros
+
+end;
+
+function TfrmFacturasGrid.ConfirmarGeneracion(AMaster, AConceptos:TAdoDAtaSEt):Boolean; //Ago 31/17
+begin
+   FrmDatosFacturaPrev:=TFrmDatosFacturaPrev.Create(self);
+   FrmDatosFacturaPrev.DSCFDIPrevio.DataSet:=AMASter;
+   FrmDatosFacturaPrev.DSConceptosPrevios.DataSet:=AConceptos;
+   FrmDAtosFActuraPrev.dsQryAuxiliar.DataSet:=dsQryAuxiliar.dataset;
+   FrmDAtosFActuraPrev.VADODtStSelMetPago:=VADODtStSelMetPago;
+   FrmDatosFacturaPrev.ShowModal;
+   Result:= FrmDatosFacturaPrev.modalresult=mrok;
+end;
+
+
 
 procedure TfrmFacturasGrid.VerificaYCambiaEstatusCXC(IDCFDIACT, NvoEstatus, AntEstatus, IdCXCAct:integer); //Se quito el creado por que siempre esta creado..
 begin                                //Jul 20/17

@@ -2,8 +2,8 @@ object FrmMetodoPagoFactura: TFrmMetodoPagoFactura
   Left = 0
   Top = 0
   Caption = 'Confirmar M'#233'todo Pago Factura'
-  ClientHeight = 188
-  ClientWidth = 389
+  ClientHeight = 289
+  ClientWidth = 384
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,17 +20,17 @@ object FrmMetodoPagoFactura: TFrmMetodoPagoFactura
   object pcMain: TcxPageControl
     Left = 0
     Top = 0
-    Width = 389
-    Height = 147
+    Width = 384
+    Height = 248
     Align = alClient
     TabOrder = 0
     Properties.ActivePage = tsGeneral
     Properties.CustomButtons.Buttons = <>
     ExplicitWidth = 398
     ExplicitHeight = 136
-    ClientRectBottom = 145
+    ClientRectBottom = 246
     ClientRectLeft = 2
-    ClientRectRight = 387
+    ClientRectRight = 382
     ClientRectTop = 26
     object tsGeneral: TcxTabSheet
       Caption = 'General'
@@ -38,7 +38,6 @@ object FrmMetodoPagoFactura: TFrmMetodoPagoFactura
       ExplicitLeft = 3
       ExplicitTop = 28
       ExplicitWidth = 394
-      ExplicitHeight = 220
       object Label2: TLabel
         Left = 16
         Top = 16
@@ -52,7 +51,6 @@ object FrmMetodoPagoFactura: TFrmMetodoPagoFactura
         Width = 114
         Height = 13
         Caption = 'Complemento Concepto'
-        Visible = False
       end
       object PnlCuenta: TPanel
         Left = 16
@@ -89,10 +87,7 @@ object FrmMetodoPagoFactura: TFrmMetodoPagoFactura
       object cxMmObserva: TcxMemo
         Left = 16
         Top = 136
-        Lines.Strings = (
-          'cxMmObserva')
         TabOrder = 2
-        Visible = False
         Height = 72
         Width = 353
       end
@@ -100,19 +95,20 @@ object FrmMetodoPagoFactura: TFrmMetodoPagoFactura
   end
   object pmlMain: TPanel
     Left = 0
-    Top = 147
-    Width = 389
+    Top = 248
+    Width = 384
     Height = 41
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 1
     ExplicitLeft = 18
     ExplicitTop = 255
+    ExplicitWidth = 389
     DesignSize = (
-      389
+      384
       41)
     object btnCancel: TButton
-      Left = 307
+      Left = 302
       Top = 6
       Width = 75
       Height = 25
@@ -124,7 +120,7 @@ object FrmMetodoPagoFactura: TFrmMetodoPagoFactura
       ExplicitLeft = 316
     end
     object btnOk: TButton
-      Left = 226
+      Left = 221
       Top = 6
       Width = 75
       Height = 25

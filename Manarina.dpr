@@ -238,7 +238,8 @@ uses
   PDFAplicacionSaldosDM in 'Reportes\PDFAplicacionSaldosDM.pas' {DmRptAplicacionPagospdf: TDataModule},
   RptPagoAplicacionesMensualDM in 'Reportes\RptPagoAplicacionesMensualDM.pas' {dmRptPagoAplicacionesMensual: TDataModule},
   RptPagoAplicacionesMensualForm in 'Reportes\RptPagoAplicacionesMensualForm.pas' {frmRptPagoAplicacionesMensual},
-  RptCoberturaForm in 'Reportes\RptCoberturaForm.pas' {frmRptCobertura};
+  RptCoberturaForm in 'Reportes\RptCoberturaForm.pas' {frmRptCobertura},
+  FacturaConfirmacionForm in 'Procesos\FacturaConfirmacionForm.pas' {FrmDatosFacturaPrev};
 
 {$R *.res}
 

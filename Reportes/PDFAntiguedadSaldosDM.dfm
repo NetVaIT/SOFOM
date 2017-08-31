@@ -128,11 +128,12 @@
       Size = 6
     end
   end
-  inherited ppReport: TppReport [2]
+  inherited ppReport: TppReport
     PrinterSetup.Orientation = poLandscape
     PrinterSetup.mmPaperHeight = 215900
     PrinterSetup.mmPaperWidth = 279400
     Template.FileName = 'C:\Desarrollo\SOFOM\Reportes\rptAntiguedadSaldos.rtm'
+    Left = 264
     DataPipelineName = 'dbpReport'
     inherited ppTitleBand1: TppTitleBand
       mmHeight = 0
@@ -1175,9 +1176,7 @@
       end
     end
   end
-  inherited mdParams: TdxMemData [3]
-  end
-  object ADODtStAntXCliente: TADODataSet [4]
+  object ADODtStAntXCliente: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -1192,12 +1191,12 @@
     Left = 32
     Top = 152
   end
-  object DSAntXCliente: TDataSource [5]
+  object DSAntXCliente: TDataSource
     DataSet = ADODtStAntXCliente
     Left = 112
     Top = 152
   end
-  object ppRprtAntXCliente: TppReport [6]
+  object ppRprtAntXCliente: TppReport
     AutoStop = False
     DataPipeline = ppDBAntXCliente
     PassSetting = psTwoPass
@@ -1252,8 +1251,8 @@
     XLSSettings.Author = 'ReportBuilder'
     XLSSettings.Subject = 'Report'
     XLSSettings.Title = 'Report'
-    Left = 280
-    Top = 152
+    Left = 304
+    Top = 144
     Version = '15.0'
     mmColumnWidth = 203200
     DataPipelineName = 'ppDBAntXCliente'
@@ -5315,19 +5314,19 @@
     object ppParameterList2: TppParameterList
     end
   end
-  object ppDBAntXClienteX: TppDBPipeline [7]
+  object ppDBAntXClienteX: TppDBPipeline
     DataSource = DSAntXCliente
     UserName = 'dbpRptAntXClientex'
     Left = 40
     Top = 224
   end
-  object ppDBAntXCliente: TppDBPipeline [8]
+  object ppDBAntXCliente: TppDBPipeline
     DataSource = DSAntXCliente
     UserName = 'dbpRptAntXCliente'
     Left = 192
     Top = 152
   end
-  object ADODtStCtaActCliente: TADODataSet [9]
+  object ADODtStCtaActCliente: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -5370,12 +5369,12 @@
     Left = 200
     Top = 248
   end
-  object DSCtaActCliente: TDataSource [10]
+  object DSCtaActCliente: TDataSource
     DataSet = ADODtStCtaActCliente
     Left = 304
     Top = 248
   end
-  object ppRptCtaActCliente: TppReport [11]
+  object ppRptCtaActCliente: TppReport
     AutoStop = False
     DataPipeline = ppDBPplnCtaActCliente
     PassSetting = psTwoPass
@@ -9495,13 +9494,13 @@
     object ppParameterList3: TppParameterList
     end
   end
-  object ppDBPplnCtaActCliente: TppDBPipeline [12]
+  object ppDBPplnCtaActCliente: TppDBPipeline
     DataSource = DSCtaActCliente
     UserName = 'dbpRptCtaActCliente'
     Left = 408
     Top = 248
   end
-  object ADODtStXContratosVencidos: TADODataSet [13]
+  object ADODtStXContratosVencidos: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -9590,12 +9589,12 @@
       Size = 11
     end
   end
-  object DSPorContratosVencidos: TDataSource [14]
+  object DSPorContratosVencidos: TDataSource
     DataSet = ADODtStXContratosVencidos
-    Left = 144
-    Top = 368
+    Left = 152
+    Top = 360
   end
-  object ppRptXContratosVencidos: TppReport [15]
+  object ppRptXContratosVencidos: TppReport
     PassSetting = psTwoPass
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
@@ -14230,12 +14229,10 @@
     object ppParameterList4: TppParameterList
     end
   end
-  object ppXContratosVencidos: TppDBPipeline [16]
+  object ppXContratosVencidos: TppDBPipeline
     DataSource = DSPorContratosVencidos
     UserName = 'dbpRptXContratosVencidos'
     Left = 232
     Top = 352
-  end
-  inherited dbpReport: TppDBPipeline [17]
   end
 end
