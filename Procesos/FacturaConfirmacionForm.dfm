@@ -11,6 +11,7 @@ object FrmDatosFacturaPrev: TFrmDatosFacturaPrev
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poOwnerFormCenter
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
@@ -90,8 +91,6 @@ object FrmDatosFacturaPrev: TFrmDatosFacturaPrev
     Height = 48
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 544
-    ExplicitWidth = 743
     DesignSize = (
       805
       48)
@@ -105,7 +104,6 @@ object FrmDatosFacturaPrev: TFrmDatosFacturaPrev
       Caption = 'Cancelar'
       ModalResult = 2
       TabOrder = 0
-      ExplicitLeft = 766
     end
     object btnOk: TButton
       Left = 577
@@ -117,7 +115,6 @@ object FrmDatosFacturaPrev: TFrmDatosFacturaPrev
       Default = True
       ModalResult = 1
       TabOrder = 1
-      ExplicitLeft = 685
     end
     object BtnAjustesBase: TButton
       Left = 93
@@ -139,7 +136,6 @@ object FrmDatosFacturaPrev: TFrmDatosFacturaPrev
     TabOrder = 2
     Properties.ActivePage = tsGeneral
     Properties.CustomButtons.Buttons = <>
-    ExplicitWidth = 827
     ClientRectBottom = 263
     ClientRectLeft = 2
     ClientRectRight = 803
@@ -147,8 +143,6 @@ object FrmDatosFacturaPrev: TFrmDatosFacturaPrev
     object tsGeneral: TcxTabSheet
       Caption = 'General'
       ImageIndex = 0
-      ExplicitLeft = 3
-      ExplicitTop = 28
       object Label1: TLabel
         Left = 272
         Top = 57
@@ -362,7 +356,7 @@ object FrmDatosFacturaPrev: TFrmDatosFacturaPrev
       object DBText8: TDBText
         Left = 139
         Top = 17
-        Width = 94
+        Width = 41
         Height = 13
         AutoSize = True
         DataField = 'RFCEmisor'
