@@ -47,7 +47,7 @@ type
     adoqCreditoCreditoEspecial: TStringField;
     adoqCreditoFechaPrimerIncumplimiento: TDateTimeField;
     adoqCreditoSaldoInsoluto: TFMTBCDField;
-    adoqCreditoCreditoMaximo: TIntegerField;
+    adoqCreditoCreditoMaximo: TFMTBCDField;
     adoqCreditoFechacarteraVencida: TDateTimeField;
     adoqPersonas: TADOQuery;
     adoqPersonasIdPersona: TAutoIncField;
@@ -179,8 +179,8 @@ const
 var
   TXTArchivo: TextFile;
   Registro: String;
-//  IdAnexo: Integer;
-//  FechaPeriodo: TDateTime;
+  IdAnexo: Integer;
+  FechaPeriodo: TDateTime;
   TotalEmpresas: Integer;
   TotalSaldo: Double;
 
@@ -361,26 +361,31 @@ var
 
 begin
 //  Result := 0;
-//  IdAnexo := 0;
   TotalEmpresas := 0;
   TotalSaldo := 0;
-//  FechaPeriodo := EncodeDate(Year,Month,DaysInAMonth(Year, Month));
+  FechaPeriodo := EncodeDate(Year,Month,DaysInAMonth(Year, Month));
   AssignFile(TXTArchivo, FileName);
   try
     Rewrite(TXTArchivo);
     Write(TXTArchivo, GetHD(Month, Year));
     adoqCredito.Close;
+    adoqCredito.Parameters.ParamByName('FechaV1').Value := FechaPeriodo;
+    adoqCredito.Parameters.ParamByName('FechaV2').Value := FechaPeriodo;
     adoqCredito.Open;
     adoqCredito.First;
     while not adoqCredito.Eof do
     begin
+      IdAnexo := adoqCreditoIdAnexo.Value;
       Write(TXTArchivo, GetEM(adoqCreditoIdPersona.Value));
       Write(TXTArchivo, GetAC(adoqCreditoIdPersona.Value));
       Write(TXTArchivo, GetCR);
       Inc(TotalEmpresas);
       // Detalle
       adoqDetalle.Close;
-      adoqDetalle.Parameters.ParamByName('IdAnexo').Value := adoqCreditoIdAnexo.Value;
+      adoqDetalle.Parameters.ParamByName('FechaV1').Value := FechaPeriodo;
+      adoqDetalle.Parameters.ParamByName('IdAnexo1').Value := IdAnexo;
+      adoqDetalle.Parameters.ParamByName('FechaV2').Value := FechaPeriodo;
+      adoqDetalle.Parameters.ParamByName('IdAnexo2').Value := IdAnexo;
       adoqDetalle.Open;
       adoqDetalle.First;
       if adoqDetalle.Eof then

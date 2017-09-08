@@ -2,14 +2,14 @@ inherited dmRptCobertura: TdmRptCobertura
   Height = 246
   inherited adodsReport: TADODataSet
     CommandText = 
-      'SELECT     IdAnexo, Contrato, Anexo, Fecha, Cliente, PorVencer, ' +
-      'Vencido, Depositos, OpcionCompra, ValorResidual, TotalLiquidar, ' +
-      'ValorComercial, TipoCambioOriginal, '#13#10'                      Valo' +
-      'rComercialActualizado, Cobertura, CASE WHEN Cobertura < 0 THEN C' +
-      'obertura ELSE 0 END AS CoberturaN, CASE WHEN Cobertura >= 0 THEN' +
-      ' Cobertura ELSE 0 END AS CoberturaP,'#13#10'                      Fact' +
-      'or, DiasRetraso'#13#10'FROM         v_RptCobertura'#13#10'WHERE ISNULL(DiasR' +
-      'etraso, 0) >= :Vencidos'#13#10'ORDER BY Cobertura'
+      'SELECT     IdAnexo, Contrato, Fecha, Cliente, PorVencer, Vencido' +
+      ', Moratorios, Depositos, OpcionCompra, ValorResidual, TotalLiqui' +
+      'dar, ValorComercial, TipoCambioOriginal, '#13#10'                     ' +
+      ' ValorComercialActualizado, Cobertura, CASE WHEN Cobertura < 0 T' +
+      'HEN Cobertura ELSE 0 END AS CoberturaN, CASE WHEN Cobertura >= 0' +
+      ' THEN Cobertura ELSE 0 END AS CoberturaP,'#13#10'                     ' +
+      ' Factor, DiasRetraso'#13#10'FROM         v_RptCobertura'#13#10'WHERE ISNULL(' +
+      'DiasRetraso, 0) >= :Vencidos'#13#10'ORDER BY Cobertura'
     Parameters = <
       item
         Name = 'Vencidos'
@@ -17,7 +17,7 @@ inherited dmRptCobertura: TdmRptCobertura
         DataType = ftInteger
         Precision = 10
         Size = 4
-        Value = Null
+        Value = 0
       end>
     object adodsReportIdAnexo: TAutoIncField
       FieldName = 'IdAnexo'
@@ -25,10 +25,6 @@ inherited dmRptCobertura: TdmRptCobertura
     end
     object adodsReportContrato: TStringField
       FieldName = 'Contrato'
-    end
-    object adodsReportAnexo: TStringField
-      FieldName = 'Anexo'
-      Size = 5
     end
     object adodsReportFecha: TDateTimeField
       FieldName = 'Fecha'
@@ -45,6 +41,12 @@ inherited dmRptCobertura: TdmRptCobertura
     end
     object adodsReportVencido: TFMTBCDField
       FieldName = 'Vencido'
+      ReadOnly = True
+      Precision = 38
+      Size = 6
+    end
+    object adodsReportMoratorios: TFMTBCDField
+      FieldName = 'Moratorios'
       ReadOnly = True
       Precision = 38
       Size = 6
@@ -157,25 +159,8 @@ inherited dmRptCobertura: TdmRptCobertura
         Transparent = True
         mmHeight = 3440
         mmLeft = 0
-        mmTop = 34179
-        mmWidth = 15875
-        BandType = 0
-        LayerName = Foreground
-      end
-      object ppLabel3: TppLabel
-        UserName = 'Label3'
-        AutoSize = False
-        Caption = 'Anexo'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = [fsBold, fsItalic]
-        Transparent = True
-        mmHeight = 3440
-        mmLeft = 15875
-        mmTop = 34179
-        mmWidth = 10583
+        mmTop = 34131
+        mmWidth = 11906
         BandType = 0
         LayerName = Foreground
       end
@@ -190,8 +175,8 @@ inherited dmRptCobertura: TdmRptCobertura
         Font.Style = [fsBold, fsItalic]
         Transparent = True
         mmHeight = 3440
-        mmLeft = 29104
-        mmTop = 34179
+        mmLeft = 13229
+        mmTop = 34131
         mmWidth = 15875
         BandType = 0
         LayerName = Foreground
@@ -208,7 +193,7 @@ inherited dmRptCobertura: TdmRptCobertura
         TextAlignment = taCentered
         Transparent = True
         mmHeight = 3440
-        mmLeft = 44979
+        mmLeft = 29079
         mmTop = 30210
         mmWidth = 50271
         BandType = 0
@@ -226,7 +211,7 @@ inherited dmRptCobertura: TdmRptCobertura
         TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 3440
-        mmLeft = 95254
+        mmLeft = 79375
         mmTop = 30210
         mmWidth = 15875
         BandType = 0
@@ -244,7 +229,7 @@ inherited dmRptCobertura: TdmRptCobertura
         TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 3440
-        mmLeft = 111129
+        mmLeft = 95229
         mmTop = 30210
         mmWidth = 15875
         BandType = 0
@@ -375,7 +360,7 @@ inherited dmRptCobertura: TdmRptCobertura
         AutoSize = False
         Border.BorderPositions = [bpBottom]
         Border.Visible = True
-        Border.Weight = 0.748799979686737100
+        Border.Weight = 0.748799979686737000
         Caption = 'Contrato'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clNavy
@@ -387,7 +372,7 @@ inherited dmRptCobertura: TdmRptCobertura
         mmHeight = 3440
         mmLeft = 0
         mmTop = 30210
-        mmWidth = 44979
+        mmWidth = 29104
         BandType = 0
         LayerName = Foreground
       end
@@ -682,6 +667,24 @@ inherited dmRptCobertura: TdmRptCobertura
           end
         end
       end
+      object ppLabel3: TppLabel
+        UserName = 'Label3'
+        AutoSize = False
+        Caption = 'Moratorio'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clNavy
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold, fsItalic]
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 3440
+        mmLeft = 111149
+        mmTop = 30159
+        mmWidth = 15875
+        BandType = 0
+        LayerName = Foreground
+      end
     end
     inherited ppDetailBand1: TppDetailBand
       mmHeight = 3969
@@ -694,30 +697,13 @@ inherited dmRptCobertura: TdmRptCobertura
         Font.Name = 'ARIAL'
         Font.Size = 8
         Font.Style = []
+        TextAlignment = taRightJustified
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 3440
         mmLeft = 0
         mmTop = 0
-        mmWidth = 18521
-        BandType = 4
-        LayerName = Foreground
-      end
-      object ppDBText2: TppDBText
-        UserName = 'DBText2'
-        DataField = 'Anexo'
-        DataPipeline = dbpReport
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'ARIAL'
-        Font.Size = 8
-        Font.Style = []
-        Transparent = True
-        DataPipelineName = 'dbpReport'
-        mmHeight = 3440
-        mmLeft = 18521
-        mmTop = 0
-        mmWidth = 10583
+        mmWidth = 11906
         BandType = 4
         LayerName = Foreground
       end
@@ -733,7 +719,7 @@ inherited dmRptCobertura: TdmRptCobertura
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 3440
-        mmLeft = 29104
+        mmLeft = 13229
         mmTop = 0
         mmWidth = 15875
         BandType = 4
@@ -751,7 +737,7 @@ inherited dmRptCobertura: TdmRptCobertura
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 3440
-        mmLeft = 44979
+        mmLeft = 29104
         mmTop = 0
         mmWidth = 50271
         BandType = 4
@@ -771,7 +757,7 @@ inherited dmRptCobertura: TdmRptCobertura
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 3440
-        mmLeft = 111121
+        mmLeft = 95221
         mmTop = 0
         mmWidth = 15875
         BandType = 4
@@ -971,7 +957,27 @@ inherited dmRptCobertura: TdmRptCobertura
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 3440
-        mmLeft = 95188
+        mmLeft = 79288
+        mmTop = 0
+        mmWidth = 15875
+        BandType = 4
+        LayerName = Foreground
+      end
+      object ppDBText2: TppDBText
+        UserName = 'DBText2'
+        DataField = 'Moratorios'
+        DataPipeline = dbpReport
+        DisplayFormat = '#,0;-#,0'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'ARIAL'
+        Font.Size = 8
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        DataPipelineName = 'dbpReport'
+        mmHeight = 3440
+        mmLeft = 111147
         mmTop = 0
         mmWidth = 15875
         BandType = 4
@@ -1024,7 +1030,7 @@ inherited dmRptCobertura: TdmRptCobertura
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 3705
-        mmLeft = 95338
+        mmLeft = 79379
         mmTop = 1323
         mmWidth = 15871
         BandType = 7
@@ -1044,7 +1050,7 @@ inherited dmRptCobertura: TdmRptCobertura
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 3705
-        mmLeft = 111147
+        mmLeft = 95254
         mmTop = 1320
         mmWidth = 15871
         BandType = 7
@@ -1181,7 +1187,7 @@ inherited dmRptCobertura: TdmRptCobertura
         TextAlignment = taCentered
         Transparent = True
         mmHeight = 3439
-        mmLeft = 81486
+        mmLeft = 67468
         mmTop = 1587
         mmWidth = 10584
         BandType = 7
@@ -1244,6 +1250,26 @@ inherited dmRptCobertura: TdmRptCobertura
         mmLeft = 235476
         mmTop = 9793
         mmWidth = 15875
+        BandType = 7
+        LayerName = Foreground
+      end
+      object ppDBCalc12: TppDBCalc
+        UserName = 'DBCalc12'
+        DataField = 'Moratorios'
+        DataPipeline = dbpReport
+        DisplayFormat = '#,0;-#,0'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        DataPipelineName = 'dbpReport'
+        mmHeight = 3705
+        mmLeft = 111147
+        mmTop = 1320
+        mmWidth = 15871
         BandType = 7
         LayerName = Foreground
       end

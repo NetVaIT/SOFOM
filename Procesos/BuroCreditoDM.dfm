@@ -26,7 +26,17 @@ inherited dmBuroCredito: TdmBuroCredito
   object adoqCredito: TADOQuery
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
-    Parameters = <>
+    Parameters = <
+      item
+        Name = 'FechaV1'
+        Size = -1
+        Value = Null
+      end
+      item
+        Name = 'FechaV2'
+        Size = -1
+        Value = Null
+      end>
     SQL.Strings = (
       
         'SELECT Anexos.IdAnexo, Contratos.IdPersona, Personas.RFC, REPLAC' +
@@ -43,9 +53,10 @@ inherited dmBuroCredito: TdmBuroCredito
         'iquidacion, 0 AS Quita, 0 AS Dacion, 0 AS Quebranto, '#39'   '#39' AS Cl' +
         'aveObservacion, '#39' '#39' AS CreditoEspecial,'
       
-        'I.FechaVencimiento AS FechaPrimerIncumplimiento, Anexos.SaldoIns' +
-        'oluto, 0 AS CreditoMaximo, V.FechaVencimiento AS FechacarteraVen' +
-        'cida'
+        'I.FechaVencimiento AS FechaPrimerIncumplimiento, (Anexos.SaldoIn' +
+        'soluto - Anexos.ValorResidual) AS SaldoInsoluto, Anexos.MontoFin' +
+        'anciar AS CreditoMaximo, V.FechaVencimiento AS FechacarteraVenci' +
+        'da'
       'FROM Anexos'
       'INNER JOIN Contratos ON Anexos.IdContrato = Contratos.IdContrato'
       'INNER JOIN Personas ON Contratos.IdPersona = Personas.IdPersona'
@@ -62,12 +73,15 @@ inherited dmBuroCredito: TdmBuroCredito
       
         'LEFT JOIN (SELECT IdAnexo, MIN(FechaVencimiento) AS FechaVencimi' +
         'ento FROM vw_AnexoAmortizacionCXCDiasRetraso WHERE DiasRetraso >' +
-        ' 0 GROUP BY IdAnexo) AS I ON I.IdAnexo = Anexos.IdAnexo'
+        ' 0 AND FechaVencimiento <= :FechaV1 GROUP BY IdAnexo) AS I ON I.' +
+        'IdAnexo = Anexos.IdAnexo'
       
         'LEFT JOIN (SELECT IdAnexo, MIN(FechaVencimiento) AS FechaVencimi' +
-        'ento FROM vw_AnexoAmortizacionCXCDiasRetraso WHERE Saldo <> 0 GR' +
-        'OUP BY IdAnexo) AS V ON V.IdAnexo = Anexos.IdAnexo'
-      'WHERE Anexos.SaldoInsoluto > 0')
+        'ento FROM vw_AnexoAmortizacionCXCDiasRetraso WHERE Saldo > 0.01 ' +
+        'AND FechaVencimiento <= :FechaV2 GROUP BY IdAnexo) AS V ON V.IdA' +
+        'nexo = Anexos.IdAnexo'
+      'WHERE Anexos.IdAnexoEstatus = 3'
+      'AND Anexos.SaldoInsoluto > 0')
     Left = 136
     Top = 88
     object adoqCreditoIdAnexo: TAutoIncField
@@ -170,9 +184,10 @@ inherited dmBuroCredito: TdmBuroCredito
       Precision = 18
       Size = 6
     end
-    object adoqCreditoCreditoMaximo: TIntegerField
+    object adoqCreditoCreditoMaximo: TFMTBCDField
       FieldName = 'CreditoMaximo'
-      ReadOnly = True
+      Precision = 18
+      Size = 6
     end
     object adoqCreditoFechacarteraVencida: TDateTimeField
       FieldName = 'FechacarteraVencida'
@@ -219,8 +234,9 @@ inherited dmBuroCredito: TdmBuroCredito
         'tal, Telefonos.Lada+Telefonos.Telefono AS Telefono, '#39#39' AS Extens' +
         'ion,'
       
-        #9#9#9#9#9#9' Faxes.Lada+Faxes.Telefono AS Fax, Personas.IdPersonaTipo ' +
-        'AS TipoCliente, '#39#39' AS EstadoPaisExtranjero, Domicilios.Pais'
+        #9#9#9#9#9#9' Faxes.Lada+Faxes.Telefono AS Fax, CASE Personas.IdPersona' +
+        'Tipo WHEN 1 THEN 2 WHEN 2 THEN 1 ELSE 0 END AS TipoCliente, '#39#39' A' +
+        'S EstadoPaisExtranjero, Domicilios.Pais'
       'FROM            Personas INNER JOIN'
       
         '                         Paises AS Nacion ON Personas.IdPais = N' +
@@ -432,8 +448,9 @@ inherited dmBuroCredito: TdmBuroCredito
         'tal, Telefonos.Lada+Telefonos.Telefono AS Telefono, '#39#39' AS Extens' +
         'ion,'
       
-        #9#9#9#9#9#9' Faxes.Lada+Faxes.Telefono AS Fax, Personas.IdPersonaTipo ' +
-        'AS Tipo, '#39#39' AS EstadoPaisExtranjero, Domicilios.Pais'
+        #9#9#9#9#9#9' Faxes.Lada+Faxes.Telefono AS Fax, CASE Personas.IdPersona' +
+        'Tipo WHEN 1 THEN 2 WHEN 2 THEN 1 ELSE 0 END AS Tipo, '#39#39' AS Estad' +
+        'oPaisExtranjero, Domicilios.Pais'
       'FROM            PersonasAccionistas INNER JOIN'
       
         '                         Personas ON PersonasAccionistas.IdAccio' +
@@ -586,7 +603,31 @@ inherited dmBuroCredito: TdmBuroCredito
     CursorType = ctStatic
     Parameters = <
       item
-        Name = 'IdAnexo'
+        Name = 'FechaV1'
+        DataType = ftDateTime
+        NumericScale = 3
+        Precision = 23
+        Size = 16
+        Value = Null
+      end
+      item
+        Name = 'IdAnexo1'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end
+      item
+        Name = 'FechaV2'
+        DataType = ftDateTime
+        NumericScale = 3
+        Precision = 23
+        Size = 16
+        Value = Null
+      end
+      item
+        Name = 'IdAnexo2'
         Attributes = [paSigned]
         DataType = ftInteger
         Precision = 10
@@ -595,17 +636,29 @@ inherited dmBuroCredito: TdmBuroCredito
       end>
     SQL.Strings = (
       
-        'SELECT AC.IdAnexo, A.DiasRetraso, MAX(A.FechaVencimiento) AS Fec' +
-        'haVencimiento, SUM(A.PagoSaldo) AS Saldo, SUM(A.Interes) AS Inte' +
-        'res'
-      'FROM v_AnexosAmortizaciones AS A '
+        'SELECT AC.IdAnexo, CASE WHEN A.DiasRetraso > 0 THEN A.DiasRetras' +
+        'o ELSE 0 END AS DiasRetraso, A.FechaVencimiento AS FechaVencimie' +
+        'nto, SUM(A.PagoSaldo) AS Saldo, SUM(A.Interes) AS Interes'
+      'FROM v_AnexosAmortizaciones AS A'
       
         'INNER JOIN AnexosCreditos AS AC ON A.IdAnexoCredito = AC.IdAnexo' +
         'Credito'
       'WHERE AC.IdAnexoCreditoEstatus = 1 AND A.PagoSaldo > 0.01'
-      'AND AC.IdAnexo = :IdAnexo'
-      'GROUP BY AC.IdAnexo, A.DiasRetraso'
-      'ORDER BY AC.IdAnexo, FechaVencimiento')
+      'AND A.FechaVencimiento <= :FechaV1 AND AC.IdAnexo = :IdAnexo1'
+      'GROUP BY AC.IdAnexo, A.DiasRetraso, A.FechaVencimiento'
+      'UNION'
+      
+        'SELECT AC.IdAnexo, 0 AS DiasRetraso, null AS FechaVencimiento, S' +
+        'UM(A.PagoSaldo) AS Saldo, SUM(A.Interes) AS Interes'
+      'FROM v_AnexosAmortizaciones AS A'
+      
+        'INNER JOIN AnexosCreditos AS AC ON A.IdAnexoCredito = AC.IdAnexo' +
+        'Credito'
+      'WHERE AC.IdAnexoCreditoEstatus = 1 AND A.PagoSaldo > 0.01'
+      'AND A.FechaVencimiento <= :FechaV2 AND AC.IdAnexo = :IdAnexo2'
+      'GROUP BY AC.IdAnexo'
+      'ORDER BY AC.IdAnexo, FechaVencimiento'
+      '')
     Left = 224
     Top = 88
     object adoqDetalleIdAnexo: TIntegerField

@@ -11,7 +11,6 @@ uses
 type
   TdmRptCobertura = class(T_dmReportSOFOM)
     ppLabel2: TppLabel;
-    ppLabel3: TppLabel;
     ppLabel4: TppLabel;
     ppLabel5: TppLabel;
     ppLabel6: TppLabel;
@@ -21,7 +20,6 @@ type
     ppLabel10: TppLabel;
     ppLabel11: TppLabel;
     ppDBText1: TppDBText;
-    ppDBText2: TppDBText;
     ppDBText3: TppDBText;
     ppDBText4: TppDBText;
     ppDBText5: TppDBText;
@@ -38,7 +36,6 @@ type
     ppLabel13: TppLabel;
     adodsReportIdAnexo: TAutoIncField;
     adodsReportContrato: TStringField;
-    adodsReportAnexo: TStringField;
     adodsReportFecha: TDateTimeField;
     adodsReportCliente: TStringField;
     adodsReportDepositos: TFMTBCDField;
@@ -96,6 +93,10 @@ type
     ppDBCalc11: TppDBCalc;
     mdParamsDepreciacion: TBooleanField;
     adospUpdProductosDepreciacion: TADOStoredProc;
+    adodsReportMoratorios: TFMTBCDField;
+    ppLabel3: TppLabel;
+    ppDBText2: TppDBText;
+    ppDBCalc12: TppDBCalc;
     procedure DataModuleCreate(Sender: TObject);
     procedure mdParamsNewRecord(DataSet: TDataSet);
   private
