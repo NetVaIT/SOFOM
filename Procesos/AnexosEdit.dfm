@@ -200,7 +200,6 @@ inherited frmAnexosEdit: TfrmAnexosEdit
           Top = 100
           Caption = 'Carta compensaci'#243'n'
           DataBinding.DataField = 'CartaCompensacion'
-          DataBinding.DataSource = dmContratos.dsAnexos
           TabOrder = 7
           Width = 121
         end
@@ -444,7 +443,6 @@ inherited frmAnexosEdit: TfrmAnexosEdit
           Top = 40
           DataBinding.DataField = 'Comision'
           DataBinding.DataSource = DataSource
-          Enabled = False
           TabOrder = 3
           Width = 121
         end
@@ -474,20 +472,11 @@ inherited frmAnexosEdit: TfrmAnexosEdit
           TabOrder = 6
           Width = 121
         end
-        object cxDBSpinEdit1: TcxDBSpinEdit
-          Left = 120
-          Top = 134
-          DataBinding.DataField = 'DespositosNumero'
-          DataBinding.DataSource = DataSource
-          TabOrder = 7
-          Width = 60
-        end
         object cxDBTextEdit13: TcxDBTextEdit
           Left = 184
           Top = 134
           DataBinding.DataField = 'Depositos'
           DataBinding.DataSource = DataSource
-          Enabled = False
           TabOrder = 8
           Width = 121
         end
@@ -499,6 +488,14 @@ inherited frmAnexosEdit: TfrmAnexosEdit
           Enabled = False
           TabOrder = 9
           Width = 121
+        end
+        object cxDBCurrencyEdit5: TcxDBCurrencyEdit
+          Left = 118
+          Top = 134
+          DataBinding.DataField = 'DespositosNumero'
+          DataBinding.DataSource = DataSource
+          TabOrder = 7
+          Width = 60
         end
       end
       object cxGroupBox3: TcxGroupBox

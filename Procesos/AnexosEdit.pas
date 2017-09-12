@@ -78,7 +78,6 @@ type
     cxDBTextEdit10: TcxDBTextEdit;
     cxDBTextEdit11: TcxDBTextEdit;
     cxDBTextEdit12: TcxDBTextEdit;
-    cxDBSpinEdit1: TcxDBSpinEdit;
     cxDBTextEdit13: TcxDBTextEdit;
     cxDBTextEdit14: TcxDBTextEdit;
     cxGroupBox3: TcxGroupBox;
@@ -94,6 +93,7 @@ type
     cxDBCheckBox1: TcxDBCheckBox;
     Label28: TLabel;
     DBLookupComboBox3: TDBLookupComboBox;
+    cxDBCurrencyEdit5: TcxDBCurrencyEdit;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);

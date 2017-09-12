@@ -302,7 +302,8 @@ inherited dmContratos: TdmContratos
       OnChange = adodsAnexosEnganchePorcentajeChange
       DisplayFormat = '0.00 %'
       EditFormat = '0.00'
-      Precision = 19
+      Precision = 18
+      Size = 6
     end
     object adodsAnexosEnganche: TFMTBCDField
       FieldName = 'Enganche'
@@ -315,17 +316,19 @@ inherited dmContratos: TdmContratos
       DisplayLabel = 'Financiar enganche'
       FieldName = 'FinanciarEnganche'
     end
-    object adodsAnexosComisionPorcentaje: TBCDField
+    object adodsAnexosComisionPorcentaje: TFMTBCDField
       DisplayLabel = 'Porcentaje comisi'#243'n'
       FieldName = 'ComisionPorcentaje'
-      OnChange = adodsAnexosPrecioMonedaChange
+      OnChange = adodsAnexosComisionPorcentajeChange
       DisplayFormat = '0.00 %'
       EditFormat = '0.00'
-      Precision = 19
+      Precision = 18
+      Size = 6
     end
     object adodsAnexosComision: TFMTBCDField
       DisplayLabel = 'Comisi'#243'n'
       FieldName = 'Comision'
+      OnChange = adodsAnexosComisionChange
       currency = True
       Precision = 18
       Size = 6
@@ -352,14 +355,19 @@ inherited dmContratos: TdmContratos
       Precision = 18
       Size = 6
     end
-    object adodsAnexosDespositosNumero: TIntegerField
+    object adodsAnexosDespositosNumero: TFMTBCDField
       DisplayLabel = 'No. de Desp'#243'sitos'
       FieldName = 'DespositosNumero'
-      OnChange = adodsAnexosPrecioMonedaChange
+      OnChange = adodsAnexosDespositosNumeroChange
+      DisplayFormat = '0.00'
+      EditFormat = '0.00'
+      Precision = 18
+      Size = 6
     end
     object adodsAnexosDepositos: TFMTBCDField
       DisplayLabel = 'Dep'#243'sito en garantia'
       FieldName = 'Depositos'
+      OnChange = adodsAnexosDepositosChange
       currency = True
       Precision = 18
       Size = 6

@@ -49,12 +49,12 @@ type
     adodsAnexosPrecioTotal: TFMTBCDField;
     adodsAnexosEnganchePorcentaje: TFMTBCDField;
     adodsAnexosEnganche: TFMTBCDField;
-    adodsAnexosComisionPorcentaje: TBCDField;
+    adodsAnexosComisionPorcentaje: TFMTBCDField;
     adodsAnexosComision: TFMTBCDField;
     adodsAnexosComisionImpuesto: TFMTBCDField;
     adodsAnexosGastos: TFMTBCDField;
     adodsAnexosGastosImpuestos: TFMTBCDField;
-    adodsAnexosDespositosNumero: TIntegerField;
+    adodsAnexosDespositosNumero: TFMTBCDField;
     adodsAnexosDepositos: TFMTBCDField;
     adodsAnexosPagoIncial: TFMTBCDField;
     adodsAnexosMontoFinanciar: TFMTBCDField;
@@ -203,6 +203,10 @@ type
     procedure adodsAnexosOpcionCompraPorcentajeChange(Sender: TField);
     procedure adodsAnexosOpcionCompraChange(Sender: TField);
     procedure actGenMoratoriosExecute(Sender: TObject);
+    procedure adodsAnexosComisionPorcentajeChange(Sender: TField);
+    procedure adodsAnexosComisionChange(Sender: TField);
+    procedure adodsAnexosDespositosNumeroChange(Sender: TField);
+    procedure adodsAnexosDepositosChange(Sender: TField);
   private
     { Private declarations }
     FPaymentTime: TPaymentTime;
@@ -430,6 +434,51 @@ begin
   Restructurar;
 end;
 
+procedure TdmContratos.adodsAnexosComisionChange(Sender: TField);
+var
+  Porcentaje: Extended;
+begin
+  inherited;
+  if adodsAnexos.State in [dsInsert, dsEdit] then
+  begin
+    Porcentaje := GetPocentaje((adodsAnexosPrecioTotal.AsExtended-adodsAnexosEnganche.AsExtended), adodsAnexosComision.AsExtended);
+    if Porcentaje <> adodsAnexosComisionPorcentaje.Value then
+      adodsAnexosComisionPorcentaje.Value := Porcentaje;
+  end;
+  CalcularImportes;
+end;
+
+procedure TdmContratos.adodsAnexosComisionPorcentajeChange(Sender: TField);
+begin
+  inherited;
+  if adodsAnexos.State in [dsInsert, dsEdit] then
+    adodsAnexosComision.Value := GetImporte((adodsAnexosPrecioTotal.AsExtended-adodsAnexosEnganche.AsExtended), adodsAnexosComisionPorcentaje.AsExtended);
+end;
+
+procedure TdmContratos.adodsAnexosDepositosChange(Sender: TField);
+var
+  Numero: Extended;
+begin
+  inherited;
+  if adodsAnexos.State in [dsInsert, dsEdit] then
+  begin
+    if adodsAnexosPagoMensual.Value <> 0 then
+      Numero := adodsAnexosDepositos.AsExtended/adodsAnexosPagoMensual.AsExtended
+    else
+      Numero := 0;
+    if Numero <> adodsAnexosDespositosNumero.Value then
+      adodsAnexosDespositosNumero.Value := Numero;
+  end;
+  CalcularImportes;
+end;
+
+procedure TdmContratos.adodsAnexosDespositosNumeroChange(Sender: TField);
+begin
+  inherited;
+  if adodsAnexos.State in [dsInsert, dsEdit] then
+    adodsAnexosDepositos.Value := adodsAnexosPagoMensual.Value * adodsAnexosDespositosNumero.Value;
+end;
+
 procedure TdmContratos.adodsAnexosEngancheChange(Sender: TField);
 var
   Porcentaje: Extended;
@@ -580,10 +629,10 @@ begin
     adodsAnexosPrecio.Value := adodsAnexosPrecioMoneda.Value * adodsAnexosTipoCambio.Value;
     adodsAnexosImpuesto.Value := adodsAnexosPrecio.Value * (_IMPUESTOS_IVA/100);
     adodsAnexosPrecioTotal.Value := adodsAnexosPrecio.Value + adodsAnexosImpuesto.Value;
-    adodsAnexosComision.Value := (adodsAnexosPrecioTotal.Value-adodsAnexosEnganche.Value)*(adodsAnexosComisionPorcentaje.Value/100);
+//    adodsAnexosComision.Value := (adodsAnexosPrecioTotal.Value-adodsAnexosEnganche.Value)*(adodsAnexosComisionPorcentaje.Value/100);
     adodsAnexosComisionImpuesto.Value := adodsAnexosComision.Value * (_IMPUESTOS_IVA/100);
     adodsAnexosGastosImpuestos.Value := adodsAnexosGastos.Value * (_IMPUESTOS_IVA/100);
-    adodsAnexosDepositos.Value := adodsAnexosPagoMensual.Value * adodsAnexosDespositosNumero.Value;
+//    adodsAnexosDepositos.Value := adodsAnexosPagoMensual.Value * adodsAnexosDespositosNumero.Value;
     adodsAnexosPagoIncial.Value := (Enganche+adodsAnexosComision.Value+adodsAnexosComisionImpuesto.Value+
     adodsAnexosGastos.Value+adodsAnexosGastosImpuestos.Value+adodsAnexosDepositos.Value);
     adodsAnexosMontoFinanciar.Value:= adodsAnexosPrecioTotal.Value-adodsAnexosEnganche.Value;
