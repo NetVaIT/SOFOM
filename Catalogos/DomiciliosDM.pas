@@ -60,6 +60,8 @@ type
     adodsUpdateMunicipio: TStringField;
     adodsUpdatePoblacion: TStringField;
     adodsUpdateCodigoPostal: TStringField;
+    adodsMasterBCCiudad: TStringField;
+    adodsUpdateBCCiudad: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterIdPaisChange(Sender: TField);
     procedure adodsMasterIdEstadoChange(Sender: TField);

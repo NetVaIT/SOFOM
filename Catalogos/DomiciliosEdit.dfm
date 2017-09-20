@@ -15,9 +15,9 @@ inherited frmDomiciliosEdit: TfrmDomiciliosEdit
     ClientRectRight = 551
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 2
-      ExplicitTop = 28
+      ExplicitTop = 26
       ExplicitWidth = 549
-      ExplicitHeight = 351
+      ExplicitHeight = 353
       object Label1: TLabel
         Left = 16
         Top = 16
@@ -97,6 +97,14 @@ inherited frmDomiciliosEdit: TfrmDomiciliosEdit
         Height = 13
         Caption = 'C'#243'digo postal'
         FocusControl = cxDBTextEdit6
+      end
+      object Label11: TLabel
+        Left = 143
+        Top = 296
+        Width = 114
+        Height = 13
+        Caption = 'Ciudad(Buro de credito)'
+        FocusControl = cxDBTextEdit7
       end
       object cxDBTextEdit1: TcxDBTextEdit
         Left = 16
@@ -206,6 +214,14 @@ inherited frmDomiciliosEdit: TfrmDomiciliosEdit
         TabOrder = 9
         Width = 121
       end
+      object cxDBTextEdit7: TcxDBTextEdit
+        Left = 143
+        Top = 312
+        DataBinding.DataField = 'BCCiudad'
+        DataBinding.DataSource = DataSource
+        TabOrder = 10
+        Width = 311
+      end
     end
   end
   inherited pmlMain: TPanel
@@ -213,13 +229,13 @@ inherited frmDomiciliosEdit: TfrmDomiciliosEdit
     Width = 553
     ExplicitTop = 381
     ExplicitWidth = 553
-    inherited btnOk: TButton
-      Left = 390
-      ExplicitLeft = 390
-    end
     inherited btnCancel: TButton
       Left = 471
       ExplicitLeft = 471
+    end
+    inherited btnOk: TButton
+      Left = 390
+      ExplicitLeft = 390
     end
   end
   inherited cxImageList: TcxImageList

@@ -27,14 +27,15 @@ inherited frmListasRestringidas: TfrmListasRestringidas
   end
   inherited pnlMaster: TPanel
     Width = 645
-    Height = 224
+    Height = 229
+    ExplicitTop = 26
     ExplicitWidth = 645
-    ExplicitHeight = 224
+    ExplicitHeight = 229
     inherited cxGrid: TcxGrid
       Width = 645
-      Height = 224
+      Height = 229
       ExplicitWidth = 645
-      ExplicitHeight = 224
+      ExplicitHeight = 229
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdListaRestringida: TcxGridDBColumn
           DataBinding.FieldName = 'IdListaRestringida'
@@ -107,7 +108,7 @@ inherited frmListasRestringidas: TfrmListasRestringidas
     DockControlHeights = (
       0
       0
-      31
+      26
       0)
     inherited dxbFilter: TdxBar
       ItemLinks = <
@@ -129,6 +130,7 @@ inherited frmListasRestringidas: TfrmListasRestringidas
       ShowCaption = True
       Width = 200
       PropertiesClassName = 'TcxTextEditProperties'
+      InternalEditValue = nil
     end
   end
   inherited cxStyleRepository: TcxStyleRepository
@@ -140,7 +142,7 @@ inherited frmListasRestringidas: TfrmListasRestringidas
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42776.465400173610000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

@@ -2,6 +2,7 @@ inherited dmListasRestringidas: TdmListasRestringidas
   OldCreateOrder = True
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
+    OnNewRecord = adodsMasterNewRecord
     CommandText = 
       'select IdListaRestringida, IdOrganismo, IdPais, IdEstatus, Ident' +
       'ificador, Nombre, Alias from ListasRestringidas'

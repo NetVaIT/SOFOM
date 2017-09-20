@@ -189,7 +189,7 @@ var
     Falta : integer;
     Nueva : string;
   begin
-    if Length(Origen) <> Longitud then
+    if Length(Origen) < Longitud then
     begin
       Falta := Longitud - Length(Origen);
       if Justifica = 'I' then
@@ -198,7 +198,7 @@ var
         Nueva := DupeString(Relleno,Falta) + Origen;
     end
     else
-      Nueva := Origen;
+      Nueva := Copy(Origen,1, Longitud);
     Result := Nueva;
   end;
 
@@ -233,6 +233,7 @@ var
 
   function GetEM(IdPersona: Integer): String;
   begin
+    Result := EmptyStr;
     adoqPersonas.Close;
     adoqPersonas.Parameters.ParamByName('IdPersona').Value := IdPersona;
     adoqPersonas.Open;
@@ -273,6 +274,7 @@ var
 
   function GetAC(IdPersona: Integer): String;
   begin
+    Result := EmptyStr;
     adoqAccionistas.Close;
     adoqAccionistas.Parameters.ParamByName('IdPersona').Value := IdPersona;
     adoqAccionistas.Open;

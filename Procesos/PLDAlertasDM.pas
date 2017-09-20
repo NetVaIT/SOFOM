@@ -116,7 +116,7 @@ uses PLDAlertasForm, PLDAlertasFiltroForm, _Utils;
     Falta : integer;
     Nueva : string;
   begin
-    if Length(Origen) <> Longitud then
+    if Length(Origen) < Longitud then
     begin
       Falta := Longitud - Length(Origen);
       if Justifica = 'I' then
@@ -125,7 +125,7 @@ uses PLDAlertasForm, PLDAlertasFiltroForm, _Utils;
         Nueva := DupeString(Relleno,Falta) + Origen;
     end
     else
-      Nueva := Origen;
+      Nueva := Copy(Origen,1, Longitud);
     Result := Nueva;
   end;
 

@@ -270,8 +270,8 @@ inherited dmBuroCredito: TdmBuroCredito
         's.Calle + '#39' '#39' + ISNULL(Domicilios.NoExterior,'#39#39') + '#39' '#39' + ISNULL(' +
         'Domicilios.NoInterior,'#39#39')) AS Dirrecion1, '#39#39' AS Dirrecion2, dbo.' +
         'BCTexto(Domicilios.Colonia) AS Colonia, dbo.BCTexto(Municipios.D' +
-        'escripcion) AS Municipio, dbo.BCTexto(Poblaciones.Descripcion) A' +
-        'S Ciudad, '
+        'escripcion) AS Municipio, dbo.BCTexto(Domicilios.BCCiudad) AS Ci' +
+        'udad, '
       
         '                         Estados.BCCodigo AS Estado, Paises.BCCo' +
         'digo AS Pais, Domicilios.CodigoPostal'
@@ -287,10 +287,7 @@ inherited dmBuroCredito: TdmBuroCredito
         's.IdEstado INNER JOIN'
       
         '                         Municipios ON Domicilios.IdMunicipio = ' +
-        'Municipios.IdMunicipio INNER JOIN'
-      
-        '                         Poblaciones ON Domicilios.IdPoblacion =' +
-        ' Poblaciones.IdPoblacion'
+        'Municipios.IdMunicipio '
       'WHERE        (PersonasDomicilios.Predeterminado = 1)'
       ') Domicilios ON Personas.IdPersona = Domicilios.IdPersona'
       'WHERE Personas.IdPersona = :IdPersona')
@@ -469,8 +466,8 @@ inherited dmBuroCredito: TdmBuroCredito
         's.Calle + '#39' '#39' + ISNULL(Domicilios.NoExterior,'#39#39') + '#39' '#39' + ISNULL(' +
         'Domicilios.NoInterior,'#39#39')) AS Dirrecion1, '#39#39' AS Dirrecion2, dbo.' +
         'BCTexto(Domicilios.Colonia) AS Colonia, dbo.BCTexto(Municipios.D' +
-        'escripcion) AS Municipio, dbo.BCTexto(Poblaciones.Descripcion) A' +
-        'S Ciudad, '
+        'escripcion) AS Municipio, dbo.BCTexto(Domicilios.BCCiudad) AS Ci' +
+        'udad, '
       
         '                         Estados.BCCodigo AS Estado, Paises.BCCo' +
         'digo AS Pais, Domicilios.CodigoPostal'
@@ -486,10 +483,7 @@ inherited dmBuroCredito: TdmBuroCredito
         's.IdEstado INNER JOIN'
       
         '                         Municipios ON Domicilios.IdMunicipio = ' +
-        'Municipios.IdMunicipio INNER JOIN'
-      
-        '                         Poblaciones ON Domicilios.IdPoblacion =' +
-        ' Poblaciones.IdPoblacion'
+        'Municipios.IdMunicipio '
       'WHERE        (PersonasDomicilios.Predeterminado = 1)'
       ') Domicilios ON Personas.IdPersona = Domicilios.IdPersona'
       'WHERE PersonasAccionistas.Porcentaje > 10'
@@ -655,7 +649,7 @@ inherited dmBuroCredito: TdmBuroCredito
         'INNER JOIN AnexosCreditos AS AC ON A.IdAnexoCredito = AC.IdAnexo' +
         'Credito'
       'WHERE AC.IdAnexoCreditoEstatus = 1 AND A.PagoSaldo > 0.01'
-      'AND A.FechaVencimiento <= :FechaV2 AND AC.IdAnexo = :IdAnexo2'
+      'AND A.FechaVencimiento > :FechaV2 AND AC.IdAnexo = :IdAnexo2'
       'GROUP BY AC.IdAnexo'
       'ORDER BY AC.IdAnexo, FechaVencimiento'
       '')

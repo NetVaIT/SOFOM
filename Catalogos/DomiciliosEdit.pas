@@ -47,6 +47,8 @@ type
     dsEstados: TDataSource;
     dsMunicipios: TDataSource;
     dsPoblaciones: TDataSource;
+    Label11: TLabel;
+    cxDBTextEdit7: TcxDBTextEdit;
     procedure FormShow(Sender: TObject);
   private
     FDataSetPaises: TDataSet;

@@ -20,6 +20,7 @@ type
     adodsMasterOrganismo: TStringField;
     adodsMasterPais: TStringField;
     procedure DataModuleCreate(Sender: TObject);
+    procedure adodsMasterNewRecord(DataSet: TDataSet);
   private
     { Private declarations }
   protected
@@ -35,6 +36,12 @@ implementation
 uses ListasRestringidasForm;
 
 {$R *.dfm}
+
+procedure TdmListasRestringidas.adodsMasterNewRecord(DataSet: TDataSet);
+begin
+  inherited;
+  adodsMasterIdEstatus.Value := 1;
+end;
 
 procedure TdmListasRestringidas.DataModuleCreate(Sender: TObject);
 begin
