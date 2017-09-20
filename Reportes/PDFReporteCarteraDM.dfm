@@ -1,5 +1,5 @@
 inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
-  Height = 760
+  Height = 817
   Width = 925
   inherited adodsReport: TADODataSet
     OnCalcFields = CuotasReportCalcFields
@@ -17,7 +17,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       'ValorResidual, SaldoInsoluto, SaldoTotal'#13#10'from vw_ReporteCartera' +
       'Completo'#13#10'order by TotalCobradoVencido desc , TotalPorCobrar DEs' +
       'c'
-    Left = 40
+    Left = 48
     Top = 16
     object adodsReportIdAnexo: TIntegerField
       FieldName = 'IdAnexo'
@@ -7810,6 +7810,316 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
     UserName = 'DBHojaControlCte'
     Left = 216
     Top = 240
+    object ppDBHojaControlCteppField1: TppField
+      FieldAlias = 'IdAnexo'
+      FieldName = 'IdAnexo'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 0
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBHojaControlCteppField2: TppField
+      FieldAlias = 'Anexo'
+      FieldName = 'Anexo'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 1
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBHojaControlCteppField3: TppField
+      FieldAlias = 'Plazo'
+      FieldName = 'Plazo'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 2
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBHojaControlCteppField4: TppField
+      FieldAlias = 'Contrato'
+      FieldName = 'Contrato'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 3
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBHojaControlCteppField5: TppField
+      FieldAlias = 'CalificacionInicial'
+      FieldName = 'CalificacionInicial'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 4
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBHojaControlCteppField6: TppField
+      FieldAlias = 'cliente'
+      FieldName = 'cliente'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 5
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBHojaControlCteppField7: TppField
+      FieldAlias = 'TC'
+      FieldName = 'TC'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 6
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBHojaControlCteppField8: TppField
+      FieldAlias = 'IdAnexoCreditoEstatus'
+      FieldName = 'IdAnexoCreditoEstatus'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 7
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBHojaControlCteppField9: TppField
+      FieldAlias = 'PrecioMoneda'
+      FieldName = 'PrecioMoneda'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 8
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBHojaControlCteppField10: TppField
+      FieldAlias = 'TipoCambio'
+      FieldName = 'TipoCambio'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 9
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBHojaControlCteppField11: TppField
+      FieldAlias = 'PrecioTotal'
+      FieldName = 'PrecioTotal'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 10
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBHojaControlCteppField12: TppField
+      FieldAlias = 'DiasRetrasoXAnexo'
+      FieldName = 'DiasRetrasoXAnexo'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 11
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBHojaControlCteppField13: TppField
+      FieldAlias = 'Cantidad'
+      FieldName = 'Cantidad'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 12
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBHojaControlCteppField14: TppField
+      FieldAlias = 'DiasSoloretraso'
+      FieldName = 'DiasSoloretraso'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 13
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBHojaControlCteppField15: TppField
+      FieldAlias = 'MayorAtraso'
+      FieldName = 'MayorAtraso'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 14
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBHojaControlCteppField16: TppField
+      FieldAlias = 'MayorPrepago'
+      FieldName = 'MayorPrepago'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 15
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBHojaControlCteppField17: TppField
+      FieldAlias = 'Atrasados'
+      FieldName = 'Atrasados'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 16
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBHojaControlCteppField18: TppField
+      FieldAlias = 'ATiempo'
+      FieldName = 'ATiempo'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 17
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBHojaControlCteppField19: TppField
+      FieldAlias = 'TotalPagados'
+      FieldName = 'TotalPagados'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 18
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBHojaControlCteppField20: TppField
+      FieldAlias = 'PorcentajeAtrasados'
+      FieldName = 'PorcentajeAtrasados'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 19
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBHojaControlCteppField21: TppField
+      FieldAlias = 'PorcentajeATiempo'
+      FieldName = 'PorcentajeATiempo'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 20
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBHojaControlCteppField22: TppField
+      FieldAlias = 'DiasPagoTotal'
+      FieldName = 'DiasPagoTotal'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 21
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBHojaControlCteppField23: TppField
+      FieldAlias = 'DiasPagoRetraso'
+      FieldName = 'DiasPagoRetraso'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 22
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBHojaControlCteppField24: TppField
+      FieldAlias = 'cantCobRecNP'
+      FieldName = 'cantCobRecNP'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 23
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBHojaControlCteppField25: TppField
+      FieldAlias = 'AtrasadoORec'
+      FieldName = 'AtrasadoORec'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 24
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBHojaControlCteppField26: TppField
+      FieldAlias = 'SaldoInsoluto'
+      FieldName = 'SaldoInsoluto'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 25
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBHojaControlCteppField27: TppField
+      FieldAlias = 'SaldoTotal'
+      FieldName = 'SaldoTotal'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 26
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBHojaControlCteppField28: TppField
+      FieldAlias = 'PocAtraORec'
+      FieldName = 'PocAtraORec'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 27
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBHojaControlCteppField29: TppField
+      FieldAlias = 'TotalSinPago'
+      FieldName = 'TotalSinPago'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 28
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBHojaControlCteppField30: TppField
+      FieldAlias = 'PorSinPago'
+      FieldName = 'PorSinPago'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 29
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBHojaControlCteppField31: TppField
+      FieldAlias = 'Suma'
+      FieldName = 'Suma'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 30
+      Searchable = False
+      Sortable = False
+    end
   end
   object ADODtStSumasXCalificacion: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -19891,18 +20201,19 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Border.BorderPositions = [bpTop]
               Border.Visible = True
               Border.Weight = 0.748799979686737100
-              DataField = 'Cantidad'
-              DataPipeline = ppDBHojaControlCte
+              DataField = 'TotalSuma'
+              DataPipeline = ppDBPpSumasAdicionales
               DisplayFormat = '#,0;-#,0'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
               Font.Name = 'Arial'
               Font.Size = 8
               Font.Style = []
+              ParentDataPipeline = False
               TextAlignment = taRightJustified
               Transparent = True
               VerticalAlignment = avCenter
-              DataPipelineName = 'ppDBHojaControlCte'
+              DataPipelineName = 'ppDBPpSumasAdicionales'
               mmHeight = 4763
               mmLeft = 61913
               mmTop = 36520
@@ -20349,7 +20660,6 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
             object ppDBText176: TppDBText
               UserName = 'DBText176'
               DataField = 'CantPagadas'
-              DataPipeline = ppDBPpSumasAdicionales
               DisplayFormat = '#,0;-#,0'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
@@ -20361,7 +20671,6 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Transparent = True
               Visible = False
               VerticalAlignment = avCenter
-              DataPipelineName = 'ppDBPpSumasAdicionales'
               mmHeight = 4763
               mmLeft = 126471
               mmTop = 11377
@@ -20510,6 +20819,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Font.Name = 'Arial'
               Font.Size = 8
               Font.Style = []
+              ParentDataPipeline = False
               TextAlignment = taRightJustified
               Transparent = True
               VerticalAlignment = avCenter
@@ -21072,61 +21382,63 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       #13#10'A.Identificador as Anexo, C.Identificador as Contrato, P.Razon' +
       'Social, CT.Descripcion as TipoContrato'#13#10'  from AnexosAmortizacio' +
       'nes aa'#13#10'  inner join AnexosCreditos AC  on AC.IdAnexoCredito=AA.' +
-      'IdAnexoCredito  '#13#10'  inner join Anexos A on A.IdAnexo=AC.IdAnexo'#13 +
-      #10'  inner join Contratos C on C.IdContrato=A.IdContrato'#13#10'  inner ' +
-      'join ContratosTipos CT on CT.IdContratoTipo=C.idcontratotipo '#13#10' ' +
-      ' inner join Personas P on P.IdPersona=C.idpersona'#13#10'  '#13#10'  inner  ' +
-      'Join CuentasXCobrar CXC on cXc.IdAnexosAmortizaciones=AA.IdAnexo' +
-      'Amortizacion and CXC.EsMoratorio=0 '#13#10'  '#13#10'  left join (Select  cx' +
-      'c1.IdAnexo, cxc1.IdCuentaXCobrarBase ,SUM(Total) TotalMora , Sum' +
-      '(Saldo) SumaSaldoMora, Max(Fecha) ultFEchaMora, Count(Fecha) as ' +
-      'cant, MAX(idCuentaXCobrar) MaxCXCMora from CuentasXCobrar cxc1 '#13 +
-      #10'             where   CXC1.EsMoratorio=1 and Total <>0 Group by ' +
-      'cxc1.IdAnexo,cxc1.idCuentaXCobrarbase) as VCxcMora '#13#10'           ' +
-      '  '#13#10'             on VCxcMora.IdCuentaXCobrarBase=CXC.IdCuentaXCo' +
-      'brar'#13#10'  left join (Select Ci.idcuentaxcobrar, Sum(Total) as Tota' +
-      'lCFDi,Count(fecha) as  cant, max(Fecha) as ultimaFecha , max(fol' +
-      'io) FolioUltimoMora from CFDI ci '#13#10#13#10'            group by   Ci.i' +
-      'dcuentaxcobrar) as VCFDIMora  on VCFDIMora.IdCuentaXCobrar=VCxcM' +
-      'ora.MaxCXCMora'#13#10'  '#13#10'  left join (Select Ci.idcuentaxcobrar, Sum(' +
-      'Total) as TotalCFDi,Count(fecha) as  cant, max(Fecha) as ultimaF' +
-      'echaCFDIBase , max(folio) FolioUltimoBase from CFDI ci '#13#10#13#10'     ' +
-      '       group by   Ci.idcuentaxcobrar) as VCFDINormal  '#13#10'        ' +
-      '    '#13#10'            on VCFDINormal.IdCuentaXCobrar=CXC.IdCuentaXCo' +
-      'brar'#13#10'  '#13#10'  Left Join (Select IdCuentaXCobrar, SUM(Importe) Paga' +
-      'do , Max(FechaAplicacion)ultFEcha from PagosAplicaciones '#13#10'     ' +
-      '         Group by  IdCuentaXCobrar) as VPagos '#13#10'            on V' +
-      'Pagos.IdCuentaXCobrar=CXC.IdCuentaXCobrar'#13#10'  where'#13#10'not Exists  ' +
-      '(SElect * from PagosAplicaciones PA where Pa.IDcuentaXCobrar=CXC' +
-      '.IdCuentaXCobrar) '#13#10'and not Exists (Select *  from CuentasXCobra' +
-      'r CXCMora  where CXCMORA.IDCuentaXCobrarBAse =CXC.IDCuentaXCobra' +
-      'r) '#13#10#13#10'and CXC.IdAnexo=:IdAnexo1'#13#10'   '#13#10'Union'#13#10#13#10' select  IdAnexo' +
-      'Amortizacion, AA.IdAnexoCredito,  a.idanexo,'#13#10'Periodo, aa.FechaC' +
-      'orte, aa.FechaVencimiento, '#13#10#13#10'AA.ImpactoISR, '#13#10'PagoTotal, Saldo' +
-      'Final, FechaMoratorio, MoratorioBase, DAteDiff(DAY, aa.Fechavenc' +
-      'imiento,aa.FechaMoratorio) as Dias,'#13#10'Moratorio, MoratorioImpuest' +
-      'o,   ( InteresImpuesto+CapitalImpuesto) as  ImpuestoTotal, Capit' +
-      'al + aa.interes as Subtotal'#13#10' ,NULL as FecVenCXC ,NULL as Total ' +
-      ',NULL as saldo,NULL as IdCuentaXCobrar,NULL IdAnexosAmortizacion' +
-      'es, '#13#10'  NULL Pagado,NULL FechaAplicacion, NULL totalmora,Null sa' +
-      'ldoMora,Null ultFEchaMora, Null ultimaFEcha,null FolioUltimoMora' +
-      ' ,null FolioUltimoBase,null ultimaFechaCFDIBase '#13#10#13#10',A.Identific' +
-      'ador as Anexo,C.Identificador as Contrato, P.RazonSocial, CT.Des' +
-      'cripcion as TipoContrato'#13#10#13#10'--,CXC.FechaVencimiento, CXC.Total, ' +
-      'CXC.Saldo,CXC.IdCuentaXCobrar,Cxc.IdAnexosAmortizaciones --, Ac.' +
-      'IdAnexo A1, Cxc.IdAnexo A2 --, CXC.EsMoratorio'#13#10'--, VPagos.Pagad' +
-      'o, VPagos.ultFEcha as FechaAplicacion, VCxcMora.TotalMora,VCxcMo' +
-      'ra.SumaSaldoMora as saldoMora ,  VCxcMora.ultFEchaMora, VCFDIMor' +
-      'a.ultimaFEcha, VCFDIMora.FolioUltimoMora,'#13#10'--VcfdiNormal.FolioUl' +
-      'timoBase, VCFDINormal.ultimaFechaCFDIBase'#13#10'  from AnexosAmortiza' +
-      'ciones aa'#13#10'  inner join AnexosCreditos AC  on AC.IdAnexoCredito=' +
-      'AA.IdAnexoCredito  '#13#10'    inner join Anexos A on A.IdAnexo=AC.IdA' +
-      'nexo'#13#10'  inner join Contratos C on C.IdContrato=A.IdContrato'#13#10'  i' +
-      'nner join ContratosTipos CT on CT.IdContratoTipo=C.idcontratotip' +
-      'o '#13#10'  inner join Personas P on P.IdPersona=C.idpersona'#13#10'  Where ' +
-      'not Exists  (SElect * from CuentasXCobrar Cc where cc.IdAnexosAm' +
-      'ortizaciones=aa.IdAnexoAmortizacion)'#13#10' and Ac.IdAnexo=:IdAnexo2'#13 +
-      #10'  '
+      'IdAnexoCredito  and ac.IdAnexoCreditoEstatus=1 -- Sep1/17 porque' +
+      ' son sin pago o no generadas'#13#10'  inner join Anexos A on A.IdAnexo' +
+      '=AC.IdAnexo'#13#10'  inner join Contratos C on C.IdContrato=A.IdContra' +
+      'to'#13#10'  inner join ContratosTipos CT on CT.IdContratoTipo=C.idcont' +
+      'ratotipo '#13#10'  inner join Personas P on P.IdPersona=C.idpersona'#13#10' ' +
+      ' '#13#10'  inner  Join CuentasXCobrar CXC on cXc.IdAnexosAmortizacione' +
+      's=AA.IdAnexoAmortizacion and CXC.EsMoratorio=0 '#13#10'  '#13#10'  left join' +
+      ' (Select  cxc1.IdAnexo, cxc1.IdCuentaXCobrarBase ,SUM(Total) Tot' +
+      'alMora , Sum(Saldo) SumaSaldoMora, Max(Fecha) ultFEchaMora, Coun' +
+      't(Fecha) as cant, MAX(idCuentaXCobrar) MaxCXCMora from CuentasXC' +
+      'obrar cxc1 '#13#10'             where   CXC1.EsMoratorio=1 and Total <' +
+      '>0 Group by cxc1.IdAnexo,cxc1.idCuentaXCobrarbase) as VCxcMora '#13 +
+      #10'             '#13#10'             on VCxcMora.IdCuentaXCobrarBase=CXC' +
+      '.IdCuentaXCobrar'#13#10'  left join (Select Ci.idcuentaxcobrar, Sum(To' +
+      'tal) as TotalCFDi,Count(fecha) as  cant, max(Fecha) as ultimaFec' +
+      'ha , max(folio) FolioUltimoMora from CFDI ci '#13#10#13#10'            gro' +
+      'up by   Ci.idcuentaxcobrar) as VCFDIMora  on VCFDIMora.IdCuentaX' +
+      'Cobrar=VCxcMora.MaxCXCMora'#13#10'  '#13#10'  left join (Select Ci.idcuentax' +
+      'cobrar, Sum(Total) as TotalCFDi,Count(fecha) as  cant, max(Fecha' +
+      ') as ultimaFechaCFDIBase , max(folio) FolioUltimoBase from CFDI ' +
+      'ci '#13#10#13#10'            group by   Ci.idcuentaxcobrar) as VCFDINormal' +
+      '  '#13#10'            '#13#10'            on VCFDINormal.IdCuentaXCobrar=CXC' +
+      '.IdCuentaXCobrar'#13#10'  '#13#10'  Left Join (Select IdCuentaXCobrar, SUM(I' +
+      'mporte) Pagado , Max(FechaAplicacion)ultFEcha from PagosAplicaci' +
+      'ones '#13#10'              Group by  IdCuentaXCobrar) as VPagos '#13#10'    ' +
+      '        on VPagos.IdCuentaXCobrar=CXC.IdCuentaXCobrar'#13#10'  where'#13#10 +
+      'not Exists  (SElect * from PagosAplicaciones PA where Pa.IDcuent' +
+      'aXCobrar=CXC.IdCuentaXCobrar) '#13#10'and not Exists (Select *  from C' +
+      'uentasXCobrar CXCMora  where CXCMORA.IDCuentaXCobrarBAse =CXC.ID' +
+      'CuentaXCobrar) '#13#10#13#10'and CXC.IdAnexo=:IdAnexo1'#13#10'   '#13#10'Union'#13#10#13#10' sel' +
+      'ect  IdAnexoAmortizacion, AA.IdAnexoCredito,  a.idanexo,'#13#10'Period' +
+      'o, aa.FechaCorte, aa.FechaVencimiento, '#13#10#13#10'AA.ImpactoISR, '#13#10'Pago' +
+      'Total, SaldoFinal, FechaMoratorio, MoratorioBase, DAteDiff(DAY, ' +
+      'aa.Fechavencimiento,aa.FechaMoratorio) as Dias,'#13#10'Moratorio, Mora' +
+      'torioImpuesto,   ( InteresImpuesto+CapitalImpuesto) as  Impuesto' +
+      'Total, Capital + aa.interes as Subtotal'#13#10' ,NULL as FecVenCXC ,NU' +
+      'LL as Total ,NULL as saldo,NULL as IdCuentaXCobrar,NULL IdAnexos' +
+      'Amortizaciones, '#13#10'  NULL Pagado,NULL FechaAplicacion, NULL total' +
+      'mora,Null saldoMora,Null ultFEchaMora, Null ultimaFEcha,null Fol' +
+      'ioUltimoMora ,null FolioUltimoBase,null ultimaFechaCFDIBase '#13#10#13#10 +
+      ',A.Identificador as Anexo,C.Identificador as Contrato, P.RazonSo' +
+      'cial, CT.Descripcion as TipoContrato'#13#10#13#10'--,CXC.FechaVencimiento,' +
+      ' CXC.Total, CXC.Saldo,CXC.IdCuentaXCobrar,Cxc.IdAnexosAmortizaci' +
+      'ones --, Ac.IdAnexo A1, Cxc.IdAnexo A2 --, CXC.EsMoratorio'#13#10'--, ' +
+      'VPagos.Pagado, VPagos.ultFEcha as FechaAplicacion, VCxcMora.Tota' +
+      'lMora,VCxcMora.SumaSaldoMora as saldoMora ,  VCxcMora.ultFEchaMo' +
+      'ra, VCFDIMora.ultimaFEcha, VCFDIMora.FolioUltimoMora,'#13#10'--VcfdiNo' +
+      'rmal.FolioUltimoBase, VCFDINormal.ultimaFechaCFDIBase'#13#10'  from An' +
+      'exosAmortizaciones aa'#13#10'  inner join AnexosCreditos AC  on AC.IdA' +
+      'nexoCredito=AA.IdAnexoCredito  and ac.IdAnexoCreditoEstatus=1 --' +
+      ' Sep1/17 porque son sin pago o no generadas'#13#10'    inner join Anex' +
+      'os A on A.IdAnexo=AC.IdAnexo'#13#10'  inner join Contratos C on C.IdCo' +
+      'ntrato=A.IdContrato'#13#10'  inner join ContratosTipos CT on CT.IdCont' +
+      'ratoTipo=C.idcontratotipo '#13#10'  inner join Personas P on P.IdPerso' +
+      'na=C.idpersona'#13#10'  Where not Exists  (SElect * from CuentasXCobra' +
+      'r Cc where cc.IdAnexosAmortizaciones=aa.IdAnexoAmortizacion)'#13#10' a' +
+      'nd Ac.IdAnexo=:IdAnexo2'#13#10'  '
     Parameters = <
       item
         Name = 'IdAnexo1'
@@ -21526,20 +21838,27 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       'Facturadas,'#13#10' case when (VPagadas.CantidadPagadas IS null) then ' +
       '0 else VPagadas.CantidadPagadas end as CantPagadas ,'#13#10'  case whe' +
       'n ( VXFacturar.XFacturar IS null) then 0 else  VXFacturar.XFactu' +
-      'rar end as CantXFacturar'#13#10'     from CuentasXCobrar CXC left join' +
-      #13#10#13#10'(select IdAnexo, Count(IdCFDI) as CantidadFActurada  from Cu' +
-      'entasXCobrar cxc'#13#10'where  IdAnexosAmortizaciones is not Null and ' +
-      'esmoratorio =0'#13#10'group  by cxc.idAnexo) VFActurada on VFActurada.' +
-      'IdAnexo =CXC.IdAnexo'#13#10'left join '#13#10'('#13#10'select IdAnexo, Count(IdAne' +
-      'xosAmortizaciones) as CantidadPagadas from CuentasXCobrar cxc'#13#10'w' +
-      'here  IdAnexosAmortizaciones is not Null and esmoratorio =0 and ' +
-      'Saldo =0'#13#10'group  by cxc.idAnexo) VPagadas on VPagadas.IdAnexo =C' +
-      'XC.IdAnexo '#13#10#13#10'Left Join  '#13#10'('#13#10'select IdAnexo, Count(IdAnexosAmo' +
-      'rtizaciones) as  XFacturar from CuentasXCobrar cxc'#13#10'where  IdAne' +
-      'xosAmortizaciones is not Null and esmoratorio =0 and IdCFDI is n' +
-      'ull'#13#10'group  by cxc.idAnexo) VXFacturar on VXFacturar.IdAnexo=CXC' +
-      '.IdAnexo'#13#10#13#10'where cxc.IdAnexosAmortizaciones is not Null and cxc' +
-      '.esmoratorio =0'#13#10' and cxc.IDAnexo=:IdAnexo'#13#10#13#10#13#10'  '
+      'rar end as CantXFacturar'#13#10','#13#10'   case when (VFActurada.CantidadFA' +
+      'cturada IS null) then '#13#10'               CAse when ( VXFacturar.XF' +
+      'acturar IS null) then'#13#10#9#9#9'      0'#13#10#9#9#9'   else'#13#10#9#9#9'      VXFactur' +
+      'ar.XFacturar'#13#10#9#9#9'   end'#13#10#9'else'#13#10#9'   CAse when ( VXFacturar.XFact' +
+      'urar IS null) then'#13#10#9#9#9'    VFActurada.CantidadFActurada'#13#10#9'   els' +
+      'e'#13#10#9#9#9' VFActurada.CantidadFActurada +VXFacturar.XFacturar     '#13#10 +
+      '        end'#13#10#9#9#9'           '#13#10'    end'#13#10#9'aS TotalSuma'#13#10'     from C' +
+      'uentasXCobrar CXC left join'#13#10#13#10'(select IdAnexo, Count(IdCFDI) as' +
+      ' CantidadFActurada  from CuentasXCobrar cxc'#13#10'where  IdAnexosAmor' +
+      'tizaciones is not Null and esmoratorio =0'#13#10'group  by cxc.idAnexo' +
+      ') VFActurada on VFActurada.IdAnexo =CXC.IdAnexo'#13#10'left join '#13#10'('#13#10 +
+      'select IdAnexo, Count(IdAnexosAmortizaciones) as CantidadPagadas' +
+      ' from CuentasXCobrar cxc'#13#10'where  IdAnexosAmortizaciones is not N' +
+      'ull and esmoratorio =0 and Saldo =0'#13#10'group  by cxc.idAnexo) VPag' +
+      'adas on VPagadas.IdAnexo =CXC.IdAnexo '#13#10#13#10'Left Join  '#13#10'('#13#10'select' +
+      ' IdAnexo, Count(IdAnexosAmortizaciones) as  XFacturar from Cuent' +
+      'asXCobrar cxc'#13#10'where  IdAnexosAmortizaciones is not Null and esm' +
+      'oratorio =0 and IdCFDI is null'#13#10'group  by cxc.idAnexo) VXFactura' +
+      'r on VXFacturar.IdAnexo=CXC.IdAnexo'#13#10#13#10'where cxc.IdAnexosAmortiz' +
+      'aciones is not Null and cxc.esmoratorio =0'#13#10' and cxc.IDAnexo=:Id' +
+      'Anexo'#13#10#13#10#13#10'  '
     DataSource = dsAnexoCliente
     IndexFieldNames = 'IdAnexo'
     MasterFields = 'IdAnexo'
@@ -21569,18 +21888,15 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       FieldName = 'CantFacturadas'
       ReadOnly = True
     end
+    object ADODtStSumasAdicionalesTotalSuma: TIntegerField
+      FieldName = 'TotalSuma'
+      ReadOnly = True
+    end
   end
   object ppDBPpSumasAdicionales: TppDBPipeline
     DataSource = DSSumasAdicionales
-    UserName = 'DBPpSumasAdicional'
+    UserName = 'DBPpSumasAdicionales'
     Left = 744
     Top = 608
-    MasterDataPipelineName = 'ppDBPpAnexoCliente'
-    object ppMasterFieldLink5: TppMasterFieldLink
-      MasterFieldName = 'IdAnexo'
-      GuidCollationType = gcString
-      DetailFieldName = 'IdAnexo'
-      DetailSortOrder = soAscending
-    end
   end
 end

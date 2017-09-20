@@ -426,8 +426,8 @@ begin
   TAdoDataset(DsconCXCPendientes.DataSet).Close;
   if cxChckBxCambioconsulta.Checked then
   begin
-
-    TAdoDataset(DsconCXCPendientes.DataSet).commandtext:='Select CXC.IdCuentaXCobrar, CXC.IdCuentaXCobrarBase, CXC.IdCuentaXCobrarEstatus, CXC.IdPersona,'
+                                                                //Sep 20/17
+    TAdoDataset(DsconCXCPendientes.DataSet).commandtext:='Select  CXC.Descripcion,CXC.IdCuentaXCobrar, CXC.IdCuentaXCobrarBase, CXC.IdCuentaXCobrarEstatus, CXC.IdPersona,'
     + 'CXC.IdAnexosAmortizaciones AS IdAnexoAmortizacion, CXC.IdAnexo, CXC.IdEstadoCuenta, CXC.IdCFDI,  CXC.Fecha, CXC.FechaVencimiento, '
     +' CXC.Importe, CXC.Impuesto, CXC.Interes, CXC.Total, CXC.Saldo, CXC.SaldoFactoraje, CXC.EsMoratorio, CI.SaldoDocumento, '
     +' Ci.SaldoFactoraje as SaldoFactorajeCFDI, ci.serie, Ci.folio  from CuentasXCobrar CXC left Join CFDI CI on CI.IdCFDI= CXC.IdCFDI where '
@@ -441,8 +441,8 @@ begin
   end
   else       //  (((IdCuentaXCobrarEstatus=0 or (IdCuentaXCobrarEstatus=1))
   begin
-
-    TAdoDataset(DsconCXCPendientes.DataSet).commandtext:='Select CXC.IdCuentaXCobrar, CXC.IdCuentaXCobrarBase, CXC.IdCuentaXCobrarEstatus, CXC.IdPersona,'
+                                                                  //Sep 20/17
+    TAdoDataset(DsconCXCPendientes.DataSet).commandtext:='Select  CXC.Descripcion,CXC.IdCuentaXCobrar, CXC.IdCuentaXCobrarBase, CXC.IdCuentaXCobrarEstatus, CXC.IdPersona,'
     + 'CXC.IdAnexosAmortizaciones AS IdAnexoAmortizacion, CXC.IdAnexo, CXC.IdEstadoCuenta, CXC.IdCFDI,  CXC.Fecha, CXC.FechaVencimiento, '
     +' CXC.Importe, CXC.Impuesto, CXC.Interes, CXC.Total, CXC.Saldo, CXC.SaldoFactoraje, CXC.EsMoratorio, CI.SaldoDocumento, '
     +' Ci.SaldoFactoraje as SaldoFactorajeCFDI , ci.serie, Ci.folio from CuentasXCobrar CXC left Join CFDI CI on CI.IdCFDI= CXC.IdCFDI where '

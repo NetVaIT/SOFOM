@@ -845,8 +845,6 @@ type
     ADODtStSumasAdicionalesIdAnexo: TIntegerField;
     ADODtStSumasAdicionalesCantPagadas: TIntegerField;
     ADODtStSumasAdicionalesCantXFacturar: TIntegerField;
-    ppDBPpSumasAdicionales: TppDBPipeline;
-    ppMasterFieldLink5: TppMasterFieldLink;
     ADODtStSumasAdicionalesCantFacturadas: TIntegerField;
     ppLabel136: TppLabel;
     ppDBText174: TppDBText;
@@ -874,6 +872,8 @@ type
     ADODtStRepHojaControlCteSuma: TIntegerField;
     ppDBText184: TppDBText;
     ppLabel159: TppLabel;
+    ADODtStSumasAdicionalesTotalSuma: TIntegerField;
+    ppDBPpSumasAdicionales: TppDBPipeline;
     procedure CuotasReportCalcFields(DataSet: TDataSet);
   private
     { Private declarations }

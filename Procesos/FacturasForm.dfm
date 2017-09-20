@@ -262,8 +262,8 @@ inherited frmFacturasGrid: TfrmFacturasGrid
   inherited pnlClose: TPanel
     Top = 492
     Width = 969
-    ExplicitTop = 387
-    ExplicitWidth = 935
+    ExplicitTop = 492
+    ExplicitWidth = 969
     DesignSize = (
       969
       41)
@@ -280,7 +280,6 @@ inherited frmFacturasGrid: TfrmFacturasGrid
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 9
-    ExplicitWidth = 935
     DesignSize = (
       969
       44)
@@ -1315,7 +1314,6 @@ inherited frmFacturasGrid: TfrmFacturasGrid
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42699.643536909720000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end
