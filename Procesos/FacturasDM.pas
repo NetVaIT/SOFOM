@@ -262,7 +262,7 @@ implementation
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
 uses FacturasForm, ConceptosFacturaForm, DocComprobanteFiscal, FacturaTipos,
-  XMLtoPDFDmod, _Utils, _ConectionDmod;
+  XMLtoPDFDmod, _Utils, _ConectionDmod, ConfiguracionDM;
 
 {$R *.dfm}
 
@@ -306,13 +306,16 @@ begin          //Agregado Ago 3/17
     Certificado.LlavePrivada.Ruta := FileKey;
     Certificado.LlavePrivada.Clave := Clave;
 
-    RutaBase:=ExtractFilePath(application.ExeName);
+    RutaBase:=dmConfiguracion.RutaFacturas;//ExtractFilePath(application.ExeName); //CAmbiado SEp 27/17
+    if RutaBase='' then
+       RutaBase:=ExtractFilePath(application.ExeName);    // SEp 27/17
+
     Carpeta := RutaBase+'Canceladas\';
     ArchivoSal:= UpperCase(System.SysUtils.FormatSettings.ShortMonthNames[MonthOfTheYear(Now)]) +
                 IntToStr(Anio) +'_'+adodsmasterserie.AsString +adodsMasterFolio.asstring+'.txt' ;
 
-
-    Esproduccion:=FileExists(RutaBase+'EnProduccion.txt'); //Temporal Dic 8/15
+                             //SEp 27/17 cambiado por este era rutabase
+    Esproduccion:=FileExists(ExtractFilePath(application.ExeName)+'EnProduccion.txt'); //Temporal Dic 8/15
     // := RutaBase + ADODtStPersonaEmisorRFC.AsString + SubCarpeta;
     if not DirectoryExists (Carpeta) then
        ForceDirectories(Carpeta);
@@ -652,9 +655,12 @@ begin
     ADODtStPersonaEmisor.Open;
     ADODtStPersonaReceptor.Open;
 
-    RutaBase:=ExtractFilePath(application.ExeName);
+    RutaBase:=dmConfiguracion.RutaFacturas;//ExtractFilePath(application.ExeName); //CAmbiado SEp 27/17
+    if RutaBase='' then
+       RutaBase:=ExtractFilePath(application.ExeName);    // SEp 27/17
+
     SubCarpeta := '\' + UpperCase(System.SysUtils.FormatSettings.ShortMonthNames[MonthOfTheYear(Now)]) + IntToStr(Anio) + '\';
-    Esproduccion:=FileExists(RutaBase+'EnProduccion.txt'); //Temporal Dic 8/15
+    Esproduccion:=FileExists(ExtractFilePath(application.ExeName)+'EnProduccion.txt'); //Temporal Dic 8/15 //Modificado sep 27/17
     DocumentoComprobanteFiscal:= TDocumentoComprobanteFiscal.Create;
 
     TipoDoc:=adodsMaster.FieldByName('TipoDocumento').asString; //Mar 31/16

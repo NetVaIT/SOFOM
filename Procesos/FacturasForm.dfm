@@ -1314,6 +1314,7 @@ inherited frmFacturasGrid: TfrmFacturasGrid
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42699.643536909720000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end
