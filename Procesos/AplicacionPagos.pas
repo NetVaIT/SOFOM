@@ -125,6 +125,7 @@ type
     FActFacturaMora: TBasicAction;
     FActAbonoCApital: TBasicAction;
     FActPagoAnticipado: TBasicAction;
+    FActCreaFinales: TBasicAction;
     function Quitasignos(TextoPesos: String): String;
     function EsCuentaXCobrarAntigua(IdCxCAct, IDPersona, IDAnexo: integer): Boolean;    //Ajuste anexo mar 9/17
     function ActualizaMoratorios(IdCxCAct: integer;FechaPago:TDateTime;var ValorMora:Double; var FechaAct:TDateTime): Boolean;
@@ -139,12 +140,15 @@ type
     function FechaSinHora(FechaHora: TDAteTime): TDAteTime;
     procedure RefreshCXCPendientes;
     procedure SetFPagoAnticipado(const Value: TBasicAction);
+    procedure SetFCreaFinales(const Value: TBasicAction);
   public
     { Public declarations }
     EsFactoraje:Boolean;
     property ActFacturaMora : TBasicAction read FActFacturaMora write SetFActFacturaMora;  //Feb 8/17
     property ActAbonoCapital : TBasicAction read FActAbonoCApital write SetFActAbonoCapital;
     property ActPagoAnticipado : TBasicAction read FActPagoAnticipado write SetFPagoAnticipado;
+
+    Property ActVerificayCreaFinal:TBasicAction read FActCreaFinales write SetFCreaFinales;   //Oct 3/17
   end;
 
 //var
@@ -268,6 +272,7 @@ begin
               fieldbyName('IDPersonacliente').AsInteger:=dsConCXCpendientes.dataset.FieldByName('IDPersona').AsInteger;
               post;
               // Proceso de Actualizaciones internas puede ser en el after post de la tabla deAplicaciones
+             // VerificaYCreaCXCFinales(adodsMasterIdAnexo.AsInteger); //Oct 2/17 ver si se coloca aca
 
             end;
             _dmConection.ADOConnection.CommitTrans;  //Feb 14/17
@@ -287,8 +292,20 @@ begin
             begin   //CAmbio de nombre                                        //Ajustado Jul 4/17
               SpdBtnSaldoAFavor.Enabled:=(dsPago.dataset.Fieldbyname('Saldo').AsExtended>0.01); //Habilitar boton para abono a Capital.
              // SpdBtnAbonoCapital.Action:= FActAbonoCApital; //Para ver si lo deja usar?? abr 19/17
+
             end;
           end;
+          //Si ya se acabo el saldo del Pago o si Ya no hay mas cuentas XCobrar  Oct 3/17
+
+          if dsConCXCpendientes.DataSet.RecordCount =0 then //Ya no hay mas cuentas XCobrar Oct 3/17
+          begin
+            ActVerificayCreaFinal.Execute; //Sólo crea CXC y avisa..
+          end;
+
+
+
+
+
         end;
       end
       else                                                                                                           //Ene 13/17 'Importe'                                                  'Saldo'
@@ -485,6 +502,11 @@ procedure TFrmAplicacionPago.SetFActFacturaMora(const Value: TBasicAction);
 begin
   FActFacturaMora := Value;
 
+end;
+
+procedure TFrmAplicacionPago.SetFCreaFinales(const Value: TBasicAction);
+begin
+  FActCreaFinales := Value;
 end;
 
 procedure TFrmAplicacionPago.SetFPagoAnticipado(const Value: TBasicAction);

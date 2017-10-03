@@ -28,7 +28,8 @@ uses
   cxGridCustomPopupMenu, cxGridPopupMenu, cxClasses, Vcl.StdActns, Vcl.DBActns,
   System.Actions, Vcl.ActnList, Vcl.StdCtrls, cxGridLevel, cxGridCustomView,
   cxGrid, Vcl.ExtCtrls,Data.Win.ADODB, cxContainer, Vcl.ComCtrls, dxCore,
-  cxDateUtils, cxTextEdit, cxMaskEdit, cxDropDownEdit, cxCalendar, Vcl.Buttons;
+  cxDateUtils, cxTextEdit, cxMaskEdit, cxDropDownEdit, cxCalendar, Vcl.Buttons,
+  Math;
 
 type
   TFrmConPagos = class(T_frmGrid)
@@ -79,6 +80,7 @@ type
     DSP_ActTotalCXC: TDataSource;
     tvMasterEsDeposito: TcxGridDBColumn;
     ChckBxDeposito: TCheckBox;
+    DSVerificaSaldoFinal: TDataSource;
     procedure FormCreate(Sender: TObject);
     procedure dxBrBtnAplicaiconesClick(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
@@ -92,6 +94,7 @@ type
     FactAbonarCapital: TBasicAction;
     FactAjustePrueba: TBasicAction;
     FActPagoAnticipado: TBasicAction;
+    FActCreaFinales: TBasicAction;
     function GetFFiltroNombre: String;
     procedure PoneFiltro;
     procedure SetactAbonarCapital(const Value: TBasicAction);
@@ -102,6 +105,8 @@ type
     procedure ActualizarFechaPago(IdPagoAct: integer);
     procedure RefreshPago;
     procedure SetFPagoAnticipado(const Value: TBasicAction);
+    procedure SetFCreaFinales(const Value: TBasicAction);
+    function VerificaFinales(idanexo:integer):boolean;
   public
     { Public declarations }
     property FiltroCon:String read ffiltro write ffiltro;
@@ -110,6 +115,8 @@ type
     property actAbonarCapital: TBasicAction read FactAbonarCapital write SetactAbonarCapital;
     property actAjustePrueba: TBasicAction read FactAjustePrueba write SetactAjusteprueba;
     property ActPagoAnticipado : TBasicAction read FActPagoAnticipado write SetFPagoAnticipado;    //Jun 29/17
+
+    Property ActVerificayCreaFinal:TBasicAction read FActCreaFinales write SetFCreaFinales; //Oct 3/17
   end;
 
 implementation
@@ -327,7 +334,10 @@ begin
          Seguir:=True;
       FrmClaveAutorizacion.Free;
     end;
-  end;
+  end
+  else                    //Corresponde al parga  Oct3/17
+   Seguir := VerificaFinales(DataSource.DataSet.FieldByName('IdAnexo').AsInteger);
+
   if Seguir then
   begin
                                 //Se debe obligar  antes
@@ -382,6 +392,8 @@ begin
           FrmAplicacionPago:=TFrmAplicacionPago.create(self);
           FrmAplicacionPago.ActFacturaMora:= ActFacturaMorato;
           FrmAplicacionPago.ActPagoAnticipado:= ActPagoAnticipado; //Jun 30/17
+          FrmAplicacionPago.ActVerificayCreaFinal:=ActVerificayCreaFinal; //Oct 3/17
+
           FrmAplicacionPago.EsFactoraje:= Datasource.DataSet.FieldByName('OrigenPago').AsInteger=1; //Ene 13/17
           FrmAplicacionPago.LblaplicandoFactoraje.Visible:= Datasource.DataSet.FieldByName('OrigenPago').AsInteger=1; //Ene 13/17
 
@@ -520,6 +532,11 @@ begin
   FactAjustePrueba := Value;
 end;
 
+procedure TFrmConPagos.SetFCreaFinales(const Value: TBasicAction);
+begin
+  FActCreaFinales := Value;
+end;
+
 procedure TFrmConPagos.SetFPagoAnticipado(const Value: TBasicAction);
 begin
   FActPagoAnticipado := Value;
@@ -542,6 +559,35 @@ begin
     Tadodataset(datasource.DataSet).Parameters.ParamByName('FFin').Value:=cxDtEdtHasta.Date+1;
   end;
   Tadodataset(datasource.DataSet).open;
+end;
+
+function TFrmConPagos.VerificaFinales(idanexo: integer): boolean;
+var Saldo,saldodeposito:Double;       //Oct 3/17
+begin
+  Saldo:=0;
+  Result:=True;
+  dsAuxiliar.DataSet.Close;
+  TADOQuery(dsAuxiliar.dataset).SQL.clear;
+  TADOQuery(dsAuxiliar.dataset).SQL.Add('Select * from Pagos where EsDeposito=1 and Saldo >0 and IdAnexo='+intTostr(IdAnexo));
+  dsAuxiliar.DataSet.open;
+  if not  dsAuxiliar.DataSet.eof then
+  begin  //Existe Deposito en Garantía
+    Result:=False;
+    SaldoDeposito:=  dsAuxiliar.DataSet.FieldByName('Saldo').ASExtended ;
+    TADOQuery(DSVerificaSaldoFinal.dataset).Close;
+    TADOQuery(DSVerificaSaldoFinal.dataset).Parameters.ParamByName('IdAnexo').Value:= idanexo;
+    TADOQuery(DSVerificaSaldoFinal.dataset).Open;
+    if not  TADOQuery(DSVerificaSaldoFinal.dataset).Eof then
+      Saldo:= SimpleRoundTo(TADOQuery(DSVerificaSaldoFinal.dataset).fieldbyname('SaldoPorCobrarOSinPago').AsExtended,-2); // PAra que compare de dorma simlar a las CXC
+    if (Saldo>0) and (Saldo <=saldoDeposito) then
+    begin // Aca ya debe venir con cxc actualizadas se verifican antes de aplicar el pago..
+      REsult:= Application.messagebox('Tiene un Pago por depósito en garantía que puede usar para liquidar las últimas mensualidades. '
+              +#13+'¿Continuar el proceso utilizando el registro del Pago Actual?'
+              ,'Confirmación',MB_YESNO)=IDYES ;
+    end
+    else
+      REsult:=True;
+  end;
 end;
 
 end.

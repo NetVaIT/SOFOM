@@ -4,6 +4,7 @@ inherited FrmConPagos: TFrmConPagos
   ClientHeight = 428
   ClientWidth = 1101
   ExplicitWidth = 1107
+  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -1115,19 +1116,18 @@ inherited FrmConPagos: TFrmConPagos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42712.575441516200000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end
   object dsConCXCPendientes: TDataSource
     DataSet = dmPagos.ADODtStCXCPendientes
-    Left = 460
-    Top = 65528
+    Left = 452
+    Top = 8
   end
   object DSDetallesCXC: TDataSource
     DataSet = dmPagos.ADODtStCxCDetallePend
-    Left = 548
-    Top = 65533
+    Left = 564
+    Top = 5
   end
   object DSAplicacion: TDataSource
     DataSet = dmPagos.ADODtStAplicacionesPagos
@@ -1140,7 +1140,7 @@ inherited FrmConPagos: TFrmConPagos
   end
   object DSDetalleMostrar: TDataSource
     DataSet = dmPagos.ADODtStDetalleCXCMostrar
-    Left = 932
+    Left = 900
     Top = 5
   end
   object DSAnexos: TDataSource
@@ -1162,5 +1162,10 @@ inherited FrmConPagos: TFrmConPagos
     DataSet = dmPagos.ADOPActualizaTotalesCXC
     Left = 796
     Top = 352
+  end
+  object DSVerificaSaldoFinal: TDataSource
+    DataSet = dmPagos.ADOQryVerificaSaldoFinal
+    Left = 1028
+    Top = 128
   end
 end

@@ -147,6 +147,10 @@ inherited dmPagos: TdmPagos
       Caption = 'ActPagosAnticipados'
       OnExecute = ActPagosAnticipadosExecute
     end
+    object ActVerYCreaCXCFinales: TAction
+      Caption = 'ActVerYCreaCXCFinales'
+      OnExecute = ActVerYCreaCXCFinalesExecute
+    end
   end
   object ADOSPersonas: TADODataSet
     Connection = _dmConection.ADOConnection

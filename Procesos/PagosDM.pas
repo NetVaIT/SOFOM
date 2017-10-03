@@ -3,8 +3,8 @@ unit PagosDM;
 interface
 
 uses
-  System.SysUtils, System.Classes, _StandarDMod, Data.DB, System.Actions,
-  Vcl.ActnList,Data.Win.ADODB, math, dialogs,ProcesosType, Controls;
+   Winapi.windows,System.SysUtils, System.Classes, _StandarDMod, Data.DB, System.Actions,
+  Vcl.ActnList,Data.Win.ADODB, math, dialogs,ProcesosType, Controls, forms;
 
 type
   TdmPagos = class(T_dmStandar)
@@ -371,6 +371,7 @@ type
     ADODtStSelMetPagoDescripcion: TStringField;
     ADODtStSelMetPagoExigeCuenta: TIntegerField;
     ADODtStSelMetPagoClaveSAT2016: TStringField;
+    ActVerYCreaCXCFinales: TAction;
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsMasterAfterPost(DataSet: TDataSet);
     procedure adodsMasterBeforePost(DataSet: TDataSet);
@@ -391,6 +392,7 @@ type
     procedure actCrearCXCAbonoCapitalExecute(Sender: TObject);
     procedure ActAjusteAmortizaExecute(Sender: TObject);
     procedure ActPagosAnticipadosExecute(Sender: TObject);
+    procedure ActVerYCreaCXCFinalesExecute(Sender: TObject);
   private
     { Private declarations }
     Inserto:Boolean;
@@ -458,7 +460,7 @@ type
     property TipoContrato: integer read  FTipocontrato write  SetFTipocontrato; //Abr 18/17
     Property TipoAbono: TAbonoCapital  read  FTipoAbono write  SetFTipoAbono; //Abr 18/17
 
-     Property IDCFDIActual: Integer  read  FIdCFDIActual write  SetFIdCFDIActual; //Abr 18/17
+    Property IDCFDIActual: Integer  read  FIdCFDIActual write  SetFIdCFDIActual; //Abr 18/17
 
 
   end;
@@ -524,6 +526,12 @@ begin //Jun 28/17
 
 end;
 
+
+procedure TdmPagos.ActVerYCreaCXCFinalesExecute(Sender: TObject);
+begin
+  inherited;
+  VerificaYCreaCXCFinales(adodsMasterIdAnexo.AsInteger); //DEbe estar en el Pago correspondiente Oct 3/17
+end;
 
 procedure TdmPagos.adodsMasterBeforeInsert(DataSet: TDataSet);
 const      // mar 10/17
@@ -957,7 +965,7 @@ begin
   end;
 end;
 
-procedure TdmPagos.actAbonarCapitalExecute(Sender: TObject);
+procedure TdmPagos.actAbonarCapitalExecute(Sender: TObject);    //No usada
 var
   dmAbonarCapital: TdmAbonarCapital;
 begin
@@ -1522,6 +1530,10 @@ begin        //FEb 10/17                 //No requerido aca
     campoimporte:='Importe';
 
   end;
+
+  ADODtStCXCPendientes.filter:='IdCuentaXCobrar = '+ADODtStAplicacionesPagosIdCuentaXCobrar.AsString; //Por si es la ultima y creo varias para que se ubique Oct 3/17
+  ADODtStCXCPendientes.filtered:=True;
+
   //FActoraje sólo filtrar FActurado//FEb
                                   // 'Importe'
   Valor:=dataset.FieldByName(campoimporte).AsFloat;      //Aplicaciones
@@ -1549,7 +1561,7 @@ begin        //FEb 10/17                 //No requerido aca
                                       +' and (SaldoDoc1 is null or SaldoDoc1>0.01)'       // 0.00001      FEb 14/17  (Verificar)
                                       +' order by fase desc, ordenAplica ' ;
   end
-  else
+  else //Esta en otra
   begin
     ADODtStCxCDetallePend.Close;
     ADODtStCxCDetallePend.CommandText:='Select * From vw_CXCParaAplicar where Saldo >0  and IdCuentaXCobrar=:IdCuentaXCobrar '
@@ -1856,8 +1868,10 @@ begin        //FEb 10/17                 //No requerido aca
 //  ADODtStCxCDetallePend.Refresh;
 
   //VErificación de  Existencia Pago de Deposito en GArantia y Saldo Final, preguntar si se generan moratotrios al día o ver ??
-   VerificaYCreaCXCFinales(adodsMasterIdAnexo.AsInteger); //DEl que se acaba de aplicar
-
+ //Quitar de aca.. o al menos evitar si se estan pagando anticipos.. para evitar mala aplicacion... Mover para   el punto donde se llama el pos y verificar si es antcipo o pago a Capital
+ // quitado Oct 2/17  VerificaYCreaCXCFinales(adodsMasterIdAnexo.AsInteger); //DEl que se acaba de aplicar
+  ADODtStCXCPendientes.filter:=''; //Por si es la ultima y creo varias para que se ubique Oct 3/17
+  ADODtStCXCPendientes.filtered:=False;
 end;
 
 function TdmPagos.VerificaYCreaCXCFinales(idAnexo:Integer):Boolean; //Jun 21/17
@@ -1876,23 +1890,27 @@ begin
     ADOQryVerificaSaldoFinal.Open;
 
     if not ADOQryVerificaSaldoFinal.Eof then
-      Saldo:=ADOQryVerificaSaldoFinal.fieldbyname('SaldoPorCobrarOSinPago').AsExtended;
+      Saldo:=SimpleRoundTo(ADOQryVerificaSaldoFinal.fieldbyname('SaldoPorCobrarOSinPago').AsExtended, -2); //REdondeado para que haga la comparacion Oct 3/17 sino no coincidira con las CXC
     if (Saldo>0) and (Saldo <=saldoDeposito) then
     begin // Aca ya debe venir con cxc actualizadas se verifican antes de aplicar el pago..
-       showMessage('               Tiene un Pago por depósito en garantía que puede usar para liquidar las últimas mensualidades. '
-              +#13+'Se verificará la no existencia de moratorios al día y se generarán las cuentas por cobrar finales en caso de que estén pendientes.');
-      //Crear moratorios
-      if (not CreaMoratoriosAFechaActual)  then
+      if Application.messagebox('  Tiene un Pago por depósito en garantía que puede usar para liquidar las últimas mensualidades. '
+              +#13+'Se verificará la no existencia de moratorios al día y se generarán las cuentas por cobrar finales en caso de que estén pendientes. Realizar proceso de Creación de Cuentas X Cobrar?'
+              ,'Confirmación',MB_YESNO)=IDYES then
       begin
-        if CrearCuentasFinales then   //Avisar de  la creación de las CXC finales...
-          showMessage('Se crearon Cuentas de Cobrar de las últimas amortizaciones quedarán disponibles para Facturar y aplicar al pago correspondiente al Depósito en Garantía')
+        //Crear moratorios
+        if (not CreaMoratoriosAFechaActual)  then
+        begin
+          if CrearCuentasFinales then   //Avisar de  la creación de las CXC finales...
+            showMessage('Se crearon Cuentas de Cobrar de las últimas amortizaciones quedarán disponibles para Facturar y aplicar al pago correspondiente al Depósito en Garantía')
+          else
+            ShowMessage('Es posible que las cuentas finales ya se encuentren creadas, verifique, facture y proceda a aplicar con el Pago de deposito en Garantía ');
+        end
         else
-          ShowMessage('Es posible que las cuentas finales ya se encuentren creadas, verifique, facture y proceda a aplicar con el Pago de deposito en Garantía ');
+           ShowMessage('Hay Moratorios pendientes al día actual. Debe pagar primero estos antes de poder generar las cuentas por cobrar finales');
       end
       else
-         ShowMessage('Hay Moratorios pendientes al día actual. Debe pagar primero estos antes de poder generar las cuentas por cobrar finales');
-
-    end;
+        ShowMessage('Proceso de Creación de Cuentas X Cobrar finales Cancelado');
+    end;  //Tiene Saldo >0 y el depósito alcanza
   end;
 
 end;
@@ -1983,7 +2001,7 @@ end;
 
 
 function TdmPagos.AplicaPago(idPago, IdCxc, IDCFDI: Integer;
-  Monto: Double): Boolean; //abr 18/17      Abono Capital
+  Monto: Double): Boolean; //abr 18/17      Abono Capital     y pagos anticipados
 begin
   try
     ADODtStAplicacionesPagos.open;
@@ -1991,7 +2009,7 @@ begin
     ADODtStAplicacionesPagosIdCuentaXCobrar.AsInteger:= IdCxc;
     ADODtStAplicacionesPagosIdPago.AsInteger:= IdPago;
     ADODtStAplicacionesPagosImporte.AsExtended:=Monto;
-    ADODtStAplicacionesPagos.Post; //DEbe hacer el resto
+    ADODtStAplicacionesPagos.Post; //DEbe hacer el resto      //Aca no debe hacerse la verificacion del deposito en Garantía  PA y AC Oct 2/17
     Result:=true;
   except
     Result:=False;
@@ -2107,6 +2125,8 @@ begin
    TFrmConPagos(gGridForm).actAjustePrueba:=ActAjusteAmortiza; //Abr 20/17 auxiliar && borrar
 
    TFrmConPagos(gGridForm).ActPagoAnticipado :=ActPagosAnticipados;//Jun 29/17
+   TFrmConPagos(gGridForm).ActVerificayCreaFinal:=ActVerYCreaCXCFinales; //Oct 3/17
+   TFrmConPagos(gGridForm).DSVerificaSaldoFinal.dataset :=adoQryVerificaSaldoFinal; //Oct 3/17
 
  //  TfrmFacturasGrid(gGridForm).ActGenerarCFDI := actProcesaFactura;  //Nov29/16
   PaymentTime := ptEndOfPeriod; //Para ajuste amortizaciones abr 18/17

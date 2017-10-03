@@ -7,7 +7,7 @@ uses
   ppParameter, ppDesignLayer, ppVar, ppBands, dxGDIPlusClasses, ppPrnabl,
   ppClass, ppCache, ppProd, ppReport, ppComm, ppRelatv, ppDB, ppDBPipe,
   Data.Win.ADODB, ppStrtch, ppSubRpt;
-
+ // para validar patrones  ,  System.regularExpressions
 type
   TDmReporteCarteraPDF = class(T_dmReportSOFOM)
     ppLabel3: TppLabel;
@@ -931,6 +931,7 @@ end;
 procedure TDmReporteCarteraPDF.CuotasReportCalcFields(DataSet: TDataSet);
 begin
   inherited;
+
   DataSet.FieldByName('CuotaMostrar').asstring:=   DataSet.FieldByName('CuotasPendientes').asstring+'/'+ DataSet.FieldByName('Plazo').asstring;
 end;
 
