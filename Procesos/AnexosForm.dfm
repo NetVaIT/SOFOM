@@ -2,37 +2,37 @@ inherited frmAnexos: TfrmAnexos
   BorderStyle = bsToolWindow
   Caption = 'Anexos'
   ClientHeight = 428
-  ClientWidth = 678
-  ExplicitWidth = 684
+  ClientWidth = 992
+  ExplicitWidth = 998
   ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
     Top = 343
-    Width = 678
+    Width = 992
     ExplicitTop = 343
     ExplicitWidth = 645
   end
   inherited splDetail1: TSplitter
     Top = 255
-    Width = 678
+    Width = 992
     ExplicitTop = 255
     ExplicitWidth = 645
   end
   inherited splDetail2: TSplitter
     Top = 299
-    Width = 678
+    Width = 992
     ExplicitTop = 299
     ExplicitWidth = 645
   end
   inherited pnlMaster: TPanel
-    Width = 678
+    Width = 992
     Height = 229
     ExplicitTop = 26
     ExplicitWidth = 678
     ExplicitHeight = 229
     inherited cxGrid: TcxGrid
-      Width = 678
+      Width = 992
       Height = 229
       ExplicitWidth = 678
       ExplicitHeight = 229
@@ -206,29 +206,29 @@ inherited frmAnexos: TfrmAnexos
   end
   inherited pnlDetail3: TPanel
     Top = 346
-    Width = 678
+    Width = 992
     ExplicitTop = 346
     ExplicitWidth = 678
   end
   inherited pnlDetail2: TPanel
     Top = 302
-    Width = 678
+    Width = 992
     ExplicitTop = 302
     ExplicitWidth = 678
   end
   inherited pnlDetail1: TPanel
     Top = 258
-    Width = 678
+    Width = 992
     ExplicitTop = 258
     ExplicitWidth = 678
   end
   inherited pnlClose: TPanel
     Top = 387
-    Width = 678
+    Width = 992
     ExplicitTop = 387
     ExplicitWidth = 678
     inherited btnClose: TButton
-      Left = 593
+      Left = 907
       ExplicitLeft = 593
     end
   end
@@ -271,6 +271,14 @@ inherited frmAnexos: TfrmAnexos
         item
           Visible = True
           ItemName = 'dxbbAbonar'
+        end
+        item
+          Visible = True
+          ItemName = 'dxbbReducirCuota'
+        end
+        item
+          Visible = True
+          ItemName = 'dxbbReducirPlazo'
         end>
     end
     object dxbbGenerar: TdxBarButton
@@ -303,6 +311,16 @@ inherited frmAnexos: TfrmAnexos
       Action = dmContratos.actGenMoratorios
       Category = 0
       PaintStyle = psCaptionGlyph
+    end
+    object dxbbReducirCuota: TdxBarButton
+      Caption = 'Reducir cuota'
+      Category = 0
+      Visible = ivAlways
+    end
+    object dxbbReducirPlazo: TdxBarButton
+      Caption = 'Reducir plazo'
+      Category = 0
+      Visible = ivAlways
     end
   end
   inherited cxStyleRepository: TcxStyleRepository

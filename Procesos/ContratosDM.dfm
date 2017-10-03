@@ -146,6 +146,14 @@ inherited dmContratos: TdmContratos
       Hint = 'Obtiene la '#250'ltima cotizaci'#243'n de la moneda'
       OnExecute = actGetTipoCambioExecute
     end
+    object actReducirCuota: TAction
+      Caption = 'Reducir cuota'
+      OnExecute = actReducirCuotaExecute
+    end
+    object actReducirPlazo: TAction
+      Caption = 'Reducir plazo'
+      OnExecute = actReducirPlazoExecute
+    end
   end
   object dsMaster: TDataSource
     AutoEdit = False

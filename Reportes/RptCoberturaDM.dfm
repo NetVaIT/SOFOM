@@ -8,8 +8,9 @@ inherited dmRptCobertura: TdmRptCobertura
       ' ValorComercialActualizado, Cobertura, CASE WHEN Cobertura < 0 T' +
       'HEN Cobertura ELSE 0 END AS CoberturaN, CASE WHEN Cobertura >= 0' +
       ' THEN Cobertura ELSE 0 END AS CoberturaP,'#13#10'                     ' +
-      ' Factor, DiasRetraso'#13#10'FROM         v_RptCobertura'#13#10'WHERE ISNULL(' +
-      'DiasRetraso, 0) >= :Vencidos'#13#10'ORDER BY Cobertura'
+      ' Factor, DiasRetraso'#13#10'FROM         v_RptCobertura'#13#10'WHERE IdAnexo' +
+      'Estatus <> 4'#13#10'AND ISNULL(DiasRetraso, 0) >= :Vencidos'#13#10'ORDER BY ' +
+      'Cobertura'
     Parameters = <
       item
         Name = 'Vencidos'

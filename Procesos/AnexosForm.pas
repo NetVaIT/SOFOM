@@ -87,6 +87,8 @@ type
     tvMasterPagadoTotal: TcxGridDBColumn;
     tvMasterSaldoTotal: TcxGridDBColumn;
     dxbbGenMoratorios: TdxBarButton;
+    dxbbReducirCuota: TdxBarButton;
+    dxbbReducirPlazo: TdxBarButton;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
@@ -97,11 +99,15 @@ type
     FactRestructurar: TBasicAction;
     FactOpcionCompra: TbasicAction;
     FactGenMoratorios: TBasicAction;
+    FactReducirCuota: TBasicAction;
+    FactReducirPlazo: TBasicAction;
     procedure SetactGenerar(const Value: TBasicAction);
     procedure SetactAbonar(const Value: TBasicAction);
     procedure SetactRestructurar(const Value: TBasicAction);
-    procedure SetactOpcionCompra(const Value: TbasicAction);
+    procedure SetactOpcionCompra(const Value: TBasicAction);
     procedure SetactGenMoratorios(const Value: TBasicAction);
+    procedure SetactReducirCuota(const Value: TBasicAction);
+    procedure SetactReducirPlazo(const Value: TBasicAction);
   public
     { Public declarations }
     property actGenerar: TBasicAction read FactGenerar write SetactGenerar;
@@ -109,7 +115,9 @@ type
     property actRestructurar: TBasicAction read FactRestructurar write SetactRestructurar;
     property actGetTipoCambio: TBasicAction read FactGetTipoCambio write FactGetTipoCambio;
     property actAbonar: TBasicAction read FactAbonar write SetactAbonar;
-    property actOpcionCompra: TbasicAction read FactOpcionCompra write SetactOpcionCompra;
+    property actOpcionCompra: TBasicAction read FactOpcionCompra write SetactOpcionCompra;
+    property actReducirCuota: TBasicAction read FactReducirCuota write SetactReducirCuota;
+    property actReducirPlazo: TBasicAction read FactReducirPlazo write SetactReducirPlazo;
   end;
 
 implementation
@@ -148,10 +156,22 @@ begin
   dxbbGenMoratorios.Action := Value;
 end;
 
-procedure TfrmAnexos.SetactOpcionCompra(const Value: TbasicAction);
+procedure TfrmAnexos.SetactOpcionCompra(const Value: TBasicAction);
 begin
   FactOpcionCompra := Value;
   dxbbOpcionCompra.Action := Value;
+end;
+
+procedure TfrmAnexos.SetactReducirCuota(const Value: TBasicAction);
+begin
+  FactReducirCuota := Value;
+  dxbbReducirCuota.Action := Value;
+end;
+
+procedure TfrmAnexos.SetactReducirPlazo(const Value: TBasicAction);
+begin
+  FactReducirPlazo := Value;
+  dxbbReducirPlazo.Action := Value;
 end;
 
 procedure TfrmAnexos.SetactRestructurar(const Value: TBasicAction);

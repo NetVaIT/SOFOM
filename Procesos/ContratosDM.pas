@@ -175,6 +175,8 @@ type
     actGenMoratorios: TAction;
     adopGenMoratorio: TADOStoredProc;
     adodsAnexosFinanciarEnganche: TBooleanField;
+    actReducirCuota: TAction;
+    actReducirPlazo: TAction;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsAnexosPrecioMonedaChange(Sender: TField);
     procedure adodsAnexosNewRecord(DataSet: TDataSet);
@@ -207,6 +209,8 @@ type
     procedure adodsAnexosComisionChange(Sender: TField);
     procedure adodsAnexosDespositosNumeroChange(Sender: TField);
     procedure adodsAnexosDepositosChange(Sender: TField);
+    procedure actReducirCuotaExecute(Sender: TObject);
+    procedure actReducirPlazoExecute(Sender: TObject);
   private
     { Private declarations }
     FPaymentTime: TPaymentTime;
@@ -366,8 +370,20 @@ begin
 //  finally
 //    dmAbonarCapital.Free;
 //  end;
+end;
+
+procedure TdmContratos.actReducirCuotaExecute(Sender: TObject);
+begin
+  inherited;
   dmAmortizaciones.TipoContrato := TipoContrato;
-  dmAmortizaciones.SetAmortizaciones(IdAnexo,0, acReducirCuota, adodsAmortizacionesFechaVencimiento.Value);
+  dmAmortizaciones.SetAmortizaciones(IdAnexo, 0, acReducirCuota, adodsAmortizacionesFechaVencimiento.Value);
+end;
+
+procedure TdmContratos.actReducirPlazoExecute(Sender: TObject);
+begin
+  inherited;
+  dmAmortizaciones.TipoContrato := TipoContrato;
+  dmAmortizaciones.SetAmortizaciones(IdAnexo, 0, acReducirPlazo, adodsAmortizacionesFechaVencimiento.Value);
 end;
 
 procedure TdmContratos.actCrearAnexoExecute(Sender: TObject);
@@ -723,6 +739,8 @@ begin
   TfrmAnexos(gFormDeatil1).actRestructurar := actRestructurar;
   TfrmAnexos(gFormDeatil1).actAbonar := actAbonarCapital;
   TfrmAnexos(gFormDeatil1).actOpcionCompra := actOpcionCompra;
+  TfrmAnexos(gFormDeatil1).actReducirCuota := actReducirCuota;
+  TfrmAnexos(gFormDeatil1).actReducirPlazo := actReducirPlazo;
   TfrmAnexos(gFormDeatil1).actGetTipoCambio := actGetTipoCambio;
   if adodsCreditos.CommandText <> EmptyStr then adodsCreditos.Open;
   gFormDeatil2:= TfrmAnexosCreditos.Create(Self);
@@ -741,10 +759,14 @@ begin
   dmAmortizaciones.PaymentTime := PaymentTime;
   {$IFDEF DEBUG}
     actAbonarCapital.Visible := True;
+    actReducirCuota.Visible := True;
+    actReducirPlazo.Visible := True;
     actPreAmortizaciones.Visible := True;
     actGenAmortizaciones.Visible := True;
   {$ELSE}
     actAbonarCapital.Visible := False;
+    actReducirCuota.Visible := False;
+    actReducirPlazo.Visible := False;
     actPreAmortizaciones.Visible := False;
     actGenAmortizaciones.Visible := False;
   {$ENDIF}

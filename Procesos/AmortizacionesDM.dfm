@@ -333,47 +333,36 @@ inherited dmAmortizaciones: TdmAmortizaciones
         Precision = 10
         Size = 4
         Value = Null
-      end
-      item
-        Name = 'Fecha'
-        DataType = ftDateTime
-        NumericScale = 3
-        Precision = 23
-        Size = 16
-        Value = Null
       end>
     SQL.Strings = (
       
         'SELECT        AnexosAmortizaciones.IdAnexoAmortizacion, AnexosAm' +
         'ortizaciones.IdAnexoCredito, AnexosAmortizaciones.IdAnexoSegment' +
         'o, AnexosAmortizaciones.Periodo, AnexosAmortizaciones.FechaCorte' +
-        ', '
+        ','
       
         '                         AnexosAmortizaciones.FechaVencimiento, ' +
         'AnexosAmortizaciones.TasaAnual, AnexosAmortizaciones.SaldoInicia' +
-        'l, AnexosAmortizaciones.Pago, AnexosAmortizaciones.Capital, '
+        'l, AnexosAmortizaciones.Pago, AnexosAmortizaciones.Capital,'
       
         '                         AnexosAmortizaciones.CapitalImpuesto, A' +
         'nexosAmortizaciones.CapitalTotal, AnexosAmortizaciones.Interes, ' +
         'AnexosAmortizaciones.InteresImpuesto, AnexosAmortizaciones.Inter' +
-        'esTotal, '
+        'esTotal,'
       
         '                         AnexosAmortizaciones.ImpactoISR, Anexos' +
         'Amortizaciones.PagoTotal, AnexosAmortizaciones.SaldoFinal, Anexo' +
-        'sAmortizaciones.FechaMoratorio, AnexosAmortizaciones.MoratorioBa' +
-        'se, '
+        'sAmortizaciones.FechaMoratorio,'
       
         '                         AnexosAmortizaciones.Moratorio, AnexosA' +
         'mortizaciones.MoratorioImpuesto'
-      'FROM AnexosAmortizaciones '
+      'FROM v_AnexosAmortizaciones AS AnexosAmortizaciones'
       
         'INNER JOIN AnexosCreditos ON AnexosAmortizaciones.IdAnexoCredito' +
         ' = AnexosCreditos.IdAnexoCredito'
-      'WHERE AnexosCreditos.IdAnexoCreditoEstatus = 1 '
-      'AND AnexosCreditos.IdAnexo = :IdAnexo'
-      
-        'AND AnexosAmortizaciones.FechaVencimiento >=:Fecha  -- abr 19/17' +
-        ' ')
+      'WHERE AnexosCreditos.IdAnexoCreditoEstatus = 1'
+      'AND AnexosAmortizaciones.PagoSaldo > 0.01'
+      'AND AnexosCreditos.IdAnexo = :IdAnexo')
     Left = 216
     Top = 88
     object adoqAnexosAmortizacionesIdAnexoAmortizacion: TAutoIncField
@@ -456,11 +445,6 @@ inherited dmAmortizaciones: TdmAmortizaciones
     end
     object adoqAnexosAmortizacionesFechaMoratorio: TDateTimeField
       FieldName = 'FechaMoratorio'
-    end
-    object adoqAnexosAmortizacionesMoratorioBase: TFMTBCDField
-      FieldName = 'MoratorioBase'
-      Precision = 18
-      Size = 6
     end
     object adoqAnexosAmortizacionesMoratorio: TFMTBCDField
       FieldName = 'Moratorio'
@@ -598,9 +582,11 @@ inherited dmAmortizaciones: TdmAmortizaciones
     SQL.Strings = (
       
         'SELECT Anexos.Fecha AS FechaPrestamo, AnexosCreditos.IdAnexoCred' +
-        'ito, AnexosCreditos.FechaCorte, AnexosCreditos.FechaVencimiento,' +
-        ' AnexosCreditos.Plazo, AnexosCreditos.TasaAnual, AnexosCreditos.' +
-        'ValorResidual, AnexosCreditos.ImpactoISR'
+        'ito, AnexosCreditos.FechaCorte,'
+      
+        'AnexosCreditos.FechaVencimiento, AnexosCreditos.Plazo, AnexosCre' +
+        'ditos.TasaAnual, AnexosCreditos.ValorResidual,'
+      'AnexosCreditos.ImpactoISR, AnexosCreditos.PagoMensual'
       'FROM AnexosCreditos'
       'INNER JOIN Anexos ON AnexosCreditos.IdAnexo = Anexos.IdAnexo'
       'WHERE AnexosCreditos.IdAnexoCreditoEstatus = 1'
@@ -634,6 +620,11 @@ inherited dmAmortizaciones: TdmAmortizaciones
     end
     object adoqCreditoImpactoISR: TFMTBCDField
       FieldName = 'ImpactoISR'
+      Precision = 18
+      Size = 6
+    end
+    object adoqCreditoPagoMensual: TFMTBCDField
+      FieldName = 'PagoMensual'
       Precision = 18
       Size = 6
     end
