@@ -111,7 +111,11 @@ inherited frmConAplicacionesInternas: TfrmConAplicacionesInternas
       0
       26
       0)
+    inherited dxbNavigator: TdxBar
+      DockedLeft = 107
+    end
     inherited dxbTools: TdxBar
+      DockedLeft = 238
       ItemLinks = <
         item
           Visible = True
@@ -912,7 +916,7 @@ inherited frmConAplicacionesInternas: TfrmConAplicacionesInternas
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42739.414081597220000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

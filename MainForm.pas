@@ -298,9 +298,14 @@ procedure TfrmMain.ActPoneFechaActualExecute(Sender: TObject);
 var FrmPoneFechaActual:TFrmPoneFechaActual;
 begin
   inherited;
-  FrmPoneFechaActual:=TFrmPoneFechaActual.Create(self);
-  FrmPoneFechaActual.ShowModal;
-  FrmPoneFechaActual.Free;
+  if not FileExists(ExtractFilePath(application.ExeName)+'EnProduccion.txt') then   //Oct 4/17
+  begin
+    FrmPoneFechaActual:=TFrmPoneFechaActual.Create(self);
+    FrmPoneFechaActual.ShowModal;
+    FrmPoneFechaActual.Free;
+  end
+  else
+    Showmessage('En Produccion No es posible cambiar de fecha');     //Oct 4/17
 end;
 
 procedure TfrmMain.ConfigControls;
@@ -396,6 +401,13 @@ begin
   inherited;
   dmConfiguracion.ShowModule(dxtshConfiguracion, '');
   dmUsuarios.ShowModule(dxtshUsuarios, '');
+  if FileExists(ExtractFilePath(application.ExeName)+'EnProduccion.txt') then //Oct 4/17
+  begin
+     dxRibbonStatusBar1.Panels[2].Text:= 'PRODUCCION';
+  end;
+
+
 end;
+
 
 end.

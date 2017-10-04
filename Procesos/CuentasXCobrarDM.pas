@@ -304,12 +304,18 @@ end;
 
 procedure TdmCuentasXCobrar.ActActualizaMoratoriosExecute(Sender: TObject);
 begin
-  inherited;
-  ADOStrprcActGralMoratorios.Parameters.ParamByName('@Fecha').Value:=FFechaActual;// may 26/17 date;  //Sin hora
-  ADOStrprcActGralMoratorios.ExecProc;
-  Showmessage('Se ejecutó proceso de Moratorios al día: '+ dateToStr(FFechaActual)) ; // may 26/17 era date
-  RegistraBitacora(1);//Moratorios Abr 12/17
-  adodsMaster.Refresh;
+  inherited;   //Confirmación Oct 4/17
+  if (Application.MessageBox(pChar('Está seguro que desea generar los moratorios de todos los contratos a la fecha:'+ dateToStr(FFechaActual)+' ?'),
+     'Confirmación',MB_YESNO)=IDYES) then
+  begin
+    ADOStrprcActGralMoratorios.Parameters.ParamByName('@Fecha').Value:=FFechaActual;// may 26/17 date;  //Sin hora
+    ADOStrprcActGralMoratorios.ExecProc;
+    Showmessage('Se ejecutó proceso de Moratorios al día: '+ dateToStr(FFechaActual)) ; // may 26/17 era date
+    RegistraBitacora(1);//Moratorios Abr 12/17
+    adodsMaster.Refresh;
+  end
+  else
+    Showmessage('Proceso de generación de Moratorios Cancelado');
 
 end;
 
@@ -358,9 +364,9 @@ begin
   adoDSMaster.Close;
   adoDSMaster.Open;
   if res=0  then
-     Showmessage('No existian Cuentas X Cobrar pendientes de generar')
+     Showmessage('No existen Amortizaciones en el rango de fechas para la creación de Cuentas X Cobrar pendientes')         //Ajustados los mensajes oct 4/17
   else
-     Showmessage('Actualizó  Cuentas X Cobrar de '+intToStr(res)+' Amortizaciones');  //Puede que no de todas actualice
+     Showmessage('Verificó '+intToStr(res)+' Amortizaciones con posibilidad de creación de Cuentas X Cobrar. Puede que se hayan generado nuevas cuentas');  //Puede que no de todas actualice
 
   RegistraBitacora(0);//CuentasXCobrar
 end;
