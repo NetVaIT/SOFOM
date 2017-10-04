@@ -376,14 +376,14 @@ procedure TdmContratos.actReducirCuotaExecute(Sender: TObject);
 begin
   inherited;
   dmAmortizaciones.TipoContrato := TipoContrato;
-  dmAmortizaciones.SetAmortizaciones(IdAnexo, 0, acReducirCuota, adodsAmortizacionesFechaVencimiento.Value);
+  dmAmortizaciones.SetAmortizaciones(IdAnexo, 0, acReducirCuota);
 end;
 
 procedure TdmContratos.actReducirPlazoExecute(Sender: TObject);
 begin
   inherited;
   dmAmortizaciones.TipoContrato := TipoContrato;
-  dmAmortizaciones.SetAmortizaciones(IdAnexo, 0, acReducirPlazo, adodsAmortizacionesFechaVencimiento.Value);
+  dmAmortizaciones.SetAmortizaciones(IdAnexo, 0, acReducirPlazo);
 end;
 
 procedure TdmContratos.actCrearAnexoExecute(Sender: TObject);

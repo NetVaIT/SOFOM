@@ -59,18 +59,17 @@ implementation
 
 function TdmAbonarCapital.AbonarCapital(IdAnexo, IdTipoContrato: Integer; Fecha: TDateTime;
   Importe: Extended; Tipo: TAbonoCapital): Boolean;
-var                                                        //No se usa
+var
   dmAmortizaciones: TdmAmortizaciones;
   IdCuentaXCobrar: Integer;
 begin
   Result := False;
-//  // Crear CXC
-//  adopCXCAbonarCapital.Parameters.ParamByName('@IdAnexo').Value := IdAnexo;
-//  adopCXCAbonarCapital.Parameters.ParamByName('@Fecha').Value := Fecha;
-//  adopCXCAbonarCapital.Parameters.ParamByName('@ImporteCapital').Value := Importe;
-// adopCXCAbonarCapital.ExecProc;
-//  IdCuentaXCobrar := adopCXCAbonarCapital.Parameters.ParamByName('@IdCuentaXCobrar').Value;
- IdCuentaXCobrar :=  10;
+  // Crear CXC
+  adopCXCAbonarCapital.Parameters.ParamByName('@IdAnexo').Value := IdAnexo;
+  adopCXCAbonarCapital.Parameters.ParamByName('@Fecha').Value := Fecha;
+  adopCXCAbonarCapital.Parameters.ParamByName('@ImporteCapital').Value := Importe;
+  adopCXCAbonarCapital.ExecProc;
+  IdCuentaXCobrar := adopCXCAbonarCapital.Parameters.ParamByName('@IdCuentaXCobrar').Value;
   // Ajustar amortizaciones
  if IdCuentaXCobrar > 0 then
   begin
@@ -78,7 +77,7 @@ begin
     try
       dmAmortizaciones.PaymentTime := PaymentTime;
       dmAmortizaciones.TipoContrato:= TCTipoContrato(IdTipoContrato);
-      Result := dmAmortizaciones.SetAmortizaciones(IdAnexo, Importe, Tipo, Fecha);  //No usada
+      Result := dmAmortizaciones.SetAmortizaciones(IdAnexo, Importe, Tipo);
     finally
       dmAmortizaciones.Free;
     end;

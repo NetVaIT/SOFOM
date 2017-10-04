@@ -361,7 +361,9 @@ inherited dmAmortizaciones: TdmAmortizaciones
         'INNER JOIN AnexosCreditos ON AnexosAmortizaciones.IdAnexoCredito' +
         ' = AnexosCreditos.IdAnexoCredito'
       'WHERE AnexosCreditos.IdAnexoCreditoEstatus = 1'
-      'AND AnexosAmortizaciones.PagoSaldo > 0.01'
+      
+        'AND AnexosAmortizaciones.IdAnexoAmortizacion >= dbo.GetAmortizac' +
+        'ionConSaldo(AnexosCreditos.IdAnexo)'
       'AND AnexosCreditos.IdAnexo = :IdAnexo')
     Left = 216
     Top = 88
@@ -581,8 +583,8 @@ inherited dmAmortizaciones: TdmAmortizaciones
       end>
     SQL.Strings = (
       
-        'SELECT Anexos.Fecha AS FechaPrestamo, AnexosCreditos.IdAnexoCred' +
-        'ito, AnexosCreditos.FechaCorte,'
+        'SELECT Anexos.Fecha AS FechaPrestamo, Anexos.SaldoInsoluto, Anex' +
+        'osCreditos.IdAnexoCredito, AnexosCreditos.FechaCorte,'
       
         'AnexosCreditos.FechaVencimiento, AnexosCreditos.Plazo, AnexosCre' +
         'ditos.TasaAnual, AnexosCreditos.ValorResidual,'
@@ -599,6 +601,11 @@ inherited dmAmortizaciones: TdmAmortizaciones
     end
     object adoqCreditoFechaPrestamo: TDateTimeField
       FieldName = 'FechaPrestamo'
+    end
+    object adoqCreditoSaldoInsoluto: TFMTBCDField
+      FieldName = 'SaldoInsoluto'
+      Precision = 18
+      Size = 6
     end
     object adoqCreditoFechaCorte: TDateTimeField
       FieldName = 'FechaCorte'
