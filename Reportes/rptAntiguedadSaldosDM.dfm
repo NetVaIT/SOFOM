@@ -164,8 +164,8 @@
       OnExecute = ActPDFAntiguedadXClienteExecute
     end
     object ActPDFCtasActualCliente: TAction
-      Caption = 'Adeudo Actual Cliente'
-      Hint = 'Adeudo Actual Cliente'
+      Caption = 'Estado de Cuenta Actual '
+      Hint = 'Estado de Cuenta Actual del Cliente'
       OnExecute = ActPDFCtasActualClienteExecute
     end
     object ActPDFXContratosVencidos: TAction

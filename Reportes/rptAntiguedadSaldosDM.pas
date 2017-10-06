@@ -71,7 +71,7 @@ begin        //Jul 11/17
   //Ajustado para que no cambie l consulta
 
   TExto:= '_' +FormatDateTime('ddmmmyyyy', _DmConection.LaFechaActual);//Date); Jun 30/17
-  ArchiPDF:='AdeudoActualXCliente'+Texto+'.PDF';
+  ArchiPDF:='EstadoCtaActualXCliente'+Texto+'.PDF';
   dmAntiguedadSaldosPDF:= TdmAntiguedadSaldosPDF.Create(Self);
   try
      dmAntiguedadSaldosPDF.ADODtStCtaActCliente.Close;
@@ -90,11 +90,11 @@ begin        //Jul 11/17
 
     dmAntiguedadSaldosPDF.ppRptCtaActCliente.ShowPrintDialog:= False;
     dmAntiguedadSaldosPDF.ppRptCtaActCliente.ShowCancelDialog:= False;
-    dmAntiguedadSaldosPDF.ppRptCtaActCliente.PrinterSetup.DocumentName:=  'Adeudo Actual Por Cliente '+#13 +Texto;
+    dmAntiguedadSaldosPDF.ppRptCtaActCliente.PrinterSetup.DocumentName:=  'Estado de Cuenta Por Cliente '+#13 +Texto; //Era Adeudo Actual Oct 5/17
 
     dmAntiguedadSaldosPDF.ppRptCtaActCliente.DeviceType:= 'PDF';
     dmAntiguedadSaldosPDF.ppRptCtaActCliente.TextFileName:= ArchiPDF;
-    dmAntiguedadSaldosPDF.ppTituloAdeudo.caption:= upperCASE('Adeudo Actual Por Cliente ')+#13 +Texto;
+    dmAntiguedadSaldosPDF.ppTituloAdeudo.caption:= upperCASE('Estado de Cuenta Por Cliente ')+#13 +Texto;     //Era Adeudo Actual Oct 5/17
     dmAntiguedadSaldosPDF.ppRptCtaActCliente.print;
 
      dmAntiguedadSaldosPDF.ADODtStCtaActCliente.Close;

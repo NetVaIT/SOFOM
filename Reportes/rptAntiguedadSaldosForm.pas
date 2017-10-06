@@ -205,7 +205,9 @@ const                                                                        //A
    TxtSQL=' SELECT   Cc.IdCuentaXCobrar, cc.IDAnexo,a.Identificador as Anexo, A.IdContrato, Con.IdContratoTipo,Con.Identificador as Contrato,'
          +'  CASE WHEN CC.Esmoratorio=1 then ''Moratorio'' else ''Amortización'' end as CobroX ,'   //Jun 30/17
          +' CT.Identificador as TC, ct.Descripcion as TipoContrato,Cc.Fecha,cc.FechaVencimiento, Cc.IdPersona, cc.IdCuentaXCobrarEstatus, Cc.Total, CC.Saldo,'
-         +' PR.RazonSocial AS Cliente, CASE WHEN [dbo].getdateAux() - Cc.FechaVencimiento <= 30 THEN Cc.Saldo END AS ''Vigentes'','
+         +' PR.RazonSocial AS Cliente, CASE WHEN ([dbo].getdateaux() - Cc.FechaVencimiento < 0) THEN Cc.Saldo ELSE 0 END AS ''Vigentes'','// oct 5/17? --  en ago 21/17     // era ' CASE WHEN [dbo].getdateAux() - Cc.FechaVencimiento <= 30 THEN Cc.Saldo END AS ''Vigentes'','
+         +' CASE WHEN ([dbo].getdateaux() -  cc.FechaVencimiento<= 30) AND ( [dbo].getdateAux() -  cc.FechaVencimiento>0 )  THEN Cc.Saldo END AS ''Vencidos0a30'',' // -- ago 21/17 ajuste
+
          +' CASE WHEN [dbo].getdateAux() - Cc.FechaVencimiento >= 0 THEN Cc.Saldo END as ''Saldo Total Vencido'','      //Ajustado para que los del dia aparezcan jun 19/17
          +' CASE WHEN ([dbo].getdateAux() - Cc.FechaVencimiento <= 60 ) AND ([dbo].getdateAux() - Cc.FechaVencimiento > 30 )'
          +' THEN Cc.Saldo END AS ''Vencidos a 30 días'', CASE WHEN ([dbo].getdateAux() - Cc.FechaVencimiento <= 90 ) AND ([dbo].getdateAux()'

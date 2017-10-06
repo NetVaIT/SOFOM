@@ -1251,7 +1251,7 @@
     XLSSettings.Author = 'ReportBuilder'
     XLSSettings.Subject = 'Report'
     XLSSettings.Title = 'Report'
-    Left = 304
+    Left = 312
     Top = 144
     Version = '15.0'
     mmColumnWidth = 203200
@@ -5342,21 +5342,31 @@
       'else CC.idCuentaXCobrar end as CxcBase, '#13#10'Cc.Fecha, cc.FechaVenc' +
       'imiento,  Cc.IdPersona, cc.IdCuentaXCobrarEstatus, Cc.Total, CC.' +
       'Saldo, '#13#10'                      PR.RazonSocial AS Cliente,'#13#10'     ' +
-      '                 AA.Periodo             '#13#10'                      ' +
-      #13#10'FROM         CuentasXCobrar AS Cc INNER JOIN'#13#10'                ' +
-      '      Personas AS PR ON Cc.IdPersona = PR.IdPersona '#13#10'          ' +
-      '   left  join  Anexos As A ON Cc.IdAnexo=A.IdAnexo       -- Por ' +
-      'si hubiese algo sin anexo.. aunque no deber'#237'a'#13#10'             left' +
-      ' join AnexosCreditos as aC on aC.IdAnexo=A.IdAnexo and aC.IdAnex' +
-      'oCreditoEstatus =1'#13#10'             left join AnexosAmortizaciones ' +
-      'as AA on AA.IdAnexoCredito=AC.IdAnexoCredito and Cc.IdAnexosAmor' +
-      'tizaciones=AA.IdAnexoAmortizacion '#13#10'             inner join Cont' +
-      'ratos as Con ON A.IdContrato=Con.IdContrato'#13#10'             inner ' +
-      'join ContratosTipos as CT On Con.IdContratoTipo =CT.IdContratoTi' +
-      'po'#13#10'             '#13#10'             '#13#10' WHERE    (Cc.Saldo > 0.01)  a' +
-      'nd Cc.IDPersona=:IdPersona  '#13#10#13#10'--  AND  -- mientras para que mu' +
-      'estre todo'#13#10#13#10'ORDER BY Cliente,cc.IdAnexo, CXCBase, cobrox, cc.F' +
-      'echaVencimiento'
+      '                 AA.Periodo,'#13#10#13#10'                     PR.RFC ,  C' +
+      'on.MontoAutorizado as importeCredito,Ac.MontoFiananciar, a.TasaA' +
+      'nual,a.SaldoInsoluto,a.TasaMoratoriaAnual, -- ajuste para Report' +
+      'e Oct 5/17'#13#10#9'      CXCBase.FechaVencimiento,  CASE WHEN CC.Esmor' +
+      'atorio=1 then DAteDiff(DAy, CXCBase.FechaVencimiento,Cc.Fecha) e' +
+      'lse 0  end as DiasVenc -- ajuste para Reporte Oct 5/17'#13#10'        ' +
+      '            , P.FEchaPago'#13#10'                      '#13#10'FROM         ' +
+      'CuentasXCobrar AS Cc INNER JOIN'#13#10'                      Personas ' +
+      'AS PR ON Cc.IdPersona = PR.IdPersona '#13#10'             left  join  ' +
+      'Anexos As A ON Cc.IdAnexo=A.IdAnexo       -- Por si hubiese algo' +
+      ' sin anexo.. aunque no deber'#237'a'#13#10'             left join AnexosCre' +
+      'ditos as aC on aC.IdAnexo=A.IdAnexo and aC.IdAnexoCreditoEstatus' +
+      ' =1'#13#10'             left join AnexosAmortizaciones as AA on AA.IdA' +
+      'nexoCredito=AC.IdAnexoCredito and Cc.IdAnexosAmortizaciones=AA.I' +
+      'dAnexoAmortizacion '#13#10#9#9#13#10'             left Join CuentasXCobrar C' +
+      'XCBase on cxcbase.idcuentaXCobrar=CC.IdCuentaXCobrarBase-- ajust' +
+      'e para Reporte Oct 5/17'#13#10'            '#13#10'             inner join C' +
+      'ontratos as Con ON A.IdContrato=Con.IdContrato'#13#10'             inn' +
+      'er join ContratosTipos as CT On Con.IdContratoTipo =CT.IdContrat' +
+      'oTipo'#13#10'             '#13#10'             left Join (SElect IdAnexo, Ma' +
+      'x(FechaPago) as fechaPago from  Pagos group by idanexo) as  P on' +
+      ' P.IdAnexo=Cc.IdAnexo  -- ajuste para Reporte Oct 5/17'#13#10'        ' +
+      '     '#13#10' WHERE    (Cc.Saldo > 0.01)  and Cc.IDPersona=:IdPersona ' +
+      ' '#13#10#13#10'--  AND  -- mientras para que muestre todo'#13#10#13#10'ORDER BY Clie' +
+      'nte,cc.IdAnexo, CXCBase, cobrox, cc.FechaVencimiento'
     Parameters = <
       item
         Name = 'IdPersona'
@@ -5442,7 +5452,7 @@
     object ppHeaderBand3: TppHeaderBand
       Background.Brush.Style = bsClear
       mmBottomOffset = 0
-      mmHeight = 50006
+      mmHeight = 69586
       mmPrintPosition = 0
       object ppLine12: TppLine
         UserName = 'Line12'
@@ -5450,9 +5460,9 @@
         Pen.Color = clGray
         Pen.Width = 2
         Weight = 1.500000000000000000
-        mmHeight = 6615
+        mmHeight = -793
         mmLeft = 1323
-        mmTop = 21697
+        mmTop = 21696
         mmWidth = 200555
         BandType = 0
         LayerName = BandLayer3
@@ -5460,16 +5470,17 @@
       object ppLabel28: TppLabel
         UserName = 'Label1'
         AutoSize = False
-        Caption = 'Cliente'
+        Caption = 'Cliente:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
         Font.Size = 9
-        Font.Style = [fsBold]
+        Font.Style = []
+        TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 4763
-        mmLeft = 5293
-        mmTop = 24633
+        mmLeft = 15081
+        mmTop = 24606
         mmWidth = 14023
         BandType = 0
         LayerName = BandLayer3
@@ -5480,9 +5491,9 @@
         Pen.Color = clGray
         Style = lsDouble
         Weight = 0.500000000000000000
-        mmHeight = 21167
+        mmHeight = 1588
         mmLeft = 1323
-        mmTop = 48716
+        mmTop = 68542
         mmWidth = 200555
         BandType = 0
         LayerName = BandLayer3
@@ -5500,8 +5511,8 @@
         Transparent = True
         DataPipelineName = 'ppDBPplnCtaActCliente'
         mmHeight = 4763
-        mmLeft = 5292
-        mmTop = 30983
+        mmLeft = 31765
+        mmTop = 24606
         mmWidth = 75936
         BandType = 0
         LayerName = BandLayer3
@@ -5509,16 +5520,17 @@
       object ppLabel35: TppLabel
         UserName = 'Label35'
         AutoSize = False
-        Caption = 'Anexo'
+        Caption = 'Anexo:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
         Font.Size = 9
-        Font.Style = [fsBold]
+        Font.Style = []
+        TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 4763
-        mmLeft = 5293
-        mmTop = 37597
+        mmLeft = 134673
+        mmTop = 30956
         mmWidth = 12700
         BandType = 0
         LayerName = BandLayer3
@@ -5535,26 +5547,27 @@
         Transparent = True
         DataPipelineName = 'ppDBPplnCtaActCliente'
         mmHeight = 4763
-        mmLeft = 19052
-        mmTop = 37597
-        mmWidth = 16933
+        mmLeft = 148432
+        mmTop = 30956
+        mmWidth = 26723
         BandType = 0
         LayerName = BandLayer3
       end
       object ppLabel37: TppLabel
         UserName = 'Label37'
         AutoSize = False
-        Caption = 'Contrato'
+        Caption = 'Contrato:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
         Font.Size = 9
-        Font.Style = [fsBold]
+        Font.Style = []
+        TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 4763
-        mmLeft = 53181
-        mmTop = 37333
-        mmWidth = 16933
+        mmLeft = 15081
+        mmTop = 30956
+        mmWidth = 14023
         BandType = 0
         LayerName = BandLayer3
       end
@@ -5570,8 +5583,8 @@
         Transparent = True
         DataPipelineName = 'ppDBPplnCtaActCliente'
         mmHeight = 4763
-        mmLeft = 71173
-        mmTop = 37333
+        mmLeft = 31765
+        mmTop = 30956
         mmWidth = 64558
         BandType = 0
         LayerName = BandLayer3
@@ -5579,16 +5592,17 @@
       object ppLabel38: TppLabel
         UserName = 'Label38'
         AutoSize = False
-        Caption = 'TipoContrato'
+        Caption = 'Tipo Contrato:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
         Font.Size = 9
-        Font.Style = [fsBold]
+        Font.Style = []
+        TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 4763
-        mmLeft = 147373
-        mmTop = 24633
+        mmLeft = 122238
+        mmTop = 37306
         mmWidth = 25135
         BandType = 0
         LayerName = BandLayer3
@@ -5605,8 +5619,8 @@
         Transparent = True
         DataPipelineName = 'ppDBPplnCtaActCliente'
         mmHeight = 4763
-        mmLeft = 147373
-        mmTop = 30983
+        mmLeft = 148432
+        mmTop = 37306
         mmWidth = 48683
         BandType = 0
         LayerName = BandLayer3
@@ -5623,7 +5637,7 @@
         Transparent = True
         mmHeight = 4763
         mmLeft = 5236
-        mmTop = 44477
+        mmTop = 64352
         mmWidth = 12700
         BandType = 0
         LayerName = BandLayer3
@@ -5640,7 +5654,7 @@
         Transparent = True
         mmHeight = 4763
         mmLeft = 28291
-        mmTop = 44476
+        mmTop = 64351
         mmWidth = 19050
         BandType = 0
         LayerName = BandLayer3
@@ -5657,7 +5671,7 @@
         Transparent = True
         mmHeight = 4763
         mmLeft = 72696
-        mmTop = 44477
+        mmTop = 64352
         mmWidth = 17992
         BandType = 0
         LayerName = BandLayer3
@@ -5674,7 +5688,7 @@
         Transparent = True
         mmHeight = 4763
         mmLeft = 53433
-        mmTop = 44476
+        mmTop = 64351
         mmWidth = 16404
         BandType = 0
         LayerName = BandLayer3
@@ -5691,8 +5705,8 @@
         TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 4763
-        mmLeft = 136790
-        mmTop = 44476
+        mmLeft = 146330
+        mmTop = 64351
         mmWidth = 22490
         BandType = 0
         LayerName = BandLayer3
@@ -5709,8 +5723,8 @@
         TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 4763
-        mmLeft = 174361
-        mmTop = 44477
+        mmLeft = 178071
+        mmTop = 64352
         mmWidth = 17992
         BandType = 0
         LayerName = BandLayer3
@@ -9113,6 +9127,207 @@
         BandType = 0
         LayerName = BandLayer3
       end
+      object ppLabel60: TppLabel
+        UserName = 'Label60'
+        AutoSize = False
+        Caption = 'Importe Cr'#233'dito:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 9
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 4763
+        mmLeft = 5292
+        mmTop = 37305
+        mmWidth = 23813
+        BandType = 0
+        LayerName = BandLayer3
+      end
+      object ppDBText54: TppDBText
+        UserName = 'DBText54'
+        DataField = 'MontoFiananciar'
+        DataPipeline = ppDBPplnCtaActCliente
+        DisplayFormat = '$#,0.00;-$#,0.00'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 9
+        Font.Style = []
+        Transparent = True
+        DataPipelineName = 'ppDBPplnCtaActCliente'
+        mmHeight = 4763
+        mmLeft = 31765
+        mmTop = 37305
+        mmWidth = 64558
+        BandType = 0
+        LayerName = BandLayer3
+      end
+      object ppLabel61: TppLabel
+        UserName = 'Label601'
+        AutoSize = False
+        Caption = 'Saldo Insoluto:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 9
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 4763
+        mmLeft = 5292
+        mmTop = 43391
+        mmWidth = 23813
+        BandType = 0
+        LayerName = BandLayer3
+      end
+      object ppDBText55: TppDBText
+        UserName = 'DBText55'
+        DataField = 'SaldoInsoluto'
+        DataPipeline = ppDBPplnCtaActCliente
+        DisplayFormat = '$#,0.00;-$#,0.00'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 9
+        Font.Style = []
+        Transparent = True
+        DataPipelineName = 'ppDBPplnCtaActCliente'
+        mmHeight = 4763
+        mmLeft = 31750
+        mmTop = 43391
+        mmWidth = 40481
+        BandType = 0
+        LayerName = BandLayer3
+      end
+      object ppLabel62: TppLabel
+        UserName = 'Label62'
+        AutoSize = False
+        Caption = 'Tasa de Inter'#233's'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 9
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 4763
+        mmLeft = 5292
+        mmTop = 49213
+        mmWidth = 23813
+        BandType = 0
+        LayerName = BandLayer3
+      end
+      object ppDBText56: TppDBText
+        UserName = 'DBText56'
+        DataField = 'TasaAnual'
+        DataPipeline = ppDBPplnCtaActCliente
+        DisplayFormat = '0.00 % Anual'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 9
+        Font.Style = []
+        Transparent = True
+        DataPipelineName = 'ppDBPplnCtaActCliente'
+        mmHeight = 4763
+        mmLeft = 31750
+        mmTop = 49213
+        mmWidth = 40481
+        BandType = 0
+        LayerName = BandLayer3
+      end
+      object ppLabel63: TppLabel
+        UserName = 'Label63'
+        AutoSize = False
+        Caption = 'Tasa Moratoria:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 9
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 4763
+        mmLeft = 5292
+        mmTop = 55033
+        mmWidth = 23813
+        BandType = 0
+        LayerName = BandLayer3
+      end
+      object ppDBText57: TppDBText
+        UserName = 'DBText57'
+        DataField = 'TasaMoratoriaAnual'
+        DataPipeline = ppDBPplnCtaActCliente
+        DisplayFormat = '0.00 % Anual'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 9
+        Font.Style = []
+        Transparent = True
+        DataPipelineName = 'ppDBPplnCtaActCliente'
+        mmHeight = 4763
+        mmLeft = 31750
+        mmTop = 55033
+        mmWidth = 40481
+        BandType = 0
+        LayerName = BandLayer3
+      end
+      object ppLabel64: TppLabel
+        UserName = 'Label64'
+        AutoSize = False
+        Caption = 'Dias'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 9
+        Font.Style = [fsBold]
+        Transparent = True
+        mmHeight = 4763
+        mmLeft = 128323
+        mmTop = 64294
+        mmWidth = 12171
+        BandType = 0
+        LayerName = BandLayer3
+      end
+      object ppLabel65: TppLabel
+        UserName = 'Label65'
+        AutoSize = False
+        Caption = 'RFC:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 9
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 4763
+        mmLeft = 134673
+        mmTop = 24606
+        mmWidth = 12700
+        BandType = 0
+        LayerName = BandLayer3
+      end
+      object ppDBText59: TppDBText
+        UserName = 'DBText59'
+        DataField = 'RFC'
+        DataPipeline = ppDBPplnCtaActCliente
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 9
+        Font.Style = []
+        Transparent = True
+        DataPipelineName = 'ppDBPplnCtaActCliente'
+        mmHeight = 4763
+        mmLeft = 148432
+        mmTop = 24606
+        mmWidth = 41010
+        BandType = 0
+        LayerName = BandLayer3
+      end
     end
     object ppDetailBand3: TppDetailBand
       Background1.Brush.Style = bsClear
@@ -9168,9 +9383,9 @@
         Transparent = True
         DataPipelineName = 'ppDBPplnCtaActCliente'
         mmHeight = 4763
-        mmLeft = 72748
-        mmTop = 527
-        mmWidth = 48154
+        mmLeft = 72761
+        mmTop = 529
+        mmWidth = 33867
         BandType = 4
         LayerName = BandLayer3
       end
@@ -9207,9 +9422,9 @@
         Transparent = True
         DataPipelineName = 'ppDBPplnCtaActCliente'
         mmHeight = 4763
-        mmLeft = 127265
-        mmTop = 527
-        mmWidth = 32015
+        mmLeft = 145257
+        mmTop = 529
+        mmWidth = 23548
         BandType = 4
         LayerName = BandLayer3
       end
@@ -9227,9 +9442,28 @@
         Transparent = True
         DataPipelineName = 'ppDBPplnCtaActCliente'
         mmHeight = 4763
-        mmLeft = 162984
-        mmTop = 527
-        mmWidth = 29369
+        mmLeft = 173308
+        mmTop = 529
+        mmWidth = 22754
+        BandType = 4
+        LayerName = BandLayer3
+      end
+      object ppDBText58: TppDBText
+        UserName = 'DBText58'
+        DataField = 'DiasVenc'
+        DataPipeline = ppDBPplnCtaActCliente
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 9
+        Font.Style = []
+        TextAlignment = taCentered
+        Transparent = True
+        DataPipelineName = 'ppDBPplnCtaActCliente'
+        mmHeight = 4763
+        mmLeft = 128323
+        mmTop = 529
+        mmWidth = 12171
         BandType = 4
         LayerName = BandLayer3
       end
@@ -9317,7 +9551,7 @@
         TextAlignment = taCentered
         Transparent = True
         mmHeight = 4763
-        mmLeft = 94721
+        mmLeft = 100286
         mmTop = 1852
         mmWidth = 28310
         BandType = 7
@@ -9338,9 +9572,9 @@
         Transparent = True
         DataPipelineName = 'ppDBPplnCtaActCliente'
         mmHeight = 4498
-        mmLeft = 127265
+        mmLeft = 145257
         mmTop = 1852
-        mmWidth = 32015
+        mmWidth = 23548
         BandType = 7
         LayerName = BandLayer3
       end
@@ -9359,9 +9593,9 @@
         Transparent = True
         DataPipelineName = 'ppDBPplnCtaActCliente'
         mmHeight = 4498
-        mmLeft = 162984
+        mmLeft = 173308
         mmTop = 1852
-        mmWidth = 29369
+        mmWidth = 22754
         BandType = 7
         LayerName = BandLayer3
       end
@@ -9402,7 +9636,7 @@
         Background.Brush.Style = bsClear
         HideWhenOneDetail = False
         mmBottomOffset = 0
-        mmHeight = 6615
+        mmHeight = 47096
         mmPrintPosition = 0
         object ppLabel19: TppLabel
           UserName = 'Label19'
@@ -9416,7 +9650,7 @@
           TextAlignment = taCentered
           Transparent = True
           mmHeight = 4763
-          mmLeft = 94721
+          mmLeft = 100286
           mmTop = 1852
           mmWidth = 28310
           BandType = 5
@@ -9439,9 +9673,9 @@
           Transparent = True
           DataPipelineName = 'ppDBPplnCtaActCliente'
           mmHeight = 4498
-          mmLeft = 127265
+          mmLeft = 145257
           mmTop = 1852
-          mmWidth = 32015
+          mmWidth = 23548
           BandType = 5
           GroupNo = 0
           LayerName = BandLayer3
@@ -9462,9 +9696,9 @@
           Transparent = True
           DataPipelineName = 'ppDBPplnCtaActCliente'
           mmHeight = 4498
-          mmLeft = 162984
+          mmLeft = 173308
           mmTop = 1852
-          mmWidth = 29369
+          mmWidth = 22754
           BandType = 5
           GroupNo = 0
           LayerName = BandLayer3
@@ -9474,10 +9708,119 @@
           Anchors = [atLeft, atTop, atRight, atBottom]
           Pen.Color = clGray
           Weight = 0.500000000000000000
-          mmHeight = 2646
+          mmHeight = 21167
           mmLeft = 128323
           mmTop = 794
           mmWidth = 73554
+          BandType = 5
+          GroupNo = 0
+          LayerName = BandLayer3
+        end
+        object ppLabel66: TppLabel
+          UserName = 'Label66'
+          AutoSize = False
+          Caption = #218'ltimo Pago Recibido el d'#237'a '
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Name = 'Arial'
+          Font.Size = 9
+          Font.Style = []
+          Transparent = True
+          mmHeight = 4763
+          mmLeft = 5292
+          mmTop = 8731
+          mmWidth = 42069
+          BandType = 5
+          GroupNo = 0
+          LayerName = BandLayer3
+        end
+        object ppDBText60: TppDBText
+          UserName = 'DBText60'
+          DataField = 'FEchaPago'
+          DataPipeline = ppDBPplnCtaActCliente
+          DisplayFormat = 'dd '#39'de'#39' mmmm '#39'del '#39'yyyy'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Name = 'Arial'
+          Font.Size = 9
+          Font.Style = []
+          Transparent = True
+          DataPipelineName = 'ppDBPplnCtaActCliente'
+          mmHeight = 4763
+          mmLeft = 47883
+          mmTop = 8731
+          mmWidth = 40481
+          BandType = 5
+          GroupNo = 0
+          LayerName = BandLayer3
+        end
+        object ppShape1: TppShape
+          UserName = 'Shape1'
+          mmHeight = 25932
+          mmLeft = 5292
+          mmTop = 12963
+          mmWidth = 115623
+          BandType = 5
+          GroupNo = 0
+          LayerName = BandLayer3
+        end
+        object ppLabel67: TppLabel
+          UserName = 'Label67'
+          AutoSize = False
+          Caption = 'DATOS BANCARIOS PARA EL DEP'#211'SITO:'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Name = 'Arial'
+          Font.Size = 8
+          Font.Style = [fsBold]
+          Transparent = True
+          mmHeight = 4763
+          mmLeft = 6879
+          mmTop = 14551
+          mmWidth = 85990
+          BandType = 5
+          GroupNo = 0
+          LayerName = BandLayer3
+        end
+        object ppLabel68: TppLabel
+          UserName = 'Label68'
+          AutoSize = False
+          Caption = 
+            'Banco:                SCOTIABANK                                ' +
+            '            Cuenta:               01008100455                   ' +
+            '                  Cuenta  Clabe:  044320010081004557            ' +
+            '   Beneficiario:      MA'#209'ARINA SAPI DE CV SOFOM ENR'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Name = 'Arial'
+          Font.Size = 9
+          Font.Style = []
+          Transparent = True
+          WordWrap = True
+          mmHeight = 16933
+          mmLeft = 6879
+          mmTop = 20638
+          mmWidth = 85990
+          BandType = 5
+          GroupNo = 0
+          LayerName = BandLayer3
+        end
+        object ppLabel69: TppLabel
+          UserName = 'Label69'
+          AutoSize = False
+          Caption = 
+            'Cualquier duda o aclaraci'#243'n favor de comunicarse al tel'#233'fono (33' +
+            ') 3003-0175 con Francisco Emilio Garc'#237'a Preciado J'#225'uregui'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Name = 'Arial'
+          Font.Size = 8
+          Font.Style = []
+          Transparent = True
+          mmHeight = 5285
+          mmLeft = 6350
+          mmTop = 39951
+          mmWidth = 189707
           BandType = 5
           GroupNo = 0
           LayerName = BandLayer3

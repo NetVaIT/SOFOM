@@ -18878,11 +18878,10 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Font.Color = clBlack
               Font.Name = 'Arial'
               Font.Size = 8
-              Font.Style = [fsBold]
+              Font.Style = []
               ParentDataPipeline = False
               TextAlignment = taRightJustified
               Transparent = True
-              Visible = False
               DataPipelineName = 'ppDBPpAmortiza'
               mmHeight = 4763
               mmLeft = 207434
@@ -19232,7 +19231,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Visible = False
               DataPipelineName = 'ppDBPpAmortiza2'
               mmHeight = 4763
-              mmLeft = 216673
+              mmLeft = 233098
               mmTop = 0
               mmWidth = 17198
               BandType = 4
@@ -19246,17 +19245,16 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
               Font.Name = 'Arial'
-              Font.Size = 7
+              Font.Size = 8
               Font.Style = []
               ParentDataPipeline = False
               TextAlignment = taRightJustified
               Transparent = True
-              Visible = False
               DataPipelineName = 'ppDBPpAmortiza2'
               mmHeight = 4763
-              mmLeft = 200803
+              mmLeft = 207434
               mmTop = 0
-              mmWidth = 13494
+              mmWidth = 21700
               BandType = 4
               LayerName = PageLayer3
             end
@@ -19270,14 +19268,12 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Font.Size = 8
               Font.Style = []
               ParentDataPipeline = False
-              TextAlignment = taRightJustified
               Transparent = True
-              Visible = False
               DataPipelineName = 'ppDBPpAmortiza2'
               mmHeight = 4763
-              mmLeft = 186775
+              mmLeft = 197909
               mmTop = 0
-              mmWidth = 10848
+              mmWidth = 9790
               BandType = 4
               LayerName = PageLayer3
             end
@@ -19475,10 +19471,9 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               ParentDataPipeline = False
               TextAlignment = taRightJustified
               Transparent = True
-              Visible = False
               DataPipelineName = 'ppDBPpAmortiza2'
               mmHeight = 4498
-              mmLeft = 207434
+              mmLeft = 208227
               mmTop = 2117
               mmWidth = 20902
               BandType = 7
@@ -19612,9 +19607,9 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               Transparent = True
               DataPipelineName = 'ppDBPpSumasAmor'
               mmHeight = 4763
-              mmLeft = 207430
+              mmLeft = 208227
               mmTop = 11642
-              mmWidth = 21000
+              mmWidth = 20902
               BandType = 7
               LayerName = PageLayer3
             end
@@ -21409,36 +21404,36 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       'ones '#13#10'              Group by  IdCuentaXCobrar) as VPagos '#13#10'    ' +
       '        on VPagos.IdCuentaXCobrar=CXC.IdCuentaXCobrar'#13#10'  where'#13#10 +
       'not Exists  (SElect * from PagosAplicaciones PA where Pa.IDcuent' +
-      'aXCobrar=CXC.IdCuentaXCobrar) '#13#10'and not Exists (Select *  from C' +
-      'uentasXCobrar CXCMora  where CXCMORA.IDCuentaXCobrarBAse =CXC.ID' +
-      'CuentaXCobrar) '#13#10#13#10'and CXC.IdAnexo=:IdAnexo1'#13#10'   '#13#10'Union'#13#10#13#10' sel' +
-      'ect  IdAnexoAmortizacion, AA.IdAnexoCredito,  a.idanexo,'#13#10'Period' +
-      'o, aa.FechaCorte, aa.FechaVencimiento, '#13#10#13#10'AA.ImpactoISR, '#13#10'Pago' +
-      'Total, SaldoFinal, FechaMoratorio, MoratorioBase, DAteDiff(DAY, ' +
-      'aa.Fechavencimiento,aa.FechaMoratorio) as Dias,'#13#10'Moratorio, Mora' +
-      'torioImpuesto,   ( InteresImpuesto+CapitalImpuesto) as  Impuesto' +
-      'Total, Capital + aa.interes as Subtotal'#13#10' ,NULL as FecVenCXC ,NU' +
-      'LL as Total ,NULL as saldo,NULL as IdCuentaXCobrar,NULL IdAnexos' +
-      'Amortizaciones, '#13#10'  NULL Pagado,NULL FechaAplicacion, NULL total' +
-      'mora,Null saldoMora,Null ultFEchaMora, Null ultimaFEcha,null Fol' +
-      'ioUltimoMora ,null FolioUltimoBase,null ultimaFechaCFDIBase '#13#10#13#10 +
-      ',A.Identificador as Anexo,C.Identificador as Contrato, P.RazonSo' +
-      'cial, CT.Descripcion as TipoContrato'#13#10#13#10'--,CXC.FechaVencimiento,' +
-      ' CXC.Total, CXC.Saldo,CXC.IdCuentaXCobrar,Cxc.IdAnexosAmortizaci' +
-      'ones --, Ac.IdAnexo A1, Cxc.IdAnexo A2 --, CXC.EsMoratorio'#13#10'--, ' +
-      'VPagos.Pagado, VPagos.ultFEcha as FechaAplicacion, VCxcMora.Tota' +
-      'lMora,VCxcMora.SumaSaldoMora as saldoMora ,  VCxcMora.ultFEchaMo' +
-      'ra, VCFDIMora.ultimaFEcha, VCFDIMora.FolioUltimoMora,'#13#10'--VcfdiNo' +
-      'rmal.FolioUltimoBase, VCFDINormal.ultimaFechaCFDIBase'#13#10'  from An' +
-      'exosAmortizaciones aa'#13#10'  inner join AnexosCreditos AC  on AC.IdA' +
-      'nexoCredito=AA.IdAnexoCredito  and ac.IdAnexoCreditoEstatus=1 --' +
-      ' Sep1/17 porque son sin pago o no generadas'#13#10'    inner join Anex' +
-      'os A on A.IdAnexo=AC.IdAnexo'#13#10'  inner join Contratos C on C.IdCo' +
-      'ntrato=A.IdContrato'#13#10'  inner join ContratosTipos CT on CT.IdCont' +
-      'ratoTipo=C.idcontratotipo '#13#10'  inner join Personas P on P.IdPerso' +
-      'na=C.idpersona'#13#10'  Where not Exists  (SElect * from CuentasXCobra' +
-      'r Cc where cc.IdAnexosAmortizaciones=aa.IdAnexoAmortizacion)'#13#10' a' +
-      'nd Ac.IdAnexo=:IdAnexo2'#13#10'  '
+      'aXCobrar=CXC.IdCuentaXCobrar) '#13#10'--and not Exists (Select *  from' +
+      ' CuentasXCobrar CXCMora  where CXCMORA.IDCuentaXCobrarBAse =CXC.' +
+      'IDCuentaXCobrar) -- oct 5/17'#13#10#13#10'and CXC.IdAnexo=:IdAnexo1'#13#10'   '#13#10 +
+      'Union'#13#10#13#10' select  IdAnexoAmortizacion, AA.IdAnexoCredito,  a.ida' +
+      'nexo,'#13#10'Periodo, aa.FechaCorte, aa.FechaVencimiento, '#13#10#13#10'AA.Impac' +
+      'toISR, '#13#10'PagoTotal, SaldoFinal, FechaMoratorio, MoratorioBase, D' +
+      'AteDiff(DAY, aa.Fechavencimiento,aa.FechaMoratorio) as Dias,'#13#10'Mo' +
+      'ratorio, MoratorioImpuesto,   ( InteresImpuesto+CapitalImpuesto)' +
+      ' as  ImpuestoTotal, Capital + aa.interes as Subtotal'#13#10' ,NULL as ' +
+      'FecVenCXC ,NULL as Total ,NULL as saldo,NULL as IdCuentaXCobrar,' +
+      'NULL IdAnexosAmortizaciones, '#13#10'  NULL Pagado,NULL FechaAplicacio' +
+      'n, NULL totalmora,Null saldoMora,Null ultFEchaMora, Null ultimaF' +
+      'Echa,null FolioUltimoMora ,null FolioUltimoBase,null ultimaFecha' +
+      'CFDIBase '#13#10#13#10',A.Identificador as Anexo,C.Identificador as Contra' +
+      'to, P.RazonSocial, CT.Descripcion as TipoContrato'#13#10#13#10'--,CXC.Fech' +
+      'aVencimiento, CXC.Total, CXC.Saldo,CXC.IdCuentaXCobrar,Cxc.IdAne' +
+      'xosAmortizaciones --, Ac.IdAnexo A1, Cxc.IdAnexo A2 --, CXC.EsMo' +
+      'ratorio'#13#10'--, VPagos.Pagado, VPagos.ultFEcha as FechaAplicacion, ' +
+      'VCxcMora.TotalMora,VCxcMora.SumaSaldoMora as saldoMora ,  VCxcMo' +
+      'ra.ultFEchaMora, VCFDIMora.ultimaFEcha, VCFDIMora.FolioUltimoMor' +
+      'a,'#13#10'--VcfdiNormal.FolioUltimoBase, VCFDINormal.ultimaFechaCFDIBa' +
+      'se'#13#10'  from AnexosAmortizaciones aa'#13#10'  inner join AnexosCreditos ' +
+      'AC  on AC.IdAnexoCredito=AA.IdAnexoCredito  and ac.IdAnexoCredit' +
+      'oEstatus=1 -- Sep1/17 porque son sin pago o no generadas'#13#10'    in' +
+      'ner join Anexos A on A.IdAnexo=AC.IdAnexo'#13#10'  inner join Contrato' +
+      's C on C.IdContrato=A.IdContrato'#13#10'  inner join ContratosTipos CT' +
+      ' on CT.IdContratoTipo=C.idcontratotipo '#13#10'  inner join Personas P' +
+      ' on P.IdPersona=C.idpersona'#13#10'  Where not Exists  (SElect * from ' +
+      'CuentasXCobrar Cc where cc.IdAnexosAmortizaciones=aa.IdAnexoAmor' +
+      'tizacion)'#13#10' and Ac.IdAnexo=:IdAnexo2'#13#10'  '
     Parameters = <
       item
         Name = 'IdAnexo1'
@@ -21809,7 +21804,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
   object ppDBPpSumasAmor: TppDBPipeline
     DataSource = DSSumasAmortizaciones
     UserName = 'DBPpSumasAmor'
-    Left = 568
+    Left = 576
     Top = 504
     MasterDataPipelineName = 'ppDBPpAnexoCliente'
     object ppMasterFieldLink4: TppMasterFieldLink

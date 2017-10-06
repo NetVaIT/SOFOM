@@ -265,6 +265,24 @@ type
     ppLabel59: TppLabel;
     ppDBText53: TppDBText;
     ppDBCalc35: TppDBCalc;
+    ppLabel60: TppLabel;
+    ppDBText54: TppDBText;
+    ppLabel61: TppLabel;
+    ppDBText55: TppDBText;
+    ppLabel62: TppLabel;
+    ppDBText56: TppDBText;
+    ppLabel63: TppLabel;
+    ppDBText57: TppDBText;
+    ppLabel64: TppLabel;
+    ppDBText58: TppDBText;
+    ppLabel65: TppLabel;
+    ppDBText59: TppDBText;
+    ppLabel66: TppLabel;
+    ppDBText60: TppDBText;
+    ppShape1: TppShape;
+    ppLabel67: TppLabel;
+    ppLabel68: TppLabel;
+    ppLabel69: TppLabel;
   private
     { Private declarations }
   public

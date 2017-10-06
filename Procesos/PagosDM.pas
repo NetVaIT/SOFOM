@@ -1269,9 +1269,9 @@ begin                                //Jul 20/17
   ADOQryAuxiliar.SQL.Add('Select * from CFDI where IDCFDI='+intTostr(IDCFDIACT));
   ADOQryAuxiliar.Open;
   if (ADOQryAuxiliar.FieldByName('IdCFDIEstatus').asInteger=2)      //vigente
-      and (ADOQryAuxiliar.FieldByName('IdCuentaXCobrar').asInteger=IDCXCAct)  and (adodsmaster.fieldbyname('IdcuentaXCobrarEstatus').AsInteger=0) then
+      and (ADOQryAuxiliar.FieldByName('IdCuentaXCobrar').asInteger=IDCXCAct)  then    // and (adodsmaster.fieldbyname('IdcuentaXCobrarEstatus').AsInteger=0)  //Aca es Pago
   begin
-    ActualizaEstatusCXC(IdCXCAct, IDCFDIACT,1,0 );
+    ActualizaEstatusCXC(IdCXCAct, IDCFDIACT,1,0 );    //Se manda aca.
   end;
 end;
 
