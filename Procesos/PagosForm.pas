@@ -353,6 +353,7 @@ begin
            datasource.DataSet.Post;
 
         dsConCXCPendientes.DataSet.Close;
+        Tadodataset(dsConCXCPendientes.DataSet).parameters.parambyname('EsAnti').Value:=0;    //Oct 9/17
         dsConCXCPendientes.DataSet.Open;
 
         if dsConCXCPendientes.DataSet.Eof then
@@ -379,6 +380,7 @@ begin
           FrmAplicacionPago.DSAuxiliar.Dataset:= DSAuxiliar.DataSet; //Abr 3/17
           FrmAplicacionPago.DSP_CalcMoratorioNueva.DataSet:= DSP_CalcMoratorioNueva.DataSet; //Abr 6/17
           FrmAplicacionPago.DSP_ActTotalCXC.DataSet:=DSP_ActTotalCXC.DataSet; //May 22/17
+          TadoDataset( FrmAplicacionPago.dsConCXCPendientes.DataSet).Parameters.ParamByName('EsAnti').Value:=0; //Oct 9/17
           FrmAplicacionPago.dsConCXCPendientes.DataSet.Open;
           FrmAplicacionPago.DSDetalleMostrar.dataset.Open;   //Agregado Feb 16/17
           FrmAplicacionPago.DSDetallesCXC.DataSet.Open;
@@ -411,6 +413,7 @@ begin
           FrmAplicacionPago.DSAuxiliar.Dataset:= DSAuxiliar.DataSet; //Abr 3/17
           FrmAplicacionPago.DSP_CalcMoratorioNueva.DataSet:= DSP_CalcMoratorioNueva.DataSet; //Abr 6/17
           FrmAplicacionPago.DSP_ActTotalCXC.DataSet:=DSP_ActTotalCXC.DataSet; //May 22/17
+          TadoDataset( FrmAplicacionPago.dsConCXCPendientes.DataSet).Parameters.ParamByName('EsAnti').Value:=0; //Oct 9/17
           FrmAplicacionPago.dsConCXCPendientes.DataSet.Open;
           FrmAplicacionPago.DSDetalleMostrar.dataset.Open;   //Agregado Feb 16/17
           FrmAplicacionPago.DSDetallesCXC.DataSet.Open;

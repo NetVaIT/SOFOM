@@ -78,6 +78,7 @@ inherited frmMain: TfrmMain
   end
   inherited dxRibbonStatusBar1: TdxRibbonStatusBar
     Width = 1020
+    ExplicitTop = 32000
     ExplicitWidth = 1020
   end
   inherited pnlMain: TPanel

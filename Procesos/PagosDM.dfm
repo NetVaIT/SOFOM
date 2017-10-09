@@ -281,19 +281,28 @@ inherited dmPagos: TdmPagos
       'danexosamortizaciones is not null and -- jun 30/17 '#13#10' Saldo >0 a' +
       'nd IDPersona=:IdPersonaCliente '#13#10'and (((IdCuentaXCobrarEstatus=0' +
       ' or (IdCuentaXCobrarEstatus=1))  and  ESMoratorio=0)'#13#10'or( Esmora' +
-      'torio=1)'#13#10'or (CXC.Fecha<=dbo.GetDateAux() and IdCuentaXCobrarEst' +
-      'atus=-1) -- para poder facturar addelantados'#13#10'or (exists (select' +
-      ' * from CuentasXCobrarDetalle CXCD where CXCD.descripcion like'#39'%' +
-      'Abono Capital%'#39' and CXC.IdCuentaXCobrar=CXCD.idcuentaXCobrar )'#13#10 +
-      'and CXC.IdCFDI is null) )-- IdCuentaXCobrarEstatus=-1 and puede ' +
-      'que esten facturadas'#13#10' and CXC.IDAnexo=:IdAnexo'#13#10'order by CXC.id' +
-      'anexosamortizaciones,EsMoratorio DEsc, CXC.FechaVencimiento'
+      'torio=1)'#13#10' or( (CXC.Fecha<=dbo.GetDateAux() and IdCuentaXCobrarE' +
+      'status=-1) and 1=:EsAnti) -- para poder facturar addelantados'#13#10'o' +
+      'r (exists (select * from CuentasXCobrarDetalle CXCD where CXCD.d' +
+      'escripcion like'#39'%Abono Capital%'#39' and CXC.IdCuentaXCobrar=CXCD.id' +
+      'cuentaXCobrar )'#13#10'and CXC.IdCFDI is null) )-- IdCuentaXCobrarEsta' +
+      'tus=-1 and puede que esten facturadas'#13#10' and CXC.IDAnexo=:IdAnexo' +
+      #13#10'order by CXC.idanexosamortizaciones,EsMoratorio DEsc, CXC.Fech' +
+      'aVencimiento'
     DataSource = DSMaster
     IndexFieldNames = 'IdPersona;IdAnexo'
     MasterFields = 'IdPersonaCliente;IdAnexo'
     Parameters = <
       item
         Name = 'IdPersonaCliente'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end
+      item
+        Name = 'EsAnti'
         Attributes = [paSigned]
         DataType = ftInteger
         Precision = 10

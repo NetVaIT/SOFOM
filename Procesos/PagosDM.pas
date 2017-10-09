@@ -487,6 +487,7 @@ procedure TdmPagos.adodsMasterAfterOpen(DataSet: TDataSet);
 begin
   inherited;
   ADODtStAplicacionesPagos.Open;
+  ADODtStCXCPendientes.parameters.parambyname('EsAnti').Value:=0; //Oct 9/17
   ADODtStCXCPendientes.Open;
   ADODtStCxCDetallePend.Open;
   ADODtStConfiguraciones.Open;
@@ -991,7 +992,7 @@ begin       //SE debe eliminar luego Abr 20/17 Para prueba parcial
   if  AjustarAmortizaciones(17,2,3173.7226,TipoAbono,Lafecha ) then //Ajustar Amortizacion
           begin                                                                                    //Abr 19/17
             ADODtStCXCPendientes.Close;
-            ADODtStCXCPendientes.Open;
+            ADODtStCXCPendientes.Open; //No usado
             ADODtStCXCPendientes.Locate('IdCuentaXCobrar', IDCXC,[]);
             adodsMaster.Refresh; //Pago
             //REgistrar en bitacora el abono a CApital
@@ -1038,8 +1039,10 @@ begin
       begin
         if AplicaPago(adodsMasterIdPago.AsInteger,idcxc,idcfdiactual,frmAbonarCapitalEdit.Importe) then
           if  AjustarAmortizaciones(IdAnexoAct,TipoContrato,frmAbonarCapitalEdit.Importe,TipoAbono,frmAbonarCapitalEdit.Fecha ) then //Ajustar Amortizacion
-          begin                                                                                    //Abr 19/17
+          begin
+                                                                                            //Abr 19/17
             ADODtStCXCPendientes.Close;
+            ADODtStCXCPendientes.Parameters.ParamByName('Esanti').value:= 1;
             ADODtStCXCPendientes.Open;
             ADODtStCXCPendientes.Locate('IdCuentaXCobrar', IDCXC,[]);
             adodsMaster.Refresh; //Pago
@@ -1120,7 +1123,9 @@ end;
 
 Function TdmPagos.CrearFacturaCXC(IdCXC:Integer):Integer; //Abr 18/17 Regresa IDCFDI
 begin
+
   ADODtStCXCPendientes.Close;      //Consulta ajustada para que muestre -1 de pagos adelantados jun 30/17
+  ADODtStCXCPendientes.Parameters.ParamByName('Esanti').value:= 1; //Oct 9/17
   ADODtStCXCPendientes.Open;
   if ADODtStCXCPendientes.Locate('IdCuentaXCobrar',IdCXC,[]) then
   begin
@@ -1285,9 +1290,14 @@ begin
   inherited;
   Existen:=true;
   IdCFDIActual:=-1;
+
+  ADODtStCXCPendientes.Close;      //SE agregó aca  oct 9/17 Para que pueda encontrar la informacion para facturar
+  ADODtStCXCPendientes.Parameters.ParamByName('EsAnti').Value:=1;  //Oct 9/17
+  ADODtStCXCPendientes.Open;
+
   while (adodsMasterSaldo.AsFloat >0.01) and Existen do //tiene saldo.. verificar si en un ciclo.
   begin
-    if CrearSiguienteCXC(adodsMasterIdAnexo.AsInteger,Idcxc)then
+    if CrearSiguienteCXC(adodsMasterIdAnexo.AsInteger,Idcxc)then //Se ajusto por i hubiese creada pero no timbrada
     begin
       if idcxc<>-1 then  //DEberia siempre serlo
          IdCFDIActual:= CrearFacturaCXC(IDCXC); //Aunque ya lo trae
@@ -1296,8 +1306,12 @@ begin
         ImportePago:=SacaSaldoApagar(adodsMasterSaldo.AsFloat,IDCXC);
         if AplicaPago(adodsMasterIdPago.AsInteger,idcxc,idcfdiactual,ImportePago) then
         //no hace ajuste porque no es abono a capital  if  AjustarAmortizaciones(IdAnexoAct,TipoContrato,ImportePago,TipoAbono,frmAbonarCapitalEdit.Fecha ) then //Ajustar Amortizacion
-          begin                                                                                    //Abr 19/17
+          begin
+          //CAmbiar consulta   //Oct 9/17
+                                                                                                   //Abr 19/17
             ADODtStCXCPendientes.Close;
+         //   ADODtStCXCPendientes.CommandText:= ConsultaConAnticipados;  Se cambio arrriba
+            ADODtStCXCPendientes.Parameters.ParamByName('EsAnti').Value:=1; //oct 9/17
             ADODtStCXCPendientes.Open;
             ADODtStCXCPendientes.Locate('IdCuentaXCobrar', IDCXC,[]);
             adodsMaster.Refresh; //Pago
@@ -1317,6 +1331,10 @@ begin
     else
       Existen:=False;
   end;
+  ADODtStCXCPendientes.Close;   //Para que regrese como estaba..   oct 9/17
+  ADODtStCXCPendientes.Parameters.ParamByName('EsAnti').Value:=0; //oct 9/17
+ // ADODtStCXCPendientes.CommandText:= ConsultaBase;
+  ADODtStCXCPendientes.Open;
   if adodsMasterSaldo.AsFloat<=0.01  then   //Ago 2/17
   begin
     RefreshAplicaPago;
@@ -1959,6 +1977,7 @@ begin
  //Abr 6/17.
   idActual:= ADODtStCXCPendientes.FieldByName('IdCuentaXCobrar').AsInteger;
   ADODtStCXCPendientes.Close;
+  ADODtStCXCPendientes.Parameters.ParamByName('EsAnti').Value:=0; //oct 9/17 Son moratorios.. verificar
   ADODtStCXCPendientes.Open;
   ADODtStCXCPendientes.Locate('IdCuentaXCobrar', idActual,[]);
   if ADODtStCXCPendientes.FieldByName('EsMoratorio').asBoolean then   //Se supone que tendría los moratorios creados???
@@ -1976,26 +1995,44 @@ begin
   Res:=0;
   IdCXC:=-1;
   REsult:=FAlse;
+
+  //VErificar si existen sin FActurar y sin pagar oct 9/17 Por si hubiese fallado el proceso??
   ADOQryAuxiliar.Close;
   ADOQryAuxiliar.sql.Clear;
-  ADOQryAuxiliar.sql.Add(' Select aa.IdAnexoAmortizacion, c.idanexo,aa.IdAnexoCredito, aa.PagoTotal from AnexosAmortizaciones aa '
-  +' inner join AnexosCreditos C on C.IdAnexoCredito=aa.IdAnexoCredito and c.IdAnexoCreditoEstatus=1 '
-  +' where c.IdAnexo='+intToSTR(idAnexo)+' and (not Exists (select * from CuentasXCobrar cxc where cxc.IdAnexosAmortizaciones=aa.idanexoamortizacion))' );
-
-  ADOQryAuxiliar.Open; //TRae todas las siguientes
-
-  if not ADOQryAuxiliar.eof then
+  ADOQryAuxiliar.sql.Add(' Select CXC.Descripcion, CXC.IdCuentaXCobrar, CXC.IdCuentaXCobrarBase, CXC.IdCuentaXCobrarEstatus, CXC.IdPersona, CXC.IdAnexosAmortizaciones AS IdAnexoAmortizacion, CXC.IdAnexo, CXC.IdEstadoCuenta, CXC.IdCFDI,'
+      +' CXC.Fecha, CXC.FechaVencimiento, CXC.Importe, CXC.Impuesto, CXC.Interes, CXC.Total, CXC.Saldo, CXC.SaldoFactoraje, CXC.EsMoratorio, CI.SaldoDocumento, Ci.SaldoFactoraje as SaldoFactorajeCFDI,'
+      +' ci.serie, Ci.folio from CuentasXCobrar CXC left Join CFDI CI on CI.IdCFDI= CXC.IdCFDI where '
+      +' Saldo >0 and IDPersona= '+adodsMasteridpersonaCliente.asString + ' and (( (CXC.Fecha<=dbo.GetDateAux() and IdCuentaXCobrarEstatus=-1) ) and CXC.IdCFDI is null) and CXC.IDAnexo='
+      + intToSTR(idAnexo)+' order by CXC.idanexosamortizaciones,EsMoratorio DEsc, CXC.FechaVencimiento');
+  ADOQryAuxiliar.Open;
+  if not ADOQryAuxiliar.eof then   //Oct 9/17
   begin
-    ADOStrdPrcGenCXCXAmortiza.Parameters.ParamByName('@IdAnexoAmortizacion').value:=  ADOQryAuxiliar.fieldbyname('IdAnexoAmortizacion').AsInteger;
-    ADOStrdPrcGenCXCXAmortiza.ExecProc;
-    if ADOStrdPrcGenCXCXAmortiza.Parameters.ParamByName('@IDCuentaXCobrar').Value>0 then //Ajustado Jun 30/17
-      res:=1;
-    if res<>0  then
+    IdCXC:=  ADOQryAuxiliar.FieldByName('idCuentaXCobrar').AsInteger;
+    Result:=True;
+  end
+  else   //No hay cxc pregeneradas proximas..  busca siguiente a generar
+  begin
+    ADOQryAuxiliar.Close;
+    ADOQryAuxiliar.sql.Clear;
+    ADOQryAuxiliar.sql.Add(' Select aa.IdAnexoAmortizacion, c.idanexo,aa.IdAnexoCredito, aa.PagoTotal from AnexosAmortizaciones aa '
+    +' inner join AnexosCreditos C on C.IdAnexoCredito=aa.IdAnexoCredito and c.IdAnexoCreditoEstatus=1 '
+    +' where c.IdAnexo='+intToSTR(idAnexo)+' and (not Exists (select * from CuentasXCobrar cxc where cxc.IdAnexosAmortizaciones=aa.idanexoamortizacion))' );
+
+    ADOQryAuxiliar.Open; //TRae todas las siguientes
+
+    if not ADOQryAuxiliar.eof then
     begin
-      Result:=True;
-      IdCXC:=ADOStrdPrcGenCXCXAmortiza.Parameters.ParamByName('@IDCuentaXCobrar').Value;
+      ADOStrdPrcGenCXCXAmortiza.Parameters.ParamByName('@IdAnexoAmortizacion').value:=  ADOQryAuxiliar.fieldbyname('IdAnexoAmortizacion').AsInteger;
+      ADOStrdPrcGenCXCXAmortiza.ExecProc;
+      if ADOStrdPrcGenCXCXAmortiza.Parameters.ParamByName('@IDCuentaXCobrar').Value>0 then //Ajustado Jun 30/17
+        res:=1;
+      if res<>0  then
+      begin
+        Result:=True;
+        IdCXC:=ADOStrdPrcGenCXCXAmortiza.Parameters.ParamByName('@IDCuentaXCobrar').Value;
+      end;
     end;
-  end;
+  end; //Oct 9/17
 end;
 
 

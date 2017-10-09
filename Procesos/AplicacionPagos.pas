@@ -281,7 +281,7 @@ begin
             _dmConection.ADOConnection.RollbackTrans; //Feb 14/17
             ShowMessage('Operacion cancelada por errores');
           end;
-          RefreshCXCPendientes;
+          RefreshCXCPendientes; //Aplicacion normal
           dsPago.dataset.Refresh;
           //Abr 17/17                                       //Ajustado Jul 4/17
           if (dsPago.dataset.Fieldbyname('Saldo').AsExtended>0.01) then     //Queda saldo
@@ -301,7 +301,6 @@ begin
           begin
             ActVerificayCreaFinal.Execute; //Sólo crea CXC y avisa..
           end;
-
 
 
 
@@ -370,12 +369,13 @@ begin       //Sin uso abr /17
 
 end;
 
-procedure TFrmAplicacionPago.RefreshCXCPendientes;
+procedure TFrmAplicacionPago.RefreshCXCPendientes;    //SE ajusto pero si se usa desde alguna de anticipos se sebe mandar el parametro
 var
   IdCuentaXCobrar: Integer;
 begin
     IdCuentaXCobrar:= dsConCXCpendientes.Dataset.FieldByName('IdCuentaXCobrar').AsInteger;
     dsConCXCpendientes.DataSet.Close;
+    Tadodataset(dsConCXCpendientes.DataSet).Parameters.ParamByName('EsAnti').Value:=0; //Generalmente es 0
     dsConCXCpendientes.DataSet.Open;
     dsConCXCpendientes.Dataset.Locate('IdCuentaXCobrar', IdCuentaXCobrar, []);
 end;
@@ -450,7 +450,7 @@ begin
     +' Ci.SaldoFactoraje as SaldoFactorajeCFDI, ci.serie, Ci.folio  from CuentasXCobrar CXC left Join CFDI CI on CI.IdCFDI= CXC.IdCFDI where '
     +' CXC.idanexosamortizaciones is not null and  Saldo >0 and IDPersona=:IdPersonaCliente and '
     +' (((IdCuentaXCobrarEstatus=0 or (IdCuentaXCobrarEstatus=1)) and  ESMoratorio=0) or( Esmoratorio=1) or '  //Ajustado jul 31/17
-    +' (CXC.Fecha<dbo.GetDateAux() and IdCuentaXCobrarEstatus=-1) or '     //jul 4/17
+    +' ((CXC.Fecha<=dbo.GetDateAux() and IdCuentaXCobrarEstatus=-1) and 1=:EsAnti)  or '     //jul 4/17  //Ajustado oct 9/17
     +' (exists (select * from CuentasXCobrarDetalle CXCD where CXCD.descripcion like''%Abono Capital%'' and CXC.IdCuentaXCobrar=CXCD.idcuentaXCobrar )'
     +' and CXC.IdCFDI is null) ) and CXC.IDAnexo=:IdAnexo'           //-- IdCuentaXCobrarEstatus=-1 and puede que esten facturadas
     +'  order by CXC.idanexosamortizaciones,EsMoratorio DEsc, CXC.FechaVencimiento' ;
@@ -465,12 +465,13 @@ begin
     +' Ci.SaldoFactoraje as SaldoFactorajeCFDI , ci.serie, Ci.folio from CuentasXCobrar CXC left Join CFDI CI on CI.IdCFDI= CXC.IdCFDI where '
     +' Saldo >0 and IDPersona=:IdPersonaCliente and '
     +' (((IdCuentaXCobrarEstatus=0 or (IdCuentaXCobrarEstatus=1)) and  ESMoratorio=0) or( Esmoratorio=1) or ' //Jul 31/17
-    +' (CXC.Fecha<dbo.GetDateAux() and IdCuentaXCobrarEstatus=-1) or '     //jul 4/17
+  //se quitaron anticipados de aca oct 9/17  +' (CXC.Fecha<dbo.GetDateAux() and IdCuentaXCobrarEstatus=-1) or '     //jul 4/17
+    +' ((CXC.Fecha<=dbo.GetDateAux() and IdCuentaXCobrarEstatus=-1) and 1=:EsAnti)  or '     //jul 4/17  //Ajustado oct 9/17
     +' (exists (select * from CuentasXCobrarDetalle CXCD where CXCD.descripcion like''%Abono Capital%'' and CXC.IdCuentaXCobrar=CXCD.idcuentaXCobrar )'
     +' and CXC.IdCFDI is null) ) and CXC.IDAnexo=:IdAnexo'           //-- IdCuentaXCobrarEstatus=-1 and puede que esten facturadas
     +'  order by CXC.idanexosamortizaciones,EsMoratorio DEsc, CXC.FechaVencimiento' ;
   end;   //Verificar si solo salen las que son....ago 22/127
-
+  TAdoDataset(DsconCXCPendientes.DataSet).parameters.parambyname('EsAnti').Value:=0; //Oct 9/17
   TAdoDataset(DsconCXCPendientes.DataSet).open;
 
 end;
