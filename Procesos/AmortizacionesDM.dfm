@@ -364,7 +364,8 @@ inherited dmAmortizaciones: TdmAmortizaciones
       
         'AND AnexosAmortizaciones.IdAnexoAmortizacion >= dbo.GetAmortizac' +
         'ionConSaldo(AnexosCreditos.IdAnexo)'
-      'AND AnexosCreditos.IdAnexo = :IdAnexo')
+      'AND AnexosCreditos.IdAnexo = :IdAnexo'
+      'ORDER BY AnexosAmortizaciones.Periodo')
     Left = 216
     Top = 88
     object adoqAnexosAmortizacionesIdAnexoAmortizacion: TAutoIncField
