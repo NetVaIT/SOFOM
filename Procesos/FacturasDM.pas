@@ -411,8 +411,8 @@ var
 begin
   //Guardar en Bitacora
   ADOQryAuxiliar.Close;
-  ADOQryAuxiliar.Sql.Clear;
-  ADOQryAuxiliar.SQL.Add('SElect CFDI where Idcfdi ='+intTostr(idcfdi));
+  ADOQryAuxiliar.Sql.Clear;     //FAltaba el * from
+  ADOQryAuxiliar.SQL.Add('SElect * from CFDI where Idcfdi ='+intTostr(idcfdi));
   ADOQryAuxiliar.open;
 
   if not ADOQryAuxiliar.eof and ADOQryAuxiliar.fieldbyname('IdCuentaXCobrar').IsNull then   //Solo debe  haber uno
