@@ -34,6 +34,7 @@
       'on.IdContratoTipo =CT.IdContratoTipo'#13#10' WHERE    (Cc.Saldo > 0) -' +
       '-  AND  -- mientras para que muestre todo'#13#10#13#10'    '#13#10'ORDER BY Clie' +
       'nte'
+    Left = 40
     object adodsReportIdCuentaXCobrar: TAutoIncField
       FieldName = 'IdCuentaXCobrar'
       ReadOnly = True
@@ -5330,43 +5331,46 @@
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'SELECT     Cc.IdCuentaXCobrar,cc.IDAnexo,a.Identificador as Anex' +
-      'o, A.IDContrato, Con.IdContratoTipo,Con.Identificador as Contrat' +
-      'o,'#13#10' CT.Identificador as TC, ct.Descripcion as TipoContrato, '#13#10'C' +
-      'ASE when aa.periodo is not null  then '#13#10'    CASE WHEN CC.Esmorat' +
-      'orio=1  then '#39'Moratorio '#39'+cast(AA.Periodo as varchar(10))+'#39'/'#39'+ca' +
-      'st(A.Plazo as varchar(10))'#13#10'    else '#39'Amortizaci'#243'n '#39'+cast(AA.Per' +
-      'iodo as varchar(10))+'#39'/'#39'+cast(A.Plazo as varchar(10))'#13#10'    end '#13 +
-      #10' else '#39'Otro '#39' end      as CAnterior, '#13#10'Cc.Descripcion  '#13#10'as Cob' +
-      'roX, '#13#10'  CASE WHEN CC.Esmoratorio=1 then cc.IdCuentaXCobrarBase ' +
-      'else CC.idCuentaXCobrar end as CxcBase, '#13#10'Cc.Fecha, cc.FechaVenc' +
-      'imiento,  Cc.IdPersona, cc.IdCuentaXCobrarEstatus, Cc.Total, CC.' +
-      'Saldo, '#13#10'                      PR.RazonSocial AS Cliente,'#13#10'     ' +
-      '                 AA.Periodo,'#13#10#13#10'                     PR.RFC ,  C' +
-      'on.MontoAutorizado as importeCredito,Ac.MontoFiananciar, a.TasaA' +
-      'nual,a.SaldoInsoluto,a.TasaMoratoriaAnual, -- ajuste para Report' +
-      'e Oct 5/17'#13#10#9'      CXCBase.FechaVencimiento,  CASE WHEN CC.Esmor' +
-      'atorio=1 then DAteDiff(DAy, CXCBase.FechaVencimiento,Cc.Fecha) e' +
-      'lse 0  end as DiasVenc -- ajuste para Reporte Oct 5/17'#13#10'        ' +
-      '            , P.FEchaPago'#13#10'                      '#13#10'FROM         ' +
-      'CuentasXCobrar AS Cc INNER JOIN'#13#10'                      Personas ' +
-      'AS PR ON Cc.IdPersona = PR.IdPersona '#13#10'             left  join  ' +
-      'Anexos As A ON Cc.IdAnexo=A.IdAnexo       -- Por si hubiese algo' +
-      ' sin anexo.. aunque no deber'#237'a'#13#10'             left join AnexosCre' +
-      'ditos as aC on aC.IdAnexo=A.IdAnexo and aC.IdAnexoCreditoEstatus' +
-      ' =1'#13#10'             left join AnexosAmortizaciones as AA on AA.IdA' +
-      'nexoCredito=AC.IdAnexoCredito and Cc.IdAnexosAmortizaciones=AA.I' +
-      'dAnexoAmortizacion '#13#10#9#9#13#10'             left Join CuentasXCobrar C' +
-      'XCBase on cxcbase.idcuentaXCobrar=CC.IdCuentaXCobrarBase-- ajust' +
-      'e para Reporte Oct 5/17'#13#10'            '#13#10'             inner join C' +
-      'ontratos as Con ON A.IdContrato=Con.IdContrato'#13#10'             inn' +
-      'er join ContratosTipos as CT On Con.IdContratoTipo =CT.IdContrat' +
-      'oTipo'#13#10'             '#13#10'             left Join (SElect IdAnexo, Ma' +
-      'x(FechaPago) as fechaPago from  Pagos group by idanexo) as  P on' +
-      ' P.IdAnexo=Cc.IdAnexo  -- ajuste para Reporte Oct 5/17'#13#10'        ' +
-      '     '#13#10' WHERE    (Cc.Saldo > 0.01)  and Cc.IDPersona=:IdPersona ' +
-      ' '#13#10#13#10'--  AND  -- mientras para que muestre todo'#13#10#13#10'ORDER BY Clie' +
-      'nte,cc.IdAnexo, CXCBase, cobrox, cc.FechaVencimiento'
+      'SELECT        Cc.IdCuentaXCobrar, Cc.IdAnexo, A.Identificador AS' +
+      ' Anexo, A.IdContrato, Con.IdContratoTipo, Con.Identificador AS C' +
+      'ontrato, CT.Identificador AS TC, CT.Descripcion AS TipoContrato,' +
+      ' CASE WHEN AA.Periodo IS NULL THEN 1000 ELSE AA.Periodo END AS P' +
+      'eriodo,'#13#10'                         CASE WHEN aa.periodo IS NOT NU' +
+      'LL THEN CASE WHEN CC.Esmoratorio = 1 THEN '#39'Moratorio '#39' + CAST(AA' +
+      '.Periodo AS varchar(10)) + '#39'/'#39' + CAST(A.Plazo AS varchar(10)) EL' +
+      'SE '#39'Amortizaci'#243'n '#39' + CAST(AA.Periodo AS varchar(10)) '#13#10'         ' +
+      '                + '#39'/'#39' + CAST(A.Plazo AS varchar(10)) END ELSE '#39'O' +
+      'tro '#39' END AS CAnterior, Cc.Descripcion AS CobroX, CASE WHEN CC.E' +
+      'smoratorio = 1 THEN cc.IdCuentaXCobrarBase ELSE CC.idCuentaXCobr' +
+      'ar END AS CxcBase, Cc.Fecha, '#13#10'                         Cc.Fecha' +
+      'Vencimiento, Cc.IdPersona, Cc.IdCuentaXCobrarEstatus, Cc.Total, ' +
+      'Cc.Saldo, PR.RazonSocial AS Cliente, PR.RFC, Con.MontoAutorizado' +
+      ' AS importeCredito, aC.MontoFiananciar, A.TasaAnual, '#13#10'         ' +
+      '                A.SaldoInsoluto, A.TasaMoratoriaAnual, --CXCBase' +
+      '.FechaVencimiento AS Expr1, '#13#10#9#9#9#9#9#9'CASE WHEN CC.Esmoratorio = 1' +
+      ' THEN DAteDiff(DAy, CXCBase.FechaVencimiento, Cc.FechaVencimient' +
+      'o) ELSE 0 END AS DiasVenc, P.fechaPago, '#13#10'                      ' +
+      '   CI.Fecha AS FechaFactura'#13#10'FROM            CuentasXCobrar AS C' +
+      'c INNER JOIN'#13#10'                         Personas AS PR ON Cc.IdPe' +
+      'rsona = PR.IdPersona LEFT OUTER JOIN'#13#10'                         A' +
+      'nexos AS A ON Cc.IdAnexo = A.IdAnexo LEFT OUTER JOIN'#13#10'          ' +
+      '               AnexosCreditos AS aC ON aC.IdAnexo = A.IdAnexo AN' +
+      'D aC.IdAnexoCreditoEstatus = 1 LEFT OUTER JOIN'#13#10'                ' +
+      '         AnexosAmortizaciones AS AA ON AA.IdAnexoCredito = aC.Id' +
+      'AnexoCredito AND Cc.IdAnexosAmortizaciones = AA.IdAnexoAmortizac' +
+      'ion LEFT OUTER JOIN'#13#10'                         CFDI AS CI ON CI.I' +
+      'dCuentaXCobrar = Cc.IdCuentaXCobrar LEFT OUTER JOIN'#13#10'           ' +
+      '              CuentasXCobrar AS CXCBase ON CXCBase.IdCuentaXCobr' +
+      'ar = Cc.IdCuentaXCobrarBase INNER JOIN'#13#10'                        ' +
+      ' Contratos AS Con ON A.IdContrato = Con.IdContrato INNER JOIN'#13#10' ' +
+      '                        ContratosTipos AS CT ON Con.IdContratoTi' +
+      'po = CT.IdContratoTipo LEFT OUTER JOIN'#13#10'                        ' +
+      '     (SELECT        IdAnexo, MAX(FechaPago) AS fechaPago'#13#10'      ' +
+      '                         FROM            Pagos'#13#10'                ' +
+      '               GROUP BY IdAnexo) AS P ON P.IdAnexo = Cc.IdAnexo'#13 +
+      #10'WHERE        (Cc.Saldo > 0.01) AND (Cc.IdPersona = :IdPersona)'#13 +
+      #10'ORDER BY Cliente, Cc.IdAnexo, Periodo, cobrox, Cc.FechaVencimie' +
+      'nto'#13#10
     Parameters = <
       item
         Name = 'IdPersona'
@@ -5635,10 +5639,11 @@
         Font.Size = 9
         Font.Style = [fsBold]
         Transparent = True
+        Visible = False
         mmHeight = 4763
-        mmLeft = 5236
-        mmTop = 64352
-        mmWidth = 12700
+        mmLeft = 2381
+        mmTop = 64294
+        mmWidth = -3704
         BandType = 0
         LayerName = BandLayer3
       end
@@ -5653,7 +5658,7 @@
         Font.Style = [fsBold]
         Transparent = True
         mmHeight = 4763
-        mmLeft = 28291
+        mmLeft = 5236
         mmTop = 64351
         mmWidth = 19050
         BandType = 0
@@ -5670,7 +5675,7 @@
         Font.Style = [fsBold]
         Transparent = True
         mmHeight = 4763
-        mmLeft = 72696
+        mmLeft = 56796
         mmTop = 64352
         mmWidth = 17992
         BandType = 0
@@ -5679,7 +5684,7 @@
       object ppLabel42: TppLabel
         UserName = 'Label42'
         AutoSize = False
-        Caption = 'CXC Base'
+        Caption = 'Fecha Factura'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -5687,9 +5692,9 @@
         Font.Style = [fsBold]
         Transparent = True
         mmHeight = 4763
-        mmLeft = 53433
+        mmLeft = 29583
         mmTop = 64351
-        mmWidth = 16404
+        mmWidth = 21969
         BandType = 0
         LayerName = BandLayer3
       end
@@ -5705,7 +5710,7 @@
         TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 4763
-        mmLeft = 146330
+        mmLeft = 139705
         mmTop = 64351
         mmWidth = 22490
         BandType = 0
@@ -5723,7 +5728,7 @@
         TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 4763
-        mmLeft = 178071
+        mmLeft = 174626
         mmTop = 64352
         mmWidth = 17992
         BandType = 0
@@ -9286,7 +9291,7 @@
         Font.Style = [fsBold]
         Transparent = True
         mmHeight = 4763
-        mmLeft = 128323
+        mmLeft = 119048
         mmTop = 64294
         mmWidth = 12171
         BandType = 0
@@ -9345,29 +9350,12 @@
         Font.Size = 9
         Font.Style = []
         Transparent = True
+        Visible = False
         DataPipelineName = 'ppDBPplnCtaActCliente'
         mmHeight = 4763
-        mmLeft = 4178
-        mmTop = 527
-        mmWidth = 19050
-        BandType = 4
-        LayerName = BandLayer3
-      end
-      object ppDBText16: TppDBText
-        UserName = 'DBText16'
-        DataField = 'FechaVencimiento'
-        DataPipeline = ppDBPplnCtaActCliente
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 9
-        Font.Style = []
-        Transparent = True
-        DataPipelineName = 'ppDBPplnCtaActCliente'
-        mmHeight = 4763
-        mmLeft = 28256
-        mmTop = 527
-        mmWidth = 19050
+        mmLeft = 1323
+        mmTop = 529
+        mmWidth = 2646
         BandType = 4
         LayerName = BandLayer3
       end
@@ -9383,16 +9371,17 @@
         Transparent = True
         DataPipelineName = 'ppDBPplnCtaActCliente'
         mmHeight = 4763
-        mmLeft = 72761
+        mmLeft = 56861
         mmTop = 529
-        mmWidth = 33867
+        mmWidth = 48154
         BandType = 4
         LayerName = BandLayer3
       end
       object ppDBText22: TppDBText
         UserName = 'DBText22'
-        DataField = 'CxcBase'
+        DataField = 'FechaFactura'
         DataPipeline = ppDBPplnCtaActCliente
+        DisplayFormat = 'mm/dd/yyyy'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -9402,9 +9391,9 @@
         Transparent = True
         DataPipelineName = 'ppDBPplnCtaActCliente'
         mmHeight = 4763
-        mmLeft = 53380
-        mmTop = 527
-        mmWidth = 14552
+        mmLeft = 29633
+        mmTop = 529
+        mmWidth = 21960
         BandType = 4
         LayerName = BandLayer3
       end
@@ -9422,7 +9411,7 @@
         Transparent = True
         DataPipelineName = 'ppDBPplnCtaActCliente'
         mmHeight = 4763
-        mmLeft = 145257
+        mmLeft = 138632
         mmTop = 529
         mmWidth = 23548
         BandType = 4
@@ -9442,7 +9431,7 @@
         Transparent = True
         DataPipelineName = 'ppDBPplnCtaActCliente'
         mmHeight = 4763
-        mmLeft = 173308
+        mmLeft = 169863
         mmTop = 529
         mmWidth = 22754
         BandType = 4
@@ -9461,9 +9450,27 @@
         Transparent = True
         DataPipelineName = 'ppDBPplnCtaActCliente'
         mmHeight = 4763
-        mmLeft = 128323
+        mmLeft = 119048
         mmTop = 529
         mmWidth = 12171
+        BandType = 4
+        LayerName = BandLayer3
+      end
+      object ppDBText16: TppDBText
+        UserName = 'DBText16'
+        DataField = 'FechaVencimiento'
+        DataPipeline = ppDBPplnCtaActCliente
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 9
+        Font.Style = []
+        Transparent = True
+        DataPipelineName = 'ppDBPplnCtaActCliente'
+        mmHeight = 4763
+        mmLeft = 5260
+        mmTop = 529
+        mmWidth = 19050
         BandType = 4
         LayerName = BandLayer3
       end
@@ -9572,7 +9579,7 @@
         Transparent = True
         DataPipelineName = 'ppDBPplnCtaActCliente'
         mmHeight = 4498
-        mmLeft = 145257
+        mmLeft = 138632
         mmTop = 1852
         mmWidth = 23548
         BandType = 7
@@ -9593,7 +9600,7 @@
         Transparent = True
         DataPipelineName = 'ppDBPplnCtaActCliente'
         mmHeight = 4498
-        mmLeft = 173308
+        mmLeft = 169863
         mmTop = 1852
         mmWidth = 22754
         BandType = 7
@@ -9614,7 +9621,7 @@
       end
     end
     object ppGroup2: TppGroup
-      BreakName = 'Anexo'
+      BreakName = 'Contrato'
       DataPipeline = ppDBPplnCtaActCliente
       GroupFileSettings.NewFile = False
       GroupFileSettings.EmailFile = False
@@ -9673,7 +9680,7 @@
           Transparent = True
           DataPipelineName = 'ppDBPplnCtaActCliente'
           mmHeight = 4498
-          mmLeft = 145257
+          mmLeft = 138632
           mmTop = 1852
           mmWidth = 23548
           BandType = 5
@@ -9696,7 +9703,7 @@
           Transparent = True
           DataPipelineName = 'ppDBPplnCtaActCliente'
           mmHeight = 4498
-          mmLeft = 173308
+          mmLeft = 169863
           mmTop = 1852
           mmWidth = 22754
           BandType = 5
@@ -9708,7 +9715,7 @@
           Anchors = [atLeft, atTop, atRight, atBottom]
           Pen.Color = clGray
           Weight = 0.500000000000000000
-          mmHeight = 21167
+          mmHeight = 2117
           mmLeft = 128323
           mmTop = 794
           mmWidth = 73554
@@ -9756,6 +9763,7 @@
         end
         object ppShape1: TppShape
           UserName = 'Shape1'
+          Visible = False
           mmHeight = 25932
           mmLeft = 5292
           mmTop = 12963
@@ -9774,6 +9782,7 @@
           Font.Size = 8
           Font.Style = [fsBold]
           Transparent = True
+          Visible = False
           mmHeight = 4763
           mmLeft = 6879
           mmTop = 14551
@@ -9796,6 +9805,7 @@
           Font.Size = 9
           Font.Style = []
           Transparent = True
+          Visible = False
           WordWrap = True
           mmHeight = 16933
           mmLeft = 6879
