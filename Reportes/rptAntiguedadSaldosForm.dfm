@@ -472,7 +472,7 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
       Caption = 'Por contratos atrasados'
       Category = 0
       Hint = 'Por contratos atrasados'
-      Visible = ivAlways
+      Visible = ivNever
       ImageIndex = 20
     end
   end

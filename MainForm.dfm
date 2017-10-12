@@ -78,7 +78,6 @@ inherited frmMain: TfrmMain
   end
   inherited dxRibbonStatusBar1: TdxRibbonStatusBar
     Width = 1020
-    ExplicitTop = 32000
     ExplicitWidth = 1020
   end
   inherited pnlMain: TPanel
@@ -688,8 +687,10 @@ inherited frmMain: TfrmMain
       Category = 1
     end
     object dxBrLrgBtnEstadoCuenta: TdxBarLargeButton
-      Action = actEstadoCuenta
+      Caption = 'Estados de Cuenta'
       Category = 1
+      Visible = ivNever
+      LargeImageIndex = 51
     end
     object dxBrLrgBtnInformacionContratos: TdxBarLargeButton
       Tag = 52

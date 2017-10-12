@@ -251,7 +251,7 @@ begin
   TfrmrptantiguedadSaldos(gGridForm).ActPDFAdeudoActualCliente:=ActPDFCtasActualCliente;
 
   //Jul 14/17
-  TfrmrptantiguedadSaldos(gGridForm).ActPDFxContratosVenc:=ActPDFXContratosVencidos;
+//DEshabilitado Oct12/17  TfrmrptantiguedadSaldos(gGridForm).ActPDFxContratosVenc:=ActPDFXContratosVencidos;
 
 end;
 

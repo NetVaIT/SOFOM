@@ -245,7 +245,7 @@ inherited FrmReporteCarteraGrid: TFrmReporteCarteraGrid
       Caption = 'Reporte Cartera'
       Category = 0
       Hint = 'Reporte Cartera'
-      Visible = ivAlways
+      Visible = ivNever
       ImageIndex = 17
     end
     object dxBrBtnHojaControlCliente: TdxBarButton
@@ -1169,7 +1169,6 @@ inherited FrmReporteCarteraGrid: TFrmReporteCarteraGrid
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42867.572603240740000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

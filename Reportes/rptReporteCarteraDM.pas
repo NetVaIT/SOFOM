@@ -355,7 +355,7 @@ begin
   gGridForm.DataSet:= adodsMaster;
   gGridForm.ReadOnlyGrid:= True;
 
-  TFrmReporteCarteraGrid(gGridForm).ActPDFReporteCartera:=ActPDFCartera;
+//DEshabilitado Oct12/17  TFrmReporteCarteraGrid(gGridForm).ActPDFReporteCartera:=ActPDFCartera;
   TFrmReporteCarteraGrid(gGridForm).ActPDFHojaControlGral:=ActPDFHojaControl;
   TFrmReporteCarteraGrid(gGridForm).ActPDFHojaAmorYpago:=ActPDFAmortizayPago;
   TFrmReporteCarteraGrid(gGridForm).ActPDFNuevoAmoryPago2:=ActAmorYPago2;
