@@ -121,13 +121,23 @@ end;
 
 procedure TdmAplicacionesConsulta.ActCreaPagoDepositoExecute(Sender: TObject);
  var i:Integer;
+    impDepo:Double; //Oct 17/17
 begin//Sólo para probar creacion de los no creados en aplicacion Jun 21/17
   inherited;
+  // Requiere traer el total del depósito en Garantía     //Oct 17/17
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.sql.Clear;
+  ADOQryAuxiliar.SQL.add('Select * From CuentasXCobrarDEtalle where IdCuentaXCobrarDEtalle ='+ADODtstAplicacionesInternasIdCuentaXCobrarDetalle.AsString);
+  ADOQryAuxiliar.Open;
+  impDepo:=ADOQryAuxiliar.fieldbyname('Importe').AsFloat;
+
+
+ //Oct 17/17 hasta aca
   i:=Pos('Deposito en garantia',ADODtstAplicacionesInternasItemCXC.AsString);
   if (i>0) and (ADODtstAplicacionesInternassaldoCXC.AsFloat<0.01)
     and NoExistePagoXDeposito(ADODtstAplicacionesInternasIDPagoAplicacionInterna.asinteger,adodsMasterIDAnexo.AsInteger )  then // verificar si asi o con sus id(56,66,76)
-  begin
-    if CrearPagoXDeposito(ADODtstAplicacionesInternas.FieldByName('IMPORTEPAGADO').AsFloat,AdoDsMaster) then
+  begin                //    ADODtstAplicacionesInternas.FieldByName('IMPORTEPAGADO').AsFloat   //Oct 17/17
+    if CrearPagoXDeposito(impDepo,AdoDsMaster) then
       ShowMessage('Se creó pago correspondiente al Depósito en Garantía. Auxiliar');
   end;
 end;

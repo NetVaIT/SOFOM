@@ -735,10 +735,10 @@ begin
     ADOQryAuxiliar.Close;
     ADOQryAuxiliar.SQl.Clear;
     ADOQryAuxiliar.SQL.Add('Select * from CuentasXCobrarDetalle  where idcuentaXCobrarDetalle='+  ADODtStCxCDetallePendIdCuentaXCobrarDetalle.AsString);
-    ADOQryAuxiliar.open;
+    ADOQryAuxiliar.open;   //Es deposito
     if ADOQryAuxiliar.FieldByName('Saldo').AsExtended<0.01 then //Ya se pago todo el enganche //jul 5/17
-    begin
-      if CrearPagoXDeposito(DataSet.FieldByName('IMPORTE').AsFloat,AdoDsMaster) then
+    begin                     //Era es te per o es el de la aplicacion actual y no es la que va  DataSet.FieldByName('IMPORTE').AsFloat
+      if CrearPagoXDeposito( ADOQryAuxiliar.FieldByName('Importe').AsFloat,AdoDsMaster ) then //ES la que tiene de origen con el total   //Oct 17/17
         ShowMessage('Se creó pago correspondiente al Depósito en Garantía');
     end;
   end;
@@ -790,8 +790,8 @@ begin
   else
      ADOQryAuxiliar.Parameters.ParamByName('IDMetodoPago').value:= 5 ;// jul 5/17 Otro
 
-  ADOQryAuxiliar.Parameters.ParamByName('SeriePago').value:=serieAct;
-  ADOQryAuxiliar.Parameters.ParamByName('FolioPago').value:= FolioAct;
+  ADOQryAuxiliar.Parameters.ParamByName('SeriePago').value:=serieAct;            //Solo registra el ultimo pago que la liquido
+  ADOQryAuxiliar.Parameters.ParamByName('FolioPago').value:= FolioAct;                 //Este es el dela CuentaXCobrar detalle.. es la que corresponde  //Oct 17/17
   ADOQryAuxiliar.Parameters.ParamByName('Importe').value:=simpleroundto(Importe,-2); //REdondeado para evitar centavos  negativo sobre centavos .. otro sobre pesos
   ADOQryAuxiliar.Parameters.ParamByName('Saldo').value:= simpleRoundto(Importe,-2);
   ADOQryAuxiliar.Parameters.ParamByName('Referencia').value:=  '';
