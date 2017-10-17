@@ -303,14 +303,16 @@ begin        //Jul 11/17
 end;
 
 procedure TdmCuentasXCobrar.ActActualizaMoratoriosExecute(Sender: TObject);
+var Fecha:TDAteTime;  //Se cambio la fecha para que no tenga que ir a consultar nuevamente a la Base de datos Oct 16/17
 begin
+  FEcha:= FFechaActual;
   inherited;   //Confirmación Oct 4/17
-  if (Application.MessageBox(pChar('Está seguro que desea generar los moratorios de todos los contratos a la fecha:'+ dateToStr(FFechaActual)+' ?'),
+  if (Application.MessageBox(pChar('Está seguro que desea generar los moratorios de todos los contratos a la fecha:'+ dateToStr(FEcha)+' ?'),
      'Confirmación',MB_YESNO)=IDYES) then
   begin
-    ADOStrprcActGralMoratorios.Parameters.ParamByName('@Fecha').Value:=FFechaActual;// may 26/17 date;  //Sin hora
+    ADOStrprcActGralMoratorios.Parameters.ParamByName('@Fecha').Value:=FEcha;// may 26/17 date;  //Sin hora
     ADOStrprcActGralMoratorios.ExecProc;
-    Showmessage('Se ejecutó proceso de Moratorios al día: '+ dateToStr(FFechaActual)) ; // may 26/17 era date
+    Showmessage('Se ejecutó proceso de Moratorios al día: '+ dateToStr(FEcha)) ; // may 26/17 era date
     RegistraBitacora(1);//Moratorios Abr 12/17
     adodsMaster.Refresh;
   end

@@ -1788,8 +1788,8 @@ begin        //FEb 10/17                 //No requerido aca
     while not ADODtStCxCDetallePend.Eof do
     begin
       ValReg:= SimpleRoundTo(ADODtStCxCDetallePend.FieldByName(CampoSaldo).AsFloat*porcentaje,-6); ///feb 12/17cambio de -4  //Lo que esta pendiente de pago
-      if valreg<=valor then //O diferencias minimas
-      begin
+      if (valreg<=valor) or  (abs(valreg-valor)<0.0001) then //O diferencias minimas
+      begin                    //Ajuste Oct 17/17
         //Aplicar interno el valor de registro y restar
         ADODtstAplicacionesInternas.Insert;
         ADODtstAplicacionesInternas.FieldByName('IDCuentaXCobrarDetalle').AsInteger:=ADODtStCxCDetallePendIdCuentaXCobrarDetalle.AsInteger;
@@ -1890,6 +1890,8 @@ begin        //FEb 10/17                 //No requerido aca
  // quitado Oct 2/17  VerificaYCreaCXCFinales(adodsMasterIdAnexo.AsInteger); //DEl que se acaba de aplicar
   ADODtStCXCPendientes.filter:=''; //Por si es la ultima y creo varias para que se ubique Oct 3/17
   ADODtStCXCPendientes.filtered:=False;
+  ADODtStDetalleCXCMostrar.close;
+  ADODtStDetalleCXCMostrar.open;
 end;
 
 function TdmPagos.VerificaYCreaCXCFinales(idAnexo:Integer):Boolean; //Jun 21/17

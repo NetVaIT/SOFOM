@@ -873,6 +873,8 @@ begin
        //     ActEnvioCorreoFact.Execute; //verificar  Abr5/16
 
             //ShowMessage('Envio a Cliente por Correo Electronico en proceso');
+            if (StrToint(TimbreCFDI.TimbresRestantes) <100) then
+               Showmessage(' Timbres Restantes : '+TimbreCFDI.TimbresRestantes);   //Oct 16/17
           end
           else
           begin

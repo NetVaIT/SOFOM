@@ -309,10 +309,13 @@ begin
       end
       else                                                                                                           //Ene 13/17 'Importe'                                                  'Saldo'
         ShowMessage('No se puede aplicar un valor de 0');
+
+      dsConCXCpendientes.DataSet.RefresH; //Oct 17/17 ??
       //showmessage(quitasignos (cxDBLblDisponible.Caption) ); //Ago 15/16    //Ajustado Jul 4/17
       BtBtnAplicar.Enabled:= (strtoFLoat(quitasignos(cxDBLblDisponible.Caption))>0.01) and (DSAplicacion.DataSet.state =dsInsert);
    //DH Abr 17/17   BtBtnAgregar.Enabled:= (strtoFLoat(quitasignos(cxDBLblDisponible.Caption))>0) and (DsAplicacion.state =dsBrowse)and (not dsConCXCpendientes.dataset.eof);
       cxDBTxtEdtImporteAplicar.Enabled:= (DSAplicacion.DataSet.state =dsInsert);//Ago 15/16
+     // dsConCXCpendientes.DataSet.RefresH; //Oct 17/17 ??
 
     {   }
     end;// del seguir opor si se require facturar Moratorios //Feb 12/17

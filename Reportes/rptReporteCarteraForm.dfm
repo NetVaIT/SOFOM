@@ -1169,6 +1169,7 @@ inherited FrmReporteCarteraGrid: TFrmReporteCarteraGrid
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42867.572603240740000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end
