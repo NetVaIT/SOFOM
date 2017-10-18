@@ -252,19 +252,19 @@ type
     ADODtStCxCDetallePendsaldoDoc1: TFMTBCDField;
     ADODtStCxCDetallePendivaCFDI2: TFloatField;
     ADODtStCxCDetallePendSaldoDocumento: TFMTBCDField;
-    ADODtStPagosAuxiliar: TADODataSet;
-    ADODtStPagosAuxiliarIDPagoAuxiliarMora: TIntegerField;
-    ADODtStPagosAuxiliarIdCuentaXCobrar: TIntegerField;
-    ADODtStPagosAuxiliarIdCuentaXCobrarDetalle: TIntegerField;
-    ADODtStPagosAuxiliarIDCFDI: TLargeintField;
-    ADODtStPagosAuxiliarIDCFDIConcepto: TLargeintField;
-    ADODtStPagosAuxiliarIDUsuario: TIntegerField;
-    ADODtStPagosAuxiliarFecha: TDateTimeField;
-    ADODtStPagosAuxiliarImporte: TFMTBCDField;
-    ADODtStPagosAuxiliarEsCondonacion: TBooleanField;
-    ADODtStPagosAuxiliarObservaciones: TStringField;
+    ADODtStPagosAuxiliarX: TADODataSet;
+    ADODtStPagosAuxiliarXIDPagoAuxiliarMora: TIntegerField;
+    ADODtStPagosAuxiliarXIdCuentaXCobrar: TIntegerField;
+    ADODtStPagosAuxiliarXIdCuentaXCobrarDetalle: TIntegerField;
+    ADODtStPagosAuxiliarXIDCFDI: TLargeintField;
+    ADODtStPagosAuxiliarXIDCFDIConcepto: TLargeintField;
+    ADODtStPagosAuxiliarXIDUsuario: TIntegerField;
+    ADODtStPagosAuxiliarXFecha: TDateTimeField;
+    ADODtStPagosAuxiliarXImporte: TFMTBCDField;
+    ADODtStPagosAuxiliarXEsCondonacion: TBooleanField;
+    ADODtStPagosAuxiliarXObservaciones: TStringField;
     DSAplicacionInterna: TDataSource;
-    ADODtStPagosAuxiliarIdPagoAplicacionInterna: TIntegerField;
+    ADODtStPagosAuxiliarXIdPagoAplicacionInterna: TIntegerField;
     ADODtStCXCDetalleDescto: TADODataSet;
     ADODtStCXCDetalleDesctoIdCuentaXCobrarDescuento: TAutoIncField;
     ADODtStCXCDetalleDesctoIdCuentaXCobrarDetalle: TIntegerField;
@@ -386,7 +386,7 @@ type
     procedure ADODtStPrefacturasCFDINewRecord(DataSet: TDataSet);
     procedure ADODtStPrefacturasCFDIAfterOpen(DataSet: TDataSet);
     procedure ADODtStCFDIConceptosPrefNewRecord(DataSet: TDataSet);
-    procedure ADODtStPagosAuxiliarNewRecord(DataSet: TDataSet);
+    procedure ADODtStPagosAuxiliarXNewRecord(DataSet: TDataSet);
     procedure actAbonarCapitalExecute(Sender: TObject);
     procedure adodsMasterBeforeInsert(DataSet: TDataSet);
     procedure actCrearCXCAbonoCapitalExecute(Sender: TObject);
@@ -700,7 +700,8 @@ begin
     ADOQryAuxiliar.ExecSQL;
 
   end;  // DEbe estar en el correspondiente
-  if ADODtStCxCDetallePendEsMoratorios.Value then //FEb 14/17 Para que guarde pagosAuxiliares de Moratorio
+//DEshabilitado para que ya no use esa tabla y no requiere esos datos guardados oct 18/17
+(*  if ADODtStCxCDetallePendEsMoratorios.Value then //FEb 14/17 Para que guarde pagosAuxiliares de Moratorio
   begin
     ADODtStPagosAuxiliar.Open;
     ADODtStPagosAuxiliar.Insert;
@@ -714,7 +715,7 @@ begin
 
 
     ADODtStPagosAuxiliar.Post;
-  end;
+  end;  *)
   //Verificar si es un Deposito en garantia   y crear un pago correspondiente Jun 8/17      //verificar por que no lo hizo....????jul 4/17
   if (Pos('Deposito en garantia',ADODtStCxCDetallePendDescripCXC.AsString)>0)  //Jun 21/17
  // deshabilitado por que puede no estar en Cero  and (ADODtStCxCDetallePendSaldo.AsFloat=0)  //Si estuviese actualizado no se veria
@@ -912,7 +913,7 @@ begin
   dataset.FieldByName('Cantidad').AsFloat:=1;
 end;
 
-procedure TdmPagos.ADODtStPagosAuxiliarNewRecord(DataSet: TDataSet);
+procedure TdmPagos.ADODtStPagosAuxiliarXNewRecord(DataSet: TDataSet);
 begin            //FEb 14/17
   inherited;
   dataset.FieldByName('Fecha').asdatetime:=now;     //REgistro auxiliar
@@ -1072,6 +1073,7 @@ begin
   1:  tipoTxt:='MORA';
   2:  tipoTxt:='ABOCAP'; //Abr 19/17
   3:  tipoTxt:='PAGANT'; //Jun 29/17
+  4:  TipoTxt:='DELAPLICA'; //Oct 18/17 Se usa internamente en Procecimiento pero para no usar ese dato
   end;
 
   ADOQryAuxiliar.Close;

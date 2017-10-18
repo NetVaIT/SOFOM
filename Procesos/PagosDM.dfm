@@ -1,7 +1,7 @@
 inherited dmPagos: TdmPagos
   OldCreateOrder = True
   Height = 669
-  Width = 900
+  Width = 1029
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     AfterOpen = adodsMasterAfterOpen
@@ -1382,10 +1382,10 @@ inherited dmPagos: TdmPagos
     Left = 776
     Top = 312
   end
-  object ADODtStPagosAuxiliar: TADODataSet
+  object ADODtStPagosAuxiliarX: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
-    OnNewRecord = ADODtStPagosAuxiliarNewRecord
+    OnNewRecord = ADODtStPagosAuxiliarXNewRecord
     CommandText = 
       'select IDPagoAuxiliarMora, IdCuentaXCobrar, IdPagoAplicacionInte' +
       'rna,'#13#10'IdCuentaXCobrarDetalle, IDCFDI, IDCFDIConcepto, IDUsuario,' +
@@ -1406,40 +1406,40 @@ inherited dmPagos: TdmPagos
       end>
     Left = 779
     Top = 387
-    object ADODtStPagosAuxiliarIDPagoAuxiliarMora: TIntegerField
+    object ADODtStPagosAuxiliarXIDPagoAuxiliarMora: TIntegerField
       FieldName = 'IDPagoAuxiliarMora'
     end
-    object ADODtStPagosAuxiliarIdCuentaXCobrar: TIntegerField
+    object ADODtStPagosAuxiliarXIdCuentaXCobrar: TIntegerField
       FieldName = 'IdCuentaXCobrar'
     end
-    object ADODtStPagosAuxiliarIdCuentaXCobrarDetalle: TIntegerField
+    object ADODtStPagosAuxiliarXIdCuentaXCobrarDetalle: TIntegerField
       FieldName = 'IdCuentaXCobrarDetalle'
     end
-    object ADODtStPagosAuxiliarIDCFDI: TLargeintField
+    object ADODtStPagosAuxiliarXIDCFDI: TLargeintField
       FieldName = 'IDCFDI'
     end
-    object ADODtStPagosAuxiliarIDCFDIConcepto: TLargeintField
+    object ADODtStPagosAuxiliarXIDCFDIConcepto: TLargeintField
       FieldName = 'IDCFDIConcepto'
     end
-    object ADODtStPagosAuxiliarIDUsuario: TIntegerField
+    object ADODtStPagosAuxiliarXIDUsuario: TIntegerField
       FieldName = 'IDUsuario'
     end
-    object ADODtStPagosAuxiliarFecha: TDateTimeField
+    object ADODtStPagosAuxiliarXFecha: TDateTimeField
       FieldName = 'Fecha'
     end
-    object ADODtStPagosAuxiliarImporte: TFMTBCDField
+    object ADODtStPagosAuxiliarXImporte: TFMTBCDField
       FieldName = 'Importe'
       Precision = 18
       Size = 6
     end
-    object ADODtStPagosAuxiliarEsCondonacion: TBooleanField
+    object ADODtStPagosAuxiliarXEsCondonacion: TBooleanField
       FieldName = 'EsCondonacion'
     end
-    object ADODtStPagosAuxiliarObservaciones: TStringField
+    object ADODtStPagosAuxiliarXObservaciones: TStringField
       FieldName = 'Observaciones'
       Size = 300
     end
-    object ADODtStPagosAuxiliarIdPagoAplicacionInterna: TIntegerField
+    object ADODtStPagosAuxiliarXIdPagoAplicacionInterna: TIntegerField
       FieldName = 'IdPagoAplicacionInterna'
     end
   end
@@ -1451,7 +1451,7 @@ inherited dmPagos: TdmPagos
   object ADODtStCXCDetalleDescto: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
-    OnNewRecord = ADODtStPagosAuxiliarNewRecord
+    OnNewRecord = ADODtStPagosAuxiliarXNewRecord
     CommandText = 
       'select IdCuentaXCobrarDescuento, IdCuentaXCobrarDetalle,'#13#10' IDUsu' +
       'ario, IdCFDI, Fecha, Monto, Observaciones from CuentasXCobrarDet' +
