@@ -4,7 +4,11 @@ interface
 
 uses
   System.SysUtils, System.Classes, _StandarDMod, System.Actions, Vcl.ActnList,
-  Data.DB, Data.Win.ADODB, dialogs, math, SHELLAPI,Forms,  winapi.windows;
+  Data.DB, Data.Win.ADODB, System.UITypes, dialogs, math, Forms,
+  Winapi.ShellAPI, Winapi.Windows;
+
+resourcestring
+  strDelAplicacion = '¿Deseas elimina esta aplicación de pago?';
 
 type
   TdmAplicacionesConsulta = class(T_dmStandar)
@@ -47,57 +51,73 @@ type
     ActRepAplicacionesPagos: TAction;
     adodsMasterSaldoCXC: TFMTBCDField;
     adodsMasterTotalFactura: TFMTBCDField;
+    actDesaplicar: TAction;
+    adopDelPagosAplicaciones: TADOStoredProc;
     procedure DataModuleCreate(Sender: TObject);
     procedure ActAplicaMoratorioIntenoExecute(Sender: TObject);
     procedure ActCreaPagoDepositoExecute(Sender: TObject);
     procedure ActRepAplicacionesPagosExecute(Sender: TObject);
+    procedure actDesaplicarExecute(Sender: TObject);
   private
+    { Private declarations }
     function AplicarMoratorioInterno(idCXC: integer;
       ImporteAplicado: Double): Double;
     function CrearPagoXDeposito(Importe: Double;
       ADatosPago: TADODataSet): Boolean;
     function NoExistePagoXDeposito(IdPagoAplicaInt, idanexo: integer): boolean;
-
-    { Private declarations }
+    function Desaplicar: Boolean;
   public
     { Public declarations }
   end;
-
-var
-  dmAplicacionesConsulta: TdmAplicacionesConsulta;
 
 implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
 uses AplicacionesConsultaGrid, AplicacionesInternasCon, _ConectionDmod,
-  PDFAplicacionSaldosDM;
-
+  PDFAplicacionSaldosDM, _Utils;
 
 {$R *.dfm}
 
 procedure TdmAplicacionesConsulta.DataModuleCreate(Sender: TObject);
 begin
   inherited;
-
-   gGridForm:= TfrmConaplicaciones.Create(Self);
- // TfrmConaplicaciones(gGridForm).DSAplicacion.DataSet:=ADODtStAplicacionesPagos;
-
+  gGridForm:= TfrmConaplicaciones.Create(Self);
   gGridForm.DataSet:= adodsMaster;
-
+  gGridForm.ReadOnlyGrid:= True;
   TfrmConaplicaciones(gGridForm).ActAplicaMoraInterno:=ActAplicaMoratorioInteno; //Abr 17/17
   TfrmConaplicaciones(gGridForm).ActRepApliacionesPDF:=ActRepAplicacionesPagos; //Ago 7/17
-
-
+  TfrmConaplicaciones(gGridForm).actDesaplicar := actDesaplicar;
+  ADODtstAplicacionesInternas.Open;
   gFormDeatil1:=TfrmConAplicacionesInternas.Create(self);
+//  gFormDeatil1.DataSet.Open;
   gFormDeatil1.DataSet:=ADODtstAplicacionesInternas;
-  gFormDeatil1.DataSet.Open;
+  gFormDeatil1.ReadOnlyGrid:= True;
   TfrmConAplicacionesInternas(gFormDeatil1).ActCreaPagoXDeposito:=ActCreaPagoDeposito; //Jun 21/17
- (* gGridEditForm:= TFrmAplicacionesConsultaInd.Create(Self);
-  gGridEditForm.DataSet := adodsMaster;
-  TFrmAplicacionesConsultaInd(gGridEditForm).DSQryAuxiliar.DataSet:=ADOQryAuxiliar; //Jun 1/16  *)
-  adodsMaster.open;
+//  adodsMaster.open;
+end;
 
+function TdmAplicacionesConsulta.Desaplicar: Boolean;
+var
+  IdPagoAplicacion: Integer;
+begin
+  Result:= False;
+  IdPagoAplicacion := adodsMasterIdPagoAplicacion.Value;
+  if IdPagoAplicacion <> 0 then
+  begin
+    if MessageDlg(strDelAplicacion, mtConfirmation, mbYesNo, 0) = mrYes then
+    begin
+      ScreenCursorProc(crSQLWait);
+      try
+        adopDelPagosAplicaciones.Parameters.ParamByName('@IdPagoAplicacion').Value:= IdPagoAplicacion;
+        adopDelPagosAplicaciones.Parameters.ParamByName('@IdUsuario').Value:= _dmConection.IdUsuario;
+        adopDelPagosAplicaciones.ExecProc;
+      finally
+        ScreenCursorProc(crDefault);
+      end;
+      Result:= True;
+    end;
+  end;
 end;
 
 procedure TdmAplicacionesConsulta.ActAplicaMoratorioIntenoExecute(
@@ -130,8 +150,6 @@ begin//Sólo para probar creacion de los no creados en aplicacion Jun 21/17
   ADOQryAuxiliar.SQL.add('Select * From CuentasXCobrarDEtalle where IdCuentaXCobrarDEtalle ='+ADODtstAplicacionesInternasIdCuentaXCobrarDetalle.AsString);
   ADOQryAuxiliar.Open;
   impDepo:=ADOQryAuxiliar.fieldbyname('Importe').AsFloat;
-
-
  //Oct 17/17 hasta aca
   i:=Pos('Deposito en garantia',ADODtstAplicacionesInternasItemCXC.AsString);
   if (i>0) and (ADODtstAplicacionesInternassaldoCXC.AsFloat<0.01)
@@ -140,6 +158,13 @@ begin//Sólo para probar creacion de los no creados en aplicacion Jun 21/17
     if CrearPagoXDeposito(impDepo,AdoDsMaster) then
       ShowMessage('Se creó pago correspondiente al Depósito en Garantía. Auxiliar');
   end;
+end;
+
+procedure TdmAplicacionesConsulta.actDesaplicarExecute(Sender: TObject);
+begin
+  inherited;
+  if Desaplicar then
+    RefreshADODS(adodsMaster, adodsMasterIdPagoAplicacion);
 end;
 
 procedure TdmAplicacionesConsulta.ActRepAplicacionesPagosExecute(
@@ -154,7 +179,6 @@ var                   //AGO 7/17
 begin
   inherited;
   TxtSQL:= AdoDSMaster.CommandText;
-
   FechaIni:=  TfrmConaplicaciones(gGridForm).AFecIni;
   FechaFin:=  TfrmConaplicaciones(gGridForm).AFecFin;
   TExto:= '_' +FormatDateTime('ddmmmyyyy',_DmConection.LaFechaActual);// jun30 /17  Date);

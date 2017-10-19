@@ -64,34 +64,35 @@ type
     tvMasterFolioFactura: TcxGridDBColumn;
     tvMasterDescripcion: TcxGridDBColumn;
     dxBrBtnAplicaPagos: TdxBarButton;
+    dxbbDesaplicar: TdxBarButton;
     procedure SpdBtnConsultaClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure RdGrpSeleccionClick(Sender: TObject);
   private
+    { Private declarations }
     ffiltroFec: String;
     FAplicaMoraInt: TBasicAction;
     FAFecIni: TDateTime;
     FAFecFin: TDateTime;
     FRepAplicaPDF: TBasicAction;
+    FactDesaplicar: TBasicAction;
     procedure SetAplicaMoraInt(const Value: TBasicAction);
     function GetFAFecFin: TDateTime;
     function GetFAFecIni: TDateTime;
     procedure SetRepAplicaPDF(const Value: TBasicAction);
-    { Private declarations }
+    procedure SetactDesaplicar(const Value: TBasicAction);
   public
     { Public declarations }
     property filtroFecha:String read ffiltroFec write ffiltroFec; //Ene 5/17
-    property ActAplicaMoraInterno : TBasicAction read FAplicaMoraInt write SetAplicaMoraInt;
-
     property AFecIni :TDateTime read GetFAFecIni write FAFecIni; // Ago 7/17
     property AFecFin :TDateTime read GetFAFecFin write FAFecFin;  // Ago 7/17
-
-     property ActRepApliacionesPDF : TBasicAction read FRepAplicaPDF write SetRepAplicaPDF;
-
+    property ActAplicaMoraInterno : TBasicAction read FAplicaMoraInt write SetAplicaMoraInt;
+    property ActRepApliacionesPDF : TBasicAction read FRepAplicaPDF write SetRepAplicaPDF;
+    property actDesaplicar: TBasicAction read FactDesaplicar write SetactDesaplicar;
   end;
 
-var
-  frmConaplicaciones: TfrmConaplicaciones;
+//var
+//  frmConaplicaciones: TfrmConaplicaciones;
 
 implementation
 
@@ -146,6 +147,12 @@ begin
   end;
 end;
 
+procedure TfrmConaplicaciones.SetactDesaplicar(const Value: TBasicAction);
+begin
+  FactDesaplicar := Value;
+  dxbbDesaplicar.Action := Value;
+end;
+
 procedure TfrmConaplicaciones.SetAplicaMoraInt(const Value: TBasicAction);
 begin
   FAplicaMoraInt := Value;
@@ -157,11 +164,9 @@ begin
   FRepAplicaPDF := Value;
   dxBrBtnAplicaPagos.Action:=VAlue;
   dxBrBtnAplicaPagos.ImageIndex:=18;
-
 end;
 
 procedure TfrmConaplicaciones.SpdBtnConsultaClick(Sender: TObject);
-
 const
    TxtSQL='select PA.FechaAplicacion ,pa.importe, PR.FechaPago as FechaPago,'+
           ' PR.FolioPago, Pr.SeriePago,Cc.IdCuentaXCobrar NoCuentaXCobrar, '+
@@ -178,15 +183,12 @@ var
    FiltroCliente:String;
 
 begin
-
   inherited;
   if EdtNombre.Text<>'' then
     FiltroCliente:=' and P.Razonsocial like ''%'+EdtNombre.Text+'%'''
   else
     FiltroCliente:='';
-
  //FEcha ya viene
-
  // Showmessage('Consulta '+TxtSQL+FiltroCliente+filtroFecha);
   Tadodataset(datasource.DataSet).Close;
   Tadodataset(datasource.DataSet).CommandText:=TxtSQL+FiltroCliente+filtroFecha;
@@ -194,11 +196,8 @@ begin
   begin
     Tadodataset(datasource.DataSet).Parameters.ParamByName('FIni').Value:=cxDtEdtInicio.Date;
     Tadodataset(datasource.DataSet).Parameters.ParamByName('FFin').Value:=cxDtEdtFin.Date+1;
-
   end;
-
   Tadodataset(datasource.DataSet).open;
-
 end;
 
 end.

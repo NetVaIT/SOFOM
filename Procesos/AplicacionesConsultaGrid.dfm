@@ -1,6 +1,6 @@
 inherited frmConaplicaciones: TfrmConaplicaciones
   BorderStyle = bsToolWindow
-  Caption = 'Consulta Aplicaciones'
+  Caption = 'Aplicaciones'
   ClientHeight = 580
   ClientWidth = 1206
   ExplicitWidth = 1212
@@ -292,10 +292,33 @@ inherited frmConaplicaciones: TfrmConaplicaciones
       26
       0)
     inherited dxbNavigator: TdxBar
-      DockedLeft = 107
+      DockedLeft = 127
+    end
+    inherited dxbEdit: TdxBar
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'Insert1'
+        end
+        item
+          Visible = True
+          ItemName = 'Edit1'
+        end
+        item
+          Visible = True
+          ItemName = 'Delete1'
+        end
+        item
+          Visible = True
+          ItemName = 'dxbbDesaplicar'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarButton7'
+        end>
     end
     inherited dxbTools: TdxBar
-      DockedLeft = 238
+      DockedLeft = 254
       ItemLinks = <
         item
           Visible = True
@@ -316,6 +339,13 @@ inherited frmConaplicaciones: TfrmConaplicaciones
       Hint = 'Reporte de Aplicaci'#243'n Pagos'
       Visible = ivAlways
       ImageIndex = 18
+    end
+    object dxbbDesaplicar: TdxBarButton
+      Caption = 'Desaplicar'
+      Category = 0
+      Hint = 'Elimia la aplicaci'#243'n seleccionada'
+      Visible = ivAlways
+      ImageIndex = 12
     end
   end
   inherited cxStyleRepository: TcxStyleRepository
@@ -1130,6 +1160,37 @@ inherited frmConaplicaciones: TfrmConaplicaciones
           CC00000000000000000000000000000000000000000000000000000000000000
           000000000000FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00}
         MaskColor = clWhite
+      end>
+  end
+  inherited PopupMenu: TdxBarPopupMenu
+    ItemLinks = <
+      item
+        Visible = True
+        ItemName = 'Insert1'
+      end
+      item
+        Visible = True
+        ItemName = 'Edit1'
+      end
+      item
+        Visible = True
+        ItemName = 'Delete1'
+      end
+      item
+        Visible = True
+        ItemName = 'dxbbDesaplicar'
+      end
+      item
+        Visible = True
+        ItemName = 'dxBarButton7'
+      end
+      item
+        Visible = True
+        ItemName = 'dxBarSeparator1'
+      end
+      item
+        Visible = True
+        ItemName = 'dxBarButton5'
       end>
   end
   inherited dxComponentPrinter: TdxComponentPrinter

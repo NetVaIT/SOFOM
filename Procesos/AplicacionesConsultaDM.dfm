@@ -108,12 +108,19 @@ inherited dmAplicacionesConsulta: TdmAplicacionesConsulta
     end
     object ActCreaPagoDeposito: TAction
       Caption = 'Crea Pago Dep'#243'sito'
+      Visible = False
       OnExecute = ActCreaPagoDepositoExecute
     end
     object ActRepAplicacionesPagos: TAction
       Caption = 'Reporte de Aplicaci'#243'n de Pagos'
       Hint = 'Reporte de Aplicaci'#243'n de Pagos'
       OnExecute = ActRepAplicacionesPagosExecute
+    end
+    object actDesaplicar: TAction
+      Caption = 'Desaplicar'
+      Hint = 'Elimia la aplicaci'#243'n seleccionada'
+      ImageIndex = 12
+      OnExecute = actDesaplicarExecute
     end
   end
   object ADOQryAuxiliar: TADOQuery
@@ -196,13 +203,38 @@ inherited dmAplicacionesConsulta: TdmAplicacionesConsulta
     CursorType = ctStatic
     CommandText = 'select UltimoFolioPago, UltimaSeriePago from Configuraciones'
     Parameters = <>
-    Left = 36
-    Top = 227
+    Left = 156
+    Top = 147
     object ADODtStConfiguracionesUltimoFolioPago: TIntegerField
       FieldName = 'UltimoFolioPago'
     end
     object ADODtStConfiguracionesUltimaSeriePago: TStringField
       FieldName = 'UltimaSeriePago'
     end
+  end
+  object adopDelPagosAplicaciones: TADOStoredProc
+    Connection = _dmConection.ADOConnection
+    ProcedureName = 'p_DelPagosAplicaciones;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@IdPagoAplicacion'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+      end
+      item
+        Name = '@IdUsuario'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+      end>
+    Left = 160
+    Top = 208
   end
 end
