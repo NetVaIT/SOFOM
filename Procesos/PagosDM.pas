@@ -372,6 +372,9 @@ type
     ADODtStSelMetPagoExigeCuenta: TIntegerField;
     ADODtStSelMetPagoClaveSAT2016: TStringField;
     ActVerYCreaCXCFinales: TAction;
+    ADODtStCxCDetallePendDescripTC: TStringField;
+    ADODtStCxCDetallePendEstatusCFDI1: TIntegerField;
+    ADODtStCxCDetallePendEstatusCFDI2: TIntegerField;
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsMasterAfterPost(DataSet: TDataSet);
     procedure adodsMasterBeforePost(DataSet: TDataSet);
@@ -1579,6 +1582,7 @@ begin        //FEb 10/17                 //No requerido aca
                                       +' and EsMoratorios=0 and (idCFDI is not null or idCFDIIVA is not null)'
                                       +' and (SaldoDocumento is null or SaldoDocumento>0.01)'     //  jun23/17 0.00001)FEb 14/17   (verificar) Para que solo traiga el vigente
                                       +' and (SaldoDoc1 is null or SaldoDoc1>0.01)'       // 0.00001      FEb 14/17  (Verificar)
+                                      +' and  (EstatusCFDI1 <>3 or  EstatusCFDI2 <>3)'  //Ajuste oct 20/17
                                       +' order by fase desc, ordenAplica ' ;
   end
   else //Esta en otra
@@ -1587,7 +1591,8 @@ begin        //FEb 10/17                 //No requerido aca
     ADODtStCxCDetallePend.CommandText:='Select * From vw_CXCParaAplicar where Saldo >0  and IdCuentaXCobrar=:IdCuentaXCobrar '
                                        +' and (SaldoDocumento is null or SaldoDocumento>0.01)'     //FEb 14/17    Para que solo traiga el vigente
                                        +' and (SaldoDoc1 is null or SaldoDoc1>0.01)'       //FEb 14/17    //  jun23/17 0.00001
-                                       +' order by fase desc, ordenAplica ' ;
+                                       +' and  (EstatusCFDI1 <>3 or  EstatusCFDI2 <>3)'  //Ajuste oct 20/17
+                                      +' order by fase desc, ordenAplica ' ;
 
   end;
   ADODtStCxCDetallePend.Open;      //estan ordenados por orden de aplicacion

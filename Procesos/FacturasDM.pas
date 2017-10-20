@@ -306,7 +306,13 @@ begin          //Agregado Ago 3/17
     Certificado.LlavePrivada.Ruta := FileKey;
     Certificado.LlavePrivada.Clave := Clave;
 
-    RutaBase:=dmConfiguracion.RutaFacturas;//ExtractFilePath(application.ExeName); //CAmbiado SEp 27/17
+                                //SEp 27/17 cambiado por este era rutabase
+    Esproduccion:=FileExists(ExtractFilePath(application.ExeName)+'EnProduccion.txt'); //Temporal Dic 8/15
+
+    if EsProduccion then  //Ajustado para poder hacer pruebas
+      RutaBase:=dmConfiguracion.RutaFacturas//ExtractFilePath(application.ExeName); //CAmbiado SEp 27/17
+    else
+      RutaBase:=ExtractFilePath(application.ExeName);
     if RutaBase='' then
        RutaBase:=ExtractFilePath(application.ExeName);    // SEp 27/17
 
@@ -314,14 +320,33 @@ begin          //Agregado Ago 3/17
     ArchivoSal:= UpperCase(System.SysUtils.FormatSettings.ShortMonthNames[MonthOfTheYear(Now)]) +
                 IntToStr(Anio) +'_'+adodsmasterserie.AsString +adodsMasterFolio.asstring+'.txt' ;
 
-                             //SEp 27/17 cambiado por este era rutabase
-    Esproduccion:=FileExists(ExtractFilePath(application.ExeName)+'EnProduccion.txt'); //Temporal Dic 8/15
+
     // := RutaBase + ADODtStPersonaEmisorRFC.AsString + SubCarpeta;
     if not DirectoryExists (Carpeta) then
        ForceDirectories(Carpeta);
     if DirectoryExists (Carpeta) then
     begin
-      if cancelarCFDI(adodsMasterUUID_TB.Value,carpeta+ArchivoSal,Certificado,Respuesta,Esproduccion) then
+      //Ajute para poder hacer pruebas proceso cuando se usan datos de produccion oct 20/17
+      if (not ESProduccion) then //Si no es produccion lo debe dar por cancelado
+      begin  //Pruebas..
+        adodsMaster.Edit;
+        adodsMasterFechaCancelacion.AsDateTime:=Now;
+        adodsMasterIdCFDIEstatus.AsInteger:=3;
+        if adodsMasterIdCuentaXCobrar.IsNull then //Ajuste Ago 3/17par aque guarde la asociacion quese va a quitar
+          adodsMasterObservaciones.asString:= adodsMasterObservaciones.asString+' '+ motivo+' '+ respuesta+' Sin IdCXC'
+        else
+          adodsMasterObservaciones.asString:= adodsMasterObservaciones.asString+' '+ motivo+' '+ respuesta+' IdCXCPrevia:'+adodsMasterIdCuentaXCobrar.AsString;
+        adodsMaster.Post;
+         //Actualiza Inventario y demás   //Mar 7/16
+        if (adodsMasterIdCFDITipoDocumento.AsInteger=1)  then
+          DesAsociarCFDIdeCXC(adodsMasterIdCFDI.AsInteger); //VErificar si se  quita la relacion de la CXC y se le cambi ael estatus a -1 (Pendiente (sin prefactura)    RevertirInventario(adodsMasterIdOrdenSalida.value,adodsMasterIdCFDI.value); //Mar 10/16    PruebaCancelacion
+        //Ajuste
+        if (adodsMasterIdCFDITipoDocumento.AsInteger=1) or (adodsMasterIdCFDITipoDocumento.AsInteger=3) then //CancelandoCFDI   Pruebas //Dic 2916
+         ActualizaSaldoCliente(adodsMasterIdCFDI.value,adodsMasterIdPersonaReceptor.Value,adodsMasterIdClienteDomicilio.value, adodsMasterTotal.Value,'- ');//Mar 7/16
+        ShowMessage(adodsMasterUUID_TB.Value + #13+'Prueba de Cancelación ');
+      end
+      else
+      if  cancelarCFDI(adodsMasterUUID_TB.Value,carpeta+ArchivoSal,Certificado,Respuesta,Esproduccion) then
       begin
         dato:=Respuesta;
 
@@ -355,7 +380,7 @@ begin          //Agregado Ago 3/17
           ShowMessage('El comprobante ya habia sido cancelado anteriormente');
         end
         else                                      //Ajuste por si acaso cambio Abr 18/16
-           if pos('UUID CANCELADO CORRECTAMENTE' ,UpperCase(Respuesta))>0 then
+           if  pos('UUID CANCELADO CORRECTAMENTE' ,UpperCase(Respuesta))>0 then
            begin
              adodsMaster.Edit;
              adodsMasterFechaCancelacion.AsDateTime:=Now;
@@ -377,7 +402,7 @@ begin          //Agregado Ago 3/17
 
            end
            else                                                                                    //Antes lo mandaba en la respuesta  ago 19/16
-             if (not EsProduccion) and ((pos('205 - El',respuesta)>0) or (pos('74305F11-FFFF-FFFF-FFFF-BD200698C5EA', adodsMasterUUID_TB.Value)>0)) then
+             if (not EsProduccion) then //and ((pos('205 - El',respuesta)>0) or (pos('74305F11-FFFF-FFFF-FFFF-BD200698C5EA', adodsMasterUUID_TB.Value)>0)) then
              begin  //Pruebas..
                adodsMaster.Edit;
                adodsMasterFechaCancelacion.AsDateTime:=Now;
