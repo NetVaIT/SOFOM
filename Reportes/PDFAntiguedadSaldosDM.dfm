@@ -4821,7 +4821,7 @@
       object ppLabel25: TppLabel
         UserName = 'Label25'
         AutoSize = False
-        Caption = 'Saldo Total Cobrado'
+        Caption = 'Saldo Total por Cobrar'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -4830,9 +4830,9 @@
         TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 4763
-        mmLeft = 84402
+        mmLeft = 81492
         mmTop = 7938
-        mmWidth = 32015
+        mmWidth = 34925
         BandType = 0
         LayerName = Foreground1
       end

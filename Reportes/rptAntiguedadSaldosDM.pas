@@ -225,11 +225,11 @@ begin
 
     dmAntiguedadSaldosPDF.ppRprtAntXCliente.ShowPrintDialog:= False;
     dmAntiguedadSaldosPDF.ppRprtAntXCliente.ShowCancelDialog:= False;
-    dmAntiguedadSaldosPDF.ppRprtAntXCliente.PrinterSetup.DocumentName:=  'ANTIGUEDAD DE SALDOS COBRADOS POR CLIENTE '+#13 +Texto;
+    dmAntiguedadSaldosPDF.ppRprtAntXCliente.PrinterSetup.DocumentName:=  'ANTIGUEDAD DE SALDOS POR COBRAR POR CLIENTE '+#13 +Texto;
 
     dmAntiguedadSaldosPDF.ppRprtAntXCliente.DeviceType:= 'PDF';
     dmAntiguedadSaldosPDF.ppRprtAntXCliente.TextFileName:= ArchiPDF;
-    dmAntiguedadSaldosPDF.ppLblTitulo2.caption:= 'ANTIGUEDAD DE SALDOS COBRADOS POR CLIENTE '+#13 +Texto;
+    dmAntiguedadSaldosPDF.ppLblTitulo2.caption:= 'ANTIGUEDAD DE SALDOS POR COBRAR POR CLIENTE '+#13 +Texto;
     dmAntiguedadSaldosPDF.ppRprtAntXCliente.print;
 
      dmAntiguedadSaldosPDF.DSAntXCliente.DataSet.Close;
