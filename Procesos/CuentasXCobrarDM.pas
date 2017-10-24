@@ -333,7 +333,7 @@ begin
   //SAca lo pendiente al dia para poder usar las fechas de corte pendientes y generar
   }
  // si debe ir deshabilitado Ago 4/17
-  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.Close;                      //Consulta para mandar crear CXC   probablememnte Verificar si PagoTotal es >1 Oct 24/17
   ADOQryAuxiliar.SQL.Clear;
   ADOQryAuxiliar.SQL.Add('SELECT    IdAnexoAmortizacion, IdAnexoCredito, IdAnexoSegmento, Periodo, FechaCorte, FechaVencimiento, '+
                          ' TasaAnual, SaldoInicial, Pago, Capital, CapitalImpuesto, CapitalTotal, Interes, InteresImpuesto,'+

@@ -164,8 +164,8 @@ begin
     if Result then
     begin
       dsAuxiliar.DataSet.Close;
-      TADOQuery(dsAuxiliar.dataset).SQL.clear;
-                                                 // lista pendientes
+      TADOQuery(dsAuxiliar.dataset).SQL.clear;     // Consulta de las finales ...probablememnte Verificar si PagoTotal es >1 Oct 24/17
+                                                   // lista pendientes
       TADOQuery(dsAuxiliar.dataset).SQL.Add('Select aa.IdAnexoAmortizacion, c.idanexo,aa.IdAnexoCredito,aa.FechaCorte, cxc1.Saldo ,'
            +'cxc1.EsMoratorio, cxc1.IdCuentaXCobrarEstatus, cxc1.Total,PagoTotal from AnexosAmortizaciones aa'
            +' inner join AnexosCreditos C on C.IdAnexoCredito=aa.IdAnexoCredito and c.IdAnexoCreditoEstatus=1'
@@ -173,9 +173,8 @@ begin
            +' where c.IdAnexo=' +datasource.DataSet.FieldByName('IdAnexo').asstring
            +' and ( not Exists (select * from CuentasXCobrar cxc where cxc.IdAnexosAmortizaciones=aa.idanexoamortizacion)'
            +' or Exists (select * from CuentasXCobrar cc where cc.IdAnexosAmortizaciones=aa.idanexoamortizacion and '
-           +' EsMoratorio=0 and cc.saldo>0.01))' ); // cc.IdCuentaXCobrarEstatus=0 and        se verifica en el siguiente
-
-
+           +' EsMoratorio=0 and cc.saldo>0.01)) and aa. PagoTotal>1' ); // cc.IdCuentaXCobrarEstatus=0 and        se verifica en el siguiente
+                                                //Oct24/17 por si hubo reduccion de plazo..
       TADOQuery(dsAuxiliar.dataset).open;
       if not dsAuxiliar.DataSet.eof then
       begin
@@ -239,7 +238,8 @@ begin
   ' and (not Exists (select * from CuentasXCobrar cxc where cxc.IdAnexosAmortizaciones=aa.idanexoamortizacion and aa.Fechacorte<=dbo.GetDateAux()) '+   //Ago 22/17 si no esta que sea en rango de fecha corte
   ' or Exists (select * from CuentasXCobrar cc where cc.IdAnexosAmortizaciones=aa.idanexoamortizacion and '+
   ' cc.IdCuentaXCobrarEstatus=-1 and EsMoratorio=0  and aa.FechaVencimiento<=dbo.GetDateAux() ) )  '+       //Si esta que sea del rando de fec vencimiento     ago 22/17
-  ' and aa.FechaVencimiento<=dbo.GetDateAux() ');//' era ago 22/17 and aa.FechaCorte<=dbo.GetDateAux() ');    //Respecto al vencimiento
+  ' and aa.FechaVencimiento<=dbo.GetDateAux()'+           //' era ago 22/17 and aa.FechaCorte<=dbo.GetDateAux() ');    //Respecto al vencimiento
+  ' and PagoTotal>1 '); //Oct 24/17 Ajustado por que hay Amortizaciones que tienen por definicion un valor  de 0.008
                                             // jun21/17
   dsAuxiliar.dataset.Open;
   if not dsAuxiliar.dataset.eof  then

@@ -1948,7 +1948,7 @@ begin
   Res:=0;
   REsult:=FAlse;
   ADOQryAuxiliar.Close;
-  ADOQryAuxiliar.sql.Clear;
+  ADOQryAuxiliar.sql.Clear;   //Probablemente si PagoTotal es <1 no se debe crear?????? oct 24/17
   ADOQryAuxiliar.sql.Add(' Select aa.IdAnexoAmortizacion, c.idanexo,aa.IdAnexoCredito, aa.PagoTotal from AnexosAmortizaciones aa '
   +' inner join AnexosCreditos C on C.IdAnexoCredito=aa.IdAnexoCredito and c.IdAnexoCreditoEstatus=1 '
   +' where c.IdAnexo=:idAnexo and (not Exists (select * from CuentasXCobrar cxc where cxc.IdAnexosAmortizaciones=aa.idanexoamortizacion))' );
@@ -2022,7 +2022,7 @@ begin
   else   //No hay cxc pregeneradas proximas..  busca siguiente a generar
   begin
     ADOQryAuxiliar.Close;
-    ADOQryAuxiliar.sql.Clear;
+    ADOQryAuxiliar.sql.Clear;            //Consulta para inntentar crear siguiente CXC.. probablememnte Verificar si PagoTotal es >1 Oct 24/17
     ADOQryAuxiliar.sql.Add(' Select aa.IdAnexoAmortizacion, c.idanexo,aa.IdAnexoCredito, aa.PagoTotal from AnexosAmortizaciones aa '
     +' inner join AnexosCreditos C on C.IdAnexoCredito=aa.IdAnexoCredito and c.IdAnexoCreditoEstatus=1 '
     +' where c.IdAnexo='+intToSTR(idAnexo)+' and (not Exists (select * from CuentasXCobrar cxc where cxc.IdAnexosAmortizaciones=aa.idanexoamortizacion))' );
