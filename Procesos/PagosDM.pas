@@ -1582,8 +1582,8 @@ begin        //FEb 10/17                 //No requerido aca
                                       +' and EsMoratorios=0 and (idCFDI is not null or idCFDIIVA is not null)'
                                       +' and (SaldoDocumento is null or SaldoDocumento>0.01)'     //  jun23/17 0.00001)FEb 14/17   (verificar) Para que solo traiga el vigente
                                       +' and (SaldoDoc1 is null or SaldoDoc1>0.01)'       // 0.00001      FEb 14/17  (Verificar)
-                                      +' and  (EstatusCFDI1 <>3 or  EstatusCFDI2 <>3)'  //Ajuste oct 20/17
-                                      +' order by fase desc, ordenAplica ' ;
+                                      +' and  (EstatusCFDI1 <>3 or  EstatusCFDI2 <>3 or (EstatusCFDI1 is NULL and EstatusCFDI2 is NULL))'  //Ajuste oct 20/17
+                                      +' order by fase desc, ordenAplica ' ;             //Oct 2517 PAra que pueda aplicar lo no facturable
   end
   else //Esta en otra
   begin
@@ -1591,8 +1591,8 @@ begin        //FEb 10/17                 //No requerido aca
     ADODtStCxCDetallePend.CommandText:='Select * From vw_CXCParaAplicar where Saldo >0  and IdCuentaXCobrar=:IdCuentaXCobrar '
                                        +' and (SaldoDocumento is null or SaldoDocumento>0.01)'     //FEb 14/17    Para que solo traiga el vigente
                                        +' and (SaldoDoc1 is null or SaldoDoc1>0.01)'       //FEb 14/17    //  jun23/17 0.00001
-                                       +' and  (EstatusCFDI1 <>3 or  EstatusCFDI2 <>3)'  //Ajuste oct 20/17
-                                      +' order by fase desc, ordenAplica ' ;
+                                       +' and  (EstatusCFDI1 <>3 or  EstatusCFDI2 <>3 or (EstatusCFDI1 is NULL and EstatusCFDI2 is NULL))'  //Ajuste oct 20/17
+                                      +' order by fase desc, ordenAplica ' ;           //Oct 2517 PAra que pueda aplicar lo no facturable
 
   end;
   ADODtStCxCDetallePend.Open;      //estan ordenados por orden de aplicacion
@@ -1672,9 +1672,10 @@ begin        //FEb 10/17                 //No requerido aca
 
             end;
             ADODtstAplicacionesInternas.Post;
+            Valor:=VAlor-VAlReg ; //  oct 25/17
           end;
+          //REsta movida de aca    oct 25/17
 
-          Valor:=VAlor-VAlReg ;
            if OAct<>Oant then   //VErificar
           begin
             Oant:=Oact;
@@ -1740,9 +1741,10 @@ begin        //FEb 10/17                 //No requerido aca
 
             end;
             ADODtstAplicacionesInternas.Post;
+            Valor:=VAlor-VAlReg ;  // oct 25/17
           end;
 
-          Valor:=VAlor-VAlReg ;
+           //REata movida de aca    oct 25/17
 
           //Se movio al inicio
 
@@ -1782,9 +1784,10 @@ begin        //FEb 10/17                 //No requerido aca
 
             end;
             ADODtstAplicacionesInternas.Post;
+            Valor:=SimpleRoundTo(VAlor-VAlReg, -6); ///feb 12/17cambio de -4   //Para evitar que reste si no alcanza oct 25/17
           end;
 
-          Valor:=SimpleRoundTo(VAlor-VAlReg, -6); ///feb 12/17cambio de -4
+          //Aca esta ba resta  oct 25/17
         end;
       end;
       ADODtStCxCDetallePend.Next;
@@ -1814,8 +1817,9 @@ begin        //FEb 10/17                 //No requerido aca
              ADODtstAplicacionesInternas.FieldByName('IDCFDIConcepto').AsInteger:=ADODtStCxCDetallePendIDCFDIConcepto.AsInteger;
         end;
         ADODtstAplicacionesInternas.Post;
+        Valor:=SimpleRoundTo(VAlor-VAlReg, -6); ///feb 12/17cambio de -4   //oct 25/17 se  movio aca
       end;
-      Valor:=SimpleRoundTo(VAlor-VAlReg, -6); ///feb 12/17cambio de -4
+      //Aca estaba la resta   oct 25/17
       ADODtStCxCDetallePend.Next;
     end;
   end;
@@ -1899,6 +1903,10 @@ begin        //FEb 10/17                 //No requerido aca
   ADODtStCXCPendientes.filtered:=False;
   ADODtStDetalleCXCMostrar.close;
   ADODtStDetalleCXCMostrar.open;
+
+  if Valor >=0.01 then
+     ShowMessage('Verificar los detalles de la cuenta por Cobrar para identificar que estén saldadas. ('+FloatToStr(Valor)+') ');
+
 end;
 
 function TdmPagos.VerificaYCreaCXCFinales(idAnexo:Integer):Boolean; //Jun 21/17

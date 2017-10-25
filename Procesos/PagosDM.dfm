@@ -422,8 +422,9 @@ inherited dmPagos: TdmPagos
       'Select * From vw_CXCParaAplicar'#13#10'where Saldo >0  '#13#10'and (SaldoDoc' +
       'umento is null or SaldoDocumento>0.00001)'#13#10' and (SaldoDoc1 is nu' +
       'll or SaldoDoc1>0.00001)'#13#10'and IdCuentaXCobrar=:IdCuentaXCobrar'#13#10 +
-      'and  (EstatusCFDI1 <>3 or  EstatusCFDI2 <>3)'#13#10' order by fase des' +
-      'c, ordenAplica  '
+      'and  (EstatusCFDI1 <>3 or  EstatusCFDI2 <>3  or (EstatusCFDI1 is' +
+      ' NULL and EstatusCFDI2 is NULL))'#13#10' order by fase desc, ordenApli' +
+      'ca  '
     DataSource = DSCXCPendientes
     IndexFieldNames = 'IdCuentaXCobrar'
     MasterFields = 'IdCuentaXCobrar'

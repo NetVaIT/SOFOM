@@ -173,8 +173,8 @@ begin
            +' where c.IdAnexo=' +datasource.DataSet.FieldByName('IdAnexo').asstring
            +' and ( not Exists (select * from CuentasXCobrar cxc where cxc.IdAnexosAmortizaciones=aa.idanexoamortizacion)'
            +' or Exists (select * from CuentasXCobrar cc where cc.IdAnexosAmortizaciones=aa.idanexoamortizacion and '
-           +' EsMoratorio=0 and cc.saldo>0.01)) and aa. PagoTotal>1' ); // cc.IdCuentaXCobrarEstatus=0 and        se verifica en el siguiente
-                                                //Oct24/17 por si hubo reduccion de plazo..
+           +' EsMoratorio=0 and cc.saldo>0.01)) and aa. PagoTotal>0.01' ); // cc.IdCuentaXCobrarEstatus=0 and        se verifica en el siguiente
+                                                //Oct24/17 por si hubo reduccion de plazo..  se reajusto a 0.01 .. sin liberar
       TADOQuery(dsAuxiliar.dataset).open;
       if not dsAuxiliar.DataSet.eof then
       begin
@@ -239,8 +239,8 @@ begin
   ' or Exists (select * from CuentasXCobrar cc where cc.IdAnexosAmortizaciones=aa.idanexoamortizacion and '+
   ' cc.IdCuentaXCobrarEstatus=-1 and EsMoratorio=0  and aa.FechaVencimiento<=dbo.GetDateAux() ) )  '+       //Si esta que sea del rando de fec vencimiento     ago 22/17
   ' and aa.FechaVencimiento<=dbo.GetDateAux()'+           //' era ago 22/17 and aa.FechaCorte<=dbo.GetDateAux() ');    //Respecto al vencimiento
-  ' and PagoTotal>1 '); //Oct 24/17 Ajustado por que hay Amortizaciones que tienen por definicion un valor  de 0.008
-                                            // jun21/17
+  ' and PagoTotal>0.01 '); //Oct 24/17 Ajustado por que hay Amortizaciones que tienen por definicion un valor  de 0.008
+               //REajustado si liberar                             // jun21/17
   dsAuxiliar.dataset.Open;
   if not dsAuxiliar.dataset.eof  then
   begin
