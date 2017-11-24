@@ -216,4 +216,130 @@ inherited dmrptReporteCartera: TdmrptReporteCartera
       OnExecute = ActAmorYPago2Execute
     end
   end
+  object ADOQryBorrarTemporales: TADOQuery
+    Connection = _dmConection.ADOConnection
+    Parameters = <>
+    SQL.Strings = (
+      'Delete From TMP_RetrasoDiasAnexo;'
+      ''
+      'Delete From TMP_Cartera;')
+    Left = 48
+    Top = 99
+  end
+  object ADOQryInsertaCartera: TADOQuery
+    Connection = _dmConection.ADOConnection
+    Parameters = <>
+    SQL.Strings = (
+      'Insert Into TMP_Cartera  ([IdAnexo]'
+      '           ,[EsMoratorio]'
+      '           ,[Anexo]'
+      '           ,[Plazo]'
+      '           ,[Contrato]'
+      '           ,[CalificacionInicial]'
+      '           ,[cliente]'
+      '           ,[Alias]'
+      '           ,[TC]'
+      '           ,[IdAnexoAmortizacion]'
+      '           ,[IdAnexoCredito]'
+      '           ,[Periodo]'
+      '           ,[FechaCorte]'
+      '           ,[FechaVencimiento]'
+      '           ,[FechaMoratorio]'
+      '           ,[Moratorio]'
+      '           ,[Pago]'
+      '           ,[PagoTotal]'
+      '           ,[IdCuentaXCobrar]'
+      '           ,[Fecha]'
+      '           ,[FecVenc]'
+      '           ,[IdCuentaXCobrarEstatus]'
+      '           ,[Total]'
+      '           ,[Saldo]'
+      '           ,[IdAnexoCreditoEstatus]'
+      '           ,[Vigentes]'
+      '           ,[De0a30Dias]'
+      '           ,[Saldo Total Vencido]'
+      '           ,[Vencidos a 30 d'#237'as]'
+      '           ,[Vencidos a 60 d'#237'as]'
+      '           ,[Vencidos a 90 d'#237'as]'
+      '           ,[Vencidos a mas de 120 d'#237'as]'
+      '           ,[PorCobrar]'
+      '           ,[ValorResidual]'
+      '           ,[SaldoInsoluto]'
+      '           ,[SaldoTotal]'
+      '           ,[Descripcion])'
+      ''
+      ''
+      '          (Select [IdAnexo]'
+      '           ,[EsMoratorio]'
+      '           ,[Anexo]'
+      '           ,[Plazo]'
+      '           ,[Contrato]'
+      '           ,[CalificacionInicial]'
+      '           ,[cliente]'
+      '           ,[Alias]'
+      '           ,[TC]'
+      '           ,[IdAnexoAmortizacion]'
+      '           ,[IdAnexoCredito]'
+      '           ,[Periodo]'
+      '           ,[FechaCorte]'
+      '           ,[FechaVencimiento]'
+      '           ,[FechaMoratorio]'
+      '           ,[Moratorio]'
+      '           ,[Pago]'
+      '           ,[PagoTotal]'
+      '           ,[IdCuentaXCobrar]'
+      '           ,[Fecha]'
+      '           ,[FecVenc]'
+      '           ,[IdCuentaXCobrarEstatus]'
+      '           ,[Total]'
+      '           ,[Saldo]'
+      '           ,[IdAnexoCreditoEstatus]'
+      '           ,[Vigentes]'
+      '           ,[De0a30Dias]'
+      '           ,[Saldo Total Vencido]'
+      '           ,[Vencidos a 30 d'#237'as]'
+      '           ,[Vencidos a 60 d'#237'as]'
+      '           ,[Vencidos a 90 d'#237'as]'
+      '           ,[Vencidos a mas de 120 d'#237'as]'
+      '           ,[PorCobrar]'
+      '           ,[ValorResidual]'
+      '           ,[SaldoInsoluto]'
+      '           ,[SaldoTotal]'
+      '           ,[Descripcion] from VW_CArteraClientes)')
+    Left = 176
+    Top = 99
+  end
+  object ADOQryInsertaRetraso: TADOQuery
+    Connection = _dmConection.ADOConnection
+    Parameters = <>
+    SQL.Strings = (
+      'INSERT INTO'
+      'TMP_RetrasoDiasAnexo     ([IdAnexo]'
+      '           ,[DiasRetrasoXAnexo]'
+      '           ,[Cantidad]'
+      '           ,[cantCobRecNP]'
+      '           ,[DiasSoloretraso]'
+      '           ,[MayorAtraso]'
+      '           ,[MayorPrepago]'
+      '           ,[Atrasados]'
+      '           ,[ATiempo]'
+      '           ,[TotalPagados]'
+      '           ,[TotalSinPago])'
+      ''
+      ' Select  [IdAnexo]'
+      '           ,[DiasRetrasoXAnexo]'
+      '           ,[Cantidad]'
+      '           ,[cantCobRecNP]'
+      '           ,[DiasSoloretraso]'
+      '           ,[MayorAtraso]'
+      '           ,[MayorPrepago]'
+      '           ,[Atrasados]'
+      '           ,[ATiempo]'
+      '           ,[TotalPagados]'
+      '           ,[TotalSinPago] from [vw_RetrasoDiasXAnexo]'
+      '      '
+      '')
+    Left = 176
+    Top = 163
+  end
 end

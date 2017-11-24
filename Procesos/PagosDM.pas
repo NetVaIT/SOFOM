@@ -1035,30 +1035,35 @@ begin
       IdAnexoAct := adoqAnexosSelIdAnexo.Value;
       TipoContrato := adoqAnexosSelIdContratoTipo.Value;
       TipoAbono:=TAbonoCapital(frmAbonarCapitalEdit.Tipo);
-
-      IdCXC:= CrearCXCAbono(IdAnexoAct,frmAbonarCapitalEdit.Fecha,frmAbonarCapitalEdit.Importe);
-      if IDCXC<>0 then
-        IdCFDIActual:= CrearFacturaCXC(IDCXC); //Aunque ya lo trae
-      if IdCFDIActual<>-1 then
-      begin
-        if AplicaPago(adodsMasterIdPago.AsInteger,idcxc,idcfdiactual,frmAbonarCapitalEdit.Importe) then
-          if  AjustarAmortizaciones(IdAnexoAct,TipoContrato,frmAbonarCapitalEdit.Importe,TipoAbono,frmAbonarCapitalEdit.Fecha ) then //Ajustar Amortizacion
-          begin
-                                                                                            //Abr 19/17
-            ADODtStCXCPendientes.Close;
-            ADODtStCXCPendientes.Parameters.ParamByName('Esanti').value:= 1;
-            ADODtStCXCPendientes.Open;
-            ADODtStCXCPendientes.Locate('IdCuentaXCobrar', IDCXC,[]);
-            adodsMaster.Refresh; //Pago
-            //REgistrar en bitacora el abono a CApital
-            ObsBitacora:='Fecha:'+datetoSTr(frmAbonarCapitalEdit.Fecha)+' IdAnexo: '+intToSTR(IdAnexoAct)+' IdCXC:'+ intToStr(idcxc)
-                        +' Importe:'+floatToStr(frmAbonarCapitalEdit.Importe)+' TipoAbono:'+ intToStr(frmAbonarCapitalEdit.Tipo);
-            RegistraBitacora(2,ObsBitacora);
-            ShowMessage('Proceso completo de Abono a Capital');
-          end;
-      end
+      if Importeact<frmAbonarCapitalEdit.Importe then
+        ShowMessage('El importe no puede ser mayor al saldo del Pago Actual. Proceso Cancelado') //nov 15/17
       else
-         ShowMessage('Proceso no relizado Factura no generada.'); //Ago 1/17
+      begin
+        IdCXC:= CrearCXCAbono(IdAnexoAct,frmAbonarCapitalEdit.Fecha,frmAbonarCapitalEdit.Importe);
+        if IDCXC<>0 then
+          IdCFDIActual:= CrearFacturaCXC(IDCXC); //Aunque ya lo trae
+        if IdCFDIActual<>-1 then
+        begin
+          if AplicaPago(adodsMasterIdPago.AsInteger,idcxc,idcfdiactual,frmAbonarCapitalEdit.Importe) then
+            if  AjustarAmortizaciones(IdAnexoAct,TipoContrato,frmAbonarCapitalEdit.Importe,TipoAbono,frmAbonarCapitalEdit.Fecha ) then //Ajustar Amortizacion
+            begin
+                                                                                              //Abr 19/17
+              ADODtStCXCPendientes.Close;
+              ADODtStCXCPendientes.Parameters.ParamByName('Esanti').value:= 1;
+              ADODtStCXCPendientes.Open;
+              ADODtStCXCPendientes.Locate('IdCuentaXCobrar', IDCXC,[]);
+              adodsMaster.Refresh; //Pago
+              //REgistrar en bitacora el abono a CApital
+              ObsBitacora:='Fecha:'+datetoSTr(frmAbonarCapitalEdit.Fecha)+' IdAnexo: '+intToSTR(IdAnexoAct)+' IdCXC:'+ intToStr(idcxc)
+                          +' Importe:'+floatToStr(frmAbonarCapitalEdit.Importe)+' TipoAbono:'+ intToStr(frmAbonarCapitalEdit.Tipo);
+              RegistraBitacora(2,ObsBitacora);
+              ShowMessage('Proceso completo de Abono a Capital');
+            end;
+        end
+        else
+           ShowMessage('Proceso no relizado Factura no generada.'); //Ago 1/17
+      end ;
+
     end;
   finally
     frmAbonarCapitalEdit.Free;

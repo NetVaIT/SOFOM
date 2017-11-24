@@ -190,7 +190,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
     Template.FileName = 'C:\Desarrollo\SOFOM\Reportes\rptCarteraSinAnexo.rtm'
     PDFSettings.ImageCompressionLevel = 5
     PreviewFormSettings.ZoomSetting = zsPageWidth
-    Left = 272
+    Left = 280
     DataPipelineName = 'dbpReport'
     inherited ppHeaderBand1: TppHeaderBand
       mmHeight = 28310
@@ -225,9 +225,9 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Transparent = True
         VerticalAlignment = avCenter
         mmHeight = 4763
-        mmLeft = 6879
+        mmLeft = 5292
         mmTop = 23019
-        mmWidth = 34131
+        mmWidth = 48683
         BandType = 0
         LayerName = Foreground
       end
@@ -247,8 +247,8 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Transparent = True
         VerticalAlignment = avCenter
         mmHeight = 4763
-        mmLeft = 60590
-        mmTop = 23018
+        mmLeft = 67471
+        mmTop = 23019
         mmWidth = 4763
         BandType = 0
         LayerName = Foreground
@@ -533,8 +533,8 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Transparent = True
         VerticalAlignment = avCenter
         mmHeight = 4763
-        mmLeft = 66675
-        mmTop = 23018
+        mmLeft = 73294
+        mmTop = 23019
         mmWidth = 16933
         BandType = 0
         LayerName = Foreground
@@ -554,9 +554,9 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Transparent = True
         VerticalAlignment = avCenter
         mmHeight = 4763
-        mmLeft = 44979
+        mmLeft = 60062
         mmTop = 23019
-        mmWidth = 11642
+        mmWidth = 6085
         BandType = 0
         LayerName = Foreground
       end
@@ -587,6 +587,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       mmHeight = 5556
       object ppDBText3: TppDBText
         UserName = 'DBText3'
+        CharWrap = True
         DataField = 'CLiente'
         DataPipeline = dbpReport
         Font.Charset = DEFAULT_CHARSET
@@ -595,12 +596,13 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Font.Size = 7
         Font.Style = []
         Transparent = True
+        WordWrap = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpReport'
-        mmHeight = 4763
-        mmLeft = 8467
-        mmTop = 265
-        mmWidth = 30692
+        mmHeight = 5555
+        mmLeft = 5292
+        mmTop = 0
+        mmWidth = 52917
         BandType = 4
         LayerName = Foreground
       end
@@ -617,8 +619,8 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
-        mmLeft = 60325
-        mmTop = 264
+        mmLeft = 67206
+        mmTop = 265
         mmWidth = 5027
         BandType = 4
         LayerName = Foreground
@@ -637,8 +639,8 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
-        mmLeft = 67998
-        mmTop = 264
+        mmLeft = 73291
+        mmTop = 265
         mmWidth = 16933
         BandType = 4
         LayerName = Foreground
@@ -868,9 +870,9 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
-        mmLeft = 44979
+        mmLeft = 60327
         mmTop = 265
-        mmWidth = 11642
+        mmWidth = 5821
         BandType = 4
         LayerName = Foreground
       end

@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, _StandarDMod, Data.DB, System.Actions,
-  Vcl.ActnList, Data.Win.ADODB, ShellAPi, Forms,winapi.windows;
+  Vcl.ActnList, Data.Win.ADODB, ShellAPi, Forms,winapi.windows, dialogs;
 
 type
   TdmrptReporteCartera = class(T_dmStandar)
@@ -44,6 +44,9 @@ type
     ActPDFAmortizaYPago: TAction;
     ActAmorYPago2: TAction;
     adodsMasterTotal0A30: TFMTBCDField;
+    ADOQryBorrarTemporales: TADOQuery;
+    ADOQryInsertaCartera: TADOQuery;
+    ADOQryInsertaRetraso: TADOQuery;
     procedure adodsMasterCalcFields(DataSet: TDataSet);
     procedure DataModuleCreate(Sender: TObject);
     procedure ActPDFCarteraExecute(Sender: TObject);
@@ -351,11 +354,26 @@ end;
 procedure TdmrptReporteCartera.DataModuleCreate(Sender: TObject);
 begin
   inherited;
+  //Borrar tablas temporales  e insertar de nuevo Nov 24/17
+
+  try
+    _dmConection.ADOConnection.BeginTrans; //nov 24/17
+    AdoQryBorrarTemporales.ExecSQL;
+    ADOQryInsertaCartera.ExecSQL;
+    ADOQryInsertaRetraso.ExecSQL;
+    _dmConection.ADOConnection.CommitTrans;  //nov 24/17
+  except
+    _dmConection.ADOConnection.RollbackTrans;  //nov 24/17
+    showMessage('Algun error');
+    raise;
+  end;
+
+
   gGridForm:= TFrmReporteCarteraGrid.Create(Self);
   gGridForm.DataSet:= adodsMaster;
   gGridForm.ReadOnlyGrid:= True;
 
-//DEshabilitado Oct12/17  TFrmReporteCarteraGrid(gGridForm).ActPDFReporteCartera:=ActPDFCartera;
+  TFrmReporteCarteraGrid(gGridForm).ActPDFReporteCartera:=ActPDFCartera;    //se re habilitó nov 21/17 DEshabilitado Oct12/17
   TFrmReporteCarteraGrid(gGridForm).ActPDFHojaControlGral:=ActPDFHojaControl;
   TFrmReporteCarteraGrid(gGridForm).ActPDFHojaAmorYpago:=ActPDFAmortizayPago;
   TFrmReporteCarteraGrid(gGridForm).ActPDFNuevoAmoryPago2:=ActAmorYPago2;
