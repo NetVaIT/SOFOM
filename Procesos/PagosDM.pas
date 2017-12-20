@@ -2038,7 +2038,8 @@ begin
     ADOQryAuxiliar.sql.Clear;            //Consulta para inntentar crear siguiente CXC.. probablememnte Verificar si PagoTotal es >1 Oct 24/17
     ADOQryAuxiliar.sql.Add(' Select aa.IdAnexoAmortizacion, c.idanexo,aa.IdAnexoCredito, aa.PagoTotal from AnexosAmortizaciones aa '
     +' inner join AnexosCreditos C on C.IdAnexoCredito=aa.IdAnexoCredito and c.IdAnexoCreditoEstatus=1 '
-    +' where c.IdAnexo='+intToSTR(idAnexo)+' and (not Exists (select * from CuentasXCobrar cxc where cxc.IdAnexosAmortizaciones=aa.idanexoamortizacion))' );
+    +' where c.IdAnexo='+intToSTR(idAnexo)+' and (not Exists (select * from CuentasXCobrar cxc where cxc.IdAnexosAmortizaciones=aa.idanexoamortizacion))'
+    +' order by aa.periodo' ); //Agregado dic 20/17
 
     ADOQryAuxiliar.Open; //TRae todas las siguientes
 
