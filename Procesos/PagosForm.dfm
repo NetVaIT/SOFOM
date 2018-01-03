@@ -281,11 +281,6 @@ inherited FrmConPagos: TFrmConPagos
       end
     end
   end
-  inherited ActionList: TActionList
-    object ActFacturaMorato: TAction
-      Caption = 'ActFacturaMorato'
-    end
-  end
   inherited DataSource: TDataSource
     DataSet = dmPagos.adodsMaster
     OnDataChange = DataSourceDataChange
@@ -312,10 +307,6 @@ inherited FrmConPagos: TFrmConPagos
         end
         item
           Visible = True
-          ItemName = 'dxbbAbonarCapital'
-        end
-        item
-          Visible = True
           ItemName = 'dxBrBtnAplicaicones'
         end>
     end
@@ -327,13 +318,6 @@ inherited FrmConPagos: TFrmConPagos
       ImageIndex = 17
       PaintStyle = psCaptionGlyph
       OnClick = dxBrBtnAplicaiconesClick
-    end
-    object dxbbAbonarCapital: TdxBarButton
-      Caption = 'Abonar capital'
-      Category = 0
-      Visible = ivNever
-      ImageIndex = 13
-      PaintStyle = psCaptionGlyph
     end
   end
   inherited cxStyleRepository: TcxStyleRepository
@@ -1115,6 +1099,7 @@ inherited FrmConPagos: TFrmConPagos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42712.575441516200000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

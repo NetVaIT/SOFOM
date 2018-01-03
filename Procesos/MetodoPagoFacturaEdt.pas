@@ -54,8 +54,8 @@ type
     Property ComplemConcepto:String read FComplemConcepto write FComplemConcepto;  //Ago 30/17
   end;
 
-var
-  FrmMetodoPagoFactura: TFrmMetodoPagoFactura;
+//var
+//  FrmMetodoPagoFactura: TFrmMetodoPagoFactura;
 
 implementation
 

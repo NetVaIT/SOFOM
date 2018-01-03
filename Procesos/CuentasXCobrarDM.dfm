@@ -357,8 +357,8 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
         Size = 4
         Value = Null
       end>
-    Left = 192
-    Top = 240
+    Left = 472
+    Top = 168
   end
   object ADODtStPrefacturasCFDI: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -761,8 +761,8 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
         Size = 4
         Value = Null
       end>
-    Left = 456
-    Top = 184
+    Left = 728
+    Top = 24
     object ADODtStDireccionesClienteIdPersonaDomicilio: TAutoIncField
       FieldName = 'IdPersonaDomicilio'
       ReadOnly = True
@@ -827,14 +827,14 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     Parameters = <>
-    Left = 736
-    Top = 232
+    Left = 760
+    Top = 152
   end
   object ADOQryAuxiliar: TADOQuery
     Connection = _dmConection.ADOConnection
     Parameters = <>
-    Left = 628
-    Top = 241
+    Left = 580
+    Top = 409
   end
   object ADOStrprcActGralMoratorios: TADOStoredProc
     Connection = _dmConection.ADOConnection
@@ -853,8 +853,8 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
         DataType = ftDateTime
         Value = Null
       end>
-    Left = 240
-    Top = 400
+    Left = 72
+    Top = 392
   end
   object ADOStrdPrcGeneraCXC: TADOStoredProc
     Connection = _dmConection.ADOConnection
@@ -873,8 +873,8 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
         DataType = ftDateTime
         Value = Null
       end>
-    Left = 456
-    Top = 400
+    Left = 208
+    Top = 328
   end
   object ADODTSTCXCMoratorios: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -901,8 +901,8 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
         Size = 4
         Value = Null
       end>
-    Left = 456
-    Top = 304
+    Left = 624
+    Top = 256
     object ADODTSTCXCMoratoriosIdCuentaXCobrar: TAutoIncField
       FieldName = 'IdCuentaXCobrar'
       ReadOnly = True
@@ -991,8 +991,8 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
         Precision = 10
         Value = Null
       end>
-    Left = 720
-    Top = 400
+    Left = 224
+    Top = 408
   end
   object ADODtStAdicionalesContratoAnexo: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -1004,8 +1004,8 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       'tificador As Contrato'#13#10' from Anexos A, Contratos C '#13#10'where A.idC' +
       'ontrato=C.IdContrato '
     Parameters = <>
-    Left = 200
-    Top = 312
+    Left = 192
+    Top = 240
     object ADODtStAdicionalesContratoAnexoIdAnexo: TAutoIncField
       FieldName = 'IdAnexo'
       ReadOnly = True
@@ -1025,8 +1025,8 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
   object ADOQryAux2: TADOQuery
     Connection = _dmConection.ADOConnection
     Parameters = <>
-    Left = 740
-    Top = 305
+    Left = 764
+    Top = 217
   end
   object ADODtStSelMetPago: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -1035,8 +1035,8 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       'select IdMetodoPago, Identificador, Descripcion, ExigeCuenta, '#13#10 +
       'ClaveSAT2016 from MetodosPago'#13#10'where idmetodoPago>0'
     Parameters = <>
-    Left = 600
-    Top = 304
+    Left = 688
+    Top = 408
     object ADODtStSelMetPagoIdMetodoPago: TIntegerField
       FieldName = 'IdMetodoPago'
     end

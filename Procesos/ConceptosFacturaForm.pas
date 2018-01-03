@@ -41,6 +41,9 @@ type
     tvMasterImporte: TcxGridDBColumn;
     tvMasterIdCFDIConcepto: TcxGridDBColumn;
     tvMasterIdCuentaXCobrarDetalle: TcxGridDBColumn;
+    tvMasterSATClaveProdServ: TcxGridDBColumn;
+    tvMasterSATClaveUnidad: TcxGridDBColumn;
+    tvMasterDescuento: TcxGridDBColumn;
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private

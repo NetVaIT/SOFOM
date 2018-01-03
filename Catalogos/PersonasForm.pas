@@ -85,6 +85,8 @@ type
     tvMasterPLDPagarEfectivo: TcxGridDBColumn;
     tvMasterPLDMontoMaximoEfectivo: TcxGridDBColumn;
     tvMasterPLDNumeroPagos: TcxGridDBColumn;
+    tvMasterIdCFDIFormaPago33: TcxGridDBColumn;
+    tvMasterIdCFDIUsoCFDI: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private

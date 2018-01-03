@@ -61,27 +61,31 @@ type
     Label15: TLabel;
     DBText15: TDBText;
     dsQryAuxiliar: TDataSource;
+    Button1: TButton;
+    Label16: TLabel;
+    DBText16: TDBText;
     procedure BtnAjustesBaseClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
+    { Private declarations }
     FADoSelMetPAgo: TAdoDAtaset;
     function CambiarMetodoPago(var IDMetodoPago: Integer; var Cuenta,
       CompConcepto: String): Boolean;
-    function SacaMetodo(IDCliente: Integer; var CtaPago: String): Integer;
-    { Private declarations }
+//    function SacaMetodo(IDCliente: Integer; var CtaPago: String): Integer;
   public
     { Public declarations }
     property VADODtStSelMetPago :TAdoDAtaset read FADoSelMetPAgo  write FadoSElMetPago; //AGo 31/17
   end;
 
-var
-  FrmDatosFacturaPrev: TFrmDatosFacturaPrev;
+//var
+//  FrmDatosFacturaPrev: TFrmDatosFacturaPrev;
 
 implementation
 
 {$R *.dfm}
 
-uses FacturasDM, MetodoPagoFacturaEdt;
+uses FacturasDM, MetodoPagoFacturaEdt, FacturasPropiedadesEdit;
 
 procedure TFrmDatosFacturaPrev.BtnAjustesBaseClick(Sender: TObject);
 var
@@ -118,7 +122,23 @@ begin
   end;
 end;
 
+procedure TFrmDatosFacturaPrev.Button1Click(Sender: TObject);
+var
+  frmFacturasPropiedadesEdit: TfrmFacturasPropiedadesEdit;
+begin
+  frmFacturasPropiedadesEdit := TfrmFacturasPropiedadesEdit.Create(Self);
+  try
+    DSCFDIPrevio.DataSet.Edit;
+    frmFacturasPropiedadesEdit.DataSet:= DSCFDIPrevio.DataSet;
+    frmFacturasPropiedadesEdit.ShowModal;
+  finally
+    frmFacturasPropiedadesEdit.Free;
+  end;
+end;
+
 function TFrmDatosFacturaPrev.CambiarMetodoPago(var IDMetodoPago:Integer; var Cuenta, CompConcepto:String):Boolean;
+var
+  FrmMetodoPagoFactura: TFrmMetodoPagoFactura;
 begin  //Jul 10/17
   Cuenta:=''; //Para que al menos este vacia
   CompConcepto:=''; //ago 30/17
@@ -136,10 +156,7 @@ begin  //Jul 10/17
     Cuenta:= FrmMetodoPagoFactura.CuentaSeleccion;
     CompConcepto:=FrmMetodoPagoFactura.ComplemConcepto; //Ago 30/17
   end;
-
   FrmMetodoPagoFactura.Free;
-
-
 end;
 
 procedure TFrmDatosFacturaPrev.FormCreate(Sender: TObject);
@@ -148,22 +165,22 @@ begin //DEberian estar abiertos
   DSConceptosPrevios.DataSet.Open;
 end;
 
-function TFrmDatosFacturaPrev.SacaMetodo (IDCliente:Integer; var CtaPago:String) :Integer;
-begin                             //Ajustado Ago 31/17
-  CtaPago:='';
-  dsQryAuxiliar.dataset.Close;
-  TAdoQuery(dsQryAuxiliar.dataset).sql.clear;
-  TAdoQuery(dsQryAuxiliar.dataset).sql.Add('Select * from Personas where idPersona = '+ intToSTR(IDCliente));
-    dsQryAuxiliar.dataset.Open;
-  if (not   dsQryAuxiliar.dataset.eof)  and not ( dsQryAuxiliar.dataset.FieldByName('IdMetodoPago').isnull) then
-  begin
-    Result:=  dsQryAuxiliar.dataset.FieldByName('IdMetodoPago').asInteger;
-    if not   dsQryAuxiliar.dataset.FieldByName('NumCtaPagoCliente').isnull then
-       CtaPago:=   dsQryAuxiliar.dataset.FieldByName('NumCtaPagoCliente').asstring;
-  end
-  else
-      Result:=5; //Otros
-
-end;
+//function TFrmDatosFacturaPrev.SacaMetodo (IDCliente:Integer; var CtaPago:String) :Integer;
+//begin                             //Ajustado Ago 31/17
+//  CtaPago:='';
+//  dsQryAuxiliar.dataset.Close;
+//  TAdoQuery(dsQryAuxiliar.dataset).sql.clear;
+//  TAdoQuery(dsQryAuxiliar.dataset).sql.Add('Select * from Personas where idPersona = '+ intToSTR(IDCliente));
+//    dsQryAuxiliar.dataset.Open;
+//  if (not   dsQryAuxiliar.dataset.eof)  and not ( dsQryAuxiliar.dataset.FieldByName('IdMetodoPago').isnull) then
+//  begin
+//    Result:=  dsQryAuxiliar.dataset.FieldByName('IdMetodoPago').asInteger;
+//    if not   dsQryAuxiliar.dataset.FieldByName('NumCtaPagoCliente').isnull then
+//       CtaPago:=   dsQryAuxiliar.dataset.FieldByName('NumCtaPagoCliente').asstring;
+//  end
+//  else
+//      Result:=5; //Otros
+//
+//end;
 
 end.

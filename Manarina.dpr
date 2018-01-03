@@ -239,7 +239,21 @@ uses
   RptPagoAplicacionesMensualDM in 'Reportes\RptPagoAplicacionesMensualDM.pas' {dmRptPagoAplicacionesMensual: TDataModule},
   RptPagoAplicacionesMensualForm in 'Reportes\RptPagoAplicacionesMensualForm.pas' {frmRptPagoAplicacionesMensual},
   RptCoberturaForm in 'Reportes\RptCoberturaForm.pas' {frmRptCobertura},
-  FacturaConfirmacionForm in 'Procesos\FacturaConfirmacionForm.pas' {FrmDatosFacturaPrev};
+  FacturaConfirmacionForm in 'Procesos\FacturaConfirmacionForm.pas' {FrmDatosFacturaPrev},
+  Facturacion.ComplementoPagoV1 in 'Facturar33\Versiones\Facturacion.ComplementoPagoV1.pas',
+  Facturacion.ComprobanteV33 in 'Facturar33\Versiones\Facturacion.ComprobanteV33.pas',
+  Facturacion.ImpuestosLocalesV1 in 'Facturar33\Versiones\Facturacion.ImpuestosLocalesV1.pas',
+  Facturacion.TimbreFiscalDigitalV33 in 'Facturar33\Versiones\Facturacion.TimbreFiscalDigitalV33.pas',
+  Facturacion.OpenSSL in 'Facturar33\Facturacion.OpenSSL.pas',
+  Facturacion.Helper in 'Facturar33\Facturacion.Helper.pas',
+  Facturacion.Comprobante in 'Facturar33\Versiones\Facturacion.Comprobante.pas',
+  Facturacion.Tipos in 'Facturar33\Facturacion.Tipos.pas',
+  libeay32 in 'Facturar33\OpenSSL\libeay32.pas',
+  LibEay32Plus in 'Facturar33\OpenSSL\LibEay32Plus.pas',
+  OpenSSLUtils in 'Facturar33\OpenSSL\OpenSSLUtils.pas',
+  VirtualXML33 in 'Facturar33\VirtualXML33.pas',
+  RptCFDI33DM in 'Reportes\RptCFDI33DM.pas' {dmRptCFDI33: TDataModule},
+  FacturasPropiedadesEdit in 'Procesos\FacturasPropiedadesEdit.pas' {frmFacturasPropiedadesEdit};
 
 {$R *.res}
 

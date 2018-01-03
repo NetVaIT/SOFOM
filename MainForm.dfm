@@ -1,21 +1,19 @@
 inherited frmMain: TfrmMain
   Caption = 'frmMain'
-  ClientWidth = 1020
+  ClientWidth = 596
   OnDestroy = FormDestroy
-  ExplicitWidth = 1036
+  ExplicitWidth = 612
   ExplicitHeight = 519
   PixelsPerInch = 96
   TextHeight = 13
   inherited dxRibbon1: TdxRibbon
-    Width = 1020
+    Width = 596
     OnApplicationMenuClick = dxRibbon1ApplicationMenuClick
-    ExplicitWidth = 1020
+    ExplicitWidth = 596
     inherited dxRibbon1Tab1: TdxRibbonTab
-      Active = False
       Index = 0
     end
     object dxRibbon1Tab2: TdxRibbonTab
-      Active = True
       Caption = 'Cat'#225'logos'
       Groups = <
         item
@@ -77,14 +75,13 @@ inherited frmMain: TfrmMain
     end
   end
   inherited dxRibbonStatusBar1: TdxRibbonStatusBar
-    Width = 1020
-    ExplicitTop = 32000
-    ExplicitWidth = 1020
+    Width = 596
+    ExplicitWidth = 596
   end
   inherited pnlMain: TPanel
-    Width = 1020
+    Width = 596
     ExplicitTop = 159
-    ExplicitWidth = 1020
+    ExplicitWidth = 596
     ExplicitHeight = 298
   end
   inherited dxBarManager: TdxBarManager
@@ -121,8 +118,7 @@ inherited frmMain: TfrmMain
         end>
     end
     inherited dxbArchivo: TdxBar
-      DockedDockControl = nil
-      DockedDockingStyle = dsNone
+      FloatLeft = 545
       FloatClientWidth = 51
       FloatClientHeight = 76
     end

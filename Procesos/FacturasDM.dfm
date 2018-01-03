@@ -1,25 +1,26 @@
 inherited dmFacturas: TdmFacturas
   OldCreateOrder = True
   Height = 578
-  Width = 711
+  Width = 771
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     BeforeOpen = adodsMasterBeforeOpen
     AfterOpen = adodsMasterAfterOpen
     OnNewRecord = adodsMasterNewRecord
     CommandText = 
-      'select  IdCFDI, IdCFDITipoDocumento, IdCFDIFormaPago,'#13#10' IdMetodo' +
-      'Pago, C.IdMoneda, IdPersonaEmisor, IdPersonaReceptor, '#13#10'IdDocume' +
-      'ntoCBB, IdDocumentoXML, IdDocumentoPDF, '#13#10'IdCFDIEstatus, IdCFDIF' +
-      'acturaGral, IdClienteDomicilio,'#13#10' CuentaCte, TipoCambio, TipoCom' +
-      'p, Serie, Folio, Fecha,'#13#10' LugarExpedicion, Sello, CondPago, NoCe' +
-      'rtificado, Certificado,'#13#10' SubTotal, Descto, MotivoDescto, Total,' +
-      ' NumCtaPago, '#13#10'CadenaOriginal, TotalImpuestoRetenido, TotalImpue' +
-      'stoTrasladado, '#13#10'SaldoDocumento, FechaCancelacion, Observaciones' +
-      ', '#13#10'PorcentajeIVA, EmailCliente, UUID_TB, SelloCFD_TB, '#13#10'SelloSA' +
-      'T_TB, CertificadoSAT_TB, FechaTimbrado_TB,'#13#10' IdCuentaXCobrar, Sa' +
-      'ldoFactoraje'#13#10' from CFDI C'#13#10'-- where fecha>DATEADD(MM, DATEDIFF(' +
-      'MM,0, [dbo].getdateAux()), 0)'#13#10'order by IDCFDIESTATUS, Fecha '
+      'SELECT        IdCFDI, IdCFDITipoDocumento, IdCFDIFormaPago, IdMe' +
+      'todoPago, IdMoneda, IdPersonaEmisor, IdPersonaReceptor, IdDocume' +
+      'ntoCBB, IdDocumentoXML, IdDocumentoPDF, IdCFDIEstatus, IdCFDIFac' +
+      'turaGral, IdClienteDomicilio, '#13#10'                         Version' +
+      ', CuentaCte, TipoCambio, TipoComp, Serie, Folio, Fecha, LugarExp' +
+      'edicion, Sello, CondPago, NoCertificado, Certificado, SubTotal, ' +
+      'Descto, MotivoDescto, Total, NumCtaPago, CadenaOriginal, TotalIm' +
+      'puestoRetenido, '#13#10'                         TotalImpuestoTraslada' +
+      'do, SaldoDocumento, FechaCancelacion, Observaciones, PorcentajeI' +
+      'VA, EmailCliente, UUID_TB, SelloCFD_TB, SelloSAT_TB, Certificado' +
+      'SAT_TB, FechaTimbrado_TB, IdCuentaXCobrar, SaldoFactoraje, '#13#10'   ' +
+      '                      IdCFDIFormaPago33, IdCFDIMetodoPago33, IDC' +
+      'FDITipoRelacion, IDCFDIUsoCFDI'#13#10'FROM            CFDI'
     Left = 40
     object adodsMasterIdCFDI: TLargeintField
       FieldName = 'IdCFDI'
@@ -260,22 +261,95 @@ inherited dmFacturas: TdmFacturas
       Size = 13
       Lookup = True
     end
+    object adodsMasterVersion: TStringField
+      FieldName = 'Version'
+      Size = 5
+    end
+    object adodsMasterIdCFDIFormaPago33: TIntegerField
+      FieldName = 'IdCFDIFormaPago33'
+      Visible = False
+    end
+    object adodsMasterIdCFDIMetodoPago33: TIntegerField
+      FieldName = 'IdCFDIMetodoPago33'
+      Visible = False
+    end
+    object adodsMasterIDCFDITipoRelacion: TIntegerField
+      FieldName = 'IDCFDITipoRelacion'
+      Visible = False
+    end
+    object adodsMasterIDCFDIUsoCFDI: TIntegerField
+      FieldName = 'IDCFDIUsoCFDI'
+      Visible = False
+    end
+    object adodsMasterFormaPago33: TStringField
+      DisplayLabel = 'Forma pago'
+      FieldKind = fkLookup
+      FieldName = 'FormaPago33'
+      LookupDataSet = adodsFormasPago33
+      LookupKeyFields = 'IdCFDIFormaPago33'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IdCFDIFormaPago33'
+      Size = 50
+      Lookup = True
+    end
+    object adodsMasterMetodoPago33: TStringField
+      DisplayLabel = 'Metodo pago'
+      FieldKind = fkLookup
+      FieldName = 'MetodoPago33'
+      LookupDataSet = adodsMetodosPago33
+      LookupKeyFields = 'IdCFDIMetodoPago33'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IdCFDIMetodoPago33'
+      Size = 50
+      Lookup = True
+    end
+    object adodsMasterTipoRelacion: TStringField
+      DisplayLabel = 'Tipo relaci'#243'n'
+      FieldKind = fkLookup
+      FieldName = 'TipoRelacion'
+      LookupDataSet = adodsTiposRelaciones
+      LookupKeyFields = 'IdCFDITipoRelacion'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IDCFDITipoRelacion'
+      Size = 80
+      Lookup = True
+    end
+    object adodsMasterUsoCFDI: TStringField
+      DisplayLabel = 'Uso'
+      FieldKind = fkLookup
+      FieldName = 'UsoCFDI'
+      LookupDataSet = adodsUsosCFDI
+      LookupKeyFields = 'IdCFDIUsoCFDI'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IDCFDIUsoCFDI'
+      Size = 100
+      Lookup = True
+    end
   end
   inherited adodsUpdate: TADODataSet
-    Left = 344
+    Left = 472
   end
   inherited ActionList: TActionList
-    object actProcesaFactura: TAction
-      Caption = 'actProcesaFactura'
-      OnExecute = actProcesaFacturaExecute
+    Left = 448
+    object actTimbrarCFDI: TAction
+      Caption = 'Timbrar'
+      Hint = 'Timbrar'
+      ImageIndex = 17
+      OnExecute = actTimbrarCFDIExecute
+      OnUpdate = actTimbrarCFDIUpdate
     end
-    object ActImprimeFactura: TAction
-      Caption = 'ActImprimeFactura'
-      OnExecute = ActImprimeFacturaExecute
+    object actImprimirCFDI: TAction
+      Caption = 'Imprimir'
+      Hint = 'Imprimir'
+      ImageIndex = 18
+      OnExecute = actImprimirCFDIExecute
     end
-    object ActCancelarCFDI: TAction
-      Caption = 'Cancelar CFDI'
-      OnExecute = ActCancelarCFDIExecute
+    object actCancelarCFDI: TAction
+      Caption = 'Cancelar'
+      Hint = 'Cancelar'
+      ImageIndex = 19
+      OnExecute = actCancelarCFDIExecute
+      OnUpdate = actCancelarCFDIUpdate
     end
   end
   object ADODtStCFDIConceptos: TADODataSet
@@ -283,12 +357,14 @@ inherited dmFacturas: TdmFacturas
     CursorType = ctStatic
     BeforeInsert = ADODtStCFDIConceptosBeforeInsert
     AfterPost = ADODtStCFDIConceptosAfterPost
+    BeforeDelete = ADODtStCFDIConceptosBeforeDelete
     AfterDelete = ADODtStCFDIConceptosAfterDelete
     OnNewRecord = ADODtStCFDIConceptosNewRecord
     CommandText = 
-      'select IdCFDIConcepto, IdCFDI, IdUnidadMedida, Cantidad, Unidad,' +
-      #13#10' Descripcion, NoIdentifica, ValorUnitario, Importe, IdCuentaXC' +
-      'obrarDetalle'#13#10'from  CFDIConceptos'#13#10' Where IdCFDI=:IdCFDI'
+      'SELECT        IdCFDIConcepto, IdCFDI, IdUnidadMedida, Cantidad, ' +
+      'Unidad, Descripcion, NoIdentifica, ValorUnitario, Importe, IdCue' +
+      'ntaXCobrarDetalle, Descuento, SATClaveProdServ, SATClaveUnidad'#13#10 +
+      'FROM            CFDIConceptos'#13#10' Where IdCFDI=:IdCFDI'
     DataSource = DSMaster
     IndexFieldNames = 'IdCFDI'
     MasterFields = 'IdCFDI'
@@ -298,16 +374,27 @@ inherited dmFacturas: TdmFacturas
         Attributes = [paSigned]
         DataType = ftLargeint
         Precision = 19
-        Size = 8
-        Value = '8534'
+        Value = '60'
       end>
     Left = 40
     Top = 88
+    object ADODtStCFDIConceptosIdCFDIConcepto: TLargeintField
+      FieldName = 'IdCFDIConcepto'
+      ReadOnly = True
+    end
     object ADODtStCFDIConceptosIdCFDI: TLargeintField
       FieldName = 'IdCFDI'
     end
     object ADODtStCFDIConceptosIdUnidadMedida: TIntegerField
       FieldName = 'IdUnidadMedida'
+    end
+    object ADODtStCFDIConceptosIdCuentaXCobrarDetalle: TIntegerField
+      FieldName = 'IdCuentaXCobrarDetalle'
+    end
+    object ADODtStCFDIConceptosSATClaveProdServ: TStringField
+      DisplayLabel = 'ClaveProdServ'
+      FieldName = 'SATClaveProdServ'
+      Size = 10
     end
     object ADODtStCFDIConceptosCantidad: TFloatField
       FieldName = 'Cantidad'
@@ -316,6 +403,11 @@ inherited dmFacturas: TdmFacturas
     object ADODtStCFDIConceptosUnidad: TStringField
       FieldName = 'Unidad'
       Size = 30
+    end
+    object ADODtStCFDIConceptosSATClaveUnidad: TStringField
+      DisplayLabel = 'ClaveUnidad'
+      FieldName = 'SATClaveUnidad'
+      Size = 5
     end
     object ADODtStCFDIConceptosDescripcion: TStringField
       DisplayLabel = 'Descripci'#243'n'
@@ -341,12 +433,10 @@ inherited dmFacturas: TdmFacturas
       Precision = 18
       Size = 6
     end
-    object ADODtStCFDIConceptosIdCFDIConcepto: TLargeintField
-      FieldName = 'IdCFDIConcepto'
-      ReadOnly = True
-    end
-    object ADODtStCFDIConceptosIdCuentaXCobrarDetalle: TIntegerField
-      FieldName = 'IdCuentaXCobrarDetalle'
+    object ADODtStCFDIConceptosDescuento: TFMTBCDField
+      FieldName = 'Descuento'
+      Precision = 18
+      Size = 6
     end
   end
   object DSMaster: TDataSource
@@ -362,7 +452,7 @@ inherited dmFacturas: TdmFacturas
       'estos where idCFDI=:IDCFDI'
     DataSource = DSMaster
     IndexFieldNames = 'IdCFDI'
-    MasterFields = 'IdCFDI'
+    MasterFields = 'IDCFDI'
     Parameters = <
       item
         Name = 'IDCFDI'
@@ -372,8 +462,8 @@ inherited dmFacturas: TdmFacturas
         Size = 8
         Value = Null
       end>
-    Left = 176
-    Top = 88
+    Left = 192
+    Top = 144
     object ADODtStCFDIImpuestosIdCFDI: TLargeintField
       FieldName = 'IdCFDI'
     end
@@ -413,8 +503,8 @@ inherited dmFacturas: TdmFacturas
     IndexFieldNames = 'idpersona'
     MasterFields = 'IdPersonaEmisor'
     Parameters = <>
-    Left = 320
-    Top = 160
+    Left = 184
+    Top = 216
     object ADODtStPersonaEmisoridpersona: TAutoIncField
       FieldName = 'idpersona'
       ReadOnly = True
@@ -506,8 +596,8 @@ inherited dmFacturas: TdmFacturas
       'ises Pa on Pa.idpais=D.Idpais'#13#10'where Pe.iDRolTipo=3 and Pe.IdPer' +
       'sona>0 and Pe.IdPersonaEstatus=1'#13#10'order by Pe.RazonSocial'
     Parameters = <>
-    Left = 315
-    Top = 232
+    Left = 179
+    Top = 280
     object ADODtStPersonaReceptoridpersona: TAutoIncField
       FieldName = 'idpersona'
       ReadOnly = True
@@ -594,8 +684,8 @@ inherited dmFacturas: TdmFacturas
         Size = 4
         Value = Null
       end>
-    Left = 496
-    Top = 80
+    Left = 440
+    Top = 256
     object ADODtStBuscaFolioSerieIdCFDITipoDocumento: TAutoIncField
       FieldName = 'IdCFDITipoDocumento'
       ReadOnly = True
@@ -732,8 +822,8 @@ inherited dmFacturas: TdmFacturas
         Size = 4
         Value = Null
       end>
-    Left = 320
-    Top = 320
+    Left = 440
+    Top = 312
     object adodsArchivosCerKeyIdPersona: TIntegerField
       FieldName = 'IdPersona'
     end
@@ -783,7 +873,7 @@ inherited dmFacturas: TdmFacturas
       'on, NombreArchivo, IdArchivo, Archivo FROM Documentos'
     Parameters = <>
     Left = 440
-    Top = 320
+    Top = 176
     object adodsDocumentoIdDocumento: TAutoIncField
       FieldName = 'IdDocumento'
       ReadOnly = True
@@ -814,8 +904,8 @@ inherited dmFacturas: TdmFacturas
   object ADOQryAuxiliar: TADOQuery
     Connection = _dmConection.ADOConnection
     Parameters = <>
-    Left = 316
-    Top = 393
+    Left = 436
+    Top = 377
   end
   object ADODSAuxiliar: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -834,7 +924,7 @@ inherited dmFacturas: TdmFacturas
       ' or P.IdPersonaEstatus is null'
     Parameters = <>
     Left = 432
-    Top = 392
+    Top = 448
   end
   object ADODtStDireccionesCliente: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -854,8 +944,8 @@ inherited dmFacturas: TdmFacturas
     IndexFieldNames = 'IdPersonaDomicilio'
     MasterFields = 'IdClienteDomicilio'
     Parameters = <>
-    Left = 616
-    Top = 144
+    Left = 184
+    Top = 352
     object ADODtStDireccionesClienteIdPersonaDomicilio: TAutoIncField
       FieldName = 'IdPersonaDomicilio'
       ReadOnly = True
@@ -940,8 +1030,8 @@ inherited dmFacturas: TdmFacturas
         Size = 4
         Value = Null
       end>
-    Left = 616
-    Top = 202
+    Left = 184
+    Top = 410
     object AutoIncField2: TAutoIncField
       FieldName = 'IdPersonaDomicilio'
       ReadOnly = True
@@ -1008,8 +1098,8 @@ inherited dmFacturas: TdmFacturas
       'select IdMetodoPago, Identificador, Descripcion, ExigeCuenta, '#13#10 +
       'ClaveSAT2016 from MetodosPago'#13#10'where idmetodoPago>0'
     Parameters = <>
-    Left = 584
-    Top = 424
+    Left = 64
+    Top = 472
     object ADODtStSelMetPagoIdMetodoPago: TIntegerField
       FieldName = 'IdMetodoPago'
     end
@@ -1028,5 +1118,889 @@ inherited dmFacturas: TdmFacturas
       FieldName = 'ClaveSAT2016'
       Size = 10
     end
+  end
+  object adospGenPrefactura: TADOStoredProc
+    Connection = _dmConection.ADOConnection
+    ProcedureName = 'p_GenPreFactura;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@IdIdCuentaXCobrar'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@IdCFDI'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Direction = pdInputOutput
+        Precision = 10
+        Value = Null
+      end>
+    Left = 440
+    Top = 504
+  end
+  object adoqCFDI: TADOQuery
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    Parameters = <
+      item
+        Name = 'IdCFDI'
+        Attributes = [paSigned]
+        DataType = ftLargeint
+        Precision = 19
+        Size = 8
+        Value = '2053'
+      end>
+    SQL.Strings = (
+      
+        'SELECT        C.IdCFDI, C.IdCuentaXCobrar, C.IdCFDITipoDocumento' +
+        ', C.IdCFDIFormaPago, C.IdMetodoPago, C.IdMoneda, C.IdCFDIFormaPa' +
+        'go33, C.IdCFDIMetodoPago33, C.IDCFDITipoRelacion, C.IDCFDIUsoCFD' +
+        'I, C.IdPersonaEmisor, '
+      
+        '                         C.IdPersonaReceptor, C.IdDocumentoCBB, ' +
+        'C.IdDocumentoXML, C.IdDocumentoPDF, C.IdCFDIEstatus, C.IdCFDIFac' +
+        'turaGral, C.IdClienteDomicilio, C.Version, C.VersionPago, C.Seri' +
+        'e, C.Folio, C.Fecha, C.CondPago, '
+      
+        '                         FP.Identificador AS FormaPago33, MP.Ide' +
+        'ntificador AS MetodoPago33, C.CuentaCte, C.TipoCambio, Monedas.I' +
+        'dentificador AS Moneda, C.TipoComp, TD.Descripcion AS TipoDocume' +
+        'nto, C.LugarExpedicion, PE.RFC AS EmisorRFC,'
+      
+        '                          PE.RazonSocial AS EmisorNombre, RF.SAT' +
+        'Clave AS EmisorRegimenFiscal, PR.RFC AS ReceptorRFC, PR.RazonSoc' +
+        'ial AS ReceptorNombre, UC.Identificador AS UsoCFDI, C.SubTotal, ' +
+        'C.Descto, C.MotivoDescto, C.Total, '
+      
+        '                         C.NumCtaPago, C.TotalImpuestoRetenido, ' +
+        'C.TotalImpuestoTrasladado, C.SaldoDocumento, C.Sello, C.NoCertif' +
+        'icado, C.Certificado, C.CadenaOriginal, C.FechaCancelacion, C.Ob' +
+        'servaciones, C.PorcentajeIVA, C.EmailCliente, '
+      
+        '                         C.UUID_TB, C.SelloCFD_TB, C.SelloSAT_TB' +
+        ', C.CertificadoSAT_TB, C.FechaTimbrado_TB, C.RFCProvCertifica_TB' +
+        ', C.LeyendaSAT_TB, C.Confirmacion, TR.Identificador AS CFDITipoR' +
+        'elacion'
+      'FROM            CFDI AS C INNER JOIN'
+      
+        '                         CFDITipoDocumento AS TD ON C.IdCFDITipo' +
+        'Documento = TD.IdCFDITipoDocumento INNER JOIN'
+      
+        '                         Monedas ON C.IdMoneda = Monedas.IdMoned' +
+        'a INNER JOIN'
+      
+        '                         Personas AS PE ON C.IdPersonaEmisor = P' +
+        'E.IdPersona INNER JOIN'
+      
+        '                         RegimenesFiscales AS RF ON PE.IdRegimen' +
+        'Fiscal = RF.IdRegimenFiscal INNER JOIN'
+      
+        '                         Personas AS PR ON C.IdPersonaReceptor =' +
+        ' PR.IdPersona LEFT OUTER JOIN'
+      
+        '                         CFDIFormasPago33 AS FP ON C.IdCFDIForma' +
+        'Pago33 = FP.IdCFDIFormaPago33 LEFT OUTER JOIN'
+      
+        '                         CFDIMetodosPago33 AS MP ON C.IdCFDIMeto' +
+        'doPago33 = MP.IdCFDIMetodoPago33 LEFT OUTER JOIN'
+      
+        '                         CFDITiposRelaciones AS TR ON C.IDCFDITi' +
+        'poRelacion = TR.IdCFDITipoRelacion LEFT OUTER JOIN'
+      
+        '                         CFDIUsosCFDI AS UC ON C.IDCFDIUsoCFDI =' +
+        ' UC.IdCFDIUsoCFDI'
+      'WHERE        (C.IdCFDI = :IdCFDI)')
+    Left = 584
+    Top = 24
+    object adoqCFDIIdCFDI: TLargeintField
+      FieldName = 'IdCFDI'
+      ReadOnly = True
+    end
+    object adoqCFDIIdCuentaXCobrar: TIntegerField
+      FieldName = 'IdCuentaXCobrar'
+    end
+    object adoqCFDIIdCFDITipoDocumento: TIntegerField
+      FieldName = 'IdCFDITipoDocumento'
+    end
+    object adoqCFDIIdCFDIFormaPago: TIntegerField
+      FieldName = 'IdCFDIFormaPago'
+    end
+    object adoqCFDIIdMetodoPago: TIntegerField
+      FieldName = 'IdMetodoPago'
+    end
+    object adoqCFDIIdMoneda: TIntegerField
+      FieldName = 'IdMoneda'
+    end
+    object adoqCFDIIdCFDIFormaPago33: TIntegerField
+      FieldName = 'IdCFDIFormaPago33'
+    end
+    object adoqCFDIIdCFDIMetodoPago33: TIntegerField
+      FieldName = 'IdCFDIMetodoPago33'
+    end
+    object adoqCFDIIDCFDITipoRelacion: TIntegerField
+      FieldName = 'IDCFDITipoRelacion'
+    end
+    object adoqCFDIIDCFDIUsoCFDI: TIntegerField
+      FieldName = 'IDCFDIUsoCFDI'
+    end
+    object adoqCFDIIdPersonaEmisor: TIntegerField
+      FieldName = 'IdPersonaEmisor'
+    end
+    object adoqCFDIIdPersonaReceptor: TIntegerField
+      FieldName = 'IdPersonaReceptor'
+    end
+    object adoqCFDIIdDocumentoCBB: TIntegerField
+      FieldName = 'IdDocumentoCBB'
+    end
+    object adoqCFDIIdDocumentoXML: TIntegerField
+      FieldName = 'IdDocumentoXML'
+    end
+    object adoqCFDIIdDocumentoPDF: TIntegerField
+      FieldName = 'IdDocumentoPDF'
+    end
+    object adoqCFDIIdCFDIEstatus: TIntegerField
+      FieldName = 'IdCFDIEstatus'
+    end
+    object adoqCFDIIdCFDIFacturaGral: TLargeintField
+      FieldName = 'IdCFDIFacturaGral'
+    end
+    object adoqCFDIIdClienteDomicilio: TIntegerField
+      FieldName = 'IdClienteDomicilio'
+    end
+    object adoqCFDIVersion: TStringField
+      FieldName = 'Version'
+      Size = 5
+    end
+    object adoqCFDIVersionPago: TStringField
+      FieldName = 'VersionPago'
+      Size = 5
+    end
+    object adoqCFDISerie: TStringField
+      FieldName = 'Serie'
+    end
+    object adoqCFDIFolio: TLargeintField
+      FieldName = 'Folio'
+    end
+    object adoqCFDIFecha: TDateTimeField
+      FieldName = 'Fecha'
+    end
+    object adoqCFDICondPago: TStringField
+      FieldName = 'CondPago'
+      Size = 250
+    end
+    object adoqCFDIFormaPago33: TStringField
+      FieldName = 'FormaPago33'
+      Size = 5
+    end
+    object adoqCFDIMetodoPago33: TStringField
+      FieldName = 'MetodoPago33'
+      Size = 5
+    end
+    object adoqCFDICuentaCte: TStringField
+      FieldName = 'CuentaCte'
+      Size = 30
+    end
+    object adoqCFDITipoCambio: TStringField
+      FieldName = 'TipoCambio'
+    end
+    object adoqCFDIMoneda: TStringField
+      FieldName = 'Moneda'
+      Size = 3
+    end
+    object adoqCFDITipoComp: TStringField
+      FieldName = 'TipoComp'
+      Size = 10
+    end
+    object adoqCFDITipoDocumento: TStringField
+      FieldName = 'TipoDocumento'
+      Size = 50
+    end
+    object adoqCFDILugarExpedicion: TStringField
+      FieldName = 'LugarExpedicion'
+      Size = 100
+    end
+    object adoqCFDIEmisorRFC: TStringField
+      FieldName = 'EmisorRFC'
+      Size = 13
+    end
+    object adoqCFDIEmisorNombre: TStringField
+      FieldName = 'EmisorNombre'
+      Size = 300
+    end
+    object adoqCFDIEmisorRegimenFiscal: TStringField
+      FieldName = 'EmisorRegimenFiscal'
+      Size = 5
+    end
+    object adoqCFDIReceptorRFC: TStringField
+      FieldName = 'ReceptorRFC'
+      Size = 13
+    end
+    object adoqCFDIReceptorNombre: TStringField
+      FieldName = 'ReceptorNombre'
+      Size = 300
+    end
+    object adoqCFDIUsoCFDI: TStringField
+      FieldName = 'UsoCFDI'
+      Size = 5
+    end
+    object adoqCFDISubTotal: TFloatField
+      FieldName = 'SubTotal'
+    end
+    object adoqCFDIDescto: TFloatField
+      FieldName = 'Descto'
+    end
+    object adoqCFDIMotivoDescto: TStringField
+      FieldName = 'MotivoDescto'
+      Size = 50
+    end
+    object adoqCFDITotal: TFMTBCDField
+      FieldName = 'Total'
+      Precision = 18
+      Size = 6
+    end
+    object adoqCFDINumCtaPago: TStringField
+      FieldName = 'NumCtaPago'
+    end
+    object adoqCFDITotalImpuestoRetenido: TFloatField
+      FieldName = 'TotalImpuestoRetenido'
+    end
+    object adoqCFDITotalImpuestoTrasladado: TFloatField
+      FieldName = 'TotalImpuestoTrasladado'
+    end
+    object adoqCFDISaldoDocumento: TFMTBCDField
+      FieldName = 'SaldoDocumento'
+      Precision = 18
+      Size = 6
+    end
+    object adoqCFDISello: TStringField
+      FieldName = 'Sello'
+      Size = 2000
+    end
+    object adoqCFDINoCertificado: TStringField
+      FieldName = 'NoCertificado'
+    end
+    object adoqCFDICertificado: TStringField
+      FieldName = 'Certificado'
+      Size = 2000
+    end
+    object adoqCFDICadenaOriginal: TStringField
+      FieldName = 'CadenaOriginal'
+      Size = 2000
+    end
+    object adoqCFDIFechaCancelacion: TDateTimeField
+      FieldName = 'FechaCancelacion'
+    end
+    object adoqCFDIObservaciones: TStringField
+      FieldName = 'Observaciones'
+      Size = 300
+    end
+    object adoqCFDIPorcentajeIVA: TFloatField
+      FieldName = 'PorcentajeIVA'
+    end
+    object adoqCFDIEmailCliente: TStringField
+      FieldName = 'EmailCliente'
+      Size = 100
+    end
+    object adoqCFDIUUID_TB: TStringField
+      FieldName = 'UUID_TB'
+      Size = 40
+    end
+    object adoqCFDISelloCFD_TB: TStringField
+      FieldName = 'SelloCFD_TB'
+      Size = 400
+    end
+    object adoqCFDISelloSAT_TB: TStringField
+      FieldName = 'SelloSAT_TB'
+      Size = 250
+    end
+    object adoqCFDICertificadoSAT_TB: TStringField
+      FieldName = 'CertificadoSAT_TB'
+    end
+    object adoqCFDIFechaTimbrado_TB: TDateTimeField
+      FieldName = 'FechaTimbrado_TB'
+    end
+    object adoqCFDIRFCProvCertifica_TB: TStringField
+      FieldName = 'RFCProvCertifica_TB'
+      Size = 13
+    end
+    object adoqCFDILeyendaSAT_TB: TStringField
+      FieldName = 'LeyendaSAT_TB'
+      Size = 150
+    end
+    object adoqCFDIConfirmacion: TStringField
+      FieldName = 'Confirmacion'
+      Size = 5
+    end
+    object adoqCFDICFDITipoRelacion: TStringField
+      FieldName = 'CFDITipoRelacion'
+      Size = 5
+    end
+  end
+  object dsCFDI: TDataSource
+    AutoEdit = False
+    DataSet = adoqCFDI
+    Left = 688
+    Top = 24
+  end
+  object adoqCFDIConceptos: TADOQuery
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    DataSource = dsCFDI
+    Parameters = <
+      item
+        Name = 'IdCFDI'
+        Attributes = [paSigned]
+        DataType = ftLargeint
+        Precision = 19
+        Value = '2053'
+      end>
+    SQL.Strings = (
+      
+        'SELECT        IdCFDIConcepto, IdUnidadMedida, IdCuentaXCobrarDet' +
+        'alle, Cantidad, Unidad, Descripcion, NoIdentifica, ValorUnitario' +
+        ', Importe, Descuento, SATClaveProdServ, SATClaveUnidad'
+      'FROM            CFDIConceptos'
+      'WHERE IdCFDI = :IdCFDI'
+      '')
+    Left = 584
+    Top = 80
+    object adoqCFDIConceptosIdCFDIConcepto: TLargeintField
+      FieldName = 'IdCFDIConcepto'
+      ReadOnly = True
+    end
+    object adoqCFDIConceptosIdUnidadMedida: TIntegerField
+      FieldName = 'IdUnidadMedida'
+    end
+    object adoqCFDIConceptosIdCuentaXCobrarDetalle: TIntegerField
+      FieldName = 'IdCuentaXCobrarDetalle'
+    end
+    object adoqCFDIConceptosSATClaveProdServ: TStringField
+      FieldName = 'SATClaveProdServ'
+      Size = 10
+    end
+    object adoqCFDIConceptosNoIdentifica: TStringField
+      FieldName = 'NoIdentifica'
+      Size = 50
+    end
+    object adoqCFDIConceptosCantidad: TFloatField
+      FieldName = 'Cantidad'
+    end
+    object adoqCFDIConceptosSATClaveUnidad: TStringField
+      FieldName = 'SATClaveUnidad'
+      Size = 5
+    end
+    object adoqCFDIConceptosUnidad: TStringField
+      FieldName = 'Unidad'
+      Size = 30
+    end
+    object adoqCFDIConceptosDescripcion: TStringField
+      FieldName = 'Descripcion'
+      Size = 400
+    end
+    object adoqCFDIConceptosValorUnitario: TFMTBCDField
+      FieldName = 'ValorUnitario'
+      Precision = 18
+      Size = 6
+    end
+    object adoqCFDIConceptosImporte: TFMTBCDField
+      FieldName = 'Importe'
+      Precision = 18
+      Size = 6
+    end
+    object adoqCFDIConceptosDescuento: TFMTBCDField
+      FieldName = 'Descuento'
+      Precision = 18
+      Size = 6
+    end
+  end
+  object adoqCFDIConceptosImpuestos: TADOQuery
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    DataSource = dsCFDIConceptos
+    Parameters = <
+      item
+        Name = 'IdCFDIConcepto'
+        Attributes = [paSigned]
+        DataType = ftLargeint
+        Precision = 19
+        Size = 8
+        Value = '3852'
+      end>
+    SQL.Strings = (
+      
+        'SELECT        IdCFDIConceptoImpuesto, IdCFDITipoImpuesto, TipoIm' +
+        'p, Base, ClaveImpuesto, Impuesto, TipoFactor, TasaOCuota, Import' +
+        'e'
+      'FROM            CFDIConceptosImpuestos'
+      
+        'WHERE TipoImp = '#39'Trasladado'#39' AND IdCFDIConcepto = :IdCFDIConcept' +
+        'o')
+    Left = 584
+    Top = 136
+    object adoqCFDIConceptosImpuestosIdCFDIConceptoImpuesto: TAutoIncField
+      FieldName = 'IdCFDIConceptoImpuesto'
+      ReadOnly = True
+    end
+    object adoqCFDIConceptosImpuestosIdCFDITipoImpuesto: TIntegerField
+      FieldName = 'IdCFDITipoImpuesto'
+    end
+    object adoqCFDIConceptosImpuestosTipoImp: TStringField
+      FieldName = 'TipoImp'
+      Size = 10
+    end
+    object adoqCFDIConceptosImpuestosBase: TFMTBCDField
+      FieldName = 'Base'
+      Precision = 18
+      Size = 6
+    end
+    object adoqCFDIConceptosImpuestosClaveImpuesto: TStringField
+      FieldName = 'ClaveImpuesto'
+      Size = 3
+    end
+    object adoqCFDIConceptosImpuestosImpuesto: TStringField
+      FieldName = 'Impuesto'
+      Size = 5
+    end
+    object adoqCFDIConceptosImpuestosTipoFactor: TStringField
+      FieldName = 'TipoFactor'
+      Size = 10
+    end
+    object adoqCFDIConceptosImpuestosTasaOCuota: TFMTBCDField
+      FieldName = 'TasaOCuota'
+      Precision = 18
+      Size = 6
+    end
+    object adoqCFDIConceptosImpuestosImporte: TFMTBCDField
+      FieldName = 'Importe'
+      Precision = 18
+      Size = 6
+    end
+  end
+  object adoqCFDIImpuestos: TADOQuery
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    DataSource = dsCFDI
+    Parameters = <
+      item
+        Name = 'IdCFDI'
+        Attributes = [paSigned, paNullable]
+        DataType = ftLargeint
+        Precision = 19
+        Size = 8
+        Value = '2053'
+      end>
+    SQL.Strings = (
+      
+        'SELECT        IdCFDIImpuesto, TipoImp, Impuesto, Tasa, Importe, ' +
+        'IdCFDITipoImpuesto, TipoFactor, ClaveImpuesto'
+      'FROM            CFDIImpuestos'
+      'WHERE TipoImp = '#39'Trasladado'#39' AND IdCFDI = :IdCFDI')
+    Left = 584
+    Top = 184
+    object adoqCFDIImpuestosIdCFDIImpuesto: TAutoIncField
+      FieldName = 'IdCFDIImpuesto'
+      ReadOnly = True
+    end
+    object adoqCFDIImpuestosIdCFDITipoImpuesto: TIntegerField
+      FieldName = 'IdCFDITipoImpuesto'
+    end
+    object adoqCFDIImpuestosTipoImp: TStringField
+      FieldName = 'TipoImp'
+      Size = 10
+    end
+    object adoqCFDIImpuestosClaveImpuesto: TStringField
+      FieldName = 'ClaveImpuesto'
+      Size = 3
+    end
+    object adoqCFDIImpuestosImpuesto: TStringField
+      FieldName = 'Impuesto'
+      Size = 10
+    end
+    object adoqCFDIImpuestosTipoFactor: TStringField
+      FieldName = 'TipoFactor'
+      Size = 10
+    end
+    object adoqCFDIImpuestosTasa: TFloatField
+      FieldName = 'Tasa'
+    end
+    object adoqCFDIImpuestosImporte: TFloatField
+      FieldName = 'Importe'
+    end
+  end
+  object dsCFDIConceptos: TDataSource
+    AutoEdit = False
+    DataSet = adoqCFDIConceptos
+    Left = 688
+    Top = 80
+  end
+  object adopUpdCFDITimbre: TADOCommand
+    CommandText = 
+      'UPDATE CFDI'#13#10'SET '#13#10#9'IdCFDIEstatus = :IdCFDIEstatus,'#13#10#9'Sello = :S' +
+      'ello,'#13#10#9'NoCertificado = :NoCertificado,'#13#10#9'Certificado = :Certifi' +
+      'cado,'#13#10#9'CadenaOriginal = :CadenaOriginal,'#13#10#9'CadenaTimbre = :Cade' +
+      'naTimbre,'#13#10#9'UUID_TB = :UUID_TB,'#13#10#9'SelloCFD_TB = :SelloCFD_TB,'#13#10#9 +
+      'SelloSAT_TB = :SelloSAT_TB,'#13#10#9'CertificadoSAT_TB = :CertificadoSA' +
+      'T_TB,'#13#10#9'FechaTimbrado_TB = :FechaTimbrado_TB,'#13#10#9'RFCProvCertifica' +
+      '_TB = :RFCProvCertifica_TB,'#13#10#9'LeyendaSAT_TB = :LeyendaSAT_TB,'#13#10#9 +
+      'NumRegistroIdTrib33 = :NumRegistroIdTrib33'#13#10'WHERE IdCFDI = :IdCF' +
+      'DI'#13#10
+    Connection = _dmConection.ADOConnection
+    Parameters = <
+      item
+        Name = 'IdCFDIEstatus'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end
+      item
+        Name = 'Sello'
+        Attributes = [paNullable]
+        DataType = ftString
+        NumericScale = 255
+        Precision = 255
+        Size = 2000
+        Value = Null
+      end
+      item
+        Name = 'NoCertificado'
+        Attributes = [paNullable]
+        DataType = ftString
+        NumericScale = 255
+        Precision = 255
+        Size = 20
+        Value = Null
+      end
+      item
+        Name = 'Certificado'
+        Attributes = [paNullable]
+        DataType = ftString
+        NumericScale = 255
+        Precision = 255
+        Size = 2000
+        Value = Null
+      end
+      item
+        Name = 'CadenaOriginal'
+        Attributes = [paNullable]
+        DataType = ftString
+        NumericScale = 255
+        Precision = 255
+        Size = 2000
+        Value = Null
+      end
+      item
+        Name = 'CadenaTimbre'
+        Attributes = [paNullable]
+        DataType = ftString
+        NumericScale = 255
+        Precision = 255
+        Size = 500
+        Value = Null
+      end
+      item
+        Name = 'UUID_TB'
+        Attributes = [paNullable]
+        DataType = ftString
+        NumericScale = 255
+        Precision = 255
+        Size = 40
+        Value = Null
+      end
+      item
+        Name = 'SelloCFD_TB'
+        Attributes = [paNullable]
+        DataType = ftString
+        NumericScale = 255
+        Precision = 255
+        Size = 400
+        Value = Null
+      end
+      item
+        Name = 'SelloSAT_TB'
+        Attributes = [paNullable]
+        DataType = ftString
+        NumericScale = 255
+        Precision = 255
+        Size = 400
+        Value = Null
+      end
+      item
+        Name = 'CertificadoSAT_TB'
+        Attributes = [paNullable]
+        DataType = ftString
+        NumericScale = 255
+        Precision = 255
+        Size = 20
+        Value = Null
+      end
+      item
+        Name = 'FechaTimbrado_TB'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        NumericScale = 3
+        Precision = 23
+        Size = 16
+        Value = Null
+      end
+      item
+        Name = 'RFCProvCertifica_TB'
+        Attributes = [paNullable]
+        DataType = ftString
+        NumericScale = 255
+        Precision = 255
+        Size = 13
+        Value = Null
+      end
+      item
+        Name = 'LeyendaSAT_TB'
+        Attributes = [paNullable]
+        DataType = ftString
+        NumericScale = 255
+        Precision = 255
+        Size = 150
+        Value = Null
+      end
+      item
+        Name = 'NumRegistroIdTrib33'
+        Attributes = [paNullable]
+        DataType = ftString
+        NumericScale = 255
+        Precision = 255
+        Size = 40
+        Value = Null
+      end
+      item
+        Name = 'IdCFDI'
+        Attributes = [paSigned]
+        DataType = ftLargeint
+        Precision = 19
+        Size = 8
+        Value = Null
+      end>
+    Left = 584
+    Top = 288
+  end
+  object adospSetCFDIFolio: TADOStoredProc
+    Connection = _dmConection.ADOConnection
+    ProcedureName = 'p_SetCFDIFolio;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@IdCFDI'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end>
+    Left = 584
+    Top = 240
+  end
+  object adocUpdCFDIArchivos: TADOCommand
+    CommandText = 
+      'UPDATE CFDI'#13#10'SET '#13#10#9'IdDocumentoCBB = :IdDocumentoCBB,'#13#10#9'IdDocume' +
+      'ntoXML = :IdDocumentoXML,'#13#10#9'IdDocumentoPDF = :IdDocumentoPDF'#13#10'WH' +
+      'ERE IdCFDI = :IdCFDI'#13#10
+    Connection = _dmConection.ADOConnection
+    Parameters = <
+      item
+        Name = 'IdDocumentoCBB'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end
+      item
+        Name = 'IdDocumentoXML'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end
+      item
+        Name = 'IdDocumentoPDF'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end
+      item
+        Name = 'IdCFDI'
+        Attributes = [paSigned]
+        DataType = ftLargeint
+        Precision = 19
+        Size = 8
+        Value = Null
+      end>
+    Left = 584
+    Top = 344
+  end
+  object adodsFormasPago33: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdCFDIFormaPago33, Identificador, Descripcion from CFDIFo' +
+      'rmasPago33'
+    Parameters = <>
+    Left = 296
+    Top = 224
+  end
+  object adodsMetodosPago33: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdCFDIMetodoPago33, Identificador, Descripcion from CFDIM' +
+      'etodosPago33'
+    Parameters = <>
+    Left = 296
+    Top = 288
+  end
+  object adodsTiposRelaciones: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdCFDITipoRelacion, Identificador, Descripcion from CFDIT' +
+      'iposRelaciones'
+    Parameters = <>
+    Left = 296
+    Top = 352
+  end
+  object adodsUsosCFDI: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdCFDIUsoCFDI, Identificador, Descripcion from CFDIUsosCF' +
+      'DI'
+    Parameters = <>
+    Left = 296
+    Top = 408
+  end
+  object adocSetConceptoImpuesto: TADOCommand
+    CommandText = 
+      'DECLARE @IdCFDIConcepto int'#13#10'DECLARE @IdCFDITipoImpuesto int'#13#10'DE' +
+      'CLARE @Base decimal(18,6)'#13#10'SET @IdCFDIConcepto = :IdCFDIConcepto' +
+      #13#10'SET @IdCFDITipoImpuesto = :IdCFDITipoImpuesto'#13#10'SET @Base = :Ba' +
+      'se'#13#10'-- Inserta concepto impuesto'#13#10'IF NOT EXISTS (SELECT * FROM C' +
+      'FDIConceptosImpuestos WHERE IdCFDIConcepto = @IdCFDIConcepto AND' +
+      ' IdCFDITipoImpuesto = @IdCFDITipoImpuesto) '#13#10'BEGIN'#13#10#9'INSERT INTO' +
+      ' CFDIConceptosImpuestos (IdCFDIConcepto,IdCFDITipoImpuesto,Clave' +
+      'Impuesto,Impuesto,TipoImp,TipoFactor,TasaOCuota,Base,Importe)'#13#10#9 +
+      'SELECT @IdCFDIConcepto, IdCFDITipoImpuesto, Identificador, Descr' +
+      'ipcion, TipoImpuesto, Factor, TasaOCuota,@Base,@Base*TasaOCuota'#13 +
+      #10#9'FROM CFDITiposImpuestos'#13#10#9'WHERE IdCFDITipoImpuesto = @IdCFDITi' +
+      'poImpuesto'#13#10'END'#13#10'ELSE'#13#10'BEGIN'#13#10#9'UPDATE CFDIConceptosImpuestos SET' +
+      ' Base = @Base, Importe =@Base*TasaOCuota'#13#10#9'WHERE IdCFDIConcepto ' +
+      '= @IdCFDIConcepto AND IdCFDITipoImpuesto = @IdCFDITipoImpuesto'#13#10 +
+      'END'#13#10
+    Connection = _dmConection.ADOConnection
+    Parameters = <
+      item
+        Name = 'IdCFDIConcepto'
+        DataType = ftInteger
+        Size = -1
+        Value = Null
+      end
+      item
+        Name = 'IdCFDITipoImpuesto'
+        DataType = ftInteger
+        Size = -1
+        Value = Null
+      end
+      item
+        Name = 'Base'
+        DataType = ftFloat
+        Size = -1
+        Value = Null
+      end>
+    Left = 592
+    Top = 400
+  end
+  object adocUpdCFDITotales: TADOCommand
+    CommandText = 
+      'DECLARE @IdCFDI int'#13#10'DECLARE @Subtotal decimal(18,6)'#13#10'DECLARE @D' +
+      'escuento decimal(18,6)'#13#10'DECLARE @TotalImpuestoTrasladado decimal' +
+      '(18,6)'#13#10'DECLARE @Total decimal(18,6)'#13#10'SET @IdCFDI =:IdCFDI'#13#10'-- A' +
+      'ctualiza totales CFDI'#13#10'SELECT @Subtotal= ISNULL(SUM(Importe),0),' +
+      ' @Descuento = ISNULL(SUM(Descuento),0) FROM CFDIConceptos WHERE ' +
+      'IdCFDI = @IdCFDI'#13#10'SELECT @TotalImpuestoTrasladado = ISNULL(SUM(I' +
+      'mporte),0) FROM CFDIImpuestos WHERE IdCFDITipoImpuesto = 1 AND I' +
+      'dCFDI = @IdCFDI'#13#10'SET @Total = @Subtotal - @Descuento + @TotalImp' +
+      'uestoTrasladado'#13#10'UPDATE CFDI '#13#10'SET Subtotal = @Subtotal'#13#10',Descto' +
+      ' = @Descuento'#13#10',TotalImpuestoTrasladado = @TotalImpuestoTraslada' +
+      'do'#13#10',Total = @Total'#13#10',SaldoDocumento = @Total'#13#10',SaldoFactoraje =' +
+      ' @Total'#13#10'WHERE IdCFDI = @IdCFDI'#13#10
+    Connection = _dmConection.ADOConnection
+    Parameters = <
+      item
+        Name = 'IdCFDI'
+        DataType = ftInteger
+        Size = -1
+        Value = Null
+      end>
+    Left = 592
+    Top = 456
+  end
+  object adocSetImpuestos: TADOCommand
+    CommandText = 
+      'DECLARE @IdCFDI int'#13#10'SET @IdCFDI = :IdCFDI'#13#10'-- Actualiza Impuest' +
+      'os'#13#10'IF NOT EXISTS (SELECT * FROM CFDIImpuestos WHERE IdCFDI = @I' +
+      'dCFDI) '#13#10'BEGIN'#13#10#9'INSERT INTO CFDIImpuestos (IdCFDI,IdCFDITipoImp' +
+      'uesto,TipoImp,ClaveImpuesto,Impuesto,TipoFactor,Tasa,Importe)'#13#10#9 +
+      'SELECT @IdCFDI, IdCFDITipoImpuesto, TipoImp, ClaveImpuesto, Impu' +
+      'esto, TipoFactor, TasaOCuota, SUM(Importe)'#13#10#9'FROM CFDIConceptosI' +
+      'mpuestos'#13#10#9'WHERE IdCFDIConcepto IN (SELECT IdCFDIConcepto FROM C' +
+      'FDIConceptos WHERE IdCFDI = @IdCFDI)'#13#10#9'GROUP BY IdCFDITipoImpues' +
+      'to, TipoImp, ClaveImpuesto, Impuesto, TipoFactor, TasaOCuota'#13#10'EN' +
+      'D'#13#10'ELSE'#13#10'BEGIN'#13#10#9'UPDATE CFDIImpuestos SET Importe = (SELECT SUM(' +
+      'Importe) FROM CFDIConceptosImpuestos'#9'WHERE IdCFDIConcepto IN (SE' +
+      'LECT IdCFDIConcepto FROM CFDIConceptos WHERE IdCFDI = @IdCFDI))'#13 +
+      #10#9'WHERE IdCFDI = @IdCFDI '#13#10'END'#13#10
+    Connection = _dmConection.ADOConnection
+    Parameters = <
+      item
+        Name = 'IdCFDI'
+        DataType = ftInteger
+        Size = -1
+        Value = Null
+      end>
+    Left = 680
+    Top = 448
+  end
+  object adocDelConceptoImpuesto: TADOCommand
+    CommandText = 
+      'DELETE CFDIConceptosImpuestos WHERE IdCFDIConcepto = :IdCFDIConc' +
+      'epto'
+    Connection = _dmConection.ADOConnection
+    Parameters = <
+      item
+        Name = 'IdCFDIConcepto'
+        Attributes = [paSigned]
+        DataType = ftLargeint
+        Precision = 19
+        Size = 8
+        Value = Null
+      end>
+    Left = 680
+    Top = 392
   end
 end

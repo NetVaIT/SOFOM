@@ -30,31 +30,18 @@ inherited frmFacturasGrid: TfrmFacturasGrid
     Width = 969
     Height = 290
     ExplicitTop = 70
-    ExplicitWidth = 935
-    ExplicitHeight = 185
+    ExplicitWidth = 969
+    ExplicitHeight = 290
     inherited cxGrid: TcxGrid
       Width = 969
       Height = 290
-      ExplicitWidth = 935
-      ExplicitHeight = 185
+      ExplicitWidth = 969
+      ExplicitHeight = 290
       inherited tvMaster: TcxGridDBTableView
         OptionsCustomize.ColumnFiltering = False
         object tvMasterIdCFDI: TcxGridDBColumn
           DataBinding.FieldName = 'IdCFDI'
           Visible = False
-        end
-        object tvMasterCliente: TcxGridDBColumn
-          DataBinding.FieldName = 'Cliente'
-          Width = 241
-        end
-        object tvMasterSerie: TcxGridDBColumn
-          DataBinding.FieldName = 'Serie'
-        end
-        object tvMasterFolio: TcxGridDBColumn
-          DataBinding.FieldName = 'Folio'
-        end
-        object tvMasterFecha: TcxGridDBColumn
-          DataBinding.FieldName = 'Fecha'
         end
         object tvMasterIdCFDITipoDocumento: TcxGridDBColumn
           DataBinding.FieldName = 'IdCFDITipoDocumento'
@@ -103,6 +90,39 @@ inherited frmFacturasGrid: TfrmFacturasGrid
         object tvMasterIdClienteDomicilio: TcxGridDBColumn
           DataBinding.FieldName = 'IdClienteDomicilio'
           Visible = False
+        end
+        object tvMasterIdCFDIFormaPago33: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCFDIFormaPago33'
+          Visible = False
+        end
+        object tvMasterIdCFDIMetodoPago33: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCFDIMetodoPago33'
+          Visible = False
+        end
+        object tvMasterIDCFDITipoRelacion: TcxGridDBColumn
+          DataBinding.FieldName = 'IDCFDITipoRelacion'
+          Visible = False
+        end
+        object tvMasterIDCFDIUsoCFDI: TcxGridDBColumn
+          DataBinding.FieldName = 'IDCFDIUsoCFDI'
+          Visible = False
+        end
+        object tvMasterVersion: TcxGridDBColumn
+          DataBinding.FieldName = 'Version'
+          Width = 40
+        end
+        object tvMasterCliente: TcxGridDBColumn
+          DataBinding.FieldName = 'Cliente'
+          Width = 241
+        end
+        object tvMasterSerie: TcxGridDBColumn
+          DataBinding.FieldName = 'Serie'
+        end
+        object tvMasterFolio: TcxGridDBColumn
+          DataBinding.FieldName = 'Folio'
+        end
+        object tvMasterFecha: TcxGridDBColumn
+          DataBinding.FieldName = 'Fecha'
         end
         object tvMasterCuentaCte: TcxGridDBColumn
           DataBinding.FieldName = 'CuentaCte'
@@ -238,26 +258,39 @@ inherited frmFacturasGrid: TfrmFacturasGrid
           DataBinding.FieldName = 'SaldoFactoraje'
           Visible = False
         end
+        object tvMasterFormaPago33: TcxGridDBColumn
+          DataBinding.FieldName = 'FormaPago33'
+        end
+        object tvMasterMetodoPago33: TcxGridDBColumn
+          DataBinding.FieldName = 'MetodoPago33'
+        end
+        object tvMasterTipoRelacion: TcxGridDBColumn
+          DataBinding.FieldName = 'TipoRelacion'
+          Visible = False
+        end
+        object tvMasterUsoCFDI: TcxGridDBColumn
+          DataBinding.FieldName = 'UsoCFDI'
+        end
       end
     end
   end
   inherited pnlDetail3: TPanel
     Top = 451
     Width = 969
-    ExplicitTop = 346
-    ExplicitWidth = 935
+    ExplicitTop = 451
+    ExplicitWidth = 969
   end
   inherited pnlDetail2: TPanel
     Top = 407
     Width = 969
-    ExplicitTop = 302
-    ExplicitWidth = 935
+    ExplicitTop = 407
+    ExplicitWidth = 969
   end
   inherited pnlDetail1: TPanel
     Top = 363
     Width = 969
-    ExplicitTop = 258
-    ExplicitWidth = 935
+    ExplicitTop = 363
+    ExplicitWidth = 969
   end
   inherited pnlClose: TPanel
     Top = 492
@@ -269,7 +302,7 @@ inherited frmFacturasGrid: TfrmFacturasGrid
       41)
     inherited btnClose: TButton
       Left = 884
-      ExplicitLeft = 850
+      ExplicitLeft = 884
     end
   end
   object PnlBusqueda: TPanel [8]
@@ -293,7 +326,6 @@ inherited frmFacturasGrid: TfrmFacturasGrid
       Caption = 'Cerrar'
       TabOrder = 0
       OnClick = btnCloseClick
-      ExplicitLeft = 852
     end
     object Panel1: TPanel
       Left = 0
@@ -329,7 +361,6 @@ inherited frmFacturasGrid: TfrmFacturasGrid
       BevelOuter = bvNone
       ParentBackground = False
       TabOrder = 2
-      ExplicitWidth = 736
       object Label1: TLabel
         Left = 21
         Top = 4
@@ -425,33 +456,32 @@ inherited frmFacturasGrid: TfrmFacturasGrid
         end
         item
           Visible = True
-          ItemName = 'dxBrBtnCFDI'
+          ItemName = 'dxbbTimbrarCFDI'
         end
         item
           Visible = True
-          ItemName = 'dxBrBtnImprimePDF'
+          ItemName = 'dxbbImprimirCFDI'
         end
         item
           Visible = True
-          ItemName = 'dxBrBtnCancelaCFDI'
+          ItemName = 'dxbbCancelarCFDI'
         end>
     end
-    object dxBrBtnCFDI: TdxBarButton
+    object dxbbTimbrarCFDI: TdxBarButton
       Caption = 'CFDI'
       Category = 0
       Hint = 'Generar CFDI'
       Visible = ivAlways
       ImageIndex = 17
-      OnClick = dxBrBtnCFDIClick
     end
-    object dxBrBtnImprimePDF: TdxBarButton
+    object dxbbImprimirCFDI: TdxBarButton
       Caption = 'ImprimePDF'
       Category = 0
       Hint = 'Imprime PDF'
       Visible = ivAlways
       ImageIndex = 18
     end
-    object dxBrBtnCancelaCFDI: TdxBarButton
+    object dxbbCancelarCFDI: TdxBarButton
       Caption = 'Cancelar CFDI'
       Category = 0
       Hint = 'Cancelar CFDI'
@@ -1314,6 +1344,7 @@ inherited frmFacturasGrid: TfrmFacturasGrid
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42699.643536909720000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

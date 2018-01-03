@@ -77,8 +77,8 @@ type
     tvMasterCliente: TcxGridDBColumn;
     tvMasterEstatus: TcxGridDBColumn;
     tvMasterMetodoPago: TcxGridDBColumn;
-    dxBrBtnCFDI: TdxBarButton;
-    dxBrBtnImprimePDF: TdxBarButton;
+    dxbbTimbrarCFDI: TdxBarButton;
+    dxbbImprimirCFDI: TdxBarButton;
     PnlBusqueda: TPanel;
     Button1: TButton;
     Panel1: TPanel;
@@ -91,7 +91,7 @@ type
     cxDtEdtDesde: TcxDateEdit;
     cxDtEdtHasta: TcxDateEdit;
     ChckBxXFecha: TCheckBox;
-    dxBrBtnCancelaCFDI: TdxBarButton;
+    dxbbCancelarCFDI: TdxBarButton;
     ChckBxFactVivas: TCheckBox;
     tvMasterIdCFDI: TcxGridDBColumn;
     tvMasterMetPagoClaveSAT: TcxGridDBColumn;
@@ -102,52 +102,66 @@ type
     tvMasterIdCuentaXCobrar: TcxGridDBColumn;
     tvMasterSaldoFactoraje: TcxGridDBColumn;
     DSQryAuxiliar: TDataSource;
+    tvMasterVersion: TcxGridDBColumn;
+    tvMasterIdCFDIFormaPago33: TcxGridDBColumn;
+    tvMasterIdCFDIMetodoPago33: TcxGridDBColumn;
+    tvMasterIDCFDITipoRelacion: TcxGridDBColumn;
+    tvMasterIDCFDIUsoCFDI: TcxGridDBColumn;
+    tvMasterFormaPago33: TcxGridDBColumn;
+    tvMasterMetodoPago33: TcxGridDBColumn;
+    tvMasterTipoRelacion: TcxGridDBColumn;
+    tvMasterUsoCFDI: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
     procedure SpdBtnBuscarClick(Sender: TObject);
     procedure EdtNombreChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure dxBrBtnCFDIClick(Sender: TObject);
+//    procedure dxBrBtnCFDIClick(Sender: TObject);
   private
-    FActGenerarCFDI: TBasicAction;
-    FActImprimePDF: TBasicAction;
+//    FActGenerarCFDI: TBasicAction;
+//    FActImprimePDF: TBasicAction;
     ffiltroNombre: String;
     fOrden: String;
     ffiltroFecha: String;
-    FActCancelaCFDI: TBasicAction;
+//    FActCancelaCFDI: TBasicAction;
     FTipoDoc: Integer;
-    FADoSelMetPAgo: TAdoDAtaset;
-    FADoCFDIConceptos: TAdoDAtaset;
-    procedure SetActGenerarCFDI(const Value: TBasicAction);
-    procedure SetActImprimePDF(const Value: TBasicAction);
+//    FADoSelMetPAgo: TAdoDAtaset;
+//    FADoCFDIConceptos: TAdoDAtaset;
+    FactCancelarCFDI: TBasicAction;
+    FactImprimirCFDI: TBasicAction;
+    FactTimbrarCFDI: TBasicAction;
+//    procedure SetActGenerarCFDI(const Value: TBasicAction);
+//    procedure SetActImprimePDF(const Value: TBasicAction);
     function GetFFiltroNombre: String;
     procedure PoneRangoFechas;
-    procedure SetActCancelaCFDI(const Value: TBasicAction);
+//    procedure SetActCancelaCFDI(const Value: TBasicAction);
     procedure VerificaYCambiaEstatusCXC(IDCFDIACT, NvoEstatus, AntEstatus,
       IdCXCAct: integer);
-    function CambiarMetodoPago(var IDMetodoPago: Integer; var Cuenta,
-      CompConcepto: String): Boolean;
-    function SacaMetodo(IDCliente: Integer; var CtaPago: String): Integer;
-    function ConfirmarGeneracion(AMaster, AConceptos: TAdoDAtaSEt): Boolean; //Jul 20/17
+    procedure SetactCancelarCFDI(const Value: TBasicAction);
+    procedure SetactImprimirCFDI(const Value: TBasicAction);
+    procedure SetactTimbrarCFDI(const Value: TBasicAction);
+//    function CambiarMetodoPago(var IDMetodoPago: Integer; var Cuenta,
+//      CompConcepto: String): Boolean;
+//    function SacaMetodo(IDCliente: Integer; var CtaPago: String): Integer;
+//    function ConfirmarGeneracion(AMaster, AConceptos: TAdoDAtaSEt): Boolean; //Jul 20/17
     { Private declarations }
   public
     { Public declarations }
-      property ActGenerarCFDI : TBasicAction read FActGenerarCFDI write SetActGenerarCFDI;
-      property ActImprimePDF : TBasicAction read FActImprimePDF write SetActImprimePDF;
-      property ActCancelaCFDI : TBasicAction read FActCancelaCFDI write SetActCancelaCFDI;
-
-      //Dic 20/16
-     property FiltroFecha: String read ffiltroFecha write ffiltroFecha;
-    // Property ElOrden :String read fOrden write fOrden;
-     property FiltroNombre:String read GetFFiltroNombre write ffiltroNombre;
-     //Dic 20/16 hasta aca
-     property TipoD:Integer read FTipoDoc write fTipoDoc; // Jun 26/17
-     property VADODtStSelMetPago :TAdoDAtaset read FADoSelMetPAgo  write FadoSElMetPago;  //Ago 31/17 para cargar la tabla
-     property VADODtStCFDIConceptos :TAdoDAtaset read FADoCFDIConceptos  write FADoCFDIConceptos;
+//      property ActGenerarCFDI : TBasicAction read FActGenerarCFDI write SetActGenerarCFDI;
+//      property ActImprimePDF : TBasicAction read FActImprimePDF write SetActImprimePDF;
+//      property ActCancelaCFDI : TBasicAction read FActCancelaCFDI write SetActCancelaCFDI;
+    property actTimbrarCFDI: TBasicAction read FactTimbrarCFDI write SetactTimbrarCFDI;
+    property actImprimirCFDI: TBasicAction read FactImprimirCFDI write SetactImprimirCFDI;
+    property actCancelarCFDI: TBasicAction read FactCancelarCFDI write SetactCancelarCFDI;
+    property FiltroFecha: String read ffiltroFecha write ffiltroFecha;
+    property FiltroNombre:String read GetFFiltroNombre write ffiltroNombre;
+    property TipoD:Integer read FTipoDoc write fTipoDoc; // Jun 26/17
+//    property VADODtStSelMetPago :TAdoDAtaset read FADoSelMetPAgo  write FadoSElMetPago;  //Ago 31/17 para cargar la tabla
+//    property VADODtStCFDIConceptos :TAdoDAtaset read FADoCFDIConceptos  write FADoCFDIConceptos;
   end;
 
-var
-  frmFacturasGrid: TfrmFacturasGrid;
+//var
+//  frmFacturasGrid: TfrmFacturasGrid;
 
 implementation
 
@@ -159,113 +173,109 @@ uses FacturasDM, FacturasEdit, _ConectionDmod, FacturaConfirmacionForm,
 procedure TfrmFacturasGrid.DataSourceDataChange(Sender: TObject; Field: TField);
 begin
   inherited;                                                                          //Jun 27/17
-  dxBrBtnCFDI.Enabled:=(datasource.DataSet.FieldByName('IDCFDIEstatus').AsInteger=1) and (datasource.DataSet.FieldByName('total').Value>0);  //Dic 7/16
-  dxBrBtnCancelaCFDI.Enabled:= (datasource.DataSet.FieldByName('IDCFDIEstatus').AsInteger=2) and   //MAr 23/17
-                               (datasource.DataSet.FieldByName('SaldoDocumento').Value=datasource.DataSet.FieldByName('Total').VAlue)and
-                               (datasource.DataSet.FieldByName('SaldoDocumento').Value=datasource.DataSet.FieldByName('SaldoFactoraje').VAlue);
-
-
+//  dxBrBtnCFDI.Enabled:=(datasource.DataSet.FieldByName('IDCFDIEstatus').AsInteger=1) and (datasource.DataSet.FieldByName('total').Value>0);  //Dic 7/16
+//  dxBrBtnCancelaCFDI.Enabled:= (datasource.DataSet.FieldByName('IDCFDIEstatus').AsInteger=2) and   //MAr 23/17
+//                               (datasource.DataSet.FieldByName('SaldoDocumento').Value=datasource.DataSet.FieldByName('Total').VAlue)and
+//                               (datasource.DataSet.FieldByName('SaldoDocumento').Value=datasource.DataSet.FieldByName('SaldoFactoraje').VAlue);
 end;
 
-procedure TfrmFacturasGrid.dxBrBtnCFDIClick(Sender: TObject);
-var idcxcAct, IdCFDIAct:Integer;
-   IdNvoMetPago:Integer; //D Ago 31/17
-    CtaNvaPago, ComplementoConc:String;
-     CambioMetPago , CFDITimbrado:Boolean; //Ago 31/17
-                         //HAgo 31/17
-begin
-  inherited;
-  idcxcAct:=-1;
-  if not(DAtasource.DataSet.FieldByName('IDCuentaXCobrar').isnull) then
-    idcxcAct :=DAtasource.DataSet.FieldByName('IDCuentaXCobrar').asinteger;
-  IdCFDIAct:=  DAtasource.DataSet.FieldByName('Idcfdi').asinteger; //Ya existe por ques desde la lista y no esta generada //Jul 20/17
-  //D Ago 31/17
+//procedure TfrmFacturasGrid.dxBrBtnCFDIClick(Sender: TObject);
+//var idcxcAct, IdCFDIAct:Integer;
+//   IdNvoMetPago:Integer; //D Ago 31/17
+//    CtaNvaPago, ComplementoConc:String;
+//     CambioMetPago , CFDITimbrado:Boolean; //Ago 31/17
+//                         //HAgo 31/17
+//begin
+//  inherited;
+//  idcxcAct:=-1;
+//  if not(DAtasource.DataSet.FieldByName('IDCuentaXCobrar').isnull) then
+//    idcxcAct :=DAtasource.DataSet.FieldByName('IDCuentaXCobrar').asinteger;
+//  IdCFDIAct:=  DAtasource.DataSet.FieldByName('Idcfdi').asinteger; //Ya existe por ques desde la lista y no esta generada //Jul 20/17
+//  //D Ago 31/17
+//
+//  //Ver si se muestra primero  y luego otra vez
+//(*  IdNvoMetPago:=0;
+//  CambioMetPago:=CambiarMetodoPago(IdNvoMetPago,CtaNvaPago,ComplementoConc );
+//  if cambioMetPago then
+//  begin
+//    DAtasource.DataSet.Edit;
+//    DAtasource.DataSet.Fieldbyname('IDMetodoPago').asInteger:= IdNvoMetPago ;
+//
+//    DAtasource.DataSet.Fieldbyname('NumCtaPago').AsString:=CtaNvaPago;
+//    DAtasource.DataSet.Post;
+//   // if True then
+//    VADODtStCFDIConceptos.Open;    //Verificar que es te en el primero de la factura
+//    VADODtStCFDIConceptos.first;
+//    if ComplementoConc<>'' and (not VADODtStCFDIConceptos.eof) and (VADODtStCFDIConceptos.FieldByName('IDCFDI').ASinteger = DAtasource.DataSet.Fieldbyname('IDCFDI').asInteger) then
+//    begin
+//      VADODtStCFDIConceptos.Edit;
+//      VADODtStCFDIConceptos.FieldByName('Descripcion').ASString:= VADODtStCFDIConceptos.FieldByName('Descripcion').asString+ ComplementoConc;
+//      VADODtStCFDIConceptos.post;
+//    end;
+//
+//
+//  end;   se mando alconfirmacion *)
+//   if ConfirmarGeneracion(TADoDAtaSEt(DAtasource.DataSet), VADODtStCFDIConceptos)  then //Ago 31/17
+////    begin  //h Ago 31/17
+//      ActGenerarCFDI.Execute;      //Equivale a ACtProcesaFActura
+//
+//  if idcxcAct<>-1 then
+//     VerificaYCambiaEstatusCXC(IDCFDIACT, 1, 0, IdCXCAct);
+//
+//end;
 
-  //Ver si se muestra primero  y luego otra vez
-(*  IdNvoMetPago:=0;
-  CambioMetPago:=CambiarMetodoPago(IdNvoMetPago,CtaNvaPago,ComplementoConc );
-  if cambioMetPago then
-  begin
-    DAtasource.DataSet.Edit;
-    DAtasource.DataSet.Fieldbyname('IDMetodoPago').asInteger:= IdNvoMetPago ;
+//function TfrmFacturasGrid.CambiarMetodoPago(var IDMetodoPago:Integer; var Cuenta, CompConcepto:String):Boolean;
+//begin  //Jul 10/17
+//  Cuenta:=''; //Para que al menos este vacia
+//  CompConcepto:=''; //ago 30/17
+//  IDMetodoPago:=6;//DEshabilitado para que siempre ponga No identificado ---SacaMetodo(datasource.DataSet.FieldByName('IdPersonaReceptor').AsInteger, Cuenta); //CFDI
+//  FrmMetodoPagoFactura:=TFrmMetodoPagoFactura.Create(self);
+//  FrmMetodoPagoFactura.IdMetSeleccion:=IDMetodoPago;
+//  FrmMetodoPagoFactura.CuentaSeleccion:= Cuenta;
+//  FrmMetodoPagoFactura.DSMetodoPago.DataSet:=VADODtStSelMetPago;
+//
+//  FrmMetodoPagoFactura.ShowModal;
+//  Result:= FrmMetodoPagoFactura.ModalResult=mrOk ;
+//  if result then
+//  begin
+//    IDMetodoPago:= FrmMetodoPagoFactura.IdMetSeleccion;
+//    Cuenta:= FrmMetodoPagoFactura.CuentaSeleccion;
+//    CompConcepto:=FrmMetodoPagoFactura.ComplemConcepto; //Ago 30/17
+//  end;
+//
+//  FrmMetodoPagoFactura.Free;
+//
+//
+//end;
 
-    DAtasource.DataSet.Fieldbyname('NumCtaPago').AsString:=CtaNvaPago;
-    DAtasource.DataSet.Post;
-   // if True then
-    VADODtStCFDIConceptos.Open;    //Verificar que es te en el primero de la factura
-    VADODtStCFDIConceptos.first;
-    if ComplementoConc<>'' and (not VADODtStCFDIConceptos.eof) and (VADODtStCFDIConceptos.FieldByName('IDCFDI').ASinteger = DAtasource.DataSet.Fieldbyname('IDCFDI').asInteger) then
-    begin
-      VADODtStCFDIConceptos.Edit;
-      VADODtStCFDIConceptos.FieldByName('Descripcion').ASString:= VADODtStCFDIConceptos.FieldByName('Descripcion').asString+ ComplementoConc;
-      VADODtStCFDIConceptos.post;
-    end;
+//function TfrmFacturasGrid.SacaMetodo (IDCliente:Integer; var CtaPago:String) :Integer;
+//begin                             //Ajustado Ago 31/17      //Puede sobrar si se hace desde la ventana de confirmacion
+//  CtaPago:='';
+//  dsQryAuxiliar.dataset.Close;
+//  TAdoQuery(dsQryAuxiliar.dataset).sql.clear;
+//  TAdoQuery(dsQryAuxiliar.dataset).sql.Add('Select * from Personas where idPersona = '+ intToSTR(IDCliente));
+//    dsQryAuxiliar.dataset.Open;
+//  if (not   dsQryAuxiliar.dataset.eof)  and not ( dsQryAuxiliar.dataset.FieldByName('IdMetodoPago').isnull) then
+//  begin
+//    Result:=  dsQryAuxiliar.dataset.FieldByName('IdMetodoPago').asInteger;
+//    if not   dsQryAuxiliar.dataset.FieldByName('NumCtaPagoCliente').isnull then
+//       CtaPago:=   dsQryAuxiliar.dataset.FieldByName('NumCtaPagoCliente').asstring;
+//  end
+//  else
+//      Result:=5; //Otros
+//
+//end;
 
-
-  end;   se mando alconfirmacion *)
-   if ConfirmarGeneracion(TADoDAtaSEt(DAtasource.DataSet), VADODtStCFDIConceptos)  then //Ago 31/17
-//    begin  //h Ago 31/17
-      ActGenerarCFDI.Execute;      //Equivale a ACtProcesaFActura
-
-  if idcxcAct<>-1 then
-     VerificaYCambiaEstatusCXC(IDCFDIACT, 1, 0, IdCXCAct);
-
-end;
-
-function TfrmFacturasGrid.CambiarMetodoPago(var IDMetodoPago:Integer; var Cuenta, CompConcepto:String):Boolean;
-begin  //Jul 10/17
-  Cuenta:=''; //Para que al menos este vacia
-  CompConcepto:=''; //ago 30/17
-  IDMetodoPago:=6;//DEshabilitado para que siempre ponga No identificado ---SacaMetodo(datasource.DataSet.FieldByName('IdPersonaReceptor').AsInteger, Cuenta); //CFDI
-  FrmMetodoPagoFactura:=TFrmMetodoPagoFactura.Create(self);
-  FrmMetodoPagoFactura.IdMetSeleccion:=IDMetodoPago;
-  FrmMetodoPagoFactura.CuentaSeleccion:= Cuenta;
-  FrmMetodoPagoFactura.DSMetodoPago.DataSet:=VADODtStSelMetPago;
-
-  FrmMetodoPagoFactura.ShowModal;
-  Result:= FrmMetodoPagoFactura.ModalResult=mrOk ;
-  if result then
-  begin
-    IDMetodoPago:= FrmMetodoPagoFactura.IdMetSeleccion;
-    Cuenta:= FrmMetodoPagoFactura.CuentaSeleccion;
-    CompConcepto:=FrmMetodoPagoFactura.ComplemConcepto; //Ago 30/17
-  end;
-
-  FrmMetodoPagoFactura.Free;
-
-
-end;
-
-function TfrmFacturasGrid.SacaMetodo (IDCliente:Integer; var CtaPago:String) :Integer;
-begin                             //Ajustado Ago 31/17      //Puede sobrar si se hace desde la ventana de confirmacion
-  CtaPago:='';
-  dsQryAuxiliar.dataset.Close;
-  TAdoQuery(dsQryAuxiliar.dataset).sql.clear;
-  TAdoQuery(dsQryAuxiliar.dataset).sql.Add('Select * from Personas where idPersona = '+ intToSTR(IDCliente));
-    dsQryAuxiliar.dataset.Open;
-  if (not   dsQryAuxiliar.dataset.eof)  and not ( dsQryAuxiliar.dataset.FieldByName('IdMetodoPago').isnull) then
-  begin
-    Result:=  dsQryAuxiliar.dataset.FieldByName('IdMetodoPago').asInteger;
-    if not   dsQryAuxiliar.dataset.FieldByName('NumCtaPagoCliente').isnull then
-       CtaPago:=   dsQryAuxiliar.dataset.FieldByName('NumCtaPagoCliente').asstring;
-  end
-  else
-      Result:=5; //Otros
-
-end;
-
-function TfrmFacturasGrid.ConfirmarGeneracion(AMaster, AConceptos:TAdoDAtaSEt):Boolean; //Ago 31/17
-begin
-   FrmDatosFacturaPrev:=TFrmDatosFacturaPrev.Create(self);
-   FrmDatosFacturaPrev.DSCFDIPrevio.DataSet:=AMASter;
-   FrmDatosFacturaPrev.DSConceptosPrevios.DataSet:=AConceptos;
-   FrmDAtosFActuraPrev.dsQryAuxiliar.DataSet:=dsQryAuxiliar.dataset;
-   FrmDAtosFActuraPrev.VADODtStSelMetPago:=VADODtStSelMetPago;
-   FrmDatosFacturaPrev.ShowModal;
-   Result:= FrmDatosFacturaPrev.modalresult=mrok;
-end;
-
-
+//function TfrmFacturasGrid.ConfirmarGeneracion(AMaster, AConceptos:TAdoDAtaSEt):Boolean; //Ago 31/17
+//begin
+//   FrmDatosFacturaPrev:=TFrmDatosFacturaPrev.Create(self);
+//   FrmDatosFacturaPrev.DSCFDIPrevio.DataSet:=AMASter;
+//   FrmDatosFacturaPrev.DSConceptosPrevios.DataSet:=AConceptos;
+//   FrmDAtosFActuraPrev.dsQryAuxiliar.DataSet:=dsQryAuxiliar.dataset;
+//   FrmDAtosFActuraPrev.VADODtStSelMetPago:=VADODtStSelMetPago;
+//   FrmDatosFacturaPrev.ShowModal;
+//   Result:= FrmDatosFacturaPrev.modalresult=mrok;
+//end;
 
 procedure TfrmFacturasGrid.VerificaYCambiaEstatusCXC(IDCFDIACT, NvoEstatus, AntEstatus, IdCXCAct:integer); //Se quito el creado por que siempre esta creado..
 begin                                //Jul 20/17
@@ -331,34 +341,54 @@ begin
   Result := ffiltroNombre;
 end;
 
-procedure TfrmFacturasGrid.SetActCancelaCFDI(const Value: TBasicAction);
-begin                         //Mar 23/17
-  FActCancelaCFDI := Value;
-  dxBrBtnCancelaCFDI.Action:= Value;
-  dxBrBtnCancelaCFDI.ImageIndex:=19;
-end;
+//procedure TfrmFacturasGrid.SetActCancelaCFDI(const Value: TBasicAction);
+//begin                         //Mar 23/17
+//  FActCancelaCFDI := Value;
+//  dxBrBtnCancelaCFDI.Action:= Value;
+//  dxBrBtnCancelaCFDI.ImageIndex:=19;
+//end;
+//
+//procedure TfrmFacturasGrid.SetActGenerarCFDI(const Value: TBasicAction);
+//begin           //Nov 29/16
+//  FActGenerarCFDI := Value;
+// // dxBrBtnCFDI.Action:=Value;    //PAra poder llamarlo y generar  el ajuste de estatus este es manual despues de un intento jul 20/17
+// // dxBrBtnCFDI.ImageIndex:=17;
+//end;
+//
+//procedure TfrmFacturasGrid.SetActImprimePDF(const Value: TBasicAction);
+//begin
+//  FActImprimePDF := Value;
+//  dxBrBtnImprimePDF.Action:=Value;
+//  dxBrBtnImprimePDF.ImageIndex:=18;
+//end;
 
-procedure TfrmFacturasGrid.SetActGenerarCFDI(const Value: TBasicAction);
-begin           //Nov 29/16
-  FActGenerarCFDI := Value;
- // dxBrBtnCFDI.Action:=Value;    //PAra poder llamarlo y generar  el ajuste de estatus este es manual despues de un intento jul 20/17
- // dxBrBtnCFDI.ImageIndex:=17;
-end;
-
-procedure TfrmFacturasGrid.SetActImprimePDF(const Value: TBasicAction);
+procedure TfrmFacturasGrid.SetactCancelarCFDI(const Value: TBasicAction);
 begin
-  FActImprimePDF := Value;
-  dxBrBtnImprimePDF.Action:=Value;
-  dxBrBtnImprimePDF.ImageIndex:=18;
+  FactCancelarCFDI := Value;
+  dxbbCancelarCFDI.Action := Value;
+end;
+
+procedure TfrmFacturasGrid.SetactImprimirCFDI(const Value: TBasicAction);
+begin
+  FactImprimirCFDI := Value;
+  dxbbImprimirCFDI.Action := Value;
+end;
+
+procedure TfrmFacturasGrid.SetactTimbrarCFDI(const Value: TBasicAction);
+begin
+  FactTimbrarCFDI := Value;
+  dxbbTimbrarCFDI.Action := Value;
 end;
 
 procedure TfrmFacturasGrid.SpdBtnBuscarClick(Sender: TObject);
-const TxtSQL='select  IdCFDI, IdCFDITipoDocumento, IdCFDIFormaPago, C.IdMetodoPago, C.IdMoneda, IdPersonaEmisor, IdPersonaReceptor,'+
+const TxtSQL='select  IdCFDI, IdCFDITipoDocumento, IdCFDIFormaPago, IdMetodoPago, IdMoneda, IdPersonaEmisor, IdPersonaReceptor,'+
 'IdDocumentoCBB, IdDocumentoXML, IdDocumentoPDF, IdCFDIEstatus, IdCFDIFacturaGral, IdClienteDomicilio,'+
-'CuentaCte, TipoCambio, TipoComp, Serie, Folio, Fecha, LugarExpedicion, Sello, CondPago, NoCertificado, Certificado,'+
-'SubTotal, Descto, MotivoDescto, Total,  C.NumCtaPago,CadenaOriginal, TotalImpuestoRetenido, TotalImpuestoTrasladado,'+
+'Version, CuentaCte, TipoCambio, TipoComp, Serie, Folio, Fecha, LugarExpedicion, Sello, CondPago, NoCertificado, Certificado,'+
+'SubTotal, Descto, MotivoDescto, Total,  NumCtaPago,CadenaOriginal, TotalImpuestoRetenido, TotalImpuestoTrasladado,'+
 'SaldoDocumento, FechaCancelacion, Observaciones,PorcentajeIVA, EmailCliente, UUID_TB,'+
-'SelloCFD_TB, SelloSAT_TB,CertificadoSAT_TB,FechaTimbrado_TB, IdCuentaXCobrar, SaldoFactoraje from CFDI C '; //Mar 14/17 SF
+'SelloCFD_TB, SelloSAT_TB,CertificadoSAT_TB,FechaTimbrado_TB, IdCuentaXCobrar, SaldoFactoraje, ' +
+'IdCFDIFormaPago33, IdCFDIMetodoPago33, IDCFDITipoRelacion, IDCFDIUsoCFDI ' +
+'from CFDI';
 var AuxFiltro, aux2 :String;     //Pendiente de programar   Dic 17/16    //Ene 12/17  era cxc
 begin
   inherited;
@@ -386,13 +416,10 @@ begin
      AuxFiltro:= ' where '+  Aux2;
   end;
   //Mar 23/17 hasta
-
-
  if AuxFiltro <>'' then  //Jun 26/17
    AuxFiltro:= AuxFiltro+ ' and idCFDITipoDocumento= '+ intTostr(TipoD)
  else
    AuxFiltro:= ' where idCFDITipoDocumento= '+ intTostr(TipoD);
-
  Tadodataset(datasource.DataSet).Close;
   Tadodataset(datasource.DataSet).CommandText:=TxtSQL+ffiltroNombre+ AuxFiltro;
 //  ShowMessage(TxtSQL+ffiltroNombre+ffiltro+ AuxFiltro);
@@ -401,12 +428,7 @@ begin
     Tadodataset(datasource.DataSet).Parameters.ParamByName('FIni').Value:=cxDtEdtDesde.Date;
     Tadodataset(datasource.DataSet).Parameters.ParamByName('FFin').Value:=cxDtEdtHasta.Date+1;
   end;
-
-
-
   Tadodataset(datasource.DataSet).open;
-
-
 end;
 
 procedure TfrmFacturasGrid.PoneRangoFechas; //Dic 20/16
@@ -414,8 +436,6 @@ begin
   ffiltroFecha:='';
   if ChckBxXFecha.checked then
     ffiltroFecha:=' Fecha >:FIni and Fecha <:FFin';
-
 end;
-
 
 end.

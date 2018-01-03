@@ -74,6 +74,14 @@ inherited frmPersonas: TfrmPersonas
           DataBinding.FieldName = 'IdMetodoPago'
           Visible = False
         end
+        object tvMasterIdCFDIFormaPago33: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCFDIFormaPago33'
+          Visible = False
+        end
+        object tvMasterIdCFDIUsoCFDI: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCFDIUsoCFDI'
+          Visible = False
+        end
         object tvMasterIdRegimenFiscal: TcxGridDBColumn
           DataBinding.FieldName = 'IdRegimenFiscal'
           Visible = False
@@ -323,6 +331,7 @@ inherited frmPersonas: TfrmPersonas
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42664.566576585640000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

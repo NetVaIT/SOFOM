@@ -64,9 +64,7 @@ type
     cxDtEdtHasta: TcxDateEdit;
     ChckBxXFecha: TCheckBox;
     ChckBxConSaldo: TCheckBox;
-    ActFacturaMorato: TAction;
     DSDetalleMostrar: TDataSource;
-    dxbbAbonarCapital: TdxBarButton;
     DSAnexos: TDataSource;
     tvMasterIdMetodoPago: TcxGridDBColumn;
     tvMasterCuentaPago: TcxGridDBColumn;
@@ -92,19 +90,16 @@ type
     ffiltroFecha: String;
     ffiltro: String;
     FactAbonarCapital: TBasicAction;
-    FactAjustePrueba: TBasicAction;
-    FActPagoAnticipado: TBasicAction;
+    FactPagoAnticipado: TBasicAction;
     FActCreaFinales: TBasicAction;
+    FactFacturarMoratorios: TBasicAction;
     function GetFFiltroNombre: String;
     procedure PoneFiltro;
-    procedure SetactAbonarCapital(const Value: TBasicAction);
     function HayCXCSinFacturaPrevia: boolean;
-    procedure SetactAjusteprueba(const Value: TBasicAction);
     function HayCXCPorGenerar: boolean;
     function SonUltimas(SaldoPago:Double; var Msg:String): Boolean;
     procedure ActualizarFechaPago(IdPagoAct: integer);
     procedure RefreshPago;
-    procedure SetFPagoAnticipado(const Value: TBasicAction);
     procedure SetFCreaFinales(const Value: TBasicAction);
     function VerificaFinales(idanexo:integer):boolean;
   public
@@ -112,11 +107,10 @@ type
     property FiltroCon:String read ffiltro write ffiltro;
     property FiltroFecha: String read ffiltroFecha write ffiltroFecha;
     property FiltroNombre:String read GetFFiltroNombre write ffiltroNombre;
-    property actAbonarCapital: TBasicAction read FactAbonarCapital write SetactAbonarCapital;
-    property actAjustePrueba: TBasicAction read FactAjustePrueba write SetactAjusteprueba;
-    property ActPagoAnticipado : TBasicAction read FActPagoAnticipado write SetFPagoAnticipado;    //Jun 29/17
-
-    Property ActVerificayCreaFinal:TBasicAction read FActCreaFinales write SetFCreaFinales; //Oct 3/17
+    property actAbonarCapital: TBasicAction read FactAbonarCapital write FactAbonarCapital;
+    property actFacturarMoratorios: TBasicAction read FactFacturarMoratorios write FactFacturarMoratorios;
+    property actPagoAnticipado: TBasicAction read FactPagoAnticipado write FactPagoAnticipado;    //Jun 29/17
+    property ActVerificayCreaFinal: TBasicAction read FActCreaFinales write SetFCreaFinales; //Oct 3/17
   end;
 
 implementation
@@ -361,7 +355,7 @@ begin
           ShowMessage('No existen Cuentas Por Cobrar pendientes de Pago para ese Cliente. Puede actualizar moratorios a la fecha del Pago o Abonar a Capital');
           //Colocado aca Abr 17/17
           FrmAplicacionPago:=TFrmAplicacionPago.create(self);
-          FrmAplicacionPago.ActFacturaMora:= ActFacturaMorato;
+          FrmAplicacionPago.ActFacturaMora:= actFacturarMoratorios;
           FrmAplicacionPago.ActPagoAnticipado:= ActPagoAnticipado; //Jun 30/17
           FrmAplicacionPago.EsFactoraje:= Datasource.DataSet.FieldByName('OrigenPago').AsInteger=1; //Ene 13/17
           FrmAplicacionPago.LblaplicandoFactoraje.Visible:= Datasource.DataSet.FieldByName('OrigenPago').AsInteger=1; //Ene 13/17
@@ -392,7 +386,7 @@ begin
         else
         begin
           FrmAplicacionPago:=TFrmAplicacionPago.create(self);
-          FrmAplicacionPago.ActFacturaMora:= ActFacturaMorato;
+          FrmAplicacionPago.ActFacturaMora:= actFacturarMoratorios;
           FrmAplicacionPago.ActPagoAnticipado:= ActPagoAnticipado; //Jun 30/17
           FrmAplicacionPago.ActVerificayCreaFinal:=ActVerificayCreaFinal; //Oct 3/17
 
@@ -524,25 +518,9 @@ begin
 
 end;
 
-procedure TFrmConPagos.SetactAbonarCapital(const Value: TBasicAction);
-begin
-  FactAbonarCapital := Value;
- // dxbbAbonarCapital.Action := Value;
-end;
-
-procedure TFrmConPagos.SetactAjusteprueba(const Value: TBasicAction);
-begin
-  FactAjustePrueba := Value;
-end;
-
 procedure TFrmConPagos.SetFCreaFinales(const Value: TBasicAction);
 begin
   FActCreaFinales := Value;
-end;
-
-procedure TFrmConPagos.SetFPagoAnticipado(const Value: TBasicAction);
-begin
-  FActPagoAnticipado := Value;
 end;
 
 procedure TFrmConPagos.SpdBtnBuscarClick(Sender: TObject);

@@ -31,6 +31,11 @@ object FrmDatosFacturaPrev: TFrmDatosFacturaPrev
     Columns = <
       item
         Expanded = False
+        FieldName = 'IdCFDIConcepto'
+        Visible = False
+      end
+      item
+        Expanded = False
         FieldName = 'IdCFDI'
         Visible = False
       end
@@ -41,31 +46,45 @@ object FrmDatosFacturaPrev: TFrmDatosFacturaPrev
       end
       item
         Expanded = False
+        FieldName = 'IdCuentaXCobrarDetalle'
+        Visible = False
+      end
+      item
+        Expanded = False
+        FieldName = 'SATClaveProdServ'
+        Visible = True
+      end
+      item
+        Expanded = False
         FieldName = 'Cantidad'
-        Width = 76
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'Unidad'
-        Width = 115
+        Width = 64
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'SATClaveUnidad'
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'Descripcion'
-        Width = 334
+        Width = 200
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'NoIdentifica'
-        Visible = False
+        Width = 75
+        Visible = True
       end
       item
         Expanded = False
         FieldName = 'ValorUnitario'
-        Width = 104
         Visible = True
       end
       item
@@ -75,13 +94,8 @@ object FrmDatosFacturaPrev: TFrmDatosFacturaPrev
       end
       item
         Expanded = False
-        FieldName = 'IdCFDIConcepto'
-        Visible = False
-      end
-      item
-        Expanded = False
-        FieldName = 'IdCuentaXCobrarDetalle'
-        Visible = False
+        FieldName = 'Descuento'
+        Visible = True
       end>
   end
   object Panel2: TPanel
@@ -117,14 +131,24 @@ object FrmDatosFacturaPrev: TFrmDatosFacturaPrev
       TabOrder = 1
     end
     object BtnAjustesBase: TButton
-      Left = 93
+      Left = 307
       Top = 14
       Width = 188
       Height = 25
       Anchors = [akTop, akRight]
       Caption = 'Ajusta M'#233'todo Pago o Concepto'
       TabOrder = 2
+      Visible = False
       OnClick = BtnAjustesBaseClick
+    end
+    object Button1: TButton
+      Left = 24
+      Top = 14
+      Width = 122
+      Height = 25
+      Caption = 'Ajustar propiedades'
+      TabOrder = 3
+      OnClick = Button1Click
     end
   end
   object pcMain: TcxPageControl
@@ -143,16 +167,18 @@ object FrmDatosFacturaPrev: TFrmDatosFacturaPrev
     object tsGeneral: TcxTabSheet
       Caption = 'General'
       ImageIndex = 0
+      ExplicitLeft = 1
+      ExplicitTop = 25
       object Label1: TLabel
-        Left = 272
-        Top = 57
+        Left = 241
+        Top = 36
         Width = 92
         Height = 13
         Caption = 'Tipo Comprobante:'
       end
       object DBText1: TDBText
-        Left = 370
-        Top = 57
+        Left = 339
+        Top = 36
         Width = 41
         Height = 13
         AutoSize = True
@@ -160,15 +186,15 @@ object FrmDatosFacturaPrev: TFrmDatosFacturaPrev
         DataSource = DSCFDIPrevio
       end
       object Label2: TLabel
-        Left = 52
-        Top = 57
+        Left = 16
+        Top = 36
         Width = 81
         Height = 13
         Caption = 'Tipo Documento:'
       end
       object DBText2: TDBText
-        Left = 139
-        Top = 57
+        Left = 103
+        Top = 36
         Width = 41
         Height = 13
         AutoSize = True
@@ -176,15 +202,15 @@ object FrmDatosFacturaPrev: TFrmDatosFacturaPrev
         DataSource = DSCFDIPrevio
       end
       object Label3: TLabel
-        Left = 96
-        Top = 76
+        Left = 60
+        Top = 55
         Width = 37
         Height = 13
         Caption = 'Cliente:'
       end
       object DBText3: TDBText
-        Left = 139
-        Top = 76
+        Left = 103
+        Top = 55
         Width = 41
         Height = 13
         AutoSize = True
@@ -193,29 +219,29 @@ object FrmDatosFacturaPrev: TFrmDatosFacturaPrev
       end
       object Label4: TLabel
         Left = 289
-        Top = 153
+        Top = 129
         Width = 44
         Height = 13
         Caption = 'Subtotal:'
       end
       object DBText4: TDBText
-        Left = 346
-        Top = 153
+        Left = 339
+        Top = 129
         Width = 65
         Height = 17
         DataField = 'SubTotal'
         DataSource = DSCFDIPrevio
       end
       object Label5: TLabel
-        Left = 48
-        Top = 95
+        Left = 12
+        Top = 74
         Width = 85
         Height = 13
         Caption = 'Lugar Expedicion:'
       end
       object DBText5: TDBText
-        Left = 139
-        Top = 95
+        Left = 103
+        Top = 74
         Width = 41
         Height = 13
         AutoSize = True
@@ -223,37 +249,37 @@ object FrmDatosFacturaPrev: TFrmDatosFacturaPrev
         DataSource = DSCFDIPrevio
       end
       object Label6: TLabel
-        Left = 458
-        Top = 95
+        Left = 307
+        Top = 74
         Width = 26
         Height = 13
         Caption = 'Folio:'
       end
       object Label7: TLabel
-        Left = 336
-        Top = 95
+        Left = 305
+        Top = 55
         Width = 28
         Height = 13
         Caption = 'Serie:'
       end
       object DBText6: TDBText
-        Left = 370
-        Top = 95
+        Left = 339
+        Top = 55
         Width = 65
         Height = 17
         DataField = 'Serie'
         DataSource = DSCFDIPrevio
       end
       object Label8: TLabel
-        Left = 91
-        Top = 180
+        Left = 55
+        Top = 156
         Width = 42
         Height = 13
         Caption = 'Moneda:'
       end
       object DBText7: TDBText
-        Left = 139
-        Top = 180
+        Left = 103
+        Top = 156
         Width = 41
         Height = 13
         AutoSize = True
@@ -262,37 +288,37 @@ object FrmDatosFacturaPrev: TFrmDatosFacturaPrev
       end
       object Label9: TLabel
         Left = 305
-        Top = 199
+        Top = 175
         Width = 28
         Height = 13
         Caption = 'Total:'
       end
       object Label10: TLabel
         Left = 312
-        Top = 175
+        Top = 156
         Width = 21
         Height = 13
         Caption = 'IVA:'
       end
       object DBText9: TDBText
-        Left = 346
-        Top = 176
+        Left = 339
+        Top = 157
         Width = 65
         Height = 17
         DataField = 'TotalImpuestoTrasladado'
         DataSource = DSCFDIPrevio
       end
       object DBText10: TDBText
-        Left = 490
-        Top = 95
+        Left = 339
+        Top = 74
         Width = 65
         Height = 17
         DataField = 'Folio'
         DataSource = DSCFDIPrevio
       end
       object DBText11: TDBText
-        Left = 139
-        Top = 199
+        Left = 103
+        Top = 175
         Width = 47
         Height = 13
         AutoSize = True
@@ -300,61 +326,61 @@ object FrmDatosFacturaPrev: TFrmDatosFacturaPrev
         DataSource = DSCFDIPrevio
       end
       object Label11: TLabel
-        Left = 66
-        Top = 134
+        Left = 30
+        Top = 110
         Width = 67
         Height = 13
         Caption = 'M'#233'todo Pago:'
       end
       object DBText12: TDBText
-        Left = 139
-        Top = 134
+        Left = 103
+        Top = 110
         Width = 47
         Height = 13
         AutoSize = True
-        DataField = 'MetodoPago'
+        DataField = 'MetodoPago33'
         DataSource = DSCFDIPrevio
       end
       object Label12: TLabel
-        Left = 45
-        Top = 199
+        Left = 9
+        Top = 175
         Width = 88
         Height = 13
         Caption = 'ClaveSATMoneda:'
       end
       object DBText13: TDBText
-        Left = 346
-        Top = 199
+        Left = 339
+        Top = 175
         Width = 65
         Height = 17
         DataField = 'Total'
         DataSource = DSCFDIPrevio
       end
       object Label13: TLabel
-        Left = 23
-        Top = 153
-        Width = 110
+        Left = 21
+        Top = 129
+        Width = 76
         Height = 13
-        Caption = 'ClaveSATMetodoPago:'
+        Caption = 'Forma de pago:'
       end
       object DBText14: TDBText
-        Left = 139
-        Top = 153
+        Left = 103
+        Top = 129
         Width = 47
         Height = 13
         AutoSize = True
-        DataField = 'MetPagoClaveSAT'
+        DataField = 'FormaPago33'
         DataSource = DSCFDIPrevio
       end
       object Label14: TLabel
-        Left = 52
+        Left = 39
         Top = 17
         Width = 58
         Height = 13
         Caption = 'RFC Emisor:'
       end
       object DBText8: TDBText
-        Left = 139
+        Left = 103
         Top = 17
         Width = 41
         Height = 13
@@ -363,19 +389,35 @@ object FrmDatosFacturaPrev: TFrmDatosFacturaPrev
         DataSource = DSCFDIPrevio
       end
       object Label15: TLabel
-        Left = 272
+        Left = 300
         Top = 17
         Width = 33
         Height = 13
         Caption = 'Fecha:'
       end
       object DBText15: TDBText
-        Left = 311
+        Left = 339
         Top = 17
         Width = 47
         Height = 13
         AutoSize = True
         DataField = 'Fecha'
+        DataSource = DSCFDIPrevio
+      end
+      object Label16: TLabel
+        Left = 75
+        Top = 194
+        Width = 22
+        Height = 13
+        Caption = 'Uso:'
+      end
+      object DBText16: TDBText
+        Left = 103
+        Top = 194
+        Width = 47
+        Height = 13
+        AutoSize = True
+        DataField = 'UsoCFDI'
         DataSource = DSCFDIPrevio
       end
     end

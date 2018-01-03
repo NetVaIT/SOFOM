@@ -92,10 +92,10 @@
         <VerInfo_Release>2</VerInfo_Release>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <Icon_MainIcon>Manarina_Icon.ico</Icon_MainIcon>
-        <VerInfo_Build>32</VerInfo_Build>
+        <VerInfo_Build>35</VerInfo_Build>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.2.32;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.2.35;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -1066,6 +1066,26 @@
         </DCCReference>
         <DCCReference Include="Procesos\FacturaConfirmacionForm.pas">
             <Form>FrmDatosFacturaPrev</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Facturar33\Versiones\Facturacion.ComplementoPagoV1.pas"/>
+        <DCCReference Include="Facturar33\Versiones\Facturacion.ComprobanteV33.pas"/>
+        <DCCReference Include="Facturar33\Versiones\Facturacion.ImpuestosLocalesV1.pas"/>
+        <DCCReference Include="Facturar33\Versiones\Facturacion.TimbreFiscalDigitalV33.pas"/>
+        <DCCReference Include="Facturar33\Facturacion.OpenSSL.pas"/>
+        <DCCReference Include="Facturar33\Facturacion.Helper.pas"/>
+        <DCCReference Include="Facturar33\Versiones\Facturacion.Comprobante.pas"/>
+        <DCCReference Include="Facturar33\Facturacion.Tipos.pas"/>
+        <DCCReference Include="Facturar33\OpenSSL\libeay32.pas"/>
+        <DCCReference Include="Facturar33\OpenSSL\LibEay32Plus.pas"/>
+        <DCCReference Include="Facturar33\OpenSSL\OpenSSLUtils.pas"/>
+        <DCCReference Include="Facturar33\VirtualXML33.pas"/>
+        <DCCReference Include="Reportes\RptCFDI33DM.pas">
+            <Form>dmRptCFDI33</Form>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Procesos\FacturasPropiedadesEdit.pas">
+            <Form>frmFacturasPropiedadesEdit</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Release">

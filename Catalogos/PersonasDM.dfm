@@ -14,8 +14,8 @@ inherited dmPersona: TdmPersona
       'egimenFiscal, IdDocumentoLogo, IdPersonaEstatus, Identificador, ' +
       'NumCtaPagoCliente, '#13#10'SaldoCliente, CalificacionInicial, Califica' +
       'cionActual, PLDOrigenRecurso, PLDDestinoRecurso, PLDMontoMaximo,' +
-      ' PLDPagarEfectivo, PLDMontoMaximoEfectivo, PLDNumeroPagos'#13#10'FROM ' +
-      'Personas'
+      ' PLDPagarEfectivo, PLDMontoMaximoEfectivo, PLDNumeroPagos, IdCFD' +
+      'IFormaPago33, IdCFDIUsoCFDI'#13#10'FROM Personas'
     Left = 64
     object adodsMasterIdPersona: TAutoIncField
       FieldName = 'IdPersona'
@@ -52,6 +52,14 @@ inherited dmPersona: TdmPersona
     end
     object adodsMasterIdMetodoPago: TIntegerField
       FieldName = 'IdMetodoPago'
+      Visible = False
+    end
+    object adodsMasterIdCFDIFormaPago33: TIntegerField
+      FieldName = 'IdCFDIFormaPago33'
+      Visible = False
+    end
+    object adodsMasterIdCFDIUsoCFDI: TIntegerField
+      FieldName = 'IdCFDIUsoCFDI'
       Visible = False
     end
     object adodsMasterIdRegimenFiscal: TIntegerField

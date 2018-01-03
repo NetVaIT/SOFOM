@@ -26,8 +26,6 @@ object FrmMetodoPagoFactura: TFrmMetodoPagoFactura
     TabOrder = 0
     Properties.ActivePage = tsGeneral
     Properties.CustomButtons.Buttons = <>
-    ExplicitWidth = 398
-    ExplicitHeight = 136
     ClientRectBottom = 246
     ClientRectLeft = 2
     ClientRectRight = 382
@@ -35,9 +33,6 @@ object FrmMetodoPagoFactura: TFrmMetodoPagoFactura
     object tsGeneral: TcxTabSheet
       Caption = 'General'
       ImageIndex = 0
-      ExplicitLeft = 3
-      ExplicitTop = 28
-      ExplicitWidth = 394
       object Label2: TLabel
         Left = 16
         Top = 16
@@ -101,9 +96,6 @@ object FrmMetodoPagoFactura: TFrmMetodoPagoFactura
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitLeft = 18
-    ExplicitTop = 255
-    ExplicitWidth = 389
     DesignSize = (
       384
       41)
@@ -117,7 +109,6 @@ object FrmMetodoPagoFactura: TFrmMetodoPagoFactura
       Caption = 'Cancelar'
       ModalResult = 2
       TabOrder = 1
-      ExplicitLeft = 316
     end
     object btnOk: TButton
       Left = 221
@@ -130,7 +121,6 @@ object FrmMetodoPagoFactura: TFrmMetodoPagoFactura
       ModalResult = 1
       TabOrder = 0
       OnClick = btnOkClick
-      ExplicitLeft = 235
     end
   end
   object DSMetodoPago: TDataSource

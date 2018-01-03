@@ -147,7 +147,6 @@ type
     property ActFacturaMora : TBasicAction read FActFacturaMora write SetFActFacturaMora;  //Feb 8/17
     property ActAbonoCapital : TBasicAction read FActAbonoCApital write SetFActAbonoCapital;
     property ActPagoAnticipado : TBasicAction read FActPagoAnticipado write SetFPagoAnticipado;
-
     Property ActVerificayCreaFinal:TBasicAction read FActCreaFinales write SetFCreaFinales;   //Oct 3/17
   end;
 

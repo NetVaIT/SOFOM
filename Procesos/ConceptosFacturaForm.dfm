@@ -27,6 +27,7 @@ inherited frmConceptos: TfrmConceptos
     inherited cxGrid: TcxGrid
       Width = 885
       Height = 258
+      ExplicitTop = -3
       ExplicitWidth = 885
       ExplicitHeight = 258
       inherited tvMaster: TcxGridDBTableView
@@ -34,6 +35,10 @@ inherited frmConceptos: TfrmConceptos
         OptionsData.Deleting = True
         OptionsData.Editing = True
         OptionsData.Inserting = True
+        object tvMasterIdCFDIConcepto: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCFDIConcepto'
+          Visible = False
+        end
         object tvMasterIdCFDI: TcxGridDBColumn
           DataBinding.FieldName = 'IdCFDI'
           Visible = False
@@ -42,9 +47,17 @@ inherited frmConceptos: TfrmConceptos
           DataBinding.FieldName = 'IdUnidadMedida'
           Visible = False
         end
+        object tvMasterIdCuentaXCobrarDetalle: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCuentaXCobrarDetalle'
+          Visible = False
+        end
+        object tvMasterSATClaveProdServ: TcxGridDBColumn
+          DataBinding.FieldName = 'SATClaveProdServ'
+          Width = 118
+        end
         object tvMasterNoIdentifica: TcxGridDBColumn
           DataBinding.FieldName = 'NoIdentifica'
-          Width = 145
+          Width = 118
         end
         object tvMasterDescripcion: TcxGridDBColumn
           DataBinding.FieldName = 'Descripcion'
@@ -53,22 +66,21 @@ inherited frmConceptos: TfrmConceptos
         object tvMasterCantidad: TcxGridDBColumn
           DataBinding.FieldName = 'Cantidad'
         end
+        object tvMasterUnidad: TcxGridDBColumn
+          DataBinding.FieldName = 'Unidad'
+        end
+        object tvMasterSATClaveUnidad: TcxGridDBColumn
+          DataBinding.FieldName = 'SATClaveUnidad'
+          Width = 77
+        end
         object tvMasterValorUnitario: TcxGridDBColumn
           DataBinding.FieldName = 'ValorUnitario'
         end
         object tvMasterImporte: TcxGridDBColumn
           DataBinding.FieldName = 'Importe'
         end
-        object tvMasterUnidad: TcxGridDBColumn
-          DataBinding.FieldName = 'Unidad'
-        end
-        object tvMasterIdCFDIConcepto: TcxGridDBColumn
-          DataBinding.FieldName = 'IdCFDIConcepto'
-          Visible = False
-        end
-        object tvMasterIdCuentaXCobrarDetalle: TcxGridDBColumn
-          DataBinding.FieldName = 'IdCuentaXCobrarDetalle'
-          Visible = False
+        object tvMasterDescuento: TcxGridDBColumn
+          DataBinding.FieldName = 'Descuento'
         end
       end
     end
@@ -118,7 +130,7 @@ inherited frmConceptos: TfrmConceptos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42699.356933969910000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

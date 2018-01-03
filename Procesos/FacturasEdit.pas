@@ -24,34 +24,46 @@ uses
 type
   TfrmEdFactura = class(T_frmEdit)
     PnlDetalleFact: TPanel;
+    Panel1: TPanel;
     Label1: TLabel;
-    cxDBDateEdit1: TcxDBDateEdit;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
+    Label9: TLabel;
+    Label10: TLabel;
+    Label13: TLabel;
+    Label14: TLabel;
+    cxDBDateEdit1: TcxDBDateEdit;
     DBLookupComboBox1: TDBLookupComboBox;
+    cxDBLabel1: TcxDBLabel;
+    cxDBLabel6: TcxDBLabel;
+    cxDBLabel9: TcxDBLabel;
+    DBLookupComboBox2: TDBLookupComboBox;
+    cxDBLabel7: TcxDBLabel;
+    cxDBLabel8: TcxDBLabel;
+    pnl32: TPanel;
+    Label12: TLabel;
+    DBLookupComboBox3: TDBLookupComboBox;
+    Label11: TLabel;
+    cxDBTextEdit3: TcxDBTextEdit;
+    pnl33: TPanel;
+    Label15: TLabel;
+    DBLookupComboBox4: TDBLookupComboBox;
+    Label16: TLabel;
+    DBLookupComboBox5: TDBLookupComboBox;
+    Label17: TLabel;
+    DBLookupComboBox6: TDBLookupComboBox;
+    Label18: TLabel;
+    DBLookupComboBox7: TDBLookupComboBox;
+    Panel4: TPanel;
     Label5: TLabel;
     Label6: TLabel;
     Label7: TLabel;
     Label8: TLabel;
-    Label9: TLabel;
-    Label10: TLabel;
-    Label11: TLabel;
-    cxDBTextEdit3: TcxDBTextEdit;
-    Label12: TLabel;
-    DBLookupComboBox3: TDBLookupComboBox;
-    cxDBLabel1: TcxDBLabel;
     cxDBLabel2: TcxDBLabel;
     cxDBLabel3: TcxDBLabel;
     cxDBLabel4: TcxDBLabel;
     cxDBLabel5: TcxDBLabel;
-    cxDBLabel6: TcxDBLabel;
-    cxDBLabel9: TcxDBLabel;
-    DBLookupComboBox2: TDBLookupComboBox;
-    Label13: TLabel;
-    cxDBLabel7: TcxDBLabel;
-    cxDBLabel8: TcxDBLabel;
-    Label14: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -61,8 +73,8 @@ type
     { Public declarations }
   end;
 
-var
-  frmEdFactura: TfrmEdFactura;
+//var
+//  frmEdFactura: TfrmEdFactura;
 
 implementation
 
@@ -88,6 +100,8 @@ begin
 end;
 
 procedure TfrmEdFactura.FormShow(Sender: TObject);
+var
+  CFDIVersion33: Boolean;
 begin
   inherited;                                                                               //Prefactura                                //A menos que fuera la de opcion compra...
 (*  if (datasource.State<>dsinsert)then // or (datasource.DataSet.FieldByName('IdCFDIEstatus').AsInteger<>1)  or (not datasource.DataSet.FieldByName('IdCuentaXCobrar').ISNull) then // jun 26/17 Verificar   // o si es de las de opcion de compra  y es prefactura ?? ver como
@@ -99,10 +113,12 @@ begin
     end;
 
   end;  *)
-
+  // CFDI 33
+  CFDIVersion33 :=DataSource.DataSet.FieldByName('Version').AsString = '3.3';
+  pnl33.Visible := CFDIVersion33;
+  pnl32.Visible := not CFDIVersion33;
   pcMain.Enabled:=(datasource.State=dsinsert) or ((datasource.DataSet.FieldByName('IdCFDIEstatus').AsInteger=1) and datasource.DataSet.FieldByName('IdCuentaXCobrar').ISNull );//False; //Dic 20/16 Sólo permite consulta.. Ver que pasa en caso que se quiera realizar factura manual??? o por donde?
   PnlDetalleFact.Enabled:= (datasource.State=dsinsert) or ((datasource.DataSet.FieldByName('IdCFDIEstatus').AsInteger=1) and datasource.DataSet.FieldByName('IdCuentaXCobrar').ISNull );//False;   //Dic 20/16
-
 end;
 
 end.
