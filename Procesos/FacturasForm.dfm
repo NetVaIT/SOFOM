@@ -43,6 +43,10 @@ inherited frmFacturasGrid: TfrmFacturasGrid
           DataBinding.FieldName = 'IdCFDI'
           Visible = False
         end
+        object tvMasterIdCuentaXCobrar: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCuentaXCobrar'
+          Visible = False
+        end
         object tvMasterIdCFDITipoDocumento: TcxGridDBColumn
           DataBinding.FieldName = 'IdCFDITipoDocumento'
           Visible = False
@@ -248,10 +252,6 @@ inherited frmFacturasGrid: TfrmFacturasGrid
         end
         object tvMasterDireccionC: TcxGridDBColumn
           DataBinding.FieldName = 'DireccionC'
-          Visible = False
-        end
-        object tvMasterIdCuentaXCobrar: TcxGridDBColumn
-          DataBinding.FieldName = 'IdCuentaXCobrar'
           Visible = False
         end
         object tvMasterSaldoFactoraje: TcxGridDBColumn

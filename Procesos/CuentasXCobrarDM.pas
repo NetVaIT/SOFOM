@@ -804,7 +804,6 @@ var
 begin
   // Cabiar metodo de pago
   // Opcion de compra
-  Result := 0;
   dmFacturas := TdmFacturas.Create(Self);
   try
     IdCFDI := dmFacturas.CrearPrefactura(IdCuentaXCobrar);
@@ -817,6 +816,7 @@ begin
     ShowMessage('Factura Creada Pendiente de Timbrar')
   else
     Showmessage('Factura Timbrada ');
+  Result := IdCFDI;
 end;
 
 procedure TdmCuentasXCobrar.DataModuleCreate(Sender: TObject);

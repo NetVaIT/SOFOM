@@ -1275,6 +1275,7 @@ end;
 
 function TdmFacturas.Timbrar(IdCFDI: Integer): Boolean;
 var
+  IdCuentaXCobrar: Integer;
   CFDICreado: Boolean;
   CreadaAntes: Boolean;
   CFDIVersion: string;
@@ -1296,21 +1297,43 @@ begin
    end;
 end;
 
+procedure VerificaYCambiaEstatusCXC(IdCFDI, NvoEstatus, AntEstatus: Integer);
+var
+  IdCuentaXCobrar: Integer;
+begin
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.sql.clear;
+  ADOQryAuxiliar.sql.Add('Select * from CFDI where IDCFDI='+intTostr(IdCFDI));
+  ADOQryAuxiliar.Open;
+  if (ADOQryAuxiliar.FieldByName('IdCFDIEstatus').AsInteger = 2) then  // Vigente
+  begin
+    IdCuentaXCobrar:= ADOQryAuxiliar.FieldByName('IdCuentaXCobrar').AsInteger;
+    ADOQryAuxiliar.Close;
+    ADOQryAuxiliar.sql.clear;
+    ADOQryAuxiliar.sql.Add('UPDATE CuentasXCobrar SET IDCuentaXCobrarEstatus ='+intToStr(NvoEstatus)+
+     ' , IDCFDI ='+intTostr(IdCFDI)+' where  IDCuentaXCobrar= '+intToSTR(IdCuentaXCobrar)+' and IDCuentaXCobrarEstatus='+intToStr(antEstatus));
+   ADOQryAuxiliar.ExecSQL;
+  end;
+end;
+
 begin
   Result := False; //En caso que estuvies etimbrada no debe entrar a la confirmación
   adodsMaster.Open; //por si no esta abierta   //Feb12/17
+  IdCuentaXCobrar := adodsMasterIdCuentaXCobrar.Value;
   CFDICreado :=  adodsMaster.Locate('IDCFDI',IdCFDI,[]);  //SE ubica en el CFDI feb 8/
   CreadaAntes := adodsMasterIdCFDIEstatus.Value = 2;  // Vigente
   CFDIVersion := adodsMasterVersion.AsString;
 //  and (IDGenTipoDoc=1)
-  if CFDICreado and (not CreadaAntes) then           //Ajuste para que se mande crear si no esta Ene3/17 //Mod Mar 28/16
+  if CFDICreado and (not CreadaAntes) then
   begin
-    if ConfirmarGeneracion then //Ago 31/17
+    if ConfirmarGeneracion then
     begin
       if CFDIVersion = '3.3' then
         Result:= Timbrar33(IdCFDI)
       else
         Result:= Timbrar32(IdCFDI);
+      if Result then
+        VerificaYCambiaEstatusCXC(IdCFDI, 1, 0);
 //      if adodsMasterIdCFDIEstatus.Value = 2 then //Se timbro en este momento //Ago 31/17
 //        Result:=True;
     end
@@ -1683,8 +1706,8 @@ var
   begin
     adopUpdCFDITimbre.Parameters.ParamByName('IdCFDIEstatus').Value := 2;
     adopUpdCFDITimbre.Parameters.ParamByName('Sello').Value := TimbreCFDI.SelloEmisor;
-    adopUpdCFDITimbre.Parameters.ParamByName('NoCertificado').Value := TimbreCFDI.NoCertificadoSAT;
-    adopUpdCFDITimbre.Parameters.ParamByName('Certificado').Value := TimbreCFDI.CertificadoEmisor;
+    adopUpdCFDITimbre.Parameters.ParamByName('NoCertificado').Value := TimbreCFDI.CertificadoEmisor;
+//    adopUpdCFDITimbre.Parameters.ParamByName('Certificado').Value :=
     adopUpdCFDITimbre.Parameters.ParamByName('CadenaOriginal').Value := TimbreCFDI.CadenaOriginal;
     adopUpdCFDITimbre.Parameters.ParamByName('CadenaTimbre').Value := TimbreCFDI.CadenaTimbre;
     adopUpdCFDITimbre.Parameters.ParamByName('UUID_TB').Value := TimbreCFDI.UUID;
@@ -1709,19 +1732,20 @@ var
 begin
   Result:= False;
   Esproduccion:=FileExists(ExtractFilePath(application.ExeName)+'EnProduccion.txt'); //Temporal Dic 8/15 //Modificado sep 27/17
+  //Poner Folio Serie
+  SetCFDIFolio(IdCFDI);
+  // Selecciona CFDI a timbrar
   adoqCFDI.Close;
   adoqCFDI.Parameters.ParamByName('IdCFDI').Value := IdCFDI;
   adoqCFDI.Open;
   adoqCFDIConceptos.Open;
   adoqCFDIImpuestos.Open;
-
+  // Verifica que el CFDi este en prefactura
   if adoqCFDIIdCFDIEstatus.Value =1 then
   begin
     //Aca van las que se timbran.. Facturas y notas de cargo y de credito (egreso  Forma de Pago misma de CFDI relacionado)
     //Si es Factura o Nota CArgo, si no( es egreso NCR) debe llevar La forma de Pago de las factura relacionada...
 
-    //Poner Folio Serie
-    SetCFDIFolio(IdCFDI);
     // Timbrar
     ShowProgress(20,100,'Preparando Datos para Generar CFDI ' + IntToStr(20) + '%');  //Jun 2/16
 //    ShowProgress(30,100.1,'Extrayendo datos de Emisor ' + IntToStr(30) + '%');  //Jun 2/16
@@ -1890,9 +1914,4 @@ result:=False;
   end;
 end;
 
-
-
-///Proceso de prefacturas se debe cambiar porque aca no sale de orden de salida sino de una CXC
-///
-///
 end.

@@ -8,60 +8,94 @@ inherited dmFacturas: TdmFacturas
     AfterOpen = adodsMasterAfterOpen
     OnNewRecord = adodsMasterNewRecord
     CommandText = 
-      'SELECT        IdCFDI, IdCFDITipoDocumento, IdCFDIFormaPago, IdMe' +
-      'todoPago, IdMoneda, IdPersonaEmisor, IdPersonaReceptor, IdDocume' +
-      'ntoCBB, IdDocumentoXML, IdDocumentoPDF, IdCFDIEstatus, IdCFDIFac' +
-      'turaGral, IdClienteDomicilio, '#13#10'                         Version' +
-      ', CuentaCte, TipoCambio, TipoComp, Serie, Folio, Fecha, LugarExp' +
-      'edicion, Sello, CondPago, NoCertificado, Certificado, SubTotal, ' +
-      'Descto, MotivoDescto, Total, NumCtaPago, CadenaOriginal, TotalIm' +
-      'puestoRetenido, '#13#10'                         TotalImpuestoTraslada' +
-      'do, SaldoDocumento, FechaCancelacion, Observaciones, PorcentajeI' +
-      'VA, EmailCliente, UUID_TB, SelloCFD_TB, SelloSAT_TB, Certificado' +
-      'SAT_TB, FechaTimbrado_TB, IdCuentaXCobrar, SaldoFactoraje, '#13#10'   ' +
-      '                      IdCFDIFormaPago33, IdCFDIMetodoPago33, IDC' +
-      'FDITipoRelacion, IDCFDIUsoCFDI'#13#10'FROM            CFDI'
+      'SELECT C.IdCFDI, C.IdCFDITipoDocumento, C.IdCFDIFormaPago, C.IdM' +
+      'etodoPago, C.IdMoneda, C.IdPersonaEmisor, C.IdPersonaReceptor, C' +
+      '.IdDocumentoCBB, C.IdDocumentoXML, C.IdDocumentoPDF, C.IdCFDIEst' +
+      'atus, '#13#10'C.IdCFDIFacturaGral, C.IdClienteDomicilio, C.Version, C.' +
+      'CuentaCte, C.TipoCambio, C.TipoComp, C.Serie, C.Folio, C.Fecha, ' +
+      'C.LugarExpedicion, C.Sello, C.CondPago, C.NoCertificado, C.Certi' +
+      'ficado, C.SubTotal, C.Descto, '#13#10'C.MotivoDescto, C.Total, C.NumCt' +
+      'aPago, C.CadenaOriginal, C.TotalImpuestoRetenido, C.TotalImpuest' +
+      'oTrasladado, C.SaldoDocumento, C.FechaCancelacion, C.Observacion' +
+      'es, C.PorcentajeIVA, C.EmailCliente, C.UUID_TB, '#13#10'C.SelloCFD_TB,' +
+      ' C.SelloSAT_TB, C.CertificadoSAT_TB, C.FechaTimbrado_TB, C.IdCue' +
+      'ntaXCobrar, C.SaldoFactoraje, C.IdCFDIFormaPago33, C.IdCFDIMetod' +
+      'oPago33, C.IDCFDITipoRelacion, C.IdCFDIUsoCFDI'#13#10'FROM CFDI AS C '#13 +
+      #10
     Left = 40
     object adodsMasterIdCFDI: TLargeintField
       FieldName = 'IdCFDI'
       ReadOnly = True
+      Visible = False
     end
     object adodsMasterIdCFDITipoDocumento: TIntegerField
       FieldName = 'IdCFDITipoDocumento'
+      Visible = False
     end
     object adodsMasterIdMetodoPago: TIntegerField
       FieldName = 'IdMetodoPago'
+      Visible = False
     end
     object adodsMasterIdCFDIFormaPago: TIntegerField
       FieldName = 'IdCFDIFormaPago'
+      Visible = False
     end
     object adodsMasterIdMoneda: TIntegerField
       FieldName = 'IdMoneda'
+      Visible = False
     end
     object adodsMasterIdPersonaEmisor: TIntegerField
       FieldName = 'IdPersonaEmisor'
+      Visible = False
     end
     object adodsMasterIdPersonaReceptor: TIntegerField
       FieldName = 'IdPersonaReceptor'
+      Visible = False
       OnChange = adodsMasterIdPersonaReceptorChange
     end
     object adodsMasterIdDocumentoCBB: TIntegerField
       FieldName = 'IdDocumentoCBB'
+      Visible = False
     end
     object adodsMasterIdDocumentoXML: TIntegerField
       FieldName = 'IdDocumentoXML'
+      Visible = False
     end
     object adodsMasterIdDocumentoPDF: TIntegerField
       FieldName = 'IdDocumentoPDF'
+      Visible = False
     end
     object adodsMasterIdCFDIEstatus: TIntegerField
       FieldName = 'IdCFDIEstatus'
+      Visible = False
     end
     object adodsMasterIdCFDIFacturaGral: TLargeintField
       FieldName = 'IdCFDIFacturaGral'
+      Visible = False
     end
     object adodsMasterIdClienteDomicilio: TIntegerField
       FieldName = 'IdClienteDomicilio'
+      Visible = False
+    end
+    object adodsMasterIdCuentaXCobrar: TIntegerField
+      FieldName = 'IdCuentaXCobrar'
+      Visible = False
+    end
+    object adodsMasterIdCFDIFormaPago33: TIntegerField
+      FieldName = 'IdCFDIFormaPago33'
+      Visible = False
+    end
+    object adodsMasterIdCFDIMetodoPago33: TIntegerField
+      FieldName = 'IdCFDIMetodoPago33'
+      Visible = False
+    end
+    object adodsMasterIDCFDITipoRelacion: TIntegerField
+      FieldName = 'IDCFDITipoRelacion'
+      Visible = False
+    end
+    object adodsMasterIDCFDIUsoCFDI: TIntegerField
+      FieldName = 'IDCFDIUsoCFDI'
+      Visible = False
     end
     object adodsMasterCuentaCte: TStringField
       FieldName = 'CuentaCte'
@@ -243,9 +277,6 @@ inherited dmFacturas: TdmFacturas
       Size = 150
       Lookup = True
     end
-    object adodsMasterIdCuentaXCobrar: TIntegerField
-      FieldName = 'IdCuentaXCobrar'
-    end
     object adodsMasterSaldoFactoraje: TFMTBCDField
       FieldName = 'SaldoFactoraje'
       Precision = 18
@@ -264,22 +295,6 @@ inherited dmFacturas: TdmFacturas
     object adodsMasterVersion: TStringField
       FieldName = 'Version'
       Size = 5
-    end
-    object adodsMasterIdCFDIFormaPago33: TIntegerField
-      FieldName = 'IdCFDIFormaPago33'
-      Visible = False
-    end
-    object adodsMasterIdCFDIMetodoPago33: TIntegerField
-      FieldName = 'IdCFDIMetodoPago33'
-      Visible = False
-    end
-    object adodsMasterIDCFDITipoRelacion: TIntegerField
-      FieldName = 'IDCFDITipoRelacion'
-      Visible = False
-    end
-    object adodsMasterIDCFDIUsoCFDI: TIntegerField
-      FieldName = 'IDCFDIUsoCFDI'
-      Visible = False
     end
     object adodsMasterFormaPago33: TStringField
       DisplayLabel = 'Forma pago'

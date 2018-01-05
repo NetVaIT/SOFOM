@@ -135,8 +135,8 @@ type
     function GetFFiltroNombre: String;
     procedure PoneRangoFechas;
 //    procedure SetActCancelaCFDI(const Value: TBasicAction);
-    procedure VerificaYCambiaEstatusCXC(IDCFDIACT, NvoEstatus, AntEstatus,
-      IdCXCAct: integer);
+//    procedure VerificaYCambiaEstatusCXC(IDCFDIACT, NvoEstatus, AntEstatus,
+//      IdCXCAct: integer);
     procedure SetactCancelarCFDI(const Value: TBasicAction);
     procedure SetactImprimirCFDI(const Value: TBasicAction);
     procedure SetactTimbrarCFDI(const Value: TBasicAction);
@@ -277,23 +277,23 @@ end;
 //   Result:= FrmDatosFacturaPrev.modalresult=mrok;
 //end;
 
-procedure TfrmFacturasGrid.VerificaYCambiaEstatusCXC(IDCFDIACT, NvoEstatus, AntEstatus, IdCXCAct:integer); //Se quito el creado por que siempre esta creado..
-begin                                //Jul 20/17
-  dsQryAuxiliar.dataset.Close;
-  TAdoQuery(dsQryAuxiliar.dataset).sql.clear;
-  TAdoQuery(dsQryAuxiliar.dataset).sql.Add('Select * from CFDI where IDCFDI='+intTostr(IDCFDIACT));
-  dsQryAuxiliar.dataset.Open;
-  if ( dsQryAuxiliar.dataset.FieldByName('IdCFDIEstatus').asInteger=2)      //vigente   and (adodsmaster.fieldbyname('IdcuentaXCobrarEstatus').AsInteger=0)
-      and ( dsQryAuxiliar.dataset.FieldByName('IdCuentaXCobrar').asInteger=IDCXCAct)  then
-  begin
-    dsQryAuxiliar.dataset.Close;
-    TAdoQuery(dsQryAuxiliar.dataset).sql.clear;
-    TAdoQuery(dsQryAuxiliar.dataset).sql.Add('UPDATE CuentasXCobrar SET IDCuentaXCobrarEstatus ='+intToStr(NvoEstatus)+
-     ' , IDCFDI ='+intTostr(IdCFDIAct)+' where  IDCuentaXCobrar= '+intToSTR(IdCXCAct)+' and IDCuentaXCobrarEstatus='+intToStr(antEstatus));
-
-   TAdoQuery(dsQryAuxiliar.dataset).ExecSQL;
-  end;
-end;
+//procedure TfrmFacturasGrid.VerificaYCambiaEstatusCXC(IDCFDIACT, NvoEstatus, AntEstatus, IdCXCAct:integer); //Se quito el creado por que siempre esta creado..
+//begin                                //Jul 20/17
+//  dsQryAuxiliar.dataset.Close;
+//  TAdoQuery(dsQryAuxiliar.dataset).sql.clear;
+//  TAdoQuery(dsQryAuxiliar.dataset).sql.Add('Select * from CFDI where IDCFDI='+intTostr(IDCFDIACT));
+//  dsQryAuxiliar.dataset.Open;
+//  if ( dsQryAuxiliar.dataset.FieldByName('IdCFDIEstatus').asInteger=2)      //vigente   and (adodsmaster.fieldbyname('IdcuentaXCobrarEstatus').AsInteger=0)
+//      and ( dsQryAuxiliar.dataset.FieldByName('IdCuentaXCobrar').asInteger=IDCXCAct)  then
+//  begin
+//    dsQryAuxiliar.dataset.Close;
+//    TAdoQuery(dsQryAuxiliar.dataset).sql.clear;
+//    TAdoQuery(dsQryAuxiliar.dataset).sql.Add('UPDATE CuentasXCobrar SET IDCuentaXCobrarEstatus ='+intToStr(NvoEstatus)+
+//     ' , IDCFDI ='+intTostr(IdCFDIAct)+' where  IDCuentaXCobrar= '+intToSTR(IdCXCAct)+' and IDCuentaXCobrarEstatus='+intToStr(antEstatus));
+//
+//   TAdoQuery(dsQryAuxiliar.dataset).ExecSQL;
+//  end;
+//end;
 
 procedure TfrmFacturasGrid.EdtNombreChange(Sender: TObject);
 begin
@@ -381,49 +381,41 @@ begin
 end;
 
 procedure TfrmFacturasGrid.SpdBtnBuscarClick(Sender: TObject);
-const TxtSQL='select  IdCFDI, IdCFDITipoDocumento, IdCFDIFormaPago, IdMetodoPago, IdMoneda, IdPersonaEmisor, IdPersonaReceptor,'+
-'IdDocumentoCBB, IdDocumentoXML, IdDocumentoPDF, IdCFDIEstatus, IdCFDIFacturaGral, IdClienteDomicilio,'+
-'Version, CuentaCte, TipoCambio, TipoComp, Serie, Folio, Fecha, LugarExpedicion, Sello, CondPago, NoCertificado, Certificado,'+
-'SubTotal, Descto, MotivoDescto, Total,  NumCtaPago,CadenaOriginal, TotalImpuestoRetenido, TotalImpuestoTrasladado,'+
-'SaldoDocumento, FechaCancelacion, Observaciones,PorcentajeIVA, EmailCliente, UUID_TB,'+
-'SelloCFD_TB, SelloSAT_TB,CertificadoSAT_TB,FechaTimbrado_TB, IdCuentaXCobrar, SaldoFactoraje, ' +
-'IdCFDIFormaPago33, IdCFDIMetodoPago33, IDCFDITipoRelacion, IDCFDIUsoCFDI ' +
-'from CFDI';
+const TxtSQL='SELECT C.IdCFDI, C.IdCFDITipoDocumento, C.IdCFDIFormaPago, C.IdMetodoPago, C.IdMoneda, C.IdPersonaEmisor, C.IdPersonaReceptor, C.IdDocumentoCBB, C.IdDocumentoXML, C.IdDocumentoPDF, C.IdCFDIEstatus, ' +
+'C.IdCFDIFacturaGral, C.IdClienteDomicilio, C.Version, C.CuentaCte, C.TipoCambio, C.TipoComp, C.Serie, C.Folio, C.Fecha, C.LugarExpedicion, C.Sello, C.CondPago, C.NoCertificado, C.Certificado, C.SubTotal, C.Descto, ' +
+'C.MotivoDescto, C.Total, C.NumCtaPago, C.CadenaOriginal, C.TotalImpuestoRetenido, C.TotalImpuestoTrasladado, C.SaldoDocumento, C.FechaCancelacion, C.Observaciones, C.PorcentajeIVA, C.EmailCliente, C.UUID_TB, ' +
+'C.SelloCFD_TB, C.SelloSAT_TB, C.CertificadoSAT_TB, C.FechaTimbrado_TB, C.IdCuentaXCobrar, C.SaldoFactoraje, C.IdCFDIFormaPago33, C.IdCFDIMetodoPago33, C.IDCFDITipoRelacion, C.IdCFDIUsoCFDI ' +
+'FROM CFDI AS C';
 var AuxFiltro, aux2 :String;     //Pendiente de programar   Dic 17/16    //Ene 12/17  era cxc
 begin
   inherited;
-  AuxFiltro:='';
+  AuxFiltro:=EmptyStr;
   //Mar 23/17 desde
   Aux2:='';//Mar 23/17
   if ChckBxFactVivas.Checked then
-     Aux2:='SaldoDocumento>0';
+     Aux2:='C.SaldoDocumento > 0';
   // HAsta Mar 23/17
-
-
   PoneRangoFechas;
-
-  if FFiltroFecha<>'' then
+  if FFiltroFecha<>EmptyStr then
   begin
-    AuxFiltro:=' where '+FFiltroFecha;
-
+    AuxFiltro:=' WHERE '+FFiltroFecha;
   end;
    //Mar 23/17 desde
-  if aux2<>'' then //Tiene filtrosaldo
+  if aux2<>EmptyStr then //Tiene filtrosaldo
   begin
-    if AuxFiltro<>'' then
-      AuxFiltro :=AuxFiltro+ ' and '+Aux2
+    if AuxFiltro<>EmptyStr then
+      AuxFiltro :=AuxFiltro+ ' AND '+Aux2
     else
-     AuxFiltro:= ' where '+  Aux2;
+     AuxFiltro:= ' WHERE '+  Aux2;
   end;
   //Mar 23/17 hasta
- if AuxFiltro <>'' then  //Jun 26/17
-   AuxFiltro:= AuxFiltro+ ' and idCFDITipoDocumento= '+ intTostr(TipoD)
+ if AuxFiltro <>EmptyStr then  //Jun 26/17
+   AuxFiltro:= AuxFiltro+ ' AND C.IdCFDITipoDocumento = '+ intTostr(TipoD)
  else
-   AuxFiltro:= ' where idCFDITipoDocumento= '+ intTostr(TipoD);
+   AuxFiltro:= ' WHERE C.IdCFDITipoDocumento = '+ intTostr(TipoD);
  Tadodataset(datasource.DataSet).Close;
   Tadodataset(datasource.DataSet).CommandText:=TxtSQL+ffiltroNombre+ AuxFiltro;
-//  ShowMessage(TxtSQL+ffiltroNombre+ffiltro+ AuxFiltro);
-  if ffiltroFecha <>''then
+  if ffiltroFecha <> EmptyStr then
   begin
     Tadodataset(datasource.DataSet).Parameters.ParamByName('FIni').Value:=cxDtEdtDesde.Date;
     Tadodataset(datasource.DataSet).Parameters.ParamByName('FFin').Value:=cxDtEdtHasta.Date+1;
@@ -433,9 +425,9 @@ end;
 
 procedure TfrmFacturasGrid.PoneRangoFechas; //Dic 20/16
 begin
-  ffiltroFecha:='';
+  ffiltroFecha:=EmptyStr;
   if ChckBxXFecha.checked then
-    ffiltroFecha:=' Fecha >:FIni and Fecha <:FFin';
+    ffiltroFecha:=' C.Fecha >:FIni and C.Fecha <:FFin';
 end;
 
 end.
