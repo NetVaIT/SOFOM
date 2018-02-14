@@ -56,6 +56,13 @@ inherited dmListasRestringidas: TdmListasRestringidas
       Size = 255
     end
   end
+  inherited ActionList: TActionList
+    object actWeb: TAction
+      Caption = 'Listas Web'
+      ImageIndex = 13
+      OnExecute = actWebExecute
+    end
+  end
   object adodsOrganismos: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic

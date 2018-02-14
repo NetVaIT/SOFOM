@@ -14,55 +14,55 @@ inherited FrmEdPagos: TFrmEdPagos
     ClientRectBottom = 459
     ClientRectRight = 593
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 2
-      ExplicitTop = 26
+      ExplicitLeft = 4
+      ExplicitTop = 28
       ExplicitWidth = 591
       ExplicitHeight = 433
       object Label7: TLabel
         Left = 27
-        Top = 325
+        Top = 317
         Width = 71
         Height = 13
         Caption = 'Observaciones'
       end
       object cxDBMemo1: TcxDBMemo
         Left = 27
-        Top = 344
+        Top = 336
         DataBinding.DataField = 'Observaciones'
         DataBinding.DataSource = DataSource
         TabOrder = 1
-        Height = 65
-        Width = 516
+        Height = 84
+        Width = 540
       end
       object PnlDatosBase: TPanel
         Left = 0
         Top = 0
         Width = 591
-        Height = 319
+        Height = 310
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
         object Label1: TLabel
           Left = 27
-          Top = 119
-          Width = 56
+          Top = 122
+          Width = 29
           Height = 13
-          Caption = 'Fecha Pago'
+          Caption = 'Fecha'
           FocusControl = cxDBDateEdit1
         end
         object Label2: TLabel
           Left = 340
           Top = 122
-          Width = 46
+          Width = 22
           Height = 13
-          Caption = 'FolioPago'
+          Caption = 'Folio'
         end
         object Label3: TLabel
           Left = 208
           Top = 122
-          Width = 48
+          Width = 24
           Height = 13
-          Caption = 'SeriePago'
+          Caption = 'Serie'
           FocusControl = cxDBTextEdit1
         end
         object Label4: TLabel
@@ -75,15 +75,15 @@ inherited FrmEdPagos: TFrmEdPagos
         end
         object Label5: TLabel
           Left = 27
-          Top = 272
+          Top = 266
           Width = 38
           Height = 13
           Caption = 'Importe'
           FocusControl = cxDBTxtEdtImporte
         end
         object Label6: TLabel
-          Left = 211
-          Top = 272
+          Left = 282
+          Top = 266
           Width = 26
           Height = 13
           Caption = 'Saldo'
@@ -115,9 +115,9 @@ inherited FrmEdPagos: TFrmEdPagos
         object Label11: TLabel
           Left = 340
           Top = 166
-          Width = 59
+          Width = 77
           Height = 13
-          Caption = 'CuentaPago'
+          Caption = 'Cuenta de pago'
           FocusControl = cxDBTextEdit4
         end
         object Label12: TLabel
@@ -127,6 +127,13 @@ inherited FrmEdPagos: TFrmEdPagos
           Height = 13
           Caption = 'Anexo'
           FocusControl = DBLkpCmbBxAnexos
+        end
+        object Label13: TLabel
+          Left = 154
+          Top = 266
+          Width = 71
+          Height = 13
+          Caption = 'Moneda origen'
         end
         object cxDBLblAnexo: TcxDBLabel
           Left = 27
@@ -143,7 +150,7 @@ inherited FrmEdPagos: TFrmEdPagos
           Style.IsFontAssigned = True
           OnClick = cxDBLblAnexoClick
           Height = 39
-          Width = 516
+          Width = 540
         end
         object cxDBDateEdit1: TcxDBDateEdit
           Left = 27
@@ -166,15 +173,15 @@ inherited FrmEdPagos: TFrmEdPagos
           Top = 231
           DataBinding.DataField = 'Referencia'
           DataBinding.DataSource = DataSource
-          TabOrder = 8
-          Width = 205
+          TabOrder = 10
+          Width = 229
         end
         object cxDBTxtEdtImporte: TcxDBTextEdit
           Left = 27
-          Top = 288
+          Top = 282
           DataBinding.DataField = 'Importe'
           DataBinding.DataSource = DataSource
-          TabOrder = 9
+          TabOrder = 11
           OnExit = cxDBTxtEdtImporteExit
           Width = 121
         end
@@ -185,12 +192,12 @@ inherited FrmEdPagos: TFrmEdPagos
           Height = 21
           DataField = 'Banco'
           DataSource = DataSource
-          TabOrder = 7
+          TabOrder = 9
         end
         object DBLkpCmbBxCliente: TDBLookupComboBox
           Left = 27
           Top = 41
-          Width = 516
+          Width = 540
           Height = 21
           DataField = 'Cliente'
           DataSource = DataSource
@@ -203,11 +210,11 @@ inherited FrmEdPagos: TFrmEdPagos
           DataBinding.DataField = 'FolioPago'
           DataBinding.DataSource = DataSource
           TabOrder = 4
-          Width = 121
+          Width = 143
         end
         object cxDBLabel1: TcxDBLabel
-          Left = 210
-          Top = 287
+          Left = 281
+          Top = 283
           DataBinding.DataField = 'Saldo'
           DataBinding.DataSource = DataSource
           ParentFont = False
@@ -227,20 +234,20 @@ inherited FrmEdPagos: TFrmEdPagos
           Height = 21
           DataField = 'MetodoPago'
           DataSource = DataSource
-          TabOrder = 5
+          TabOrder = 6
         end
         object cxDBTextEdit4: TcxDBTextEdit
           Left = 338
           Top = 182
           DataBinding.DataField = 'CuentaPago'
           DataBinding.DataSource = DataSource
-          TabOrder = 6
-          Width = 121
+          TabOrder = 7
+          Width = 143
         end
         object cxDBRdGrpOrigenPago: TcxDBRadioGroup
-          Left = 338
-          Top = 272
-          Caption = 'Origen Pago'
+          Left = 408
+          Top = 266
+          Caption = 'Or'#237'gen de pago'
           DataBinding.DataField = 'OrigenPago'
           DataBinding.DataSource = DataSource
           Properties.Columns = 2
@@ -253,14 +260,14 @@ inherited FrmEdPagos: TFrmEdPagos
               Caption = 'Factoraje'
               Value = '1'
             end>
-          TabOrder = 10
+          TabOrder = 13
           Height = 42
-          Width = 205
+          Width = 159
         end
         object DBLkpCmbBxAnexos: TDBLookupComboBox
           Left = 27
           Top = 83
-          Width = 516
+          Width = 540
           Height = 21
           DataField = 'IdAnexo'
           DataSource = DataSource
@@ -272,25 +279,34 @@ inherited FrmEdPagos: TFrmEdPagos
           OnClick = DBLkpCmbBxAnexosClick
         end
         object cxDBCheckBox1: TcxDBCheckBox
-          Left = 472
+          Left = 487
           Top = 138
-          Caption = 'Es Dep'#243'sito'
+          Caption = 'Es dep'#243'sito'
           DataBinding.DataField = 'EsDeposito'
           DataBinding.DataSource = DataSource
           Properties.ReadOnly = True
-          TabOrder = 13
-          Width = 89
+          TabOrder = 5
+          Width = 80
         end
         object cxBtnUsaNotaCredito: TcxButton
-          Left = 511
+          Left = 535
           Top = 180
           Width = 32
           Height = 25
           Hint = 'Usar Nota Cr'#233'dito'
           OptionsImage.ImageIndex = 2
           OptionsImage.Images = cxImageList
-          TabOrder = 14
+          TabOrder = 8
           OnClick = cxBtnUsaNotaCreditoClick
+        end
+        object DBLookupComboBox2: TDBLookupComboBox
+          Left = 154
+          Top = 282
+          Width = 121
+          Height = 21
+          DataField = 'MonedaOrigen'
+          DataSource = DataSource
+          TabOrder = 15
         end
       end
     end
@@ -442,19 +458,16 @@ inherited FrmEdPagos: TFrmEdPagos
   object DSPersonas: TDataSource
     AutoEdit = False
     DataSet = dmPagos.ADOSPersonas
-    Left = 496
-    Top = 136
+    Left = 344
   end
   object DSAnexos: TDataSource
     AutoEdit = False
     DataSet = dmPagos.ADODtStAnexoSeleccion
-    Left = 544
-    Top = 136
+    Left = 408
   end
   object DSNotasCredito: TDataSource
     AutoEdit = False
     DataSet = dmPagos.ADODtStCFDINotaCredito
-    Left = 552
-    Top = 200
+    Left = 480
   end
 end

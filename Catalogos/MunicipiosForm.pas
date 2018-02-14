@@ -35,6 +35,7 @@ type
     tvMasterIdEstado: TcxGridDBColumn;
     tvMasterIdentificador: TcxGridDBColumn;
     tvMasterDescripcion: TcxGridDBColumn;
+    tvMasterCNBVCodigo: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
@@ -46,7 +47,7 @@ implementation
 
 {$R *.dfm}
 
-uses MunicipioForm;
+uses MunicipioForm, UbicacionesDM;
 
 procedure TfrmMunicipios.FormCreate(Sender: TObject);
 begin

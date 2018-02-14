@@ -18,7 +18,7 @@ uses
   dxSkinWhiteprint, dxSkinXmas2008Blue, dxSkinscxPCPainter, cxPCdxBarPopupMenu,
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, cxContainer,
   cxEdit, cxTextEdit, cxDBEdit, Vcl.StdCtrls, Vcl.ImgList, System.Actions,
-  Vcl.ActnList, Data.DB, Vcl.ExtCtrls, cxPC, Vcl.DBActns;
+  Vcl.ActnList, Data.DB, Vcl.ExtCtrls, cxPC, Vcl.DBActns, cxCheckBox;
 
 type
   TfrmPais = class(T_frmEdit)
@@ -26,6 +26,10 @@ type
     cxDBTextEdit1: TcxDBTextEdit;
     Label2: TLabel;
     cxDBTextEdit2: TcxDBTextEdit;
+    cxDBCheckBox2: TcxDBCheckBox;
+    cxDBCheckBox1: TcxDBCheckBox;
+    cxDBTextEdit3: TcxDBTextEdit;
+    Label3: TLabel;
   private
     { Private declarations }
   public

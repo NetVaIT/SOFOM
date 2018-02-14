@@ -330,6 +330,9 @@ type
     adocUpdCFDITotales: TADOCommand;
     adocSetImpuestos: TADOCommand;
     adocDelConceptoImpuesto: TADOCommand;
+    adoqCFDIRelacionados: TADOQuery;
+    adoqCFDIRelacionadosIdCFDIRelacionado: TLargeintField;
+    adoqCFDIRelacionadosUUID: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actTimbrarCFDIExecute(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
@@ -1652,6 +1655,7 @@ end;
 function TdmFacturas.Timbrar33(IdCFDI: Integer): Boolean;
 var
   facturaCFDIv33 : IComprobanteFiscalV33;
+  UUIDRelacionado33:IComprobanteFiscalV33_CfdiRelacionados_CfdiRelacionado;
   concepto33 : IComprobanteFiscalV33_Conceptos_Concepto;
   iva33 : IComprobanteFiscalV33_Conceptos_Concepto_Impuestos_Traslados_Traslado;
   totalIVA33 : IComprobanteFiscalV33_Impuestos_Traslados_Traslado;
@@ -1780,6 +1784,21 @@ begin
       facturaCFDIv33.Receptor.UsoCFDI     := adoqCFDIUsoCFDI.AsString;
       facturaCFDIv33.Impuestos.TotalImpuestosTrasladados  := TFacturacionHelper.ComoMoneda(adoqCFDITotalImpuestoTrasladado.AsExtended );
 //      ShowProgress(50,100.1,'Extrayendo datos de conceptos ' + IntToStr(50) + '%');  //Jun 2/16
+      // Documentos relacionados
+      adoqCFDIRelacionados.Close;
+      adoqCFDIRelacionados.Open;
+      if not adoqCFDIRelacionados.Eof then
+      begin
+        facturaCFDIv33.CfdiRelacionados.TipoRelacion := adoqCFDICFDITipoRelacion.AsString;
+        adoqCFDIRelacionados.First;
+        while not adoqCFDIRelacionados.Eof do
+        begin
+          UUIDRelacionado33 := facturaCFDIv33.CfdiRelacionados.Add;
+          UUIDRElacionado33.UUID := adoqCFDIRelacionadosUUID.AsString;
+          adoqCFDIRelacionados.Next;
+        end;
+      end;
+      // Conceptos
       adoqCFDIConceptos.First;
       while not adoqCFDIConceptos.Eof do
       begin

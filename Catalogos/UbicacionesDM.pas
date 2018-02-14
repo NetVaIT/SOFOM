@@ -32,6 +32,11 @@ type
     adodsPoblacionesIdMunicipio: TIntegerField;
     adodsPoblacionesIdentificador: TIntegerField;
     adodsPoblacionesDescripcion: TStringField;
+    adodsMasterBCCodigo: TStringField;
+    adodsMasterRegimenFiscalPreferente: TBooleanField;
+    adodsMasterListaGAFI: TBooleanField;
+    adodsEstadosBCCodigo: TStringField;
+    adodsMunicipiosCNBVCodigo: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterAfterOpen(DataSet: TDataSet);
   private

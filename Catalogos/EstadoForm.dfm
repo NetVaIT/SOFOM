@@ -1,23 +1,23 @@
 inherited frmEstado: TfrmEstado
   Caption = 'Estado'
-  ClientHeight = 209
+  ClientHeight = 237
   ClientWidth = 350
   ExplicitWidth = 356
-  ExplicitHeight = 238
+  ExplicitHeight = 266
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
     Width = 350
-    Height = 168
+    Height = 196
     ExplicitWidth = 350
     ExplicitHeight = 168
-    ClientRectBottom = 162
-    ClientRectRight = 344
+    ClientRectBottom = 194
+    ClientRectRight = 348
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 3
+      ExplicitLeft = 2
       ExplicitTop = 26
-      ExplicitWidth = 341
-      ExplicitHeight = 136
+      ExplicitWidth = 346
+      ExplicitHeight = 140
       object Label1: TLabel
         Left = 24
         Top = 24
@@ -33,6 +33,14 @@ inherited frmEstado: TfrmEstado
         Height = 13
         Caption = 'Descripcion'
         FocusControl = cxDBTextEdit2
+      end
+      object Label3: TLabel
+        Left = 24
+        Top = 112
+        Width = 49
+        Height = 13
+        Caption = 'C'#243'digo BC'
+        FocusControl = cxDBTextEdit3
       end
       object cxDBTextEdit1: TcxDBTextEdit
         Left = 24
@@ -50,20 +58,28 @@ inherited frmEstado: TfrmEstado
         TabOrder = 1
         Width = 300
       end
+      object cxDBTextEdit3: TcxDBTextEdit
+        Left = 24
+        Top = 128
+        DataBinding.DataField = 'BCCodigo'
+        DataBinding.DataSource = DataSource
+        TabOrder = 2
+        Width = 121
+      end
     end
   end
   inherited pmlMain: TPanel
-    Top = 168
+    Top = 196
     Width = 350
     ExplicitTop = 168
     ExplicitWidth = 350
-    inherited btnOk: TButton
-      Left = 187
-      ExplicitLeft = 187
-    end
     inherited btnCancel: TButton
       Left = 268
       ExplicitLeft = 268
+    end
+    inherited btnOk: TButton
+      Left = 187
+      ExplicitLeft = 187
     end
   end
   inherited cxImageList: TcxImageList

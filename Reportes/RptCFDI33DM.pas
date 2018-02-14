@@ -148,7 +148,6 @@ type
     ppShape2: TppShape;
     ppLabel6: TppLabel;
     ppLabel7: TppLabel;
-    ppDBText6: TppDBText;
     ppDBText5: TppDBText;
     ppLabel3: TppLabel;
     ppDBText21: TppDBText;
@@ -245,6 +244,7 @@ type
     adoqCFDIRelacionadosTxt: TStringField;
     adoqCFDIConceptosImpuestoTxt: TStringField;
     adoqCFDIConceptosImpuesto: TCurrencyField;
+    ppDBMemo5: TppDBMemo;
     procedure adoqCFDICalcFields(DataSet: TDataSet);
     procedure adoqCFDIConceptosCalcFields(DataSet: TDataSet);
     procedure ppRptCFDIFileDeviceCreate(Sender: TObject);

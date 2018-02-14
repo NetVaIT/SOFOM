@@ -32,7 +32,7 @@ object _frmEdit: T_frmEdit
     ClientRectBottom = 323
     ClientRectLeft = 2
     ClientRectRight = 436
-    ClientRectTop = 28
+    ClientRectTop = 26
     object tsGeneral: TcxTabSheet
       Caption = 'General'
       ImageIndex = 0

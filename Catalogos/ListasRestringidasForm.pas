@@ -41,6 +41,7 @@ type
     tvMasterNombre: TcxGridDBColumn;
     tvMasterAlias: TcxGridDBColumn;
     edtNombre: TcxBarEditItem;
+    dxBarButton8: TdxBarButton;
     procedure FormCreate(Sender: TObject);
   private
     function GetNombre: String;

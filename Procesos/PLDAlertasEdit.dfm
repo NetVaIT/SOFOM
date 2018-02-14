@@ -1,31 +1,140 @@
 inherited frmPLDAlertasEdit: TfrmPLDAlertasEdit
   Caption = 'frmPLDAlertasEdit'
-  ClientHeight = 547
+  ClientHeight = 412
   ClientWidth = 435
   ExplicitWidth = 441
-  ExplicitHeight = 576
+  ExplicitHeight = 441
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
     Width = 435
-    Height = 506
-    ExplicitWidth = 359
-    ExplicitHeight = 526
-    ClientRectBottom = 504
+    Height = 371
+    ExplicitWidth = 435
+    ExplicitHeight = 506
+    ClientRectBottom = 369
     ClientRectRight = 433
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 4
       ExplicitTop = 28
       ExplicitWidth = 431
-      ExplicitHeight = 597
+      ExplicitHeight = 538
       object Label1: TLabel
-        Left = 295
-        Top = 88
+        Left = 16
+        Top = 5
         Width = 93
         Height = 13
         Caption = 'Fecha de detecci'#243'n'
         FocusControl = cxDBDateEdit1
       end
+      object Label8: TLabel
+        Left = 16
+        Top = 80
+        Width = 85
+        Height = 13
+        Caption = 'Tipo de operaci'#243'n'
+        FocusControl = DBLookupComboBox1
+      end
+      object Label9: TLabel
+        Left = 16
+        Top = 40
+        Width = 20
+        Height = 13
+        Caption = 'Tipo'
+        FocusControl = DBLookupComboBox2
+      end
+      object Label10: TLabel
+        Left = 16
+        Top = 120
+        Width = 36
+        Height = 13
+        Caption = 'Estatus'
+        FocusControl = DBLookupComboBox3
+      end
+      object Label11: TLabel
+        Left = 16
+        Top = 160
+        Width = 54
+        Height = 13
+        Caption = 'Descripci'#243'n'
+      end
+      object Label12: TLabel
+        Left = 16
+        Top = 240
+        Width = 30
+        Height = 13
+        Caption = 'Raz'#243'n'
+      end
+      object cxDBDateEdit1: TcxDBDateEdit
+        Left = 16
+        Top = 21
+        DataBinding.DataField = 'FechaDeteccion'
+        DataBinding.DataSource = DataSource
+        Enabled = False
+        TabOrder = 1
+        Width = 121
+      end
+      object DBLookupComboBox1: TDBLookupComboBox
+        Left = 16
+        Top = 96
+        Width = 400
+        Height = 21
+        DataField = 'OperacionTipo'
+        DataSource = DataSource
+        TabOrder = 3
+      end
+      object DBLookupComboBox2: TDBLookupComboBox
+        Left = 16
+        Top = 56
+        Width = 400
+        Height = 21
+        DataField = 'Tipo'
+        DataSource = DataSource
+        Enabled = False
+        TabOrder = 2
+      end
+      object DBLookupComboBox3: TDBLookupComboBox
+        Left = 16
+        Top = 136
+        Width = 400
+        Height = 21
+        DataField = 'Estatus'
+        DataSource = DataSource
+        TabOrder = 4
+      end
+      object cxDBCheckBox1: TcxDBCheckBox
+        Left = 16
+        Top = 320
+        Caption = 'R24'
+        DataBinding.DataField = 'R24'
+        DataBinding.DataSource = DataSource
+        Enabled = False
+        TabOrder = 0
+        Visible = False
+        Width = 121
+      end
+      object cxDBMemo1: TcxDBMemo
+        Left = 16
+        Top = 176
+        DataBinding.DataField = 'Descripcion'
+        DataBinding.DataSource = DataSource
+        TabOrder = 5
+        Height = 58
+        Width = 400
+      end
+      object cxDBMemo2: TcxDBMemo
+        Left = 16
+        Top = 256
+        DataBinding.DataField = 'Razon'
+        DataBinding.DataSource = DataSource
+        TabOrder = 6
+        Height = 58
+        Width = 400
+      end
+    end
+    object cxTabSheet1: TcxTabSheet
+      Caption = 'Cliente'
+      ImageIndex = 1
+      ExplicitHeight = 538
       object Label2: TLabel
         Left = 16
         Top = 88
@@ -49,44 +158,6 @@ inherited frmPLDAlertasEdit: TfrmPLDAlertasEdit
         Height = 13
         Caption = 'Metodo de pago'
         FocusControl = cxDBTextEdit3
-      end
-      object Label8: TLabel
-        Left = 16
-        Top = 208
-        Width = 85
-        Height = 13
-        Caption = 'Tipo de operaci'#243'n'
-        FocusControl = DBLookupComboBox1
-      end
-      object Label9: TLabel
-        Left = 16
-        Top = 168
-        Width = 20
-        Height = 13
-        Caption = 'Tipo'
-        FocusControl = DBLookupComboBox2
-      end
-      object Label10: TLabel
-        Left = 16
-        Top = 248
-        Width = 36
-        Height = 13
-        Caption = 'Estatus'
-        FocusControl = DBLookupComboBox3
-      end
-      object Label11: TLabel
-        Left = 16
-        Top = 288
-        Width = 54
-        Height = 13
-        Caption = 'Descripci'#243'n'
-      end
-      object Label12: TLabel
-        Left = 16
-        Top = 368
-        Width = 30
-        Height = 13
-        Caption = 'Raz'#243'n'
       end
       object Label13: TLabel
         Left = 16
@@ -136,22 +207,13 @@ inherited frmPLDAlertasEdit: TfrmPLDAlertasEdit
         Caption = 'Total de pagos'
         FocusControl = cxDBSpinEdit3
       end
-      object cxDBDateEdit1: TcxDBDateEdit
-        Left = 295
-        Top = 104
-        DataBinding.DataField = 'FechaDeteccion'
-        DataBinding.DataSource = DataSource
-        Enabled = False
-        TabOrder = 7
-        Width = 121
-      end
       object cxDBDateEdit2: TcxDBDateEdit
         Left = 16
         Top = 104
         DataBinding.DataField = 'FechaPago'
         DataBinding.DataSource = DataSource
         Enabled = False
-        TabOrder = 5
+        TabOrder = 0
         Width = 121
       end
       object cxDBTextEdit1: TcxDBTextEdit
@@ -160,7 +222,7 @@ inherited frmPLDAlertasEdit: TfrmPLDAlertasEdit
         DataBinding.DataField = 'Cliente'
         DataBinding.DataSource = DataSource
         Enabled = False
-        TabOrder = 0
+        TabOrder = 1
         Width = 400
       end
       object cxDBTextEdit3: TcxDBTextEdit
@@ -169,65 +231,8 @@ inherited frmPLDAlertasEdit: TfrmPLDAlertasEdit
         DataBinding.DataField = 'MetodoPago'
         DataBinding.DataSource = DataSource
         Enabled = False
-        TabOrder = 6
+        TabOrder = 2
         Width = 140
-      end
-      object DBLookupComboBox1: TDBLookupComboBox
-        Left = 16
-        Top = 224
-        Width = 400
-        Height = 21
-        DataField = 'OperacionTipo'
-        DataSource = DataSource
-        TabOrder = 12
-      end
-      object DBLookupComboBox2: TDBLookupComboBox
-        Left = 16
-        Top = 184
-        Width = 400
-        Height = 21
-        DataField = 'Tipo'
-        DataSource = DataSource
-        Enabled = False
-        TabOrder = 11
-      end
-      object DBLookupComboBox3: TDBLookupComboBox
-        Left = 16
-        Top = 264
-        Width = 400
-        Height = 21
-        DataField = 'Estatus'
-        DataSource = DataSource
-        TabOrder = 13
-      end
-      object cxDBCheckBox1: TcxDBCheckBox
-        Left = 16
-        Top = 448
-        Caption = 'R24'
-        DataBinding.DataField = 'R24'
-        DataBinding.DataSource = DataSource
-        Enabled = False
-        TabOrder = 4
-        Visible = False
-        Width = 121
-      end
-      object cxDBMemo1: TcxDBMemo
-        Left = 16
-        Top = 304
-        DataBinding.DataField = 'Descripcion'
-        DataBinding.DataSource = DataSource
-        TabOrder = 14
-        Height = 58
-        Width = 400
-      end
-      object cxDBMemo2: TcxDBMemo
-        Left = 16
-        Top = 384
-        DataBinding.DataField = 'Razon'
-        DataBinding.DataSource = DataSource
-        TabOrder = 15
-        Height = 58
-        Width = 400
       end
       object cxDBTextEdit5: TcxDBTextEdit
         Left = 16
@@ -235,7 +240,7 @@ inherited frmPLDAlertasEdit: TfrmPLDAlertasEdit
         DataBinding.DataField = 'Contrato'
         DataBinding.DataSource = DataSource
         Enabled = False
-        TabOrder = 1
+        TabOrder = 3
         Width = 121
       end
       object cxDBSpinEdit1: TcxDBSpinEdit
@@ -244,7 +249,7 @@ inherited frmPLDAlertasEdit: TfrmPLDAlertasEdit
         DataBinding.DataField = 'PeriodoMes'
         DataBinding.DataSource = DataSource
         Enabled = False
-        TabOrder = 2
+        TabOrder = 4
         Width = 80
       end
       object cxDBSpinEdit2: TcxDBSpinEdit
@@ -253,7 +258,7 @@ inherited frmPLDAlertasEdit: TfrmPLDAlertasEdit
         DataBinding.DataField = 'PeriodoAnio'
         DataBinding.DataSource = DataSource
         Enabled = False
-        TabOrder = 3
+        TabOrder = 5
         Width = 80
       end
       object cxDBCheckBox2: TcxDBCheckBox
@@ -263,7 +268,7 @@ inherited frmPLDAlertasEdit: TfrmPLDAlertasEdit
         DataBinding.DataField = 'SoloEfectivo'
         DataBinding.DataSource = DataSource
         Enabled = False
-        TabOrder = 16
+        TabOrder = 6
         Width = 90
       end
       object cxDBTextEdit2: TcxDBTextEdit
@@ -272,7 +277,7 @@ inherited frmPLDAlertasEdit: TfrmPLDAlertasEdit
         DataBinding.DataField = 'Total'
         DataBinding.DataSource = DataSource
         Enabled = False
-        TabOrder = 8
+        TabOrder = 7
         Width = 121
       end
       object cxDBTextEdit4: TcxDBTextEdit
@@ -281,7 +286,7 @@ inherited frmPLDAlertasEdit: TfrmPLDAlertasEdit
         DataBinding.DataField = 'TotalUSD'
         DataBinding.DataSource = DataSource
         Enabled = False
-        TabOrder = 9
+        TabOrder = 8
         Width = 121
       end
       object cxDBSpinEdit3: TcxDBSpinEdit
@@ -290,23 +295,23 @@ inherited frmPLDAlertasEdit: TfrmPLDAlertasEdit
         DataBinding.DataField = 'TotalPagos'
         DataBinding.DataSource = DataSource
         Enabled = False
-        TabOrder = 10
+        TabOrder = 9
         Width = 121
       end
     end
   end
   inherited pmlMain: TPanel
-    Top = 506
+    Top = 371
     Width = 435
-    ExplicitTop = 526
-    ExplicitWidth = 359
+    ExplicitTop = 506
+    ExplicitWidth = 435
     inherited btnCancel: TButton
       Left = 353
-      ExplicitLeft = 277
+      ExplicitLeft = 353
     end
     inherited btnOk: TButton
       Left = 272
-      ExplicitLeft = 196
+      ExplicitLeft = 272
     end
   end
   inherited cxImageList: TcxImageList

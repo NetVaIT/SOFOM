@@ -375,6 +375,9 @@ type
     ADODtStCxCDetallePendDescripTC: TStringField;
     ADODtStCxCDetallePendEstatusCFDI1: TIntegerField;
     ADODtStCxCDetallePendEstatusCFDI2: TIntegerField;
+    adodsMasterIdMonedaOrigen: TIntegerField;
+    adodsMonedas: TADODataSet;
+    adodsMasterMonedaOrigen: TStringField;
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsMasterAfterPost(DataSet: TDataSet);
     procedure adodsMasterBeforePost(DataSet: TDataSet);
@@ -535,10 +538,10 @@ begin
 end;
 
 procedure TdmPagos.adodsMasterBeforeInsert(DataSet: TDataSet);
-const      // mar 10/17
-   TxtSQL='select  IdPago, IdBanco, IdPersonaCliente, IdCuentaBancariaEstadoCuenta, '+
-   'FechaPago, FolioPago, SeriePago, Referencia, Importe, Saldo,Observaciones,'+
-   'IdMetodoPago, CuentaPago, OrigenPago,IdContrato, IdAnexo, EsDeposito, IDCFDI_NCR from Pagos';
+const
+  TxtSQL='SELECT IdPago, IdBanco, IdPersonaCliente, IdCuentaBancariaEstadoCuenta, IdMetodoPago, IdContrato, IdAnexo, IdCFDI_NCR, IdMonedaOrigen, FechaPago, FolioPago, SeriePago, Referencia, Importe, Saldo, Observaciones, ' +
+  'CuentaPago, OrigenPago, EsDeposito ' +
+  'FROM Pagos ';
 
 var Txt:String;
 begin
@@ -600,7 +603,6 @@ var SErieAct:String;
     FolioAct:Integer;
 begin  //Pagos
   inherited;
-
   DataSet.FieldByName('FechaPago').AsDateTime:=_DmConection.LaFechaActual;//May26/17 Date; //Era now Abr 18/17
   SerieAct:= ADODtStConfiguraciones.FieldByName('UltimaSeriePago').AsString;
   FolioAct:= ADODtStConfiguraciones.FieldByName('UltimoFolioPago').AsInteger;
@@ -609,8 +611,7 @@ begin  //Pagos
   //VEr que pasa si se usan iguales
   DataSet.FieldByName('OrigenPago').asInteger :=0;    //Jun 9/17
   DAtaset.FieldByName('EsDeposito').AsBoolean:=False; //Jun 9/17
-
-
+  adodsMasterIdMonedaOrigen.Value:= _MONEDAS_ID_PESO_MXN;
 end;
 
 procedure TdmPagos.ADODtstAplicacionesInternasAfterPost(DataSet: TDataSet);

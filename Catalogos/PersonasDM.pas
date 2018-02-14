@@ -105,6 +105,7 @@ type
     adodsMasterPLDNumeroPagos: TIntegerField;
     adodsMasterIdCFDIFormaPago33: TIntegerField;
     adodsMasterIdCFDIUsoCFDI: TIntegerField;
+    adodsMasterPPE: TBooleanField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsPersonaRolesNewRecord(DataSet: TDataSet);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
@@ -190,7 +191,7 @@ begin
   // Busqueda
   SQLSelect:= 'SELECT IdPersona, IdPersonaTipo, IdRolTipo, IdRazonSocialTipo, IdSexo, IdEstadoCivil, IdPais, IdPoblacion, IdRiesgoTipo, IdBCCalificacion, IdBCActividad1, IdBCActividad2, IdBCActividad3, RFC, CURP, RazonSocial, ' +
   'Nombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, LugarNacimiento, VigenciaFM34, IdMetodoPago, IdRegimenFiscal, IdDocumentoLogo, IdPersonaEstatus, Identificador, NumCtaPagoCliente, ' +
-  'SaldoCliente, CalificacionInicial, CalificacionActual, PLDOrigenRecurso, PLDDestinoRecurso, PLDMontoMaximo, PLDPagarEfectivo, PLDMontoMaximoEfectivo, PLDNumeroPagos, IdCFDIFormaPago33, IdCFDIUsoCFDI ' +
+  'SaldoCliente, CalificacionInicial, CalificacionActual, PLDOrigenRecurso, PLDDestinoRecurso, PLDMontoMaximo, PLDPagarEfectivo, PLDMontoMaximoEfectivo, PLDNumeroPagos, IdCFDIFormaPago33, IdCFDIUsoCFDI, PPE ' +
   'FROM Personas';
   SQLOrderBy:= 'ORDER BY RazonSocial';
   actSearch.Execute;

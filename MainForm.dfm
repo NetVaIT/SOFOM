@@ -115,9 +115,19 @@ inherited frmMain: TfrmMain
         item
           Visible = True
           ItemName = 'dxBarLargeButton12'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton35'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarButton11'
         end>
     end
     inherited dxbArchivo: TdxBar
+      DockedDockControl = nil
+      DockedDockingStyle = dsNone
       FloatLeft = 545
       FloatClientWidth = 51
       FloatClientHeight = 76
@@ -129,8 +139,8 @@ inherited frmMain: TfrmMain
       DockedTop = 0
       FloatLeft = 674
       FloatTop = 8
-      FloatClientWidth = 144
-      FloatClientHeight = 270
+      FloatClientWidth = 145
+      FloatClientHeight = 324
       ItemLinks = <
         item
           Visible = True
@@ -155,6 +165,10 @@ inherited frmMain: TfrmMain
         item
           Visible = True
           ItemName = 'dxBrLrgBtnPoneFechaActual'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton20'
         end>
       OneOnRow = False
       Row = 0
@@ -165,7 +179,7 @@ inherited frmMain: TfrmMain
     object dxbOrganizacion: TdxBar [3]
       Caption = 'Organizacion'
       CaptionButtons = <>
-      DockedLeft = 449
+      DockedLeft = 263
       DockedTop = 0
       FloatLeft = 759
       FloatTop = 8
@@ -197,7 +211,7 @@ inherited frmMain: TfrmMain
     object dxbPresonas: TdxBar [4]
       Caption = 'Personas'
       CaptionButtons = <>
-      DockedLeft = 778
+      DockedLeft = 414
       DockedTop = 0
       FloatLeft = 764
       FloatTop = 8
@@ -266,7 +280,7 @@ inherited frmMain: TfrmMain
     object dxbProductos: TdxBar [6]
       Caption = 'Productos'
       CaptionButtons = <>
-      DockedLeft = 630
+      DockedLeft = 352
       DockedTop = 0
       FloatLeft = 1133
       FloatTop = 8
@@ -402,7 +416,7 @@ inherited frmMain: TfrmMain
     object dxBarManagerBar2: TdxBar [9]
       Caption = 'Exportar'
       CaptionButtons = <>
-      DockedLeft = 703
+      DockedLeft = 469
       DockedTop = 0
       FloatLeft = 1054
       FloatTop = 8
@@ -624,12 +638,6 @@ inherited frmMain: TfrmMain
       SyncImageIndex = False
       ImageIndex = 52
     end
-    object dxBarLargeButton20: TdxBarLargeButton
-      Caption = 'New Button'
-      Category = 0
-      Hint = 'New Button'
-      Visible = ivAlways
-    end
     object dxBarLargeButton22: TdxBarLargeButton
       Action = actMonedasCotizaciones
       Category = 0
@@ -645,12 +653,6 @@ inherited frmMain: TfrmMain
     object dxBarLargeButton33: TdxBarLargeButton
       Action = actColocacionAcumulado
       Category = 0
-    end
-    object dxBrLrgBtnCambioFecha: TdxBarLargeButton
-      Action = ActPoneFechaActual
-      Category = 0
-      SyncImageIndex = False
-      ImageIndex = 43
     end
     object dxBrLrgBtnPoneFechaActual: TdxBarLargeButton
       Action = ActPoneFechaActual
@@ -670,8 +672,12 @@ inherited frmMain: TfrmMain
       Action = actAlertasPLD
       Category = 0
     end
-    object dxBarLargeButton42: TdxBarLargeButton
-      Action = actRptPagoAplicacionesMensual
+    object dxBarButton11: TdxBarButton
+      Action = actAgregarAlerta
+      Category = 0
+    end
+    object dxBarLargeButton20: TdxBarLargeButton
+      Action = actPLDAlertasConfiguracion
       Category = 0
     end
     object dxBarButton13: TdxBarButton
@@ -702,6 +708,10 @@ inherited frmMain: TfrmMain
     end
     object dxBarLargeButton31: TdxBarLargeButton
       Action = actRptExpecientes
+      Category = 1
+    end
+    object dxBarLargeButton42: TdxBarLargeButton
+      Action = actRptPagoAplicacionesMensual
       Category = 1
     end
     object dxBarLargeButton12: TdxBarLargeButton
@@ -11127,8 +11137,8 @@ inherited frmMain: TfrmMain
     object actMonedasCotizaciones: TAction
       Tag = 6
       Category = 'Catalogos'
-      Caption = 'Cotizaci'#243'm de monedas'
-      ImageIndex = 19
+      Caption = 'Cotizaci'#243'n de monedas'
+      ImageIndex = 36
       OnExecute = actCatalogoExecute
     end
     object actFormulas: TAction
@@ -11205,6 +11215,7 @@ inherited frmMain: TfrmMain
       Tag = 20
       Category = 'Catalogos'
       Caption = 'Personas'
+      Hint = 'Personas'
       ImageIndex = 32
       OnExecute = actCatalogoExecute
     end
@@ -11226,6 +11237,7 @@ inherited frmMain: TfrmMain
       Tag = 22
       Category = 'Catalogos'
       Caption = 'Clientes'
+      Hint = 'Clientes'
       ImageIndex = 15
       OnExecute = actCatalogoExecute
     end
@@ -11354,6 +11366,7 @@ inherited frmMain: TfrmMain
       Tag = 30
       Category = 'Procesos'
       Caption = 'Contratos'
+      Hint = 'Contratos'
       ImageIndex = 0
       OnExecute = actCatalogoExecute
     end
@@ -11486,6 +11499,20 @@ inherited frmMain: TfrmMain
       Tag = 39
       Category = 'Procesos'
       Caption = 'Alertas PLD'
+      ImageIndex = 19
+      OnExecute = actCatalogoExecute
+    end
+    object actAgregarAlerta: TAction
+      Category = 'Procesos'
+      Caption = 'Agregar alerta'
+      Hint = 'Agregar alerta preocupante'
+      ImageIndex = 19
+      OnExecute = actAgregarAlertaExecute
+    end
+    object actPLDAlertasConfiguracion: TAction
+      Tag = 29
+      Category = 'Catalogos'
+      Caption = 'Configuracion de alertas'
       ImageIndex = 19
       OnExecute = actCatalogoExecute
     end

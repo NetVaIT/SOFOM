@@ -5,7 +5,7 @@ interface
 uses
   System.SysUtils, System.Classes, _StandarDMod, System.Actions, Vcl.ActnList,
   Data.DB, Data.Win.ADODB, System.StrUtils, System.DateUtils, Vcl.Dialogs,
-  System.UITypes;
+  System.UITypes, System.IOUtils, dxmdaset;
 
 resourcestring
   strCreateFile    = 'Se creo el archivo %s, con %d registro(s).';
@@ -89,6 +89,10 @@ type
     adoqConfiguracionPLDArchivoExtension: TStringField;
     adcUpdPLDAlertas: TADOCommand;
     daMaster: TDataSource;
+    adopSetPLDAlertas: TADOStoredProc;
+    dxmdAlerta: TdxMemData;
+    dxmdAlertaFecha: TDateTimeField;
+    dxmdAlertaMensaje: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actGenerarAlertasExecute(Sender: TObject);
     procedure actGenerarArchivoExecute(Sender: TObject);
@@ -101,13 +105,14 @@ type
     function GetNombreArchivo(IdPLDALertaTipo, Month, Year: Word): TFileName;
   public
     { Public declarations }
+    procedure GenerarAlertaPreocupante;
   end;
 
 implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses PLDAlertasForm, PLDAlertasFiltroForm, _Utils;
+uses PLDAlertasForm, PLDAlertasFiltroForm, _Utils, PLDAlertasPreocupanteForm;
 
 {$R *.dfm}
 
@@ -181,6 +186,47 @@ begin
       (adodsMasterIdPLDAlertaEstatus.Value = 5);
 end;
 
+procedure TdmPLDAlertas.GenerarAlertaPreocupante;
+var
+  frmPLDAlertasPreocupante: TfrmPLDAlertasPreocupante;
+
+  procedure GenerarAlerta(Fecha: TDateTime; Descripcion: string);
+  var
+    Year, Month, Day: Word;
+  begin
+    DecodeDate(Fecha, Year, Month, Day);
+    adopSetPLDAlertas.Parameters.ParamByName('@IdPLDOperacionTipo').Value := 11;
+    adopSetPLDAlertas.Parameters.ParamByName('@IdPLDAlertaTipo').Value := 3;
+    adopSetPLDAlertas.Parameters.ParamByName('@IdPLDAlertaEstatus').Value := 1;
+    adopSetPLDAlertas.Parameters.ParamByName('@PeriodoMes').Value := Month;
+    adopSetPLDAlertas.Parameters.ParamByName('@PeriodoAnio').Value := Year;
+    adopSetPLDAlertas.Parameters.ParamByName('@SoloEfectivo').Value := 0;
+    adopSetPLDAlertas.Parameters.ParamByName('@FechaDeteccion').Value := Now;
+    adopSetPLDAlertas.Parameters.ParamByName('@Total').Value := 0;
+    adopSetPLDAlertas.Parameters.ParamByName('@TotalUSD').Value := 0;
+    adopSetPLDAlertas.Parameters.ParamByName('@TotalPagos').Value := 0;
+    adopSetPLDAlertas.Parameters.ParamByName('@Descripcion').Value := Descripcion;
+    adopSetPLDAlertas.Parameters.ParamByName('@R24').Value := 0;
+    adopSetPLDAlertas.ExecProc;
+  end;
+
+begin
+  frmPLDAlertasPreocupante := TfrmPLDAlertasPreocupante.Create(Self);
+  try
+    dxmdAlerta.Open;
+    dxmdAlerta.Insert;
+    dxmdAlertaFecha.Value := Now;
+    frmPLDAlertasPreocupante.DataSet:= dxmdAlerta;
+    if frmPLDAlertasPreocupante.ShowModal = mrOk then
+    begin
+      GenerarAlerta(dxmdAlertaFecha.Value, dxmdAlertaMensaje.AsString);
+    end;
+  finally
+    frmPLDAlertasPreocupante.Free;
+  end;
+  dxmdAlerta.Close;
+end;
+
 function TdmPLDAlertas.GenerarAlertas(Month, Year: Word): Boolean;
 begin
 //  Result:= False;
@@ -200,12 +246,16 @@ function TdmPLDAlertas.GenerarArchivo(IdPLDALertaTipo, Month, Year: Word;
 const
   cSeparador = ';';
 var
+  Directorio: string;
   TXTArchivo: TextFile;
   Registro: String;
   NoRegistros: Integer;
 begin
 //  Result := 0;
   NoRegistros := 0;
+  Directorio := TPath.GetDirectoryName(FileName);
+  if not DirectoryExists(Directorio) then
+    ForceDirectories(Directorio);
   AssignFile(TXTArchivo, FileName);
   try
     Rewrite(TXTArchivo);

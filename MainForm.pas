@@ -136,7 +136,6 @@ type
     dxBarLargeButton19: TdxBarLargeButton;
     dxBrLrgBtnSeguimiento: TdxBarLargeButton;
     actSeguimiento: TAction;
-    dxBarLargeButton20: TdxBarLargeButton;
     dxBrLrgBtnInformacionContratos: TdxBarLargeButton;
     actInformacionContratos: TAction;
     actMonedasCotizaciones: TAction;
@@ -151,7 +150,6 @@ type
     dxBarLargeButton32: TdxBarLargeButton;
     actColocacionAcumulado: TAction;
     dxBarLargeButton33: TdxBarLargeButton;
-    dxBrLrgBtnCambioFecha: TdxBarLargeButton;
     ActPoneFechaActual: TAction;
     dxBrLrgBtnPoneFechaActual: TdxBarLargeButton;
     dxBarManagerBar2: TdxBar;
@@ -163,6 +161,10 @@ type
     dxBarLargeButton41: TdxBarLargeButton;
     actRptPagoAplicacionesMensual: TAction;
     dxBarLargeButton42: TdxBarLargeButton;
+    actAgregarAlerta: TAction;
+    dxBarButton11: TdxBarButton;
+    actPLDAlertasConfiguracion: TAction;
+    dxBarLargeButton20: TdxBarLargeButton;
     procedure actCatalogoExecute(Sender: TObject);
     procedure actIntervaCXPExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -171,6 +173,7 @@ type
     procedure dxRibbon1ApplicationMenuClick(Sender: TdxCustomRibbon;
       var AHandled: Boolean);
     procedure ActPoneFechaActualExecute(Sender: TObject);
+    procedure actAgregarAlertaExecute(Sender: TObject);
   private
     { Private declarations }
   protected
@@ -199,7 +202,21 @@ uses ConfiguracionDM, UbicacionesDM, BancosDM, MonedasDM, PuestosDM, PlazasTurno
   SeguimientoCobranzaDM, rptInformacionContratosDM, MonedasCotizacionesDM,
   RptCoberturaDM, RptExpedientesRecibidosDM, rptReporteCarteraDM,
   RptAnexosProductosDM, RptColocacionAcumuladoDM, PonerFechaActualForm,
-  BuroCreditoDM, PLDAlertasDM, RptPagoAplicacionesMensualDM;
+  BuroCreditoDM, PLDAlertasDM, RptPagoAplicacionesMensualDM, _ConectionDmod,
+  PLDAlertasConfiguracionDM;
+
+procedure TfrmMain.actAgregarAlertaExecute(Sender: TObject);
+var
+  dmPLDAlertas: TdmPLDAlertas;
+begin
+  inherited;
+  dmPLDAlertas := TdmPLDAlertas.Create(Self);
+  try
+    dmPLDAlertas.GenerarAlertaPreocupante;
+  finally
+    dmPLDAlertas.Free;
+  end;
+end;
 
 procedure TfrmMain.actCatalogoExecute(Sender: TObject);
 begin
@@ -234,6 +251,7 @@ begin
    26: gModulo := TdmPersona.CreateWRol(Self, rComisionista);
    27: gModulo := TdmPersona.CreateWRol(Self, rSocio);
    28: gModulo := TdmPersona.CreateWRol(Self, rEmisor); //Nov 28/16
+   29: gModulo := TdmPLDAlertasConfiguracion.Create(Self);
    30: gModulo := TdmContratos.Create(Self);
    31: gModulo := TdmAmortizaciones.Create(Self);
    32: gModulo := TDMFacturas.CreateWMostrar(Self,True,1); //Nov 25/16 mod  nov29/16
@@ -355,14 +373,17 @@ begin
   actRptAntiguedadSaldos.Enabled:= Conected;
   actEstadoCuenta.Enabled       := Conected;
   actInformacionContratos.Enabled:= Conected;
-  actReporteCartera.Enabled:=   Conected;
+  actReporteCartera.Enabled     := Conected;
   actRptCobertura.Enabled       := Conected;
   actRptExpecientes.Enabled     := Conected;
   actRptColocacion.Enabled      := Conected;
+  actRptPagoAplicacionesMensual.Enabled := Conected;
   actColocacionAcumulado.Enabled:= Conected;
   actBuroCredito.Enabled        := Conected;
   actNotasCredito.Enabled       := Conected;
-  actAlertasPLD.Enabled         := Conected;
+  actAlertasPLD.Enabled         := Conected and _dmConection.OficialCumplimiento;
+  actPLDAlertasConfiguracion.Enabled := Conected and _dmConection.OficialCumplimiento;
+  actAgregarAlerta.Enabled      := Conected;
 end;
 
 procedure TfrmMain.DestroyModule;

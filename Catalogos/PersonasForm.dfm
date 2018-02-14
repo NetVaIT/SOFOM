@@ -227,6 +227,9 @@ inherited frmPersonas: TfrmPersonas
           DataBinding.FieldName = 'Actividad3'
           Visible = False
         end
+        object tvMasterPPE: TcxGridDBColumn
+          DataBinding.FieldName = 'PPE'
+        end
         object tvMasterCalificacionInicial: TcxGridDBColumn
           DataBinding.FieldName = 'CalificacionInicial'
           Visible = False

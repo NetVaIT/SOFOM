@@ -87,6 +87,7 @@ type
     tvMasterPLDNumeroPagos: TcxGridDBColumn;
     tvMasterIdCFDIFormaPago33: TcxGridDBColumn;
     tvMasterIdCFDIUsoCFDI: TcxGridDBColumn;
+    tvMasterPPE: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private

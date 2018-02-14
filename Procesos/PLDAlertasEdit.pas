@@ -25,12 +25,6 @@ type
   TfrmPLDAlertasEdit = class(T_frmEdit)
     Label1: TLabel;
     cxDBDateEdit1: TcxDBDateEdit;
-    Label2: TLabel;
-    cxDBDateEdit2: TcxDBDateEdit;
-    Label3: TLabel;
-    cxDBTextEdit1: TcxDBTextEdit;
-    Label6: TLabel;
-    cxDBTextEdit3: TcxDBTextEdit;
     Label8: TLabel;
     DBLookupComboBox1: TDBLookupComboBox;
     Label9: TLabel;
@@ -42,18 +36,25 @@ type
     cxDBCheckBox1: TcxDBCheckBox;
     cxDBMemo1: TcxDBMemo;
     cxDBMemo2: TcxDBMemo;
+    cxTabSheet1: TcxTabSheet;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label6: TLabel;
     Label13: TLabel;
-    cxDBTextEdit5: TcxDBTextEdit;
     Label14: TLabel;
-    cxDBSpinEdit1: TcxDBSpinEdit;
     Label15: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label7: TLabel;
+    cxDBDateEdit2: TcxDBDateEdit;
+    cxDBTextEdit1: TcxDBTextEdit;
+    cxDBTextEdit3: TcxDBTextEdit;
+    cxDBTextEdit5: TcxDBTextEdit;
+    cxDBSpinEdit1: TcxDBSpinEdit;
     cxDBSpinEdit2: TcxDBSpinEdit;
     cxDBCheckBox2: TcxDBCheckBox;
-    Label4: TLabel;
     cxDBTextEdit2: TcxDBTextEdit;
-    Label5: TLabel;
     cxDBTextEdit4: TcxDBTextEdit;
-    Label7: TLabel;
     cxDBSpinEdit3: TcxDBSpinEdit;
   private
     { Private declarations }

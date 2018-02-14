@@ -23,7 +23,8 @@ object _dmConection: T_dmConection
     SQL.Strings = (
       
         'SELECT Usuarios.IdUsuario, Usuarios.IdPersona, Personas.RazonSoc' +
-        'ial, Usuarios.Login, Usuarios.Password'
+        'ial, Usuarios.Login, Usuarios.Password, Usuarios.OficialCumplimi' +
+        'ento'
       'FROM Usuarios'
       'INNER JOIN Personas ON Usuarios.IdPersona = Personas.IdPersona'
       'WHERE Usuarios.IdUsuarioEstatus = 1')
@@ -47,6 +48,9 @@ object _dmConection: T_dmConection
     object adoqUsuariosPassword: TStringField
       FieldName = 'Password'
       Size = 15
+    end
+    object adoqUsuariosOficialCumplimiento: TBooleanField
+      FieldName = 'OficialCumplimiento'
     end
   end
   object ADOQryFechaActual: TADOQuery

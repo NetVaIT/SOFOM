@@ -1825,8 +1825,8 @@ inherited dmFacturas: TdmFacturas
         Precision = 10
         Value = Null
       end>
-    Left = 584
-    Top = 240
+    Left = 696
+    Top = 288
   end
   object adocUpdCFDIArchivos: TADOCommand
     CommandText = 
@@ -2017,5 +2017,32 @@ inherited dmFacturas: TdmFacturas
       end>
     Left = 680
     Top = 392
+  end
+  object adoqCFDIRelacionados: TADOQuery
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    DataSource = dsCFDI
+    Parameters = <
+      item
+        Name = 'IdCFDI'
+        Attributes = [paSigned]
+        DataType = ftLargeint
+        Precision = 19
+        Value = '2053'
+      end>
+    SQL.Strings = (
+      'SELECT        IdCFDIRelacionado, UUID'
+      'FROM            CFDIRelacionados'
+      'WHERE        IdCFDI = :IdCFDI')
+    Left = 584
+    Top = 240
+    object adoqCFDIRelacionadosIdCFDIRelacionado: TLargeintField
+      FieldName = 'IdCFDIRelacionado'
+      ReadOnly = True
+    end
+    object adoqCFDIRelacionadosUUID: TStringField
+      FieldName = 'UUID'
+      Size = 40
+    end
   end
 end

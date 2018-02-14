@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, _StandarDMod, Data.DB, System.Actions,
-  Vcl.ActnList, Data.Win.ADODB;
+  Vcl.ActnList, Data.Win.ADODB, ProcesosType;
 
 type
   TdmListasRestringidas = class(T_dmStandar)
@@ -19,8 +19,10 @@ type
     adodsPaises: TADODataSet;
     adodsMasterOrganismo: TStringField;
     adodsMasterPais: TStringField;
+    actWeb: TAction;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
+    procedure actWebExecute(Sender: TObject);
   private
     { Private declarations }
   protected
@@ -33,9 +35,24 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses ListasRestringidasForm;
+uses ListasRestringidasForm, ListasRestringidasWeb;
 
 {$R *.dfm}
+
+procedure TdmListasRestringidas.actWebExecute(Sender: TObject);
+var
+  frmListasRestringidasWeb: TfrmListasRestringidasWeb;
+begin
+  inherited;
+  frmListasRestringidasWeb := TfrmListasRestringidasWeb.Create(Self);
+  try
+    frmListasRestringidasWeb.View := True;
+    frmListasRestringidasWeb.URL := _URLLogin;
+    frmListasRestringidasWeb.ShowModal;
+  finally
+    frmListasRestringidasWeb.Free;
+  end;
+end;
 
 procedure TdmListasRestringidas.adodsMasterNewRecord(DataSet: TDataSet);
 begin

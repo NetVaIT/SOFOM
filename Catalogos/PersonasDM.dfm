@@ -15,7 +15,7 @@ inherited dmPersona: TdmPersona
       'NumCtaPagoCliente, '#13#10'SaldoCliente, CalificacionInicial, Califica' +
       'cionActual, PLDOrigenRecurso, PLDDestinoRecurso, PLDMontoMaximo,' +
       ' PLDPagarEfectivo, PLDMontoMaximoEfectivo, PLDNumeroPagos, IdCFD' +
-      'IFormaPago33, IdCFDIUsoCFDI'#13#10'FROM Personas'
+      'IFormaPago33, IdCFDIUsoCFDI, PPE'#13#10'FROM Personas'
     Left = 64
     object adodsMasterIdPersona: TAutoIncField
       FieldName = 'IdPersona'
@@ -183,7 +183,7 @@ inherited dmPersona: TdmPersona
       FieldName = 'Pais'
       LookupDataSet = adodsPais
       LookupKeyFields = 'IdPais'
-      LookupResultField = 'Descripcion'
+      LookupResultField = 'Pais'
       KeyFields = 'IdPais'
       Size = 100
       Lookup = True
@@ -345,6 +345,10 @@ inherited dmPersona: TdmPersona
       DisplayLabel = 'N'#250'mero de pagos'
       FieldName = 'PLDNumeroPagos'
     end
+    object adodsMasterPPE: TBooleanField
+      DisplayLabel = 'Persona politicamente expuesta'
+      FieldName = 'PPE'
+    end
   end
   inherited adodsUpdate: TADODataSet
     Left = 224
@@ -393,7 +397,9 @@ inherited dmPersona: TdmPersona
   object adodsPais: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
-    CommandText = 'SELECT IdPais, Descripcion FROM Paises'
+    CommandText = 
+      'SELECT IdPais, Descripcion AS Pais, RegimenFiscalPreferente, Lis' +
+      'taGAFI FROM Paises'
     Parameters = <>
     Left = 64
     Top = 296

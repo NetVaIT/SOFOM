@@ -11,32 +11,110 @@ inherited dmPagos: TdmPagos
     AfterCancel = adodsMasterAfterCancel
     OnNewRecord = adodsMasterNewRecord
     CommandText = 
-      'select  IdPago, IdBanco, IdPersonaCliente, IdCuentaBancariaEstad' +
-      'oCuenta, '#13#10'FechaPago, FolioPago, SeriePago, Referencia, Importe,' +
-      ' Saldo, '#13#10'Observaciones, IdMetodoPago, CuentaPago, OrigenPago ,'#13 +
-      #10' IdContrato, IdAnexo, EsDeposito, IdCFDI_NCR'#13#10'from Pagos'
+      'SELECT IdPago, IdBanco, IdPersonaCliente, IdCuentaBancariaEstado' +
+      'Cuenta, IdMetodoPago, IdContrato, IdAnexo, IdCFDI_NCR, IdMonedaO' +
+      'rigen, FechaPago, FolioPago, SeriePago, Referencia, Importe, Sal' +
+      'do, Observaciones, '#13#10'CuentaPago, OrigenPago, EsDeposito'#13#10'FROM Pa' +
+      'gos'
     Left = 48
     object adodsMasterIdPago: TAutoIncField
       FieldName = 'IdPago'
       ReadOnly = True
+      Visible = False
     end
     object adodsMasterIdBanco: TIntegerField
       FieldName = 'IdBanco'
+      Visible = False
     end
     object adodsMasterIdPersonaCliente: TIntegerField
       FieldName = 'IdPersonaCliente'
+      Visible = False
     end
     object adodsMasterIdCuentaBancariaEstadoCuenta: TIntegerField
       FieldName = 'IdCuentaBancariaEstadoCuenta'
+      Visible = False
+    end
+    object adodsMasterIdMetodoPago: TIntegerField
+      FieldName = 'IdMetodoPago'
+      Visible = False
+    end
+    object adodsMasterIdContrato: TIntegerField
+      FieldName = 'IdContrato'
+      Visible = False
+    end
+    object adodsMasterIdAnexo: TIntegerField
+      FieldName = 'IdAnexo'
+      Visible = False
+    end
+    object adodsMasterIdCFDI_NCR: TLargeintField
+      FieldName = 'IdCFDI_NCR'
+      Visible = False
+    end
+    object adodsMasterIdMonedaOrigen: TIntegerField
+      FieldName = 'IdMonedaOrigen'
+      Visible = False
+    end
+    object adodsMasterCliente: TStringField
+      FieldKind = fkLookup
+      FieldName = 'Cliente'
+      LookupDataSet = ADOSPersonas
+      LookupKeyFields = 'IdPersona'
+      LookupResultField = 'RazonSocial'
+      KeyFields = 'IdPersonaCliente'
+      Size = 150
+      Lookup = True
+    end
+    object adodsMasterAnexo: TStringField
+      DisplayWidth = 250
+      FieldKind = fkLookup
+      FieldName = 'Anexo'
+      LookupDataSet = ADODtStAnexos
+      LookupKeyFields = 'IdAnexo'
+      LookupResultField = 'identificadorCompleto'
+      KeyFields = 'IdAnexo'
+      Visible = False
+      Size = 250
+      Lookup = True
     end
     object adodsMasterFechaPago: TDateTimeField
+      DisplayLabel = 'Fecha'
       FieldName = 'FechaPago'
     end
+    object adodsMasterSeriePago: TStringField
+      DisplayLabel = 'Serie'
+      FieldName = 'SeriePago'
+    end
     object adodsMasterFolioPago: TIntegerField
+      DisplayLabel = 'Folio'
       FieldName = 'FolioPago'
     end
-    object adodsMasterSeriePago: TStringField
-      FieldName = 'SeriePago'
+    object adodsMasterEsDeposito: TBooleanField
+      DisplayLabel = 'Es dep'#243'sito'
+      FieldName = 'EsDeposito'
+    end
+    object adodsMasterMetodoPago: TStringField
+      DisplayLabel = 'M'#233'todo de pago'
+      FieldKind = fkLookup
+      FieldName = 'MetodoPago'
+      LookupDataSet = ADODtstMetodoPago
+      LookupKeyFields = 'IdMetodoPago'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IdMetodoPago'
+      Size = 30
+      Lookup = True
+    end
+    object adodsMasterCuentaPago: TStringField
+      DisplayLabel = 'Cuenta de pago'
+      FieldName = 'CuentaPago'
+    end
+    object adodsMasterBanco: TStringField
+      FieldKind = fkLookup
+      FieldName = 'Banco'
+      LookupDataSet = ADoDtStBancos
+      LookupKeyFields = 'IdBanco'
+      LookupResultField = 'Nombre'
+      KeyFields = 'IdBanco'
+      Lookup = True
     end
     object adodsMasterReferencia: TStringField
       FieldName = 'Referencia'
@@ -55,70 +133,26 @@ inherited dmPagos: TdmPagos
       Precision = 18
       Size = 6
     end
+    object adodsMasterMonedaOrigen: TStringField
+      DisplayLabel = 'Moneda origen'
+      FieldKind = fkLookup
+      FieldName = 'MonedaOrigen'
+      LookupDataSet = adodsMonedas
+      LookupKeyFields = 'IdMoneda'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IdMonedaOrigen'
+      Visible = False
+      Size = 80
+      Lookup = True
+    end
     object adodsMasterObservaciones: TStringField
       FieldName = 'Observaciones'
       Size = 255
     end
-    object adodsMasterBanco: TStringField
-      FieldKind = fkLookup
-      FieldName = 'Banco'
-      LookupDataSet = ADoDtStBancos
-      LookupKeyFields = 'IdBanco'
-      LookupResultField = 'Nombre'
-      KeyFields = 'IdBanco'
-      Lookup = True
-    end
-    object adodsMasterCliente: TStringField
-      FieldKind = fkLookup
-      FieldName = 'Cliente'
-      LookupDataSet = ADOSPersonas
-      LookupKeyFields = 'IdPersona'
-      LookupResultField = 'RazonSocial'
-      KeyFields = 'IdPersonaCliente'
-      Size = 150
-      Lookup = True
-    end
-    object adodsMasterIdMetodoPago: TIntegerField
-      FieldName = 'IdMetodoPago'
-    end
-    object adodsMasterCuentaPago: TStringField
-      FieldName = 'CuentaPago'
-    end
-    object adodsMasterMetodoPago: TStringField
-      FieldKind = fkLookup
-      FieldName = 'MetodoPago'
-      LookupDataSet = ADODtstMetodoPago
-      LookupKeyFields = 'IdMetodoPago'
-      LookupResultField = 'Descripcion'
-      KeyFields = 'IdMetodoPago'
-      Size = 30
-      Lookup = True
-    end
     object adodsMasterOrigenPago: TIntegerField
+      DisplayLabel = 'Or'#237'gen de pago'
       FieldName = 'OrigenPago'
-    end
-    object adodsMasterIdContrato: TIntegerField
-      FieldName = 'IdContrato'
-    end
-    object adodsMasterIdAnexo: TIntegerField
-      FieldName = 'IdAnexo'
-    end
-    object adodsMasterAnexo: TStringField
-      DisplayWidth = 250
-      FieldKind = fkLookup
-      FieldName = 'Anexo'
-      LookupDataSet = ADODtStAnexos
-      LookupKeyFields = 'IdAnexo'
-      LookupResultField = 'identificadorCompleto'
-      KeyFields = 'IdAnexo'
-      Size = 250
-      Lookup = True
-    end
-    object adodsMasterEsDeposito: TBooleanField
-      FieldName = 'EsDeposito'
-    end
-    object adodsMasterIdCFDI_NCR: TLargeintField
-      FieldName = 'IdCFDI_NCR'
+      Visible = False
     end
   end
   inherited adodsUpdate: TADODataSet
@@ -2050,5 +2084,13 @@ inherited dmPagos: TdmPagos
       FieldName = 'ClaveSAT2016'
       Size = 10
     end
+  end
+  object adodsMonedas: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 'select IdMoneda, Descripcion from Monedas'#13#10'where UsoComun = 1'
+    Parameters = <>
+    Left = 48
+    Top = 248
   end
 end

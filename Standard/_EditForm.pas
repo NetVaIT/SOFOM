@@ -62,8 +62,9 @@ uses _Utils;
 
 procedure T_frmEdit.actCancelExecute(Sender: TObject);
 begin
-  if DataSource.DataSet.State in [dsInsert, dsEdit] then
-    DataSource.DataSet.Cancel;
+  if Assigned(DataSource.DataSet) then
+    if DataSource.DataSet.State in [dsInsert, dsEdit] then
+      DataSource.DataSet.Cancel;
   ModalResult:= mrCancel;
 end;
 
@@ -81,8 +82,9 @@ end;
 
 procedure T_frmEdit.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  if DataSource.DataSet.State in [dsInsert, dsEdit] then
-    DataSource.DataSet.Cancel;
+  if Assigned(DataSource.DataSet) then
+    if DataSource.DataSet.State in [dsInsert, dsEdit] then
+      DataSource.DataSet.Cancel;
 end;
 
 procedure T_frmEdit.FormCreate(Sender: TObject);

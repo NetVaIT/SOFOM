@@ -56,6 +56,8 @@ type
     cxDBCheckBox1: TcxDBCheckBox;
     cxBtnUsaNotaCredito: TcxButton;
     DSNotasCredito: TDataSource;
+    DBLookupComboBox2: TDBLookupComboBox;
+    Label13: TLabel;
     procedure DBLkpCmbBxClienteClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure cxDBTxtEdtImporteExit(Sender: TObject);

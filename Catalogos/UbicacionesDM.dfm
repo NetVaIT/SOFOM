@@ -3,7 +3,9 @@ inherited dmUbicaciones: TdmUbicaciones
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     AfterOpen = adodsMasterAfterOpen
-    CommandText = 'select IdPais, Identificador, Descripcion from Paises'
+    CommandText = 
+      'select IdPais, Identificador, Descripcion, BCCodigo, RegimenFisc' +
+      'alPreferente, ListaGAFI from Paises'
     Left = 40
     object adodsMasterIdPais: TAutoIncField
       FieldName = 'IdPais'
@@ -20,6 +22,19 @@ inherited dmUbicaciones: TdmUbicaciones
       Required = True
       Size = 100
     end
+    object adodsMasterBCCodigo: TStringField
+      DisplayLabel = 'C'#243'digo BC'
+      FieldName = 'BCCodigo'
+      Size = 2
+    end
+    object adodsMasterRegimenFiscalPreferente: TBooleanField
+      DisplayLabel = 'R'#233'gimen fiscal preferente'
+      FieldName = 'RegimenFiscalPreferente'
+    end
+    object adodsMasterListaGAFI: TBooleanField
+      DisplayLabel = 'Lista GAFI'
+      FieldName = 'ListaGAFI'
+    end
   end
   object dsMaster: TDataSource
     DataSet = adodsMaster
@@ -30,8 +45,8 @@ inherited dmUbicaciones: TdmUbicaciones
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'select IdEstado, IdPais, Identificador, Descripcion from Estados' +
-      #13#10'where IdPais = :IdPais'
+      'select IdEstado, IdPais, Identificador, Descripcion, BCCodigo fr' +
+      'om Estados'#13#10'where IdPais = :IdPais'
     DataSource = dsMaster
     MasterFields = 'IdPais'
     Parameters = <
@@ -40,6 +55,7 @@ inherited dmUbicaciones: TdmUbicaciones
         Attributes = [paSigned]
         DataType = ftInteger
         Precision = 10
+        Size = 4
         Value = 1
       end>
     Left = 40
@@ -61,6 +77,11 @@ inherited dmUbicaciones: TdmUbicaciones
       FieldName = 'Descripcion'
       Required = True
     end
+    object adodsEstadosBCCodigo: TStringField
+      DisplayLabel = 'C'#243'digo BC'
+      FieldName = 'BCCodigo'
+      Size = 4
+    end
   end
   object dsEstados: TDataSource
     DataSet = adodsEstados
@@ -71,8 +92,8 @@ inherited dmUbicaciones: TdmUbicaciones
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'select IdMunicipio, IdEstado, Identificador, Descripcion from Mu' +
-      'nicipios'#13#10'where IdEstado = :IdEstado'
+      'select IdMunicipio, IdEstado, Identificador, Descripcion, CNBVCo' +
+      'digo from Municipios'#13#10'where IdEstado = :IdEstado'
     DataSource = dsEstados
     MasterFields = 'IdEstado'
     Parameters = <
@@ -81,6 +102,7 @@ inherited dmUbicaciones: TdmUbicaciones
         Attributes = [paSigned]
         DataType = ftInteger
         Precision = 10
+        Size = 4
         Value = 1
       end>
     Left = 40
@@ -100,6 +122,11 @@ inherited dmUbicaciones: TdmUbicaciones
       DisplayLabel = 'Descripci'#243'n'
       FieldName = 'Descripcion'
       Size = 50
+    end
+    object adodsMunicipiosCNBVCodigo: TStringField
+      DisplayLabel = 'C'#243'digo CNBV'
+      FieldName = 'CNBVCodigo'
+      Size = 10
     end
   end
   object dsMunicipios: TDataSource

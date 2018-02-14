@@ -34,6 +34,9 @@ type
     tvMasterIdPais: TcxGridDBColumn;
     tvMasterIdentificador: TcxGridDBColumn;
     tvMasterDescripcion: TcxGridDBColumn;
+    tvMasterBCCodigo: TcxGridDBColumn;
+    tvMasterRegimenFiscalPreferente: TcxGridDBColumn;
+    tvMasterListaGAFI: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }

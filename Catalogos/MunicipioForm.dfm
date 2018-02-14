@@ -1,23 +1,23 @@
 inherited frmMunicipio: TfrmMunicipio
   Caption = 'Municipio'
-  ClientHeight = 203
+  ClientHeight = 234
   ClientWidth = 362
   ExplicitWidth = 368
-  ExplicitHeight = 232
+  ExplicitHeight = 263
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
     Width = 362
-    Height = 162
+    Height = 193
     ExplicitWidth = 362
     ExplicitHeight = 162
-    ClientRectBottom = 160
+    ClientRectBottom = 191
     ClientRectRight = 360
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 2
+      ExplicitLeft = 3
       ExplicitTop = 28
       ExplicitWidth = 358
-      ExplicitHeight = 132
+      ExplicitHeight = 165
       object Label1: TLabel
         Left = 24
         Top = 24
@@ -33,6 +33,14 @@ inherited frmMunicipio: TfrmMunicipio
         Height = 13
         Caption = 'Descripci'#243'n'
         FocusControl = cxDBTextEdit1
+      end
+      object Label3: TLabel
+        Left = 24
+        Top = 112
+        Width = 62
+        Height = 13
+        Caption = 'C'#243'digo CNBV'
+        FocusControl = cxDBTextEdit2
       end
       object cxDBSpinEdit1: TcxDBSpinEdit
         Left = 24
@@ -50,20 +58,28 @@ inherited frmMunicipio: TfrmMunicipio
         TabOrder = 1
         Width = 300
       end
+      object cxDBTextEdit2: TcxDBTextEdit
+        Left = 24
+        Top = 128
+        DataBinding.DataField = 'CNBVCodigo'
+        DataBinding.DataSource = DataSource
+        TabOrder = 2
+        Width = 121
+      end
     end
   end
   inherited pmlMain: TPanel
-    Top = 162
+    Top = 193
     Width = 362
     ExplicitTop = 162
     ExplicitWidth = 362
-    inherited btnOk: TButton
-      Left = 199
-      ExplicitLeft = 199
-    end
     inherited btnCancel: TButton
       Left = 280
       ExplicitLeft = 280
+    end
+    inherited btnOk: TButton
+      Left = 199
+      ExplicitLeft = 199
     end
   end
   inherited cxImageList: TcxImageList

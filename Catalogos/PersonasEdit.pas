@@ -69,8 +69,6 @@ type
     PnlCliente: TPanel;
     Label17: TLabel;
     DBLookupComboBox2: TDBLookupComboBox;
-    Label19: TLabel;
-    cxDBLabel1: TcxDBLabel;
     PnlEmisor: TPanel;
     Label20: TLabel;
     DBLookupComboBox3: TDBLookupComboBox;
@@ -113,6 +111,7 @@ type
     cxDBDateEdit2: TcxDBDateEdit;
     Label34: TLabel;
     cxDBSpinEdit1: TcxDBSpinEdit;
+    cxDBCheckBox2: TcxDBCheckBox;
     procedure FormShow(Sender: TObject);
     procedure cxDBLookupComboBox1PropertiesChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);

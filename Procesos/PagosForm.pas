@@ -33,19 +33,6 @@ uses
 
 type
   TFrmConPagos = class(T_frmGrid)
-    tvMasterIdPago: TcxGridDBColumn;
-    tvMasterIdBanco: TcxGridDBColumn;
-    tvMasterIdPersonaCliente: TcxGridDBColumn;
-    tvMasterIdCuentaBancariaEstadoCuenta: TcxGridDBColumn;
-    tvMasterFechaPago: TcxGridDBColumn;
-    tvMasterFolioPago: TcxGridDBColumn;
-    tvMasterSeriePago: TcxGridDBColumn;
-    tvMasterReferencia: TcxGridDBColumn;
-    tvMasterImporte: TcxGridDBColumn;
-    tvMasterSaldo: TcxGridDBColumn;
-    tvMasterObservaciones: TcxGridDBColumn;
-    tvMasterBanco: TcxGridDBColumn;
-    tvMasterCliente: TcxGridDBColumn;
     dxBrBtnAplicaicones: TdxBarButton;
     dsConCXCPendientes: TDataSource;
     DSDetallesCXC: TDataSource;
@@ -66,19 +53,35 @@ type
     ChckBxConSaldo: TCheckBox;
     DSDetalleMostrar: TDataSource;
     DSAnexos: TDataSource;
-    tvMasterIdMetodoPago: TcxGridDBColumn;
-    tvMasterCuentaPago: TcxGridDBColumn;
-    tvMasterMetodoPago: TcxGridDBColumn;
-    tvMasterOrigenPago: TcxGridDBColumn;
-    tvMasterIdContrato: TcxGridDBColumn;
-    tvMasterIdAnexo: TcxGridDBColumn;
-    tvMasterAnexo: TcxGridDBColumn;
     DSAuxiliar: TDataSource;
     DSP_CalcMoratorioNueva: TDataSource;
     DSP_ActTotalCXC: TDataSource;
-    tvMasterEsDeposito: TcxGridDBColumn;
     ChckBxDeposito: TCheckBox;
     DSVerificaSaldoFinal: TDataSource;
+    tvMasterIdPago: TcxGridDBColumn;
+    tvMasterIdBanco: TcxGridDBColumn;
+    tvMasterIdPersonaCliente: TcxGridDBColumn;
+    tvMasterIdCuentaBancariaEstadoCuenta: TcxGridDBColumn;
+    tvMasterIdMetodoPago: TcxGridDBColumn;
+    tvMasterIdContrato: TcxGridDBColumn;
+    tvMasterIdAnexo: TcxGridDBColumn;
+    tvMasterIdCFDI_NCR: TcxGridDBColumn;
+    tvMasterIdMonedaOrigen: TcxGridDBColumn;
+    tvMasterCliente: TcxGridDBColumn;
+    tvMasterAnexo: TcxGridDBColumn;
+    tvMasterFechaPago: TcxGridDBColumn;
+    tvMasterFolioPago: TcxGridDBColumn;
+    tvMasterSeriePago: TcxGridDBColumn;
+    tvMasterEsDeposito: TcxGridDBColumn;
+    tvMasterMetodoPago: TcxGridDBColumn;
+    tvMasterCuentaPago: TcxGridDBColumn;
+    tvMasterBanco: TcxGridDBColumn;
+    tvMasterReferencia: TcxGridDBColumn;
+    tvMasterImporte: TcxGridDBColumn;
+    tvMasterSaldo: TcxGridDBColumn;
+    tvMasterObservaciones: TcxGridDBColumn;
+    tvMasterOrigenPago: TcxGridDBColumn;
+    tvMasterMonedaOrigen: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure dxBrBtnAplicaiconesClick(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
@@ -525,9 +528,9 @@ end;
 
 procedure TFrmConPagos.SpdBtnBuscarClick(Sender: TObject);
 const  //Dic 20/16
-   TxtSQL='select  IdPago, IdBanco, IdPersonaCliente, IdCuentaBancariaEstadoCuenta,'+
-          'FechaPago, FolioPago, SeriePago, Referencia, Importe, Saldo, Observaciones,' +
-          'PA.IdMetodoPago, CuentaPago, OrigenPago, IDContrato, IDAnexo, ESdeposito, IDCFDI_NCR from Pagos PA ';
+  TxtSQL='SELECT IdPago, IdBanco, IdPersonaCliente, IdCuentaBancariaEstadoCuenta, PA.IdMetodoPago, IdContrato, IdAnexo, IdCFDI_NCR, IdMonedaOrigen, FechaPago, FolioPago, SeriePago, Referencia, Importe, Saldo, Observaciones, ' +
+  'CuentaPago, OrigenPago, EsDeposito ' +
+  'FROM Pagos PA ';
 begin
   inherited;
   PoneFiltro;

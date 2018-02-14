@@ -26,6 +26,8 @@ type
     cxDBSpinEdit1: TcxDBSpinEdit;
     Label2: TLabel;
     cxDBTextEdit1: TcxDBTextEdit;
+    Label3: TLabel;
+    cxDBTextEdit2: TcxDBTextEdit;
   private
     { Private declarations }
   public
@@ -35,5 +37,7 @@ type
 implementation
 
 {$R *.dfm}
+
+uses UbicacionesDM;
 
 end.

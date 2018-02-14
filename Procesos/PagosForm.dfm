@@ -4,6 +4,7 @@ inherited FrmConPagos: TFrmConPagos
   ClientHeight = 428
   ClientWidth = 1101
   ExplicitWidth = 1107
+  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -53,57 +54,8 @@ inherited FrmConPagos: TFrmConPagos
           DataBinding.FieldName = 'IdCuentaBancariaEstadoCuenta'
           Visible = False
         end
-        object tvMasterFechaPago: TcxGridDBColumn
-          DataBinding.FieldName = 'FechaPago'
-        end
-        object tvMasterCliente: TcxGridDBColumn
-          DataBinding.FieldName = 'Cliente'
-          Width = 300
-        end
-        object tvMasterSeriePago: TcxGridDBColumn
-          DataBinding.FieldName = 'SeriePago'
-          Width = 105
-        end
-        object tvMasterFolioPago: TcxGridDBColumn
-          DataBinding.FieldName = 'FolioPago'
-          Width = 81
-        end
-        object tvMasterBanco: TcxGridDBColumn
-          DataBinding.FieldName = 'Banco'
-        end
-        object tvMasterImporte: TcxGridDBColumn
-          DataBinding.FieldName = 'Importe'
-        end
-        object tvMasterSaldo: TcxGridDBColumn
-          DataBinding.FieldName = 'Saldo'
-        end
-        object tvMasterEsDeposito: TcxGridDBColumn
-          Caption = 'Dep'#243'sito Garant'#237'a'
-          DataBinding.FieldName = 'EsDeposito'
-          Width = 94
-        end
-        object tvMasterReferencia: TcxGridDBColumn
-          DataBinding.FieldName = 'Referencia'
-          Width = 133
-        end
-        object tvMasterObservaciones: TcxGridDBColumn
-          DataBinding.FieldName = 'Observaciones'
-          Width = 350
-        end
         object tvMasterIdMetodoPago: TcxGridDBColumn
           DataBinding.FieldName = 'IdMetodoPago'
-          Visible = False
-        end
-        object tvMasterCuentaPago: TcxGridDBColumn
-          DataBinding.FieldName = 'CuentaPago'
-          Visible = False
-        end
-        object tvMasterMetodoPago: TcxGridDBColumn
-          DataBinding.FieldName = 'MetodoPago'
-          Visible = False
-        end
-        object tvMasterOrigenPago: TcxGridDBColumn
-          DataBinding.FieldName = 'OrigenPago'
           Visible = False
         end
         object tvMasterIdContrato: TcxGridDBColumn
@@ -112,10 +64,68 @@ inherited FrmConPagos: TFrmConPagos
         end
         object tvMasterIdAnexo: TcxGridDBColumn
           DataBinding.FieldName = 'IdAnexo'
+          Visible = False
+        end
+        object tvMasterIdCFDI_NCR: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCFDI_NCR'
+          Visible = False
+        end
+        object tvMasterIdMonedaOrigen: TcxGridDBColumn
+          DataBinding.FieldName = 'IdMonedaOrigen'
+          Visible = False
+        end
+        object tvMasterCliente: TcxGridDBColumn
+          DataBinding.FieldName = 'Cliente'
+          Width = 300
         end
         object tvMasterAnexo: TcxGridDBColumn
           DataBinding.FieldName = 'Anexo'
           Visible = False
+          Width = 300
+        end
+        object tvMasterFechaPago: TcxGridDBColumn
+          DataBinding.FieldName = 'FechaPago'
+        end
+        object tvMasterSeriePago: TcxGridDBColumn
+          DataBinding.FieldName = 'SeriePago'
+        end
+        object tvMasterFolioPago: TcxGridDBColumn
+          DataBinding.FieldName = 'FolioPago'
+        end
+        object tvMasterEsDeposito: TcxGridDBColumn
+          DataBinding.FieldName = 'EsDeposito'
+          Width = 60
+        end
+        object tvMasterMetodoPago: TcxGridDBColumn
+          DataBinding.FieldName = 'MetodoPago'
+        end
+        object tvMasterCuentaPago: TcxGridDBColumn
+          DataBinding.FieldName = 'CuentaPago'
+        end
+        object tvMasterBanco: TcxGridDBColumn
+          DataBinding.FieldName = 'Banco'
+        end
+        object tvMasterReferencia: TcxGridDBColumn
+          DataBinding.FieldName = 'Referencia'
+        end
+        object tvMasterImporte: TcxGridDBColumn
+          DataBinding.FieldName = 'Importe'
+        end
+        object tvMasterSaldo: TcxGridDBColumn
+          DataBinding.FieldName = 'Saldo'
+        end
+        object tvMasterMonedaOrigen: TcxGridDBColumn
+          DataBinding.FieldName = 'MonedaOrigen'
+          Visible = False
+        end
+        object tvMasterObservaciones: TcxGridDBColumn
+          DataBinding.FieldName = 'Observaciones'
+          Width = 300
+        end
+        object tvMasterOrigenPago: TcxGridDBColumn
+          DataBinding.FieldName = 'OrigenPago'
+          Visible = False
+          Width = 79
         end
       end
     end

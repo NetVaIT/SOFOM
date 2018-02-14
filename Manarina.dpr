@@ -253,7 +253,13 @@ uses
   OpenSSLUtils in 'Facturar33\OpenSSL\OpenSSLUtils.pas',
   VirtualXML33 in 'Facturar33\VirtualXML33.pas',
   RptCFDI33DM in 'Reportes\RptCFDI33DM.pas' {dmRptCFDI33: TDataModule},
-  FacturasPropiedadesEdit in 'Procesos\FacturasPropiedadesEdit.pas' {frmFacturasPropiedadesEdit};
+  FacturasPropiedadesEdit in 'Procesos\FacturasPropiedadesEdit.pas' {frmFacturasPropiedadesEdit},
+  ListasRestringidasWeb in 'Catalogos\ListasRestringidasWeb.pas' {frmListasRestringidasWeb},
+  MSHTML_TLB in 'Catalogos\MSHTML_TLB.pas',
+  PLDAlertasPreocupanteForm in 'Procesos\PLDAlertasPreocupanteForm.pas' {frmPLDAlertasPreocupante},
+  PLDAlertasConfiguracionDM in 'Catalogos\PLDAlertasConfiguracionDM.pas' {dmPLDAlertasConfiguracion: TDataModule},
+  PLDAlertasConfiguracionForm in 'Catalogos\PLDAlertasConfiguracionForm.pas' {frmPLDAlertasConfiguracion},
+  PLDAlertasConfiguracionEdit in 'Catalogos\PLDAlertasConfiguracionEdit.pas' {frmPLDAlertasConfiguracionEdit};
 
 {$R *.res}
 

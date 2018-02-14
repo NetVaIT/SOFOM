@@ -27,14 +27,15 @@ inherited frmEstados: TfrmEstados
   end
   inherited pnlMaster: TPanel
     Width = 645
-    Height = 224
+    Height = 229
+    ExplicitTop = 26
     ExplicitWidth = 645
-    ExplicitHeight = 265
+    ExplicitHeight = 229
     inherited cxGrid: TcxGrid
       Width = 645
-      Height = 265
+      Height = 229
       ExplicitWidth = 645
-      ExplicitHeight = 265
+      ExplicitHeight = 229
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdEstado: TcxGridDBColumn
           DataBinding.FieldName = 'IdEstado'
@@ -51,36 +52,42 @@ inherited frmEstados: TfrmEstados
           DataBinding.FieldName = 'Descripcion'
           Width = 300
         end
+        object tvMasterBCCodigo: TcxGridDBColumn
+          DataBinding.FieldName = 'BCCodigo'
+          Width = 54
+        end
       end
     end
   end
   inherited pnlDetail3: TPanel
     Top = 346
     Width = 645
-    ExplicitTop = 387
+    ExplicitTop = 346
     ExplicitWidth = 645
   end
   inherited pnlDetail2: TPanel
     Top = 302
     Width = 645
-    ExplicitTop = 343
+    ExplicitTop = 302
     ExplicitWidth = 645
   end
   inherited pnlDetail1: TPanel
     Top = 258
     Width = 645
-    ExplicitTop = 299
+    ExplicitTop = 258
     ExplicitWidth = 645
   end
   inherited pnlClose: TPanel
     Top = 387
     Width = 645
+    ExplicitTop = 387
+    ExplicitWidth = 645
   end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
       0
       0
-      31
+      26
       0)
   end
   inherited cxStyleRepository: TcxStyleRepository
@@ -92,7 +99,7 @@ inherited frmEstados: TfrmEstados
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42593.687647256940000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

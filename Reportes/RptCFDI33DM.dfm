@@ -709,6 +709,7 @@ object dmRptCFDI33: TdmRptCFDI33
     DataPipelineName = 'dbpCFDIConceptos'
     object ppHeaderBand1: TppHeaderBand
       Background.Brush.Style = bsClear
+      PrintHeight = phDynamic
       mmBottomOffset = 0
       mmHeight = 96044
       mmPrintPosition = 0
@@ -4712,10 +4713,10 @@ object dmRptCFDI33: TdmRptCFDI33
         UserName = 'Shape2'
         Brush.Color = clBtnFace
         Shape = stRoundRect
-        mmHeight = 8996
-        mmLeft = 1058
-        mmTop = 79375
-        mmWidth = 202671
+        mmHeight = 13229
+        mmLeft = 3175
+        mmTop = 75406
+        mmWidth = 200290
         BandType = 0
         LayerName = Foreground
       end
@@ -4730,7 +4731,7 @@ object dmRptCFDI33: TdmRptCFDI33
         Transparent = True
         mmHeight = 2911
         mmLeft = 3969
-        mmTop = 79641
+        mmTop = 75666
         mmWidth = 17462
         BandType = 0
         LayerName = Foreground
@@ -4746,27 +4747,8 @@ object dmRptCFDI33: TdmRptCFDI33
         Transparent = True
         mmHeight = 2910
         mmLeft = 66675
-        mmTop = 79641
+        mmTop = 75666
         mmWidth = 24606
-        BandType = 0
-        LayerName = Foreground
-      end
-      object ppDBText6: TppDBText
-        UserName = 'DBText6'
-        DataField = 'RelacionadosCFDIs'
-        DataPipeline = dbpCFDI
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 7
-        Font.Style = []
-        ParentDataPipeline = False
-        Transparent = True
-        DataPipelineName = 'dbpCFDI'
-        mmHeight = 4498
-        mmLeft = 66675
-        mmTop = 83081
-        mmWidth = 134411
         BandType = 0
         LayerName = Foreground
       end
@@ -4784,7 +4766,7 @@ object dmRptCFDI33: TdmRptCFDI33
         DataPipelineName = 'dbpCFDI'
         mmHeight = 4498
         mmLeft = 3969
-        mmTop = 82816
+        mmTop = 78841
         mmWidth = 60856
         BandType = 0
         LayerName = Foreground
@@ -4909,6 +4891,33 @@ object dmRptCFDI33: TdmRptCFDI33
         mmWidth = 34396
         BandType = 0
         LayerName = Foreground
+      end
+      object ppDBMemo5: TppDBMemo
+        UserName = 'DBMemo5'
+        CharWrap = True
+        DataField = 'RelacionadosTxt'
+        DataPipeline = dbpCFDI
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = []
+        ParentDataPipeline = False
+        RemoveEmptyLines = False
+        Stretch = True
+        Transparent = True
+        DataPipelineName = 'dbpCFDI'
+        mmHeight = 8996
+        mmLeft = 66675
+        mmTop = 78840
+        mmWidth = 134409
+        BandType = 0
+        LayerName = Foreground
+        mmBottomOffset = 0
+        mmOverFlowOffset = 0
+        mmStopPosition = 0
+        mmMinHeight = 0
+        mmLeading = 0
       end
     end
     object ppDetailBand1: TppDetailBand
@@ -5284,7 +5293,7 @@ object dmRptCFDI33: TdmRptCFDI33
         Visible = False
         WordWrap = True
         mmHeight = 4233
-        mmLeft = 3178
+        mmLeft = 2910
         mmTop = 31223
         mmWidth = 82815
         BandType = 7
@@ -5443,7 +5452,7 @@ object dmRptCFDI33: TdmRptCFDI33
         Transparent = True
         WordWrap = True
         mmHeight = 5292
-        mmLeft = 3176
+        mmLeft = 2910
         mmTop = 37045
         mmWidth = 101336
         BandType = 7
@@ -5522,7 +5531,7 @@ object dmRptCFDI33: TdmRptCFDI33
         Font.Style = [fsItalic]
         Transparent = True
         mmHeight = 4233
-        mmLeft = 2381
+        mmLeft = 2910
         mmTop = 15875
         mmWidth = 25929
         BandType = 7
@@ -5559,7 +5568,7 @@ object dmRptCFDI33: TdmRptCFDI33
         Transparent = True
         Visible = False
         mmHeight = 4234
-        mmLeft = 2646
+        mmLeft = 2910
         mmTop = 21431
         mmWidth = 33602
         BandType = 7
@@ -5615,7 +5624,7 @@ object dmRptCFDI33: TdmRptCFDI33
         Font.Style = [fsItalic]
         Transparent = True
         mmHeight = 4233
-        mmLeft = 2117
+        mmLeft = 2910
         mmTop = 9790
         mmWidth = 24606
         BandType = 7

@@ -27,22 +27,21 @@ type
     ADOQryEdFechaFechaActual: TDateTimeField;
     ADOQryEdFechaEsProduccion: TBooleanField;
     ADOQryEdFechaUsarFecha: TBooleanField;
+    adoqUsuariosOficialCumplimiento: TBooleanField;
     procedure ADOConnectionConnectComplete(Connection: TADOConnection;
       const Error: Error; var EventStatus: TEventStatus);
     procedure ADOConnectionDisconnect(Connection: TADOConnection;
       var EventStatus: TEventStatus);
   private
     { Private declarations }
-//    FNombreOperador: String;
-//    FOperador: String;
     FConectionCaption: String;
-//    FIndiceOperador: Integer;
     FExePath: string;
     FADMIN_PROD: String;
     FNombrePersona: string;
     FIdUsuario: Integer;
     FIdPersona: Integer;
     FUsuario: string;
+    FOficialCumplimiento: Boolean;
     procedure SetExePath(const Value: string);
     function GetFFechaActual: TDAteTime;
   public
@@ -57,9 +56,7 @@ type
     property Usuario: string read FUsuario;
     property IdPersona: Integer read FIdPersona;
     property NombrePersona: string read FNombrePersona;
-//    property IndiceOperador: Integer read FIndiceOperador;
-//    property Operador: String read FOperador;
-//    property NombreOperador: String read FNombreOperador;
+    property OficialCumplimiento: Boolean read FOficialCumplimiento;
     property ADMIN_PROD: String read FADMIN_PROD;
 
     Property LaFechaActual:TDAteTime read GetFFechaActual;
@@ -153,6 +150,7 @@ var
         FUsuario:= adoqUsuariosLogin.AsString;
         FIdPersona:= adoqUsuariosIdPersona.Value;
         FNombrePersona:= adoqUsuariosRazonSocial.AsString;
+        FOficialCumplimiento:= adoqUsuariosOficialCumplimiento.Value;
 //        FADMIN_PROD:= adoqOperadoresADMIN_PROD.Value;
       end
       else

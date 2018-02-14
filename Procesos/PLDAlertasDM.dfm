@@ -12,11 +12,11 @@ inherited dmPLDAlertas: TdmPLDAlertas
       'Descripcion AS MetodoPago, PLDAlertas.FechaDeteccion, '#13#10'        ' +
       '                 PLDAlertas.Total, PLDAlertas.TotalUSD, PLDAlert' +
       'as.TotalPagos, PLDAlertas.Descripcion, PLDAlertas.Razon, PLDAler' +
-      'tas.R24'#13#10'FROM            PLDAlertas INNER JOIN'#13#10'                ' +
-      '         Personas ON PLDAlertas.IdPersona = Personas.IdPersona I' +
-      'NNER JOIN'#13#10'                         Pagos ON PLDAlertas.IdPago =' +
-      ' Pagos.IdPago INNER JOIN'#13#10'                         MetodosPago O' +
-      'N Pagos.IdMetodoPago = MetodosPago.IdMetodoPago'
+      'tas.R24'#13#10'FROM            PLDAlertas LEFT JOIN'#13#10'                 ' +
+      '        Personas ON PLDAlertas.IdPersona = Personas.IdPersona LE' +
+      'FT JOIN'#13#10'                         Pagos ON PLDAlertas.IdPago = P' +
+      'agos.IdPago LEFT JOIN'#13#10'                         MetodosPago ON P' +
+      'agos.IdMetodoPago = MetodosPago.IdMetodoPago'
     Left = 32
     object adodsMasterIdPLDAlerta: TAutoIncField
       FieldName = 'IdPLDAlerta'
@@ -488,8 +488,8 @@ inherited dmPLDAlertas: TdmPLDAlertas
         Size = 4
         Value = Null
       end>
-    Left = 256
-    Top = 160
+    Left = 240
+    Top = 96
   end
   object daMaster: TDataSource
     AutoEdit = False
@@ -497,5 +497,144 @@ inherited dmPLDAlertas: TdmPLDAlertas
     OnDataChange = daMasterDataChange
     Left = 128
     Top = 16
+  end
+  object adopSetPLDAlertas: TADOStoredProc
+    Connection = _dmConection.ADOConnection
+    ProcedureName = 'p_SetPLDAlertas;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@IdPersona'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@IdPago'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@IdPLDOperacionTipo'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@IdPLDAlertaTipo'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@IdPLDAlertaEstatus'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@PeriodoMes'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@PeriodoAnio'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@SoloEfectivo'
+        Attributes = [paNullable]
+        DataType = ftBoolean
+        Value = Null
+      end
+      item
+        Name = '@FechaDeteccion'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Value = Null
+      end
+      item
+        Name = '@Total'
+        Attributes = [paNullable]
+        DataType = ftBCD
+        NumericScale = 6
+        Precision = 18
+        Value = Null
+      end
+      item
+        Name = '@TotalUSD'
+        Attributes = [paNullable]
+        DataType = ftBCD
+        NumericScale = 6
+        Precision = 18
+        Value = Null
+      end
+      item
+        Name = '@TotalPagos'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@Descripcion'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 4000
+        Value = Null
+      end
+      item
+        Name = '@Razon'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 4000
+        Value = Null
+      end
+      item
+        Name = '@R24'
+        Attributes = [paNullable]
+        DataType = ftBoolean
+        Value = Null
+      end
+      item
+        Name = '@IdPLDAlerta'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Direction = pdInputOutput
+        Precision = 10
+        Value = Null
+      end>
+    Left = 272
+    Top = 224
+  end
+  object dxmdAlerta: TdxMemData
+    Indexes = <>
+    SortOptions = []
+    Left = 272
+    Top = 176
+    object dxmdAlertaFecha: TDateTimeField
+      FieldName = 'Fecha'
+    end
+    object dxmdAlertaMensaje: TStringField
+      FieldName = 'Mensaje'
+      Size = 4000
+    end
   end
 end
