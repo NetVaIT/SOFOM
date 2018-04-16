@@ -119,6 +119,7 @@ type
     procedure edtNombreEditing(Sender: TObject; var CanEdit: Boolean);
     procedure btnNextClick(Sender: TObject);
     procedure btnWebClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
     dmTelefonos: TdmTelefonos;
@@ -168,6 +169,19 @@ procedure TfrmPersonaEdit.edtNombreEditing(Sender: TObject;
 begin
   inherited;
   edtRazonSocial.Text := edtNombre.Text + ' ' + edtAPaterno.Text + ' ' + edtAMaterno.Text;
+end;
+
+procedure TfrmPersonaEdit.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  inherited;
+  dmDomicilios.MasterSource := nil;
+  dmTelefonos.MasterSource := nil;
+  dmEmails.MasterSource := nil;
+  dmPersonasContacto.MasterSource := nil;
+  dmCuentasBancarias.MasterSource := nil;
+  dmPersonasCSD.MasterSource := nil;
+  dmDocumentos.MasterSource := nil;
+  dmPerfiles.MasterSource := nil;
 end;
 
 procedure TfrmPersonaEdit.FormCreate(Sender: TObject);

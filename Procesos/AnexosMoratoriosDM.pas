@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, _StandarDMod, System.Actions, Vcl.ActnList,
-  Data.DB, Data.Win.ADODB;
+  Data.DB, Data.Win.ADODB, Vcl.Dialogs;
 
 type
   TdmAnexosMoratorios = class(T_dmStandar)
@@ -27,6 +27,7 @@ type
     procedure adodsMasterImporteChange(Sender: TField);
     procedure adodsMasterAfterPost(DataSet: TDataSet);
     procedure dsMasterDataChange(Sender: TObject; Field: TField);
+    procedure adodsMasterDescuentoValidate(Sender: TField);
   private
     { Private declarations }
     FIdCuentaXCobrar: Integer;
@@ -51,6 +52,16 @@ begin
   inherited;
   adopUpdAmortizacionMoratorio.Parameters.ParamByName('@IdAnexoAmortizacion').Value:= adodsMasterIdAnexoAmortizacion.Value;
   adopUpdAmortizacionMoratorio.ExecProc;
+end;
+
+procedure TdmAnexosMoratorios.adodsMasterDescuentoValidate(Sender: TField);
+begin
+  inherited;
+  if (adodsMasterDescuento.Value > adodsMasterImporte.Value) then
+  begin
+    ShowMessage('El descuento debe ser menor o igual que el importe');
+    Abort;
+  end;
 end;
 
 procedure TdmAnexosMoratorios.adodsMasterImporteChange(Sender: TField);
@@ -79,13 +90,14 @@ begin
   inherited;
   gGridForm:= TfrmAnexosMoratorios.Create(Self);
   gGridForm.DataSet := adodsMaster;
-  // Filtrar
-  SQLSelect:= 'select IdAnexoMoratorio, IdAnexoAmortizacion, IdAnexoMoratorioEstatus, IdCuentaXCobrar, Fecha, ImporteBase, Importe, Descuento, Impuesto, ImporteAplicado, Cancelacion from AnexosMoratorios';
-  SQLOrderBy:= 'ORDER BY Fecha ';
   if IdCuentaXCobrar <> 0 then
-    SQLWhere:= Format('WHERE IdCuentaXCobrar = %d', [IdCuentaXCobrar])
-  else
-    SQLWhere:= EmptyStr;
+  begin
+    // Filtrar
+    SQLSelect:= 'select IdAnexoMoratorio, IdAnexoAmortizacion, IdAnexoMoratorioEstatus, IdCuentaXCobrar, Fecha, ImporteBase, Importe, Descuento, Impuesto, ImporteAplicado, Cancelacion from AnexosMoratorios';
+    SQLWhere:= Format('WHERE IdCuentaXCobrar = %d', [IdCuentaXCobrar]);
+    SQLOrderBy:= 'ORDER BY Fecha ';
+    OpenDataSet;
+  end;
 end;
 
 procedure TdmAnexosMoratorios.dsMasterDataChange(Sender: TObject;

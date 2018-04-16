@@ -22,7 +22,8 @@ inherited dmFacturas: TdmFacturas
       'ntaXCobrar, C.SaldoFactoraje, C.IdCFDIFormaPago33, C.IdCFDIMetod' +
       'oPago33, C.IDCFDITipoRelacion, C.IdCFDIUsoCFDI'#13#10'FROM CFDI AS C '#13 +
       #10
-    Left = 40
+    Left = 56
+    Top = 24
     object adodsMasterIdCFDI: TLargeintField
       FieldName = 'IdCFDI'
       ReadOnly = True
@@ -342,10 +343,11 @@ inherited dmFacturas: TdmFacturas
     end
   end
   inherited adodsUpdate: TADODataSet
-    Left = 472
+    Left = 440
   end
   inherited ActionList: TActionList
-    Left = 448
+    Left = 440
+    Top = 72
     object actTimbrarCFDI: TAction
       Caption = 'Timbrar'
       Hint = 'Timbrar'
@@ -366,6 +368,11 @@ inherited dmFacturas: TdmFacturas
       OnExecute = actCancelarCFDIExecute
       OnUpdate = actCancelarCFDIUpdate
     end
+    object actRelacionarCFDI: TAction
+      Caption = '...'
+      Hint = 'Relacionar los CFDi anteriores'
+      OnExecute = actRelacionarCFDIExecute
+    end
   end
   object ADODtStCFDIConceptos: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -380,7 +387,7 @@ inherited dmFacturas: TdmFacturas
       'Unidad, Descripcion, NoIdentifica, ValorUnitario, Importe, IdCue' +
       'ntaXCobrarDetalle, Descuento, SATClaveProdServ, SATClaveUnidad'#13#10 +
       'FROM            CFDIConceptos'#13#10' Where IdCFDI=:IdCFDI'
-    DataSource = DSMaster
+    DataSource = dsMaster
     IndexFieldNames = 'IdCFDI'
     MasterFields = 'IdCFDI'
     Parameters = <
@@ -391,8 +398,8 @@ inherited dmFacturas: TdmFacturas
         Precision = 19
         Value = '60'
       end>
-    Left = 40
-    Top = 88
+    Left = 296
+    Top = 72
     object ADODtStCFDIConceptosIdCFDIConcepto: TLargeintField
       FieldName = 'IdCFDIConcepto'
       ReadOnly = True
@@ -454,10 +461,10 @@ inherited dmFacturas: TdmFacturas
       Size = 6
     end
   end
-  object DSMaster: TDataSource
+  object dsMaster: TDataSource
     DataSet = adodsMaster
-    Left = 176
-    Top = 24
+    Left = 296
+    Top = 16
   end
   object ADODtStCFDIImpuestos: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -465,7 +472,7 @@ inherited dmFacturas: TdmFacturas
     CommandText = 
       'select IdCFDI, TipoImp, Impuesto, Tasa, Importe  '#13#10'from CFDIImpu' +
       'estos where idCFDI=:IDCFDI'
-    DataSource = DSMaster
+    DataSource = dsMaster
     IndexFieldNames = 'IdCFDI'
     MasterFields = 'IDCFDI'
     Parameters = <
@@ -474,11 +481,10 @@ inherited dmFacturas: TdmFacturas
         Attributes = [paSigned, paNullable]
         DataType = ftLargeint
         Precision = 19
-        Size = 8
-        Value = Null
+        Value = '60'
       end>
-    Left = 192
-    Top = 144
+    Left = 304
+    Top = 248
     object ADODtStCFDIImpuestosIdCFDI: TLargeintField
       FieldName = 'IdCFDI'
     end
@@ -518,8 +524,8 @@ inherited dmFacturas: TdmFacturas
     IndexFieldNames = 'idpersona'
     MasterFields = 'IdPersonaEmisor'
     Parameters = <>
-    Left = 184
-    Top = 216
+    Left = 56
+    Top = 312
     object ADODtStPersonaEmisoridpersona: TAutoIncField
       FieldName = 'idpersona'
       ReadOnly = True
@@ -611,8 +617,8 @@ inherited dmFacturas: TdmFacturas
       'ises Pa on Pa.idpais=D.Idpais'#13#10'where Pe.iDRolTipo=3 and Pe.IdPer' +
       'sona>0 and Pe.IdPersonaEstatus=1'#13#10'order by Pe.RazonSocial'
     Parameters = <>
-    Left = 179
-    Top = 280
+    Left = 59
+    Top = 368
     object ADODtStPersonaReceptoridpersona: TAutoIncField
       FieldName = 'idpersona'
       ReadOnly = True
@@ -727,8 +733,8 @@ inherited dmFacturas: TdmFacturas
       'select IdCFDIEstatus, Identificador, Descripcion from CFDIEstatu' +
       's'
     Parameters = <>
-    Left = 40
-    Top = 160
+    Left = 64
+    Top = 424
   end
   object ADODtStFormasPago: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -737,8 +743,8 @@ inherited dmFacturas: TdmFacturas
       'select IDCFDIFormaPago, Identificador, Descripcion from CFDIForm' +
       'asPago'
     Parameters = <>
-    Left = 40
-    Top = 216
+    Left = 56
+    Top = 192
     object ADODtStFormasPagoIDCFDIFormaPago: TAutoIncField
       FieldName = 'IDCFDIFormaPago'
       ReadOnly = True
@@ -759,8 +765,8 @@ inherited dmFacturas: TdmFacturas
       'select IdMetodoPago, Identificador, Descripcion, ExigeCuenta, Cl' +
       'aveSAT2016 '#13#10' from MetodosPago where idMetodoPago>0'
     Parameters = <>
-    Left = 40
-    Top = 264
+    Left = 56
+    Top = 136
     object ADODtStMetodoPagoIdMetodoPago: TAutoIncField
       FieldName = 'IdMetodoPago'
       ReadOnly = True
@@ -786,8 +792,8 @@ inherited dmFacturas: TdmFacturas
     CursorType = ctStatic
     CommandText = 'select IdMoneda, IdPais, Identificador, Descripcion from Monedas'
     Parameters = <>
-    Left = 40
-    Top = 328
+    Left = 56
+    Top = 248
   end
   object ADODtStTiposDocumentos: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -796,8 +802,8 @@ inherited dmFacturas: TdmFacturas
       'select IdCFDITipoDocumento, Descripcion, SerieDoc, FolioDoc, Tip' +
       'oComprobante from CFDITipoDocumento'
     Parameters = <>
-    Left = 48
-    Top = 392
+    Left = 56
+    Top = 80
     object ADODtStTiposDocumentosIdCFDITipoDocumento: TAutoIncField
       FieldName = 'IdCFDITipoDocumento'
       ReadOnly = True
@@ -955,12 +961,12 @@ inherited dmFacturas: TdmFacturas
       'ion=d.IdPoblacion'#13#10'left join Municipios M on M.idmunicipio=D.IdM' +
       'unicipio'#13#10'Left Join Estados E on E.idestado=D.idestado'#13#10'Left Joi' +
       'n Paises Pa on Pa.idpais=D.Idpais'#13#10#13#10#13#10#13#10
-    DataSource = DSMaster
+    DataSource = dsMaster
     IndexFieldNames = 'IdPersonaDomicilio'
     MasterFields = 'IdClienteDomicilio'
     Parameters = <>
-    Left = 184
-    Top = 352
+    Left = 64
+    Top = 488
     object ADODtStDireccionesClienteIdPersonaDomicilio: TAutoIncField
       FieldName = 'IdPersonaDomicilio'
       ReadOnly = True
@@ -1045,8 +1051,8 @@ inherited dmFacturas: TdmFacturas
         Size = 4
         Value = Null
       end>
-    Left = 184
-    Top = 410
+    Left = 304
+    Top = 362
     object AutoIncField2: TAutoIncField
       FieldName = 'IdPersonaDomicilio'
       ReadOnly = True
@@ -1113,8 +1119,8 @@ inherited dmFacturas: TdmFacturas
       'select IdMetodoPago, Identificador, Descripcion, ExigeCuenta, '#13#10 +
       'ClaveSAT2016 from MetodosPago'#13#10'where idmetodoPago>0'
     Parameters = <>
-    Left = 64
-    Top = 472
+    Left = 304
+    Top = 304
     object ADODtStSelMetPagoIdMetodoPago: TIntegerField
       FieldName = 'IdMetodoPago'
     end
@@ -1877,8 +1883,8 @@ inherited dmFacturas: TdmFacturas
       'select IdCFDIFormaPago33, Identificador, Descripcion from CFDIFo' +
       'rmasPago33'
     Parameters = <>
-    Left = 296
-    Top = 224
+    Left = 176
+    Top = 192
   end
   object adodsMetodosPago33: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -1887,8 +1893,8 @@ inherited dmFacturas: TdmFacturas
       'select IdCFDIMetodoPago33, Identificador, Descripcion from CFDIM' +
       'etodosPago33'
     Parameters = <>
-    Left = 296
-    Top = 288
+    Left = 176
+    Top = 256
   end
   object adodsTiposRelaciones: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -1897,8 +1903,8 @@ inherited dmFacturas: TdmFacturas
       'select IdCFDITipoRelacion, Identificador, Descripcion from CFDIT' +
       'iposRelaciones'
     Parameters = <>
-    Left = 296
-    Top = 352
+    Left = 176
+    Top = 320
   end
   object adodsUsosCFDI: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -1907,8 +1913,8 @@ inherited dmFacturas: TdmFacturas
       'select IdCFDIUsoCFDI, Identificador, Descripcion from CFDIUsosCF' +
       'DI'
     Parameters = <>
-    Left = 296
-    Top = 408
+    Left = 176
+    Top = 384
   end
   object adocSetConceptoImpuesto: TADOCommand
     CommandText = 

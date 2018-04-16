@@ -72,9 +72,7 @@ inherited dmProductosDocumentos: TdmProductosDocumentos
   object adodsDocumento: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
-    CommandText = 
-      'SELECT IdDocumento, IdDocumentoTipo, IdDocumentoClase, Descripci' +
-      'on, NombreArchivo, IdArchivo, Archivo FROM Documentos'
+    CommandText = 'SELECT IdDocumento, Descripcion FROM Documentos'
     IndexFieldNames = 'IdDocumento'
     MasterFields = 'IdDocumento'
     Parameters = <>

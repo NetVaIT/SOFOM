@@ -64,13 +64,17 @@ type
     cxDBLabel3: TcxDBLabel;
     cxDBLabel4: TcxDBLabel;
     cxDBLabel5: TcxDBLabel;
+    btnRelacionarCFDI: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
+    FactRelacionarCFDI: TBasicAction;
+    procedure SetactRelacionarCFDI(const Value: TBasicAction);
     { Private declarations }
   public
     { Public declarations }
+    property actRelacionarCFDI: TBasicAction read FactRelacionarCFDI write SetactRelacionarCFDI;
   end;
 
 //var
@@ -119,6 +123,12 @@ begin
   pnl32.Visible := not CFDIVersion33;
   pcMain.Enabled:=(datasource.State=dsinsert) or ((datasource.DataSet.FieldByName('IdCFDIEstatus').AsInteger=1) and datasource.DataSet.FieldByName('IdCuentaXCobrar').ISNull );//False; //Dic 20/16 Sólo permite consulta.. Ver que pasa en caso que se quiera realizar factura manual??? o por donde?
   PnlDetalleFact.Enabled:= (datasource.State=dsinsert) or ((datasource.DataSet.FieldByName('IdCFDIEstatus').AsInteger=1) and datasource.DataSet.FieldByName('IdCuentaXCobrar').ISNull );//False;   //Dic 20/16
+end;
+
+procedure TfrmEdFactura.SetactRelacionarCFDI(const Value: TBasicAction);
+begin
+  FactRelacionarCFDI := Value;
+  btnRelacionarCFDI.Action := Value;
 end;
 
 end.

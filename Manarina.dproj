@@ -92,10 +92,10 @@
         <VerInfo_Release>2</VerInfo_Release>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <Icon_MainIcon>Manarina_Icon.ico</Icon_MainIcon>
-        <VerInfo_Build>40</VerInfo_Build>
+        <VerInfo_Build>42</VerInfo_Build>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.2.40;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.2.42;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -1109,6 +1109,13 @@
         <DCCReference Include="Catalogos\PLDAlertasConfiguracionEdit.pas">
             <Form>frmPLDAlertasConfiguracionEdit</Form>
             <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Procesos\CFDIRelacionadosDM.pas">
+            <Form>dmCFDIRelacionados</Form>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Procesos\CFDIRelacionadosForm.pas">
+            <Form>frmCFDIRelacionados</Form>
         </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>

@@ -27,6 +27,7 @@ type
     FMasterSource: TDataSource;
     procedure SetMasterFields(const Value: string);
     procedure SetMasterSource(const Value: TDataSource);
+    function UseSearch: Boolean;
   protected
     gGridForm: T_frmGrid;
     gFormDeatil1: T_frmGrid;
@@ -112,7 +113,7 @@ procedure T_dmStandar.OpenDataSet;
   procedure PrepareDataSet;
   begin
     adodsMaster.Close;
-    if SQLSelect <> EmptyStr then
+    if UseSearch then
       adodsMaster.CommandText:= SQLSelect + ' ' + SQLWhere + ' ' + SQLGroupBy + ' ' + SQLOrderBy;
   end;
 begin
@@ -163,7 +164,7 @@ procedure T_dmStandar.ShowModule(pConteiner: TWinControl; pCation: TCaption);
 begin
   if Assigned(gGridForm) then
   begin
-    OpenDataSet;
+    if not UseSearch then OpenDataSet;
     if Assigned(pConteiner) then
     begin
       gGridForm.Parent:= pConteiner;
@@ -203,6 +204,11 @@ begin
     gFormDeatil3.Align:= alClient;
     gFormDeatil3.Show;
   end;
+end;
+
+function T_dmStandar.UseSearch: Boolean;
+begin
+  Result := (SQLSelect <> EmptyStr);
 end;
 
 end.

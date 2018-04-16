@@ -26,17 +26,17 @@ inherited frmFacturasGrid: TfrmFacturasGrid
     ExplicitWidth = 815
   end
   inherited pnlMaster: TPanel
-    Top = 70
+    Top = 53
     Width = 969
-    Height = 290
-    ExplicitTop = 70
+    Height = 307
+    ExplicitTop = 53
     ExplicitWidth = 969
-    ExplicitHeight = 290
+    ExplicitHeight = 307
     inherited cxGrid: TcxGrid
       Width = 969
-      Height = 290
+      Height = 307
       ExplicitWidth = 969
-      ExplicitHeight = 290
+      ExplicitHeight = 307
       inherited tvMaster: TcxGridDBTableView
         OptionsCustomize.ColumnFiltering = False
         object tvMasterIdCFDI: TcxGridDBColumn
@@ -258,18 +258,19 @@ inherited frmFacturasGrid: TfrmFacturasGrid
           DataBinding.FieldName = 'SaldoFactoraje'
           Visible = False
         end
-        object tvMasterFormaPago33: TcxGridDBColumn
-          DataBinding.FieldName = 'FormaPago33'
-        end
         object tvMasterMetodoPago33: TcxGridDBColumn
           DataBinding.FieldName = 'MetodoPago33'
         end
-        object tvMasterTipoRelacion: TcxGridDBColumn
-          DataBinding.FieldName = 'TipoRelacion'
-          Visible = False
+        object tvMasterFormaPago33: TcxGridDBColumn
+          DataBinding.FieldName = 'FormaPago33'
         end
         object tvMasterUsoCFDI: TcxGridDBColumn
           DataBinding.FieldName = 'UsoCFDI'
+          Width = 304
+        end
+        object tvMasterTipoRelacion: TcxGridDBColumn
+          DataBinding.FieldName = 'TipoRelacion'
+          Width = 304
         end
       end
     end
@@ -305,146 +306,20 @@ inherited frmFacturasGrid: TfrmFacturasGrid
       ExplicitLeft = 884
     end
   end
-  object PnlBusqueda: TPanel [8]
-    Left = 0
-    Top = 26
-    Width = 969
-    Height = 44
-    Align = alTop
-    BevelOuter = bvNone
-    TabOrder = 9
-    DesignSize = (
-      969
-      44)
-    object Button1: TButton
-      Left = 886
-      Top = 6
-      Width = 75
-      Height = 25
-      Anchors = [akTop, akRight]
-      Cancel = True
-      Caption = 'Cerrar'
-      TabOrder = 0
-      OnClick = btnCloseClick
-    end
-    object Panel1: TPanel
-      Left = 0
-      Top = 0
-      Width = 199
-      Height = 44
-      Align = alLeft
-      BevelOuter = bvNone
-      ParentBackground = False
-      TabOrder = 1
-      object Label3: TLabel
-        Left = 16
-        Top = 2
-        Width = 90
-        Height = 13
-        Caption = 'Cliente parecido a:'
-      end
-      object EdtNombre: TEdit
-        Left = 15
-        Top = 17
-        Width = 163
-        Height = 21
-        TabOrder = 0
-        OnChange = EdtNombreChange
-      end
-    end
-    object PnlFechas: TPanel
-      Left = 199
-      Top = 0
-      Width = 770
-      Height = 44
-      Align = alClient
-      BevelOuter = bvNone
-      ParentBackground = False
-      TabOrder = 2
-      object Label1: TLabel
-        Left = 21
-        Top = 4
-        Width = 30
-        Height = 13
-        Caption = 'Desde'
-      end
-      object Label2: TLabel
-        Left = 181
-        Top = 4
-        Width = 28
-        Height = 13
-        Caption = 'Hasta'
-      end
-      object SpdBtnBuscar: TSpeedButton
-        Left = 331
-        Top = 13
-        Width = 25
-        Height = 25
-        Glyph.Data = {
-          76010000424D7601000000000000760000002800000020000000100000000100
-          04000000000000010000130B0000130B00001000000000000000000000000000
-          8000008000000080800080000000800080008080000080808000C0C0C0000000
-          FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
-          33033333333333333F7F3333333333333000333333333333F777333333333333
-          000333333333333F777333333333333000333333333333F77733333333333300
-          033333333FFF3F777333333700073B703333333F7773F77733333307777700B3
-          33333377333777733333307F8F8F7033333337F3333337F3333377F8F8F8F773
-          333337333333373F3333078F8F8F870333337F333333337F333307F8F8F8F703
-          33337F333333337F3333078F8F8F8703333373F333333373333377F8F8F8F773
-          333337F3333337F33333307F8F8F70333333373FF333F7333333330777770333
-          333333773FF77333333333370007333333333333777333333333}
-        NumGlyphs = 2
-        OnClick = SpdBtnBuscarClick
-      end
-      object cxDtEdtDesde: TcxDateEdit
-        Left = 16
-        Top = 17
-        TabOrder = 0
-        Width = 145
-      end
-      object cxDtEdtHasta: TcxDateEdit
-        Left = 176
-        Top = 17
-        TabOrder = 1
-        Width = 137
-      end
-      object ChckBxXFecha: TCheckBox
-        Left = 373
-        Top = 18
-        Width = 82
-        Height = 17
-        Caption = 'Usar Fecha'
-        Checked = True
-        State = cbChecked
-        TabOrder = 2
-        OnClick = SpdBtnBuscarClick
-      end
-      object ChckBxFactVivas: TCheckBox
-        Left = 461
-        Top = 19
-        Width = 148
-        Height = 17
-        Caption = 'Facturas con Saldo'
-        TabOrder = 3
-        OnClick = SpdBtnBuscarClick
-      end
-    end
-  end
   inherited DataSource: TDataSource
     DataSet = dmFacturas.adodsMaster
-    OnDataChange = DataSourceDataChange
   end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
       0
       0
-      26
+      53
       0)
     inherited dxbNavigator: TdxBar
-      DockedLeft = 107
+      DockedLeft = 104
     end
     inherited dxbTools: TdxBar
-      DockedLeft = 238
+      DockedLeft = 231
       ItemLinks = <
         item
           Visible = True
@@ -467,6 +342,40 @@ inherited frmFacturasGrid: TfrmFacturasGrid
           ItemName = 'dxbbCancelarCFDI'
         end>
     end
+    inherited dxbFilter: TdxBar
+      DockedLeft = 0
+      DockedTop = 27
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'edtCliente'
+        end
+        item
+          Visible = True
+          ItemName = 'edtDesde'
+        end
+        item
+          Visible = True
+          ItemName = 'edtHasta'
+        end
+        item
+          ViewLayout = ivlGlyphControlCaption
+          Visible = True
+          ItemName = 'edtUsarFecha'
+        end
+        item
+          ViewLayout = ivlGlyphControlCaption
+          Visible = True
+          ItemName = 'edtConSaldo'
+        end
+        item
+          Visible = True
+          ItemName = 'dxbtnSearch'
+        end>
+      OneOnRow = True
+      Row = 1
+      Visible = True
+    end
     object dxbbTimbrarCFDI: TdxBarButton
       Caption = 'CFDI'
       Category = 0
@@ -487,6 +396,54 @@ inherited frmFacturasGrid: TfrmFacturasGrid
       Hint = 'Cancelar CFDI'
       Visible = ivAlways
       ImageIndex = 19
+    end
+    object edtCliente: TcxBarEditItem
+      Caption = 'Cliente'
+      Category = 0
+      Hint = 'Cliente'
+      Visible = ivAlways
+      ShowCaption = True
+      PropertiesClassName = 'TcxTextEditProperties'
+    end
+    object edtDesde: TcxBarEditItem
+      Caption = 'Desde'
+      Category = 0
+      Hint = 'Desde'
+      Visible = ivAlways
+      ShowCaption = True
+      PropertiesClassName = 'TcxDateEditProperties'
+    end
+    object edtHasta: TcxBarEditItem
+      Caption = 'Hasta'
+      Category = 0
+      Hint = 'Hasta'
+      Visible = ivAlways
+      ShowCaption = True
+      PropertiesClassName = 'TcxDateEditProperties'
+    end
+    object edtUsarFecha: TcxBarEditItem
+      Caption = 'Usar fecha'
+      Category = 0
+      Hint = 'Usar fecha'
+      Visible = ivAlways
+      OnChange = edtUsarFechaChange
+      ShowCaption = True
+      Width = 0
+      PropertiesClassName = 'TcxCheckBoxProperties'
+      Properties.ImmediatePost = True
+      InternalEditValue = True
+    end
+    object edtConSaldo: TcxBarEditItem
+      Caption = 'Con saldo'
+      Category = 0
+      Hint = 'Con saldo'
+      Visible = ivAlways
+      OnChange = edtConSaldoChange
+      ShowCaption = True
+      Width = 0
+      PropertiesClassName = 'TcxCheckBoxProperties'
+      Properties.ImmediatePost = True
+      InternalEditValue = False
     end
   end
   inherited cxStyleRepository: TcxStyleRepository
@@ -1347,10 +1304,5 @@ inherited frmFacturasGrid: TfrmFacturasGrid
       AssignedFormatValues = []
       BuiltInReportLink = True
     end
-  end
-  object DSQryAuxiliar: TDataSource
-    DataSet = dmFacturas.ADOQryAuxiliar
-    Left = 856
-    Top = 32
   end
 end

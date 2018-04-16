@@ -98,15 +98,15 @@ inherited FrmConPagos: TFrmConPagos
         end
         object tvMasterMetodoPago: TcxGridDBColumn
           DataBinding.FieldName = 'MetodoPago'
+          Visible = False
         end
         object tvMasterCuentaPago: TcxGridDBColumn
           DataBinding.FieldName = 'CuentaPago'
+          Visible = False
         end
         object tvMasterBanco: TcxGridDBColumn
           DataBinding.FieldName = 'Banco'
-        end
-        object tvMasterReferencia: TcxGridDBColumn
-          DataBinding.FieldName = 'Referencia'
+          Visible = False
         end
         object tvMasterImporte: TcxGridDBColumn
           DataBinding.FieldName = 'Importe'
@@ -117,6 +117,9 @@ inherited FrmConPagos: TFrmConPagos
         object tvMasterMonedaOrigen: TcxGridDBColumn
           DataBinding.FieldName = 'MonedaOrigen'
           Visible = False
+        end
+        object tvMasterReferencia: TcxGridDBColumn
+          DataBinding.FieldName = 'Referencia'
         end
         object tvMasterObservaciones: TcxGridDBColumn
           DataBinding.FieldName = 'Observaciones'

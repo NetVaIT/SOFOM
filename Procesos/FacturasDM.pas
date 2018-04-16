@@ -63,7 +63,7 @@ type
     ADODtStCFDIConceptosValorUnitario: TFMTBCDField;
     ADODtStCFDIConceptosImporte: TFMTBCDField;
     ADODtStCFDIConceptosIdCFDIConcepto: TLargeintField;
-    DSMaster: TDataSource;
+    dsMaster: TDataSource;
     ADODtStCFDIImpuestos: TADODataSet;
     ADODtStCFDIImpuestosIdCFDI: TLargeintField;
     ADODtStCFDIImpuestosTipoImp: TStringField;
@@ -333,6 +333,7 @@ type
     adoqCFDIRelacionados: TADOQuery;
     adoqCFDIRelacionadosIdCFDIRelacionado: TLargeintField;
     adoqCFDIRelacionadosUUID: TStringField;
+    actRelacionarCFDI: TAction;
     procedure DataModuleCreate(Sender: TObject);
     procedure actTimbrarCFDIExecute(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
@@ -350,6 +351,7 @@ type
     procedure actTimbrarCFDIUpdate(Sender: TObject);
     procedure actCancelarCFDIUpdate(Sender: TObject);
     procedure ADODtStCFDIConceptosBeforeDelete(DataSet: TDataSet);
+    procedure actRelacionarCFDIExecute(Sender: TObject);
   private
     { Private declarations }
     FMuestra: Boolean;
@@ -374,6 +376,8 @@ type
     function Timbrar32(IdCFDI: Integer): Boolean;
     function Timbrar33(IdCFDI: Integer): Boolean;
     procedure GenerarPDF(IdCFDI:Integer; ArchivoPDF, ArchivoImagen: TFileName);
+  protected
+    procedure SetFilter; override;
   public
     { Public declarations }
     EsProduccion:Boolean;
@@ -398,7 +402,7 @@ uses FacturasForm, ConceptosFacturaForm,
   _Utils, _ConectionDmod, ConfiguracionDM, FacturaConfirmacionForm,
   FacturaReglamentacion, Facturacion.ComprobanteV33,
   Facturacion.ComplementoPagoV1, Facturacion.ImpuestosLocalesV1,
-  Facturacion.Helper, RptCFDI33DM;
+  Facturacion.Helper, RptCFDI33DM, CFDIRelacionadosDM;
 
 {$R *.dfm}
 
@@ -725,6 +729,21 @@ begin
   //Filtrar con ID enDocumento
   //Sacar Documento
   //Aun no guarda de nuevo.. (Verificar)
+end;
+
+procedure TdmFacturas.actRelacionarCFDIExecute(Sender: TObject);
+var
+  dmCFDIRelacionados: TdmCFDIRelacionados;
+begin
+  inherited;
+  dmCFDIRelacionados := TdmCFDIRelacionados.CreateWPersona(Self, adodsMasterIdPersonaReceptor.Value);
+  try
+    dmCFDIRelacionados.MasterSource := dsMaster;
+    dmCFDIRelacionados.MasterFields:= 'IdCFDI';
+    dmCFDIRelacionados.ShowModule(nil,'');
+  finally
+    dmCFDIRelacionados.Free;
+  end;
 end;
 
 procedure TDMFacturas.ReadFile(FileName: TFileName); //Dic 15/16
@@ -1210,14 +1229,36 @@ begin
   1:  gGridForm.Caption:='Facturas';
   2:  gGridForm.Caption:='Notas de Crédito';
   end;
-  TfrmFacturasGrid(gGridForm).DSQryAuxiliar.DataSet:=ADOQryAuxiliar;
-  TfrmFacturasGrid(gGridForm).ChckBxFactVivas.Caption:= gGridForm.Caption+' con Saldo';
-  TfrmFacturasGrid(gGridForm).TipoD := IdCFDITipoDocumento;
-  TfrmFacturasGrid(gGridForm).actTimbrarCFDI := actTimbrarCFDI;  //Nov29/16
-  TfrmFacturasGrid(gGridForm).actImprimirCFDI := actImprimirCFDI;  //Dic 15/16
-  TfrmFacturasGrid(gGridForm).actCancelarCFDI := actCancelarCFDI;//Mar 23/17
+//  TfrmFacturasGrid(gGridForm).DSQryAuxiliar.DataSet:=ADOQryAuxiliar;
+//  TfrmFacturasGrid(gGridForm).ChckBxFactVivas.Caption:= gGridForm.Caption+' con Saldo';
+//  TfrmFacturasGrid(gGridForm).TipoD := IdCFDITipoDocumento;
+  gGridForm.actSearch := actSearch;
+  TfrmFacturasGrid(gGridForm).actTimbrarCFDI := actTimbrarCFDI;
+  TfrmFacturasGrid(gGridForm).actImprimirCFDI := actImprimirCFDI;
+  TfrmFacturasGrid(gGridForm).actCancelarCFDI := actCancelarCFDI;
+  TfrmFacturasGrid(gGridForm).actRelacionarCFDI := actRelacionarCFDI;
+
+  // Busqueda
+  SQLSelect:= 'SELECT IdCFDI, IdCFDITipoDocumento, IdCFDIFormaPago, IdMetodoPago, IdMoneda, IdPersonaEmisor, IdPersonaReceptor, IdDocumentoCBB, IdDocumentoXML, IdDocumentoPDF, IdCFDIEstatus, IdCFDIFacturaGral, IdClienteDomicilio, ' +
+  'Version, CuentaCte, TipoCambio, TipoComp, Serie, Folio, Fecha, LugarExpedicion, Sello, CondPago, NoCertificado, Certificado, SubTotal, Descto, MotivoDescto, Total, NumCtaPago, CadenaOriginal, TotalImpuestoRetenido, ' +
+  'TotalImpuestoTrasladado, SaldoDocumento, FechaCancelacion, Observaciones, PorcentajeIVA, EmailCliente, UUID_TB, SelloCFD_TB, SelloSAT_TB, CertificadoSAT_TB, FechaTimbrado_TB, IdCuentaXCobrar, SaldoFactoraje, ' +
+  'IdCFDIFormaPago33, IdCFDIMetodoPago33, IDCFDITipoRelacion, IdCFDIUsoCFDI ' +
+  'FROM CFDI ';
+  actSearch.Execute;
 //  TfrmFacturasGrid(gGridForm).VADODtStSelMetPago:=ADODtStSelMetPago; //Ago 31/17
 //  TfrmFacturasGrid(gGridForm).VADODtStCFDIConceptos:=ADODtStCFDIConceptos; //Ago 31/17
+end;
+
+procedure TdmFacturas.SetFilter;
+begin
+  inherited;
+  SQLWhere := Format(' WHERE (IdCFDITipoDocumento =  %d) ', [IdCFDITipoDocumento]);
+  if TfrmFacturasGrid(gGridForm).Cliente <> EmptyStr then
+    SQLWhere := SQLWhere + 'AND IdPersonaReceptor IN (SELECT IdPersona FROM Personas WHERE RazonSocial LIKE ''%' + TfrmFacturasGrid(gGridForm).Cliente + '%'') ';
+  if TfrmFacturasGrid(gGridForm).UsarFecha then
+    SQLWhere := SQLWhere + Format('AND Fecha BETWEEN ''%s'' AND ''%s'' ', [DateToStr(TfrmFacturasGrid(gGridForm).Desde), DateToStr(TfrmFacturasGrid(gGridForm).Hasta)]);
+  if TfrmFacturasGrid(gGridForm).ConSaldo then
+    SQLWhere := SQLWhere + 'AND SaldoDocumento > 0 ';
 end;
 
 procedure TdmFacturas.ReadFileCERKEY(FileNameCER, FileNameKEY: TFileName);

@@ -6,7 +6,8 @@ inherited dmAnexosMoratorios: TdmAnexosMoratorios
     CommandText = 
       'select IdAnexoMoratorio, IdAnexoAmortizacion, IdAnexoMoratorioEs' +
       'tatus, IdCuentaXCobrar, Fecha, ImporteBase, Importe, Descuento, ' +
-      'Impuesto, ImporteAplicado, Cancelacion from AnexosMoratorios'
+      'Impuesto, ImporteAplicado, Cancelacion from AnexosMoratorios'#13#10'OR' +
+      'DER BY Fecha'
     object adodsMasterIdAnexoMoratorio: TIntegerField
       FieldName = 'IdAnexoMoratorio'
       Visible = False
@@ -53,6 +54,7 @@ inherited dmAnexosMoratorios: TdmAnexosMoratorios
     object adodsMasterDescuento: TFMTBCDField
       FieldName = 'Descuento'
       OnChange = adodsMasterImporteChange
+      OnValidate = adodsMasterDescuentoValidate
       currency = True
       Precision = 18
       Size = 6

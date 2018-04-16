@@ -9,14 +9,14 @@ inherited frmEdFactura: TfrmEdFactura
   inherited pcMain: TcxPageControl
     Width = 694
     Height = 569
-    ExplicitWidth = 701
+    ExplicitWidth = 694
     ExplicitHeight = 569
     ClientRectBottom = 567
     ClientRectRight = 692
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 2
       ExplicitTop = 26
-      ExplicitWidth = 697
+      ExplicitWidth = 690
       ExplicitHeight = 541
       object PnlDetalleFact: TPanel
         Left = 0
@@ -26,7 +26,6 @@ inherited frmEdFactura: TfrmEdFactura
         Align = alClient
         BevelKind = bkTile
         TabOrder = 0
-        ExplicitWidth = 697
       end
       object Panel1: TPanel
         Left = 0
@@ -36,7 +35,6 @@ inherited frmEdFactura: TfrmEdFactura
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 1
-        ExplicitWidth = 697
         object Label1: TLabel
           Left = 25
           Top = 5
@@ -172,7 +170,6 @@ inherited frmEdFactura: TfrmEdFactura
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 2
-        ExplicitWidth = 697
         object Label12: TLabel
           Left = 25
           Top = 3
@@ -215,7 +212,7 @@ inherited frmEdFactura: TfrmEdFactura
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 3
-        ExplicitWidth = 697
+        ExplicitTop = 206
         object Label15: TLabel
           Left = 338
           Top = 2
@@ -284,6 +281,15 @@ inherited frmEdFactura: TfrmEdFactura
           DataSource = DataSource
           TabOrder = 2
         end
+        object btnRelacionarCFDI: TButton
+          Left = 643
+          Top = 59
+          Width = 42
+          Height = 21
+          Hint = 'Relacionar los CFDi anteriores'
+          Caption = '...'
+          TabOrder = 4
+        end
       end
       object Panel4: TPanel
         Left = 0
@@ -292,7 +298,6 @@ inherited frmEdFactura: TfrmEdFactura
         Height = 42
         Align = alBottom
         TabOrder = 4
-        ExplicitWidth = 697
         object Label5: TLabel
           Left = 9
           Top = 13
@@ -391,17 +396,17 @@ inherited frmEdFactura: TfrmEdFactura
     Top = 569
     Width = 694
     ExplicitTop = 569
-    ExplicitWidth = 701
+    ExplicitWidth = 694
     DesignSize = (
       694
       41)
     inherited btnCancel: TButton
       Left = 612
-      ExplicitLeft = 619
+      ExplicitLeft = 612
     end
     inherited btnOk: TButton
       Left = 531
-      ExplicitLeft = 538
+      ExplicitLeft = 531
     end
   end
   inherited DataSource: TDataSource

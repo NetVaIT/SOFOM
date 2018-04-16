@@ -1205,7 +1205,7 @@
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.Duplex = dpVertical
     PrinterSetup.Orientation = poLandscape
-    PrinterSetup.PaperName = 'Oficio'
+    PrinterSetup.PaperName = 'Legal (8,5" x 14")'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350
@@ -5395,7 +5395,7 @@
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.Duplex = dpVertical
-    PrinterSetup.PaperName = 'Carta'
+    PrinterSetup.PaperName = 'Letter (8,5" x 11")'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350
@@ -9381,7 +9381,7 @@
         UserName = 'DBText22'
         DataField = 'FechaFactura'
         DataPipeline = ppDBPplnCtaActCliente
-        DisplayFormat = 'mm/dd/yyyy'
+        DisplayFormat = 'dd/mm/yyyy'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -9820,7 +9820,7 @@
           AutoSize = False
           Caption = 
             'Cualquier duda o aclaraci'#243'n favor de comunicarse al tel'#233'fono (33' +
-            ') 3003-0175 con Francisco Emilio Garc'#237'a Preciado J'#225'uregui'
+            ') 3003-0174 con Carlos Armando Portillo Osuna'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Name = 'Arial'
@@ -9953,7 +9953,7 @@
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.Duplex = dpVertical
     PrinterSetup.Orientation = poLandscape
-    PrinterSetup.PaperName = 'Carta'
+    PrinterSetup.PaperName = 'Letter (8,5" x 11")'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350

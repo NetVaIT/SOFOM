@@ -259,7 +259,9 @@ uses
   PLDAlertasPreocupanteForm in 'Procesos\PLDAlertasPreocupanteForm.pas' {frmPLDAlertasPreocupante},
   PLDAlertasConfiguracionDM in 'Catalogos\PLDAlertasConfiguracionDM.pas' {dmPLDAlertasConfiguracion: TDataModule},
   PLDAlertasConfiguracionForm in 'Catalogos\PLDAlertasConfiguracionForm.pas' {frmPLDAlertasConfiguracion},
-  PLDAlertasConfiguracionEdit in 'Catalogos\PLDAlertasConfiguracionEdit.pas' {frmPLDAlertasConfiguracionEdit};
+  PLDAlertasConfiguracionEdit in 'Catalogos\PLDAlertasConfiguracionEdit.pas' {frmPLDAlertasConfiguracionEdit},
+  CFDIRelacionadosDM in 'Procesos\CFDIRelacionadosDM.pas' {dmCFDIRelacionados: TDataModule},
+  CFDIRelacionadosForm in 'Procesos\CFDIRelacionadosForm.pas' {frmCFDIRelacionados};
 
 {$R *.res}
 

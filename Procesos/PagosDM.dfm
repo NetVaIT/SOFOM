@@ -100,12 +100,14 @@ inherited dmPagos: TdmPagos
       LookupKeyFields = 'IdMetodoPago'
       LookupResultField = 'Descripcion'
       KeyFields = 'IdMetodoPago'
+      Visible = False
       Size = 30
       Lookup = True
     end
     object adodsMasterCuentaPago: TStringField
       DisplayLabel = 'Cuenta de pago'
       FieldName = 'CuentaPago'
+      Visible = False
     end
     object adodsMasterBanco: TStringField
       FieldKind = fkLookup
@@ -114,6 +116,7 @@ inherited dmPagos: TdmPagos
       LookupKeyFields = 'IdBanco'
       LookupResultField = 'Nombre'
       KeyFields = 'IdBanco'
+      Visible = False
       Lookup = True
     end
     object adodsMasterReferencia: TStringField
