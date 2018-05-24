@@ -107,12 +107,11 @@ type
     procedure FormShow(Sender: TObject);
     procedure edtUsarFechaChange(Sender: TObject);
     procedure edtConSaldoChange(Sender: TObject);
+    procedure DataSourceDataChange(Sender: TObject; Field: TField);
   private
     { Private declarations }
     ffiltroNombre: String;
-    fOrden: String;
     ffiltroFecha: String;
-    FTipoDoc: Integer;
     FactCancelarCFDI: TBasicAction;
     FactImprimirCFDI: TBasicAction;
     FactTimbrarCFDI: TBasicAction;
@@ -152,6 +151,13 @@ implementation
 
 uses FacturasDM, FacturasEdit, _ConectionDmod, FacturaConfirmacionForm,
   MetodoPagoFacturaEdt;
+
+procedure TfrmFacturasGrid.DataSourceDataChange(Sender: TObject; Field: TField);
+begin
+  inherited;
+  if Assigned(gEditForm) then
+    TfrmEdfactura(gEditForm).SoloLectura := not CanEdit;
+end;
 
 procedure TfrmFacturasGrid.edtConSaldoChange(Sender: TObject);
 begin

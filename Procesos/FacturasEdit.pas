@@ -19,7 +19,8 @@ uses
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, Vcl.ImgList,
   System.Actions, Vcl.ActnList, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls, cxPC,
   cxContainer, cxEdit, cxCalc, cxDBEdit, Vcl.DBCtrls, cxSpinEdit, cxTextEdit,
-  cxMaskEdit, cxDropDownEdit, cxCalendar, cxLabel, cxDBLabel;
+  cxMaskEdit, cxDropDownEdit, cxCalendar, cxLabel, cxDBLabel,
+  ConceptosFacturaForm;
 
 type
   TfrmEdFactura = class(T_frmEdit)
@@ -69,66 +70,61 @@ type
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
-    FactRelacionarCFDI: TBasicAction;
-    procedure SetactRelacionarCFDI(const Value: TBasicAction);
     { Private declarations }
+    frmConceptos: TfrmConceptos;
+    FactRelacionarCFDI: TBasicAction;
+    FSoloLectura: Boolean;
+    procedure SetactRelacionarCFDI(const Value: TBasicAction);
+    procedure SetSoloLectura(const Value: Boolean);
   public
     { Public declarations }
     property actRelacionarCFDI: TBasicAction read FactRelacionarCFDI write SetactRelacionarCFDI;
+    property SoloLectura: Boolean read FSoloLectura write SetSoloLectura;
   end;
-
-//var
-//  frmEdFactura: TfrmEdFactura;
 
 implementation
 
 {$R *.dfm}
 
-uses FacturasDM, ConceptosFacturaForm;
+uses FacturasDM;
 
 procedure TfrmEdFactura.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   inherited;
-  if FrmConceptos.DataSource.State in [dsEdit,DSInsert] then //Jun 27/17
-     FrmConceptos.DataSource.dataset.Post;
-
+  if frmConceptos.DataSource.State in [dsEdit,DSInsert] then
+     frmConceptos.DataSource.dataset.Post;
 end;
 
 procedure TfrmEdFactura.FormCreate(Sender: TObject);
 begin
   inherited;
-  frmConceptos:=TfrmConceptos.Create(self);
-  FrmConceptos.Parent:= PnlDetalleFact;
-  FrmConceptos.Align:=alClient;
-  FrmConceptos.Show;
+  frmConceptos:= TfrmConceptos.Create(self);
+  frmConceptos.Parent:= PnlDetalleFact;
+  frmConceptos.Align:=alClient;
+  frmConceptos.Show;
 end;
 
 procedure TfrmEdFactura.FormShow(Sender: TObject);
 var
   CFDIVersion33: Boolean;
 begin
-  inherited;                                                                               //Prefactura                                //A menos que fuera la de opcion compra...
-(*  if (datasource.State<>dsinsert)then // or (datasource.DataSet.FieldByName('IdCFDIEstatus').AsInteger<>1)  or (not datasource.DataSet.FieldByName('IdCuentaXCobrar').ISNull) then // jun 26/17 Verificar   // o si es de las de opcion de compra  y es prefactura ?? ver como
-  begin
-    if (datasource.DataSet.FieldByName('IdCFDIEstatus').AsInteger<>1) or (not datasource.DataSet.FieldByName('IdCuentaXCobrar').ISNull) then // si no es prefactura o si tiene cxc asociada
-    begin
-      pcMain.Enabled:=False; //Dic 20/16 Sólo permite consulta.. Ver que pasa en caso que se quiera realizar factura manual??? o por donde?
-      PnlDetalleFact.Enabled:=False;   //Dic 20/16
-    end;
-
-  end;  *)
+  inherited;
+  frmConceptos.ReadOnlyGrid := SoloLectura;
   // CFDI 33
   CFDIVersion33 :=DataSource.DataSet.FieldByName('Version').AsString = '3.3';
   pnl33.Visible := CFDIVersion33;
   pnl32.Visible := not CFDIVersion33;
-  pcMain.Enabled:=(datasource.State=dsinsert) or ((datasource.DataSet.FieldByName('IdCFDIEstatus').AsInteger=1) and datasource.DataSet.FieldByName('IdCuentaXCobrar').ISNull );//False; //Dic 20/16 Sólo permite consulta.. Ver que pasa en caso que se quiera realizar factura manual??? o por donde?
-  PnlDetalleFact.Enabled:= (datasource.State=dsinsert) or ((datasource.DataSet.FieldByName('IdCFDIEstatus').AsInteger=1) and datasource.DataSet.FieldByName('IdCuentaXCobrar').ISNull );//False;   //Dic 20/16
 end;
 
 procedure TfrmEdFactura.SetactRelacionarCFDI(const Value: TBasicAction);
 begin
   FactRelacionarCFDI := Value;
   btnRelacionarCFDI.Action := Value;
+end;
+
+procedure TfrmEdFactura.SetSoloLectura(const Value: Boolean);
+begin
+  FSoloLectura := Value;
 end;
 
 end.

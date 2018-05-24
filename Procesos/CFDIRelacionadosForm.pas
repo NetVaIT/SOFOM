@@ -36,6 +36,8 @@ type
     tvMasterIDCFDIAsociado: TcxGridDBColumn;
     tvMasterCFDIAsociado: TcxGridDBColumn;
     tvMasterUUID: TcxGridDBColumn;
+    dxBarButton8: TdxBarButton;
+    dxBarButton9: TdxBarButton;
   private
     { Private declarations }
   public

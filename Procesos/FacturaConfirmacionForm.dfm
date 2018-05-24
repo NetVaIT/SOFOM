@@ -62,7 +62,6 @@ object FrmDatosFacturaPrev: TFrmDatosFacturaPrev
       item
         Expanded = False
         FieldName = 'Unidad'
-        Width = 64
         Visible = True
       end
       item
@@ -169,6 +168,8 @@ object FrmDatosFacturaPrev: TFrmDatosFacturaPrev
       ImageIndex = 0
       ExplicitLeft = 1
       ExplicitTop = 25
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label1: TLabel
         Left = 241
         Top = 36

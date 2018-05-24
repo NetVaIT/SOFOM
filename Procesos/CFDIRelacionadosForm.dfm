@@ -43,6 +43,47 @@ inherited frmCFDIRelacionados: TfrmCFDIRelacionados
       0
       26
       0)
+    inherited dxbNavigator: TdxBar
+      DockedLeft = 150
+    end
+    inherited dxbEdit: TdxBar
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'Insert1'
+        end
+        item
+          Visible = True
+          ItemName = 'Edit1'
+        end
+        item
+          Visible = True
+          ItemName = 'Delete1'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarButton7'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarButton8'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarButton9'
+        end>
+    end
+    inherited dxbTools: TdxBar
+      DockedLeft = 277
+    end
+    object dxBarButton8: TdxBarButton
+      Action = DatasetPost
+      Category = 0
+    end
+    object dxBarButton9: TdxBarButton
+      Action = DatasetCancel
+      Category = 0
+    end
   end
   inherited cxStyleRepository: TcxStyleRepository
     PixelsPerInch = 96
@@ -52,7 +93,7 @@ inherited frmCFDIRelacionados: TfrmCFDIRelacionados
   end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
-      ReportDocument.CreationDate = 43165.499007245370000000
+      ReportDocument.CreationDate = 43165.499007245380000000
       AssignedFormatValues = []
       BuiltInReportLink = True
     end

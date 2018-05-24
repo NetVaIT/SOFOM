@@ -211,31 +211,20 @@ type
     procedure ActRepCxCEstatusFactPendienteExecute(Sender: TObject);
   private
     { Private declarations }
-//    FFacturando: boolean;
     FTotalConMora: Double;
     function SacaTipoComp(TipoDoc: Integer): String;
     function SacaDireccion(IDCliente: Integer): Integer;
     function SacaMetodo(IDCliente: Integer; var CtaPago:String): Integer;
-//    procedure Facturar(IDCFDIGen: Integer; var CFDICreado, CFDITimbrado: Boolean;
-//      IDGenTipoDoc: integer);
     procedure RegistraBitacora(tipoRegistro: Integer);
     function GetFFechaActual: TDAteTime;
-    function EsOpcionCompra(idCXC: Integer;var ConceptoNvo:String; var idCXCDet :integer): Boolean;
-    function GetFTotalConMora: Double;  //May 26/17
-//    function CambiarMetodoPago(var IDMetodoPago: Integer;
-//      var Cuenta,CompConcepto: String): Boolean;
-    procedure verificaYCambiaEstatusCXC(IDCFDIACT, NvoEstatus, IdCXCAct:integer; CFDICreado:Boolean );
-//    function ConfirmarGeneracion(AMAster, AConceptos: TAdoDAtaSEt): Boolean;
+    function GetFTotalConMora: Double;
+    procedure verificaYCambiaEstatusCXC(IDCFDIACT, NvoEstatus, IdCXCAct:integer);
   public
     { Public declarations }
     function CrearCFDI(IdCuentaXCobrar: Integer): Integer;
-//    property Facturando:boolean read FFacturando write FFacturando; //Abr 7/17 copiado de Pagos
     property FFechaActual:TDAteTime read GetFFechaActual;
-    property TotalConMora : Double read GetFTotalConMora ;//Jul 10/17    write FTotalConMora
+    property TotalConMora : Double read GetFTotalConMora;
   end;
-
-//var
-//  dmCuentasXCobrar: TdmCuentasXCobrar;
 
 implementation
 
@@ -244,7 +233,6 @@ implementation
 uses CuentasXCobrarForm, FacturasDM, _ConectionDmod, ConceptoOpcionCEdt, MetodoPagoFacturaEdt,
   PDFReporteEstatusCXC, FacturaConfirmacionForm, _Utils;
 
-
 {$R *.dfm}
 
 procedure TdmCuentasXCobrar.ActRepCxCEstatusFactPendienteExecute(
@@ -252,46 +240,21 @@ procedure TdmCuentasXCobrar.ActRepCxCEstatusFactPendienteExecute(
 var
   DMListaCXCPendFactPDF:TDMListaCXCPendFactPDF;
   ArchiPDF:TFileName;
-  Texto:String;//,TxtSQL:String;
-//  FechaIni, FechaFin:TDAteTime;
-begin        //Jul 11/17
+  Texto:String;
+begin
   inherited;
-//  FechaIni:=  TfrmrptantiguedadSaldos(gGridForm).AFecIni;
-//  FechaFin:=  TfrmrptantiguedadSaldos(gGridForm).AFecFin;
   //Ajustado para que no cambie l consulta
-
   TExto:= '_' +FormatDateTime('ddmmmyyyy', _DmConection.LaFechaActual);//Date); Jun 30/17
   ArchiPDF:='ListaCXCPendFacturas'+Texto+'.PDF';
   DMListaCXCPendFactPDF:= TDMListaCXCPendFactPDF.Create(Self);
   try
- //    DMListaCXCPendFactPDF.ADODtStCtaActCliente.Close;
-  //   TAdoDAtaset(dmAntiguedadSaldosPDF.ADODtStCtaActCliente).CommandText:=  TxtSQL;
-   // if pos(':FIni',TxtSQL)>0 then
-    begin                                                                                        //Jul 11/17
-  //    TADoDAtaset(dmAntiguedadSaldosPDF.ADODtStCtaActCliente).Parameters.ParamByName('IdPersona').Value:=adodsMasterIdPersona.AsInteger; //DEl que tenga actualmente  siempre usa fechas
-//      TADoDAtaset(dmAntiguedadSaldosPDF.ADODtStCtaActCliente).Parameters.ParamByName('Fini').Value:= FechaIni;
-//      TADoDAtaset(dmAntiguedadSaldosPDF.ADODtStCtaActCliente).Parameters.ParamByName('FFin').Value:= FechaFin;
-   //   TExto:= ' DEL ' + DAteToSTR(FEchaIni) + ' AL '+ DAteToSTR(FEchaFin);//+FormatDateTime('mmm-dd-yyyy',FechaIni)+ ' AL: '+FormatDateTime('dd mmm del aaaa',FechaFin);
-    end;
- //   else             //
-   // TExto:=  'AL '+upperCASE(FormatDateTime('dd ''de'' mmmm ''del'' yyyy',_DmConection.LaFechaActual));//Date)); Jul 11/17 para que muestre todo lo adeudado
-
-   // DMListaCXCPendFactPDF.ADODtStCtaActCliente.Open;
-
-
-
     DMListaCXCPendFactPDF.adodsReport.Open;
-
     DMListaCXCPendFactPDF.ppReport.ShowPrintDialog:= False;
     DMListaCXCPendFactPDF.ppReport.ShowCancelDialog:= False;
-
     DMListaCXCPendFactPDF.ppReport.PrinterSetup.DocumentName:=  'LISTADO DE CXC CON FACTURAS PENDIENTES '+#13 +Texto;
-
     DMListaCXCPendFactPDF.ppReport.DeviceType:= 'PDF';
     DMListaCXCPendFactPDF.ppReport.TextFileName:= ArchiPDF;
-   // dmAntiguedadSaldosPDF.ppLblTitulo2.caption:= 'ANTIGUEDAD DE SALDOS COBRADOS POR CLIENTE '+#13 +Texto;
     DMListaCXCPendFactPDF.ppReport.print;
-
      DMListaCXCPendFactPDF.adodsReport.Close;
   finally
     DMListaCXCPendFactPDF.Free;
@@ -316,7 +279,6 @@ begin
   end
   else
     Showmessage('Proceso de generación de Moratorios Cancelado');
-
 end;
 
 procedure TdmCuentasXCobrar.ActGeneraCuentasXCobrarExecute(Sender: TObject);
@@ -327,10 +289,6 @@ begin
   inherited;
   REs:=0;                                                                                 // may 26/17 era date
   ShowMessage('Calcula Cuentas X Cobrar pendientes de generar al dia de hoy '+dateTimeToSTR(FFechaActual));
-  { feb 15/17
-  //SAca lo pendiente al dia para poder usar las fechas de corte pendientes y generar
-  }
- // si debe ir deshabilitado Ago 4/17
   ADOQryAuxiliar.Close;                      //Consulta para mandar crear CXC   probablememnte Verificar si PagoTotal es >1 Oct 24/17
   ADOQryAuxiliar.SQL.Clear;
   ADOQryAuxiliar.SQL.Add('SELECT    IdAnexoAmortizacion, IdAnexoCredito, IdAnexoSegmento, Periodo, FechaCorte, FechaVencimiento, '+
@@ -341,49 +299,35 @@ begin
 //                         '       //     and CXC.Fecha=AA.FechaCorte)'+ no debe filtrar poresto
                          ' and not Exists (Select * from AnexosCreditos Ac where Ac.IdAnexoCredito =AA.IdAnexoCredito and AC.IdAnexoCreditoEstatus =2)-- no Cancelado'+
                          ' order by FechaCorte');
-
   ADOQryAuxiliar.Parameters.ParamByName('FechaCorte').value:= FFechaActual;// may 26/17 date;      //Se buscan a al dìa de hoy  (Fecha Tabla)
-
   ADOQryAuxiliar.Open;
   while not ADOQryAuxiliar.eof do
   begin
-
     FechaAux:= ADOQryAuxiliar.FieldByName('FechaCorte').AsDateTime;
-
     ADOStrdPrcGeneraCXC.Parameters.ParamByName('@FechaCorte').Value:=FechaAux;   //FFechaActual
     ADOStrdPrcGeneraCXC.ExecProc;
-
- // deshabilitado ab 11/17   ShowMessage('Ejecutó proceso con fecha '+dateTimeToSTR(FechaAux));
-// verificar con Jesus para que mande algun valor  if ADOStrdPrcGeneraCXC.Parameters.ParamByName('@IDCuentaXCobrar').Value>0 then //Ajustado Jun 30/17
-
-    Res:=Res+1;  //Movido aca abr 12/17
+    Res:=Res+1;
     ADOQryAuxiliar.Next;
   end;
   ADOQryAuxiliar.Close;
-
   adoDSMaster.Close;
   adoDSMaster.Open;
   if res=0  then
      Showmessage('No existen Amortizaciones en el rango de fechas para la creación de Cuentas X Cobrar pendientes')         //Ajustados los mensajes oct 4/17
   else
      Showmessage('Verificó '+intToStr(res)+' Amortizaciones con posibilidad de creación de Cuentas X Cobrar. Puede que se hayan generado nuevas cuentas');  //Puede que no de todas actualice
-
-  RegistraBitacora(0);//CuentasXCobrar
+  RegistraBitacora(0);
 end;
-
 
 Procedure TdmCuentasXCobrar.RegistraBitacora(tipoRegistro:Integer); //Abr 11/17
 var
    tipoTxt:String;
-   REsp:Integer;
 begin
   case TipoRegistro of
-  0:  tipoTxt:='CXC';
-  1:  tipoTxt:='MORA';
-  2:  tipoTxt:='ABOCAP'; //Abr 19/17
-
+    0:  tipoTxt:='CXC';
+    1:  tipoTxt:='MORA';
+    2:  tipoTxt:='ABOCAP'; //Abr 19/17
   end;
-
   ADOQryAuxiliar.Close;
   ADOQryAuxiliar.SQL.Clear;
   ADOQryAuxiliar.sql.Add('IF not exists(Select * from BitacoraGeneracion where Tipo = '''+TipoTxt+''' and FechaGeneracion =:IdFechaHoy1 )'+
@@ -391,59 +335,9 @@ begin
                          intToSTR(_DMConection.idUsuario)+' ) ' );
   ADOQryAuxiliar.Parameters.ParamByName('IdFechaHoy1').Value:=FFechaActual;  //cambio May 28/17   date bitacora
   ADOQryAuxiliar.Parameters.ParamByName('IdFechaHoy2').Value:=FFechaActual;  // cambio May 28/17   date bitacora
-  Resp:=ADOQryAuxiliar.ExecSQL;
-//  if Resp=1 then
-  //  showmessage('Lo creó');
+  ADOQryAuxiliar.ExecSQL;
   AdodsMaster.Refresh;
 end;
-
-function TdmCuentasXCobrar.EsOpcionCompra(idCXC:Integer;var ConceptoNvo:String; var idCXCDet :integer ):Boolean; //Jun 28/17
-begin                                                                          //Para traer la que se va a cambiar
-  ADOQryAuxiliar.Close;
-  ADOQryAuxiliar.SQL.Clear;
-  ADOQryAuxiliar.sql.Add('Select * from CuentasXcobrarDetalle  where idCuentaXCobrar=' +intToStr(idcxc)+
-                         ' and IdCuentaXCobrarTipo in (92,96,100)' );
-
-  ADOQryAuxiliar.open;
-  if not ADOQryAuxiliar.eof then         //Solo debe ria haber una
-  begin
-    idCXCDet:=ADOQryAuxiliar.FieldByName('IDCuentaXCobrarDetalle').AsInteger;
-    ConceptoNvo:= ADOQryAuxiliar.FieldByName('Descripcion').AsString;
-    FrmConcFacturaOpcCompra:=TFrmConcFacturaOpcCompra.Create(self);
-    FrmConcFacturaOpcCompra.cxMmConceptoFactura.Text:= ConceptoNvo;
-    FrmConcFacturaOpcCompra.ShowModal;
-    if FrmConcFacturaOpcCompra.ModalResult=mrOk then
-       ConceptoNvo:= FrmConcFacturaOpcCompra.cxMmConceptoFactura.Text; //verificar si se toman las lineas y se coloca un enter entre una y otra en el texto Jul 10/17
-    FrmConcFacturaOpcCompra.Free;
-    result:=true;
-  end
-  else
-  begin
-    Result:=False;
-    idCXCDet:=-1;
-  end;
-end;
-
-//function TdmCuentasXCobrar.CambiarMetodoPago(var IDMetodoPago:Integer; var Cuenta, CompConcepto:String):Boolean;
-//begin  //Jul 10/17
-//  Cuenta:=''; //Para que al menos este vacia
-//  CompConcepto:=''; //ago 30/17
-//  IDMetodoPago:=6;// No identificado SacaMetodo(adodsMasterIdPersona.AsInteger, Cuenta);   //CXC
-//  FrmMetodoPagoFactura:=TFrmMetodoPagoFactura.Create(self);
-//  FrmMetodoPagoFactura.IdMetSeleccion:=IDMetodoPago;
-//  FrmMetodoPagoFactura.CuentaSeleccion:= Cuenta;
-//  FrmMetodoPagoFactura.DSMetodoPago.DataSet:=ADODtStSelMetPago;
-//
-//  FrmMetodoPagoFactura.ShowModal;
-//  Result:= FrmMetodoPagoFactura.ModalResult=mrOk ;
-//  if result then
-//  begin
-//    IDMetodoPago:= FrmMetodoPagoFactura.IdMetSeleccion;
-//    Cuenta:= FrmMetodoPagoFactura.CuentaSeleccion;
-//    CompConcepto:=FrmMetodoPagoFactura.ComplemConcepto; //Ago 30/17
-//  end;
-//  FrmMetodoPagoFactura.Free;
-//end;
 
 procedure TdmCuentasXCobrar.actGeneraPreFacturasExecute(Sender: TObject);
 var
@@ -537,7 +431,7 @@ end;
 //  end;
 //end;
 
-procedure TdmCuentasXCobrar.verificaYCambiaEstatusCXC(IDCFDIACT, NvoEstatus, IdCXCAct:integer; CFDICreado:Boolean );
+procedure TdmCuentasXCobrar.verificaYCambiaEstatusCXC(IDCFDIACT, NvoEstatus, IdCXCAct:integer);
 begin                                //Jul 19/17
   ADOQryAuxiliar.Close;
   ADOQryAuxiliar.SQL.Clear;
@@ -647,21 +541,20 @@ begin
     Tadodataset(adodsMaster).open;
   end;
   inherited;
-
 end;
 
 procedure TdmCuentasXCobrar.ADODtStCFDIConceptosPrefAfterPost(
   DataSet: TDataSet);
 var                             //Copiado de Mas
-  idDocCFDI, IDDocItem, idImp:Integer;
+  idDocCFDI, idImp:Integer;
   Subtotal,IVACal,TotalCal, IVAReg:Double; //Agregado ago 25/16
-  Existe:Boolean;
+//  Existe:Boolean;
 begin
   inherited;  //Mar 29/16     //Verificar que no intertfiera con el  proceso normal de facturacion
   idImp:=-1;
   IVAreg:=0; //
   //Verificar si aca actualizar el item respectivo del detalle del documento
-  IDDocItem:=DataSet.FieldByName('IDCFDIConcepto').AsInteger;
+//  IDDocItem:=DataSet.FieldByName('IDCFDIConcepto').AsInteger;
   idDocCFDI:=DataSet.FieldByName('IDCFDI').AsInteger;
 
   //Verificar si tiene conceptos de IVA .. Poner y no calcular, pero si no  calcular..//Ene 16/17
@@ -770,7 +663,7 @@ begin
   //Verificar si serie yFolio se colocan aca o se colocan justo antes de generar el CFDI
   DataSet.FieldByName('Folio').AsInteger:=0; //Sin asignar aun
   DataSet.FieldByName('Fecha').AsDateTime:=now; //Prefactura Se supondría que se van a generar inmediatamente pero hay que verificar(por si se requiere cambio de fecha antes de generar)
-  DataSet.FieldByName('LugarExpedicion').AsString:=ADODtStPersonaEmisorMunicipio.Value +', '+ADODtStPersonaEmisorEstado.Value;//'Zapopan, Jalisco' ; //Verificar si se saca de  la direccion del emisor?
+  DataSet.FieldByName('LugarExpedicion').AsString:=ADODtStPersonaEmisorMunicipio.AsString +', '+ADODtStPersonaEmisorEstado.AsString;//'Zapopan, Jalisco' ; //Verificar si se saca de  la direccion del emisor?
 
 // DataSet.FieldByName('Serie').AsString:=
   DataSet.FieldByName('IdCFDIFormaPago').AsInteger :=1;
@@ -799,7 +692,6 @@ function TdmCuentasXCobrar.CrearCFDI(IdCuentaXCobrar: Integer): Integer;
 var
   dmFacturas: TdmFacturas;
   IdCFDI: Integer;
-  CFDICreado: Boolean;
   CFDITimbrado: Boolean;
 begin
   // Cabiar metodo de pago
@@ -811,7 +703,7 @@ begin
   finally
     dmFacturas.Free;
   end;
-  VerificaYCambiaEstatusCXC(IdCFDI,1,IdCuentaXCobrar,CFDICreado); //A EstatusFActurada (1)
+  VerificaYCambiaEstatusCXC(IdCFDI,1,IdCuentaXCobrar);
   if not CFDITimbrado then
     ShowMessage('Factura Creada Pendiente de Timbrar')
   else
@@ -840,8 +732,6 @@ begin
     TFrmConCuentasXCobrar(gGridForm).TotalConMora:=totalconMora;
 end;
 
-(*  //  *)
-
 function TdmCuentasXCobrar.SacaTipoComp (TipoDoc:Integer) :String;
 begin
   ADOdsAuxiliar.Close;
@@ -861,8 +751,6 @@ begin    //Verificar que pasa en caso que no tenga          //Dic 6/16
   begin
     REsult:= ADODtStDireccionesCliente.FieldByName('IDPersonaDomicilio').AsInteger;
   end;
-
-
 end;
 
 function TdmCuentasXCobrar.SacaMetodo (IDCliente:Integer; var CtaPago:String) :Integer;
@@ -879,9 +767,7 @@ begin                                         //Dic 6/16
   end
   else
       Result:=5; //Otros
-
 end;
-
 
 end.
 

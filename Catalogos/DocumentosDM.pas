@@ -58,11 +58,13 @@ type
     FFilename: TFileName;
     FFileAllowed: TFileAllowed;
     FLoadFileAllowed: Boolean;
+    FIdDocumentoTipo: Integer;
     procedure WriteFile(FileName: TFileName);
     procedure ReadFile(FileName: TFileName);
     procedure TuneOpenDialog;
     procedure SetFileAllowed(const Value: TFileAllowed);
     procedure SetLoadFileAllowed(const Value: Boolean);
+    procedure SetIdDocumentoTipo(const Value: Integer);
 //    function SetFile(FileName: TFileName): Integer;
   public
     { Public declarations }
@@ -71,6 +73,7 @@ type
     function SetFile(FileName: TFileName): Integer; overload;
     property FileAllowed: TFileAllowed read FFileAllowed write SetFileAllowed default faXLSx;
     property LoadFileAllowed: Boolean read FLoadFileAllowed write SetLoadFileAllowed default True;
+    property IdDocumentoTipo: Integer read FIdDocumentoTipo write SetIdDocumentoTipo;
   end;
 
 implementation
@@ -162,6 +165,7 @@ begin
   gGridForm := TfrmDocumentos.Create(Self);
   gGridForm.DataSet := adodsMaster;
   LoadFileAllowed:= True;
+  IdDocumentoTipo:= 1;
 end;
 
 function TdmDocumentos.GetFileName(IdDocumento: Integer): TFileName;
@@ -211,7 +215,7 @@ begin
   adodsUpdate.Open;
   try
     adodsUpdate.Insert;
-    adodsUpdateIdDocumentoTipo.Value:= 1;
+    adodsUpdateIdDocumentoTipo.Value:= IdDocumentoTipo;
     adodsUpdateIdDocumentoClase.Value:= 1;
     adodsUpdateDescripcion.AsString:= ExtractFileName(Filename);
     adodsUpdateNombreArchivo.AsString:= ExtractFileName(Filename);
@@ -234,6 +238,11 @@ begin
     TuneOpenDialog;
 //    ChangeExtension;
   end;
+end;
+
+procedure TdmDocumentos.SetIdDocumentoTipo(const Value: Integer);
+begin
+  FIdDocumentoTipo := Value;
 end;
 
 procedure TdmDocumentos.SetLoadFileAllowed(const Value: Boolean);

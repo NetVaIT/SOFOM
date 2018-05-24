@@ -44,16 +44,14 @@ type
     tvMasterSATClaveProdServ: TcxGridDBColumn;
     tvMasterSATClaveUnidad: TcxGridDBColumn;
     tvMasterDescuento: TcxGridDBColumn;
-    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    dxBarButton8: TdxBarButton;
+    dxBarButton9: TdxBarButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
   public
     { Public declarations }
   end;
-
-var
-  frmConceptos: TfrmConceptos;
 
 implementation
 
@@ -66,12 +64,6 @@ begin
   inherited;
   if datasource.DataSet.State in [dsEdit, dsInsert] then
     datasource.DataSet.post;
-end;
-
-procedure TfrmConceptos.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
-begin
-  inherited;
-   //O verificar si se pregunta
 end;
 
 end.

@@ -59,13 +59,11 @@ object _frmGrid: T_frmGrid
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitTop = 31
-    ExplicitHeight = 253
     object cxGrid: TcxGrid
       Left = 0
       Top = 0
       Width = 651
-      Height = 253
+      Height = 258
       Align = alClient
       PopupMenu = PopupMenu
       TabOrder = 0
@@ -1284,6 +1282,7 @@ object _frmGrid: T_frmGrid
       Active = True
       Component = cxGrid
       DesignerCaption = 'Formato del reporte'
+      PageNumberFormat = pnfNumeral
       PrinterPage.DMPaper = 1
       PrinterPage.Footer = 6350
       PrinterPage.GrayShading = True
@@ -1300,7 +1299,8 @@ object _frmGrid: T_frmGrid
       PrinterPage.PageSize.Y = 279400
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
-      ReportDocument.CreationDate = 42957.399411307870000000
+      ReportDocument.CreationDate = 43208.683231932870000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       OptionsView.Caption = False
       OptionsView.FilterBar = False
       BuiltInReportLink = True

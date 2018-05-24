@@ -123,18 +123,21 @@ type
     FactSearch: TBasicAction;
     FPrintTitle: string;
     FApplyBestFit: Boolean;
+    FCanEdit: Boolean;
     procedure SetReadOnlyGrid(const Value: Boolean);
     procedure SetDataSet(const Value: TDataSet);
     procedure SetView(const Value: Boolean);
     procedure SetactSearch(const Value: TBasicAction);
     procedure InsertMenuItem;
     procedure SetPrintTitle(const Value: string);
+    procedure SetCanEdit(const Value: Boolean);
   protected
     tvStatus: TcxGridDBColumn;
     property gEditForm: T_frmEdit read FgEditForm write FgEditForm;
   public
     { Public declarations }
     property DataSet: TDataSet read FDataSet write SetDataSet;
+    property CanEdit: Boolean read FCanEdit write SetCanEdit default True;
     property ReadOnlyGrid: Boolean read FReadOnlyGrid write SetReadOnlyGrid default False;
     property View: Boolean read FView write SetView default False;
     property ApplyBestFit: Boolean read FApplyBestFit write FApplyBestFit default True;
@@ -235,6 +238,7 @@ procedure T_frmGrid.FormCreate(Sender: TObject);
 begin
   InsertMenuItem;
   ApplyBestFit:= True;
+  CanEdit:= True;
 end;
 
 procedure T_frmGrid.FormShow(Sender: TObject);
@@ -248,14 +252,29 @@ begin
 //  tvMaster.ViewData.Expand(True);
   dxbNavigator.DockedLeft:= 82;
   dxbTools.DockedLeft:= 210;
-
- // pnlTitulo.Caption:='    '+Caption; //Mar 9/17
 end;
 
 procedure T_frmGrid.SetactSearch(const Value: TBasicAction);
 begin
   FactSearch := Value;
   dxbtnSearch.Action:= Value;
+end;
+
+procedure T_frmGrid.SetCanEdit(const Value: Boolean);
+begin
+  FCanEdit := Value;
+  DatasetEdit.Visible:= Value;
+  actShow.Visible:= not Value;
+  if not Value then
+  begin
+    dxbNavigator.DockedLeft:= 36;
+    dxbTools.DockedLeft:= 164;
+  end
+  else
+  begin
+    dxbNavigator.DockedLeft:= 82;
+    dxbTools.DockedLeft:= 210;
+  end;
 end;
 
 procedure T_frmGrid.SetDataSet(const Value: TDataSet);
@@ -279,18 +298,19 @@ begin
   FReadOnlyGrid := Value;
   DataSetInsert.Visible:= not Value;
   DataSetDelete.Visible:= not Value;
-  DatasetEdit.Visible:= not Value;
-  actShow.Visible:= Value;
-  if FReadOnlyGrid then
-  begin
-    dxbNavigator.DockedLeft:= 36;
-    dxbTools.DockedLeft:= 164;
-  end
-  else
-  begin
-    dxbNavigator.DockedLeft:= 82;
-    dxbTools.DockedLeft:= 210;
-  end;
+  CanEdit:= not Value;
+//  DatasetEdit.Visible:= not Value;
+//  actShow.Visible:= Value;
+//  if FReadOnlyGrid then
+//  begin
+//    dxbNavigator.DockedLeft:= 36;
+//    dxbTools.DockedLeft:= 164;
+//  end
+//  else
+//  begin
+//    dxbNavigator.DockedLeft:= 82;
+//    dxbTools.DockedLeft:= 210;
+//  end;
 end;
 
 procedure T_frmGrid.SetView(const Value: Boolean);
@@ -307,10 +327,10 @@ procedure T_frmGrid.tvMasterCellDblClick(Sender: TcxCustomGridTableView;
   ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
   AShift: TShiftState; var AHandled: Boolean);
 begin
-  if ReadOnlyGrid then
-    actShow.Execute
+  if CanEdit then
+    DatasetEdit.Execute
   else
-    DatasetEdit.Execute;
+    actShow.Execute;
 end;
 
 procedure T_frmGrid.InsertMenuItem;
@@ -331,16 +351,11 @@ begin
     FMenuItem := TMenuItem.Create(Self);
     FMenuItem.Caption := '-';
     TPopupMenu(AMenu).Items.Add(FMenuItem);
-
     FMenuItem:= TMenuItem.Create(Self);
     FMenuItem.Action:= actFullExpandGroup;
     TPopupMenu(AMenu).Items.Add(FMenuItem);
-
     FMenuItem := TMenuItem.Create(Self);
     FMenuItem.Action:= actFullColapseGroup;
-//    FMenuItem.Caption := 'Contraer';
-//    FMenuItem.Hint := '';
-//    FMenuItem.OnClick := GroupFullCollapse;
     TPopupMenu(AMenu).Items.Add(FMenuItem);
   end;
 end;

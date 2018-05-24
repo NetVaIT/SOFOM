@@ -212,7 +212,6 @@ inherited frmEdFactura: TfrmEdFactura
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 3
-        ExplicitTop = 206
         object Label15: TLabel
           Left = 338
           Top = 2

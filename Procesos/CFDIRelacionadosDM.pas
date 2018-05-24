@@ -22,11 +22,15 @@ type
   private
     { Private declarations }
     FIdPersonaReceptor: Integer;
+    FSoloLectura: Boolean;
     procedure SetIdPersonaReceptor(const Value: Integer);
+    procedure SetSoloLectura(const Value: Boolean);
     property IdPersonaReceptor: Integer read FIdPersonaReceptor write SetIdPersonaReceptor;
+    property SoloLectura: Boolean read FSoloLectura write SetSoloLectura;
   public
     { Public declarations }
-    constructor CreateWPersona(AOwner: TComponent; IdPersona: Integer); virtual;
+    constructor CreateWith(AOwner: TComponent; IdPersona: Integer;
+      SoloLectura: Boolean);
   end;
 
 implementation
@@ -46,10 +50,11 @@ begin
   end;
 end;
 
-constructor TdmCFDIRelacionados.CreateWPersona(AOwner: TComponent;
-  IdPersona: Integer);
+constructor TdmCFDIRelacionados.CreateWith(AOwner: TComponent;
+  IdPersona: Integer; SoloLectura: Boolean);
 begin
   FIdPersonaReceptor:= IdPersona;
+  FSoloLectura := SoloLectura;
   inherited Create(AOwner);
 end;
 
@@ -58,12 +63,18 @@ begin
   inherited;
   gGridForm:= TfrmCFDIRelacionados.Create(Self);
   gGridForm.DataSet:= adodsMaster;
+  gGridForm.ReadOnlyGrid:= SoloLectura;
   adodsCFDIParaRelacionar.Parameters.ParamByName('IdPersonaReceptor').Value := IdPersonaReceptor;
 end;
 
 procedure TdmCFDIRelacionados.SetIdPersonaReceptor(const Value: Integer);
 begin
   FIdPersonaReceptor := Value;
+end;
+
+procedure TdmCFDIRelacionados.SetSoloLectura(const Value: Boolean);
+begin
+  FSoloLectura := Value;
 end;
 
 end.

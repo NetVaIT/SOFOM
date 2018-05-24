@@ -294,7 +294,7 @@ var
         Result := Result + '09' + PreparaCadena(adoqAccionistasDirrecion1.AsString,'I',' ',40);
         Result := Result + '10' + PreparaCadena(adoqAccionistasDirrecion2.AsString,'I',' ',40);
         Result := Result + '11' + PreparaCadena(adoqAccionistasColonia.AsString,'I',' ',60);
-        Result := Result + '12' + PreparaCadena(adoqPersonasMunicipio.AsString,'I',' ',40);
+        Result := Result + '12' + PreparaCadena(adoqAccionistasMunicipio.AsString,'I',' ',40);
         Result := Result + '13' + PreparaCadena(adoqAccionistasCiudad.AsString,'I',' ',40);
         Result := Result + '14' + PreparaCadena(adoqAccionistasEstado.AsString,'I',' ',4);
         Result := Result + '15' + PreparaCadena(adoqAccionistasCodigoPostal.AsString,'I',' ',10);

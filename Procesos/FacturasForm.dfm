@@ -308,6 +308,7 @@ inherited frmFacturasGrid: TfrmFacturasGrid
   end
   inherited DataSource: TDataSource
     DataSet = dmFacturas.adodsMaster
+    OnDataChange = DataSourceDataChange
   end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (

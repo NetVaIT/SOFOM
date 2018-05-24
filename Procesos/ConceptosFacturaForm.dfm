@@ -2,7 +2,6 @@ inherited frmConceptos: TfrmConceptos
   Caption = 'frmConceptosGrid'
   ClientWidth = 885
   OnClose = FormClose
-  OnCloseQuery = FormCloseQuery
   ExplicitWidth = 885
   ExplicitHeight = 457
   PixelsPerInch = 96
@@ -21,15 +20,10 @@ inherited frmConceptos: TfrmConceptos
   end
   inherited pnlMaster: TPanel
     Width = 885
-    ExplicitTop = 26
     ExplicitWidth = 885
-    ExplicitHeight = 258
     inherited cxGrid: TcxGrid
       Width = 885
-      Height = 258
-      ExplicitTop = -3
       ExplicitWidth = 885
-      ExplicitHeight = 258
       inherited tvMaster: TcxGridDBTableView
         OptionsBehavior.IncSearch = False
         OptionsData.Deleting = True
@@ -115,10 +109,45 @@ inherited frmConceptos: TfrmConceptos
       26
       0)
     inherited dxbNavigator: TdxBar
-      DockedLeft = 107
+      DockedLeft = 150
+    end
+    inherited dxbEdit: TdxBar
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'Insert1'
+        end
+        item
+          Visible = True
+          ItemName = 'Edit1'
+        end
+        item
+          Visible = True
+          ItemName = 'Delete1'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarButton7'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarButton8'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarButton9'
+        end>
     end
     inherited dxbTools: TdxBar
-      DockedLeft = 238
+      DockedLeft = 277
+    end
+    object dxBarButton8: TdxBarButton
+      Action = DatasetPost
+      Category = 0
+    end
+    object dxBarButton9: TdxBarButton
+      Action = DatasetCancel
+      Category = 0
     end
   end
   inherited cxStyleRepository: TcxStyleRepository
@@ -130,7 +159,6 @@ inherited frmConceptos: TfrmConceptos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42699.356933969910000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

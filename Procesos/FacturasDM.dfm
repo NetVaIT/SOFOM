@@ -462,7 +462,9 @@ inherited dmFacturas: TdmFacturas
     end
   end
   object dsMaster: TDataSource
+    AutoEdit = False
     DataSet = adodsMaster
+    OnDataChange = dsMasterDataChange
     Left = 296
     Top = 16
   end

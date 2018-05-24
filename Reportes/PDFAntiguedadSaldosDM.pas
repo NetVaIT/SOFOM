@@ -6,7 +6,7 @@ uses
   System.SysUtils, System.Classes, _ReportSOFOMDM, dxmdaset, ppParameter,
   ppDesignLayer, ppVar, ppCtrls, ppBands, dxGDIPlusClasses, ppPrnabl, ppClass,
   ppCache, ppProd, ppReport, ppComm, ppRelatv, ppDB, ppDBPipe, Data.DB,
-  Data.Win.ADODB;
+  Data.Win.ADODB, ppStrtch, ppMemo;
 
 type
   TdmAntiguedadSaldosPDF = class(T_dmReportSOFOM)
@@ -265,12 +265,12 @@ type
     ppLabel59: TppLabel;
     ppDBText53: TppDBText;
     ppDBCalc35: TppDBCalc;
-    ppLabel60: TppLabel;
-    ppDBText54: TppDBText;
-    ppLabel61: TppLabel;
-    ppDBText55: TppDBText;
-    ppLabel62: TppLabel;
-    ppDBText56: TppDBText;
+    lblMontaFinanciar: TppLabel;
+    dbtxtMontoFinanaciar: TppDBText;
+    lblSaldoInsoluto: TppLabel;
+    dbtxtSaldoInsolutio: TppDBText;
+    lblTasaAnual: TppLabel;
+    dbtxtTasaAnual: TppDBText;
     ppLabel63: TppLabel;
     ppDBText57: TppDBText;
     ppLabel64: TppLabel;
@@ -282,7 +282,12 @@ type
     ppShape1: TppShape;
     ppLabel67: TppLabel;
     ppLabel68: TppLabel;
-    ppLabel69: TppLabel;
+    ppDBCalc36: TppDBCalc;
+    ppDBCalc37: TppDBCalc;
+    ppLabel70: TppLabel;
+    ppLabel71: TppLabel;
+    ppMemo1: TppMemo;
+    procedure ppHeaderBand3BeforePrint(Sender: TObject);
   private
     { Private declarations }
   public
@@ -307,6 +312,20 @@ procedure TdmAntiguedadSaldosPDF.AssignParam;
 begin
   inherited;
 //
+end;
+
+procedure TdmAntiguedadSaldosPDF.ppHeaderBand3BeforePrint(Sender: TObject);
+var
+  Mostrar: Boolean;
+begin
+  inherited;
+  Mostrar:= ADODtStCtaActCliente.FieldByName('TC').AsString<>'AP' ;
+  lblMontaFinanciar.Visible:= Mostrar;
+  dbtxtMontoFinanaciar.Visible:= Mostrar;
+  lblSaldoInsoluto.Visible:= Mostrar;
+  dbtxtSaldoInsolutio.Visible:= Mostrar;
+  lblTasaAnual.Visible:= Mostrar;
+  dbtxtTasaAnual.Visible:= Mostrar;
 end;
 
 end.

@@ -33,8 +33,8 @@
       'ubiese algo sin anexo.. aunque no deber'#237'a'#13#10'             inner jo' +
       'in Contratos as Con ON A.IdContrato=Con.IdContrato'#13#10'            ' +
       ' inner join ContratosTipos as CT On Con.IdContratoTipo =CT.IdCon' +
-      'tratoTipo'#13#10' WHERE    (Cc.Saldo > 0) --  AND  -- mientras para qu' +
-      'e muestre todo'#13#10'    '#13#10'ORDER BY Cliente'
+      'tratoTipo'#13#10' WHERE    (Cc.Saldo > 0.01) --  AND  -- mientras para' +
+      ' que muestre todo'#13#10'    '#13#10'ORDER BY Cliente'
     Left = 48
     object adodsMasterIdCuentaXCobrar: TAutoIncField
       DisplayLabel = 'No.CuentaXCobrar'

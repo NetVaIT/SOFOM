@@ -89,10 +89,9 @@ uses FacturasDM, MetodoPagoFacturaEdt, FacturasPropiedadesEdit;
 
 procedure TFrmDatosFacturaPrev.BtnAjustesBaseClick(Sender: TObject);
 var
-   IdNvoMetPago:Integer; //D Ago 31/17
-    CtaNvaPago, ComplementoConc:String;
-     CambioMetPago , CFDITimbrado:Boolean; //Ago 31/17
-                         //HAgo 31/17
+  IdNvoMetPago:Integer; //D Ago 31/17
+  CtaNvaPago, ComplementoConc:String;
+  CambioMetPago:Boolean; //Ago 31/17
 begin
   IdNvoMetPago:=0;
   CambioMetPago:=CambiarMetodoPago(IdNvoMetPago,CtaNvaPago,ComplementoConc );
@@ -110,15 +109,12 @@ begin
       and (DSConceptosPrevios.DataSet.FieldByName('IDCFDI').ASinteger = DSCFDIPrevio.DataSet.Fieldbyname('IDCFDI').asInteger)
       and (application.messageBox('El concepto será modificado, se agregará el complemento colocado. Esta seguro? ',
                             'Confirmación',MB_ICONEXCLAMATION or MB_YESNO)=ID_YES) then
-
     begin  //DEbe ser
       DSConceptosPrevios.DataSet.Edit;
       DSConceptosPrevios.DataSet.FieldByName('Descripcion').ASString:= DSConceptosPrevios.DataSet.FieldByName('Descripcion').asString+' '+ ComplementoConc;
 
       DSConceptosPrevios.DataSet.post;
     end;
-
-
   end;
 end;
 
