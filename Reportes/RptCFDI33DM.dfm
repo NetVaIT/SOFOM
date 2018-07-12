@@ -13,7 +13,7 @@ object dmRptCFDI33: TdmRptCFDI33
         DataType = ftLargeint
         Precision = 19
         Size = 8
-        Value = '2052'
+        Value = '3206'
       end>
     SQL.Strings = (
       
@@ -67,7 +67,7 @@ object dmRptCFDI33: TdmRptCFDI33
       'FROM            CFDI AS C INNER JOIN'
       
         '                         CFDITipoDocumento AS TD ON C.IdCFDITipo' +
-        'Documento = TD.IdCFDITipoDocumento INNER JOIN'
+        'Documento = TD.IdCFDITipoDocumento LEFT OUTER JOIN'
       
         '                         Monedas ON C.IdMoneda = Monedas.IdMoned' +
         'a INNER JOIN'
@@ -125,7 +125,7 @@ object dmRptCFDI33: TdmRptCFDI33
         '                               WHERE        (PersonasDomicilios.' +
         'Predeterminado = 1)) AS DE ON C.IdPersonaEmisor = DE.IdPersona'
       'WHERE        (C.IdCFDI = :IdCFDI)')
-    Left = 56
+    Left = 96
     Top = 32
     object adoqCFDIIdCFDI: TLargeintField
       FieldName = 'IdCFDI'
@@ -430,7 +430,7 @@ object dmRptCFDI33: TdmRptCFDI33
   object dsCFDI: TDataSource
     AutoEdit = False
     DataSet = adoqCFDI
-    Left = 160
+    Left = 200
     Top = 32
   end
   object adoqCFDIConceptos: TADOQuery
@@ -444,7 +444,7 @@ object dmRptCFDI33: TdmRptCFDI33
         Attributes = [paSigned]
         DataType = ftLargeint
         Precision = 19
-        Value = '2052'
+        Value = '3206'
       end>
     SQL.Strings = (
       
@@ -454,7 +454,7 @@ object dmRptCFDI33: TdmRptCFDI33
       'FROM            CFDIConceptos'
       'WHERE IdCFDI = :IdCFDI'
       '')
-    Left = 56
+    Left = 96
     Top = 88
     object adoqCFDIConceptosIdCFDIConcepto: TLargeintField
       FieldName = 'IdCFDIConcepto'
@@ -536,7 +536,7 @@ object dmRptCFDI33: TdmRptCFDI33
       
         'WHERE TipoImp = '#39'Trasladado'#39' AND IdCFDIConcepto = :IdCFDIConcept' +
         'o')
-    Left = 56
+    Left = 96
     Top = 144
     object adoqCFDIConceptosImpuestosIdCFDIConceptoImpuesto: TAutoIncField
       FieldName = 'IdCFDIConceptoImpuesto'
@@ -594,7 +594,7 @@ object dmRptCFDI33: TdmRptCFDI33
         'IdCFDITipoImpuesto, TipoFactor, ClaveImpuesto'
       'FROM            CFDIImpuestos'
       'WHERE TipoImp = '#39'Trasladado'#39' AND IdCFDI = :IdCFDI')
-    Left = 56
+    Left = 96
     Top = 192
     object adoqCFDIImpuestosIdCFDIImpuesto: TAutoIncField
       FieldName = 'IdCFDIImpuesto'
@@ -629,26 +629,26 @@ object dmRptCFDI33: TdmRptCFDI33
   object dsCFDIConceptos: TDataSource
     AutoEdit = False
     DataSet = adoqCFDIConceptos
-    Left = 160
+    Left = 200
     Top = 88
   end
   object dbpCFDI: TppDBPipeline
     DataSource = dsCFDI
     UserName = 'dbpCFDI'
-    Left = 280
+    Left = 320
     Top = 32
   end
   object dbpCFDIConceptos: TppDBPipeline
     DataSource = dsCFDIConceptos
     UserName = 'dbpCFDIConceptos'
-    Left = 280
+    Left = 320
     Top = 88
     MasterDataPipelineName = 'dbpCFDI'
   end
   object ppRptCFDI: TppReport
     OnFileDeviceCreate = ppRptCFDIFileDeviceCreate
     AutoStop = False
-    DataPipeline = dbpCFDIConceptos
+    DataPipeline = dbpCFDIComplementoPagosRelacionado
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.Duplex = dpVertical
@@ -664,7 +664,7 @@ object dmRptCFDI33: TdmRptCFDI33
     PrinterSetup.PaperSize = 1
     Template.FileName = 
       'C:\Users\hucj1e3.FG\Documents\RAD Studio\Projects\NetVaIT\SOFOM\' +
-      'CFDIManarina33.rtm'
+      'CFDIPago33Manarina.rtm'
     Units = utScreenPixels
     AllowPrintToFile = True
     ArchiveFileName = '($MyDocuments)\ReportArchive.raf'
@@ -702,16 +702,16 @@ object dmRptCFDI33: TdmRptCFDI33
     XLSSettings.Author = 'ReportBuilder'
     XLSSettings.Subject = 'Report'
     XLSSettings.Title = 'Report'
-    Left = 280
+    Left = 320
     Top = 160
     Version = '15.0'
     mmColumnWidth = 0
-    DataPipelineName = 'dbpCFDIConceptos'
+    DataPipelineName = 'dbpCFDIComplementoPagosRelacionado'
     object ppHeaderBand1: TppHeaderBand
       Background.Brush.Style = bsClear
       PrintHeight = phDynamic
       mmBottomOffset = 0
-      mmHeight = 96044
+      mmHeight = 140494
       mmPrintPosition = 0
       object ppShape1: TppShape
         UserName = 'Shape1'
@@ -762,7 +762,7 @@ object dmRptCFDI33: TdmRptCFDI33
         mmHeight = 4763
         mmLeft = 11906
         mmTop = 44450
-        mmWidth = 2382
+        mmWidth = 10054
         BandType = 0
         LayerName = Foreground
       end
@@ -1156,9 +1156,9 @@ object dmRptCFDI33: TdmRptCFDI33
         Transparent = True
         DataPipelineName = 'dbpCFDI'
         mmHeight = 3968
-        mmLeft = 190500
+        mmLeft = 175419
         mmTop = 60590
-        mmWidth = 9261
+        mmWidth = 24342
         BandType = 0
         LayerName = Foreground
       end
@@ -4378,9 +4378,9 @@ object dmRptCFDI33: TdmRptCFDI33
         Transparent = True
         DataPipelineName = 'dbpCFDI'
         mmHeight = 3969
-        mmLeft = 132292
+        mmLeft = 186002
         mmTop = 41010
-        mmWidth = 67469
+        mmWidth = 13759
         BandType = 0
         LayerName = Foreground
       end
@@ -4453,9 +4453,9 @@ object dmRptCFDI33: TdmRptCFDI33
         Transparent = True
         DataPipelineName = 'dbpCFDI'
         mmHeight = 3969
-        mmLeft = 162719
+        mmLeft = 172509
         mmTop = 45773
-        mmWidth = 37042
+        mmWidth = 27252
         BandType = 0
         LayerName = Foreground
       end
@@ -4474,9 +4474,9 @@ object dmRptCFDI33: TdmRptCFDI33
         Transparent = True
         DataPipelineName = 'dbpCFDI'
         mmHeight = 3969
-        mmLeft = 162719
+        mmLeft = 179917
         mmTop = 50271
-        mmWidth = 37042
+        mmWidth = 19844
         BandType = 0
         LayerName = Foreground
       end
@@ -4495,9 +4495,9 @@ object dmRptCFDI33: TdmRptCFDI33
         Transparent = True
         DataPipelineName = 'dbpCFDI'
         mmHeight = 3969
-        mmLeft = 161925
+        mmLeft = 170921
         mmTop = 55827
-        mmWidth = 37836
+        mmWidth = 28840
         BandType = 0
         LayerName = Foreground
       end
@@ -4551,7 +4551,7 @@ object dmRptCFDI33: TdmRptCFDI33
         mmHeight = 3969
         mmLeft = 5027
         mmTop = 68792
-        mmWidth = 37306
+        mmWidth = 12965
         BandType = 0
         LayerName = Foreground
       end
@@ -4919,15 +4919,715 @@ object dmRptCFDI33: TdmRptCFDI33
         mmMinHeight = 0
         mmLeading = 0
       end
-    end
-    object ppDetailBand1: TppDetailBand
-      Background1.Brush.Style = bsClear
-      Background2.Brush.Style = bsClear
-      ColumnBalancing = True
-      PrintHeight = phDynamic
-      mmBottomOffset = 0
-      mmHeight = 3704
-      mmPrintPosition = 0
+      object ppShape13: TppShape
+        UserName = 'Shape13'
+        Brush.Color = clBtnFace
+        mmHeight = 6615
+        mmLeft = 794
+        mmTop = 133615
+        mmWidth = 202671
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel10: TppLabel
+        UserName = 'Label10'
+        Caption = 'UUID Documento Pagado'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = [fsBold]
+        Transparent = True
+        mmHeight = 2911
+        mmLeft = 3175
+        mmTop = 135202
+        mmWidth = 30427
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel77: TppLabel
+        UserName = 'Label77'
+        Caption = 'Parc.'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = [fsBold]
+        Transparent = True
+        mmHeight = 2911
+        mmLeft = 104511
+        mmTop = 135202
+        mmWidth = 6085
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel78: TppLabel
+        UserName = 'Label78'
+        Caption = '     Monto       Pagado'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = [fsBold]
+        Transparent = True
+        WordWrap = True
+        mmHeight = 5821
+        mmLeft = 185738
+        mmTop = 133615
+        mmWidth = 12700
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel79: TppLabel
+        UserName = 'Label79'
+        Caption = 'Saldo Pendiente'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = [fsBold]
+        Transparent = True
+        WordWrap = True
+        mmHeight = 5821
+        mmLeft = 163248
+        mmTop = 133615
+        mmWidth = 13229
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel80: TppLabel
+        UserName = 'Label80'
+        Caption = 'Serie'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = [fsBold]
+        Transparent = True
+        mmHeight = 2911
+        mmLeft = 60854
+        mmTop = 135202
+        mmWidth = 6086
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel81: TppLabel
+        UserName = 'Label81'
+        Caption = 'Met.Pago'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = [fsBold]
+        TextAlignment = taCentered
+        Transparent = True
+        mmHeight = 2911
+        mmLeft = 91811
+        mmTop = 135202
+        mmWidth = 10848
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLine21: TppLine
+        UserName = 'Line21'
+        Position = lpLeft
+        Weight = 0.750000000000000000
+        mmHeight = 6615
+        mmLeft = 57150
+        mmTop = 133615
+        mmWidth = 2381
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLine22: TppLine
+        UserName = 'Line22'
+        Position = lpLeft
+        Weight = 0.750000000000000000
+        mmHeight = 6615
+        mmLeft = 69850
+        mmTop = 133615
+        mmWidth = 2117
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLine23: TppLine
+        UserName = 'Line23'
+        Position = lpLeft
+        Weight = 0.750000000000000000
+        mmHeight = 6350
+        mmLeft = 103717
+        mmTop = 133615
+        mmWidth = 2117
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLine24: TppLine
+        UserName = 'Line24'
+        Position = lpLeft
+        Weight = 0.750000000000000000
+        mmHeight = 6615
+        mmLeft = 157692
+        mmTop = 133615
+        mmWidth = 1058
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLine25: TppLine
+        UserName = 'Line25'
+        Position = lpLeft
+        Weight = 0.750000000000000000
+        mmHeight = 6615
+        mmLeft = 181769
+        mmTop = 133615
+        mmWidth = 1058
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLine26: TppLine
+        UserName = 'Line26'
+        Position = lpLeft
+        Weight = 0.750000000000000000
+        mmHeight = 6350
+        mmLeft = 89694
+        mmTop = 133615
+        mmWidth = 2117
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel82: TppLabel
+        UserName = 'Label82'
+        Caption = 'Folio'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = [fsBold]
+        TextAlignment = taCentered
+        Transparent = True
+        mmHeight = 2910
+        mmLeft = 74613
+        mmTop = 135202
+        mmWidth = 10848
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLine27: TppLine
+        UserName = 'Line27'
+        Position = lpLeft
+        Weight = 0.750000000000000000
+        mmHeight = 6615
+        mmLeft = 111125
+        mmTop = 133615
+        mmWidth = 2642
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel83: TppLabel
+        UserName = 'Label301'
+        Caption = 'Moneda'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = [fsBold]
+        Transparent = True
+        WordWrap = True
+        mmHeight = 3436
+        mmLeft = 111919
+        mmTop = 135202
+        mmWidth = 10848
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppShape14: TppShape
+        UserName = 'Shape14'
+        Brush.Color = clBtnFace
+        Shape = stRoundRect
+        mmHeight = 31221
+        mmLeft = 1058
+        mmTop = 100806
+        mmWidth = 202407
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel65: TppLabel
+        UserName = 'Label65'
+        AutoSize = False
+        Caption = 'Fecha Pago:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold]
+        TextAlignment = taRightJustified
+        Transparent = True
+        VerticalAlignment = avCenter
+        mmHeight = 4763
+        mmLeft = 5027
+        mmTop = 102923
+        mmWidth = 19844
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppDBText77: TppDBText
+        UserName = 'DBText77'
+        DataField = 'FechaPago'
+        DataPipeline = dppCFDIComplementoPagos
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        VerticalAlignment = avCenter
+        DataPipelineName = 'dppCFDIComplementoPagos'
+        mmHeight = 4763
+        mmLeft = 26194
+        mmTop = 102923
+        mmWidth = 38629
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel66: TppLabel
+        UserName = 'Label66'
+        AutoSize = False
+        Caption = 'Forma Pago:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold]
+        TextAlignment = taRightJustified
+        Transparent = True
+        VerticalAlignment = avCenter
+        mmHeight = 4763
+        mmLeft = 6085
+        mmTop = 108744
+        mmWidth = 18785
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppDBText78: TppDBText
+        UserName = 'DBText78'
+        DataField = 'FormaPagoP'
+        DataPipeline = dppCFDIComplementoPagos
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        VerticalAlignment = avCenter
+        DataPipelineName = 'dppCFDIComplementoPagos'
+        mmHeight = 4763
+        mmLeft = 26194
+        mmTop = 108744
+        mmWidth = 59267
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel67: TppLabel
+        UserName = 'Label67'
+        AutoSize = False
+        Caption = 'Num.Operaci'#243'n:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold]
+        TextAlignment = taRightJustified
+        Transparent = True
+        VerticalAlignment = avCenter
+        mmHeight = 4763
+        mmLeft = 1323
+        mmTop = 114565
+        mmWidth = 23548
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppDBText79: TppDBText
+        UserName = 'DBText79'
+        DataField = 'NumOperacion'
+        DataPipeline = dppCFDIComplementoPagos
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        VerticalAlignment = avCenter
+        DataPipelineName = 'dppCFDIComplementoPagos'
+        mmHeight = 4763
+        mmLeft = 26194
+        mmTop = 114565
+        mmWidth = 38629
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel68: TppLabel
+        UserName = 'Label68'
+        AutoSize = False
+        Caption = 'Total Pago:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold]
+        TextAlignment = taRightJustified
+        Transparent = True
+        VerticalAlignment = avCenter
+        mmHeight = 4763
+        mmLeft = 7408
+        mmTop = 120650
+        mmWidth = 17463
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppDBText80: TppDBText
+        UserName = 'DBText80'
+        DataField = 'Monto'
+        DataPipeline = dppCFDIComplementoPagos
+        DisplayFormat = '$#,0.00;-$#,0.00'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        VerticalAlignment = avCenter
+        DataPipelineName = 'dppCFDIComplementoPagos'
+        mmHeight = 4763
+        mmLeft = 26194
+        mmTop = 120650
+        mmWidth = 27517
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel73: TppLabel
+        UserName = 'Label73'
+        AutoSize = False
+        Caption = 'Moneda:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold]
+        TextAlignment = taRightJustified
+        Transparent = True
+        VerticalAlignment = avCenter
+        mmHeight = 4763
+        mmLeft = 9260
+        mmTop = 126736
+        mmWidth = 15610
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppDBText81: TppDBText
+        UserName = 'DBText801'
+        DataField = 'MonedaP'
+        DataPipeline = dppCFDIComplementoPagos
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        VerticalAlignment = avCenter
+        DataPipelineName = 'dppCFDIComplementoPagos'
+        mmHeight = 4763
+        mmLeft = 26194
+        mmTop = 126736
+        mmWidth = 15875
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel74: TppLabel
+        UserName = 'Label74'
+        AutoSize = False
+        Caption = 'Tipo Cambio:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold]
+        TextAlignment = taRightJustified
+        Transparent = True
+        VerticalAlignment = avCenter
+        mmHeight = 4763
+        mmLeft = 42863
+        mmTop = 126736
+        mmWidth = 20638
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppDBText82: TppDBText
+        UserName = 'DBText82'
+        DataField = 'TipoCambioP'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        VerticalAlignment = avCenter
+        mmHeight = 4763
+        mmLeft = 64029
+        mmTop = 126736
+        mmWidth = 14552
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel75: TppLabel
+        UserName = 'Label75'
+        AutoSize = False
+        Caption = 'RFC Banco Ordenante:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold]
+        TextAlignment = taRightJustified
+        Transparent = True
+        VerticalAlignment = avCenter
+        mmHeight = 4763
+        mmLeft = 90488
+        mmTop = 102923
+        mmWidth = 38365
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppDBText83: TppDBText
+        UserName = 'DBText83'
+        DataField = 'RFCEmisorCtaOrd'
+        DataPipeline = dppCFDIComplementoPagos
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        DataPipelineName = 'dppCFDIComplementoPagos'
+        mmHeight = 4763
+        mmLeft = 130704
+        mmTop = 102923
+        mmWidth = 24871
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel76: TppLabel
+        UserName = 'Label76'
+        AutoSize = False
+        Caption = 'RFC Banco Beneficiario:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold]
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 4763
+        mmLeft = 92869
+        mmTop = 119856
+        mmWidth = 35983
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppDBText84: TppDBText
+        UserName = 'DBText84'
+        DataField = 'RFCEmisorCtaBen'
+        DataPipeline = dppCFDIComplementoPagos
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        DataPipelineName = 'dppCFDIComplementoPagos'
+        mmHeight = 4763
+        mmLeft = 130704
+        mmTop = 119856
+        mmWidth = 24871
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel88: TppLabel
+        UserName = 'Label88'
+        AutoSize = False
+        Caption = 'Nombre Banco Ord. Ext:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold]
+        TextAlignment = taRightJustified
+        Transparent = True
+        VerticalAlignment = avCenter
+        mmHeight = 4763
+        mmLeft = 89959
+        mmTop = 108744
+        mmWidth = 38894
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppDBText85: TppDBText
+        UserName = 'DBText85'
+        DataField = 'NomBAncoOrdExt'
+        DataPipeline = dppCFDIComplementoPagos
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        DataPipelineName = 'dppCFDIComplementoPagos'
+        mmHeight = 4763
+        mmLeft = 130704
+        mmTop = 108744
+        mmWidth = 59267
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel89: TppLabel
+        UserName = 'Label89'
+        AutoSize = False
+        Caption = 'Cta Beneficiario:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold]
+        TextAlignment = taRightJustified
+        Transparent = True
+        VerticalAlignment = avCenter
+        mmHeight = 4763
+        mmLeft = 87313
+        mmTop = 125148
+        mmWidth = 41540
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppDBText86: TppDBText
+        UserName = 'DBText86'
+        DataField = 'CtaBeneficiario'
+        DataPipeline = dppCFDIComplementoPagos
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        DataPipelineName = 'dppCFDIComplementoPagos'
+        mmHeight = 4763
+        mmLeft = 130704
+        mmTop = 125148
+        mmWidth = 59267
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel90: TppLabel
+        UserName = 'Label90'
+        Caption = 'Tipo Cambio'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = [fsBold]
+        Transparent = True
+        WordWrap = True
+        mmHeight = 5821
+        mmLeft = 123031
+        mmTop = 133879
+        mmWidth = 9525
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLine13: TppLine
+        UserName = 'Line13'
+        Position = lpLeft
+        Weight = 0.750000000000000000
+        mmHeight = 6615
+        mmLeft = 121973
+        mmTop = 133615
+        mmWidth = 2907
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLine18: TppLine
+        UserName = 'Line18'
+        Position = lpLeft
+        Weight = 0.750000000000000000
+        mmHeight = 6615
+        mmLeft = 132821
+        mmTop = 133879
+        mmWidth = 1058
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel91: TppLabel
+        UserName = 'Label91'
+        Caption = ' Saldo Anterior'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = [fsBold]
+        Transparent = True
+        WordWrap = True
+        mmHeight = 5821
+        mmLeft = 138907
+        mmTop = 134409
+        mmWidth = 12961
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel92: TppLabel
+        UserName = 'Label92'
+        AutoSize = False
+        Caption = 'Cta Ordenante:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold]
+        TextAlignment = taRightJustified
+        Transparent = True
+        VerticalAlignment = avCenter
+        mmHeight = 4763
+        mmLeft = 87313
+        mmTop = 114036
+        mmWidth = 41540
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppDBText88: TppDBText
+        UserName = 'DBText88'
+        DataField = 'CtaOrdenante'
+        DataPipeline = dppCFDIComplementoPagos
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        DataPipelineName = 'dppCFDIComplementoPagos'
+        mmHeight = 4763
+        mmLeft = 130704
+        mmTop = 114036
+        mmWidth = 59267
+        BandType = 0
+        LayerName = Foreground
+      end
       object ppDBText24: TppDBText
         UserName = 'DBText24'
         DataField = 'Cantidad'
@@ -4942,10 +5642,10 @@ object dmRptCFDI33: TdmRptCFDI33
         Transparent = True
         DataPipelineName = 'dbpCFDIConceptos'
         mmHeight = 3175
-        mmLeft = 1588
-        mmTop = 265
+        mmLeft = 2910
+        mmTop = 96838
         mmWidth = 6615
-        BandType = 4
+        BandType = 0
         LayerName = Foreground
       end
       object ppDBText28: TppDBText
@@ -4963,10 +5663,10 @@ object dmRptCFDI33: TdmRptCFDI33
         Transparent = True
         DataPipelineName = 'dbpCFDIConceptos'
         mmHeight = 3175
-        mmLeft = 165894
-        mmTop = 0
+        mmLeft = 167217
+        mmTop = 96573
         mmWidth = 16933
-        BandType = 4
+        BandType = 0
         LayerName = Foreground
       end
       object ppDBText29: TppDBText
@@ -4984,10 +5684,10 @@ object dmRptCFDI33: TdmRptCFDI33
         Transparent = True
         DataPipelineName = 'dbpCFDIConceptos'
         mmHeight = 3175
-        mmLeft = 184150
-        mmTop = 0
+        mmLeft = 185473
+        mmTop = 96573
         mmWidth = 16404
-        BandType = 4
+        BandType = 0
         LayerName = Foreground
       end
       object ppDBMemo2: TppDBMemo
@@ -5006,10 +5706,10 @@ object dmRptCFDI33: TdmRptCFDI33
         Transparent = True
         DataPipelineName = 'dbpCFDIConceptos'
         mmHeight = 3175
-        mmLeft = 59267
-        mmTop = 0
+        mmLeft = 60590
+        mmTop = 96573
         mmWidth = 75671
-        BandType = 4
+        BandType = 0
         LayerName = Foreground
         mmBottomOffset = 0
         mmOverFlowOffset = 0
@@ -5031,10 +5731,10 @@ object dmRptCFDI33: TdmRptCFDI33
         Transparent = True
         DataPipelineName = 'dbpCFDIConceptos'
         mmHeight = 3175
-        mmLeft = 8731
-        mmTop = 0
+        mmLeft = 10054
+        mmTop = 96573
         mmWidth = 10054
-        BandType = 4
+        BandType = 0
         LayerName = Foreground
       end
       object ppDBText46: TppDBText
@@ -5051,10 +5751,10 @@ object dmRptCFDI33: TdmRptCFDI33
         Transparent = True
         DataPipelineName = 'dbpCFDIConceptos'
         mmHeight = 3175
-        mmLeft = 36248
-        mmTop = 0
+        mmLeft = 37571
+        mmTop = 96573
         mmWidth = 21167
-        BandType = 4
+        BandType = 0
         LayerName = Foreground
       end
       object ppDBText38: TppDBText
@@ -5071,10 +5771,10 @@ object dmRptCFDI33: TdmRptCFDI33
         Transparent = True
         DataPipelineName = 'dbpCFDIConceptos'
         mmHeight = 3175
-        mmLeft = 20902
-        mmTop = 0
+        mmLeft = 22225
+        mmTop = 96573
         mmWidth = 12965
-        BandType = 4
+        BandType = 0
         LayerName = Foreground
       end
       object ppDBText47: TppDBText
@@ -5091,10 +5791,10 @@ object dmRptCFDI33: TdmRptCFDI33
         Transparent = True
         DataPipelineName = 'dbpCFDIConceptos'
         mmHeight = 3175
-        mmLeft = 137054
-        mmTop = 0
+        mmLeft = 138377
+        mmTop = 96573
         mmWidth = 9525
-        BandType = 4
+        BandType = 0
         LayerName = Foreground
       end
       object ppDBText20: TppDBText
@@ -5111,9 +5811,337 @@ object dmRptCFDI33: TdmRptCFDI33
         Transparent = True
         DataPipelineName = 'dbpCFDIConceptos'
         mmHeight = 3175
-        mmLeft = 147638
-        mmTop = 0
+        mmLeft = 148961
+        mmTop = 96573
         mmWidth = 13758
+        BandType = 0
+        LayerName = Foreground
+      end
+    end
+    object ppDetailBand1: TppDetailBand
+      Background1.Brush.Style = bsClear
+      Background2.Brush.Style = bsClear
+      ColumnBalancing = True
+      PrintHeight = phDynamic
+      mmBottomOffset = 0
+      mmHeight = 5292
+      mmPrintPosition = 0
+      object ppShape12: TppShape
+        UserName = 'Shape12'
+        Brush.Color = clBtnFace
+        mmHeight = 5290
+        mmLeft = 794
+        mmTop = 0
+        mmWidth = 202671
+        BandType = 4
+        LayerName = Foreground
+      end
+      object ppDBText69: TppDBText
+        UserName = 'DBText69'
+        DataField = 'UUID'
+        DataPipeline = dbpCFDIComplementoPagosRelacionado
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = []
+        ParentDataPipeline = False
+        TextAlignment = taCentered
+        Transparent = True
+        DataPipelineName = 'dbpCFDIComplementoPagosRelacionado'
+        mmHeight = 3704
+        mmLeft = 2910
+        mmTop = 529
+        mmWidth = 52126
+        BandType = 4
+        LayerName = Foreground
+      end
+      object ppDBText70: TppDBText
+        UserName = 'DBText70'
+        DataField = 'ImpSaldoInsoluto'
+        DataPipeline = dbpCFDIComplementoPagosRelacionado
+        DisplayFormat = '$#,0.00;-$#,0.00'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = []
+        ParentDataPipeline = False
+        TextAlignment = taRightJustified
+        Transparent = True
+        DataPipelineName = 'dbpCFDIComplementoPagosRelacionado'
+        mmHeight = 4233
+        mmLeft = 160073
+        mmTop = 529
+        mmWidth = 16933
+        BandType = 4
+        LayerName = Foreground
+      end
+      object ppDBText71: TppDBText
+        UserName = 'DBText71'
+        DataField = 'ImpPagado'
+        DataPipeline = dbpCFDIComplementoPagosRelacionado
+        DisplayFormat = '$#,0.00;-$#,0.00'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = []
+        ParentDataPipeline = False
+        TextAlignment = taRightJustified
+        Transparent = True
+        DataPipelineName = 'dbpCFDIComplementoPagosRelacionado'
+        mmHeight = 4233
+        mmLeft = 184680
+        mmTop = 794
+        mmWidth = 16404
+        BandType = 4
+        LayerName = Foreground
+      end
+      object ppDBMemo6: TppDBMemo
+        UserName = 'DBMemo6'
+        CharWrap = False
+        DataField = 'MonedaDR'
+        DataPipeline = dbpCFDIComplementoPagosRelacionado
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = []
+        ParentDataPipeline = False
+        RemoveEmptyLines = False
+        Stretch = True
+        Transparent = True
+        DataPipelineName = 'dbpCFDIComplementoPagosRelacionado'
+        mmHeight = 4233
+        mmLeft = 112977
+        mmTop = 794
+        mmWidth = 8996
+        BandType = 4
+        LayerName = Foreground
+        mmBottomOffset = 0
+        mmOverFlowOffset = 0
+        mmStopPosition = 0
+        mmMinHeight = 0
+        mmLeading = 0
+      end
+      object ppDBText72: TppDBText
+        UserName = 'DBText72'
+        DataField = 'Serie'
+        DataPipeline = dbpCFDIComplementoPagosRelacionado
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = []
+        ParentDataPipeline = False
+        TextAlignment = taCentered
+        Transparent = True
+        DataPipelineName = 'dbpCFDIComplementoPagosRelacionado'
+        mmHeight = 3704
+        mmLeft = 58473
+        mmTop = 529
+        mmWidth = 10054
+        BandType = 4
+        LayerName = Foreground
+      end
+      object ppDBText73: TppDBText
+        UserName = 'DBText73'
+        DataField = 'MetodoPagoDR'
+        DataPipeline = dbpCFDIComplementoPagosRelacionado
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = []
+        ParentDataPipeline = False
+        TextAlignment = taCentered
+        Transparent = True
+        DataPipelineName = 'dbpCFDIComplementoPagosRelacionado'
+        mmHeight = 3704
+        mmLeft = 92340
+        mmTop = 529
+        mmWidth = 10848
+        BandType = 4
+        LayerName = Foreground
+      end
+      object ppDBText74: TppDBText
+        UserName = 'DBText74'
+        DataField = 'Folio'
+        DataPipeline = dbpCFDIComplementoPagosRelacionado
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = []
+        ParentDataPipeline = False
+        TextAlignment = taCentered
+        Transparent = True
+        DataPipelineName = 'dbpCFDIComplementoPagosRelacionado'
+        mmHeight = 3704
+        mmLeft = 72496
+        mmTop = 794
+        mmWidth = 15346
+        BandType = 4
+        LayerName = Foreground
+      end
+      object ppDBText75: TppDBText
+        UserName = 'DBText75'
+        DataField = 'TipoCambioDR'
+        DataPipeline = dbpCFDIComplementoPagosRelacionado
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = []
+        ParentDataPipeline = False
+        TextAlignment = taCentered
+        Transparent = True
+        DataPipelineName = 'dbpCFDIComplementoPagosRelacionado'
+        mmHeight = 4233
+        mmLeft = 123561
+        mmTop = 794
+        mmWidth = 9525
+        BandType = 4
+        LayerName = Foreground
+      end
+      object ppDBText76: TppDBText
+        UserName = 'DBText202'
+        DataField = 'ImpSaldoAnt'
+        DataPipeline = dbpCFDIComplementoPagosRelacionado
+        DisplayFormat = '$#,0.00;-$#,0.00'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = []
+        ParentDataPipeline = False
+        TextAlignment = taRightJustified
+        Transparent = True
+        DataPipelineName = 'dbpCFDIComplementoPagosRelacionado'
+        mmHeight = 4233
+        mmLeft = 138377
+        mmTop = 529
+        mmWidth = 14817
+        BandType = 4
+        LayerName = Foreground
+      end
+      object ppDBText87: TppDBText
+        UserName = 'DBText87'
+        DataField = 'NumParcialidad'
+        DataPipeline = dbpCFDIComplementoPagosRelacionado
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = []
+        ParentDataPipeline = False
+        TextAlignment = taCentered
+        Transparent = True
+        DataPipelineName = 'dbpCFDIComplementoPagosRelacionado'
+        mmHeight = 3704
+        mmLeft = 105040
+        mmTop = 794
+        mmWidth = 6085
+        BandType = 4
+        LayerName = Foreground
+      end
+      object ppLine28: TppLine
+        UserName = 'Line28'
+        Position = lpLeft
+        Weight = 0.750000000000000000
+        mmHeight = 5290
+        mmLeft = 157692
+        mmTop = 0
+        mmWidth = 1058
+        BandType = 4
+        LayerName = Foreground
+      end
+      object ppLine29: TppLine
+        UserName = 'Line29'
+        Position = lpLeft
+        Weight = 0.750000000000000000
+        mmHeight = 5290
+        mmLeft = 132821
+        mmTop = 0
+        mmWidth = 1058
+        BandType = 4
+        LayerName = Foreground
+      end
+      object ppLine30: TppLine
+        UserName = 'Line30'
+        Position = lpLeft
+        Weight = 0.750000000000000000
+        mmHeight = 5290
+        mmLeft = 181769
+        mmTop = 0
+        mmWidth = 1058
+        BandType = 4
+        LayerName = Foreground
+      end
+      object ppLine31: TppLine
+        UserName = 'Line31'
+        Position = lpLeft
+        Weight = 0.750000000000000000
+        mmHeight = 5290
+        mmLeft = 121973
+        mmTop = 0
+        mmWidth = 2910
+        BandType = 4
+        LayerName = Foreground
+      end
+      object ppLine32: TppLine
+        UserName = 'Line32'
+        Position = lpLeft
+        Weight = 0.750000000000000000
+        mmHeight = 5290
+        mmLeft = 111125
+        mmTop = 0
+        mmWidth = 2646
+        BandType = 4
+        LayerName = Foreground
+      end
+      object ppLine33: TppLine
+        UserName = 'Line33'
+        Position = lpLeft
+        Weight = 0.750000000000000000
+        mmHeight = 5025
+        mmLeft = 103717
+        mmTop = 0
+        mmWidth = 2117
+        BandType = 4
+        LayerName = Foreground
+      end
+      object ppLine34: TppLine
+        UserName = 'Line34'
+        Position = lpLeft
+        Weight = 0.750000000000000000
+        mmHeight = 5025
+        mmLeft = 89694
+        mmTop = 0
+        mmWidth = 2117
+        BandType = 4
+        LayerName = Foreground
+      end
+      object ppLine35: TppLine
+        UserName = 'Line35'
+        Position = lpLeft
+        Weight = 0.750000000000000000
+        mmHeight = 5290
+        mmLeft = 69850
+        mmTop = 0
+        mmWidth = 2117
+        BandType = 4
+        LayerName = Foreground
+      end
+      object ppLine36: TppLine
+        UserName = 'Line36'
+        Position = lpLeft
+        Weight = 0.750000000000000000
+        mmHeight = 5290
+        mmLeft = 57150
+        mmTop = 0
+        mmWidth = 2381
         BandType = 4
         LayerName = Foreground
       end
@@ -5123,188 +6151,14 @@ object dmRptCFDI33: TdmRptCFDI33
       PrintHeight = phDynamic
       AlignToBottom = True
       mmBottomOffset = 794
-      mmHeight = 96573
+      mmHeight = 60854
       mmPrintPosition = 0
-      object ppShape9: TppShape
-        UserName = 'Shape9'
-        Shape = stRoundRect
-        mmHeight = 7673
-        mmLeft = 2915
-        mmTop = 0
-        mmWidth = 201611
-        BandType = 7
-        LayerName = Foreground
-      end
-      object ppLabel14: TppLabel
-        UserName = 'Label14'
-        Caption = 'SUBTOTAL'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 10
-        Font.Style = []
-        Transparent = True
-        mmHeight = 4233
-        mmLeft = 150014
-        mmTop = 8730
-        mmWidth = 17727
-        BandType = 7
-        LayerName = Foreground
-      end
-      object ppLabel15: TppLabel
-        UserName = 'Label15'
-        Caption = 'IVA TASA 16%'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 10
-        Font.Style = []
-        Transparent = True
-        mmHeight = 4234
-        mmLeft = 150014
-        mmTop = 18261
-        mmWidth = 23548
-        BandType = 7
-        LayerName = Foreground
-      end
-      object ppDBText30: TppDBText
-        UserName = 'DBText30'
-        DataField = 'SubTotal'
-        DataPipeline = dbpCFDI
-        DisplayFormat = '###,##0.00'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Name = 'Arial'
-        Font.Size = 10
-        Font.Style = [fsBold]
-        ParentDataPipeline = False
-        TextAlignment = taRightJustified
-        Transparent = True
-        DataPipelineName = 'dbpCFDI'
-        mmHeight = 4191
-        mmLeft = 172239
-        mmTop = 8465
-        mmWidth = 28310
-        BandType = 7
-        LayerName = Foreground
-      end
-      object ppLabel16: TppLabel
-        UserName = 'Label16'
-        Caption = 'TOTAL'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 10
-        Font.Style = [fsBold]
-        Transparent = True
-        mmHeight = 4233
-        mmLeft = 150014
-        mmTop = 28058
-        mmWidth = 11377
-        BandType = 7
-        LayerName = Foreground
-      end
-      object ppLabel17: TppLabel
-        UserName = 'Label17'
-        Caption = 'CANTIDAD EN LETRA'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = [fsBold]
-        Transparent = True
-        mmHeight = 3704
-        mmLeft = 3973
-        mmTop = 529
-        mmWidth = 28840
-        BandType = 7
-        LayerName = Foreground
-      end
-      object ppDBText33: TppDBText
-        UserName = 'DBText33'
-        DataField = 'TotalEnLetra'
-        DataPipeline = dbpCFDI
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 10
-        Font.Style = []
-        ParentDataPipeline = False
-        Transparent = True
-        DataPipelineName = 'dbpCFDI'
-        mmHeight = 4233
-        mmLeft = 34401
-        mmTop = 2117
-        mmWidth = 162984
-        BandType = 7
-        LayerName = Foreground
-      end
-      object ppDBText31: TppDBText
-        UserName = 'DBText31'
-        DataField = 'TotalImpuestoTrasladado'
-        DataPipeline = dbpCFDI
-        DisplayFormat = '###,##0.00'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Name = 'Arial'
-        Font.Size = 10
-        Font.Style = [fsBold]
-        ParentDataPipeline = False
-        TextAlignment = taRightJustified
-        Transparent = True
-        DataPipelineName = 'dbpCFDI'
-        mmHeight = 4191
-        mmLeft = 172239
-        mmTop = 18261
-        mmWidth = 28310
-        BandType = 7
-        LayerName = Foreground
-      end
-      object ppDBText32: TppDBText
-        UserName = 'DBText32'
-        DataField = 'Total'
-        DataPipeline = dbpCFDI
-        DisplayFormat = '###,##0.00'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Name = 'Arial'
-        Font.Size = 10
-        Font.Style = [fsBold]
-        ParentDataPipeline = False
-        TextAlignment = taRightJustified
-        Transparent = True
-        DataPipelineName = 'dbpCFDI'
-        mmHeight = 4191
-        mmLeft = 172239
-        mmTop = 28058
-        mmWidth = 28310
-        BandType = 7
-        LayerName = Foreground
-      end
-      object ppLabel2: TppLabel
-        UserName = 'Label201'
-        Caption = 'Efectos fiscales al pago.'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 10
-        Font.Style = [fsBold, fsItalic]
-        Transparent = True
-        Visible = False
-        WordWrap = True
-        mmHeight = 4233
-        mmLeft = 2910
-        mmTop = 31223
-        mmWidth = 82815
-        BandType = 7
-        LayerName = Foreground
-      end
       object ppLine14: TppLine
         UserName = 'Line11'
         Weight = 0.750000000000000000
         mmHeight = 1058
-        mmLeft = 795
-        mmTop = 43656
+        mmLeft = 794
+        mmTop = 6613
         mmWidth = 202936
         BandType = 7
         LayerName = Foreground
@@ -5325,9 +6179,9 @@ object dmRptCFDI33: TdmRptCFDI33
         Transparent = True
         DataPipelineName = 'dbpCFDI'
         mmHeight = 8996
-        mmLeft = 1060
-        mmTop = 49742
-        mmWidth = 200290
+        mmLeft = 3175
+        mmTop = 15081
+        mmWidth = 163248
         BandType = 7
         LayerName = Foreground
         mmBottomOffset = 0
@@ -5347,8 +6201,8 @@ object dmRptCFDI33: TdmRptCFDI33
         Transparent = True
         WordWrap = True
         mmHeight = 4498
-        mmLeft = 1060
-        mmTop = 45515
+        mmLeft = 3175
+        mmTop = 10848
         mmWidth = 37835
         BandType = 7
         LayerName = Foreground
@@ -5364,8 +6218,8 @@ object dmRptCFDI33: TdmRptCFDI33
         Transparent = True
         WordWrap = True
         mmHeight = 4233
-        mmLeft = 795
-        mmTop = 59274
+        mmLeft = 2910
+        mmTop = 24606
         mmWidth = 37835
         BandType = 7
         LayerName = Foreground
@@ -5386,9 +6240,9 @@ object dmRptCFDI33: TdmRptCFDI33
         Transparent = True
         DataPipelineName = 'dbpCFDI'
         mmHeight = 8996
-        mmLeft = 795
-        mmTop = 64029
-        mmWidth = 200555
+        mmLeft = 2910
+        mmTop = 29369
+        mmWidth = 163513
         BandType = 7
         LayerName = Foreground
         mmBottomOffset = 0
@@ -5413,8 +6267,8 @@ object dmRptCFDI33: TdmRptCFDI33
         Transparent = True
         DataPipelineName = 'dbpCFDI'
         mmHeight = 15081
-        mmLeft = 795
-        mmTop = 77789
+        mmLeft = 2910
+        mmTop = 43127
         mmWidth = 200555
         BandType = 7
         LayerName = Foreground
@@ -5434,9 +6288,9 @@ object dmRptCFDI33: TdmRptCFDI33
         Font.Style = [fsBold, fsItalic]
         Transparent = True
         WordWrap = True
-        mmHeight = 4234
-        mmLeft = 795
-        mmTop = 73032
+        mmHeight = 4233
+        mmLeft = 2910
+        mmTop = 38365
         mmWidth = 37835
         BandType = 7
         LayerName = Foreground
@@ -5453,7 +6307,7 @@ object dmRptCFDI33: TdmRptCFDI33
         WordWrap = True
         mmHeight = 5292
         mmLeft = 2910
-        mmTop = 37045
+        mmTop = 0
         mmWidth = 101336
         BandType = 7
         LayerName = Foreground
@@ -5465,49 +6319,10 @@ object dmRptCFDI33: TdmRptCFDI33
         AlignVertical = avCenter
         MaintainAspectRatio = False
         Stretch = True
-        mmHeight = 33074
-        mmLeft = 109805
-        mmTop = 9261
-        mmWidth = 33339
-        BandType = 7
-        LayerName = Foreground
-      end
-      object ppLabel51: TppLabel
-        UserName = 'Label51'
-        Caption = 'DESCUENTO'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 10
-        Font.Style = []
-        Transparent = True
-        Visible = False
-        mmHeight = 4234
-        mmLeft = 150014
-        mmTop = 13758
-        mmWidth = 21167
-        BandType = 7
-        LayerName = Foreground
-      end
-      object ppDBText16: TppDBText
-        UserName = 'DBText301'
-        DataField = 'Descto'
-        DataPipeline = dbpCFDI
-        DisplayFormat = '###,##0.00'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Name = 'Arial'
-        Font.Size = 10
-        Font.Style = [fsBold]
-        ParentDataPipeline = False
-        TextAlignment = taRightJustified
-        Transparent = True
-        Visible = False
-        DataPipelineName = 'dbpCFDI'
-        mmHeight = 4191
-        mmLeft = 172235
-        mmTop = 13498
-        mmWidth = 28310
+        mmHeight = 33073
+        mmLeft = 168540
+        mmTop = 9260
+        mmWidth = 33338
         BandType = 7
         LayerName = Foreground
       end
@@ -5515,118 +6330,9 @@ object dmRptCFDI33: TdmRptCFDI33
         UserName = 'Line1'
         Weight = 0.750000000000000000
         mmHeight = 1058
-        mmLeft = 795
-        mmTop = 95250
+        mmLeft = 2910
+        mmTop = 59796
         mmWidth = 202936
-        BandType = 7
-        LayerName = Foreground
-      end
-      object ppLabel23: TppLabel
-        UserName = 'Label23'
-        Caption = 'M'#233'todo de Pago:'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 10
-        Font.Style = [fsItalic]
-        Transparent = True
-        mmHeight = 4233
-        mmLeft = 2910
-        mmTop = 15875
-        mmWidth = 25929
-        BandType = 7
-        LayerName = Foreground
-      end
-      object ppDBText13: TppDBText
-        UserName = 'DBText13'
-        AutoSize = True
-        DataField = 'FormaPago33Txt'
-        DataPipeline = dbpCFDI
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 9
-        Font.Style = []
-        ParentDataPipeline = False
-        Transparent = True
-        DataPipelineName = 'dbpCFDI'
-        mmHeight = 3968
-        mmLeft = 38100
-        mmTop = 9790
-        mmWidth = 19579
-        BandType = 7
-        LayerName = Foreground
-      end
-      object ppLabel36: TppLabel
-        UserName = 'Label36'
-        Caption = 'Condiciones de Pago:'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 10
-        Font.Style = [fsItalic]
-        Transparent = True
-        Visible = False
-        mmHeight = 4234
-        mmLeft = 2910
-        mmTop = 21431
-        mmWidth = 33602
-        BandType = 7
-        LayerName = Foreground
-      end
-      object ppDBText14: TppDBText
-        UserName = 'DBText14'
-        DataField = 'CondPago'
-        DataPipeline = dbpCFDI
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 9
-        Font.Style = []
-        ParentDataPipeline = False
-        Transparent = True
-        Visible = False
-        DataPipelineName = 'dbpCFDI'
-        mmHeight = 3704
-        mmLeft = 38100
-        mmTop = 21431
-        mmWidth = 67204
-        BandType = 7
-        LayerName = Foreground
-      end
-      object ppDBText37: TppDBText
-        UserName = 'DBText37'
-        AutoSize = True
-        DataField = 'MetodoPago33Txt'
-        DataPipeline = dbpCFDI
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 9
-        Font.Style = []
-        ParentDataPipeline = False
-        Transparent = True
-        DataPipelineName = 'dbpCFDI'
-        mmHeight = 3969
-        mmLeft = 38100
-        mmTop = 16404
-        mmWidth = 54769
-        BandType = 7
-        LayerName = Foreground
-      end
-      object ppLabel31: TppLabel
-        UserName = 'Label31'
-        Caption = 'Forma de Pago:'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 10
-        Font.Style = [fsItalic]
-        Transparent = True
-        mmHeight = 4233
-        mmLeft = 2910
-        mmTop = 9790
-        mmWidth = 24606
         BandType = 7
         LayerName = Foreground
       end
@@ -5671,7 +6377,7 @@ object dmRptCFDI33: TdmRptCFDI33
       'SELECT IdCFDIRelacionado, IDCFDI, IDCFDIAsociado, UUID'
       'FROM CFDIRelacionados'
       'WHERE IdCFDI = :IdCFDI')
-    Left = 56
+    Left = 96
     Top = 248
     object adoqCFDIRelacionadosIdCFDIRelacionado: TLargeintField
       FieldName = 'IdCFDIRelacionado'
@@ -5687,5 +6393,202 @@ object dmRptCFDI33: TdmRptCFDI33
       FieldName = 'UUID'
       Size = 40
     end
+  end
+  object adoqCFDIComplementoPagos: TADOQuery
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    DataSource = dsCFDI
+    Parameters = <
+      item
+        Name = 'IdCFDI'
+        Attributes = [paSigned]
+        DataType = ftLargeint
+        Precision = 19
+        Value = '3206'
+      end>
+    SQL.Strings = (
+      
+        'SELECT IdCFDIComplementoPago, IdCFDI, IdCFDITipoCadenaPago, Fech' +
+        'aPago, FormaPagoP, MonedaP, TipoCambioP, Monto, NumOperacion, RF' +
+        'CEmisorCtaOrd, NomBancoOrdExt, CtaOrdenante, RFCEmisorCtaBen, Ct' +
+        'aBeneficiario, '
+      'TipoCadPago, CerPago, CadPago, SelloPago'
+      'FROM CFDIComplementoPagos'
+      'WHERE IdCFDI = :IdCFDI')
+    Left = 96
+    Top = 312
+    object adoqCFDIComplementoPagosIdCFDIComplementoPago: TLargeintField
+      FieldName = 'IdCFDIComplementoPago'
+      ReadOnly = True
+    end
+    object adoqCFDIComplementoPagosIdCFDI: TLargeintField
+      FieldName = 'IdCFDI'
+    end
+    object adoqCFDIComplementoPagosIdCFDITipoCadenaPago: TIntegerField
+      FieldName = 'IdCFDITipoCadenaPago'
+    end
+    object adoqCFDIComplementoPagosFechaPago: TDateTimeField
+      FieldName = 'FechaPago'
+    end
+    object adoqCFDIComplementoPagosFormaPagoP: TStringField
+      FieldName = 'FormaPagoP'
+      Size = 2
+    end
+    object adoqCFDIComplementoPagosMonedaP: TStringField
+      FieldName = 'MonedaP'
+      Size = 3
+    end
+    object adoqCFDIComplementoPagosTipoCambioP: TFMTBCDField
+      FieldName = 'TipoCambioP'
+      Precision = 18
+      Size = 6
+    end
+    object adoqCFDIComplementoPagosMonto: TFMTBCDField
+      FieldName = 'Monto'
+      Precision = 18
+      Size = 6
+    end
+    object adoqCFDIComplementoPagosNumOperacion: TStringField
+      FieldName = 'NumOperacion'
+      Size = 100
+    end
+    object adoqCFDIComplementoPagosRFCEmisorCtaOrd: TStringField
+      FieldName = 'RFCEmisorCtaOrd'
+      Size = 13
+    end
+    object adoqCFDIComplementoPagosNomBancoOrdExt: TStringField
+      FieldName = 'NomBancoOrdExt'
+      Size = 300
+    end
+    object adoqCFDIComplementoPagosCtaOrdenante: TStringField
+      FieldName = 'CtaOrdenante'
+      Size = 50
+    end
+    object adoqCFDIComplementoPagosRFCEmisorCtaBen: TStringField
+      FieldName = 'RFCEmisorCtaBen'
+      Size = 13
+    end
+    object adoqCFDIComplementoPagosCtaBeneficiario: TStringField
+      FieldName = 'CtaBeneficiario'
+      Size = 50
+    end
+    object adoqCFDIComplementoPagosTipoCadPago: TStringField
+      FieldName = 'TipoCadPago'
+      Size = 2
+    end
+    object adoqCFDIComplementoPagosCerPago: TStringField
+      FieldName = 'CerPago'
+      Size = 2000
+    end
+    object adoqCFDIComplementoPagosCadPago: TStringField
+      FieldName = 'CadPago'
+      Size = 8000
+    end
+    object adoqCFDIComplementoPagosSelloPago: TStringField
+      FieldName = 'SelloPago'
+      Size = 2000
+    end
+  end
+  object adoqCFDIComplementoPagosRelacionado: TADOQuery
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    DataSource = dsCFDIComplementoPagos
+    Parameters = <
+      item
+        Name = 'IdCFDIComplementoPago'
+        Attributes = [paSigned]
+        DataType = ftLargeint
+        Precision = 19
+        Value = '7'
+      end>
+    SQL.Strings = (
+      
+        'SELECT IdCFDIComplementoPagoRelacionado, IdCFDIComplementoPago, ' +
+        'IdCFDIAsociado, UUID, Serie, Folio, MonedaDR, TipoCambioDR, Meto' +
+        'doPagoDR, NumParcialidad, ImpSaldoAnt, ImpPagado, ImpSaldoInsolu' +
+        'to'
+      'FROM CFDIComplementoPagosRelacionado'
+      'WHERE IdCFDIComplementoPago = :IdCFDIComplementoPago')
+    Left = 96
+    Top = 368
+    object adoqCFDIComplementoPagosRelacionadoIdCFDIComplementoPagoRelacionado: TLargeintField
+      FieldName = 'IdCFDIComplementoPagoRelacionado'
+      ReadOnly = True
+    end
+    object adoqCFDIComplementoPagosRelacionadoIdCFDIComplementoPago: TLargeintField
+      FieldName = 'IdCFDIComplementoPago'
+    end
+    object adoqCFDIComplementoPagosRelacionadoIdCFDIAsociado: TLargeintField
+      FieldName = 'IdCFDIAsociado'
+    end
+    object adoqCFDIComplementoPagosRelacionadoUUID: TStringField
+      FieldName = 'UUID'
+      Size = 40
+    end
+    object adoqCFDIComplementoPagosRelacionadoSerie: TStringField
+      FieldName = 'Serie'
+      Size = 25
+    end
+    object adoqCFDIComplementoPagosRelacionadoFolio: TStringField
+      FieldName = 'Folio'
+      Size = 40
+    end
+    object adoqCFDIComplementoPagosRelacionadoMonedaDR: TStringField
+      FieldName = 'MonedaDR'
+      Size = 3
+    end
+    object adoqCFDIComplementoPagosRelacionadoTipoCambioDR: TFMTBCDField
+      FieldName = 'TipoCambioDR'
+      Precision = 18
+      Size = 6
+    end
+    object adoqCFDIComplementoPagosRelacionadoMetodoPagoDR: TStringField
+      FieldName = 'MetodoPagoDR'
+      Size = 3
+    end
+    object adoqCFDIComplementoPagosRelacionadoNumParcialidad: TIntegerField
+      FieldName = 'NumParcialidad'
+    end
+    object adoqCFDIComplementoPagosRelacionadoImpSaldoAnt: TFMTBCDField
+      FieldName = 'ImpSaldoAnt'
+      Precision = 18
+      Size = 6
+    end
+    object adoqCFDIComplementoPagosRelacionadoImpPagado: TFMTBCDField
+      FieldName = 'ImpPagado'
+      Precision = 18
+      Size = 6
+    end
+    object adoqCFDIComplementoPagosRelacionadoImpSaldoInsoluto: TFMTBCDField
+      FieldName = 'ImpSaldoInsoluto'
+      Precision = 18
+      Size = 6
+    end
+  end
+  object dsCFDIComplementoPagos: TDataSource
+    AutoEdit = False
+    DataSet = adoqCFDIComplementoPagos
+    Left = 192
+    Top = 328
+  end
+  object dsCFDIComplementoPagosRelacionado: TDataSource
+    AutoEdit = False
+    DataSet = adoqCFDIComplementoPagosRelacionado
+    Left = 216
+    Top = 392
+  end
+  object dppCFDIComplementoPagos: TppDBPipeline
+    DataSource = dsCFDIComplementoPagos
+    UserName = 'ComplementoPagos'
+    Left = 296
+    Top = 312
+    MasterDataPipelineName = 'dbpCFDI'
+  end
+  object dbpCFDIComplementoPagosRelacionado: TppDBPipeline
+    DataSource = dsCFDIComplementoPagosRelacionado
+    UserName = 'ComplementoPagosRelacionado'
+    Left = 312
+    Top = 376
+    MasterDataPipelineName = 'dppCFDIComplementoPagos'
   end
 end

@@ -108,7 +108,7 @@ object FrmDatosFacturaPrev: TFrmDatosFacturaPrev
       805
       48)
     object btnCancel: TButton
-      Left = 658
+      Left = 714
       Top = 14
       Width = 75
       Height = 25
@@ -119,7 +119,7 @@ object FrmDatosFacturaPrev: TFrmDatosFacturaPrev
       TabOrder = 0
     end
     object btnOk: TButton
-      Left = 577
+      Left = 633
       Top = 14
       Width = 75
       Height = 25
@@ -130,7 +130,7 @@ object FrmDatosFacturaPrev: TFrmDatosFacturaPrev
       TabOrder = 1
     end
     object BtnAjustesBase: TButton
-      Left = 307
+      Left = 147
       Top = 14
       Width = 188
       Height = 25
@@ -141,7 +141,7 @@ object FrmDatosFacturaPrev: TFrmDatosFacturaPrev
       OnClick = BtnAjustesBaseClick
     end
     object Button1: TButton
-      Left = 24
+      Left = 11
       Top = 14
       Width = 122
       Height = 25
@@ -166,10 +166,6 @@ object FrmDatosFacturaPrev: TFrmDatosFacturaPrev
     object tsGeneral: TcxTabSheet
       Caption = 'General'
       ImageIndex = 0
-      ExplicitLeft = 1
-      ExplicitTop = 25
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label1: TLabel
         Left = 241
         Top = 36
@@ -429,13 +425,8 @@ object FrmDatosFacturaPrev: TFrmDatosFacturaPrev
     Top = 40
   end
   object DSConceptosPrevios: TDataSource
-    DataSet = dmFacturas.ADODtStCFDIConceptos
+    DataSet = dmFacturas.adodsCFDIConceptos
     Left = 696
     Top = 352
-  end
-  object dsQryAuxiliar: TDataSource
-    DataSet = dmFacturas.ADOQryAuxiliar
-    Left = 688
-    Top = 224
   end
 end

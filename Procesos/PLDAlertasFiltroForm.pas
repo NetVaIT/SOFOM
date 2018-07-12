@@ -23,26 +23,32 @@ uses
 
 type
   TfrmPLDAlertasFiltro = class(T_frmEdit)
-    cxLabel1: TcxLabel;
-    edtMonth: TcxSpinEdit;
+    lblFactor: TcxLabel;
+    edtFactor: TcxSpinEdit;
     cxLabel2: TcxLabel;
     edtYear: TcxSpinEdit;
     lblTipo: TLabel;
     cxcbTipo: TcxComboBox;
+    procedure FormShow(Sender: TObject);
+    procedure cxcbTipoPropertiesChange(Sender: TObject);
   private
     { Private declarations }
+    FAccion: Integer;
     function GetPeriodoAnio: Integer;
-    function GetPeriodoMes: Integer;
     procedure SetPeriodoAnio(const Value: Integer);
-    procedure SetPeriodoMes(const Value: Integer);
     function GetIdTipo: Integer;
     procedure SetIdTipo(const Value: Integer);
+    procedure SetAccion(const Value: Integer);
+    function GetFactor: Integer;
+    procedure SetFactor(const Value: Integer);
+    procedure AjustarControles;
   public
     { Public declarations }
     function Execute(MostrarTipo: Boolean): Boolean;
-    property PeriodoMes: Integer read GetPeriodoMes write SetPeriodoMes;
-    property PeriodoAnio: Integer read GetPeriodoAnio write SetPeriodoAnio;
+    property Accion: Integer read FAccion write SetAccion;
     property IdTipo: Integer read GetIdTipo write SetIdTipo;
+    property Factor: Integer read GetFactor write SetFactor;
+    property PeriodoAnio: Integer read GetPeriodoAnio write SetPeriodoAnio;
   end;
 
 implementation
@@ -54,11 +60,55 @@ uses PLDAlertasDM;
 { TfrmPLDAlertasFiltro }
 
 
+procedure TfrmPLDAlertasFiltro.AjustarControles;
+begin
+  case Accion of
+    1:
+    begin
+      lblFactor.Caption := 'Periodo mes';
+      edtFactor.EditValue := 1;
+      edtFactor.Properties.MaxValue := 12;
+    end;
+    2:
+    begin
+      if IdTipo = 1 then
+      begin
+        lblFactor.Caption := 'Trimestre';
+        edtFactor.EditValue := 1;
+        edtFactor.Properties.MaxValue := 4;
+      end
+      else
+      begin
+        lblFactor.Caption := 'Periodo mes';
+        edtFactor.EditValue := 1;
+        edtFactor.Properties.MaxValue := 12;
+      end;
+    end;
+  end;
+end;
+
+procedure TfrmPLDAlertasFiltro.cxcbTipoPropertiesChange(Sender: TObject);
+begin
+  inherited;
+  AjustarControles;
+end;
+
 function TfrmPLDAlertasFiltro.Execute(MostrarTipo: Boolean): Boolean;
 begin
   lblTipo.Visible:= MostrarTipo;
   cxcbTipo.Visible:= MostrarTipo;
   Result:= (ShowModal = mrOk);
+end;
+
+procedure TfrmPLDAlertasFiltro.FormShow(Sender: TObject);
+begin
+  inherited;
+  AjustarControles;
+end;
+
+function TfrmPLDAlertasFiltro.GetFactor: Integer;
+begin
+  Result:= edtFactor.Value;
 end;
 
 function TfrmPLDAlertasFiltro.GetIdTipo: Integer;
@@ -71,9 +121,14 @@ begin
   Result := edtYear.Value;
 end;
 
-function TfrmPLDAlertasFiltro.GetPeriodoMes: Integer;
+procedure TfrmPLDAlertasFiltro.SetAccion(const Value: Integer);
 begin
-  Result := edtMonth.Value;
+  FAccion := Value;
+end;
+
+procedure TfrmPLDAlertasFiltro.SetFactor(const Value: Integer);
+begin
+  edtFactor.Value := Value;
 end;
 
 procedure TfrmPLDAlertasFiltro.SetIdTipo(const Value: Integer);
@@ -84,11 +139,6 @@ end;
 procedure TfrmPLDAlertasFiltro.SetPeriodoAnio(const Value: Integer);
 begin
   edtYear.Value := Value;
-end;
-
-procedure TfrmPLDAlertasFiltro.SetPeriodoMes(const Value: Integer);
-begin
-  edtMonth.Value := Value;
 end;
 
 end.

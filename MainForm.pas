@@ -22,7 +22,7 @@ uses
   Vcl.ExtCtrls, dxStatusBar, dxRibbonStatusBar, cxLabel, dxGallery,
   dxGalleryControl, dxRibbonBackstageViewGalleryControl, dxRibbonBackstageView,
   cxClasses, dxRibbon, dxScreenTip, _Utils, _StandarDMod, _ReportDMod,
-  UsuariosDM;
+  UsuariosDM, ProcesosType;
 
 type
   TfrmMain = class(T_frmMainRibbon)
@@ -39,10 +39,7 @@ type
     actPuestos: TAction;
     dxBarLargeButton11: TdxBarLargeButton;
     actPlazasTurnos: TAction;
-    actEsquemasPago: TAction;
-    actFormulas: TAction;
     dxBarLargeButton9: TdxBarLargeButton;
-    actReglasNegocio: TAction;
     dxBarLargeButton10: TdxBarLargeButton;
     actEstablecimientos: TAction;
     dxbOrganizacion: TdxBar;
@@ -54,9 +51,7 @@ type
     actProveedores: TAction;
     dxBarLargeButton15: TdxBarLargeButton;
     dxBarLargeButton16: TdxBarLargeButton;
-    actMovimientosTipo: TAction;
     dxbEsquemas: TdxBar;
-    actRoles: TAction;
     dxBarButton1: TdxBarButton;
     dxBarButton2: TdxBarButton;
     dxBarButton3: TdxBarButton;
@@ -70,37 +65,24 @@ type
     dxBarLargeButton7: TdxBarLargeButton;
     dxBarLargeButton8: TdxBarLargeButton;
     dxRibbon1Tab3: TdxRibbonTab;
-    dxBarLargeButton13: TdxBarLargeButton;
-    dxBarButton6: TdxBarButton;
-    dxBarButton7: TdxBarButton;
     dxBarLargeButton14: TdxBarLargeButton;
     dxBarLargeButton17: TdxBarLargeButton;
     dxBarLargeButton18: TdxBarLargeButton;
     actComisionistas: TAction;
     actSocios: TAction;
     dxBarButton8: TdxBarButton;
-    actInstruccionesTipos: TAction;
-    actPeriodos: TAction;
     dxBarLargeButton21: TdxBarLargeButton;
     dxBarLargeButton23: TdxBarLargeButton;
     dxBarLargeButton24: TdxBarLargeButton;
-    actCuentasContables: TAction;
-    actCuentasInternas: TAction;
     dxRibbon1Tab5: TdxRibbonTab;
     dxBarLargeButton25: TdxBarLargeButton;
-    dxBarButton9: TdxBarButton;
     actCXCConceptos: TAction;
     dxBarLargeButton27: TdxBarLargeButton;
-    dxBarLargeButton28: TdxBarLargeButton;
-    dxBarLargeButton30: TdxBarLargeButton;
-    dxBarButton10: TdxBarButton;
     dxtshConfiguracion: TdxRibbonBackstageViewTabSheet;
     dxtshUsuarios: TdxRibbonBackstageViewTabSheet;
-    actPrestamos: TAction;
     dxBarLargeButton34: TdxBarLargeButton;
     actRptPlaza: TAction;
     dxBarButton13: TdxBarButton;
-    dxBarButton14: TdxBarButton;
     actProductos: TAction;
     dxBarLargeButton29: TdxBarLargeButton;
     dxbProductos: TdxBar;
@@ -115,7 +97,6 @@ type
     dxBarLargeButton35: TdxBarLargeButton;
     dxBarLargeButton38: TdxBarLargeButton;
     actAmortizaciones: TAction;
-    dxBrLrgBtnFacturas: TdxBarLargeButton;
     actFacturacion: TAction;
     dxBarLargeButton39: TdxBarLargeButton;
     actEmisor: TAction;
@@ -123,7 +104,6 @@ type
     actCuentasXCobrar: TAction;
     dxBrLrgBtnPagos: TdxBarLargeButton;
     actPagos: TAction;
-    dxBrLrgBtnAplicaciones: TdxBarLargeButton;
     actAplicacionPagos: TAction;
     actCotizaciones: TAction;
     dxBarLargeButton40: TdxBarLargeButton;
@@ -150,12 +130,11 @@ type
     dxBarLargeButton32: TdxBarLargeButton;
     actColocacionAcumulado: TAction;
     dxBarLargeButton33: TdxBarLargeButton;
-    ActPoneFechaActual: TAction;
+    actPoneFechaActual: TAction;
     dxBrLrgBtnPoneFechaActual: TdxBarLargeButton;
     dxBarManagerBar2: TdxBar;
     dxBarLargeButton36: TdxBarLargeButton;
     actBuroCredito: TAction;
-    dxBarLargeButton37: TdxBarLargeButton;
     actNotasCredito: TAction;
     actAlertasPLD: TAction;
     dxBarLargeButton41: TdxBarLargeButton;
@@ -165,14 +144,18 @@ type
     dxBarButton11: TdxBarButton;
     actPLDAlertasConfiguracion: TAction;
     dxBarLargeButton20: TdxBarLargeButton;
+    dxBarButton6: TdxBarButton;
+    dxBarButton7: TdxBarButton;
+    dxBarButton9: TdxBarButton;
+    dxBarButton10: TdxBarButton;
+    actCFDIPagos: TAction;
     procedure actCatalogoExecute(Sender: TObject);
-    procedure actIntervaCXPExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure dxRibbon1ApplicationMenuClick(Sender: TdxCustomRibbon;
       var AHandled: Boolean);
-    procedure ActPoneFechaActualExecute(Sender: TObject);
+    procedure actPoneFechaActualExecute(Sender: TObject);
     procedure actAgregarAlertaExecute(Sender: TObject);
   private
     { Private declarations }
@@ -250,22 +233,23 @@ begin
    25: gModulo := TdmPersona.CreateWRol(Self, rOutSourcing);
    26: gModulo := TdmPersona.CreateWRol(Self, rComisionista);
    27: gModulo := TdmPersona.CreateWRol(Self, rSocio);
-   28: gModulo := TdmPersona.CreateWRol(Self, rEmisor); //Nov 28/16
+   28: gModulo := TdmPersona.CreateWRol(Self, rEmisor);
    29: gModulo := TdmPLDAlertasConfiguracion.Create(Self);
    30: gModulo := TdmContratos.Create(Self);
    31: gModulo := TdmAmortizaciones.Create(Self);
-   32: gModulo := TDMFacturas.CreateWMostrar(Self,True,1); //Nov 25/16 mod  nov29/16
-   33: gModulo := TDMCuentasXCobrar.Create(Self); //Nov 25/16 mod  nov29/16
+   32: gModulo := TDMFacturas.CreateWMostrar(Self,True,tdFactura);
+   33: gModulo := TDMCuentasXCobrar.Create(Self);
    34: gModulo := TdmPagos.Create(Self);
-   35: gModulo := TdmAplicacionesConsulta.Create(Self); //Ene 5/17
+   35: gModulo := TdmAplicacionesConsulta.Create(Self);
    36: gModulo := TdmCotizaciones.Create(Self);
-   37: gModulo := TdmSeguimientoCobranza.Create(Self);  //Feb 15/17
-   38: gModulo := TDMFacturas.CreateWMostrar(Self,True,2); //jun 26/17   Notas Credito
+   37: gModulo := TdmSeguimientoCobranza.Create(Self);
+   38: gModulo := TDMFacturas.CreateWMostrar(Self,True,tdNotaCredito);
    39: gModulo := TdmPLDAlertas.Create(Self);
+   40: gModulo := TDMFacturas.CreateWMostrar(Self,True,tdCFDIPago);
    50: gModulo := TdmRptAntiguedadSaldos.Create(Self);
    51: gModulo := TdmEstadosCuenta.Create(Self);
-   52: gModulo := TdmRptInformacionContratos.Create(Self);  //Abr 20/17
-   53: gModulo := TdmRptReporteCartera.Create(Self);  //may 12/17
+   52: gModulo := TdmRptInformacionContratos.Create(Self);
+   53: gModulo := TdmRptReporteCartera.Create(Self);
    54: begin
          gReport := TdmRptCobertura.Create(Self);
          gReport.Title := pCaption;
@@ -306,13 +290,7 @@ begin
   end;
 end;
 
-procedure TfrmMain.actIntervaCXPExecute(Sender: TObject);
-begin   //Esto no deberia estar aca Ago 10/17
-  inherited;
-  ExecuteUntilFinish('IntervaCXP.exe');
-end;
-
-procedure TfrmMain.ActPoneFechaActualExecute(Sender: TObject);
+procedure TfrmMain.actPoneFechaActualExecute(Sender: TObject);
 var FrmPoneFechaActual:TFrmPoneFechaActual;
 begin
   inherited;
@@ -338,17 +316,11 @@ begin
   actPuestos.Enabled            := Conected;
   actCapacitaciones.Enabled     := Conected;
   actPlazasTurnos.Enabled       := Conected;
-  actPeriodos.Enabled           := Conected;
-  actFormulas.Enabled           := Conected;
-  actReglasNegocio.Enabled      := Conected;
   actEstablecimientos.Enabled   := Conected;
   actProductos.Enabled          := Conected;
   actMarcas.Enabled             := Conected;
   actFamilias.Enabled           := Conected;
   actProductosTipos.Enabled     := Conected;
-  actRoles.Enabled              := Conected;
-  actEsquemasPago.Enabled       := Conected;
-  actMovimientosTipo.Enabled    := Conected;
   actPersonas.Enabled           := Conected;
   actEmpleados.Enabled          := Conected;
   actClientes.Enabled           := Conected;
@@ -358,8 +330,6 @@ begin
   actComisionistas.Enabled      := Conected;
   actSocios.Enabled             := Conected;
   actEmisor.Enabled             := Conected;
-  actCuentasContables.Enabled   := Conected;
-  actCuentasInternas.Enabled    := Conected;
   actCXCConceptos.Enabled       := Conected;
   actAmortizaciones.Enabled     := Conected;
   actCotizaciones.Enabled       := Conected;
@@ -367,6 +337,7 @@ begin
   actFacturacion.Enabled        := Conected;
   actCuentasXCobrar.Enabled     := Conected;
   actPagos.Enabled              := Conected;
+  actCFDIPagos.Enabled          := Conected;
   actAplicacionPagos.Enabled    := Conected;
   actSeguimiento.Enabled        := Conected;
   actRptPlaza.Enabled           := Conected;

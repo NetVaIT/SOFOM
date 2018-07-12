@@ -200,6 +200,7 @@ inherited frmAnexosEdit: TfrmAnexosEdit
           Top = 100
           Caption = 'Carta compensaci'#243'n'
           DataBinding.DataField = 'CartaCompensacion'
+          DataBinding.DataSource = DataSource
           TabOrder = 7
           Width = 121
         end

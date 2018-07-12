@@ -27,7 +27,7 @@ uses
   dxPSPDFExport, cxDrawTextUtils, dxPSPrVwStd, dxPSPrVwAdv, dxPSPrVwRibbon,
   dxPScxPageControlProducer, dxPScxGridLnk, dxPScxGridLayoutViewLnk,
   dxPScxEditorProducers, dxPScxExtEditorProducers, dxSkinsdxRibbonPainter,
-  dxPSCore, dxPScxCommon;
+  dxPSCore, dxPScxCommon, cxCheckBox;
 
 type
   TfrmPersonas = class(T_frmGrid)
@@ -88,6 +88,8 @@ type
     tvMasterIdCFDIFormaPago33: TcxGridDBColumn;
     tvMasterIdCFDIUsoCFDI: TcxGridDBColumn;
     tvMasterPPE: TcxGridDBColumn;
+    tvMasterRegimenFiscalPreferente: TcxGridDBColumn;
+    tvMasterListaGAFI: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private

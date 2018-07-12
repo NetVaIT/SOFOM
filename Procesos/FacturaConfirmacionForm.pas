@@ -17,7 +17,8 @@ uses
   dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
   dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine, dxSkinVS2010,
   dxSkinWhiteprint, dxSkinXmas2008Blue, dxSkinscxPCPainter, cxPCdxBarPopupMenu,
-  cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, cxPC, Data.Win.ADODB;
+  cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, cxPC, Data.Win.ADODB,
+  ProcesosType;
 
 type
   TFrmDatosFacturaPrev = class(TForm)
@@ -60,7 +61,6 @@ type
     DBText8: TDBText;
     Label15: TLabel;
     DBText15: TDBText;
-    dsQryAuxiliar: TDataSource;
     Button1: TButton;
     Label16: TLabel;
     DBText16: TDBText;
@@ -69,17 +69,23 @@ type
     procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
-    FADoSelMetPAgo: TAdoDAtaset;
+    FCFDITipoDocumento: TCFDITipoDocumento;
+    FCFDI: TDataSet;
+    FConceptos: TDataSet;
+    FMetodoPago: TDataSet;
+    FactRelacionarCFDI: TBasicAction;
     function CambiarMetodoPago(var IDMetodoPago: Integer; var Cuenta,
       CompConcepto: String): Boolean;
-//    function SacaMetodo(IDCliente: Integer; var CtaPago: String): Integer;
+    procedure SetCFDI(const Value: TDataSet);
+    procedure SetConceptos(const Value: TDataSet);
   public
     { Public declarations }
-    property VADODtStSelMetPago :TAdoDAtaset read FADoSelMetPAgo  write FadoSElMetPago; //AGo 31/17
+    property actRelacionarCFDI: TBasicAction read FactRelacionarCFDI write FactRelacionarCFDI;
+    property CFDI: TDataSet read FCFDI write SetCFDI;
+    property Conceptos: TDataSet read FConceptos write SetConceptos;
+    property MetodoPago: TDataSet read FMetodoPago write FMetodoPago;
+    property CFDITipoDocumento: TCFDITipoDocumento read FCFDITipoDocumento write FCFDITipoDocumento;
   end;
-
-//var
-//  FrmDatosFacturaPrev: TFrmDatosFacturaPrev;
 
 implementation
 
@@ -125,7 +131,9 @@ begin
   frmFacturasPropiedadesEdit := TfrmFacturasPropiedadesEdit.Create(Self);
   try
     DSCFDIPrevio.DataSet.Edit;
-    frmFacturasPropiedadesEdit.DataSet:= DSCFDIPrevio.DataSet;
+    frmFacturasPropiedadesEdit.DataSet:= CFDI;
+    frmFacturasPropiedadesEdit.actRelacionarCFDI := actRelacionarCFDI;
+    frmFacturasPropiedadesEdit.CFDITipoDocumento := CFDITipoDocumento;
     frmFacturasPropiedadesEdit.ShowModal;
   finally
     frmFacturasPropiedadesEdit.Free;
@@ -142,8 +150,7 @@ begin  //Jul 10/17
   FrmMetodoPagoFactura:=TFrmMetodoPagoFactura.Create(self);
   FrmMetodoPagoFactura.IdMetSeleccion:=IDMetodoPago;
   FrmMetodoPagoFactura.CuentaSeleccion:= Cuenta;
-  FrmMetodoPagoFactura.DSMetodoPago.DataSet:=VADODtStSelMetPago;
-
+  FrmMetodoPagoFactura.MetodoPago := MetodoPago;
   FrmMetodoPagoFactura.ShowModal;
   Result:= FrmMetodoPagoFactura.ModalResult=mrOk ;
   if result then
@@ -161,22 +168,16 @@ begin //DEberian estar abiertos
   DSConceptosPrevios.DataSet.Open;
 end;
 
-//function TFrmDatosFacturaPrev.SacaMetodo (IDCliente:Integer; var CtaPago:String) :Integer;
-//begin                             //Ajustado Ago 31/17
-//  CtaPago:='';
-//  dsQryAuxiliar.dataset.Close;
-//  TAdoQuery(dsQryAuxiliar.dataset).sql.clear;
-//  TAdoQuery(dsQryAuxiliar.dataset).sql.Add('Select * from Personas where idPersona = '+ intToSTR(IDCliente));
-//    dsQryAuxiliar.dataset.Open;
-//  if (not   dsQryAuxiliar.dataset.eof)  and not ( dsQryAuxiliar.dataset.FieldByName('IdMetodoPago').isnull) then
-//  begin
-//    Result:=  dsQryAuxiliar.dataset.FieldByName('IdMetodoPago').asInteger;
-//    if not   dsQryAuxiliar.dataset.FieldByName('NumCtaPagoCliente').isnull then
-//       CtaPago:=   dsQryAuxiliar.dataset.FieldByName('NumCtaPagoCliente').asstring;
-//  end
-//  else
-//      Result:=5; //Otros
-//
-//end;
+procedure TFrmDatosFacturaPrev.SetCFDI(const Value: TDataSet);
+begin
+  FCFDI := Value;
+  DSCFDIPrevio.DataSet := Value;
+end;
+
+procedure TFrmDatosFacturaPrev.SetConceptos(const Value: TDataSet);
+begin
+  FConceptos := Value;
+  DSConceptosPrevios.DataSet := Value;
+end;
 
 end.

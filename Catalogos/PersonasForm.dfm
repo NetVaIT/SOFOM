@@ -29,7 +29,6 @@ inherited frmPersonas: TfrmPersonas
   inherited pnlMaster: TPanel
     Width = 645
     Height = 226
-    ExplicitTop = 26
     ExplicitWidth = 645
     ExplicitHeight = 226
     inherited cxGrid: TcxGrid
@@ -169,7 +168,15 @@ inherited frmPersonas: TfrmPersonas
         end
         object tvMasterPais: TcxGridDBColumn
           DataBinding.FieldName = 'Pais'
-          Visible = False
+          Width = 200
+        end
+        object tvMasterRegimenFiscalPreferente: TcxGridDBColumn
+          DataBinding.FieldName = 'RegimenFiscalPreferente'
+          PropertiesClassName = 'TcxCheckBoxProperties'
+        end
+        object tvMasterListaGAFI: TcxGridDBColumn
+          DataBinding.FieldName = 'ListaGAFI'
+          PropertiesClassName = 'TcxCheckBoxProperties'
         end
         object tvMasterLugarNacimiento: TcxGridDBColumn
           DataBinding.FieldName = 'LugarNacimiento'
@@ -334,7 +341,7 @@ inherited frmPersonas: TfrmPersonas
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42664.566576585640000000
-      AssignedFormatValues = []
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

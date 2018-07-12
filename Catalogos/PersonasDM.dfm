@@ -188,6 +188,26 @@ inherited dmPersona: TdmPersona
       Size = 100
       Lookup = True
     end
+    object adodsMasterRegimenFiscalPreferente: TBooleanField
+      DisplayLabel = 'RFP'
+      FieldKind = fkLookup
+      FieldName = 'RegimenFiscalPreferente'
+      LookupDataSet = adodsPais
+      LookupKeyFields = 'IdPais'
+      LookupResultField = 'RegimenFiscalPreferente'
+      KeyFields = 'IdPais'
+      Lookup = True
+    end
+    object adodsMasterListaGAFI: TBooleanField
+      DisplayLabel = 'GAFI'
+      FieldKind = fkLookup
+      FieldName = 'ListaGAFI'
+      LookupDataSet = adodsPais
+      LookupKeyFields = 'IdPais'
+      LookupResultField = 'ListaGAFI'
+      KeyFields = 'IdPais'
+      Lookup = True
+    end
     object adodsMasterLugarNacimiento: TStringField
       FieldName = 'LugarNacimiento'
       Size = 100

@@ -231,36 +231,35 @@ implementation
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
 uses CuentasXCobrarForm, FacturasDM, _ConectionDmod, ConceptoOpcionCEdt, MetodoPagoFacturaEdt,
-  PDFReporteEstatusCXC, FacturaConfirmacionForm, _Utils;
+  PDFReporteEstatusCXC, FacturaConfirmacionForm, _Utils, ProcesosType;
 
 {$R *.dfm}
 
 procedure TdmCuentasXCobrar.ActRepCxCEstatusFactPendienteExecute(
   Sender: TObject);
 var
-  DMListaCXCPendFactPDF:TDMListaCXCPendFactPDF;
-  ArchiPDF:TFileName;
-  Texto:String;
+  DMListaCXCPendFactPDF: TDMListaCXCPendFactPDF;
+  ArchiPDF: TFileName;
+  Actual: string;
 begin
   inherited;
-  //Ajustado para que no cambie l consulta
-  TExto:= '_' +FormatDateTime('ddmmmyyyy', _DmConection.LaFechaActual);//Date); Jun 30/17
-  ArchiPDF:='ListaCXCPendFacturas'+Texto+'.PDF';
+  Actual:= FormatDateTime('ddmmmyyyyhhnnss', Now);
+  ArchiPDF:='ListaCXCPendientesFacturas'+'_'+Actual+_ExtensionPDF;
   DMListaCXCPendFactPDF:= TDMListaCXCPendFactPDF.Create(Self);
   try
     DMListaCXCPendFactPDF.adodsReport.Open;
     DMListaCXCPendFactPDF.ppReport.ShowPrintDialog:= False;
     DMListaCXCPendFactPDF.ppReport.ShowCancelDialog:= False;
-    DMListaCXCPendFactPDF.ppReport.PrinterSetup.DocumentName:=  'LISTADO DE CXC CON FACTURAS PENDIENTES '+#13 +Texto;
+    DMListaCXCPendFactPDF.ppReport.PrinterSetup.DocumentName:= ArchiPDF;
     DMListaCXCPendFactPDF.ppReport.DeviceType:= 'PDF';
     DMListaCXCPendFactPDF.ppReport.TextFileName:= ArchiPDF;
-    DMListaCXCPendFactPDF.ppReport.print;
-     DMListaCXCPendFactPDF.adodsReport.Close;
+    DMListaCXCPendFactPDF.ppReport.Print;
+    DMListaCXCPendFactPDF.adodsReport.Close;
   finally
     DMListaCXCPendFactPDF.Free;
   end;
   if FileExists(ArchiPDF) then
-      ShellExecute(application.Handle, 'open', PChar(ArchiPDF), nil, nil, SW_SHOWNORMAL);
+    ShellExecute(application.Handle, 'open', PChar(ArchiPDF), nil, nil, SW_SHOWNORMAL);
 end;
 
 procedure TdmCuentasXCobrar.ActActualizaMoratoriosExecute(Sender: TObject);

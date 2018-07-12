@@ -1,42 +1,44 @@
 inherited FrmConPagos: TFrmConPagos
   BorderStyle = bsToolWindow
   Caption = 'Pagos'
-  ClientHeight = 428
+  ClientHeight = 560
   ClientWidth = 1101
   ExplicitWidth = 1107
-  ExplicitHeight = 457
+  ExplicitHeight = 589
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Top = 343
+    Top = 475
     Width = 1101
     ExplicitTop = 343
     ExplicitWidth = 1107
   end
   inherited splDetail1: TSplitter
-    Top = 255
+    Top = 228
     Width = 1101
-    ExplicitTop = 255
-    ExplicitWidth = 1107
+    ExplicitLeft = -10
+    ExplicitTop = 425
+    ExplicitWidth = 1101
   end
   inherited splDetail2: TSplitter
-    Top = 299
+    Top = 431
     Width = 1101
-    ExplicitTop = 299
-    ExplicitWidth = 1107
+    ExplicitLeft = 8
+    ExplicitTop = 440
+    ExplicitWidth = 1101
   end
   inherited pnlMaster: TPanel
     Top = 70
     Width = 1101
-    Height = 185
+    Height = 158
     ExplicitTop = 70
     ExplicitWidth = 1101
-    ExplicitHeight = 185
+    ExplicitHeight = 158
     inherited cxGrid: TcxGrid
       Width = 1101
-      Height = 185
+      Height = 158
       ExplicitWidth = 1101
-      ExplicitHeight = 185
+      ExplicitHeight = 158
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdPago: TcxGridDBColumn
           DataBinding.FieldName = 'IdPago'
@@ -130,31 +132,40 @@ inherited FrmConPagos: TFrmConPagos
           Visible = False
           Width = 79
         end
+        object tvMasterGenerarCFDIPago: TcxGridDBColumn
+          DataBinding.FieldName = 'GenerarCFDIPago'
+          Width = 92
+        end
+        object tvMasterIdCFDI: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCFDI'
+        end
       end
     end
   end
   inherited pnlDetail3: TPanel
-    Top = 346
+    Top = 478
     Width = 1101
-    ExplicitTop = 346
+    ExplicitTop = 478
     ExplicitWidth = 1101
   end
   inherited pnlDetail2: TPanel
-    Top = 302
+    Top = 434
     Width = 1101
-    ExplicitTop = 302
+    ExplicitTop = 434
     ExplicitWidth = 1101
   end
   inherited pnlDetail1: TPanel
-    Top = 258
+    Top = 231
     Width = 1101
-    ExplicitTop = 258
+    Height = 200
+    ExplicitTop = 231
     ExplicitWidth = 1101
+    ExplicitHeight = 200
   end
   inherited pnlClose: TPanel
-    Top = 387
+    Top = 519
     Width = 1101
-    ExplicitTop = 387
+    ExplicitTop = 519
     ExplicitWidth = 1101
     inherited btnClose: TButton
       Left = 1016
@@ -321,6 +332,10 @@ inherited FrmConPagos: TFrmConPagos
         item
           Visible = True
           ItemName = 'dxBrBtnAplicaicones'
+        end
+        item
+          Visible = True
+          ItemName = 'dxbbGenCFDIPago'
         end>
     end
     object dxBrBtnAplicaicones: TdxBarButton
@@ -331,6 +346,13 @@ inherited FrmConPagos: TFrmConPagos
       ImageIndex = 17
       PaintStyle = psCaptionGlyph
       OnClick = dxBrBtnAplicaiconesClick
+    end
+    object dxbbGenCFDIPago: TdxBarButton
+      Caption = 'Generar CFDI'
+      Category = 0
+      Visible = ivAlways
+      ImageIndex = 18
+      PaintStyle = psCaptionGlyph
     end
   end
   inherited cxStyleRepository: TcxStyleRepository
@@ -1107,19 +1129,55 @@ inherited FrmConPagos: TFrmConPagos
           FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00C6ECD000ADE5BB00E0F4E300FFFF
           FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00}
         MaskColor = clWhite
+      end
+      item
+        Image.Data = {
+          36040000424D3604000000000000360000002800000010000000100000000100
+          2000000000000004000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000}
+        MaskColor = clBlack
       end>
   end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42712.575441516200000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end
   object dsConCXCPendientes: TDataSource
     DataSet = dmPagos.ADODtStCXCPendientes
-    Left = 452
-    Top = 8
+    Left = 732
   end
   object DSDetallesCXC: TDataSource
     DataSet = dmPagos.ADODtStCxCDetallePend
@@ -1131,7 +1189,6 @@ inherited FrmConPagos: TFrmConPagos
     Left = 640
   end
   object DSPersonas: TDataSource
-    DataSet = dmPagos.ADOSPersonas
     Left = 648
     Top = 120
   end

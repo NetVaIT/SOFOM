@@ -100,7 +100,7 @@ inherited frmConceptos: TfrmConceptos
     end
   end
   inherited DataSource: TDataSource
-    DataSet = dmFacturas.ADODtStCFDIConceptos
+    DataSet = dmFacturas.adodsCFDIConceptos
   end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
@@ -159,6 +159,7 @@ inherited frmConceptos: TfrmConceptos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42699.356933969910000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

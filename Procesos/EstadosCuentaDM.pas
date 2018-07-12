@@ -133,7 +133,8 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses EstadosCuentaForm, EstadosCuentaDetalleForm, PDFEStadoCuentaDM;
+uses EstadosCuentaForm, EstadosCuentaDetalleForm, PDFEStadoCuentaDM,
+  ProcesosType;
 
 {$R *.dfm}
 
@@ -393,10 +394,10 @@ var
   IDEstadoCta:Integer;
 begin
   inherited;
+  Texto:= adodsMasterIdContrato.AsString+'_' +FormatDateTime('mmm-dd-yyyy',fechaCorte);
+  ArchiPDF:='EstadoCta_NoCto_'+Texto+_ExtensionPDF;
   FechaCorte:=adodsMasterFechaCorte.AsDateTime;
   IdEstadoCta:=adodsMasterIdEstadoCuenta.AsInteger;
-  TExto:= adodsMasterIdContrato.AsString+'_' +FormatDateTime('mmm-dd-yyyy',fechaCorte);
-  ArchiPDF:='EstadoCta_NoCto_'+Texto+'.PDF';
   rptEstadoCtaPDF:= TdmRepEstadoCta.Create(Self);
   try
     TADoDAtaset(rptEstadoCtaPDF.dsReport.DataSet).Parameters.ParamByName('IDEstadoCuenta').Value:= IdEstadoCta;

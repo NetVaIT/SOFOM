@@ -211,6 +211,9 @@ type
     procedure adodsAnexosDepositosChange(Sender: TField);
     procedure actReducirCuotaExecute(Sender: TObject);
     procedure actReducirPlazoExecute(Sender: TObject);
+    procedure actGenMoratoriosUpdate(Sender: TObject);
+    procedure actRestructurarUpdate(Sender: TObject);
+    procedure actCrearAnexoUpdate(Sender: TObject);
   private
     { Private declarations }
     FPaymentTime: TPaymentTime;
@@ -233,6 +236,8 @@ type
     procedure Restructurar;
     function ProductosValido(IdAnexo: Integer): Boolean;
     procedure SetAnexoSaldo(IdAnexo: Integer);
+  protected
+    procedure SetFilter; override;
   public
     { Public declarations }
     property PaymentTime: TPaymentTime read FPaymentTime write SetPaymentTime;
@@ -313,7 +318,7 @@ end;
 procedure TdmContratos.actGenerarUpdate(Sender: TObject);
 begin
   inherited;
-  TAction(Sender).Enabled := not adodsAnexosPagoInicialCreado.Value;
+  TAction(Sender).Enabled := (not adodsAnexosIdAnexo.IsNull) and (not adodsAnexosPagoInicialCreado.Value);
 end;
 
 procedure TdmContratos.actGenMoratoriosExecute(Sender: TObject);
@@ -321,6 +326,12 @@ begin
   inherited;
   if CrearMoratorios then
     RefreshADODS(adodsAmortizaciones, adodsAmortizacionesIdAnexoAmortizacion);
+end;
+
+procedure TdmContratos.actGenMoratoriosUpdate(Sender: TObject);
+begin
+  inherited;
+  TAction(Sender).Enabled := (not adodsAnexosIdAnexo.IsNull);
 end;
 
 procedure TdmContratos.actGetTipoCambioExecute(Sender: TObject);
@@ -356,7 +367,8 @@ end;
 procedure TdmContratos.actOpcionCompraUpdate(Sender: TObject);
 begin
   inherited;
-  TAction(Sender).Enabled := (adodsAnexosOpcionCompra.Value > 0) and (not adodsAnexosOpcionCompraCreado.Value);
+  TAction(Sender).Enabled := (not adodsAnexosIdAnexo.IsNull) and
+  (adodsAnexosOpcionCompra.Value > 0) and (not adodsAnexosOpcionCompraCreado.Value);
 end;
 
 procedure TdmContratos.actAbonarCapitalExecute(Sender: TObject);
@@ -424,6 +436,12 @@ begin
     end;
 end;
 
+procedure TdmContratos.actCrearAnexoUpdate(Sender: TObject);
+begin
+  inherited;
+  TAction(Sender).Enabled := (not adodsMasterIdContrato.IsNull);
+end;
+
 procedure TdmContratos.actPreAmortizacionesExecute(Sender: TObject);
 var
   Amortizaciones: TdmAmortizaciones;
@@ -448,6 +466,12 @@ procedure TdmContratos.actRestructurarExecute(Sender: TObject);
 begin
   inherited;
   Restructurar;
+end;
+
+procedure TdmContratos.actRestructurarUpdate(Sender: TObject);
+begin
+  inherited;
+  TAction(Sender).Enabled := (not adodsAnexosIdAnexo.IsNull);
 end;
 
 procedure TdmContratos.adodsAnexosComisionChange(Sender: TField);
@@ -729,6 +753,7 @@ begin
   PaymentTime := ptEndOfPeriod;
   gGridForm:= TfrmContratos.Create(Self);
   gGridForm.DataSet:= adodsMaster;
+  gGridForm.ApplyBestFit := False;
   TfrmContratos(gGridForm).actCrearAnexo := actCrearAnexo;
   if adodsAnexos.CommandText <> EmptyStr then adodsAnexos.Open;
   gFormDeatil1:= TfrmAnexos.Create(Self);
@@ -770,7 +795,14 @@ begin
     actPreAmortizaciones.Visible := False;
     actGenAmortizaciones.Visible := False;
   {$ENDIF}
-end;
+  // Busqueda
+  gGridForm.actSearch := actSearch;
+  SQLSelect:= 'SELECT Contratos.IdContrato, Contratos.IdPersona, Contratos.IdContratoTipo, Contratos.IdContratoEstatus, Contratos.Identificador, Contratos.Fecha, Contratos.MontoAutorizado, Contratos.DiaCorte, Contratos.DiaVencimiento ' +
+  'FROM Contratos ' +
+  'INNER JOIN Personas ON Contratos.IdPersona = Personas.IdPersona ';
+  SQLOrderBy:= 'ORDER BY Personas.RazonSocial ';
+  actSearch.Execute;
+end;
 
 procedure TdmContratos.DataModuleDestroy(Sender: TObject);
 begin
@@ -907,6 +939,16 @@ procedure TdmContratos.SetAnexoSaldo(IdAnexo: Integer);
 begin
   adocSetAnexoSaldo.Parameters.ParamByName('IdAnexo').Value := IdAnexo;
   adocSetAnexoSaldo.Execute;
+end;
+
+procedure TdmContratos.SetFilter;
+begin
+  inherited;
+  SQLWhere := 'WHERE 1=1 ';
+  if TfrmContratos(gGridForm).Cliente <> EmptyStr then
+    SQLWhere := SQLWhere + 'AND Contratos.IdPersona IN (SELECT IdPersona FROM Personas WHERE RazonSocial LIKE ''%' + TfrmContratos(gGridForm).Cliente + '%'') ';
+  if TfrmContratos(gGridForm).UsarFecha then
+    SQLWhere := SQLWhere + Format('AND Fecha BETWEEN CONVERT(datetime, ''%s'' , 103) AND CONVERT(datetime, ''%s'' , 103) ', [DateToStr(TfrmContratos(gGridForm).Desde), DateToStr(TfrmContratos(gGridForm).Hasta)]);
 end;
 
 procedure TdmContratos.SetPaymentTime(const Value: TPaymentTime);

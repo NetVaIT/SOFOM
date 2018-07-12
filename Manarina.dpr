@@ -261,7 +261,9 @@ uses
   PLDAlertasConfiguracionForm in 'Catalogos\PLDAlertasConfiguracionForm.pas' {frmPLDAlertasConfiguracion},
   PLDAlertasConfiguracionEdit in 'Catalogos\PLDAlertasConfiguracionEdit.pas' {frmPLDAlertasConfiguracionEdit},
   CFDIRelacionadosDM in 'Procesos\CFDIRelacionadosDM.pas' {dmCFDIRelacionados: TDataModule},
-  CFDIRelacionadosForm in 'Procesos\CFDIRelacionadosForm.pas' {frmCFDIRelacionados};
+  CFDIRelacionadosForm in 'Procesos\CFDIRelacionadosForm.pas' {frmCFDIRelacionados},
+  CFDICPRelacionadosForm in 'Procesos\CFDICPRelacionadosForm.pas' {frmCFDICPRelacionados},
+  PagosAplicacionesForm in 'Procesos\PagosAplicacionesForm.pas' {frmPagosAplicaciones};
 
 {$R *.res}
 

@@ -5,9 +5,12 @@ inherited dmContratos: TdmContratos
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     CommandText = 
-      'select IdContrato, IdPersona, IdContratoTipo, IdContratoEstatus,' +
-      ' Identificador, Fecha, MontoAutorizado, DiaCorte, DiaVencimiento' +
-      ' from Contratos'
+      'SELECT Contratos.IdContrato, Contratos.IdPersona, Contratos.IdCo' +
+      'ntratoTipo, Contratos.IdContratoEstatus, Contratos.Identificador' +
+      ', Contratos.Fecha, Contratos.MontoAutorizado, Contratos.DiaCorte' +
+      ', Contratos.DiaVencimiento'#13#10'FROM Contratos '#13#10'INNER JOIN Personas' +
+      ' ON Contratos.IdPersona = Personas.IdPersona'#13#10'ORDER BY Personas.' +
+      'RazonSocial'
     Left = 32
     object adodsMasterIdContrato: TAutoIncField
       FieldName = 'IdContrato'
@@ -89,6 +92,7 @@ inherited dmContratos: TdmContratos
       Hint = 'Crea un anexo de una cotizaci'#243'n'
       ImageIndex = 10
       OnExecute = actCrearAnexoExecute
+      OnUpdate = actCrearAnexoUpdate
     end
     object actGenerar: TAction
       Caption = 'Generar'
@@ -99,28 +103,34 @@ inherited dmContratos: TdmContratos
     end
     object actGenMoratorios: TAction
       Caption = 'Generar moratorios'
-      Hint = 'Genera los moratorios de un anexo a la fecha'
+      Hint = 'Generar los moratorios de un anexo a la fecha'
       ImageIndex = 10
       OnExecute = actGenMoratoriosExecute
+      OnUpdate = actGenMoratoriosUpdate
     end
     object actOpcionCompra: TAction
       Caption = 'Opci'#243'n de compra'
+      Hint = 'Generar la cuenta por cobrar de opci'#243'n de compra'
       ImageIndex = 10
       OnExecute = actOpcionCompraExecute
       OnUpdate = actOpcionCompraUpdate
     end
     object actRestructurar: TAction
       Caption = 'Restructurar'
+      Hint = 'Restructurar un contrato'
       ImageIndex = 13
       OnExecute = actRestructurarExecute
+      OnUpdate = actRestructurarUpdate
     end
     object actAbonarCapital: TAction
       Caption = 'Abonar al capital'
+      Hint = 'Abonar al capital'
       Visible = False
       OnExecute = actAbonarCapitalExecute
     end
     object actMoratorios: TAction
       Caption = 'Moratorios'
+      Hint = 'Moratorios'
       ImageIndex = 13
       OnExecute = actMoratoriosExecute
     end
@@ -137,6 +147,7 @@ inherited dmContratos: TdmContratos
     end
     object actCrearPagoInicial: TAction
       Caption = 'Crear pago inicial'
+      Hint = 'Crear pago inicial'
       Visible = False
       OnExecute = actCrearPagoInicialExecute
       OnUpdate = actCrearPagoInicialUpdate

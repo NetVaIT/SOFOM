@@ -106,6 +106,8 @@ type
     adodsMasterIdCFDIFormaPago33: TIntegerField;
     adodsMasterIdCFDIUsoCFDI: TIntegerField;
     adodsMasterPPE: TBooleanField;
+    adodsMasterRegimenFiscalPreferente: TBooleanField;
+    adodsMasterListaGAFI: TBooleanField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsPersonaRolesNewRecord(DataSet: TDataSet);
     procedure adodsMasterNewRecord(DataSet: TDataSet);

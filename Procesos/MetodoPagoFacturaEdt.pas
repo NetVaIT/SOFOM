@@ -43,19 +43,19 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
   private
+    { Private declarations }
     FIDMetSeleccion: integer;
     FCuentaSeleccion: String;
     FComplemConcepto: String;
-    { Private declarations }
+    FMetodoPago: TDataSet;
+    procedure SetMetodoPago(const Value: TDataSet);
   public
     { Public declarations }
     property IdMetSeleccion: integer read FIDMetSeleccion write FIdMetSeleccion;
     Property CuentaSeleccion:String read FCuentaSeleccion write FCuentaSeleccion;
     Property ComplemConcepto:String read FComplemConcepto write FComplemConcepto;  //Ago 30/17
+    property MetodoPago: TDataSet read FMetodoPago write SetMetodoPago;
   end;
-
-//var
-//  FrmMetodoPagoFactura: TFrmMetodoPagoFactura;
 
 implementation
 
@@ -70,9 +70,7 @@ begin
     FCuentaSeleccion:= cxTxtEdtCuenta.Text
   else
     FCuentaSeleccion:='';
-
   FComplemConcepto:= cxMmObserva.Text; //Ago 30/17
-
 end;
 
 procedure TFrmMetodoPagoFactura.cxDBLkpCmbBxMetodoPagoClick(Sender: TObject);
@@ -106,6 +104,12 @@ begin
   DBLkpCmbBxMetodoPago.KeyValue:=IdMetSeleccion;
   pnlcuenta.Visible:= CuentaSeleccion <>'';
   cxTxtEdtCuenta.Text:=CuentaSeleccion;
+end;
+
+procedure TFrmMetodoPagoFactura.SetMetodoPago(const Value: TDataSet);
+begin
+  FMetodoPago := Value;
+  DSMetodoPago.DataSet := Value;
 end;
 
 end.

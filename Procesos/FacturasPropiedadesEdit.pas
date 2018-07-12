@@ -18,7 +18,7 @@ uses
   dxSkinWhiteprint, dxSkinXmas2008Blue, dxSkinscxPCPainter, cxPCdxBarPopupMenu,
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, Vcl.ImgList,
   System.Actions, Vcl.ActnList, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls, cxPC,
-  Vcl.DBCtrls;
+  Vcl.DBCtrls, ProcesosType;
 
 type
   TfrmFacturasPropiedadesEdit = class(T_frmEdit)
@@ -26,18 +26,43 @@ type
     Label16: TLabel;
     Label17: TLabel;
     Label18: TLabel;
-    DBLookupComboBox2: TDBLookupComboBox;
-    DBLookupComboBox1: TDBLookupComboBox;
-    DBLookupComboBox4: TDBLookupComboBox;
-    DBLookupComboBox3: TDBLookupComboBox;
+    dblcbFormaPago: TDBLookupComboBox;
+    dblcbMetodPago: TDBLookupComboBox;
+    dblcbTipoRelacion: TDBLookupComboBox;
+    dblcbUso: TDBLookupComboBox;
+    btnRelacionarCFDI: TButton;
   private
+    FCFDITipoDocumento: TCFDITipoDocumento;
+    FactRelacionarCFDI: TBasicAction;
+    procedure SetCFDITipoDocumento(const Value: TCFDITipoDocumento);
+    procedure SetactRelacionarCFDI(const Value: TBasicAction);
     { Private declarations }
   public
     { Public declarations }
+    property actRelacionarCFDI: TBasicAction read FactRelacionarCFDI write SetactRelacionarCFDI;
+    property CFDITipoDocumento: TCFDITipoDocumento read FCFDITipoDocumento write SetCFDITipoDocumento;
   end;
 
 implementation
 
 {$R *.dfm}
+
+{ TfrmFacturasPropiedadesEdit }
+
+procedure TfrmFacturasPropiedadesEdit.SetactRelacionarCFDI(
+  const Value: TBasicAction);
+begin
+  FactRelacionarCFDI := Value;
+  btnRelacionarCFDI.Action := Value;
+end;
+
+procedure TfrmFacturasPropiedadesEdit.SetCFDITipoDocumento(
+  const Value: TCFDITipoDocumento);
+begin
+  FCFDITipoDocumento := Value;
+  dblcbMetodPago.Enabled := (Value <> tdCFDIPago);
+  dblcbFormaPago.Enabled := (Value <> tdCFDIPago);
+  dblcbUso.Enabled := (Value <> tdCFDIPago);
+end;
 
 end.

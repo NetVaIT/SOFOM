@@ -7,7 +7,7 @@ uses
   Data.DB, Data.Win.ADODB,dateutils,dialogs,forms, shellAPI,winapi.windows,
   Vcl.Controls,
   VirtualXML,
-  XMLIntf, Activex,VirtualXML33, DocumentosDM;
+  XMLIntf, Activex,VirtualXML33, DocumentosDM, ProcesosType;
 
 type
   TdmFacturas = class(T_dmStandar)
@@ -53,16 +53,16 @@ type
     adodsMasterSelloSAT_TB: TStringField;
     adodsMasterCertificadoSAT_TB: TStringField;
     adodsMasterFechaTimbrado_TB: TDateTimeField;
-    ADODtStCFDIConceptos: TADODataSet;
-    ADODtStCFDIConceptosIdCFDI: TLargeintField;
-    ADODtStCFDIConceptosIdUnidadMedida: TIntegerField;
-    ADODtStCFDIConceptosCantidad: TFloatField;
-    ADODtStCFDIConceptosUnidad: TStringField;
-    ADODtStCFDIConceptosDescripcion: TStringField;
-    ADODtStCFDIConceptosNoIdentifica: TStringField;
-    ADODtStCFDIConceptosValorUnitario: TFMTBCDField;
-    ADODtStCFDIConceptosImporte: TFMTBCDField;
-    ADODtStCFDIConceptosIdCFDIConcepto: TLargeintField;
+    adodsCFDIConceptos: TADODataSet;
+    adodsCFDIConceptosIdCFDI: TLargeintField;
+    adodsCFDIConceptosIdUnidadMedida: TIntegerField;
+    adodsCFDIConceptosCantidad: TFloatField;
+    adodsCFDIConceptosUnidad: TStringField;
+    adodsCFDIConceptosDescripcion: TStringField;
+    adodsCFDIConceptosNoIdentifica: TStringField;
+    adodsCFDIConceptosValorUnitario: TFMTBCDField;
+    adodsCFDIConceptosImporte: TFMTBCDField;
+    adodsCFDIConceptosIdCFDIConcepto: TLargeintField;
     dsMaster: TDataSource;
     ADODtStCFDIImpuestos: TADODataSet;
     ADODtStCFDIImpuestosIdCFDI: TLargeintField;
@@ -116,10 +116,6 @@ type
     ADODtStBuscaFolioSerieFolioDoc: TLargeintField;
     ADODtStBuscaFolioSerieTipoComprobante: TStringField;
     ADODtStCFDIEstatus: TADODataSet;
-    ADODtStFormasPago: TADODataSet;
-    ADODtStFormasPagoIDCFDIFormaPago: TAutoIncField;
-    ADODtStFormasPagoIdentificador: TStringField;
-    ADODtStFormasPagoDescripcion: TStringField;
     ADODtStMetodoPago: TADODataSet;
     ADODtStMetodoPagoIdMetodoPago: TAutoIncField;
     ADODtStMetodoPagoIdentificador: TStringField;
@@ -194,14 +190,12 @@ type
     StringField9: TStringField;
     StringField10: TStringField;
     StringField11: TStringField;
-    adodsMasterDirCompleta: TStringField;
     actImprimirCFDI: TAction;
     adodsMasterDireccionC: TStringField;
-    ADODtStCFDIConceptosIdCuentaXCobrarDetalle: TIntegerField;
+    adodsCFDIConceptosIdCuentaXCobrarDetalle: TIntegerField;
     adodsMasterIdCuentaXCobrar: TIntegerField;
     adodsMasterSaldoFactoraje: TFMTBCDField;
     actCancelarCFDI: TAction;
-    adodsMasterRFCEmisor: TStringField;
     ADODtStSelMetPago: TADODataSet;
     ADODtStSelMetPagoIdMetodoPago: TIntegerField;
     ADODtStSelMetPagoIdentificador: TStringField;
@@ -315,17 +309,13 @@ type
     adodsMasterIdCFDIMetodoPago33: TIntegerField;
     adodsMasterIDCFDITipoRelacion: TIntegerField;
     adodsMasterIDCFDIUsoCFDI: TIntegerField;
-    adodsFormasPago33: TADODataSet;
-    adodsMetodosPago33: TADODataSet;
-    adodsTiposRelaciones: TADODataSet;
-    adodsUsosCFDI: TADODataSet;
     adodsMasterFormaPago33: TStringField;
     adodsMasterMetodoPago33: TStringField;
     adodsMasterTipoRelacion: TStringField;
     adodsMasterUsoCFDI: TStringField;
-    ADODtStCFDIConceptosDescuento: TFMTBCDField;
-    ADODtStCFDIConceptosSATClaveProdServ: TStringField;
-    ADODtStCFDIConceptosSATClaveUnidad: TStringField;
+    adodsCFDIConceptosDescuento: TFMTBCDField;
+    adodsCFDIConceptosSATClaveProdServ: TStringField;
+    adodsCFDIConceptosSATClaveUnidad: TStringField;
     adocSetConceptoImpuesto: TADOCommand;
     adocUpdCFDITotales: TADOCommand;
     adocSetImpuestos: TADOCommand;
@@ -334,15 +324,88 @@ type
     adoqCFDIRelacionadosIdCFDIRelacionado: TLargeintField;
     adoqCFDIRelacionadosUUID: TStringField;
     actRelacionarCFDI: TAction;
+    adospGenCFDIPago: TADOStoredProc;
+    adodsMasterIdPago: TIntegerField;
+    adodsMasterNumPagosAplicados: TIntegerField;
+    adodsMasterIdCFDIComplementoPago: TLargeintField;
+    adodsMasterIdCFDITipoCadenaPago: TIntegerField;
+    adodsMasterVersionPago: TStringField;
+    adodsMasterFechaPago: TDateTimeField;
+    adodsMasterFormaPagoP: TStringField;
+    adodsMasterMonedaP: TStringField;
+    adodsMasterTipoCambioP: TFMTBCDField;
+    adodsMasterMonto: TFMTBCDField;
+    adodsMasterNumOperacion: TStringField;
+    adoqFormasPago33: TADOQuery;
+    adoqMetodosPago33: TADOQuery;
+    adoqTiposRelaciones: TADOQuery;
+    adoqUsosCFDI: TADOQuery;
+    adodsMasterRFCEmisor: TStringField;
+    adodsCFDICPRelacionados: TADODataSet;
+    adodsCFDICPRelacionadosIdCFDIComplementoPagoRelacionado: TLargeintField;
+    adodsCFDICPRelacionadosIdCFDIComplementoPago: TLargeintField;
+    adodsCFDICPRelacionadosIdCFDIAsociado: TLargeintField;
+    adodsCFDICPRelacionadosUUID: TStringField;
+    adodsCFDICPRelacionadosSerie: TStringField;
+    adodsCFDICPRelacionadosFolio: TStringField;
+    adodsCFDICPRelacionadosMonedaDR: TStringField;
+    adodsCFDICPRelacionadosTipoCambioDR: TFMTBCDField;
+    adodsCFDICPRelacionadosMetodoPagoDR: TStringField;
+    adodsCFDICPRelacionadosNumParcialidad: TIntegerField;
+    adodsCFDICPRelacionadosImpSaldoAnt: TFMTBCDField;
+    adodsCFDICPRelacionadosImpPagado: TFMTBCDField;
+    adodsCFDICPRelacionadosImpSaldoInsoluto: TFMTBCDField;
+    adoqCFDIInfo: TADOQuery;
+    adoqCFDIInfoIdCFDI: TLargeintField;
+    adoqCFDIInfoIdCFDITipoDocumento: TIntegerField;
+    adoqCFDIInfoIdCFDIEstatus: TIntegerField;
+    adoqCFDIInfoIdCuentaXCobrar: TIntegerField;
+    adoqCFDIInfoIdPago: TIntegerField;
+    adoqCFDIInfoVersion: TStringField;
+    adoqCFDIInfoVersionPago: TStringField;
+    adoqCFDIComplementoPagos: TADOQuery;
+    adoqCFDIComplementoPagosRelacionado: TADOQuery;
+    adoqCFDIComplementoPagosIdCFDIComplementoPago: TLargeintField;
+    adoqCFDIComplementoPagosIdCFDI: TLargeintField;
+    adoqCFDIComplementoPagosIdCFDITipoCadenaPago: TIntegerField;
+    adoqCFDIComplementoPagosFechaPago: TDateTimeField;
+    adoqCFDIComplementoPagosFormaPagoP: TStringField;
+    adoqCFDIComplementoPagosMonedaP: TStringField;
+    adoqCFDIComplementoPagosTipoCambioP: TFMTBCDField;
+    adoqCFDIComplementoPagosMonto: TFMTBCDField;
+    adoqCFDIComplementoPagosNumOperacion: TStringField;
+    adoqCFDIComplementoPagosRFCEmisorCtaOrd: TStringField;
+    adoqCFDIComplementoPagosNomBancoOrdExt: TStringField;
+    adoqCFDIComplementoPagosCtaOrdenante: TStringField;
+    adoqCFDIComplementoPagosRFCEmisorCtaBen: TStringField;
+    adoqCFDIComplementoPagosCtaBeneficiario: TStringField;
+    adoqCFDIComplementoPagosTipoCadPago: TStringField;
+    adoqCFDIComplementoPagosCerPago: TStringField;
+    adoqCFDIComplementoPagosCadPago: TStringField;
+    adoqCFDIComplementoPagosSelloPago: TStringField;
+    dsCFDIComplementoPagos: TDataSource;
+    adoqCFDIComplementoPagosRelacionadoIdCFDIComplementoPagoRelacionado: TLargeintField;
+    adoqCFDIComplementoPagosRelacionadoIdCFDIComplementoPago: TLargeintField;
+    adoqCFDIComplementoPagosRelacionadoIdCFDIAsociado: TLargeintField;
+    adoqCFDIComplementoPagosRelacionadoUUID: TStringField;
+    adoqCFDIComplementoPagosRelacionadoSerie: TStringField;
+    adoqCFDIComplementoPagosRelacionadoFolio: TStringField;
+    adoqCFDIComplementoPagosRelacionadoMonedaDR: TStringField;
+    adoqCFDIComplementoPagosRelacionadoTipoCambioDR: TFMTBCDField;
+    adoqCFDIComplementoPagosRelacionadoMetodoPagoDR: TStringField;
+    adoqCFDIComplementoPagosRelacionadoNumParcialidad: TIntegerField;
+    adoqCFDIComplementoPagosRelacionadoImpSaldoAnt: TFMTBCDField;
+    adoqCFDIComplementoPagosRelacionadoImpPagado: TFMTBCDField;
+    adoqCFDIComplementoPagosRelacionadoImpSaldoInsoluto: TFMTBCDField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actTimbrarCFDIExecute(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsMasterBeforeOpen(DataSet: TDataSet);
-    procedure ADODtStCFDIConceptosBeforeInsert(DataSet: TDataSet);
-    procedure ADODtStCFDIConceptosAfterPost(DataSet: TDataSet);
-    procedure ADODtStCFDIConceptosNewRecord(DataSet: TDataSet);
-    procedure ADODtStCFDIConceptosValorUnitarioChange(Sender: TField);
-    procedure ADODtStCFDIConceptosAfterDelete(DataSet: TDataSet);
+    procedure adodsCFDIConceptosBeforeInsert(DataSet: TDataSet);
+    procedure adodsCFDIConceptosAfterPost(DataSet: TDataSet);
+    procedure adodsCFDIConceptosNewRecord(DataSet: TDataSet);
+    procedure adodsCFDIConceptosValorUnitarioChange(Sender: TField);
+    procedure adodsCFDIConceptosAfterDelete(DataSet: TDataSet);
     procedure adodsMasterIdPersonaReceptorChange(Sender: TField);
     procedure ADODtStDireccionesClienteCalcFields(DataSet: TDataSet);
     procedure actImprimirCFDIExecute(Sender: TObject);
@@ -350,21 +413,20 @@ type
     procedure actCancelarCFDIExecute(Sender: TObject);
     procedure actTimbrarCFDIUpdate(Sender: TObject);
     procedure actCancelarCFDIUpdate(Sender: TObject);
-    procedure ADODtStCFDIConceptosBeforeDelete(DataSet: TDataSet);
+    procedure adodsCFDIConceptosBeforeDelete(DataSet: TDataSet);
     procedure actRelacionarCFDIExecute(Sender: TObject);
     procedure dsMasterDataChange(Sender: TObject; Field: TField);
+    procedure actRelacionarCFDIUpdate(Sender: TObject);
   private
     { Private declarations }
     FMuestra: Boolean;
-    FIdCFDITipoDocumento: Integer;
+    FIdCFDITipoDocumento: TCFDITipoDocumento;
     FCanEdit: Boolean;
     procedure ReadFileCERKEY(FileNameCER,FileNameKEY: TFileName);
     function ConvierteFechaT_DT(Texto: String): TDateTime;
-    function CargaXMLPDFaFS(Archivo, Describe: string): integer;
-    procedure SubirXMLPDFaFS(FileName: TFileName);
+//    function CargaXMLPDFaFS(Archivo, Describe: string): integer;
+//    procedure SubirXMLPDFaFS(FileName: TFileName);
 //    Function ActualizaSaldoCliente(IdCFDI, IDCliente, IDDomicilioCliente:Integer;Importe :Double; operacion:String):Boolean;
-    function VerificaArchivo(var IDArchivo: Integer; Archivo: String;
-      var Respuesta: String): Boolean;
     procedure SetMuestra(const Value: Boolean);
     function SacaTipoComp(tipoD: Integer): String;
     function InformacionContrato(IdCXC: Integer): String;
@@ -374,7 +436,7 @@ type
 //    procedure RefreshCFDI;
     procedure DesAsociarCFDIdeCXC(Idcfdi: Integer);
     procedure RegistraBitacora(tipoRegistro: Integer; Observacion: String);    //Regresado
-    function Timbrar32(IdCFDI: Integer): Boolean;
+//    function Timbrar32(IdCFDI: Integer): Boolean;
     function Timbrar33(IdCFDI: Integer): Boolean;
     procedure GenerarPDF(IdCFDI:Integer; ArchivoPDF, ArchivoImagen: TFileName);
     function AgregarDocumento(FileName: TFileName): Integer;
@@ -385,11 +447,12 @@ type
     { Public declarations }
     EsProduccion:Boolean;
     constructor CreateWMostrar(AOwner: TComponent; Muestra: Boolean;
-      IdCFDITipoDocumento: Integer); virtual;
+      IdCFDITipoDocumento: TCFDITipoDocumento); virtual;
     function CrearPrefactura(IdCuentaXCobrar: Integer): Integer;
+    function CrearCFDIPago(IdPago: Integer): Integer;
     function Timbrar(IdCFDI: Integer): Boolean;
+    property IdCFDITipoDocumento: TCFDITipoDocumento read FIdCFDITipoDocumento write FIdCFDITipoDocumento;
     property Muestra:Boolean read FMuestra write SetMuestra;
-    property IdCFDITipoDocumento:Integer read FIdCFDITipoDocumento write FIdCFDITipoDocumento;
     property CanEdit: Boolean read FCanEdit write SetCanEdit;
   end;
 
@@ -402,23 +465,24 @@ uses FacturasForm, ConceptosFacturaForm,
   _Utils, _ConectionDmod, ConfiguracionDM, FacturaConfirmacionForm,
   FacturaReglamentacion, Facturacion.ComprobanteV33,
   Facturacion.ComplementoPagoV1, Facturacion.ImpuestosLocalesV1,
-  Facturacion.Helper, RptCFDI33DM, CFDIRelacionadosDM;
+  Facturacion.Helper, RptCFDI33DM, CFDIRelacionadosDM, CFDICPRelacionadosForm;
 
 {$R *.dfm}
 
 procedure TdmFacturas.actCancelarCFDIExecute(Sender: TObject);
-var               //Solo se permite si es el ultimo movimiento...    //AGo 3/17
+var
   Certificado: TFECertificado;
   FileCertificado, FileKey : TFileName;
-  Clave, RutaBase, carpeta, Respuesta, ArchivoSal,dato, motivo : String;
+  Clave, RutaBase, Carpeta, Respuesta, ArchivoSal: string;
+  Dato: string;
+  Motivo: string;
   Anio,dia,mes:Word;
   F:TextFile;
-begin          //Agregado Ago 3/17
+begin
   inherited;
   //Verificar que sea el  CFDI  de la ultima amortización.., si es un moratorio requiere que ya se haya desaplicado(proceso aun no realizado).. y dejar las
   // amortizaciones moratorios habilitadas nuevamente
-
-//Cancelar CFDI
+  //Cancelar CFDI
   dato:= '¿Está seguro CANCELAR el documento con Folio:'
            +adodsMaster.fieldbyname('Folio').ASString+' Serie: '
            +adodsMaster.fieldbyname('Serie').ASString +'?';
@@ -484,7 +548,7 @@ begin          //Agregado Ago 3/17
         ShowMessage(adodsMasterUUID_TB.AsString + #13+'Prueba de Cancelación ');
       end
       else
-      if  cancelarCFDI(adodsMasterUUID_TB.AsString,carpeta+ArchivoSal,Certificado,Respuesta,Esproduccion) then
+      if  CancelarCFDI(adodsMasterUUID_TB.AsString,carpeta+ArchivoSal,Certificado,Respuesta,Esproduccion) then
       begin
         dato:=Respuesta;
 
@@ -595,7 +659,11 @@ end;
 procedure TdmFacturas.dsMasterDataChange(Sender: TObject; Field: TField);
 begin
   inherited;
-  CanEdit := (adodsMasterIdCuentaXCobrar.IsNull and (adodsMasterIdCFDIEstatus.Value=1));
+  case IdCFDITipoDocumento of
+    tdFactura: CanEdit := (adodsMasterIdCuentaXCobrar.IsNull and (adodsMasterIdCFDIEstatus.Value=1));
+    tdNotaCredito: CanEdit := (adodsMasterIdCuentaXCobrar.IsNull and (adodsMasterIdCFDIEstatus.Value=1));
+    tdCFDIPago: CanEdit := False;
+  end;
   if Assigned(gGridForm) then
     gGridForm.CanEdit:= CanEdit;
 end;
@@ -714,7 +782,7 @@ begin
     else
       Showmessage ('No fue posible regenerar el PDF, puede que no se haya encontrado el archivo PNG');
   except
-      Showmessage ('No fue posible regenerar el PDF, verifique que no se encuentre abierto en si visor de PDFs');
+    on E: Exception do Showmessage ('No fue posible generar el PDF. ' + E.Message);
   end;
   ShowProgress(100,100);
   //Filtrar con ID enDocumento
@@ -735,6 +803,13 @@ begin
   finally
     dmCFDIRelacionados.Free;
   end;
+end;
+
+procedure TdmFacturas.actRelacionarCFDIUpdate(Sender: TObject);
+begin
+  inherited;
+  //Podra agregar UUID relacionadas si especifica el tipo de relacion del CFDI
+  actRelacionarCFDI.Enabled := (not adodsMasterIDCFDITipoRelacion.IsNull);
 end;
 
 procedure TDMFacturas.ReadFile(FileName: TFileName); //Dic 15/16
@@ -769,68 +844,19 @@ end;
 procedure TdmFacturas.actTimbrarCFDIUpdate(Sender: TObject);
 begin
   inherited;
-  actTimbrarCFDI.Enabled := (adodsMasterIdCFDIEstatus.Value = 1) and (adodsMasterTotal.Value > 0);
+  case IdCFDITipoDocumento of
+    tdFactura:  actTimbrarCFDI.Enabled := (adodsMasterIdCFDIEstatus.Value = 1) and (adodsMasterTotal.Value > 0);
+    tdNotaCredito:  actTimbrarCFDI.Enabled := (adodsMasterIdCFDIEstatus.Value = 1) and (adodsMasterTotal.Value > 0);
+    tdCFDIPago:  actTimbrarCFDI.Enabled := (adodsMasterIdCFDIEstatus.Value = 1) and (adodsMasterTotal.Value = 0);
+  end;
 end;
 
-//Ene 27/17 Copiado
-//function TDMFacturas.CrearArchivos_TimbrePrueba( var Ruta : String; var TimbradoCFDI: TTimbreCFDI; Adicional :String):Boolean;
-//const
-//    XMLF='XMLPruebaST.xml';
-//    PDFF='PDFPruebaST.pdf';
-//    PNGF='PNGPruebaST.png';
-//var
-//  rutaAux, BAse:String;
-//  XRuta:String;
-//begin
-//
-//  Base:=ExtractFilePath(application.exename);
-//  Result:=True;
-//  Ruta := Ruta + adicional;
-//  XRuta:=Base+XMLF;
-////  if FileExists(XRuta) then
-// //    ShowMessage('XML existe');
-//
-//   XRuta:=Base+PDFF;
-// // if FileExists(XRuta) then
-// //    ShowMessage('pdf existe');
-//
-//  XRuta:=Base+PNGF;
-// // if FileExists(XRuta) then
-//   //  ShowMessage('png existe');
-//
-//
-//  if FileExists(Base+XMLF) and FileExists(Base+PDFF) and FileExists(Base+PNGF) then
-//  begin
-//    CopyFile(pwidechar(Base+XMLF),pwidechar(Ruta),false);
-//    RutaAux:= Ruta ;
-//
-//    RutaAux:= ChangeFileExt(Ruta, fePDF);
-//    CopyFile(pwidechar(Base+PDFF),pwidechar(RutaAux), False);
-//
-//    RutaAux:= ChangeFileExt(Ruta, fePNG);
-//    CopyFile(pwidechar(Base+PNGF),pwidechar(RutaAux),false);
-//
-//    TimbradoCFDI.Resultado := 'PRUEBA';      // constante de descripcion del error
-//    TimbradoCFDI.MensajeError:= '';      // descripcion del error
-//    TimbradoCFDI.CertificadoEmisor:= '111111111';      // No certificado del emisor
-//    TimbradoCFDI.SelloEmisor:='fffffffffffffffffff';      // Sello del emisor
-//    TimbradoCFDI.CadenaOriginal:= '||prueba|||';      // Cadena Original del documento
-//    TimbradoCFDI.NoCertificadoSAT:='aaaaaaaaaaaaaaaaaaaaaa';      // No. certificado del SAT
-//    TimbradoCFDI.SelloSAT:= '==aaaaaaaaaa=';      // Sello del SAT
-//    TimbradoCFDI.CadenaTimbre:= 'cadenatimbre';      // Cadena del timbre
-//    TimbradoCFDI.UUID:= '74305F11-FFFF-FFFF-FFFF-BD200698C5EA';      // UUID
-//    TimbradoCFDI.FechaTimbre:= dateTimeToStr(now);     // fecha del timbrado
-//    TimbradoCFDI.InicioVigenciaCertificado:= dateTimeToStr(date-10);     // inicio de vigencia del certificado
-//    TimbradoCFDI.FinVigenciaCertificado:= dateTimeToStr(date+10);     // fin de vigencia del certificado
-//    TimbradoCFDI.VirtualPACID:= 'Prueba';     // VPID
-//    TimbradoCFDI.TimbresRestantes:= '1';     // timbres restantes
-//    TimbradoCFDI.VersionLibreria:= '00';     // version de la libreria
-//    TimbradoCFDI.NombreArchivo:= Ruta;
-//  end
-//  else
-//    REsult:=FAlse;
-//
-//end;
+function TdmFacturas.CrearCFDIPago(IdPago: Integer): Integer;
+begin
+  adospGenCFDIPago.Parameters.ParamByName('@IdPago').Value:= IdPago;
+  adospGenCFDIPago.ExecProc;
+  Result := adospGenCFDIPago.Parameters.ParamByName('@IdCFDI').Value;
+end;
 
 function TdmFacturas.CrearPrefactura(IdCuentaXCobrar: Integer): Integer;
 begin
@@ -852,32 +878,6 @@ begin        //Dic 7/16
     result:=   ADODSAuxiliar.fieldbyname('Identificador').asString;
   end;
 end;
-
-//function TdmFacturas.ActualizaSaldoCliente(IdCFDI, IDCliente,
-//  IDDomicilioCliente: Integer; Importe: Double; operacion: String): Boolean;
-//begin
-//
-//  if IDCliente<>-1 then
-//  begin
-//    try
-//      ADOQryAuxiliar.Close;
-//      ADOQryAuxiliar.Sql.Clear;
-//      ADOQryAuxiliar.Sql.add('Update PersonasDomicilios set Saldo =Saldo '+operacion+floatToStr(Importe)+' where IDPersonaDomicilio='+intToStr(IdDomiciliocliente));
-//      ADOQryAuxiliar.ExecSQL;
-//
-// (* quitado Ene 28/17
-//      ADOQryAuxiliar.Close;
-//      ADOQryAuxiliar.Sql.Clear;
-//      ADOQryAuxiliar.Sql.add('Update Personas set SaldoCliente =SaldoCliente '+operacion+floatToStr(Importe)+' where IDPersona='+intToStr(IdCliente));
-//      ADOQryAuxiliar.ExecSQL;    *)
-//      result:=true;
-//    except
-//       result:=False;
-//    end;
-//  end
-//  else //No hay agrupadas de publico en general
-//    result:=False;
-//end;
 
 procedure TdmFacturas.adodsMasterAfterOpen(DataSet: TDataSet);
 begin
@@ -920,18 +920,14 @@ begin
   try
     adodsMasterVersion.AsString := '3.3';
     DataSet.FieldByName('IDCFDIEstatus').AsInteger:=1; //Prefactura
-    DataSet.FieldByName('IDCFDITipoDocumento').AsInteger:= IdCFDITipoDocumento; //Factura    //ADODtSTOrdenSalida.fieldByname('IdGeneraCFDITipoDoc').ASInteger;//Mod. Mar 28/16
-    DataSet.FieldByName('TipoComp').AsString:=SacaTipoComp(IdCFDITipoDocumento); //DataSet.FieldByName('TipoComprobante').AsString;//'ingreso'; //columna TipoComprobante de Tabla CFDItipoDocumento
-    //Verificar si serie yFolio se colocan aca o se colocan justo antes de generar el CFDI
-    DataSet.FieldByName('Folio').AsInteger:=0; //Sin asignar aun
-    DataSet.FieldByName('Fecha').AsDateTime:=now; //Se supondría que se van a generar inmediatamente pero hay que verificar(por si se requiere cambio de fecha antes de generar)
+    DataSet.FieldByName('IDCFDITipoDocumento').AsInteger:= Ord(IdCFDITipoDocumento);
+    DataSet.FieldByName('TipoComp').AsString:=SacaTipoComp(Ord(IdCFDITipoDocumento));
+    DataSet.FieldByName('Folio').AsInteger:=0;
+    DataSet.FieldByName('Fecha').AsDateTime:=now;
     DataSet.FieldByName('LugarExpedicion').AsString:= ADODtStPersonaEmisorCodigoPostal.AsString;//ADODtStPersonaEmisorMunicipio.Value +', '+ADODtStPersonaEmisorEstado.Value;//'Zapopan, Jalisco' ; //Verificar si se saca de  la direccion del emisor?
-  // DataSet.FieldByName('Serie').AsString:=
-  //  DataSet.FieldByName('IdCFDIFormaPago').AsInteger :=1;
-  //  DataSet.FieldByName('IDMetodoPago').AsInteger:=5; //Otros Jun 27/16  4; //No identificado // abril 1/16      se supone que al seleccionar el cliente debe cambiar, si tiene
     DataSet.FieldByName('IDMoneda').AsInteger:=106;
-    adodsMaster.fieldbyname('TipoCambio').AsInteger:=1; //Jun 27/16
-    DataSet.FieldByName('IdPersonaEmisor').AsInteger:=ADODtStPersonaEmisoridpersona.AsInteger; //Debe estar abierta y debe tener una direccion fiscal
+    adodsMaster.fieldbyname('TipoCambio').AsInteger:=1;
+    DataSet.FieldByName('IdPersonaEmisor').AsInteger:=ADODtStPersonaEmisoridpersona.AsInteger;
     adodsMasterIdCFDIMetodoPago33.Value := 2;
     adodsMasterIdCFDIFormaPago33.Value := 99;
     adodsMasterIDCFDIUsoCFDI.Value := 22;
@@ -940,12 +936,12 @@ begin
   end;
 end;
 
-procedure TdmFacturas.ADODtStCFDIConceptosAfterDelete(DataSet: TDataSet);
+procedure TdmFacturas.adodsCFDIConceptosAfterDelete(DataSet: TDataSet);
 var
 IdCFDI: Integer;
 begin
   inherited;
-  IdCFDI := ADODtStCFDIConceptosIdCFDI.Value;
+  IdCFDI := adodsCFDIConceptosIdCFDI.Value;
   // Actualiza impuesto
   adocSetImpuestos.Parameters.ParamByName('IdCFDI').Value := IdCFDI;
   adocSetImpuestos.Execute;
@@ -955,7 +951,7 @@ begin
   AdoDSMaster.Refresh;
 end;
 
-procedure TdmFacturas.ADODtStCFDIConceptosAfterPost(DataSet: TDataSet);
+procedure TdmFacturas.adodsCFDIConceptosAfterPost(DataSet: TDataSet);
 var
   IdCFDI: Integer;
   IdCFDIConcepto: Integer;
@@ -965,9 +961,9 @@ begin
   if adodsMasterIdCuentaXCobrar.IsNull then  // ago 31/17 Por si se esta modificando el concepto al vuelo , solo esto aplica a las que no tienen CXC
   begin
     Showmessage('Se actualizarán totales e IVA para este comprobante'); //feb 7/17
-    IdCFDI := ADODtStCFDIConceptosIdCFDI.Value;
-    IdCFDIConcepto := ADODtStCFDIConceptosIdCFDIConcepto.Value;
-    Base := ADODtStCFDIConceptosImporte.AsFloat;
+    IdCFDI := adodsCFDIConceptosIdCFDI.Value;
+    IdCFDIConcepto := adodsCFDIConceptosIdCFDIConcepto.Value;
+    Base := adodsCFDIConceptosImporte.AsFloat;
     // Inserta concepto impuesto
     adocSetConceptoImpuesto.Parameters.ParamByName('IdCFDIConcepto').Value := IdCFDIConcepto;
     adocSetConceptoImpuesto.Parameters.ParamByName('IdCFDITipoImpuesto').Value := 1;
@@ -984,46 +980,36 @@ begin
 //  RefreshCFDI; //jun 27/17
 end;
 
-//procedure TdmFacturas.RefreshCFDI; //jun 27/17
-//var
-//  IdCFDI: Integer;
-//begin
-//    IdCFDI:= ADODtStCFDIConceptos.FieldByName('IdCFDI').AsInteger;
-//    ADODsmaster.Close;
-//    ADODsmaster.Open;
-//    ADODsmaster.Locate('IdCFDI', IdCFDI, []);
-//end;
-
-procedure TdmFacturas.ADODtStCFDIConceptosBeforeDelete(DataSet: TDataSet);
+procedure TdmFacturas.adodsCFDIConceptosBeforeDelete(DataSet: TDataSet);
 begin
   inherited;
-    adocDelConceptoImpuesto.Parameters.ParamByName('IdCFDIConcepto').Value := ADODtStCFDIConceptosIdCFDIConcepto.Value;
+    adocDelConceptoImpuesto.Parameters.ParamByName('IdCFDIConcepto').Value := adodsCFDIConceptosIdCFDIConcepto.Value;
     adocDelConceptoImpuesto.Execute;
 end;
 
-procedure TdmFacturas.ADODtStCFDIConceptosBeforeInsert(DataSet: TDataSet);
+procedure TdmFacturas.adodsCFDIConceptosBeforeInsert(DataSet: TDataSet);
 begin
   inherited;
   if adodsMaster.State in [dsInsert,dsEdit] then
      adodsMaster.Post;
 end;
 
-procedure TdmFacturas.ADODtStCFDIConceptosNewRecord(DataSet: TDataSet);
+procedure TdmFacturas.adodsCFDIConceptosNewRecord(DataSet: TDataSet);
 begin
   inherited;
-  ADODtStCFDIConceptosIdUnidadMedida.Value :=2; //NA
-  ADODtStCFDIConceptosUnidad.AsString:='NA';
-  ADODtStCFDIConceptosSATClaveUnidad.AsString:='XNA';
-  ADODtStCFDIConceptosCantidad.AsFloat:=1;
-  ADODtStCFDIConceptosDescuento.Value := 0;
+  adodsCFDIConceptosIdUnidadMedida.Value :=2; //NA
+  adodsCFDIConceptosUnidad.AsString:='NA';
+  adodsCFDIConceptosSATClaveUnidad.AsString:='XNA';
+  adodsCFDIConceptosCantidad.AsFloat:=1;
+  adodsCFDIConceptosDescuento.Value := 0;
 end;
 
-procedure TdmFacturas.ADODtStCFDIConceptosValorUnitarioChange(Sender: TField);
+procedure TdmFacturas.adodsCFDIConceptosValorUnitarioChange(Sender: TField);
 begin
   inherited;
-  if (ADODtStCFDIConceptos.State in [dsEdit,dsInsert]) and (ADODtStCFDIConceptos.FieldByName('ValorUnitario').AsFloat <>0) and (ADODtStCFDIConceptos.FieldByName('Cantidad').AsFloat<>0) then
+  if (adodsCFDIConceptos.State in [dsEdit,dsInsert]) and (adodsCFDIConceptos.FieldByName('ValorUnitario').AsFloat <>0) and (adodsCFDIConceptos.FieldByName('Cantidad').AsFloat<>0) then
   begin                                      //Value Feb 19/17
-    ADODtStCFDIConceptos.FieldByName('Importe').Value:=ADODtStCFDIConceptos.FieldByName('ValorUnitario').AsFloat* ADODtStCFDIConceptos.FieldByName('CAntidad').AsFloat;
+    adodsCFDIConceptos.FieldByName('Importe').Value:=adodsCFDIConceptos.FieldByName('ValorUnitario').AsFloat* adodsCFDIConceptos.FieldByName('CAntidad').AsFloat;
   end;
 
 end;
@@ -1060,22 +1046,22 @@ begin
     result:=ADODSAuxiliar.fieldbyname('SATClave').AsString;
 end;
 
-function TdmFacturas.CargaXMLPDFaFS(Archivo, Describe: string): integer;
-var
-  FacturaXML : TFileName;
-begin
-  FacturaXML := Archivo;
-  adodsDocumento.Open;
-  adodsDocumento.Insert;
-  adodsDocumentoIdDocumentoTipo.Value := 2;
-  adodsDocumentoIdDocumentoClase.Value := 1;
-  adodsDocumentoDescripcion.AsString := Describe;
-  adodsDocumentoNombreArchivo.AsString := ExtractFileName(Archivo);
-  SubirXMLPDFaFS(FacturaXML);
-  adodsDocumento.Post;
-  Result := adodsDocumentoIdDocumento.Value;
-  adodsDocumento.Close;
-end;
+//function TdmFacturas.CargaXMLPDFaFS(Archivo, Describe: string): integer;
+//var
+//  FacturaXML : TFileName;
+//begin
+//  FacturaXML := Archivo;
+//  adodsDocumento.Open;
+//  adodsDocumento.Insert;
+//  adodsDocumentoIdDocumentoTipo.Value := 2;
+//  adodsDocumentoIdDocumentoClase.Value := 1;
+//  adodsDocumentoDescripcion.AsString := Describe;
+//  adodsDocumentoNombreArchivo.AsString := ExtractFileName(Archivo);
+//  SubirXMLPDFaFS(FacturaXML);
+//  adodsDocumento.Post;
+//  Result := adodsDocumentoIdDocumento.Value;
+//  adodsDocumento.Close;
+//end;
 
 function TdmFacturas.ConvierteFechaT_DT(Texto: String): TDateTime;
 var                      //Texto Viene en formato 'yyyy-mm-dd''T''hh:nn:ss'
@@ -1095,7 +1081,7 @@ begin
 end;
 
 constructor TdmFacturas.CreateWMostrar(AOwner: TComponent; Muestra: Boolean;
-  IdCFDITipoDocumento: Integer);
+  IdCFDITipoDocumento: TCFDITipoDocumento);
 begin
   FMuestra:=Muestra;
   FIdCFDITipoDocumento := IdCFDITipoDocumento;
@@ -1105,24 +1091,36 @@ end;
 procedure TdmFacturas.DataModuleCreate(Sender: TObject);
 begin
   inherited;
-  if ADODtStCFDIConceptos.CommandText <> EmptyStr then ADODtStCFDIConceptos.Open;
+  if adodsCFDIConceptos.CommandText <> EmptyStr then adodsCFDIConceptos.Open;
   gGridForm:= TfrmFacturasGrid.Create(Self);
+  gGridForm.ReadOnlyGrid := (IdCFDITipoDocumento = tdCFDIPago);
   gGridForm.DataSet:= adodsMaster;
-  case IdCFDITipoDocumento  of  //Jun 26/17
-  1:  gGridForm.Caption:='Facturas';
-  2:  gGridForm.Caption:='Notas de Crédito';
+  case IdCFDITipoDocumento of
+    tdFactura: gGridForm.Caption:='Facturas';
+    tdNotaCredito: gGridForm.Caption:='Notas de Crédito';
+    tdNotaCargo: ;
+    tdCFDIPago: gGridForm.Caption:='CFDI de pagos';
   end;
   gGridForm.actSearch := actSearch;
   TfrmFacturasGrid(gGridForm).actTimbrarCFDI := actTimbrarCFDI;
   TfrmFacturasGrid(gGridForm).actImprimirCFDI := actImprimirCFDI;
   TfrmFacturasGrid(gGridForm).actCancelarCFDI := actCancelarCFDI;
   TfrmFacturasGrid(gGridForm).actRelacionarCFDI := actRelacionarCFDI;
+  if IdCFDITipoDocumento = tdCFDIPago then
+  begin
+    adodsCFDICPRelacionados.Open;
+    gFormDeatil1:= TfrmCFDICPRelacionados.Create(Self);
+    gFormDeatil1.ReadOnlyGrid := True;
+    gFormDeatil1.DataSet:= adodsCFDICPRelacionados;
+  end;
   // Busqueda
-  SQLSelect:= 'SELECT IdCFDI, IdCFDITipoDocumento, IdCFDIFormaPago, IdMetodoPago, IdMoneda, IdPersonaEmisor, IdPersonaReceptor, IdDocumentoCBB, IdDocumentoXML, IdDocumentoPDF, IdCFDIEstatus, IdCFDIFacturaGral, IdClienteDomicilio, ' +
-  'Version, CuentaCte, TipoCambio, TipoComp, Serie, Folio, Fecha, LugarExpedicion, Sello, CondPago, NoCertificado, Certificado, SubTotal, Descto, MotivoDescto, Total, NumCtaPago, CadenaOriginal, TotalImpuestoRetenido, ' +
-  'TotalImpuestoTrasladado, SaldoDocumento, FechaCancelacion, Observaciones, PorcentajeIVA, EmailCliente, UUID_TB, SelloCFD_TB, SelloSAT_TB, CertificadoSAT_TB, FechaTimbrado_TB, IdCuentaXCobrar, SaldoFactoraje, ' +
-  'IdCFDIFormaPago33, IdCFDIMetodoPago33, IDCFDITipoRelacion, IdCFDIUsoCFDI ' +
-  'FROM CFDI ';
+  SQLSelect:= 'SELECT C.IdCFDI, C.IdCFDITipoDocumento, C.IdCFDIFormaPago, C.IdMetodoPago, C.IdMoneda, C.IdPersonaEmisor, C.IdPersonaReceptor, C.IdDocumentoCBB, C.IdDocumentoXML, C.IdDocumentoPDF, C.IdCFDIEstatus, ' +
+  'C.IdCFDIFacturaGral, C.IdClienteDomicilio, C.IdCuentaXCobrar, C.IdCFDIFormaPago33, C.IdCFDIMetodoPago33, C.IDCFDITipoRelacion, C.IdCFDIUsoCFDI, C.IdPago, C.Version, C.CuentaCte, C.TipoCambio, C.TipoComp, C.Serie, ' +
+  'C.Folio, C.Fecha, C.LugarExpedicion, C.Sello, C.CondPago, C.NoCertificado, C.Certificado, C.SubTotal, C.Descto, C.MotivoDescto, C.Total, C.NumCtaPago, C.CadenaOriginal, C.TotalImpuestoRetenido, C.TotalImpuestoTrasladado, ' +
+  'C.SaldoDocumento, C.FechaCancelacion, C.Observaciones, C.PorcentajeIVA, C.EmailCliente, C.UUID_TB, C.SelloCFD_TB, C.SelloSAT_TB, C.CertificadoSAT_TB, C.FechaTimbrado_TB, C.SaldoFactoraje, C.NumPagosAplicados, ' +
+  'CCP.IdCFDIComplementoPago, CCP.IdCFDITipoCadenaPago, CCP.VersionPago, CCP.FechaPago, CCP.FormaPagoP, CCP.MonedaP, CCP.TipoCambioP, CCP.Monto, CCP.NumOperacion ' +
+  'FROM CFDI AS C ' +
+  'LEFT OUTER JOIN CFDIComplementoPagos AS CCP ON C.IdCFDI = CCP.IdCFDI ';
   actSearch.Execute;
 end;
 
@@ -1134,13 +1132,13 @@ end;
 procedure TdmFacturas.SetFilter;
 begin
   inherited;
-  SQLWhere := Format(' WHERE (IdCFDITipoDocumento =  %d) ', [IdCFDITipoDocumento]);
+  SQLWhere := Format(' WHERE (C.IdCFDITipoDocumento =  %d) ', [Ord(IdCFDITipoDocumento)]);
   if TfrmFacturasGrid(gGridForm).Cliente <> EmptyStr then
-    SQLWhere := SQLWhere + 'AND IdPersonaReceptor IN (SELECT IdPersona FROM Personas WHERE RazonSocial LIKE ''%' + TfrmFacturasGrid(gGridForm).Cliente + '%'') ';
+    SQLWhere := SQLWhere + 'AND C.IdPersonaReceptor IN (SELECT IdPersona FROM Personas WHERE RazonSocial LIKE ''%' + TfrmFacturasGrid(gGridForm).Cliente + '%'') ';
   if TfrmFacturasGrid(gGridForm).UsarFecha then
-    SQLWhere := SQLWhere + Format('AND Fecha BETWEEN CONVERT(datetime, ''%s'' , 103) AND CONVERT(datetime, ''%s'' , 103) ', [DateToStr(TfrmFacturasGrid(gGridForm).Desde), DateToStr(TfrmFacturasGrid(gGridForm).Hasta)]);
+    SQLWhere := SQLWhere + Format('AND C.Fecha BETWEEN CONVERT(datetime, ''%s'' , 103) AND CONVERT(datetime, ''%s'' , 103) ', [DateToStr(TfrmFacturasGrid(gGridForm).Desde), DateToStr(TfrmFacturasGrid(gGridForm).Hasta)]);
   if TfrmFacturasGrid(gGridForm).ConSaldo then
-    SQLWhere := SQLWhere + 'AND SaldoDocumento > 0 ';
+    SQLWhere := SQLWhere + 'AND C.SaldoDocumento > 0 ';
 end;
 
 procedure TdmFacturas.ReadFileCERKEY(FileNameCER, FileNameKEY: TFileName);
@@ -1180,30 +1178,31 @@ begin
   FMuestra := Value;
 end;
 
-procedure TdmFacturas.SubirXMLPDFaFS(FileName: TFileName);
-var
-  Blob: TStream;
-  Fs: TFileStream;
-begin
-  Blob:= adodsUpdate.CreateBlobStream(adodsDocumentoArchivo, bmWrite);
-  try
-    Blob.Seek(0, soFromBeginning);
-    Fs := TFileStream.Create(FileName, fmOpenRead or fmShareDenyWrite);
-    try
-      Blob.CopyFrom(Fs, Fs.Size)
-    finally
-      Fs.Free
-    end;
-  finally
-    Blob.Free
-  end;
-end;
+//procedure TdmFacturas.SubirXMLPDFaFS(FileName: TFileName);
+//var
+//  Blob: TStream;
+//  Fs: TFileStream;
+//begin
+//  Blob:= adodsUpdate.CreateBlobStream(adodsDocumentoArchivo, bmWrite);
+//  try
+//    Blob.Seek(0, soFromBeginning);
+//    Fs := TFileStream.Create(FileName, fmOpenRead or fmShareDenyWrite);
+//    try
+//      Blob.CopyFrom(Fs, Fs.Size)
+//    finally
+//      Fs.Free
+//    end;
+//  finally
+//    Blob.Free
+//  end;
+//end;
 
 function TdmFacturas.Timbrar(IdCFDI: Integer): Boolean;
 var
   CFDICreado: Boolean;
   CreadaAntes: Boolean;
   CFDIVersion: string;
+  CFDITipoDocumento: TCFDITipoDocumento;
 
   function ConfirmarGeneracion: Boolean; //Ago 31/17
   var
@@ -1211,10 +1210,11 @@ var
   begin
      FrmDatosFacturaPrev:=TFrmDatosFacturaPrev.Create(self);
      try
-       FrmDatosFacturaPrev.DSCFDIPrevio.DataSet:=adodsMaster;
-       FrmDatosFacturaPrev.DSConceptosPrevios.DataSet:=ADODtStCFDIConceptos;
-       FrmDAtosFActuraPrev.dsQryAuxiliar.DataSet:=ADOQryAuxiliar;
-       FrmDAtosFActuraPrev.VADODtStSelMetPago:=ADODtStSelMetPago;
+       FrmDatosFacturaPrev.CFDI := adodsMaster;
+       FrmDatosFacturaPrev.Conceptos := adodsCFDIConceptos;
+       FrmDAtosFActuraPrev.MetodoPago := ADODtStSelMetPago;
+       FrmDAtosFActuraPrev.actRelacionarCFDI := actRelacionarCFDI;
+       FrmDatosFacturaPrev.CFDITipoDocumento := CFDITipoDocumento;
        FrmDatosFacturaPrev.ShowModal;
        Result:= FrmDatosFacturaPrev.modalresult=mrok;
      finally
@@ -1243,19 +1243,28 @@ var
 
 begin
   Result := False;
-  adodsMaster.Open;
-  CFDICreado :=  adodsMaster.Locate('IDCFDI',IdCFDI,[]);  //SE ubica en el CFDI feb 8/
-  CreadaAntes := adodsMasterIdCFDIEstatus.Value = 2;  // Vigente
-  CFDIVersion := adodsMasterVersion.AsString;
+  //Obtiene informacion del CFDI
+  adoqCFDIInfo.Close;
+  adoqCFDIInfo.Parameters.ParamByName('IdCFDI').Value := IdCFDI;
+  adoqCFDIInfo.Open;
+  CFDITipoDocumento := TCFDITipoDocumento(adoqCFDIInfoIdCFDITipoDocumento.Value);
+  CFDICreado :=  (adoqCFDIInfoIdCFDI.Value = IdCFDI);
+  CreadaAntes := (adoqCFDIInfoIdCuentaXCobrar.Value = 2);  // Vigente
+  CFDIVersion := adoqCFDIInfoVersion.AsString;
+  adoqCFDIInfo.Close;
+//  adodsMaster.Open;
+//  CFDICreado :=  adodsMaster.Locate('IDCFDI',IdCFDI,[]);  //SE ubica en el CFDI feb 8/
+//  CreadaAntes := adodsMasterIdCFDIEstatus.Value = 2;  // Vigente
+//  CFDIVersion := adodsMasterVersion.AsString;
   if CFDICreado and (not CreadaAntes) then
   begin
     if ConfirmarGeneracion then
     begin
       if CFDIVersion = '3.3' then
-        Result:= Timbrar33(IdCFDI)
-      else
-        Result:= Timbrar32(IdCFDI);
-      if Result then
+        Result:= Timbrar33(IdCFDI);
+//      else
+//        Result:= Timbrar32(IdCFDI);
+      if Result and (CFDITipoDocumento <> tdCFDIPago) then
         VerificaYCambiaEstatusCXC(IdCFDI, 1, 0);
     end
     else
@@ -1265,309 +1274,309 @@ begin
   end;
 end;
 
-function TdmFacturas.Timbrar32(IdCFDI: Integer): Boolean;
-const  //Copiado de sistema RH Dic 7/15
-  _SEGUNDOS_A_RESTAR = -30;
-var
-  DocumentoComprobanteFiscal: TDocumentoComprobanteFiscal;
-  Certificado: TFECertificado;
-  Emisor, Receptor: TFEContribuyente;
-  ImpuestoRet: TFEImpuestoRetenido;
-  ImpuestoTras : TFEImpuestoTrasladado;
-//  ImpuestoLocal: TFEImpuestoLocal;
-  ConceptoActual : TFEConcepto;    // Dic 7/15 Se cambio  para que en el se coloque cada concepto y luiego se mande agregaer en un ciclo
-
-  TimbreCFDI: VirtualXML.TTimbreCFDI;
-  FileCertificado, FileKey : TFileName;
-  Clave : String;
-  Anio, Mes, Dia : Word;                         //Ene 27/17
-  RutaBase, SubCarpeta, RutaFactura, RutaPDF: String;
-  XMLpdf : TdmodXMLtoPDF;
-  IDPDF, IDXML, IDCBB: integer; //Sep 27/16 Para hacer proceso en dos partes
-  Respuesta:String; //Sep 27/16
-
-  FechaAux:TDAteTime;//Porque si se intento generar le mande la misma fecha original
-  TipoDoc:String; //Mar 31/16 para enviar como parametro
-  IdCFDIAuxiliar:integer; //Oct 27/16 para verificar que este en el mismo , idOrdenSalAux se quito nov 28/16
-  Contrato:String; //Para mañarina dic 7/16
-
-  Continuar:Boolean; //Ene27/17 para proceso alterno facturacion
-  AuxTxt:String;
-begin
-  Result:= False;
-  AuxTxt:='';
-  //Habilitado Dic 21/15
-  ShowProgress(10,100.1,'Preparando Datos para Generar CFDI ' + IntToStr(10) + '%');  //Jun 2/16
-  XMLpdf := TdmodXMLtoPDF.Create(Self);
-  XMLpdf.FileRTM:= ExtractFilePath(Application.ExeName) + 'CFDIManarina.rtm'; //Cambiado Nov 29/16
-  XMLpdf.FileXTR:= ExtractFilePath(Application.ExeName) + 'Transfor32.xtr';
-   //Habilitado Dic 21/15 hasta aca
-  //verificar si no se intento generar antes
-  FechaAux:=IncSecond(Now, _SEGUNDOS_A_RESTAR);
-                                      //Prefactura
-  if adodsMasterIdCFDIEstatus.AsInteger =1 then
-  begin
-    //Poner Folio Serie
-    if adodsMasterFolio.AsInteger=0 then
-    begin
-      ADODtStBuscaFolioSerie.Close;
-      ADODtStBuscaFolioSerie.Parameters.ParamByName('IdCFDITipoDocumento').Value:= adodsMasterIdCFDITipoDocumento.AsInteger; //Asegurarse que tenga valor
-      ADODtStBuscaFolioSerie.Open;
-                                                                                  //Mantiene el valor del siguiente a generar Nov 29/16
-      if (not ADODtStBuscaFolioSerie.eof) and (ADODtStBuscaFolioSerie.FieldByName('FolioDoc').AsInteger >0)then
-      begin
-        adodsMaster.Edit;
-        adodsMasterFecha.AsDateTime:=FechaAux;
-        adodsMasterFolio.AsInteger:= ADODtStBuscaFolioSerie.FieldByName('FolioDoc').AsInteger;
-        adodsMasterSerie.AsString:= ADODtStBuscaFolioSerie.FieldByName('SerieDoc').AsString;
-        adodsMaster.Post;
-
-        ADODtStBuscaFolioSerie.Edit;
-        ADODtStBuscaFolioSerie.FieldByName('FolioDoc').AsInteger:= ADODtStBuscaFolioSerie.FieldByName('FolioDoc').AsInteger+1;
-        ADODtStBuscaFolioSerie.Post;
-      end
-      else //Verificar si se debe hacer algun ajuste antes de generar!!
-      begin //dic 29/15
-        Showmessage('Se generara sin serie ,ni folio ');
-        adodsMaster.Edit;
-        adodsMasterFecha.AsDateTime:=FechaAux;
-        adodsMaster.Post;
-
-      end;
-    end
-    else //Dic 29/15 ya se intento pero no se genero
-    begin
-      if FechaAux-adodsMasterFecha.AsDateTime >3 then
-      begin
-        adodsMaster.Edit;
-        adodsMasterFecha.AsDateTime:=FechaAux;
-        adodsMaster.Post
-      end
-      else
-        FechaAux:=adodsMasterFecha.AsDateTime; //Para que use esa con los datos que tiene
-    end;
-   // ScreenCursorProc(-11);  //Deshabilitado Dic 29/15
-    DecodeDate(Now, Anio, Mes, Dia);
-    ShowProgress(20,100.1,'Preparando Datos para Generar CFDI ' + IntToStr(20) + '%');  //Jun 2/16
-    adodsArchivosCerKey.Close;
-
-    ADODtStPersonaEmisor.Close;
-    ADODtStPersonaReceptor.Close;
-    // Verificar si se require esto... o borrar  adodsEmisor.Parameters.ParamByName('IdPersona').Value := adodsMaster.FieldByName('IdPersona').Value;
-    // adodsReceptor.Parameters.ParamByName('IdPersona').Value := adodsMaster.FieldByName('IdPersonaRelacionada').Value;
-     adodsArchivosCerKey.Parameters.ParamByName('IdPersona').Value := adodsMaster.FieldByName('IdPersonaEmisor').asInteger;
-    // adodsKey.Parameters.ParamByName('IdPersona').Value := adodsMaster.FieldByName('IdPersona').Value;
-    adodsArchivosCerKey.Open;
-    ADODtStPersonaEmisor.Open;
-    ADODtStPersonaReceptor.Open;
-
-    RutaBase:=dmConfiguracion.RutaFacturas;//ExtractFilePath(application.ExeName); //CAmbiado SEp 27/17
-    if RutaBase='' then
-       RutaBase:=ExtractFilePath(application.ExeName);    // SEp 27/17
-
-    SubCarpeta := '\' + UpperCase(System.SysUtils.FormatSettings.ShortMonthNames[MonthOfTheYear(Now)]) + IntToStr(Anio) + '\';
-    Esproduccion:=FileExists(ExtractFilePath(application.ExeName)+'EnProduccion.txt'); //Temporal Dic 8/15 //Modificado sep 27/17
-    DocumentoComprobanteFiscal:= TDocumentoComprobanteFiscal.Create;
-
-    TipoDoc:=adodsMaster.FieldByName('TipoDocumento').asString; //Mar 31/16
-    ShowProgress(30,100.1,'Extrayendo datos de Emisor ' + IntToStr(30) + '%');  //Jun 2/16
-    try
-        Emisor.RFC                    := TFERFC(ADODtStPersonaEmisorRFC.AsString);
-        Emisor.Nombre                 := ADODtStPersonaEmisorRazonSocial.AsString;
-        Emisor.Direccion.Calle        := ADODtStPersonaEmisorCalle.AsString;
-        Emisor.Direccion.NoExterior   := ADODtStPersonaEmisorNoExterior.AsString;
-        Emisor.Direccion.NoInterior   := ADODtStPersonaEmisorNoInterior.AsString;
-        Emisor.Direccion.CodigoPostal := ADODtStPersonaEmisorCodigoPostal.AsString;
-        Emisor.Direccion.Colonia      := ADODtStPersonaEmisorColonia.AsString;
-        Emisor.Direccion.Municipio    := ADODtStPersonaEmisorMunicipio.AsString;
-        Emisor.Direccion.Estado       := ADODtStPersonaEmisorEstado.AsString;
-        Emisor.Direccion.Pais         := ADODtStPersonaEmisorPais.AsString;
-        Emisor.Direccion.Localidad    := ADODtStPersonaEmisorPoblacion.AsString;
-         // 2. Agregamos los régimenes fiscales (requerido en CFD >= 2.2)
-        SetLength(Emisor.Regimenes, 1);
-        Emisor.Regimenes[0] := ADODtStPersonaEmisorRegimenFiscalEmisor.AsString;
-        // Asignamos los valores iguales a la direcion del emisor suponiendo que se genera en el mismo lugar que se emitio
-        // Se debe verificar antes de colocar el expedido. ya que sólo debe hacerse para cuando son diferentes
-   (*     Emisor.ExpedidoEn.Calle        := Emisor.Direccion.Calle;
-        Emisor.ExpedidoEn.NoExterior   := Emisor.Direccion.NoExterior;
-        Emisor.ExpedidoEn.NoInterior   := Emisor.Direccion.NoInterior;
-        Emisor.ExpedidoEn.CodigoPostal := Emisor.Direccion.CodigoPostal;
-        Emisor.ExpedidoEn.Colonia      := Emisor.Direccion.Colonia;
-        Emisor.ExpedidoEn.Municipio    := Emisor.Direccion.Municipio;
-        Emisor.ExpedidoEn.Estado       := Emisor.Direccion.Estado;
-        Emisor.ExpedidoEn.Pais         := Emisor.Direccion.Pais;
-        Emisor.ExpedidoEn.Localidad    := Emisor.Direccion.Localidad;
-        Emisor.ExpedidoEn.Referencia   := Emisor.Direccion.Referencia;    *)
-
-        ShowProgress(40,100.1,'Extrayendo datos de Receptor ' + IntToStr(40) + '%');  //Jun 2/16
-        Receptor.RFC := TFERFC(ADODtStPersonaReceptorRFC.AsString);
-        Receptor.Nombre := ADODtStPersonaReceptorRazonSocial.AsString;
-            //Por si no tiene registro de direccion Ene 29/17
-        if (not ADODtStPersonaReceptor.Eof)and(ADODtStPersonaReceptorCalle.AsString<>'')and (ADODtStPersonaReceptorPais.AsString<>'')then
-        begin
-          Receptor.Direccion.Calle:=ADODtStPersonaReceptorCalle.AsString;
-          Receptor.Direccion.NoExterior:=ADODtStPersonaReceptorNoExterior.AsString;
-          Receptor.Direccion.NoInterior:=ADODtStPersonaReceptorNoInterior.AsString;
-          Receptor.Direccion.CodigoPostal:=ADODtStPersonaReceptorCodigoPostal.AsString;
-          Receptor.Direccion.Colonia:=ADODtStPersonaReceptorColonia.AsString;
-          Receptor.Direccion.Municipio:=ADODtStPersonaReceptorMunicipio.AsString;
-          Receptor.Direccion.Estado:=ADODtStPersonaReceptorEstado.AsString;
-          Receptor.Direccion.Pais :=ADODtStPersonaReceptorPais.AsString;
-          Receptor.Direccion.Localidad:=ADODtStPersonaReceptorPoblacion.AsString;
-        end;
-
-
-        FileCertificado := ExtractFilePath(application.ExeName)+ adodsArchivosCerKeyNomCert.AsString;
-        FileKey := ExtractFilePath(application.ExeName)+  adodsArchivosCerKeyNomKey.AsString;  //  TPath.GetTempPath +
-        ReadFileCERKEY(FileCertificado,FileKey);
-
-        Clave := adodsArchivosCerKeyClave.AsString;
-
-        Certificado.Ruta := FileCertificado;
-        Certificado.LlavePrivada.Ruta := FileKey;
-        Certificado.LlavePrivada.Clave := Clave;
-
-        DocumentoComprobanteFiscal.Folio:= adodsMasterFolio.AsInteger; //Dic 9/15
-        DocumentoComprobanteFiscal.Serie:= adodsMasterSerie.AsString;  //Dic 9/15
-
-        DocumentoComprobanteFiscal.Emisor := Emisor;
-        DocumentoComprobanteFiscal.Receptor := Receptor;
-                                                          //Se cambio mar 31/16
-        DocumentoComprobanteFiscal.TipoCompTexto := adodsMasterTipoComp.AsString; //verificar que venga
-
-        DocumentoComprobanteFiscal.FechaGeneracion := FechaAux; //Para evitar  dobles generaciones
-
-        DocumentoComprobanteFiscal.MetodoDePago := adodsMasterMetPagoClaveSAT.AsString; //Jun 27/16  adodsMasterMetodoPago.AsString;
-        if adodsMasterNumCtaPago.AsString <>''then
-          DocumentoComprobanteFiscal.NumeroDeCuenta:= adodsMasterNumCtaPago.AsString;
-        // Asignamos el lugar de expedición (requerido en  CFD >= 2.2)
-        DocumentoComprobanteFiscal.LugarDeExpedicion := ADODtStPersonaEmisorMunicipio.AsString+ ', ' + ADODtStPersonaEmisorEstado.AsString;
-        //adodsEmisorPoblacion.AsString ;
-
-    //Llevaba ceros..
-        DocumentoComprobanteFiscal.Moneda:= adodsMasterClaveMoneda.AsString;//Jun 27/16
-        DocumentoComprobanteFiscal.TipoCambio:= (adodsMasterTipoCambio.AsFloat);//Jun 27/16
-
-        // Definimos todos los conceptos que incluyo la factura
-        ShowProgress(50,100.1,'Extrayendo datos de conceptos ' + IntToStr(50) + '%');  //Jun 2/16
-
-        ADODtStCFDIConceptos.First;
-        while not ADODtStCFDIConceptos.Eof do
-        begin
-          ConceptoActual.Cantidad := ADODtStCFDIConceptosCantidad.AsFloat;
-          ConceptoActual.Unidad := ADODtStCFDIConceptosUnidad.AsString;  //Verificar contenido
-          ConceptoActual.Descripcion := ADODtStCFDIConceptosDescripcion.AsString;
-
-          ConceptoActual.ValorUnitario := ADODtStCFDIConceptosValorUnitario.AsFloat;
-          ConceptoActual.NoIdentificacion := ADODtStCFDIConceptosNoIdentifica.asstring;
-//        ConceptoActual.CuentaPredial := ADOdsConceptocdsCuentaPredial.Value;
-          DocumentoComprobanteFiscal.AgregarConcepto(ConceptoActual);
-          ADODtStCFDIConceptos.Next;
-        end;
-        ADODtStCFDIImpuestos.Close;
-        ADODtStCFDIImpuestos.Open;  //Verificar que este ubicado
-
-       // ADODtStCFDIImpuestos.First;
-        while not ADODtStCFDIImpuestos.Eof do
-        begin
-          if ADODtStCFDIImpuestosTipoImp.AsString='Trasladado' then //Verificar que se coloque
-          begin
-            Impuestotras.Nombre := ADODtStCFDIImpuestosImpuesto.AsString;
-            Impuestotras.Tasa := ADODtStCFDIImpuestosTasa.AsFloat;
-            Impuestotras.Importe := ADODtStCFDIImpuestosImporte.AsFloat;
-            DocumentoComprobanteFiscal.AgregarImpuestoTrasladado(Impuestotras);
-          end
-          else
-          begin
-            ImpuestoRet.Nombre := ADODtStCFDIImpuestosImpuesto.AsString;
-            ImpuestoRet.Importe := ADODtStCFDIImpuestosImporte.AsFloat;
-            DocumentoComprobanteFiscal.AgregarImpuestoRetenido(ImpuestoRet);
-          end;
-          ADODtStCFDIImpuestos.Next;
-        end;
-        RutaFactura := RutaBase + ADODtStPersonaEmisorRFC.AsString + SubCarpeta;
-        if not DirectoryExists (RutaFactura) then
-           ForceDirectories(RutaFactura);
-        if  DirectoryExists (RutaFactura) then
-        begin
-          ShowProgress(60,100.1,'Timbrando  CFDI .... ' + IntToStr(60) + '%');  //Jun 2/16
-        (*  if not esProduccion then
-          begin
-            Continuar:=CrearArchivos_TimbrePrueba(RutaFactura,TimbreCFDI,adodsMasterSerie.asstring + adodsMasterFolio.asString + feXML);
-            RutaPDF:=ChangeFileExt(RutaFactura, fePDF);
-            RutaIMG:= ChangeFileExt(RutaFactura, fePNG);
-            AuxTxt:='Proceso Alterno ';
-          end
-          else  // deshabilitado para usar  la del  2017 Abr 6/17*)
-          Continuar:=GenerarCFDI(RutaFactura, DocumentoComprobanteFiscal, Certificado, TimbreCFDI, EsProduccion);
-          if Continuar then
-          begin
-            XMLpdf.FileIMG := RutaFactura + fePNG; //Dic 21/15
-            XMLpdf.CadenaOriginalTimbre:= TimbreCFDI.CadenaTimbre; //Dic 28/15                  tenia nov 28/16  adodsMasterIdentificadorCte.AsString
-            Contrato:=Informacioncontrato(adodsMasterIdCuentaXCobrar.Value); //Dic 7/16 //verificar  que pasa si la FActura no tiene CXC??
-            RutaPDF := XMLpdf.GeneratePDFFile(RutaFactura,TipoDoc,Contrato,''); //Dic 21/15  //verificar si sirve ese Formato
-            //Actualizar datos de Timbre en CFDI         //Mar 31/16              //Ago 26/16
-            adodsMaster.Edit;
-            adodsMasterUUID_TB.AsString:=  TimbreCFDI.UUID;
-            adodsMasterSelloCFD_TB.AsString:=TimbreCFDI.SelloEmisor;// 26 ago se regreso como estaba Cadenatimbre; XImpresion // ajustado ago 24/16 era SelloEmisor;
-            adodsMasterSelloSAT_TB.AsString:=TimbreCFDI.SelloSAT;
-            adodsMasterSello.AsString:=TimbreCFDI.SelloEmisor; //Verificar
-            adodsMasterCertificadoSAT_TB.AsString:=   TimbreCFDI.NoCertificadoSAT;
-            adodsMasterFechaTimbrado_TB.AsDateTime:=ConvierteFechaT_DT(TimbreCFDI.FechaTimbre);
-            adodsMasterCadenaOriginal.AsString:= TimbreCFDI.CadenaTimbre;// 26 ago se regreso como estaba//Cadenaoriginal;//CadenaTimbre ;Ago 24/16  // Dic 23/15
-            adodsMasterIdCFDIEstatus.AsInteger:=2; //Dic 29/15
-            IdCFDIAuxiliar:= adodsMasterIdCFDI.AsInteger;// Oct 27/16
-            adodsMaster.Post; //Se puso esto primero  y luego se asocia el resto
-
-            adodsMaster.Edit;
-            IDXML := CargaXMLPDFaFS(RutaFactura,TipoDoc + String(DocumentoComprobanteFiscal.Serie) + IntToStr(DocumentoComprobanteFiscal.Folio));
-            IDPDF:=  CargaXMLPDFaFS(RutaPDF, TipoDoc+ String(DocumentoComprobanteFiscal.Serie) + IntToStr(DocumentoComprobanteFiscal.Folio));
-            IDCBB:=  CargaXMLPDFaFS(XMLpdf.FileIMG,'PNG '+TipoDoc + String(DocumentoComprobanteFiscal.Serie) + IntToStr(DocumentoComprobanteFiscal.Folio));//Ene 5/2016
-            Respuesta:='';
-            if VerificaArchivo(IDXML,ExtractFileName(RutaFactura), Respuesta) then     //REspuesta debe concatenar las respuestas si no va vacia //Sep 27/16
-              adodsMasterIdDocumentoXML.Value :=IDXML ;
-            if VerificaArchivo(IDPDF,ExtractFileName(RutaPDF), Respuesta) then
-              adodsMasterIdDocumentoPDF.Value :=IDPDF;
-            if  VerificaArchivo(IDCBB, ExtractFileName(XMLpdf.FileIMG), Respuesta) then
-               adodsMasterIdDocumentoCBB.Value := IDCBB;
-            adodsMaster.Post;
-            ShowProgress(80,100.1,'Actualizando Datos Cliente ' +AuxTxt+ IntToStr(80) + '%');  //Jun 2/16
-
-            if IdCFDIAuxiliar <> adodsMasterIdCFDI.value then    //oct 26/16
-               Respuesta:=Respuesta+AuxTxt+'R'+intToStr(IdCFDIAuxiliar)+' CFDI C'+ intTostr(adodsMasterIdCFDI.value);
-//          //  Actualiza Saldos  Mar 1/16
-//              ActualizaSaldoCliente(adodsMasterIdCFDI.value,adodsMasterIdPersonaReceptor.Value,adodsMasterIdClienteDomicilio.value, adodsMasterTotal.Value,'+ ');
-            ShowProgress(100,100.1,'Procesando PDF '+ AuxTxt + IntToStr(100) + '%');  //Jun 2/16
-            ShowProgress(100,100);
-            if Respuesta <>'' then //Por los archivos Sep 27/16
-               showMessage('Advertencias de asociacion archivos...'+ Respuesta);
-           (* if not EsProduccion then
-              showMessage('Proceso Alterno de Facturación Terminado '+adodsMasterSerie.asstring+'-'+ adodsMasterFolio.asstring)
-            else   // deshabilitado para usar  la del  2017 Abr 6/17 *)
-              if FileExists(RutaPDF) then
-                ShellExecute(application.Handle, 'open', PChar(RutaPDF), nil, nil, SW_SHOWNORMAL);     //VErificar el FRM Edit
-       //     ActEnvioCorreoFact.Execute; //verificar  Abr5/16
-            //ShowMessage('Envio a Cliente por Correo Electronico en proceso');
-            if (StrToint(TimbreCFDI.TimbresRestantes) <100) then
-               Showmessage(' Timbres Restantes : '+TimbreCFDI.TimbresRestantes);   //Oct 16/17
-            Result:= True;
-          end
-          else
-          begin
-            Showmessage('Error Generando CFDI '+AuxTxt+TimbreCFDI.MensajeError);//Dic 29/15
-            ShowProgress(100,100.1,'Proceso Terminado con errores ' +AuxTxt + IntToStr(100) + '%');  //Jun 16/16
-            ShowProgress(100,100); //Jun 16/16
-          end
-        end
-        else
-          application.MessageBox('No se pudo Crear el directorio. Verifique permisos', 'Error', MB_Ok);
-      finally
-
-    end;
-  end
-  else
-    Showmessage('CFDI generado con anterioridad');
-end;
+//function TdmFacturas.Timbrar32(IdCFDI: Integer): Boolean;
+//const  //Copiado de sistema RH Dic 7/15
+//  _SEGUNDOS_A_RESTAR = -30;
+//var
+//  DocumentoComprobanteFiscal: TDocumentoComprobanteFiscal;
+//  Certificado: TFECertificado;
+//  Emisor, Receptor: TFEContribuyente;
+//  ImpuestoRet: TFEImpuestoRetenido;
+//  ImpuestoTras : TFEImpuestoTrasladado;
+////  ImpuestoLocal: TFEImpuestoLocal;
+//  ConceptoActual : TFEConcepto;    // Dic 7/15 Se cambio  para que en el se coloque cada concepto y luiego se mande agregaer en un ciclo
+//
+//  TimbreCFDI: VirtualXML.TTimbreCFDI;
+//  FileCertificado, FileKey : TFileName;
+//  Clave : String;
+//  Anio, Mes, Dia : Word;                         //Ene 27/17
+//  RutaBase, SubCarpeta, RutaFactura, RutaPDF: String;
+//  XMLpdf : TdmodXMLtoPDF;
+//  IDPDF, IDXML, IDCBB: integer; //Sep 27/16 Para hacer proceso en dos partes
+//  Respuesta:String; //Sep 27/16
+//
+//  FechaAux:TDAteTime;//Porque si se intento generar le mande la misma fecha original
+//  TipoDoc:String; //Mar 31/16 para enviar como parametro
+//  IdCFDIAuxiliar:integer; //Oct 27/16 para verificar que este en el mismo , idOrdenSalAux se quito nov 28/16
+//  Contrato:String; //Para mañarina dic 7/16
+//
+//  Continuar:Boolean; //Ene27/17 para proceso alterno facturacion
+//  AuxTxt:String;
+//begin
+//  Result:= False;
+//  AuxTxt:='';
+//  //Habilitado Dic 21/15
+//  ShowProgress(10,100.1,'Preparando Datos para Generar CFDI ' + IntToStr(10) + '%');  //Jun 2/16
+//  XMLpdf := TdmodXMLtoPDF.Create(Self);
+//  XMLpdf.FileRTM:= ExtractFilePath(Application.ExeName) + 'CFDIManarina.rtm'; //Cambiado Nov 29/16
+//  XMLpdf.FileXTR:= ExtractFilePath(Application.ExeName) + 'Transfor32.xtr';
+//   //Habilitado Dic 21/15 hasta aca
+//  //verificar si no se intento generar antes
+//  FechaAux:=IncSecond(Now, _SEGUNDOS_A_RESTAR);
+//                                      //Prefactura
+//  if adodsMasterIdCFDIEstatus.AsInteger =1 then
+//  begin
+//    //Poner Folio Serie
+//    if adodsMasterFolio.AsInteger=0 then
+//    begin
+//      ADODtStBuscaFolioSerie.Close;
+//      ADODtStBuscaFolioSerie.Parameters.ParamByName('IdCFDITipoDocumento').Value:= adodsMasterIdCFDITipoDocumento.AsInteger; //Asegurarse que tenga valor
+//      ADODtStBuscaFolioSerie.Open;
+//                                                                                  //Mantiene el valor del siguiente a generar Nov 29/16
+//      if (not ADODtStBuscaFolioSerie.eof) and (ADODtStBuscaFolioSerie.FieldByName('FolioDoc').AsInteger >0)then
+//      begin
+//        adodsMaster.Edit;
+//        adodsMasterFecha.AsDateTime:=FechaAux;
+//        adodsMasterFolio.AsInteger:= ADODtStBuscaFolioSerie.FieldByName('FolioDoc').AsInteger;
+//        adodsMasterSerie.AsString:= ADODtStBuscaFolioSerie.FieldByName('SerieDoc').AsString;
+//        adodsMaster.Post;
+//
+//        ADODtStBuscaFolioSerie.Edit;
+//        ADODtStBuscaFolioSerie.FieldByName('FolioDoc').AsInteger:= ADODtStBuscaFolioSerie.FieldByName('FolioDoc').AsInteger+1;
+//        ADODtStBuscaFolioSerie.Post;
+//      end
+//      else //Verificar si se debe hacer algun ajuste antes de generar!!
+//      begin //dic 29/15
+//        Showmessage('Se generara sin serie ,ni folio ');
+//        adodsMaster.Edit;
+//        adodsMasterFecha.AsDateTime:=FechaAux;
+//        adodsMaster.Post;
+//
+//      end;
+//    end
+//    else //Dic 29/15 ya se intento pero no se genero
+//    begin
+//      if FechaAux-adodsMasterFecha.AsDateTime >3 then
+//      begin
+//        adodsMaster.Edit;
+//        adodsMasterFecha.AsDateTime:=FechaAux;
+//        adodsMaster.Post
+//      end
+//      else
+//        FechaAux:=adodsMasterFecha.AsDateTime; //Para que use esa con los datos que tiene
+//    end;
+//   // ScreenCursorProc(-11);  //Deshabilitado Dic 29/15
+//    DecodeDate(Now, Anio, Mes, Dia);
+//    ShowProgress(20,100.1,'Preparando Datos para Generar CFDI ' + IntToStr(20) + '%');  //Jun 2/16
+//    adodsArchivosCerKey.Close;
+//
+//    ADODtStPersonaEmisor.Close;
+//    ADODtStPersonaReceptor.Close;
+//    // Verificar si se require esto... o borrar  adodsEmisor.Parameters.ParamByName('IdPersona').Value := adodsMaster.FieldByName('IdPersona').Value;
+//    // adodsReceptor.Parameters.ParamByName('IdPersona').Value := adodsMaster.FieldByName('IdPersonaRelacionada').Value;
+//     adodsArchivosCerKey.Parameters.ParamByName('IdPersona').Value := adodsMaster.FieldByName('IdPersonaEmisor').asInteger;
+//    // adodsKey.Parameters.ParamByName('IdPersona').Value := adodsMaster.FieldByName('IdPersona').Value;
+//    adodsArchivosCerKey.Open;
+//    ADODtStPersonaEmisor.Open;
+//    ADODtStPersonaReceptor.Open;
+//
+//    RutaBase:=dmConfiguracion.RutaFacturas;//ExtractFilePath(application.ExeName); //CAmbiado SEp 27/17
+//    if RutaBase='' then
+//       RutaBase:=ExtractFilePath(application.ExeName);    // SEp 27/17
+//
+//    SubCarpeta := '\' + UpperCase(System.SysUtils.FormatSettings.ShortMonthNames[MonthOfTheYear(Now)]) + IntToStr(Anio) + '\';
+//    Esproduccion:=FileExists(ExtractFilePath(application.ExeName)+'EnProduccion.txt'); //Temporal Dic 8/15 //Modificado sep 27/17
+//    DocumentoComprobanteFiscal:= TDocumentoComprobanteFiscal.Create;
+//
+//    TipoDoc:=adodsMaster.FieldByName('TipoDocumento').asString; //Mar 31/16
+//    ShowProgress(30,100.1,'Extrayendo datos de Emisor ' + IntToStr(30) + '%');  //Jun 2/16
+//    try
+//        Emisor.RFC                    := TFERFC(ADODtStPersonaEmisorRFC.AsString);
+//        Emisor.Nombre                 := ADODtStPersonaEmisorRazonSocial.AsString;
+//        Emisor.Direccion.Calle        := ADODtStPersonaEmisorCalle.AsString;
+//        Emisor.Direccion.NoExterior   := ADODtStPersonaEmisorNoExterior.AsString;
+//        Emisor.Direccion.NoInterior   := ADODtStPersonaEmisorNoInterior.AsString;
+//        Emisor.Direccion.CodigoPostal := ADODtStPersonaEmisorCodigoPostal.AsString;
+//        Emisor.Direccion.Colonia      := ADODtStPersonaEmisorColonia.AsString;
+//        Emisor.Direccion.Municipio    := ADODtStPersonaEmisorMunicipio.AsString;
+//        Emisor.Direccion.Estado       := ADODtStPersonaEmisorEstado.AsString;
+//        Emisor.Direccion.Pais         := ADODtStPersonaEmisorPais.AsString;
+//        Emisor.Direccion.Localidad    := ADODtStPersonaEmisorPoblacion.AsString;
+//         // 2. Agregamos los régimenes fiscales (requerido en CFD >= 2.2)
+//        SetLength(Emisor.Regimenes, 1);
+//        Emisor.Regimenes[0] := ADODtStPersonaEmisorRegimenFiscalEmisor.AsString;
+//        // Asignamos los valores iguales a la direcion del emisor suponiendo que se genera en el mismo lugar que se emitio
+//        // Se debe verificar antes de colocar el expedido. ya que sólo debe hacerse para cuando son diferentes
+//   (*     Emisor.ExpedidoEn.Calle        := Emisor.Direccion.Calle;
+//        Emisor.ExpedidoEn.NoExterior   := Emisor.Direccion.NoExterior;
+//        Emisor.ExpedidoEn.NoInterior   := Emisor.Direccion.NoInterior;
+//        Emisor.ExpedidoEn.CodigoPostal := Emisor.Direccion.CodigoPostal;
+//        Emisor.ExpedidoEn.Colonia      := Emisor.Direccion.Colonia;
+//        Emisor.ExpedidoEn.Municipio    := Emisor.Direccion.Municipio;
+//        Emisor.ExpedidoEn.Estado       := Emisor.Direccion.Estado;
+//        Emisor.ExpedidoEn.Pais         := Emisor.Direccion.Pais;
+//        Emisor.ExpedidoEn.Localidad    := Emisor.Direccion.Localidad;
+//        Emisor.ExpedidoEn.Referencia   := Emisor.Direccion.Referencia;    *)
+//
+//        ShowProgress(40,100.1,'Extrayendo datos de Receptor ' + IntToStr(40) + '%');  //Jun 2/16
+//        Receptor.RFC := TFERFC(ADODtStPersonaReceptorRFC.AsString);
+//        Receptor.Nombre := ADODtStPersonaReceptorRazonSocial.AsString;
+//            //Por si no tiene registro de direccion Ene 29/17
+//        if (not ADODtStPersonaReceptor.Eof)and(ADODtStPersonaReceptorCalle.AsString<>'')and (ADODtStPersonaReceptorPais.AsString<>'')then
+//        begin
+//          Receptor.Direccion.Calle:=ADODtStPersonaReceptorCalle.AsString;
+//          Receptor.Direccion.NoExterior:=ADODtStPersonaReceptorNoExterior.AsString;
+//          Receptor.Direccion.NoInterior:=ADODtStPersonaReceptorNoInterior.AsString;
+//          Receptor.Direccion.CodigoPostal:=ADODtStPersonaReceptorCodigoPostal.AsString;
+//          Receptor.Direccion.Colonia:=ADODtStPersonaReceptorColonia.AsString;
+//          Receptor.Direccion.Municipio:=ADODtStPersonaReceptorMunicipio.AsString;
+//          Receptor.Direccion.Estado:=ADODtStPersonaReceptorEstado.AsString;
+//          Receptor.Direccion.Pais :=ADODtStPersonaReceptorPais.AsString;
+//          Receptor.Direccion.Localidad:=ADODtStPersonaReceptorPoblacion.AsString;
+//        end;
+//
+//
+//        FileCertificado := ExtractFilePath(application.ExeName)+ adodsArchivosCerKeyNomCert.AsString;
+//        FileKey := ExtractFilePath(application.ExeName)+  adodsArchivosCerKeyNomKey.AsString;  //  TPath.GetTempPath +
+//        ReadFileCERKEY(FileCertificado,FileKey);
+//
+//        Clave := adodsArchivosCerKeyClave.AsString;
+//
+//        Certificado.Ruta := FileCertificado;
+//        Certificado.LlavePrivada.Ruta := FileKey;
+//        Certificado.LlavePrivada.Clave := Clave;
+//
+//        DocumentoComprobanteFiscal.Folio:= adodsMasterFolio.AsInteger; //Dic 9/15
+//        DocumentoComprobanteFiscal.Serie:= adodsMasterSerie.AsString;  //Dic 9/15
+//
+//        DocumentoComprobanteFiscal.Emisor := Emisor;
+//        DocumentoComprobanteFiscal.Receptor := Receptor;
+//                                                          //Se cambio mar 31/16
+//        DocumentoComprobanteFiscal.TipoCompTexto := adodsMasterTipoComp.AsString; //verificar que venga
+//
+//        DocumentoComprobanteFiscal.FechaGeneracion := FechaAux; //Para evitar  dobles generaciones
+//
+//        DocumentoComprobanteFiscal.MetodoDePago := adodsMasterMetPagoClaveSAT.AsString; //Jun 27/16  adodsMasterMetodoPago.AsString;
+//        if adodsMasterNumCtaPago.AsString <>''then
+//          DocumentoComprobanteFiscal.NumeroDeCuenta:= adodsMasterNumCtaPago.AsString;
+//        // Asignamos el lugar de expedición (requerido en  CFD >= 2.2)
+//        DocumentoComprobanteFiscal.LugarDeExpedicion := ADODtStPersonaEmisorMunicipio.AsString+ ', ' + ADODtStPersonaEmisorEstado.AsString;
+//        //adodsEmisorPoblacion.AsString ;
+//
+//    //Llevaba ceros..
+//        DocumentoComprobanteFiscal.Moneda:= adodsMasterClaveMoneda.AsString;//Jun 27/16
+//        DocumentoComprobanteFiscal.TipoCambio:= (adodsMasterTipoCambio.AsFloat);//Jun 27/16
+//
+//        // Definimos todos los conceptos que incluyo la factura
+//        ShowProgress(50,100.1,'Extrayendo datos de conceptos ' + IntToStr(50) + '%');  //Jun 2/16
+//
+//        adodsCFDIConceptos.First;
+//        while not adodsCFDIConceptos.Eof do
+//        begin
+//          ConceptoActual.Cantidad := adodsCFDIConceptosCantidad.AsFloat;
+//          ConceptoActual.Unidad := adodsCFDIConceptosUnidad.AsString;  //Verificar contenido
+//          ConceptoActual.Descripcion := adodsCFDIConceptosDescripcion.AsString;
+//
+//          ConceptoActual.ValorUnitario := adodsCFDIConceptosValorUnitario.AsFloat;
+//          ConceptoActual.NoIdentificacion := adodsCFDIConceptosNoIdentifica.asstring;
+////        ConceptoActual.CuentaPredial := ADOdsConceptocdsCuentaPredial.Value;
+//          DocumentoComprobanteFiscal.AgregarConcepto(ConceptoActual);
+//          adodsCFDIConceptos.Next;
+//        end;
+//        ADODtStCFDIImpuestos.Close;
+//        ADODtStCFDIImpuestos.Open;  //Verificar que este ubicado
+//
+//       // ADODtStCFDIImpuestos.First;
+//        while not ADODtStCFDIImpuestos.Eof do
+//        begin
+//          if ADODtStCFDIImpuestosTipoImp.AsString='Trasladado' then //Verificar que se coloque
+//          begin
+//            Impuestotras.Nombre := ADODtStCFDIImpuestosImpuesto.AsString;
+//            Impuestotras.Tasa := ADODtStCFDIImpuestosTasa.AsFloat;
+//            Impuestotras.Importe := ADODtStCFDIImpuestosImporte.AsFloat;
+//            DocumentoComprobanteFiscal.AgregarImpuestoTrasladado(Impuestotras);
+//          end
+//          else
+//          begin
+//            ImpuestoRet.Nombre := ADODtStCFDIImpuestosImpuesto.AsString;
+//            ImpuestoRet.Importe := ADODtStCFDIImpuestosImporte.AsFloat;
+//            DocumentoComprobanteFiscal.AgregarImpuestoRetenido(ImpuestoRet);
+//          end;
+//          ADODtStCFDIImpuestos.Next;
+//        end;
+//        RutaFactura := RutaBase + ADODtStPersonaEmisorRFC.AsString + SubCarpeta;
+//        if not DirectoryExists (RutaFactura) then
+//           ForceDirectories(RutaFactura);
+//        if  DirectoryExists (RutaFactura) then
+//        begin
+//          ShowProgress(60,100.1,'Timbrando  CFDI .... ' + IntToStr(60) + '%');  //Jun 2/16
+//        (*  if not esProduccion then
+//          begin
+//            Continuar:=CrearArchivos_TimbrePrueba(RutaFactura,TimbreCFDI,adodsMasterSerie.asstring + adodsMasterFolio.asString + feXML);
+//            RutaPDF:=ChangeFileExt(RutaFactura, fePDF);
+//            RutaIMG:= ChangeFileExt(RutaFactura, fePNG);
+//            AuxTxt:='Proceso Alterno ';
+//          end
+//          else  // deshabilitado para usar  la del  2017 Abr 6/17*)
+//          Continuar:=GenerarCFDI(RutaFactura, DocumentoComprobanteFiscal, Certificado, TimbreCFDI, EsProduccion);
+//          if Continuar then
+//          begin
+//            XMLpdf.FileIMG := RutaFactura + fePNG; //Dic 21/15
+//            XMLpdf.CadenaOriginalTimbre:= TimbreCFDI.CadenaTimbre; //Dic 28/15                  tenia nov 28/16  adodsMasterIdentificadorCte.AsString
+//            Contrato:=Informacioncontrato(adodsMasterIdCuentaXCobrar.Value); //Dic 7/16 //verificar  que pasa si la FActura no tiene CXC??
+//            RutaPDF := XMLpdf.GeneratePDFFile(RutaFactura,TipoDoc,Contrato,''); //Dic 21/15  //verificar si sirve ese Formato
+//            //Actualizar datos de Timbre en CFDI         //Mar 31/16              //Ago 26/16
+//            adodsMaster.Edit;
+//            adodsMasterUUID_TB.AsString:=  TimbreCFDI.UUID;
+//            adodsMasterSelloCFD_TB.AsString:=TimbreCFDI.SelloEmisor;// 26 ago se regreso como estaba Cadenatimbre; XImpresion // ajustado ago 24/16 era SelloEmisor;
+//            adodsMasterSelloSAT_TB.AsString:=TimbreCFDI.SelloSAT;
+//            adodsMasterSello.AsString:=TimbreCFDI.SelloEmisor; //Verificar
+//            adodsMasterCertificadoSAT_TB.AsString:=   TimbreCFDI.NoCertificadoSAT;
+//            adodsMasterFechaTimbrado_TB.AsDateTime:=ConvierteFechaT_DT(TimbreCFDI.FechaTimbre);
+//            adodsMasterCadenaOriginal.AsString:= TimbreCFDI.CadenaTimbre;// 26 ago se regreso como estaba//Cadenaoriginal;//CadenaTimbre ;Ago 24/16  // Dic 23/15
+//            adodsMasterIdCFDIEstatus.AsInteger:=2; //Dic 29/15
+//            IdCFDIAuxiliar:= adodsMasterIdCFDI.AsInteger;// Oct 27/16
+//            adodsMaster.Post; //Se puso esto primero  y luego se asocia el resto
+//
+//            adodsMaster.Edit;
+//            IDXML := CargaXMLPDFaFS(RutaFactura,TipoDoc + String(DocumentoComprobanteFiscal.Serie) + IntToStr(DocumentoComprobanteFiscal.Folio));
+//            IDPDF:=  CargaXMLPDFaFS(RutaPDF, TipoDoc+ String(DocumentoComprobanteFiscal.Serie) + IntToStr(DocumentoComprobanteFiscal.Folio));
+//            IDCBB:=  CargaXMLPDFaFS(XMLpdf.FileIMG,'PNG '+TipoDoc + String(DocumentoComprobanteFiscal.Serie) + IntToStr(DocumentoComprobanteFiscal.Folio));//Ene 5/2016
+//            Respuesta:='';
+//            if VerificaArchivo(IDXML,ExtractFileName(RutaFactura), Respuesta) then     //REspuesta debe concatenar las respuestas si no va vacia //Sep 27/16
+//              adodsMasterIdDocumentoXML.Value :=IDXML ;
+//            if VerificaArchivo(IDPDF,ExtractFileName(RutaPDF), Respuesta) then
+//              adodsMasterIdDocumentoPDF.Value :=IDPDF;
+//            if  VerificaArchivo(IDCBB, ExtractFileName(XMLpdf.FileIMG), Respuesta) then
+//               adodsMasterIdDocumentoCBB.Value := IDCBB;
+//            adodsMaster.Post;
+//            ShowProgress(80,100.1,'Actualizando Datos Cliente ' +AuxTxt+ IntToStr(80) + '%');  //Jun 2/16
+//
+//            if IdCFDIAuxiliar <> adodsMasterIdCFDI.value then    //oct 26/16
+//               Respuesta:=Respuesta+AuxTxt+'R'+intToStr(IdCFDIAuxiliar)+' CFDI C'+ intTostr(adodsMasterIdCFDI.value);
+////          //  Actualiza Saldos  Mar 1/16
+////              ActualizaSaldoCliente(adodsMasterIdCFDI.value,adodsMasterIdPersonaReceptor.Value,adodsMasterIdClienteDomicilio.value, adodsMasterTotal.Value,'+ ');
+//            ShowProgress(100,100.1,'Procesando PDF '+ AuxTxt + IntToStr(100) + '%');  //Jun 2/16
+//            ShowProgress(100,100);
+//            if Respuesta <>'' then //Por los archivos Sep 27/16
+//               showMessage('Advertencias de asociacion archivos...'+ Respuesta);
+//           (* if not EsProduccion then
+//              showMessage('Proceso Alterno de Facturación Terminado '+adodsMasterSerie.asstring+'-'+ adodsMasterFolio.asstring)
+//            else   // deshabilitado para usar  la del  2017 Abr 6/17 *)
+//              if FileExists(RutaPDF) then
+//                ShellExecute(application.Handle, 'open', PChar(RutaPDF), nil, nil, SW_SHOWNORMAL);     //VErificar el FRM Edit
+//       //     ActEnvioCorreoFact.Execute; //verificar  Abr5/16
+//            //ShowMessage('Envio a Cliente por Correo Electronico en proceso');
+//            if (StrToint(TimbreCFDI.TimbresRestantes) <100) then
+//               Showmessage(' Timbres Restantes : '+TimbreCFDI.TimbresRestantes);   //Oct 16/17
+//            Result:= True;
+//          end
+//          else
+//          begin
+//            Showmessage('Error Generando CFDI '+AuxTxt+TimbreCFDI.MensajeError);//Dic 29/15
+//            ShowProgress(100,100.1,'Proceso Terminado con errores ' +AuxTxt + IntToStr(100) + '%');  //Jun 16/16
+//            ShowProgress(100,100); //Jun 16/16
+//          end
+//        end
+//        else
+//          application.MessageBox('No se pudo Crear el directorio. Verifique permisos', 'Error', MB_Ok);
+//      finally
+//
+//    end;
+//  end
+//  else
+//    Showmessage('CFDI generado con anterioridad');
+//end;
 
 function TdmFacturas.Timbrar33(IdCFDI: Integer): Boolean;
 var
@@ -1585,6 +1594,12 @@ var
   IdDocumentoXML: Integer;
   IdDocumentoCBB: Integer;
   IdDocumentoPDF: Integer;
+  IdCFDITipoDocumento: TCFDITipoDocumento;
+  complementoPagoV1: IPagosV1;
+  pagoComplementPagoV1: IPagos_PagoV1;
+  doctoRelacionadoListV1: IPagos_Pago_DoctoRelacionadoListV1;
+  doctoRelacionadoComplementoPagoV1: IPagos_Pago_DoctoRelacionadoV1;
+
   function GetRutaFactura(EmisorRFC: string): string;
   var
     Anio, Mes, Dia: Word;
@@ -1661,6 +1676,7 @@ begin
   adoqCFDI.Open;
   adoqCFDIConceptos.Open;
   adoqCFDIImpuestos.Open;
+  IdCFDITipoDocumento:= TCFDITipoDocumento(adoqCFDIIdCFDITipoDocumento.Value);
   // Verifica que el CFDi este en prefactura
   if adoqCFDIIdCFDIEstatus.Value =1 then
   begin
@@ -1673,20 +1689,34 @@ begin
     try
       facturaCFDIv33 := NewComprobanteFiscalV33;
       facturaCFDIv33.OwnerDocument.Options := facturaCFDIv33.OwnerDocument.Options - [doNodeAutoIndent];
-      facturaCFDIv33.Serie     := adoqCFDISerie.AsString;
-      facturaCFDIv33.Folio     := adoqCFDIFolio.AsString;
-      facturaCFDIv33.Fecha     := TFacturacionHelper.ComoFechaISO8601(adoqCFDIFecha.Value);
-      facturaCFDIv33.CondicionesDePago :=adoqCFDICondPago.AsString;
-      facturaCFDIv33.FormaPago         := adoqCFDIFormaPago33.AsString;
-      facturaCFDIv33.MetodoPago        := adoqCFDIMetodoPago33.AsString;
-      facturaCFDIv33.Subtotal          := TFacturacionHelper.ComoMoneda(adoqCFDISubTotal.Value);
-      facturaCFDIv33.Descuento         := TFacturacionHelper.ComoMoneda(adoqCFDIDescto.Value);
-      facturaCFDIv33.Moneda            := adoqCFDIMoneda.AsString;
-      facturaCFDIv33.TipoCambio        := adoqCFDITipoCambio.AsString;
-      facturaCFDIv33.Total             := TFacturacionHelper.ComoMoneda(adoqCFDITotal.AsExtended);
-      facturaCFDIv33.TipoDeComprobante := adoqCFDITipoComp.AsString;
+      if IdCFDITipoDocumento = tdCFDIPago then
+      begin
+        facturaCFDIv33.Serie             := adoqCFDISerie.AsString;
+        facturaCFDIv33.Folio             := adoqCFDIFolio.AsString;
+        facturaCFDIv33.Fecha             := TFacturacionHelper.ComoFechaISO8601(adoqCFDIFecha.Value);
+        facturaCFDIv33.Subtotal          := TFacturacionHelper.ComoMoneda(adoqCFDISubTotal.Value);
+        facturaCFDIv33.Moneda            := 'XXX'; //adoqCFDIMoneda.AsString;
+        facturaCFDIv33.Total             := TFacturacionHelper.ComoMoneda(adoqCFDITotal.AsExtended);
+        facturaCFDIv33.TipoDeComprobante := adoqCFDITipoComp.AsString;
+        facturaCFDIv33.LugarExpedicion   := adoqCFDILugarExpedicion.AsString;
+      end
+      else
+      begin
+        facturaCFDIv33.Serie             := adoqCFDISerie.AsString;
+        facturaCFDIv33.Folio             := adoqCFDIFolio.AsString;
+        facturaCFDIv33.Fecha             := TFacturacionHelper.ComoFechaISO8601(adoqCFDIFecha.Value);
+        facturaCFDIv33.CondicionesDePago :=adoqCFDICondPago.AsString;
+        facturaCFDIv33.FormaPago         := adoqCFDIFormaPago33.AsString;
+        facturaCFDIv33.MetodoPago        := adoqCFDIMetodoPago33.AsString;
+        facturaCFDIv33.Subtotal          := TFacturacionHelper.ComoMoneda(adoqCFDISubTotal.Value);
+        facturaCFDIv33.Descuento         := TFacturacionHelper.ComoMoneda(adoqCFDIDescto.Value);
+        facturaCFDIv33.Moneda            := adoqCFDIMoneda.AsString;
+        facturaCFDIv33.TipoCambio        := adoqCFDITipoCambio.AsString;
+        facturaCFDIv33.Total             := TFacturacionHelper.ComoMoneda(adoqCFDITotal.AsExtended);
+        facturaCFDIv33.TipoDeComprobante := adoqCFDITipoComp.AsString;
+        facturaCFDIv33.LugarExpedicion   := adoqCFDILugarExpedicion.AsString;
+      end;
 //      ShowProgress(30,100,'Extrayendo datos de Emisor ' + IntToStr(30) + '%');
-      facturaCFDIv33.LugarExpedicion   := adoqCFDILugarExpedicion.AsString;
       {$IFDEF DEBUG}
         facturaCFDIv33.Emisor.Rfc        := 'AAA010101AAA';
       {$ELSE}
@@ -1697,10 +1727,9 @@ begin
 //      ShowProgress(40,100.1,'Extrayendo datos de Receptor ' + IntToStr(40) + '%');
       facturaCFDIv33.Receptor.Rfc         := adoqCFDIReceptorRFC.asString;//'MTI0806042N7';
       facturaCFDIv33.Receptor.Nombre      := adoqCFDIReceptorNombre.AsString;
-      facturaCFDIv33.Receptor.UsoCFDI     := adoqCFDIUsoCFDI.AsString;
-      facturaCFDIv33.Impuestos.TotalImpuestosTrasladados  := TFacturacionHelper.ComoMoneda(adoqCFDITotalImpuestoTrasladado.AsExtended );
 //      ShowProgress(50,100.1,'Extrayendo datos de conceptos ' + IntToStr(50) + '%');  //Jun 2/16
       // Documentos relacionados
+      facturaCFDIv33.Receptor.UsoCFDI     := adoqCFDIUsoCFDI.AsString;
       adoqCFDIRelacionados.Close;
       adoqCFDIRelacionados.Open;
       if not adoqCFDIRelacionados.Eof then
@@ -1745,17 +1774,69 @@ begin
         adoqCFDIConceptos.Next;
       end;
 //      ShowProgress(60,100.1,'Extrayendo datos de impuestos ' + IntToStr(60) + '%');  // se recorrio respecto del original
-      adoqCFDIImpuestos.First;
-      while not adoqCFDIImpuestos.Eof do
+      if IdCFDITipoDocumento <> tdCFDIPago then
       begin
-        totalIVA33 := facturaCFDIv33.Impuestos.Traslados.Add;
-        totalIVA33.Impuesto   := adoqCFDIImpuestosClaveImpuesto.AsString;
-        totalIVA33.TipoFactor := adoqCFDIImpuestosTipoFactor.AsString;
-//        if  totalIVA33.TipoFactor<>'Exento' then //VErificar
-        totalIVA33.TasaOCuota := TFacturacionHelper.ComoMoneda(adoqCFDIImpuestosTasa.AsExtended,6);
-        totalIVA33.Importe    := TFacturacionHelper.ComoMoneda(adoqCFDIImpuestosImporte.AsExtended);
-        adoqCFDIImpuestos.Next;
+        facturaCFDIv33.Impuestos.TotalImpuestosTrasladados  := TFacturacionHelper.ComoMoneda(adoqCFDITotalImpuestoTrasladado.AsExtended );
+        adoqCFDIImpuestos.First;
+        while not adoqCFDIImpuestos.Eof do
+        begin
+          totalIVA33 := facturaCFDIv33.Impuestos.Traslados.Add;
+          totalIVA33.Impuesto   := adoqCFDIImpuestosClaveImpuesto.AsString;
+          totalIVA33.TipoFactor := adoqCFDIImpuestosTipoFactor.AsString;
+  //        if  totalIVA33.TipoFactor<>'Exento' then //VErificar
+          totalIVA33.TasaOCuota := TFacturacionHelper.ComoMoneda(adoqCFDIImpuestosTasa.AsExtended,6);
+          totalIVA33.Importe    := TFacturacionHelper.ComoMoneda(adoqCFDIImpuestosImporte.AsExtended);
+          adoqCFDIImpuestos.Next;
+        end;
       end;
+      {$region 'Complemento de pago'}
+      if IdCFDITipoDocumento = tdCFDIPago then
+      begin
+        adoqCFDIComplementoPagos.Close;
+        adoqCFDIComplementoPagos.Open;
+        complementoPagoV1 := NewComplementoPagoV1;
+        pagoComplementPagoV1 := complementoPagoV1.Add;
+        pagoComplementPagoV1.FechaPago        := TFacturacionHelper.ComoFechaISO8601(adoqCFDIComplementoPagosFechaPago.Value);
+        pagoComplementPagoV1.FormaDePagoP     := adoqCFDIComplementoPagosFormaPagoP.AsString;
+        pagoComplementPagoV1.MonedaP          := adoqCFDIComplementoPagosMonedaP.AsString;
+        if  pagoComplementPagoV1.MonedaP<>'MXN' then
+          pagoComplementPagoV1.TipoCambioP      := adoqCFDIComplementoPagosTipoCambioP.AsString;
+        pagoComplementPagoV1.Monto            := TFacturacionHelper.ComoMoneda(adoqCFDIComplementoPagosMonto.AsExtended);
+        pagoComplementPagoV1.NumOperacion     := adoqCFDIComplementoPagosNumOperacion.AsString;
+        if adoqCFDIComplementoPagosRFCEmisorCtaOrd.AsString <> EmptyStr then
+          pagoComplementPagoV1.RfcEmisorCtaOrd  := adoqCFDIComplementoPagosRFCEmisorCtaOrd.AsString;
+        if adoqCFDIComplementoPagosNomBancoOrdExt.AsString <> EmptyStr then
+          pagoComplementPagoV1.CtaOrdenante     := adoqCFDIComplementoPagosNomBancoOrdExt.AsString;
+        if adoqCFDIComplementoPagosRFCEmisorCtaBen.AsString <> EmptyStr then
+          pagoComplementPagoV1.RfcEmisorCtaBen  := adoqCFDIComplementoPagosRFCEmisorCtaBen.AsString;
+        if adoqCFDIComplementoPagosCtaBeneficiario.AsString <> EmptyStr then
+          pagoComplementPagoV1.CtaBeneficiario  := adoqCFDIComplementoPagosCtaBeneficiario.AsString;
+        doctoRelacionadoListV1 := pagoComplementPagoV1.DoctoRelacionado;
+        adoqCFDIComplementoPagosRelacionado.Close;
+        adoqCFDIComplementoPagosRelacionado.Open;
+        while not adoqCFDIComplementoPagosRelacionado.Eof  do
+        begin
+          doctoRelacionadoComplementoPagoV1 := doctoRelacionadoListV1.Add;
+          doctoRelacionadoComplementoPagoV1.IdDocumento      := adoqCFDIComplementoPagosRelacionadoUUID.asString;
+          doctoRelacionadoComplementoPagoV1.Serie            := adoqCFDIComplementoPagosRelacionadoSerie.AsString;
+          doctoRelacionadoComplementoPagoV1.Folio            := adoqCFDIComplementoPagosRelacionadoFolio.AsString;
+          doctoRelacionadoComplementoPagoV1.MonedaDR         := adoqCFDIComplementoPagosRelacionadoMonedaDR.AsString;
+          //Tipo Cambio puede implicar cambio en aplicacion de pago.. verificar //FEb22/18
+          if (pagoComplementPagoV1.MonedaP <> doctoRelacionadoComplementoPagoV1.MonedaDR) then
+            doctoRelacionadoComplementoPagoV1.TipoCambioDR   := adoqCFDIComplementoPagosRelacionadoTipoCambioDR.AsString;
+          doctoRelacionadoComplementoPagoV1.MetodoDePagoDR   := adoqCFDIComplementoPagosRelacionadoMetodoPagoDR.AsString;
+          doctoRelacionadoComplementoPagoV1.NumParcialidad   := adoqCFDIComplementoPagosRelacionadoNumParcialidad.AsInteger;
+          doctoRelacionadoComplementoPagoV1.ImpSaldoAnt      := TFacturacionHelper.ComoMoneda(adoqCFDIComplementoPagosRelacionadoImpSaldoAnt.AsExtended);
+          doctoRelacionadoComplementoPagoV1.ImpPagado        := TFacturacionHelper.ComoMoneda(adoqCFDIComplementoPagosRelacionadoImpPagado.AsExtended);
+          doctoRelacionadoComplementoPagoV1.ImpSaldoInsoluto := TFacturacionHelper.ComoMoneda(adoqCFDIComplementoPagosRelacionadoImpSaldoInsoluto.AsExtended);
+          adoqCFDIComplementoPagosRelacionado.Next;
+        end;
+        facturaCFDIv33.AgregarComplemento(complementoPagoV1,
+                                        'pago10',
+                                        'http://www.sat.gob.mx/Pagos',
+                                        'http://www.sat.gob.mx/Pagos http://www.sat.gob.mx/sitio_internet/cfd/Pagos/Pagos10.xsd');
+      end;
+      {$endregion}
       GetCSD(adoqCFDIIdPersonaEmisor.Value);
       RutaFactura := GetRutaFactura(adoqCFDIEmisorRFC.AsString);
       if not DirectoryExists (RutaFactura) then
@@ -1804,52 +1885,6 @@ begin
   end
   else
     Showmessage('CFDI generado con anterioridad');
-end;
-
-function TdmFacturas.VerificaArchivo(var IDArchivo: Integer; Archivo: String;
-  var Respuesta: String): Boolean;
-begin
-result:=False;
-  if idArchivo <>0 then
-  begin
-    AdodsAuxiliar.Close;
-    AdodsAuxiliar.CommandText :='Select * from Documentos where IdDocumento='+ intToStr(IDArchivo);
-    AdodsAuxiliar.open;
-    if AdodsAuxiliar.eof then
-    begin
-      Respuesta :=Respuesta+' ID no encontrado('+intTostr(IDArchivo)+') '+Archivo;
-      AdodsAuxiliar.Close;
-      AdodsAuxiliar.CommandText :='Select * from Documentos where NombreArchivo='''+ Archivo+'''';
-      AdodsAuxiliar.open;
-      if not AdodsAuxiliar.eof then
-      begin
-        IDArchivo:=  AdodsAuxiliar.fieldbyname('IDDocumento').AsInteger;
-        result:=true;
-      end;
-    end
-    else  //Si encontró el id
-    begin
-      if AdodsAuxiliar.fieldbyname('NombreArchivo').AsString<>Archivo then
-        Respuesta :=Respuesta+' Nombres diferentes G:'+AdodsAuxiliar.fieldbyname('NombreArchivo').AsString +' B:'+Archivo;
-      result:=true;
-      //Se asocia ID
-    end;
-
-  end
-  else
-  begin
-    Respuesta :=Respuesta+' ID (0) '+Archivo;
-    AdodsAuxiliar.Close;
-    AdodsAuxiliar.CommandText :='Select * from Documentos where NombreArchivo='''+ Archivo+'''';
-    AdodsAuxiliar.open;
-    if not AdodsAuxiliar.eof then
-    begin
-      IDArchivo:=  AdodsAuxiliar.fieldbyname('IDDocumento').AsInteger;
-      result:=true;
-    end
-    else
-      Respuesta :=Respuesta+' No encontro nombre: '+ Archivo;  //Va falso y no se pone
-  end;
 end;
 
 end.

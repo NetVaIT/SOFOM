@@ -54,7 +54,9 @@ type
     procedure ActPDFAmortizaYPagoExecute(Sender: TObject);
     procedure ActAmorYPago2Execute(Sender: TObject);
   private
+    function GetActual: string;
     { Private declarations }
+    property Actual: string read GetActual;
   public
     { Public declarations }
   end;
@@ -66,33 +68,23 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses rptReporteCarteraForm, PDFReporteCarteraDM, _ConectionDmod;
+uses rptReporteCarteraForm, PDFReporteCarteraDM, _ConectionDmod, ProcesosType;
 
 {$R *.dfm}
 
 procedure TdmrptReporteCartera.ActAmorYPago2Execute(Sender: TObject);
-var                                                //Jul 19/17
-  dmReporteCarteraPDF:TDmReporteCarteraPDF;
-  ArchiPDF:TFileName;
-  TxtSQL,Texto:String;//  GrupoSQL,, Fecha
- // FechaIni, FechaFin:TDAteTime;
+var
+  dmReporteCarteraPDF: TDmReporteCarteraPDF;
+  ArchiPDF: TFileName;
+  TxtSQL: string;
 begin
   inherited;
- //if  TFrmReporteCarteraGrid(gGridForm).AEsIndividual then
-
-  //  TxtSQL:=' IdAnexo = ' + intTostr(TFrmReporteCarteraGrid(gGridForm).AIdAnexoAct);
-
-//  else
-//    TxtSql:='';
-
-  TExto:= '_' +FormatDateTime('ddmmmyyyy',_DmConection.LaFechaActual);//Date); //Jun 30/17
-  ArchiPDF:='AmortizacionesYPagos2'+Texto+'.PDF';
+  ArchiPDF:='AmortizacionesYPagos2'+'_'+Actual+_ExtensionPDF;
   dmReporteCarteraPDF:= TdmReporteCarteraPDF.Create(Self);
   try
   dmReporteCarteraPDF.ADODtStAnexoCliente.Close;
   dmReporteCarteraPDF.ADODtStAnexoCliente.Parameters.ParamByName('IDAnexo').Value:= TFrmReporteCarteraGrid(gGridForm).AIdAnexoAct;
   dmReporteCarteraPDF.ADODtStAnexoCliente.open;
-
   dmReporteCarteraPDF.ADODtStRepHojaControlCte.Open;
   TxtSQL:=' IdAnexo = ' + intTostr(TFrmReporteCarteraGrid(gGridForm).AIdAnexoAct);
     if TxtSql<>'' then    //May 22/17
@@ -102,41 +94,29 @@ begin
     end
     else
       dmReporteCarteraPDF.ADODtStRepHojaControlCte.Filtered:=False;  // nunca va por aca en este reporte
-
     dmReporteCarteraPDF.ADODtStAmortiza.Close;
     dmReporteCarteraPDF.ADODtStAmortiza.Parameters.ParamByName('IDAnexo1').Value:=TFrmReporteCarteraGrid(gGridForm).AIdAnexoAct;
-   // dmReporteCarteraPDF.ADODtStAmortiza.Parameters.ParamByName('IDAnexo2').Value:=TFrmReporteCarteraGrid(gGridForm).AIdAnexoAct;
-    dmReporteCarteraPDF.ADODtStAmortiza.OPen;
+    dmReporteCarteraPDF.ADODtStAmortiza.Open;
     dmReporteCarteraPDF.ADODtStAmortiza2.Close;
     dmReporteCarteraPDF.ADODtStAmortiza2.Parameters.ParamByName('IDAnexo1').Value:=TFrmReporteCarteraGrid(gGridForm).AIdAnexoAct;
     dmReporteCarteraPDF.ADODtStAmortiza2.Parameters.ParamByName('IDAnexo2').Value:=TFrmReporteCarteraGrid(gGridForm).AIdAnexoAct;
-    dmReporteCarteraPDF.ADODtStAmortiza2.OPen;
-
+    dmReporteCarteraPDF.ADODtStAmortiza2.Open;
     dmReporteCarteraPDF.ADODtStProd2.Close;
     dmReporteCarteraPDF.adodtstProd2.Parameters.ParamByName('IdAnexo').Value:= TFrmReporteCarteraGrid(gGridForm).AIdAnexoAct;
-    dmReporteCarteraPDF.adodtstProd2.open;
-
+    dmReporteCarteraPDF.adodtstProd2.Open;
     dmReporteCarteraPDF.ADODtStPago2.Open;
-
-    dmReporteCarteraPDF.ADODtStMoratoriosXCXC.Open; // ago 16/17
-
+    dmReporteCarteraPDF.ADODtStMoratoriosXCXC.Open;
     dmReporteCarteraPDF.ppRprtAmoryPagos2.ShowPrintDialog:= False;
     dmReporteCarteraPDF.ppRprtAmoryPagos2.ShowCancelDialog:= False;
-    dmReporteCarteraPDF.ppRprtAmoryPagos2.PrinterSetup.DocumentName:=  'AMORTIZACIONES Y PAGOS '+#13 +Texto;
-
+    dmReporteCarteraPDF.ppRprtAmoryPagos2.PrinterSetup.DocumentName:= ArchiPDF;
     dmReporteCarteraPDF.ppRprtAmoryPagos2.DeviceType:= 'PDF';
     dmReporteCarteraPDF.ppRprtAmoryPagos2.TextFileName:= ArchiPDF;
-
     dmReporteCarteraPDF.ppRprtAmoryPagos2.print;
-
-    // dmReporteCarteraPDF.ADODtStRepHojaControlCte.Close;
   finally
     dmReporteCarteraPDF.Free;
   end;
   if FileExists(ArchiPDF) then
-      ShellExecute(application.Handle, 'open', PChar(ArchiPDF), nil, nil, SW_SHOWNORMAL);
-
-
+    ShellExecute(application.Handle, 'open', PChar(ArchiPDF), nil, nil, SW_SHOWNORMAL);
 end;
 
 procedure TdmrptReporteCartera.ActPDFAmortizaYPagoExecute(Sender: TObject);
@@ -147,49 +127,37 @@ var                                                //Jul 19/17
   FechaIni, FechaFin:TDAteTime;
 begin
   inherited;
- if  TFrmReporteCarteraGrid(gGridForm).AEsIndividual then
-  begin
-    TxtSQL:=' IdAnexo = ' + intTostr(TFrmReporteCarteraGrid(gGridForm).AIdAnexoAct);
-  end
+  ArchiPDF:='HojaAmortizacionesYPagos'+'_'+Actual+_ExtensionPDF;
+  if  TFrmReporteCarteraGrid(gGridForm).AEsIndividual then
+    TxtSQL:=' IdAnexo = ' + intTostr(TFrmReporteCarteraGrid(gGridForm).AIdAnexoAct)
   else
     TxtSql:='';
-
-  TExto:= '_' +FormatDateTime('ddmmmyyyy',_DmConection.LaFechaActual);//Date); //Jun 30/17
-  ArchiPDF:='HojaAmortizacionesYPagos'+Texto+'.PDF';
   dmReporteCarteraPDF:= TdmReporteCarteraPDF.Create(Self);
   try
-
-
     dmReporteCarteraPDF.ADODtStRepHojaControlCte.Open;
-    if TxtSql<>'' then    //May 22/17
+    if TxtSql<>'' then
     begin
       dmReporteCarteraPDF.ADODtStRepHojaControlCte.Filter:= TxtSql;
       dmReporteCarteraPDF.ADODtStRepHojaControlCte.Filtered:=True;
     end
     else
       dmReporteCarteraPDF.ADODtStRepHojaControlCte.Filtered:=False;
-
     dmReporteCarteraPDF.ADODtStRepAmortiza.Close;
     dmReporteCarteraPDF.ADODtStRepAmortiza.Parameters.ParamByName('IDAnexo1').Value:=TFrmReporteCarteraGrid(gGridForm).AIdAnexoAct;
     dmReporteCarteraPDF.ADODtStRepAmortiza.Parameters.ParamByName('IDAnexo2').Value:=TFrmReporteCarteraGrid(gGridForm).AIdAnexoAct;
     dmReporteCarteraPDF.ADODtStRepAmortiza.OPen;
-
     dmReporteCarteraPDF.ppRprtRepAmortizayPagos.ShowPrintDialog:= False;
     dmReporteCarteraPDF.ppRprtRepAmortizayPagos.ShowCancelDialog:= False;
-    dmReporteCarteraPDF.ppRprtRepAmortizayPagos.PrinterSetup.DocumentName:=  'HOJA AMORTIZACIONES Y PAGOS '+#13 +Texto;
-
+    dmReporteCarteraPDF.ppRprtRepAmortizayPagos.PrinterSetup.DocumentName:= ArchiPDF;
     dmReporteCarteraPDF.ppRprtRepAmortizayPagos.DeviceType:= 'PDF';
     dmReporteCarteraPDF.ppRprtRepAmortizayPagos.TextFileName:= ArchiPDF;
-
     dmReporteCarteraPDF.ppRprtRepAmortizayPagos.print;
-
-     dmReporteCarteraPDF.ADODtStRepHojaControlCte.Close;
+    dmReporteCarteraPDF.ADODtStRepHojaControlCte.Close;
   finally
     dmReporteCarteraPDF.Free;
   end;
   if FileExists(ArchiPDF) then
-      ShellExecute(application.Handle, 'open', PChar(ArchiPDF), nil, nil, SW_SHOWNORMAL);
-
+    ShellExecute(application.Handle, 'open', PChar(ArchiPDF), nil, nil, SW_SHOWNORMAL);
 end;
 
 procedure TdmrptReporteCartera.ActPDFCarteraExecute(Sender: TObject);
@@ -197,11 +165,11 @@ var
   dmReporteCarteraPDF:TDmReporteCarteraPDF;
   ArchiPDF:TFileName;
   Texto,TxtSQL, GrupoSQL, Fecha:String;
- // FechaIni, FechaFin:TDAteTime;
-  Monto, Total,ValMax,ValMin:Double;    //jun 1/17
-  Cantidad:integer;  //jun 1/17
+  Monto, Total,ValMax,ValMin:Double;
+  Cantidad:integer;
 begin
   inherited;
+  ArchiPDF:='CarteraXCliente'+'_'+Actual+_ExtensionPDF;
   //No se usa esto aca.. verificar... Ago 21 /17 Sum (Vencidos0a30)as Total0a30,  no colocado ???
   TxtSQL:= 'SElect Cliente,sum("Saldo")  as SaldoTotal,  Sum ("Saldo Total Vencido")as TotalVencido, Sum (vigentes)as TotalVigentes, SUM ("vencidos a 30 días") as Total30Dias,'
           +' SUM ("vencidos a 60 días") as Total60Dias, SUM ("vencidos a 90 días") as Total90Dias ,'
@@ -209,34 +177,15 @@ begin
           +' SUM ("Vencidos a mas de 120 días") as TotalMas120Dias  from Vw_AntiguedadSaldosCXC ';
   Fecha:= ' where fecha>=:Fini and fecha<=:Ffin ';
   GrupoSQL:=' Group BY Cliente order by Totalvencido desc, SaldoTotal desc'; //adodsMaster.CommandText; ver si se le coloca Fecha
-
-  //FechaIni:=  TfrmrptantiguedadSaldos(gGridForm).AFecIni;
-  //FechaFin:=  TfrmrptantiguedadSaldos(gGridForm).AFecFin;
   TExto:= adodsMaster.CommandText;
   if pos(':FIni',Texto)>0 then   //REvisa si hizo consulta por fecha Mar 2/17
      TxtSQL:=TxtSQL+Fecha;
   TxtSQL:=TxtSQL +GrupoSQL;
-
-  TExto:= '_' +FormatDateTime('ddmmmyyyy',_DmConection.LaFechaActual);//Date); jun 30/17
-  ArchiPDF:='CarteraXCliente'+Texto+'.PDF';
   dmReporteCarteraPDF:= TdmReporteCarteraPDF.Create(Self);
   try
-   (*  dmReporteCarteraPDF.DSAntXCliente.DataSet.Close;
-     TAdoDAtaset(dmReporteCarteraPDF.DSAntXCliente.DataSet).CommandText:=  TxtSQL;
-    if pos(':FIni',TxtSQL)>0 then
-    begin
-      TADoDAtaset(dmAntiguedadSaldosPDF.DSAntXCliente.DataSet).Parameters.ParamByName('Fini').Value:= FechaIni;
-      TADoDAtaset(dmAntiguedadSaldosPDF.DSAntXCliente.DataSet).Parameters.ParamByName('FFin').Value:= FechaFin;
-      TExto:= ' DEL ' + DAteToSTR(FEchaIni) + ' AL '+ DAteToSTR(FEchaFin);//+FormatDateTime('mmm-dd-yyyy',FechaIni)+ ' AL: '+FormatDateTime('dd mmm del aaaa',FechaFin);
-    end
-    else
-      TExto:=  'AL '+upperCASE(FormatDateTime('dd ''de'' mmmm ''del'' yyyy',Date));   *)
-
     dmReporteCarteraPDF.adodsReport.Open;
-
     dmReporteCarteraPDF.ppReport.ShowPrintDialog:= False;
     dmReporteCarteraPDF.ppReport.ShowCancelDialog:= False;
-            //Jun 1/17
     dmReporteCarteraPDF.CalculoPercentil(Monto, Total,ValMax,ValMin,cantidad,0.8);
     dmReporteCarteraPDF.ppLblNumCreditos.Caption:=  intTostr(dmReporteCarteraPDF.adodsReport.recordcount);
     dmReporteCarteraPDF.ppLblCantidad80.Caption:= intToStr(cantidad) ;
@@ -246,116 +195,70 @@ begin
     dmReporteCarteraPDF.ppLblMontoTotal.Caption:= FormatFloat('#,0',Total/1000);  //Aplicar luego formato
     dmReporteCarteraPDF.ppLblProm80.Caption:= FormatFloat('#,0',(Monto/cantidad)/1000);//Aplicar luego formato
     if (dmReporteCarteraPDF.adodsReport.recordcount-cantidad)<>0 then
-
-       dmReporteCarteraPDF.ppLblPorm20.Caption:= FormatFloat('#,0',((Total-Monto)/(dmReporteCarteraPDF.adodsReport.recordcount-cantidad)/1000)) //Aplicar luego formato
+      dmReporteCarteraPDF.ppLblPorm20.Caption:= FormatFloat('#,0',((Total-Monto)/(dmReporteCarteraPDF.adodsReport.recordcount-cantidad)/1000)) //Aplicar luego formato
     else
       dmReporteCarteraPDF.ppLblPorm20.Caption:= FormatFloat('#,0',0);
     dmReporteCarteraPDF.ppLblValorMinCred.Caption:= FormatFloat('#,0',ValMin/1000);
     dmReporteCarteraPDF.ppLblValorMaxCred.Caption:= FormatFloat('#,0',(ValMax/1000));
-
-
     dmReporteCarteraPDF.ppLblMontoPromedioCred.Caption:= FormatFloat('#,0',(Total/dmReporteCarteraPDF.adodsReport.recordcount/1000));
-    // hasta aca jun  1/17
-    dmReporteCarteraPDF.ppReport.PrinterSetup.DocumentName:=  'REPORTE DE CARTERA POR CLIENTE '+#13 +Texto;
-
+    dmReporteCarteraPDF.ppReport.PrinterSetup.DocumentName:= ArchiPDF;
     dmReporteCarteraPDF.ppReport.DeviceType:= 'PDF';
     dmReporteCarteraPDF.ppReport.TextFileName:= ArchiPDF;
-   // dmAntiguedadSaldosPDF.ppLblTitulo2.caption:= 'ANTIGUEDAD DE SALDOS COBRADOS POR CLIENTE '+#13 +Texto;
     dmReporteCarteraPDF.ppReport.print;
-
-     dmReporteCarteraPDF.adodsReport.Close;
+    dmReporteCarteraPDF.adodsReport.Close;
   finally
     dmReporteCarteraPDF.Free;
   end;
   if FileExists(ArchiPDF) then
-      ShellExecute(application.Handle, 'open', PChar(ArchiPDF), nil, nil, SW_SHOWNORMAL);
-
+    ShellExecute(application.Handle, 'open', PChar(ArchiPDF), nil, nil, SW_SHOWNORMAL);
 end;
 
 procedure TdmrptReporteCartera.ActPDFHojaControlExecute(Sender: TObject);
 var
   dmReporteCarteraPDF:TDmReporteCarteraPDF;
   ArchiPDF:TFileName;
-  Texto,TxtSQL:String;       //   , GrupoSQL, Fecha
- // FechaIni, FechaFin:TDAteTime;
+  Texto,TxtSQL:String;
 begin
   inherited;
-(*  TxtSQL:= 'SElect Cliente,sum("Saldo")  as SaldoTotal,  Sum ("Saldo Total Vencido")as TotalVencido, Sum (vigentes)as TotalVigentes, SUM ("vencidos a 30 días") as Total30Dias,'
-          +' SUM ("vencidos a 60 días") as Total60Dias, SUM ("vencidos a 90 días") as Total90Dias ,'
-        //  +' SUM ("vencidos a 120 días") as Total120Dias ,Sum("Vencidos a mas de 120 días") as TotalMas120Dias,' //May 18/17
-          +' SUM ("Vencidos a mas de 120 días") as TotalMas120Dias  from Vw_AntiguedadSaldosCXC ';
-  Fecha:= ' where fecha>=:Fini and fecha<=:Ffin ';
-  GrupoSQL:=' Group BY Cliente order by Totalvencido desc, SaldoTotal desc'; //adodsMaster.CommandText; ver si se le coloca Fecha
-
-  //FechaIni:=  TfrmrptantiguedadSaldos(gGridForm).AFecIni;
-  //FechaFin:=  TfrmrptantiguedadSaldos(gGridForm).AFecFin;
-  TExto:= adodsMaster.CommandText;
-  if pos(':FIni',Texto)>0 then   //REvisa si hizo consulta por fecha Mar 2/17
-     TxtSQL:=TxtSQL+Fecha;
-  TxtSQL:=TxtSQL +GrupoSQL;
-  *)
-
+  ArchiPDF:='HojaControlGeneral'+'_'+Actual+_ExtensionPDF;
   if  TFrmReporteCarteraGrid(gGridForm).AEsIndividual then
-  begin
-    TxtSQL:=' IdAnexo = ' + intTostr(TFrmReporteCarteraGrid(gGridForm).AIdAnexoAct);
-  end
+    TxtSQL:=' IdAnexo = ' + intTostr(TFrmReporteCarteraGrid(gGridForm).AIdAnexoAct)
   else
     TxtSql:='';
-
-  TExto:= '_' +FormatDateTime('ddmmmyyyy',_DmConection.LaFechaActual);//Date); //Jun 30/17
-  ArchiPDF:='HojaControlGral'+Texto+'.PDF';
   dmReporteCarteraPDF:= TdmReporteCarteraPDF.Create(Self);
   try
-   (*  dmReporteCarteraPDF.DSAntXCliente.DataSet.Close;
-     TAdoDAtaset(dmReporteCarteraPDF.DSAntXCliente.DataSet).CommandText:=  TxtSQL;   //No usado     ago 21/17
-    if pos(':FIni',TxtSQL)>0 then
-    begin
-      TADoDAtaset(dmAntiguedadSaldosPDF.DSAntXCliente.DataSet).Parameters.ParamByName('Fini').Value:= FechaIni;
-      TADoDAtaset(dmAntiguedadSaldosPDF.DSAntXCliente.DataSet).Parameters.ParamByName('FFin').Value:= FechaFin;
-      TExto:= ' DEL ' + DAteToSTR(FEchaIni) + ' AL '+ DAteToSTR(FEchaFin);//+FormatDateTime('mmm-dd-yyyy',FechaIni)+ ' AL: '+FormatDateTime('dd mmm del aaaa',FechaFin);
-    end
-    else
-      TExto:=  'AL '+upperCASE(FormatDateTime('dd ''de'' mmmm ''del'' yyyy',Date));   *)
-
     dmReporteCarteraPDF.ADODtStRepHojaControlCte.Open;
-    if TxtSql<>'' then    //May 22/17
+    if TxtSql<>'' then
     begin
       dmReporteCarteraPDF.ADODtStRepHojaControlCte.Filter:= TxtSql;
       dmReporteCarteraPDF.ADODtStRepHojaControlCte.Filtered:=True;
     end
     else
       dmReporteCarteraPDF.ADODtStRepHojaControlCte.Filtered:=False;
-
     dmReporteCarteraPDF.ppRprtHojaControlCte.ShowPrintDialog:= False;
     dmReporteCarteraPDF.ppRprtHojaControlCte.ShowCancelDialog:= False;
-    dmReporteCarteraPDF.ppRprtHojaControlCte.PrinterSetup.DocumentName:=  'HOJA CONTROL '+#13 +Texto;
-
+    dmReporteCarteraPDF.ppRprtHojaControlCte.PrinterSetup.DocumentName:= ArchiPDF;
     dmReporteCarteraPDF.ppRprtHojaControlCte.DeviceType:= 'PDF';
     dmReporteCarteraPDF.ppRprtHojaControlCte.TextFileName:= ArchiPDF;
-   // dmAntiguedadSaldosPDF.ppLblTitulo2.caption:= 'ANTIGUEDAD DE SALDOS COBRADOS POR CLIENTE '+#13 +Texto;
     dmReporteCarteraPDF.ppRprtHojaControlCte.print;
-
-     dmReporteCarteraPDF.ADODtStRepHojaControlCte.Close;
+    dmReporteCarteraPDF.ADODtStRepHojaControlCte.Close;
   finally
     dmReporteCarteraPDF.Free;
   end;
   if FileExists(ArchiPDF) then
       ShellExecute(application.Handle, 'open', PChar(ArchiPDF), nil, nil, SW_SHOWNORMAL);
-
 end;
 
 procedure TdmrptReporteCartera.adodsMasterCalcFields(DataSet: TDataSet);
 begin
   inherited;
   DataSet.FieldByName('CuotaMostrar').asstring:=   DataSet.FieldByName('CuotasPendientes').asstring+'/'+ DataSet.FieldByName('Plazo').asstring;
-
 end;
 
 procedure TdmrptReporteCartera.DataModuleCreate(Sender: TObject);
 begin
   inherited;
   //Borrar tablas temporales  e insertar de nuevo Nov 24/17
-
   try
     _dmConection.ADOConnection.BeginTrans; //nov 24/17
     AdoQryBorrarTemporales.ExecSQL;
@@ -367,16 +270,18 @@ begin
     showMessage('Algun error');
     raise;
   end;
-
-
   gGridForm:= TFrmReporteCarteraGrid.Create(Self);
   gGridForm.DataSet:= adodsMaster;
   gGridForm.ReadOnlyGrid:= True;
-
   TFrmReporteCarteraGrid(gGridForm).ActPDFReporteCartera:=ActPDFCartera;    //se re habilitó nov 21/17 DEshabilitado Oct12/17
   TFrmReporteCarteraGrid(gGridForm).ActPDFHojaControlGral:=ActPDFHojaControl;
   TFrmReporteCarteraGrid(gGridForm).ActPDFHojaAmorYpago:=ActPDFAmortizayPago;
   TFrmReporteCarteraGrid(gGridForm).ActPDFNuevoAmoryPago2:=ActAmorYPago2;
+end;
+
+function TdmrptReporteCartera.GetActual: string;
+begin
+  Result:= FormatDateTime('ddmmmyyyyhhnnss', Now);
 end;
 
 end.

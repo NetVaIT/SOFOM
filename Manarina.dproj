@@ -5,7 +5,7 @@
         <FrameworkType>VCL</FrameworkType>
         <MainSource>Manarina.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Release</Config>
+        <Config Condition="'$(Config)'==''">Debug</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Application</AppType>
@@ -1116,6 +1116,14 @@
         </DCCReference>
         <DCCReference Include="Procesos\CFDIRelacionadosForm.pas">
             <Form>frmCFDIRelacionados</Form>
+        </DCCReference>
+        <DCCReference Include="Procesos\CFDICPRelacionadosForm.pas">
+            <Form>frmCFDICPRelacionados</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Procesos\PagosAplicacionesForm.pas">
+            <Form>frmPagosAplicaciones</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>

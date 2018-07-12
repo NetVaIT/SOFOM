@@ -221,18 +221,21 @@ inherited dmAplicacionesConsulta: TdmAplicacionesConsulta
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@IdPagoAplicacion'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end
       item
         Name = '@IdUsuario'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end>
     Left = 160
     Top = 208

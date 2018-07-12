@@ -128,7 +128,7 @@ inherited frmEdFactura: TfrmEdFactura
           Width = 89
         end
         object cxDBLabel9: TcxDBLabel
-          Left = 72
+          Left = 75
           Top = 130
           DataBinding.DataField = 'DireccionC'
           DataBinding.DataSource = DataSource
@@ -173,9 +173,9 @@ inherited frmEdFactura: TfrmEdFactura
         object Label12: TLabel
           Left = 25
           Top = 3
-          Width = 63
+          Width = 78
           Height = 13
-          Caption = 'M'#233'todo Pago'
+          Caption = 'M'#233'todo de pago'
           FocusControl = DBLookupComboBox3
         end
         object Label11: TLabel
@@ -215,25 +215,25 @@ inherited frmEdFactura: TfrmEdFactura
         object Label15: TLabel
           Left = 338
           Top = 2
-          Width = 57
+          Width = 72
           Height = 13
-          Caption = 'Forma pago'
+          Caption = 'Forma de pago'
           FocusControl = DBLookupComboBox4
         end
         object Label16: TLabel
           Left = 25
           Top = 2
-          Width = 63
+          Width = 78
           Height = 13
-          Caption = 'Metodo pago'
+          Caption = 'M'#233'todo de pago'
           FocusControl = DBLookupComboBox5
         end
         object Label17: TLabel
           Left = 338
           Top = 43
-          Width = 60
+          Width = 75
           Height = 13
-          Caption = 'Tipo relaci'#243'n'
+          Caption = 'Tipo de relaci'#243'n'
           FocusControl = DBLookupComboBox6
         end
         object Label18: TLabel
@@ -409,7 +409,6 @@ inherited frmEdFactura: TfrmEdFactura
     end
   end
   inherited DataSource: TDataSource
-    DataSet = dmFacturas.adodsMaster
     Left = 496
   end
   inherited ActionList: TActionList

@@ -1,39 +1,39 @@
 inherited frmPLDAlertasFiltro: TfrmPLDAlertasFiltro
   Caption = 'Filtro alertas'
-  ClientHeight = 176
-  ClientWidth = 289
-  ExplicitWidth = 295
-  ExplicitHeight = 205
+  ClientHeight = 194
+  ClientWidth = 260
+  ExplicitWidth = 266
+  ExplicitHeight = 223
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
-    Width = 289
-    Height = 135
+    Width = 260
+    Height = 153
     ExplicitWidth = 289
     ExplicitHeight = 135
-    ClientRectBottom = 133
-    ClientRectRight = 287
+    ClientRectBottom = 151
+    ClientRectRight = 258
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 2
-      ExplicitTop = 26
+      ExplicitLeft = 98
+      ExplicitTop = 90
       ExplicitWidth = 285
-      ExplicitHeight = 107
+      ExplicitHeight = 239
       object lblTipo: TLabel
-        Left = 20
-        Top = 70
+        Left = 29
+        Top = 24
         Width = 20
         Height = 13
         Caption = 'Tipo'
       end
-      object cxLabel1: TcxLabel
-        Left = 20
-        Top = 16
+      object lblFactor: TcxLabel
+        Left = 29
+        Top = 51
         Caption = 'Periodo mes'
-        FocusControl = edtMonth
+        FocusControl = edtFactor
       end
-      object edtMonth: TcxSpinEdit
-        Left = 88
-        Top = 12
+      object edtFactor: TcxSpinEdit
+        Left = 97
+        Top = 47
         Properties.MaxValue = 12.000000000000000000
         Properties.MinValue = 1.000000000000000000
         TabOrder = 1
@@ -41,26 +41,27 @@ inherited frmPLDAlertasFiltro: TfrmPLDAlertasFiltro
         Width = 121
       end
       object cxLabel2: TcxLabel
-        Left = 20
-        Top = 40
+        Left = 29
+        Top = 75
         Caption = 'Periodo a'#241'o'
         FocusControl = edtYear
       end
       object edtYear: TcxSpinEdit
-        Left = 87
-        Top = 39
+        Left = 96
+        Top = 74
         TabOrder = 3
-        Value = 2017
+        Value = 2018
         Width = 121
       end
       object cxcbTipo: TcxComboBox
-        Left = 88
-        Top = 66
+        Left = 96
+        Top = 21
         Properties.Items.Strings = (
           ''
           'Relevante'
           'Inusual'
           'Interna preocupante')
+        Properties.OnChange = cxcbTipoPropertiesChange
         TabOrder = 4
         Text = 'Relevante'
         Width = 121
@@ -68,16 +69,16 @@ inherited frmPLDAlertasFiltro: TfrmPLDAlertasFiltro
     end
   end
   inherited pmlMain: TPanel
-    Top = 135
-    Width = 289
+    Top = 153
+    Width = 260
     ExplicitTop = 135
     ExplicitWidth = 289
     inherited btnCancel: TButton
-      Left = 207
+      Left = 178
       ExplicitLeft = 207
     end
     inherited btnOk: TButton
-      Left = 126
+      Left = 97
       ExplicitLeft = 126
     end
   end

@@ -6,7 +6,11 @@ inherited dmAnexosMoratorios: TdmAnexosMoratorios
     CommandText = 
       'select IdAnexoMoratorio, IdAnexoAmortizacion, IdAnexoMoratorioEs' +
       'tatus, IdCuentaXCobrar, Fecha, ImporteBase, Importe, Descuento, ' +
-      'Impuesto, ImporteAplicado, Cancelacion from AnexosMoratorios'#13#10'OR' +
+      #13#10'CASE WHEN IdAnexoMoratorioEstatus = 2 THEN 0 ELSE Importe-Desc' +
+      'uento END AS Moratorio, CASE WHEN IdAnexoMoratorioEstatus = 2 TH' +
+      'EN 0 ELSE Impuesto END AS Impuesto, '#13#10'CASE WHEN IdAnexoMoratorio' +
+      'Estatus = 2 THEN 0 ELSE Importe-Descuento+Impuesto END AS Morato' +
+      'rioTotal, ImporteAplicado, Cancelacion from AnexosMoratorios'#13#10'OR' +
       'DER BY Fecha'
     object adodsMasterIdAnexoMoratorio: TIntegerField
       FieldName = 'IdAnexoMoratorio'
@@ -59,16 +63,30 @@ inherited dmAnexosMoratorios: TdmAnexosMoratorios
       Precision = 18
       Size = 6
     end
+    object adodsMasterMoratorio: TFMTBCDField
+      FieldName = 'Moratorio'
+      ReadOnly = True
+      currency = True
+      Precision = 19
+      Size = 6
+    end
     object adodsMasterImpuesto: TFMTBCDField
       FieldName = 'Impuesto'
       currency = True
       Precision = 18
       Size = 6
     end
+    object adodsMasterMoratorioTotal: TFMTBCDField
+      DisplayLabel = 'Total'
+      FieldName = 'MoratorioTotal'
+      ReadOnly = True
+      currency = True
+      Precision = 20
+      Size = 6
+    end
     object adodsMasterImporteAplicado: TFMTBCDField
       DisplayLabel = 'Importe aplicado'
       FieldName = 'ImporteAplicado'
-      Visible = False
       currency = True
       Precision = 18
       Size = 6
@@ -76,6 +94,22 @@ inherited dmAnexosMoratorios: TdmAnexosMoratorios
     object adodsMasterCancelacion: TDateTimeField
       FieldName = 'Cancelacion'
       Visible = False
+    end
+  end
+  inherited ActionList: TActionList
+    object actAgregarDescuento: TAction
+      Caption = 'Agregar'
+      ShortCut = 16449
+      OnExecute = actAgregarDescuentoExecute
+    end
+    object actEliminarDescuento: TAction
+      Caption = 'Eliminar'
+      ShortCut = 16453
+      OnExecute = actEliminarDescuentoExecute
+    end
+    object actDescuentoParcial: TAction
+      Caption = 'Parcial'
+      OnExecute = actDescuentoParcialExecute
     end
   end
   object adodsEstatus: TADODataSet
@@ -115,5 +149,63 @@ inherited dmAnexosMoratorios: TdmAnexosMoratorios
     OnDataChange = dsMasterDataChange
     Left = 104
     Top = 16
+  end
+  object adopSetMoratoriosDescuento: TADOStoredProc
+    Connection = _dmConection.ADOConnection
+    ProcedureName = 'p_SetAnexosMoratoriosDescuento;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@IdAnexoMoratorio'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@Descuento'
+        Attributes = [paNullable]
+        DataType = ftBCD
+        NumericScale = 6
+        Precision = 18
+        Value = Null
+      end>
+    Left = 88
+    Top = 208
+  end
+  object adopSetMoratoriosDescuentos: TADOStoredProc
+    Connection = _dmConection.ADOConnection
+    ProcedureName = 'p_SetAnexosMoratoriosDescuentos;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@IdAnexoAmortizacion'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@ImporteDescuento'
+        Attributes = [paNullable]
+        DataType = ftBCD
+        NumericScale = 6
+        Precision = 18
+        Value = Null
+      end>
+    Left = 88
+    Top = 264
   end
 end

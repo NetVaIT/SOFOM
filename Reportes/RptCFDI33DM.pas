@@ -9,6 +9,7 @@ uses
 
 const
   _CFDIRTM = 'CFDIManarina33.rtm';
+  _CFDIPagoRTM = 'CFDIPago33Manarina.rtm';
 
 type
   TdmRptCFDI33 = class(TDataModule)
@@ -93,16 +94,6 @@ type
     ppLabel5: TppLabel;
     ppDetailBand1: TppDetailBand;
     ppSummaryBand1: TppSummaryBand;
-    ppShape9: TppShape;
-    ppLabel14: TppLabel;
-    ppLabel15: TppLabel;
-    ppDBText30: TppDBText;
-    ppLabel16: TppLabel;
-    ppLabel17: TppLabel;
-    ppDBText33: TppDBText;
-    ppDBText31: TppDBText;
-    ppDBText32: TppDBText;
-    ppLabel2: TppLabel;
     ppLine14: TppLine;
     ppDBMemo1: TppDBMemo;
     ppLabel27: TppLabel;
@@ -112,8 +103,6 @@ type
     ppLabel32: TppLabel;
     ppLabel33: TppLabel;
     ppImageCBB: TppImage;
-    ppLabel51: TppLabel;
-    ppDBText16: TppDBText;
     ppLine1: TppLine;
     ppPageStyle1: TppPageStyle;
     ppDesignLayers1: TppDesignLayers;
@@ -151,12 +140,6 @@ type
     ppDBText5: TppDBText;
     ppLabel3: TppLabel;
     ppDBText21: TppDBText;
-    ppLabel23: TppLabel;
-    ppDBText13: TppDBText;
-    ppLabel36: TppLabel;
-    ppDBText14: TppDBText;
-    ppDBText37: TppDBText;
-    ppLabel31: TppLabel;
     adoqCFDIIdCFDI: TLargeintField;
     adoqCFDIIdCuentaXCobrar: TIntegerField;
     adoqCFDIIdCFDITipoDocumento: TIntegerField;
@@ -245,6 +228,106 @@ type
     adoqCFDIConceptosImpuestoTxt: TStringField;
     adoqCFDIConceptosImpuesto: TCurrencyField;
     ppDBMemo5: TppDBMemo;
+    adoqCFDIComplementoPagos: TADOQuery;
+    adoqCFDIComplementoPagosIdCFDIComplementoPago: TLargeintField;
+    adoqCFDIComplementoPagosIdCFDI: TLargeintField;
+    adoqCFDIComplementoPagosIdCFDITipoCadenaPago: TIntegerField;
+    adoqCFDIComplementoPagosFechaPago: TDateTimeField;
+    adoqCFDIComplementoPagosFormaPagoP: TStringField;
+    adoqCFDIComplementoPagosMonedaP: TStringField;
+    adoqCFDIComplementoPagosTipoCambioP: TFMTBCDField;
+    adoqCFDIComplementoPagosMonto: TFMTBCDField;
+    adoqCFDIComplementoPagosNumOperacion: TStringField;
+    adoqCFDIComplementoPagosRFCEmisorCtaOrd: TStringField;
+    adoqCFDIComplementoPagosNomBancoOrdExt: TStringField;
+    adoqCFDIComplementoPagosCtaOrdenante: TStringField;
+    adoqCFDIComplementoPagosRFCEmisorCtaBen: TStringField;
+    adoqCFDIComplementoPagosCtaBeneficiario: TStringField;
+    adoqCFDIComplementoPagosTipoCadPago: TStringField;
+    adoqCFDIComplementoPagosCerPago: TStringField;
+    adoqCFDIComplementoPagosCadPago: TStringField;
+    adoqCFDIComplementoPagosSelloPago: TStringField;
+    adoqCFDIComplementoPagosRelacionado: TADOQuery;
+    adoqCFDIComplementoPagosRelacionadoIdCFDIComplementoPagoRelacionado: TLargeintField;
+    adoqCFDIComplementoPagosRelacionadoIdCFDIComplementoPago: TLargeintField;
+    adoqCFDIComplementoPagosRelacionadoIdCFDIAsociado: TLargeintField;
+    adoqCFDIComplementoPagosRelacionadoUUID: TStringField;
+    adoqCFDIComplementoPagosRelacionadoSerie: TStringField;
+    adoqCFDIComplementoPagosRelacionadoFolio: TStringField;
+    adoqCFDIComplementoPagosRelacionadoMonedaDR: TStringField;
+    adoqCFDIComplementoPagosRelacionadoTipoCambioDR: TFMTBCDField;
+    adoqCFDIComplementoPagosRelacionadoMetodoPagoDR: TStringField;
+    adoqCFDIComplementoPagosRelacionadoNumParcialidad: TIntegerField;
+    adoqCFDIComplementoPagosRelacionadoImpSaldoAnt: TFMTBCDField;
+    adoqCFDIComplementoPagosRelacionadoImpPagado: TFMTBCDField;
+    adoqCFDIComplementoPagosRelacionadoImpSaldoInsoluto: TFMTBCDField;
+    dsCFDIComplementoPagos: TDataSource;
+    dsCFDIComplementoPagosRelacionado: TDataSource;
+    dppCFDIComplementoPagos: TppDBPipeline;
+    dbpCFDIComplementoPagosRelacionado: TppDBPipeline;
+    ppShape13: TppShape;
+    ppLabel10: TppLabel;
+    ppLabel77: TppLabel;
+    ppLabel78: TppLabel;
+    ppLabel79: TppLabel;
+    ppLabel80: TppLabel;
+    ppLabel81: TppLabel;
+    ppLine21: TppLine;
+    ppLine22: TppLine;
+    ppLine23: TppLine;
+    ppLine24: TppLine;
+    ppLine25: TppLine;
+    ppLine26: TppLine;
+    ppLabel82: TppLabel;
+    ppLine27: TppLine;
+    ppLabel83: TppLabel;
+    ppShape14: TppShape;
+    ppLabel65: TppLabel;
+    ppDBText77: TppDBText;
+    ppLabel66: TppLabel;
+    ppDBText78: TppDBText;
+    ppLabel67: TppLabel;
+    ppDBText79: TppDBText;
+    ppLabel68: TppLabel;
+    ppDBText80: TppDBText;
+    ppLabel73: TppLabel;
+    ppDBText81: TppDBText;
+    ppLabel74: TppLabel;
+    ppDBText82: TppDBText;
+    ppLabel75: TppLabel;
+    ppDBText83: TppDBText;
+    ppLabel76: TppLabel;
+    ppDBText84: TppDBText;
+    ppLabel88: TppLabel;
+    ppDBText85: TppDBText;
+    ppLabel89: TppLabel;
+    ppDBText86: TppDBText;
+    ppLabel90: TppLabel;
+    ppLine13: TppLine;
+    ppLine18: TppLine;
+    ppLabel91: TppLabel;
+    ppLabel92: TppLabel;
+    ppDBText88: TppDBText;
+    ppShape12: TppShape;
+    ppDBText69: TppDBText;
+    ppDBText70: TppDBText;
+    ppDBText71: TppDBText;
+    ppDBMemo6: TppDBMemo;
+    ppDBText72: TppDBText;
+    ppDBText73: TppDBText;
+    ppDBText74: TppDBText;
+    ppDBText75: TppDBText;
+    ppDBText76: TppDBText;
+    ppDBText87: TppDBText;
+    ppLine28: TppLine;
+    ppLine29: TppLine;
+    ppLine30: TppLine;
+    ppLine31: TppLine;
+    ppLine32: TppLine;
+    ppLine33: TppLine;
+    ppLine34: TppLine;
+    ppLine35: TppLine;
+    ppLine36: TppLine;
     procedure adoqCFDICalcFields(DataSet: TDataSet);
     procedure adoqCFDIConceptosCalcFields(DataSet: TDataSet);
     procedure ppRptCFDIFileDeviceCreate(Sender: TObject);
@@ -266,7 +349,7 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses _ConectionDmod, _Utils;
+uses _ConectionDmod, _Utils, ProcesosType;
 
 {$R *.dfm}
 
@@ -294,14 +377,20 @@ end;
 
 procedure TdmRptCFDI33.GenerarArchivoPDF(IdCFDI: Integer; ArchivoPDF,
   ArchivoImagen: TFileName);
+var
+  IdCFDITipoDocumento: TCFDITipoDocumento;
 begin
   FileIMG:= ArchivoImagen;
   adoqCFDI.Close;
   adoqCFDI.Parameters.Parambyname('IdCFDI').value:= IdCFDI;
   adoqCFDI.Open;
+  IdCFDITipoDocumento := TCFDITipoDocumento(adoqCFDIIdCFDITipoDocumento.Value);
   if not adoqCFDI.Eof then
   begin
-    ppRptCFDI.Template.FileName:= _dmConection.ExePath + _CFDIRTM;
+    if IdCFDITipoDocumento = tdCFDIPago then
+      ppRptCFDI.Template.FileName:= _dmConection.ExePath + _CFDIPagoRTM
+    else
+      ppRptCFDI.Template.FileName:= _dmConection.ExePath + _CFDIRTM;
     ppRptCFDI.Template.LoadFromFile;
     ppRptCFDI.ShowPrintDialog := False;
     ppRptCFDI.ShowCancelDialog := False;
@@ -315,7 +404,7 @@ end;
 function TdmRptCFDI33.GetImpuesto(IdCFDIConcepto: Integer;
   var Descripcion: string): Double;
 begin
-  Result := 0;
+//  Result := 0;
   adoqCFDIConceptosImpuestos.Close;
   adoqCFDIConceptosImpuestos.Parameters.ParamByName('IdCFDIConcepto').Value:= IdCFDIConcepto;
   adoqCFDIConceptosImpuestos.Open;
@@ -342,14 +431,20 @@ begin
 end;
 
 procedure TdmRptCFDI33.Imprimir(IdCFDI: Integer; ArchivoImagen: TFileName);
+var
+  IdCFDITipoDocumento: TCFDITipoDocumento;
 begin
   FileIMG:= ArchivoImagen;
   adoqCFDI.Close;
   adoqCFDI.Parameters.Parambyname('IdCFDI').value:= IdCFDI;
   adoqCFDI.Open;
+  IdCFDITipoDocumento := TCFDITipoDocumento(adoqCFDIIdCFDITipoDocumento.Value);
   if not adoqCFDI.Eof then
   begin
-    ppRptCFDI.Template.FileName:= _dmConection.ExePath + _CFDIRTM;
+    if IdCFDITipoDocumento = tdCFDIPago then
+      ppRptCFDI.Template.FileName:= _dmConection.ExePath + _CFDIPagoRTM
+    else
+      ppRptCFDI.Template.FileName:= _dmConection.ExePath + _CFDIRTM;
     ppRptCFDI.Template.LoadFromFile;
     ppRptCFDI.ShowPrintDialog := False;
     ppRptCFDI.ShowCancelDialog := False;

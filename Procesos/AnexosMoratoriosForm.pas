@@ -43,11 +43,26 @@ type
     tvMasterIdCuentaXCobrar: TcxGridDBColumn;
     tvMasterImporteAplicado: TcxGridDBColumn;
     tvMasterCancelacion: TcxGridDBColumn;
+    dxbbAgregarDescuento: TdxBarButton;
+    dxbbEliminarDescuento: TdxBarButton;
+    dxbbDescuentoParcial: TdxBarButton;
+    dxBarSubItem1: TdxBarSubItem;
+    tvMasterMoratorio: TcxGridDBColumn;
+    tvMasterMoratorioTotal: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
   private
+    FactAgregarDescuento: TBasicAction;
+    FactDescuentoParcial: TBasicAction;
+    FactEliminarDescuento: TBasicAction;
+    procedure SetactAgregarDescuento(const Value: TBasicAction);
+    procedure SetactDescuentoParcial(const Value: TBasicAction);
+    procedure SetactEliminarDescuento(const Value: TBasicAction);
     { Private declarations }
   public
     { Public declarations }
+    property actAgregarDescuento: TBasicAction read FactAgregarDescuento write SetactAgregarDescuento;
+    property actEliminarDescuento: TBasicAction read FactEliminarDescuento write SetactEliminarDescuento;
+    property actDescuentoParcial: TBasicAction read FactDescuentoParcial write SetactDescuentoParcial;
   end;
 
 implementation
@@ -60,6 +75,27 @@ procedure TfrmAnexosMoratorios.FormCreate(Sender: TObject);
 begin
   inherited;
   gEditForm := TfrmAnexosMoratoriosEdit.Create(Self);
+end;
+
+procedure TfrmAnexosMoratorios.SetactAgregarDescuento(
+  const Value: TBasicAction);
+begin
+  FactAgregarDescuento := Value;
+  dxbbAgregarDescuento.Action := Value;
+end;
+
+procedure TfrmAnexosMoratorios.SetactDescuentoParcial(
+  const Value: TBasicAction);
+begin
+  FactDescuentoParcial := Value;
+  dxbbDescuentoParcial.Action := Value;
+end;
+
+procedure TfrmAnexosMoratorios.SetactEliminarDescuento(
+  const Value: TBasicAction);
+begin
+  FactEliminarDescuento := Value;
+  dxbbEliminarDescuento.Action := Value;
 end;
 
 end.

@@ -15,10 +15,12 @@ const
   _URLLogin = 'https://www.prevenciondelavado.com/portal/vsr/listas_interactivo.aspx?nm_accion=HomeProd&nm_origen=Home&cd_pais=mx';
   _LoginKey = 'carlosp6';
   _LoginPasswd = '9A02396F';
+  _ExtensionPDF = '.PDF';
 
 type
   TCTipoContrato = (tcNone, tcCreditoSimple, tcArrendamientoFinanciero, tcArrendamientoPuro);
   TCotizacionEstatus = (aeNone, aeAbierto, aeContratado, aeCerrado);
+  TCFDITipoDocumento = (tdNone, tdFactura, tdNotaCredito, tdNotaCargo, tdCFDIPago);
 
   TAbonoCapital = (acReducirCuota, acReducirPlazo);
 

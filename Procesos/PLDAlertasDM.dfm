@@ -219,7 +219,7 @@ inherited dmPLDAlertas: TdmPLDAlertas
         Value = Null
       end
       item
-        Name = 'PeriodoMes'
+        Name = 'PeriodoFactor'
         Attributes = [paSigned]
         DataType = ftInteger
         Precision = 10
@@ -238,8 +238,8 @@ inherited dmPLDAlertas: TdmPLDAlertas
       'SELECT * FROM v_ReportePLDAlertas'
       'WHERE IdPLDAlertaEstatus = 4'
       
-        'AND IdPLDAlertaTipo = :IdPLDAlertaTipo AND PeriodoMes = :Periodo' +
-        'Mes AND PeriodoAnio = :PeriodoAnio')
+        'AND IdPLDAlertaTipo = :IdPLDAlertaTipo AND PeriodoFactor = :Peri' +
+        'odoFactor AND PeriodoAnio = :PeriodoAnio')
     Left = 152
     Top = 160
     object adoqPLDAlertasIdPLDAlerta: TIntegerField

@@ -75,7 +75,7 @@ implementation
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
 uses AplicacionesConsultaGrid, AplicacionesInternasCon, _ConectionDmod,
-  PDFAplicacionSaldosDM, _Utils;
+  PDFAplicacionSaldosDM, _Utils, ProcesosType;
 
 {$R *.dfm}
 
@@ -90,11 +90,9 @@ begin
   TfrmConaplicaciones(gGridForm).actDesaplicar := actDesaplicar;
   ADODtstAplicacionesInternas.Open;
   gFormDeatil1:=TfrmConAplicacionesInternas.Create(self);
-//  gFormDeatil1.DataSet.Open;
   gFormDeatil1.DataSet:=ADODtstAplicacionesInternas;
   gFormDeatil1.ReadOnlyGrid:= True;
   TfrmConAplicacionesInternas(gFormDeatil1).ActCreaPagoXDeposito:=ActCreaPagoDeposito; //Jun 21/17
-//  adodsMaster.open;
 end;
 
 function TdmAplicacionesConsulta.Desaplicar: Boolean;
@@ -169,20 +167,19 @@ end;
 
 procedure TdmAplicacionesConsulta.ActRepAplicacionesPagosExecute(
   Sender: TObject);
-var                   //AGO 7/17
+var
   DmRptAplicacionPagospdf:TDmRptAplicacionPagospdf;
   ArchiPDF:TFileName;
+  Actual: string;
   Texto,TxtSQL:String;
   FechaIni, FechaFin:TDAteTime;
-//  Monto, Total,ValMax,ValMin:Double;
-//  Cantidad:integer;
 begin
   inherited;
+  Actual:= FormatDateTime('ddmmmyyyyhhnnss', Now);
+  ArchiPDF:='AplicacionesPagos'+'_'+Actual+_ExtensionPDF;
   TxtSQL:= AdoDSMaster.CommandText;
   FechaIni:=  TfrmConaplicaciones(gGridForm).AFecIni;
   FechaFin:=  TfrmConaplicaciones(gGridForm).AFecFin;
-  TExto:= '_' +FormatDateTime('ddmmmyyyy',_DmConection.LaFechaActual);// jun30 /17  Date);
-  ArchiPDF:='AplicacionesPagos'+Texto+'.PDF';
   DmRptAplicacionPagospdf:= TDmRptAplicacionPagospdf.Create(Self);
   try
      DmRptAplicacionPagospdf.dsReport.DataSet.Close;
@@ -191,11 +188,10 @@ begin
     begin
       TADoDAtaset(DmRptAplicacionPagospdf.dsReport.DataSet).Parameters.ParamByName('Fini').Value:= FechaIni;
       TADoDAtaset(DmRptAplicacionPagospdf.dsReport.DataSet).Parameters.ParamByName('FFin').Value:= FechaFin+1;
-      TExto:= FormatDateTime('dd/mmm/yyyy',FEchaIni) + '  -  '+ FormatDateTime('dd/mmm/yyyy',FEchaFin);//+FormatDateTime('mmm-dd-yyyy',FechaIni)+ ' AL: '+FormatDateTime('dd mmm del aaaa',FechaFin);
+      Texto:= FormatDateTime('dd/mmm/yyyy',FEchaIni) + '  -  '+ FormatDateTime('dd/mmm/yyyy',FEchaFin);//+FormatDateTime('mmm-dd-yyyy',FechaIni)+ ' AL: '+FormatDateTime('dd mmm del aaaa',FechaFin);
     end
     else
-      TExto:=  'AL '+upperCASE(FormatDateTime('dd ''de'' mmmm ''del'' yyyy',_DmConection.LaFechaActual));//Date)); //Jun 30/17
-
+      Texto:=  'AL '+upperCASE(FormatDateTime('dd ''de'' mmmm ''del'' yyyy',_DmConection.LaFechaActual));//Date)); //Jun 30/17
     DmRptAplicacionPagospdf.dsReport.DataSet.Open;
     DmRptAplicacionPagospdf.Title:= 'REPORTE DE APLICACIONES DE PAGOS ' +#13+Texto;
     DmRptAplicacionPagospdf.pplblFilters.Caption:=Texto;
@@ -204,8 +200,8 @@ begin
   finally
     DmRptAplicacionPagospdf.Free;
   end;
-    if FileExists(ArchiPDF) then
-      ShellExecute(application.Handle, 'open', PChar(ArchiPDF), nil, nil, SW_SHOWNORMAL);
+  if FileExists(ArchiPDF) then
+    ShellExecute(application.Handle, 'open', PChar(ArchiPDF), nil, nil, SW_SHOWNORMAL);
 end;
 
 function TdmAplicacionesConsulta.NoExistePagoXDeposito (IdPagoAplicaInt, idanexo :integer):boolean;
@@ -256,37 +252,28 @@ begin
   FolioAct:= ADODtStConfiguraciones.FieldByName('UltimoFolioPago').AsInteger;
   SerieAct:=SerieAct;
   FolioAct:=FolioAct+1;
-
-
-
   ADOQryAuxiliar.Close;
   ADOQryAuxiliar.SQl.Clear;
   ADOQryAuxiliar.SQL.Add(' Insert Into Pagos(idPersonaCliente,FechaPago,IdAnexo, IdContrato, IDMetodoPago,  ' +
                          ' SeriePago, FolioPago,Importe, Saldo,Referencia, Observaciones, EsDeposito) Values (  '+
                          ' :idPersonaCliente,:FechaPago,:IdAnexo,:IdContrato, :IDMetodoPago,  ' +
                          ' :SeriePago, :FolioPago,:Importe, :Saldo,:Referencia, :Observaciones,:EsDeposito)');
-
   ADOQryAuxiliar.Parameters.ParamByName('idPersonaCliente').value:=ADatosPago.FieldByName('IdPersonaCliente').asInteger;
   ADOQryAuxiliar.Parameters.ParamByName('FechaPago').value:=ADatosPago.FieldByName('FechaPago').asDatetime;
-
   ADOQryAuxiliar.Parameters.ParamByName('IdAnexo').value:=ADatosPago.FieldByName('IDAnexo').asInteger;
   ADOQryAuxiliar.Parameters.ParamByName('IdContrato').value:=ADatosPago.FieldByName('IdContrato').asInteger;
   if not aDatosPago.FieldByName('IDMetodoPago').isnull then
      ADOQryAuxiliar.Parameters.ParamByName('IDMetodoPago').value:=aDatosPago.FieldByName('IDMetodoPago').asInteger
   else
      ADOQryAuxiliar.Parameters.ParamByName('IDMetodoPago').value:= 5 ;// jul 5/17 Otro
-
-
   ADOQryAuxiliar.Parameters.ParamByName('SeriePago').value:=serieAct;
   ADOQryAuxiliar.Parameters.ParamByName('FolioPago').value:= FolioAct;
   ADOQryAuxiliar.Parameters.ParamByName('Importe').value:=simpleroundto( Importe,-2);  //Jun 21/17
   ADOQryAuxiliar.Parameters.ParamByName('Saldo').value:= simpleroundto(Importe,-2);
   ADOQryAuxiliar.Parameters.ParamByName('Referencia').value:=  '';
   ADOQryAuxiliar.Parameters.ParamByName('Observaciones').value:=  'Trasladado por Deposito en Garantía.API: ('
-                                                                 + ADODtstAplicacionesInternasIDPagoAplicacionInterna.AsString+')';
+  + ADODtstAplicacionesInternasIDPagoAplicacionInterna.AsString+')';
   ADOQryAuxiliar.Parameters.ParamByName('EsDeposito').value:=  True;
-
-
   Res:= ADOQryAuxiliar.ExecSQL;
   if Res=1 then
   begin
@@ -296,7 +283,6 @@ begin
     ADODtStConfiguraciones.FieldByName('UltimaSeriePago').AsString:=SerieAct;
     ADODtStConfiguraciones.FieldByName('UltimoFolioPago').AsInteger :=FolioAct;
     ADODtStConfiguraciones.Post;
-
   end;
   ADODtStConfiguraciones.Close;
 end;

@@ -82,6 +82,9 @@ type
     tvMasterObservaciones: TcxGridDBColumn;
     tvMasterOrigenPago: TcxGridDBColumn;
     tvMasterMonedaOrigen: TcxGridDBColumn;
+    dxbbGenCFDIPago: TdxBarButton;
+    tvMasterGenerarCFDIPago: TcxGridDBColumn;
+    tvMasterIdCFDI: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure dxBrBtnAplicaiconesClick(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
@@ -96,6 +99,7 @@ type
     FactPagoAnticipado: TBasicAction;
     FActCreaFinales: TBasicAction;
     FactFacturarMoratorios: TBasicAction;
+    FactGenCFDIPago: TBasicAction;
     function GetFFiltroNombre: String;
     procedure PoneFiltro;
     function HayCXCSinFacturaPrevia: boolean;
@@ -105,6 +109,7 @@ type
     procedure RefreshPago;
     procedure SetFCreaFinales(const Value: TBasicAction);
     function VerificaFinales(idanexo:integer):boolean;
+    procedure SetactGenCFDIPago(const Value: TBasicAction);
   public
     { Public declarations }
     property FiltroCon:String read ffiltro write ffiltro;
@@ -114,6 +119,7 @@ type
     property actFacturarMoratorios: TBasicAction read FactFacturarMoratorios write FactFacturarMoratorios;
     property actPagoAnticipado: TBasicAction read FactPagoAnticipado write FactPagoAnticipado;    //Jun 29/17
     property ActVerificayCreaFinal: TBasicAction read FActCreaFinales write SetFCreaFinales; //Oct 3/17
+    property actGenCFDIPago: TBasicAction read FactGenCFDIPago write SetactGenCFDIPago;
   end;
 
 implementation
@@ -521,6 +527,12 @@ begin
 
 end;
 
+procedure TFrmConPagos.SetactGenCFDIPago(const Value: TBasicAction);
+begin
+  FactGenCFDIPago := Value;
+  dxbbGenCFDIPago.Action := Value;
+end;
+
 procedure TFrmConPagos.SetFCreaFinales(const Value: TBasicAction);
 begin
   FActCreaFinales := Value;
@@ -529,7 +541,7 @@ end;
 procedure TFrmConPagos.SpdBtnBuscarClick(Sender: TObject);
 const  //Dic 20/16
   TxtSQL='SELECT IdPago, IdBanco, IdPersonaCliente, IdCuentaBancariaEstadoCuenta, PA.IdMetodoPago, IdContrato, IdAnexo, IdCFDI_NCR, IdMonedaOrigen, FechaPago, FolioPago, SeriePago, Referencia, Importe, Saldo, Observaciones, ' +
-  'CuentaPago, OrigenPago, EsDeposito ' +
+  'CuentaPago, OrigenPago, EsDeposito, dbo.CanGenerarCFDIPago(IdPago) AS GenerarCFDIPago, dbo.GetIdCFDIPago(IdPago) AS IdCFDI ' +
   'FROM Pagos PA ';
 begin
   inherited;

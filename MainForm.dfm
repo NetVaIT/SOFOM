@@ -1,15 +1,15 @@
 inherited frmMain: TfrmMain
   Caption = 'frmMain'
-  ClientWidth = 596
+  ClientWidth = 1082
   OnDestroy = FormDestroy
-  ExplicitWidth = 612
+  ExplicitWidth = 1098
   ExplicitHeight = 519
   PixelsPerInch = 96
   TextHeight = 13
   inherited dxRibbon1: TdxRibbon
-    Width = 596
+    Width = 1082
     OnApplicationMenuClick = dxRibbon1ApplicationMenuClick
-    ExplicitWidth = 596
+    ExplicitWidth = 1082
     inherited dxRibbon1Tab1: TdxRibbonTab
       Index = 0
     end
@@ -75,25 +75,28 @@ inherited frmMain: TfrmMain
     end
   end
   inherited dxRibbonStatusBar1: TdxRibbonStatusBar
-    Width = 596
-    ExplicitWidth = 596
+    Width = 1082
+    ExplicitWidth = 1082
   end
   inherited pnlMain: TPanel
-    Width = 596
+    Width = 1082
     ExplicitTop = 159
-    ExplicitWidth = 596
+    ExplicitWidth = 1082
     ExplicitHeight = 298
   end
   inherited dxBarManager: TdxBarManager
     Categories.Strings = (
       'Default'
       'Reportes'
-      'Personas')
+      'Personas'
+      'Procesos')
     Categories.ItemsVisibles = (
+      2
       2
       2
       2)
     Categories.Visibles = (
+      True
       True
       True
       True)
@@ -179,7 +182,7 @@ inherited frmMain: TfrmMain
     object dxbOrganizacion: TdxBar [3]
       Caption = 'Organizacion'
       CaptionButtons = <>
-      DockedLeft = 263
+      DockedLeft = 541
       DockedTop = 0
       FloatLeft = 759
       FloatTop = 8
@@ -211,7 +214,7 @@ inherited frmMain: TfrmMain
     object dxbPresonas: TdxBar [4]
       Caption = 'Personas'
       CaptionButtons = <>
-      DockedLeft = 414
+      DockedLeft = 811
       DockedTop = 0
       FloatLeft = 764
       FloatTop = 8
@@ -280,7 +283,7 @@ inherited frmMain: TfrmMain
     object dxbProductos: TdxBar [6]
       Caption = 'Productos'
       CaptionButtons = <>
-      DockedLeft = 352
+      DockedLeft = 722
       DockedTop = 0
       FloatLeft = 1133
       FloatTop = 8
@@ -294,10 +297,6 @@ inherited frmMain: TfrmMain
         item
           Visible = True
           ItemName = 'dxBarButton16'
-        end
-        item
-          Visible = True
-          ItemName = 'dxBarButton15'
         end>
       OneOnRow = False
       Row = 0
@@ -313,7 +312,7 @@ inherited frmMain: TfrmMain
       FloatLeft = 1133
       FloatTop = 8
       FloatClientWidth = 178
-      FloatClientHeight = 432
+      FloatClientHeight = 348
       ItemLinks = <
         item
           Visible = True
@@ -328,26 +327,33 @@ inherited frmMain: TfrmMain
           ItemName = 'dxBarLargeButton35'
         end
         item
+          BeginGroup = True
           Visible = True
           ItemName = 'dxBrLrgBtnCuentasXCobrar'
         end
         item
           Visible = True
-          ItemName = 'dxBrLrgBtnFacturas'
+          ItemName = 'dxBarButton6'
         end
         item
           Visible = True
-          ItemName = 'dxBarLargeButton37'
+          ItemName = 'dxBarButton7'
         end
         item
+          BeginGroup = True
           Visible = True
           ItemName = 'dxBrLrgBtnPagos'
         end
         item
           Visible = True
-          ItemName = 'dxBrLrgBtnAplicaciones'
+          ItemName = 'dxBarButton9'
         end
         item
+          Visible = True
+          ItemName = 'dxBarButton10'
+        end
+        item
+          BeginGroup = True
           Visible = True
           ItemName = 'dxBrLrgBtnSeguimiento'
         end
@@ -416,7 +422,7 @@ inherited frmMain: TfrmMain
     object dxBarManagerBar2: TdxBar [9]
       Caption = 'Exportar'
       CaptionButtons = <>
-      DockedLeft = 469
+      DockedLeft = 703
       DockedTop = 0
       FloatLeft = 1054
       FloatTop = 8
@@ -457,12 +463,18 @@ inherited frmMain: TfrmMain
       Category = 0
     end
     object dxBarLargeButton9: TdxBarLargeButton
-      Action = actFormulas
+      Caption = 'Formulas'
       Category = 0
+      Visible = ivAlways
+      LargeImageIndex = 36
+      OnClick = actCatalogoExecute
     end
     object dxBarLargeButton10: TdxBarLargeButton
-      Action = actReglasNegocio
+      Caption = 'Reglas de Negocio'
       Category = 0
+      Visible = ivAlways
+      LargeImageIndex = 27
+      OnClick = actCatalogoExecute
     end
     object dxBarButton1: TdxBarButton
       Action = actCapacitaciones
@@ -477,16 +489,25 @@ inherited frmMain: TfrmMain
       Category = 0
     end
     object dxBarLargeButton4: TdxBarLargeButton
-      Action = actRoles
+      Caption = 'Roles'
       Category = 0
+      Visible = ivAlways
+      LargeImageIndex = 37
+      OnClick = actCatalogoExecute
     end
     object dxBarButton4: TdxBarButton
-      Action = actEsquemasPago
+      Caption = 'Esquemas de Pago'
       Category = 0
+      Visible = ivAlways
+      ImageIndex = 30
+      OnClick = actCatalogoExecute
     end
     object dxBarButton5: TdxBarButton
-      Action = actMovimientosTipo
+      Caption = 'Tipo de movimientos'
       Category = 0
+      Visible = ivAlways
+      ImageIndex = 7
+      OnClick = actCatalogoExecute
     end
     object dxBarLargeButton14: TdxBarLargeButton
       Caption = 'Documentos Adjuntos'
@@ -496,20 +517,32 @@ inherited frmMain: TfrmMain
       OnClick = actCatalogoExecute
     end
     object dxBarButton8: TdxBarButton
-      Action = actInstruccionesTipos
+      Caption = 'Tipo de instrucciones'
       Category = 0
+      Visible = ivAlways
+      ImageIndex = 5
+      OnClick = actCatalogoExecute
     end
     object dxBarLargeButton21: TdxBarLargeButton
-      Action = actPeriodos
+      Caption = 'Periodos'
       Category = 0
+      Visible = ivAlways
+      LargeImageIndex = 41
+      OnClick = actCatalogoExecute
     end
     object dxBarLargeButton23: TdxBarLargeButton
-      Action = actCuentasContables
+      Caption = 'Cuentas Contables'
       Category = 0
+      Visible = ivAlways
+      LargeImageIndex = 18
+      OnClick = actCatalogoExecute
     end
     object dxBarLargeButton24: TdxBarLargeButton
-      Action = actCuentasInternas
+      Caption = 'Cuentas Internas'
       Category = 0
+      Visible = ivAlways
+      LargeImageIndex = 19
+      OnClick = actCatalogoExecute
     end
     object dxBarLargeButton25: TdxBarLargeButton
       Caption = 'Movimientos por categor'#237'a'
@@ -522,63 +555,11 @@ inherited frmMain: TfrmMain
       Action = actCXCConceptos
       Category = 0
     end
-    object dxBarLargeButton28: TdxBarLargeButton
-      Caption = 'Naturaleza Cuentas Contables'
-      Category = 0
-      Visible = ivAlways
-      LargeImageIndex = 13
-      OnClick = actCatalogoExecute
-    end
-    object dxBarLargeButton13: TdxBarLargeButton
-      Caption = 'Instrucciones'
-      Category = 0
-      Visible = ivAlways
-      LargeImageIndex = 5
-      OnClick = actCatalogoExecute
-    end
-    object dxBarButton6: TdxBarButton
-      Caption = 'Incidencias'
-      Category = 0
-      Visible = ivAlways
-      ImageIndex = 45
-      OnClick = actCatalogoExecute
-    end
-    object dxBarButton7: TdxBarButton
-      Caption = 'Movimientos'
-      Category = 0
-      Visible = ivAlways
-      ImageIndex = 9
-      OnClick = actCatalogoExecute
-    end
-    object dxBarButton9: TdxBarButton
-      Caption = 'Cuentas por pagar'
-      Category = 0
-      Visible = ivAlways
-      ImageIndex = 40
-      OnClick = actCatalogoExecute
-    end
-    object dxBarButton10: TdxBarButton
-      Caption = 'Cuentas por cobrar'
-      Category = 0
-      Visible = ivAlways
-      ImageIndex = 40
-      OnClick = actCatalogoExecute
-    end
-    object dxBarLargeButton30: TdxBarLargeButton
-      Caption = 'Interva Cuentas por Pagar'
-      Category = 0
-      Visible = ivAlways
-      LargeImageIndex = 46
-      OnClick = actIntervaCXPExecute
-    end
     object dxBarLargeButton34: TdxBarLargeButton
-      Action = actPrestamos
-      Category = 0
-    end
-    object dxBarButton14: TdxBarButton
-      Caption = 'Exportar pagos'
+      Caption = 'Prestamos'
       Category = 0
       Visible = ivAlways
+      LargeImageIndex = 34
       OnClick = actCatalogoExecute
     end
     object dxBarLargeButton29: TdxBarLargeButton
@@ -597,79 +578,16 @@ inherited frmMain: TfrmMain
       Action = actProductosTipos
       Category = 0
     end
-    object dxBarLargeButton35: TdxBarLargeButton
-      Action = actContratos
-      Category = 0
-    end
-    object dxBarLargeButton38: TdxBarLargeButton
-      Action = actAmortizaciones
-      Category = 0
-    end
-    object dxBrLrgBtnFacturas: TdxBarLargeButton
-      Action = actFacturacion
-      Category = 0
-    end
-    object dxBrLrgBtnCuentasXCobrar: TdxBarLargeButton
-      Action = actCuentasXCobrar
-      Category = 0
-      SyncImageIndex = False
-      ImageIndex = 47
-    end
-    object dxBrLrgBtnPagos: TdxBarLargeButton
-      Action = actPagos
-      Category = 0
-    end
-    object dxBrLrgBtnAplicaciones: TdxBarLargeButton
-      Action = actAplicacionPagos
-      Category = 0
-    end
-    object dxBarLargeButton40: TdxBarLargeButton
-      Action = actCotizaciones
-      Category = 0
-    end
     object dxBarLargeButton19: TdxBarLargeButton
       Action = actListasRestringidas
       Category = 0
-    end
-    object dxBrLrgBtnSeguimiento: TdxBarLargeButton
-      Action = actSeguimiento
-      Category = 0
-      PaintStyle = psCaptionGlyph
-      SyncImageIndex = False
-      ImageIndex = 52
     end
     object dxBarLargeButton22: TdxBarLargeButton
       Action = actMonedasCotizaciones
       Category = 0
     end
-    object dxBrLrgBtnReporteCartera: TdxBarLargeButton
-      Action = actReporteCartera
-      Category = 0
-    end
-    object dxBarLargeButton32: TdxBarLargeButton
-      Action = actRptColocacion
-      Category = 0
-    end
-    object dxBarLargeButton33: TdxBarLargeButton
-      Action = actColocacionAcumulado
-      Category = 0
-    end
     object dxBrLrgBtnPoneFechaActual: TdxBarLargeButton
-      Action = ActPoneFechaActual
-      Category = 0
-    end
-    object dxBarLargeButton36: TdxBarLargeButton
-      Action = actBuroCredito
-      Category = 0
-    end
-    object dxBarLargeButton37: TdxBarLargeButton
-      Action = actNotasCredito
-      Category = 0
-      SyncImageIndex = False
-      ImageIndex = -1
-    end
-    object dxBarLargeButton41: TdxBarLargeButton
-      Action = actAlertasPLD
+      Action = actPoneFechaActual
       Category = 0
     end
     object dxBarButton11: TdxBarButton
@@ -678,6 +596,14 @@ inherited frmMain: TfrmMain
     end
     object dxBarLargeButton20: TdxBarLargeButton
       Action = actPLDAlertasConfiguracion
+      Category = 0
+    end
+    object dxBarButton9: TdxBarButton
+      Action = actCFDIPagos
+      Category = 0
+    end
+    object dxBarButton10: TdxBarButton
+      Action = actAplicacionPagos
       Category = 0
     end
     object dxBarButton13: TdxBarButton
@@ -695,6 +621,10 @@ inherited frmMain: TfrmMain
       Visible = ivNever
       LargeImageIndex = 51
     end
+    object dxBarLargeButton31: TdxBarLargeButton
+      Action = actRptExpecientes
+      Category = 1
+    end
     object dxBrLrgBtnInformacionContratos: TdxBarLargeButton
       Tag = 52
       Action = actInformacionContratos
@@ -702,16 +632,28 @@ inherited frmMain: TfrmMain
       SyncImageIndex = False
       ImageIndex = -1
     end
+    object dxBarLargeButton32: TdxBarLargeButton
+      Action = actRptColocacion
+      Category = 1
+    end
+    object dxBarLargeButton33: TdxBarLargeButton
+      Action = actColocacionAcumulado
+      Category = 1
+    end
     object dxBarLargeButton26: TdxBarLargeButton
       Action = actRptCobertura
       Category = 1
     end
-    object dxBarLargeButton31: TdxBarLargeButton
-      Action = actRptExpecientes
+    object dxBrLrgBtnReporteCartera: TdxBarLargeButton
+      Action = actReporteCartera
       Category = 1
     end
     object dxBarLargeButton42: TdxBarLargeButton
       Action = actRptPagoAplicacionesMensual
+      Category = 1
+    end
+    object dxBarLargeButton36: TdxBarLargeButton
+      Action = actBuroCredito
       Category = 1
     end
     object dxBarLargeButton12: TdxBarLargeButton
@@ -751,6 +693,47 @@ inherited frmMain: TfrmMain
       Category = 2
       SyncImageIndex = False
       ImageIndex = 11
+    end
+    object dxBarLargeButton38: TdxBarLargeButton
+      Action = actAmortizaciones
+      Category = 3
+    end
+    object dxBarLargeButton40: TdxBarLargeButton
+      Action = actCotizaciones
+      Category = 3
+    end
+    object dxBarLargeButton35: TdxBarLargeButton
+      Action = actContratos
+      Category = 3
+    end
+    object dxBrLrgBtnCuentasXCobrar: TdxBarLargeButton
+      Action = actCuentasXCobrar
+      Category = 3
+      SyncImageIndex = False
+      ImageIndex = 47
+    end
+    object dxBarButton7: TdxBarButton
+      Action = actNotasCredito
+      Category = 3
+    end
+    object dxBarButton6: TdxBarButton
+      Action = actFacturacion
+      Category = 3
+    end
+    object dxBrLrgBtnPagos: TdxBarLargeButton
+      Action = actPagos
+      Category = 3
+    end
+    object dxBrLrgBtnSeguimiento: TdxBarLargeButton
+      Action = actSeguimiento
+      Category = 3
+      PaintStyle = psCaptionGlyph
+      SyncImageIndex = False
+      ImageIndex = 52
+    end
+    object dxBarLargeButton41: TdxBarLargeButton
+      Action = actAlertasPLD
+      Category = 3
     end
   end
   inherited dxSkinController: TdxSkinController
@@ -11141,20 +11124,6 @@ inherited frmMain: TfrmMain
       ImageIndex = 36
       OnExecute = actCatalogoExecute
     end
-    object actFormulas: TAction
-      Tag = 6
-      Category = 'Catalogos'
-      Caption = 'Formulas'
-      ImageIndex = 36
-      OnExecute = actCatalogoExecute
-    end
-    object actReglasNegocio: TAction
-      Tag = 7
-      Category = 'Catalogos'
-      Caption = 'Reglas de Negocio'
-      ImageIndex = 27
-      OnExecute = actCatalogoExecute
-    end
     object actPuestos: TAction
       Tag = 8
       Category = 'Catalogos'
@@ -11181,34 +11150,6 @@ inherited frmMain: TfrmMain
       Category = 'Catalogos'
       Caption = 'Establecimientos'
       ImageIndex = 23
-      OnExecute = actCatalogoExecute
-    end
-    object actRoles: TAction
-      Tag = 11
-      Category = 'Catalogos'
-      Caption = 'Roles'
-      ImageIndex = 37
-      OnExecute = actCatalogoExecute
-    end
-    object actEsquemasPago: TAction
-      Tag = 12
-      Category = 'Catalogos'
-      Caption = 'Esquemas de Pago'
-      ImageIndex = 30
-      OnExecute = actCatalogoExecute
-    end
-    object actMovimientosTipo: TAction
-      Tag = 13
-      Category = 'Catalogos'
-      Caption = 'Tipo de movimientos'
-      ImageIndex = 7
-      OnExecute = actCatalogoExecute
-    end
-    object actInstruccionesTipos: TAction
-      Tag = 14
-      Category = 'Catalogos'
-      Caption = 'Tipo de instrucciones'
-      ImageIndex = 5
       OnExecute = actCatalogoExecute
     end
     object actPersonas: TAction
@@ -11278,39 +11219,11 @@ inherited frmMain: TfrmMain
       ImageIndex = 11
       OnExecute = actCatalogoExecute
     end
-    object actPeriodos: TAction
-      Tag = 5
-      Category = 'Catalogos'
-      Caption = 'Periodos'
-      ImageIndex = 41
-      OnExecute = actCatalogoExecute
-    end
-    object actCuentasContables: TAction
-      Tag = 15
-      Category = 'Catalogos'
-      Caption = 'Cuentas Contables'
-      ImageIndex = 18
-      OnExecute = actCatalogoExecute
-    end
-    object actCuentasInternas: TAction
-      Tag = 16
-      Category = 'Catalogos'
-      Caption = 'Cuentas Internas'
-      ImageIndex = 19
-      OnExecute = actCatalogoExecute
-    end
     object actCXCConceptos: TAction
       Tag = 17
       Category = 'Catalogos'
       Caption = 'Conceptos CXC'
       ImageIndex = 31
-      OnExecute = actCatalogoExecute
-    end
-    object actPrestamos: TAction
-      Tag = 19
-      Category = 'Catalogos'
-      Caption = 'Prestamos'
-      ImageIndex = 34
       OnExecute = actCatalogoExecute
     end
     object actRptPlaza: TAction
@@ -11370,6 +11283,13 @@ inherited frmMain: TfrmMain
       ImageIndex = 0
       OnExecute = actCatalogoExecute
     end
+    object actCuentasXCobrar: TAction
+      Tag = 33
+      Category = 'Procesos'
+      Caption = 'Cuentas por cobrar'
+      ImageIndex = 47
+      OnExecute = actCatalogoExecute
+    end
     object actFacturacion: TAction
       Tag = 32
       Category = 'Procesos'
@@ -11377,24 +11297,31 @@ inherited frmMain: TfrmMain
       ImageIndex = 45
       OnExecute = actCatalogoExecute
     end
-    object actCuentasXCobrar: TAction
-      Tag = 33
+    object actNotasCredito: TAction
+      Tag = 38
       Category = 'Procesos'
-      Caption = 'Cuentas X Cobrar'
-      ImageIndex = 47
+      Caption = 'Notas Cr'#233'dito'
+      ImageIndex = 56
       OnExecute = actCatalogoExecute
     end
     object actPagos: TAction
       Tag = 34
       Category = 'Procesos'
-      Caption = 'Registro Pagos'
+      Caption = 'Pagos'
       ImageIndex = 48
+      OnExecute = actCatalogoExecute
+    end
+    object actCFDIPagos: TAction
+      Tag = 40
+      Category = 'Procesos'
+      Caption = 'CFDI de Pagos'
+      ImageIndex = 45
       OnExecute = actCatalogoExecute
     end
     object actAplicacionPagos: TAction
       Tag = 35
       Category = 'Procesos'
-      Caption = 'Aplicaciones de Pagos'
+      Caption = 'Aplicaciones de pagos'
       ImageIndex = 49
       OnExecute = actCatalogoExecute
     end
@@ -11422,7 +11349,7 @@ inherited frmMain: TfrmMain
     object actSeguimiento: TAction
       Tag = 37
       Category = 'Procesos'
-      Caption = 'Seguimiento Cobros'
+      Caption = 'Seguimiento de cobros'
       ImageIndex = 52
       OnExecute = actCatalogoExecute
     end
@@ -11468,11 +11395,11 @@ inherited frmMain: TfrmMain
       ImageIndex = 16
       OnExecute = actCatalogoExecute
     end
-    object ActPoneFechaActual: TAction
+    object actPoneFechaActual: TAction
       Category = 'Catalogos'
       Caption = 'Establecer Fecha Actual'
       ImageIndex = 43
-      OnExecute = ActPoneFechaActualExecute
+      OnExecute = actPoneFechaActualExecute
     end
     object actRptPagoAplicacionesMensual: TAction
       Tag = 60
@@ -11486,13 +11413,6 @@ inherited frmMain: TfrmMain
       Category = 'Reportes'
       Caption = 'Buro de cr'#233'dito'
       ImageIndex = 55
-      OnExecute = actCatalogoExecute
-    end
-    object actNotasCredito: TAction
-      Tag = 38
-      Category = 'Procesos'
-      Caption = 'Notas Cr'#233'dito'
-      ImageIndex = 56
       OnExecute = actCatalogoExecute
     end
     object actAlertasPLD: TAction

@@ -100,9 +100,9 @@ type
   private
     { Private declarations }
     function GenerarAlertas(Month, Year: Word): Boolean;
-    function GenerarArchivo(IdPLDALertaTipo, Month, Year: Word;
+    function GenerarArchivo(IdPLDALertaTipo, Factor, Year: Word;
       FileName: TFileName): Integer;
-    function GetNombreArchivo(IdPLDALertaTipo, Month, Year: Word): TFileName;
+    function GetNombreArchivo(IdPLDALertaTipo, Factor, Year: Word): TFileName;
   public
     { Public declarations }
     procedure GenerarAlertaPreocupante;
@@ -141,9 +141,10 @@ begin
   inherited;
   frmFiltro := TfrmPLDAlertasFiltro.Create(Self);
   try
+    frmFiltro.Accion := 1;
     if frmFiltro.Execute(False) then
     begin
-      if GenerarAlertas(frmFiltro.PeriodoMes, frmFiltro.PeriodoAnio) then
+      if GenerarAlertas(frmFiltro.Factor, frmFiltro.PeriodoAnio) then
         RefreshADODS(adodsMaster, adodsMasterIdPLDAlerta);
     end;
   finally
@@ -160,10 +161,11 @@ begin
   inherited;
   frmFiltro := TfrmPLDAlertasFiltro.Create(Self);
   try
+    frmFiltro.Accion := 2;
     if frmFiltro.Execute(True) then
     begin
-      NombreArchivo:= GetNombreArchivo(frmFiltro.IdTipo, frmFiltro.PeriodoMes, frmFiltro.PeriodoAnio);
-      NoRegistros:= GenerarArchivo(frmFiltro.IdTipo, frmFiltro.PeriodoMes, frmFiltro.PeriodoAnio, NombreArchivo);
+      NombreArchivo:= GetNombreArchivo(frmFiltro.IdTipo, frmFiltro.Factor, frmFiltro.PeriodoAnio);
+      NoRegistros:= GenerarArchivo(frmFiltro.IdTipo, frmFiltro.Factor, frmFiltro.PeriodoAnio, NombreArchivo);
       if (NoRegistros>0) then
       begin
         RefreshADODS(adodsMaster, adodsMasterIdPLDAlerta);
@@ -241,7 +243,7 @@ begin
   Result:= True;
 end;
 
-function TdmPLDAlertas.GenerarArchivo(IdPLDALertaTipo, Month, Year: Word;
+function TdmPLDAlertas.GenerarArchivo(IdPLDALertaTipo, Factor, Year: Word;
   FileName: TFileName): Integer;
 const
   cSeparador = ';';
@@ -261,7 +263,7 @@ begin
     Rewrite(TXTArchivo);
     adoqPLDAlertas.Close;
     adoqPLDAlertas.Parameters.ParamByName('IdPLDAlertaTipo').Value := IdPLDALertaTipo;
-    adoqPLDAlertas.Parameters.ParamByName('PeriodoMes').Value := Month;
+    adoqPLDAlertas.Parameters.ParamByName('PeriodoFactor').Value := Factor;
     adoqPLDAlertas.Parameters.ParamByName('PeriodoAnio').Value := Year;
     adoqPLDAlertas.Open;
     adoqPLDAlertas.First;
@@ -326,14 +328,14 @@ begin
   TfrmPLDAlertas(gGridForm).actGenerarArchivo := actGenerarArchivo;
 end;
 
-function TdmPLDAlertas.GetNombreArchivo(IdPLDALertaTipo, Month, Year: Word): TFileName;
+function TdmPLDAlertas.GetNombreArchivo(IdPLDALertaTipo, Factor, Year: Word): TFileName;
 var
   Periodo: string;
 begin
   if IdPLDALertaTipo = 1 then
-    Periodo := Copy(IntToStr(Year),3,4) + PreparaCadena(IntToStr(Month),'D','0',2)
+    Periodo := Copy(IntToStr(Year),3,4) + PreparaCadena(IntToStr(Factor*3),'D','0',2)
   else
-    Periodo := Copy(IntToStr(Year),3,4) + PreparaCadena(IntToStr(Month),'D','0',2) + '01';
+    Periodo := Copy(IntToStr(Year),3,4) + PreparaCadena(IntToStr(Factor),'D','0',2) + '01';
   adoqConfiguracion.Close;
   adoqConfiguracion.Parameters.ParamByName('IdPLDAlertaTipo').Value := IdPLDALertaTipo;
   adoqConfiguracion.Open;
