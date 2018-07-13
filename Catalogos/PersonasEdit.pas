@@ -112,11 +112,12 @@ type
     Label34: TLabel;
     cxDBSpinEdit1: TcxDBSpinEdit;
     cxDBCheckBox2: TcxDBCheckBox;
+    Label19: TLabel;
+    edtSegundoNombre: TcxDBTextEdit;
     procedure FormShow(Sender: TObject);
     procedure cxDBLookupComboBox1PropertiesChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
-    procedure edtNombreEditing(Sender: TObject; var CanEdit: Boolean);
     procedure btnNextClick(Sender: TObject);
     procedure btnWebClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -162,13 +163,6 @@ procedure TfrmPersonaEdit.cxDBLookupComboBox1PropertiesChange(Sender: TObject);
 begin
   inherited;
   MostrarPanel;
-end;
-
-procedure TfrmPersonaEdit.edtNombreEditing(Sender: TObject;
-  var CanEdit: Boolean);
-begin
-  inherited;
-  edtRazonSocial.Text := edtNombre.Text + ' ' + edtAPaterno.Text + ' ' + edtAMaterno.Text;
 end;
 
 procedure TfrmPersonaEdit.FormClose(Sender: TObject; var Action: TCloseAction);

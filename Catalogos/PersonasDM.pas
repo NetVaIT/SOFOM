@@ -108,15 +108,18 @@ type
     adodsMasterPPE: TBooleanField;
     adodsMasterRegimenFiscalPreferente: TBooleanField;
     adodsMasterListaGAFI: TBooleanField;
+    adodsMasterSegundoNombre: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsPersonaRolesNewRecord(DataSet: TDataSet);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure actAccionistasExecute(Sender: TObject);
     procedure actAccionistasUpdate(Sender: TObject);
+    procedure adodsMasterNombreChange(Sender: TField);
   private
     { Private declarations }
     FRolTipo: TRolTipo;
     procedure SetRolTipo(const Value: TRolTipo);
+    function GetNombreCompleto: string;
     property RolTipo: TRolTipo read FRolTipo write SetRolTipo;
   protected
     procedure SetFilter; override;
@@ -171,6 +174,12 @@ begin
   adodsMasterPLDPagarEfectivo.Value := False;
 end;
 
+procedure TdmPersona.adodsMasterNombreChange(Sender: TField);
+begin
+  inherited;
+  adodsMasterRazonSocial.Value := GetNombreCompleto;
+end;
+
 procedure TdmPersona.adodsPersonaRolesNewRecord(DataSet: TDataSet);
 begin
   inherited;
@@ -192,11 +201,24 @@ begin
   TfrmPersonas(gGridForm).actAccionistas := actAccionistas;
   // Busqueda
   SQLSelect:= 'SELECT IdPersona, IdPersonaTipo, IdRolTipo, IdRazonSocialTipo, IdSexo, IdEstadoCivil, IdPais, IdPoblacion, IdRiesgoTipo, IdBCCalificacion, IdBCActividad1, IdBCActividad2, IdBCActividad3, RFC, CURP, RazonSocial, ' +
-  'Nombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, LugarNacimiento, VigenciaFM34, IdMetodoPago, IdRegimenFiscal, IdDocumentoLogo, IdPersonaEstatus, Identificador, NumCtaPagoCliente, ' +
+  'Nombre, SegundoNombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, LugarNacimiento, VigenciaFM34, IdMetodoPago, IdRegimenFiscal, IdDocumentoLogo, IdPersonaEstatus, Identificador, NumCtaPagoCliente, ' +
   'SaldoCliente, CalificacionInicial, CalificacionActual, PLDOrigenRecurso, PLDDestinoRecurso, PLDMontoMaximo, PLDPagarEfectivo, PLDMontoMaximoEfectivo, PLDNumeroPagos, IdCFDIFormaPago33, IdCFDIUsoCFDI, PPE ' +
   'FROM Personas';
   SQLOrderBy:= 'ORDER BY RazonSocial';
   actSearch.Execute;
+end;
+
+function TdmPersona.GetNombreCompleto: string;
+begin
+  Result := EmptyStr;
+  if adodsMasterNombre.Value <> EmptyStr then
+    Result := adodsMasterNombre.Value;
+  if adodsMasterSegundoNombre.Value <> EmptyStr then
+    Result := Result + ' ' + adodsMasterSegundoNombre.Value;
+  if adodsMasterApellidoPaterno.Value <> EmptyStr then
+    Result := Result + ' ' + adodsMasterApellidoPaterno.Value;
+  if adodsMasterApellidoMaterno.Value <> EmptyStr then
+    Result := Result + ' ' + adodsMasterApellidoMaterno.Value;
 end;
 
 procedure TdmPersona.SetFilter;

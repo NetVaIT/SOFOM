@@ -211,11 +211,12 @@ inherited dmBuroCredito: TdmBuroCredito
         'SELECT        Personas.IdPersona, Personas.RFC, Personas.CURP, C' +
         'ASE WHEN IdPersonaTipo = 2 THEN dbo.BCTexto(RazonSocial) ELSE '#39#39 +
         ' END AS Empresa, CASE WHEN IdPersonaTipo = 2 THEN '#39#39' ELSE dbo.BC' +
-        'Texto(Nombre) END AS PrimerNombre, '
+        'Texto(Nombre) END AS PrimerNombre,'
       
         '                         CASE WHEN IdPersonaTipo = 2 THEN '#39#39' ELS' +
-        'E '#39#39' END AS SegindoNombre, CASE WHEN IdPersonaTipo = 2 THEN '#39#39' E' +
-        'LSE dbo.BCTexto(ApellidoPaterno) END AS ApellidoPaterno, '
+        'E dbo.BCTexto(SegundoNombre) END AS SegindoNombre, CASE WHEN IdP' +
+        'ersonaTipo = 2 THEN '#39#39' ELSE dbo.BCTexto(ApellidoPaterno) END AS ' +
+        'ApellidoPaterno,'
       
         '                         CASE WHEN IdPersonaTipo = 2 THEN '#39#39' ELS' +
         'E dbo.BCTexto(ApellidoMaterno) END AS ApellidoMaterno, Nacion.BC' +
@@ -428,8 +429,9 @@ inherited dmBuroCredito: TdmBuroCredito
         '2 THEN '#39#39' ELSE dbo.BCTexto(Nombre) END AS PrimerNombre, '
       
         '                         CASE WHEN IdPersonaTipo = 2 THEN '#39#39' ELS' +
-        'E '#39#39' END AS SegindoNombre, CASE WHEN IdPersonaTipo = 2 THEN '#39#39' E' +
-        'LSE dbo.BCTexto(ApellidoPaterno) END AS ApellidoPaterno, '
+        'E dbo.BCTexto(SegundoNombre) END AS SegindoNombre, CASE WHEN IdP' +
+        'ersonaTipo = 2 THEN '#39#39' ELSE dbo.BCTexto(ApellidoPaterno) END AS ' +
+        'ApellidoPaterno,'
       
         '                         CASE WHEN IdPersonaTipo = 2 THEN '#39#39' ELS' +
         'E dbo.BCTexto(ApellidoMaterno) END AS ApellidoMaterno, '

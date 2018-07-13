@@ -9,13 +9,13 @@ inherited dmPersona: TdmPersona
       'SELECT IdPersona, IdPersonaTipo, IdRolTipo, IdRazonSocialTipo, I' +
       'dSexo, IdEstadoCivil, IdPais, IdPoblacion, IdRiesgoTipo, IdBCCal' +
       'ificacion, IdBCActividad1, IdBCActividad2, IdBCActividad3, RFC, ' +
-      'CURP, RazonSocial, '#13#10'Nombre, ApellidoPaterno, ApellidoMaterno, F' +
-      'echaNacimiento, LugarNacimiento, VigenciaFM34, IdMetodoPago, IdR' +
-      'egimenFiscal, IdDocumentoLogo, IdPersonaEstatus, Identificador, ' +
-      'NumCtaPagoCliente, '#13#10'SaldoCliente, CalificacionInicial, Califica' +
-      'cionActual, PLDOrigenRecurso, PLDDestinoRecurso, PLDMontoMaximo,' +
-      ' PLDPagarEfectivo, PLDMontoMaximoEfectivo, PLDNumeroPagos, IdCFD' +
-      'IFormaPago33, IdCFDIUsoCFDI, PPE'#13#10'FROM Personas'
+      'CURP, RazonSocial, '#13#10'Nombre, SegundoNombre, ApellidoPaterno, Ape' +
+      'llidoMaterno, FechaNacimiento, LugarNacimiento, VigenciaFM34, Id' +
+      'MetodoPago, IdRegimenFiscal, IdDocumentoLogo, IdPersonaEstatus, ' +
+      'Identificador, NumCtaPagoCliente, '#13#10'SaldoCliente, CalificacionIn' +
+      'icial, CalificacionActual, PLDOrigenRecurso, PLDDestinoRecurso, ' +
+      'PLDMontoMaximo, PLDPagarEfectivo, PLDMontoMaximoEfectivo, PLDNum' +
+      'eroPagos, IdCFDIFormaPago33, IdCFDIUsoCFDI, PPE'#13#10'FROM Personas'
     Left = 64
     object adodsMasterIdPersona: TAutoIncField
       FieldName = 'IdPersona'
@@ -145,14 +145,23 @@ inherited dmPersona: TdmPersona
     end
     object adodsMasterNombre: TStringField
       FieldName = 'Nombre'
+      OnChange = adodsMasterNombreChange
+      Size = 100
+    end
+    object adodsMasterSegundoNombre: TStringField
+      DisplayLabel = 'Segundo nombre'
+      FieldName = 'SegundoNombre'
+      OnChange = adodsMasterNombreChange
       Size = 100
     end
     object adodsMasterApellidoPaterno: TStringField
       FieldName = 'ApellidoPaterno'
+      OnChange = adodsMasterNombreChange
       Size = 100
     end
     object adodsMasterApellidoMaterno: TStringField
       FieldName = 'ApellidoMaterno'
+      OnChange = adodsMasterNombreChange
       Size = 100
     end
     object adodsMasterFechaNacimiento: TDateTimeField
@@ -383,6 +392,7 @@ inherited dmPersona: TdmPersona
     end
   end
   object adodsPersonaTipo: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdPersonaTipo, Descripcion FROM PersonasTipos'
@@ -391,6 +401,7 @@ inherited dmPersona: TdmPersona
     Top = 72
   end
   object adodsRazonSocialTipo: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdRazonSocialTipo, Descripcion FROM RazonesSocialesTipos'
@@ -399,6 +410,7 @@ inherited dmPersona: TdmPersona
     Top = 128
   end
   object adodsSexo: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdSexo, Descripcion FROM Sexos'
@@ -407,6 +419,7 @@ inherited dmPersona: TdmPersona
     Top = 184
   end
   object adodsEstadoCivil: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdEstadoCivil, Descripcion FROM EstadosCiviles'
@@ -415,6 +428,7 @@ inherited dmPersona: TdmPersona
     Top = 240
   end
   object adodsPais: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -609,6 +623,7 @@ inherited dmPersona: TdmPersona
     Top = 48
   end
   object adodsRolesTipos: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdRolTipo, Identificador, Descripcion from RolesTipos'
@@ -617,6 +632,7 @@ inherited dmPersona: TdmPersona
     Top = 360
   end
   object ADOdsPersonaEstatus: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -627,6 +643,7 @@ inherited dmPersona: TdmPersona
     Top = 432
   end
   object ADOdsMetodosPago: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -637,6 +654,7 @@ inherited dmPersona: TdmPersona
     Top = 432
   end
   object ADOdsRegimenFiscal: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -647,6 +665,7 @@ inherited dmPersona: TdmPersona
     Top = 432
   end
   object adodsRiesgosTipos: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdRiesgoTipo, Descripcion from RiesgosTipos'
@@ -655,6 +674,7 @@ inherited dmPersona: TdmPersona
     Top = 432
   end
   object adodsBCCalificacion: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -665,6 +685,7 @@ inherited dmPersona: TdmPersona
     Top = 192
   end
   object adodsBCActividades1: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -675,6 +696,7 @@ inherited dmPersona: TdmPersona
     Top = 248
   end
   object adodsBCActividades2: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -685,6 +707,7 @@ inherited dmPersona: TdmPersona
     Top = 296
   end
   object adodsBCActividades3: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 

@@ -217,8 +217,8 @@ inherited frmPersonaEdit: TfrmPersonaEdit
         TabOrder = 2
         Visible = False
         object Label5: TLabel
-          Left = 16
-          Top = 39
+          Left = 222
+          Top = -1
           Width = 37
           Height = 13
           Caption = 'Nombre'
@@ -226,7 +226,7 @@ inherited frmPersonaEdit: TfrmPersonaEdit
         end
         object Label6: TLabel
           Left = 224
-          Top = 41
+          Top = 38
           Width = 78
           Height = 13
           Caption = 'Apellido Paterno'
@@ -234,7 +234,7 @@ inherited frmPersonaEdit: TfrmPersonaEdit
         end
         object Label7: TLabel
           Left = 432
-          Top = 39
+          Top = 38
           Width = 80
           Height = 13
           Caption = 'Apellido Materno'
@@ -292,22 +292,28 @@ inherited frmPersonaEdit: TfrmPersonaEdit
           Height = 13
           Caption = 'Nacionalidad'
         end
+        object Label19: TLabel
+          Left = 18
+          Top = 38
+          Width = 81
+          Height = 13
+          Caption = 'Segundo nombre'
+          FocusControl = edtSegundoNombre
+        end
         object edtNombre: TcxDBTextEdit
-          Left = 16
-          Top = 55
+          Left = 222
+          Top = 16
           DataBinding.DataField = 'Nombre'
           DataBinding.DataSource = DataSource
           TabOrder = 2
-          OnEditing = edtNombreEditing
-          Width = 200
+          Width = 408
         end
         object edtAPaterno: TcxDBTextEdit
           Left = 224
           Top = 55
           DataBinding.DataField = 'ApellidoPaterno'
           DataBinding.DataSource = DataSource
-          TabOrder = 3
-          OnEditing = edtNombreEditing
+          TabOrder = 4
           Width = 200
         end
         object edtAMaterno: TcxDBTextEdit
@@ -315,8 +321,7 @@ inherited frmPersonaEdit: TfrmPersonaEdit
           Top = 55
           DataBinding.DataField = 'ApellidoMaterno'
           DataBinding.DataSource = DataSource
-          TabOrder = 4
-          OnEditing = edtNombreEditing
+          TabOrder = 5
           Width = 200
         end
         object cxDBDateEdit1: TcxDBDateEdit
@@ -324,7 +329,7 @@ inherited frmPersonaEdit: TfrmPersonaEdit
           Top = 140
           DataBinding.DataField = 'FechaNacimiento'
           DataBinding.DataSource = DataSource
-          TabOrder = 6
+          TabOrder = 7
           Width = 170
         end
         object cxDBLookupComboBox3: TcxDBLookupComboBox
@@ -333,7 +338,7 @@ inherited frmPersonaEdit: TfrmPersonaEdit
           DataBinding.DataField = 'Sexo'
           DataBinding.DataSource = DataSource
           Properties.ListColumns = <>
-          TabOrder = 8
+          TabOrder = 9
           Width = 170
         end
         object cxDBLookupComboBox4: TcxDBLookupComboBox
@@ -342,7 +347,7 @@ inherited frmPersonaEdit: TfrmPersonaEdit
           DataBinding.DataField = 'EstadoCivil'
           DataBinding.DataSource = DataSource
           Properties.ListColumns = <>
-          TabOrder = 9
+          TabOrder = 10
           Width = 150
         end
         object cxDBTextEdit2: TcxDBTextEdit
@@ -350,7 +355,7 @@ inherited frmPersonaEdit: TfrmPersonaEdit
           Top = 140
           DataBinding.DataField = 'LugarNacimiento'
           DataBinding.DataSource = DataSource
-          TabOrder = 7
+          TabOrder = 8
           Width = 440
         end
         object cxDBTextEdit3: TcxDBTextEdit
@@ -358,7 +363,7 @@ inherited frmPersonaEdit: TfrmPersonaEdit
           Top = 99
           DataBinding.DataField = 'RazonSocial'
           DataBinding.DataSource = DataSource
-          TabOrder = 5
+          TabOrder = 6
           Width = 616
         end
         object cxDBEditCURP: TcxDBMaskEdit
@@ -384,8 +389,16 @@ inherited frmPersonaEdit: TfrmPersonaEdit
           DataBinding.DataField = 'Pais'
           DataBinding.DataSource = DataSource
           Properties.ListColumns = <>
-          TabOrder = 10
+          TabOrder = 11
           Width = 280
+        end
+        object edtSegundoNombre: TcxDBTextEdit
+          Left = 18
+          Top = 55
+          DataBinding.DataField = 'SegundoNombre'
+          DataBinding.DataSource = DataSource
+          TabOrder = 3
+          Width = 200
         end
       end
       object pnlOrigen: TPanel

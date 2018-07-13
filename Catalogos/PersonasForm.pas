@@ -90,6 +90,7 @@ type
     tvMasterPPE: TcxGridDBColumn;
     tvMasterRegimenFiscalPreferente: TcxGridDBColumn;
     tvMasterListaGAFI: TcxGridDBColumn;
+    tvMasterSegundoNombre: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private

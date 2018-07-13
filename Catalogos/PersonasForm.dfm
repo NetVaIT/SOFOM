@@ -145,14 +145,22 @@ inherited frmPersonas: TfrmPersonas
         object tvMasterNombre: TcxGridDBColumn
           DataBinding.FieldName = 'Nombre'
           Visible = False
+          Width = 200
+        end
+        object tvMasterSegundoNombre: TcxGridDBColumn
+          DataBinding.FieldName = 'SegundoNombre'
+          Visible = False
+          Width = 200
         end
         object tvMasterApellidoPaterno: TcxGridDBColumn
           DataBinding.FieldName = 'ApellidoPaterno'
           Visible = False
+          Width = 200
         end
         object tvMasterApellidoMaterno: TcxGridDBColumn
           DataBinding.FieldName = 'ApellidoMaterno'
           Visible = False
+          Width = 200
         end
         object tvMasterFechaNacimiento: TcxGridDBColumn
           DataBinding.FieldName = 'FechaNacimiento'
@@ -341,7 +349,6 @@ inherited frmPersonas: TfrmPersonas
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42664.566576585640000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end
