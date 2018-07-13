@@ -12,11 +12,12 @@ inherited dmDomicilios: TdmDomicilios
       'ios.Colonia, Domicilios.Referencia, '#13#10'Paises.Descripcion AS Pais' +
       ', Estados.Descripcion AS Estado, Municipios.Descripcion AS Munic' +
       'ipio, '#13#10'Poblaciones.Descripcion AS Poblacion, Domicilios.CodigoP' +
-      'ostal, BCCiudad'#13#10'FROM Domicilios '#13#10'INNER JOIN Paises ON Domicili' +
-      'os.IdPais = Paises.IdPais'#13#10'INNER JOIN Estados ON Domicilios.IdEs' +
-      'tado = Estados.IdEstado'#13#10'INNER JOIN Municipios ON Domicilios.IdM' +
-      'unicipio = Municipios.IdMunicipio'#13#10'INNER JOIN Poblaciones ON Dom' +
-      'icilios.IdPoblacion = Poblaciones.IdPoblacion'
+      'ostal, Domicilios.BCCiudad, Domicilios.BCCodigoPostal'#13#10'FROM Domi' +
+      'cilios '#13#10'INNER JOIN Paises ON Domicilios.IdPais = Paises.IdPais'#13 +
+      #10'INNER JOIN Estados ON Domicilios.IdEstado = Estados.IdEstado'#13#10'I' +
+      'NNER JOIN Municipios ON Domicilios.IdMunicipio = Municipios.IdMu' +
+      'nicipio'#13#10'INNER JOIN Poblaciones ON Domicilios.IdPoblacion = Pobl' +
+      'aciones.IdPoblacion'
     Left = 48
     Top = 32
     object adodsMasterIdDomicilio: TAutoIncField
@@ -95,10 +96,17 @@ inherited dmDomicilios: TdmDomicilios
       Size = 10
     end
     object adodsMasterBCCiudad: TStringField
-      DisplayLabel = 'Ciudad(Buro de credito)'
+      DisplayLabel = 'Ciudad (BC)'
       DisplayWidth = 50
       FieldName = 'BCCiudad'
+      Visible = False
       Size = 50
+    end
+    object adodsMasterBCCodigoPostal: TStringField
+      DisplayLabel = 'CodigoPostal (BC)'
+      FieldName = 'BCCodigoPostal'
+      Visible = False
+      Size = 10
     end
   end
   inherited adodsUpdate: TADODataSet
@@ -111,12 +119,12 @@ inherited dmDomicilios: TdmDomicilios
       'ios.Colonia, Domicilios.Referencia, '#13#10'Paises.Descripcion AS Pais' +
       ', Estados.Descripcion AS Estado, Municipios.Descripcion AS Munic' +
       'ipio, '#13#10'Poblaciones.Descripcion AS Poblacion, Domicilios.CodigoP' +
-      'ostal, BCCiudad'#13#10'FROM Domicilios '#13#10'INNER JOIN Paises ON Domicili' +
-      'os.IdPais = Paises.IdPais'#13#10'INNER JOIN Estados ON Domicilios.IdEs' +
-      'tado = Estados.IdEstado'#13#10'INNER JOIN Municipios ON Domicilios.IdM' +
-      'unicipio = Municipios.IdMunicipio'#13#10'INNER JOIN Poblaciones ON Dom' +
-      'icilios.IdPoblacion = Poblaciones.IdPoblacion'#13#10'WHERE Domicilios.' +
-      'IdDomicilio = :IdDomicilio'
+      'ostal, Domicilios.BCCiudad, Domicilios.BCCodigoPostal'#13#10'FROM Domi' +
+      'cilios '#13#10'INNER JOIN Paises ON Domicilios.IdPais = Paises.IdPais'#13 +
+      #10'INNER JOIN Estados ON Domicilios.IdEstado = Estados.IdEstado'#13#10'I' +
+      'NNER JOIN Municipios ON Domicilios.IdMunicipio = Municipios.IdMu' +
+      'nicipio'#13#10'INNER JOIN Poblaciones ON Domicilios.IdPoblacion = Pobl' +
+      'aciones.IdPoblacion'#13#10'WHERE Domicilios.IdDomicilio = :IdDomicilio'
     Parameters = <
       item
         Name = 'IdDomicilio'
@@ -196,9 +204,14 @@ inherited dmDomicilios: TdmDomicilios
       Size = 10
     end
     object adodsUpdateBCCiudad: TStringField
-      DisplayLabel = 'Ciudad(Buro de credito)'
+      DisplayLabel = 'Ciudad (BC)'
       FieldName = 'BCCiudad'
       Size = 50
+    end
+    object adodsUpdateBCCodigoPostal: TStringField
+      DisplayLabel = 'CodigoPostal (BC)'
+      FieldName = 'BCCodigoPostal'
+      Size = 10
     end
   end
   object adodsPaises: TADODataSet

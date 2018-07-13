@@ -275,7 +275,7 @@ inherited dmBuroCredito: TdmBuroCredito
         'udad, '
       
         '                         Estados.BCCodigo AS Estado, Paises.BCCo' +
-        'digo AS Pais, Domicilios.CodigoPostal'
+        'digo AS Pais, Domicilios.BCCodigoPostal AS CodigoPostal'
       'FROM            PersonasDomicilios INNER JOIN'
       
         '                         Domicilios ON PersonasDomicilios.IdDomi' +
@@ -426,7 +426,7 @@ inherited dmBuroCredito: TdmBuroCredito
         'SELECT        PersonasAccionistas.IdPersonaAccionista, Personas.' +
         'RFC, Personas.CURP, CASE WHEN IdPersonaTipo = 2 THEN dbo.BCTexto' +
         '(RazonSocial) ELSE '#39#39' END AS Empresa, CASE WHEN IdPersonaTipo = ' +
-        '2 THEN '#39#39' ELSE dbo.BCTexto(Nombre) END AS PrimerNombre, '
+        '2 THEN '#39#39' ELSE dbo.BCTexto(Nombre) END AS PrimerNombre,'
       
         '                         CASE WHEN IdPersonaTipo = 2 THEN '#39#39' ELS' +
         'E dbo.BCTexto(SegundoNombre) END AS SegindoNombre, CASE WHEN IdP' +
@@ -472,7 +472,7 @@ inherited dmBuroCredito: TdmBuroCredito
         'udad, '
       
         '                         Estados.BCCodigo AS Estado, Paises.BCCo' +
-        'digo AS Pais, Domicilios.CodigoPostal'
+        'digo AS Pais, Domicilios.BCCodigoPostal AS CodigoPostal'
       'FROM            PersonasDomicilios INNER JOIN'
       
         '                         Domicilios ON PersonasDomicilios.IdDomi' +

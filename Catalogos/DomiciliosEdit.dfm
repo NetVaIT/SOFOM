@@ -1,18 +1,18 @@
 inherited frmDomiciliosEdit: TfrmDomiciliosEdit
   Caption = 'Domicilio'
-  ClientHeight = 422
-  ClientWidth = 553
-  ExplicitWidth = 559
-  ExplicitHeight = 451
+  ClientHeight = 496
+  ClientWidth = 477
+  ExplicitWidth = 483
+  ExplicitHeight = 525
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
-    Width = 553
-    Height = 381
+    Width = 477
+    Height = 455
     ExplicitWidth = 553
     ExplicitHeight = 381
-    ClientRectBottom = 379
-    ClientRectRight = 551
+    ClientRectBottom = 453
+    ClientRectRight = 475
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 2
       ExplicitTop = 26
@@ -97,14 +97,6 @@ inherited frmDomiciliosEdit: TfrmDomiciliosEdit
         Height = 13
         Caption = 'C'#243'digo postal'
         FocusControl = cxDBTextEdit6
-      end
-      object Label11: TLabel
-        Left = 143
-        Top = 296
-        Width = 114
-        Height = 13
-        Caption = 'Ciudad(Buro de credito)'
-        FocusControl = cxDBTextEdit7
       end
       object cxDBTextEdit1: TcxDBTextEdit
         Left = 16
@@ -214,27 +206,59 @@ inherited frmDomiciliosEdit: TfrmDomiciliosEdit
         TabOrder = 9
         Width = 121
       end
-      object cxDBTextEdit7: TcxDBTextEdit
-        Left = 143
-        Top = 312
-        DataBinding.DataField = 'BCCiudad'
-        DataBinding.DataSource = DataSource
+      object cxGroupBox1: TcxGroupBox
+        Left = 16
+        Top = 339
+        Caption = 'Buro de cr'#233'dito'
         TabOrder = 10
-        Width = 311
+        Height = 78
+        Width = 438
+        object Label11: TLabel
+          Left = 3
+          Top = 19
+          Width = 33
+          Height = 13
+          Caption = 'Ciudad'
+          FocusControl = cxDBTextEdit7
+        end
+        object Label12: TLabel
+          Left = 314
+          Top = 21
+          Width = 65
+          Height = 13
+          Caption = 'C'#243'digo postal'
+          FocusControl = cxDBTextEdit8
+        end
+        object cxDBTextEdit7: TcxDBTextEdit
+          Left = 3
+          Top = 35
+          DataBinding.DataField = 'BCCiudad'
+          DataBinding.DataSource = DataSource
+          TabOrder = 0
+          Width = 305
+        end
+        object cxDBTextEdit8: TcxDBTextEdit
+          Left = 314
+          Top = 37
+          DataBinding.DataField = 'BCCodigoPostal'
+          DataBinding.DataSource = DataSource
+          TabOrder = 1
+          Width = 121
+        end
       end
     end
   end
   inherited pmlMain: TPanel
-    Top = 381
-    Width = 553
+    Top = 455
+    Width = 477
     ExplicitTop = 381
     ExplicitWidth = 553
     inherited btnCancel: TButton
-      Left = 471
+      Left = 395
       ExplicitLeft = 471
     end
     inherited btnOk: TButton
-      Left = 390
+      Left = 314
       ExplicitLeft = 390
     end
   end

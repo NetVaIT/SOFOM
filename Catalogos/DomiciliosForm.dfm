@@ -5,11 +5,7 @@ inherited frmDomicilios: TfrmDomicilios
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlMaster: TPanel
-    ExplicitTop = 26
-    ExplicitHeight = 258
     inherited cxGrid: TcxGrid
-      Height = 258
-      ExplicitHeight = 258
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdDomicilio: TcxGridDBColumn
           DataBinding.FieldName = 'IdDomicilio'
@@ -70,7 +66,12 @@ inherited frmDomicilios: TfrmDomicilios
         end
         object tvMasterBCCiudad: TcxGridDBColumn
           DataBinding.FieldName = 'BCCiudad'
+          Visible = False
           Width = 185
+        end
+        object tvMasterBCCodigoPostal: TcxGridDBColumn
+          DataBinding.FieldName = 'BCCodigoPostal'
+          Visible = False
         end
       end
     end
@@ -91,7 +92,6 @@ inherited frmDomicilios: TfrmDomicilios
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42870.486940787040000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

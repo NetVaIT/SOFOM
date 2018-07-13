@@ -47,6 +47,7 @@ type
     tvMasterPoblacion: TcxGridDBColumn;
     tvMasterCodigoPostal: TcxGridDBColumn;
     tvMasterBCCiudad: TcxGridDBColumn;
+    tvMasterBCCodigoPostal: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private

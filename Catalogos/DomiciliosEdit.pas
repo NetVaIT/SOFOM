@@ -19,7 +19,8 @@ uses
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, Vcl.ImgList,
   System.Actions, Vcl.ActnList, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls, cxPC,
   cxContainer, cxEdit, cxMaskEdit, cxSpinEdit, cxDBEdit, cxTextEdit, Vcl.DBCtrls,
-  cxCheckBox, cxDropDownEdit, cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox;
+  cxCheckBox, cxDropDownEdit, cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox,
+  cxGroupBox;
 
 type
   TfrmDomiciliosEdit = class(T_frmEdit)
@@ -47,8 +48,11 @@ type
     dsEstados: TDataSource;
     dsMunicipios: TDataSource;
     dsPoblaciones: TDataSource;
-    Label11: TLabel;
+    cxGroupBox1: TcxGroupBox;
     cxDBTextEdit7: TcxDBTextEdit;
+    Label11: TLabel;
+    cxDBTextEdit8: TcxDBTextEdit;
+    Label12: TLabel;
     procedure FormShow(Sender: TObject);
   private
     FDataSetPaises: TDataSet;
