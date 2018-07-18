@@ -4,8 +4,10 @@ inherited dmListasRestringidas: TdmListasRestringidas
     CursorType = ctStatic
     OnNewRecord = adodsMasterNewRecord
     CommandText = 
-      'select IdListaRestringida, IdOrganismo, IdPais, IdEstatus, Ident' +
-      'ificador, Nombre, Alias from ListasRestringidas'
+      'select IdListaRestringida, IdOrganismo, IdPais, IdEstatus,'#13#10' Ide' +
+      'ntificador, Nombre, Alias '#13#10', FechaNacimiento, RFC, NoIdentifica' +
+      'cion, Dependencia, '#13#10'Puesto, Comentarios, Nacionalidad'#13#10'from Lis' +
+      'tasRestringidas'
     object adodsMasterIdListaRestringida: TAutoIncField
       FieldName = 'IdListaRestringida'
       ReadOnly = True
@@ -55,6 +57,33 @@ inherited dmListasRestringidas: TdmListasRestringidas
       FieldName = 'Alias'
       Size = 255
     end
+    object adodsMasterFechaNacimiento: TDateTimeField
+      FieldName = 'FechaNacimiento'
+    end
+    object adodsMasterRFC: TStringField
+      FieldName = 'RFC'
+      Size = 50
+    end
+    object adodsMasterNoIdentificacion: TStringField
+      FieldName = 'NoIdentificacion'
+      Size = 30
+    end
+    object adodsMasterDependencia: TStringField
+      FieldName = 'Dependencia'
+      Size = 250
+    end
+    object adodsMasterPuesto: TStringField
+      FieldName = 'Puesto'
+      Size = 150
+    end
+    object adodsMasterComentarios: TStringField
+      FieldName = 'Comentarios'
+      Size = 500
+    end
+    object adodsMasterNacionalidad: TStringField
+      FieldName = 'Nacionalidad'
+      Size = 250
+    end
   end
   inherited ActionList: TActionList
     object actWeb: TAction
@@ -62,8 +91,13 @@ inherited dmListasRestringidas: TdmListasRestringidas
       ImageIndex = 13
       OnExecute = actWebExecute
     end
+    object ActCargaLPB: TAction
+      Caption = 'Carga LPB'
+      OnExecute = ActCargaLPBExecute
+    end
   end
   object adodsOrganismos: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdOrganismo, Descripcion, Aplica24Horas from Organismos'
@@ -72,11 +106,190 @@ inherited dmListasRestringidas: TdmListasRestringidas
     Top = 72
   end
   object adodsPaises: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdPais, Identificador, Descripcion from Paises'
     Parameters = <>
     Left = 72
     Top = 128
+  end
+  object XMLDocListaPB_ONU: TXMLDocument
+    FileName = 'C:\Desarrollo\Documentos\SofomListas\CNBV-LPB-2016-000120.xml'
+    Left = 56
+    Top = 200
+    DOMVendorDesc = 'MSXML'
+  end
+  object OpnDlgXML: TOpenDialog
+    Filter = 'XML|*.XML'
+    Left = 56
+    Top = 264
+  end
+  object ADOQryAuxiliar: TADOQuery
+    Connection = _dmConection.ADOConnection
+    Parameters = <>
+    Left = 176
+    Top = 208
+  end
+  object ADOInsertaRegistro: TADOQuery
+    Connection = _dmConection.ADOConnection
+    Parameters = <
+      item
+        Name = 'IdOrganismo'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end
+      item
+        Name = 'IdPais'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end
+      item
+        Name = 'IdEstatus'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end
+      item
+        Name = 'Identificador'
+        Attributes = [paNullable]
+        DataType = ftString
+        NumericScale = 255
+        Precision = 255
+        Size = 60
+        Value = Null
+      end
+      item
+        Name = 'Nombre'
+        Attributes = [paNullable]
+        DataType = ftString
+        NumericScale = 255
+        Precision = 255
+        Size = 500
+        Value = Null
+      end
+      item
+        Name = 'Alias'
+        Attributes = [paNullable]
+        DataType = ftString
+        NumericScale = 255
+        Precision = 255
+        Size = 255
+        Value = Null
+      end
+      item
+        Name = 'FechaNacimiento'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        NumericScale = 3
+        Precision = 23
+        Size = 16
+        Value = Null
+      end
+      item
+        Name = 'RFC'
+        Attributes = [paNullable]
+        DataType = ftString
+        NumericScale = 255
+        Precision = 255
+        Size = 50
+        Value = Null
+      end
+      item
+        Name = 'NoIdentificacion'
+        Attributes = [paNullable]
+        DataType = ftString
+        NumericScale = 255
+        Precision = 255
+        Size = 30
+        Value = Null
+      end
+      item
+        Name = 'Dependencia'
+        Attributes = [paNullable]
+        DataType = ftString
+        NumericScale = 255
+        Precision = 255
+        Size = 250
+        Value = Null
+      end
+      item
+        Name = 'Puesto'
+        Attributes = [paNullable]
+        DataType = ftString
+        NumericScale = 255
+        Precision = 255
+        Size = 150
+        Value = Null
+      end
+      item
+        Name = 'Funciones'
+        Attributes = [paNullable]
+        DataType = ftString
+        NumericScale = 255
+        Precision = 255
+        Size = 200
+        Value = Null
+      end
+      item
+        Name = 'Comentarios'
+        Attributes = [paNullable]
+        DataType = ftString
+        NumericScale = 255
+        Precision = 255
+        Size = 500
+        Value = Null
+      end
+      item
+        Name = 'Nacionalidad'
+        Attributes = [paNullable]
+        DataType = ftString
+        NumericScale = 255
+        Precision = 255
+        Size = 250
+        Value = Null
+      end>
+    SQL.Strings = (
+      'INSERT INTO ListasRestringidas'
+      '           (IdOrganismo'
+      '           ,IdPais'
+      '           ,IdEstatus'
+      '           ,Identificador'
+      '           ,Nombre'
+      '           ,Alias'
+      '           ,FechaNacimiento'
+      '           ,RFC'
+      '           ,NoIdentificacion'
+      '           ,Dependencia'
+      '           ,Puesto'
+      '           ,Funciones'
+      '           ,Comentarios'
+      '           ,Nacionalidad)'
+      '     VALUES'
+      '(           (:IdOrganismo'
+      '           ,:IdPais'
+      '           ,:IdEstatus'
+      '           ,:Identificador'
+      '           ,:Nombre'
+      '           ,:Alias'
+      '           ,:FechaNacimiento'
+      '           ,:RFC'
+      '           ,:NoIdentificacion'
+      '           ,:Dependencia'
+      '           ,:Puesto'
+      '           ,:Funciones'
+      '           ,:Comentarios'
+      '           ,:Nacionalidad)'
+      '')
+    Left = 296
+    Top = 208
   end
 end

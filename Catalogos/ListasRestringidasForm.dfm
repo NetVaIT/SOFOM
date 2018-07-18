@@ -2,40 +2,39 @@ inherited frmListasRestringidas: TfrmListasRestringidas
   BorderStyle = bsToolWindow
   Caption = 'Listas restringidas'
   ClientHeight = 428
-  ClientWidth = 674
-  ExplicitWidth = 680
-  ExplicitHeight = 457
+  ClientWidth = 907
+  ExplicitWidth = 913
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
     Top = 343
-    Width = 674
+    Width = 907
     ExplicitTop = 343
     ExplicitWidth = 645
   end
   inherited splDetail1: TSplitter
     Top = 255
-    Width = 674
+    Width = 907
     ExplicitTop = 255
     ExplicitWidth = 645
   end
   inherited splDetail2: TSplitter
     Top = 299
-    Width = 674
+    Width = 907
     ExplicitTop = 299
     ExplicitWidth = 645
   end
   inherited pnlMaster: TPanel
-    Width = 674
-    Height = 229
-    ExplicitTop = 26
-    ExplicitWidth = 645
-    ExplicitHeight = 229
+    Width = 907
+    Height = 227
+    ExplicitTop = 28
+    ExplicitWidth = 674
+    ExplicitHeight = 227
     inherited cxGrid: TcxGrid
-      Width = 674
-      Height = 229
-      ExplicitWidth = 645
-      ExplicitHeight = 229
+      Width = 907
+      Height = 227
+      ExplicitWidth = 674
+      ExplicitHeight = 227
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdListaRestringida: TcxGridDBColumn
           DataBinding.FieldName = 'IdListaRestringida'
@@ -78,43 +77,39 @@ inherited frmListasRestringidas: TfrmListasRestringidas
   end
   inherited pnlDetail3: TPanel
     Top = 346
-    Width = 674
+    Width = 907
     ExplicitTop = 346
-    ExplicitWidth = 645
+    ExplicitWidth = 674
   end
   inherited pnlDetail2: TPanel
     Top = 302
-    Width = 674
+    Width = 907
     ExplicitTop = 302
-    ExplicitWidth = 645
+    ExplicitWidth = 674
   end
   inherited pnlDetail1: TPanel
     Top = 258
-    Width = 674
+    Width = 907
     ExplicitTop = 258
-    ExplicitWidth = 645
+    ExplicitWidth = 674
   end
   inherited pnlClose: TPanel
     Top = 387
-    Width = 674
+    Width = 907
     ExplicitTop = 387
-    ExplicitWidth = 645
+    ExplicitWidth = 674
     inherited btnClose: TButton
-      Left = 589
-      ExplicitLeft = 560
+      Left = 822
+      ExplicitLeft = 589
     end
   end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
       0
       0
-      26
+      28
       0)
-    inherited dxbNavigator: TdxBar
-      DockedLeft = 104
-    end
     inherited dxbTools: TdxBar
-      DockedLeft = 231
       ItemLinks = <
         item
           Visible = True
@@ -130,7 +125,7 @@ inherited frmListasRestringidas: TfrmListasRestringidas
         end>
     end
     inherited dxbFilter: TdxBar
-      DockedLeft = 372
+      DockedLeft = 381
       ItemLinks = <
         item
           Visible = True
@@ -139,6 +134,10 @@ inherited frmListasRestringidas: TfrmListasRestringidas
         item
           Visible = True
           ItemName = 'dxbtnSearch'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBrBtnLPB'
         end>
       Visible = True
     end
@@ -157,6 +156,10 @@ inherited frmListasRestringidas: TfrmListasRestringidas
       Category = 0
       PaintStyle = psCaptionGlyph
     end
+    object dxBrBtnLPB: TdxBarButton
+      Action = dmListasRestringidas.ActCargaLPB
+      Category = 0
+    end
   end
   inherited cxStyleRepository: TcxStyleRepository
     PixelsPerInch = 96
@@ -167,7 +170,6 @@ inherited frmListasRestringidas: TfrmListasRestringidas
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42776.465400173610000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

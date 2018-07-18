@@ -263,7 +263,8 @@ uses
   CFDIRelacionadosDM in 'Procesos\CFDIRelacionadosDM.pas' {dmCFDIRelacionados: TDataModule},
   CFDIRelacionadosForm in 'Procesos\CFDIRelacionadosForm.pas' {frmCFDIRelacionados},
   CFDICPRelacionadosForm in 'Procesos\CFDICPRelacionadosForm.pas' {frmCFDICPRelacionados},
-  PagosAplicacionesForm in 'Procesos\PagosAplicacionesForm.pas' {frmPagosAplicaciones};
+  PagosAplicacionesForm in 'Procesos\PagosAplicacionesForm.pas' {frmPagosAplicaciones},
+  LPB in 'Procesos\LPB.pas';
 
 {$R *.res}
 
