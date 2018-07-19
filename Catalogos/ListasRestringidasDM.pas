@@ -33,10 +33,12 @@ type
     adodsMasterComentarios: TStringField;
     adodsMasterNacionalidad: TStringField;
     ADOInsertaRegistro: TADOQuery;
+    ActPoneOrganismos: TAction;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure actWebExecute(Sender: TObject);
     procedure ActCargaLPBExecute(Sender: TObject);
+    procedure ActPoneOrganismosExecute(Sender: TObject);
   private
     { Private declarations }
     procedure SacarFecha(FechaNac:IXMLFecha_Nac_IndividuoList;var FecNac:TDateTime; var Texto:String);  //Jul 17/18
@@ -64,7 +66,7 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses ListasRestringidasForm, ListasRestringidasWeb;
+uses ListasRestringidasForm, ListasRestringidasWeb, _Utils;
 
 {$R *.dfm}
 
@@ -73,6 +75,28 @@ begin
   inherited;
   if OpnDlgXML.Execute then
     CargarDatosBloqueados(1, OpnDlgXML.FileName); //DEberia ser del formato
+end;
+
+procedure TdmListasRestringidas.ActPoneOrganismosExecute(Sender: TObject);
+begin
+  inherited;
+  //Generar consulta de
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.SQL.Clear;
+  ADOQryAuxiliar.SQL.Add('Select IdOrganismo, Descripcion from Organismos O where Exists( Select distinct (IdOrganismo) from ListasRestringidas LR where Lr.Idorganismo=O.IdOrganismo )');
+  ADOQryAuxiliar.open;
+  if not ADOQryAuxiliar.eof then
+  begin
+    TfrmListasRestringidas(gGridForm).RdGrpOrganismo.Items.Clear;
+    TfrmListasRestringidas(gGridForm).RdGrpOrganismo.Items.Add('Todos');
+    while not ADOQryAuxiliar.eof do
+    begin
+      TfrmListasRestringidas(gGridForm).RdGrpOrganismo.Items.ADD(ADOQryAuxiliar.FieldByName('Descripcion').asstring +'('+ ADOQryAuxiliar.FieldByName('IDOrganismo').asstring+')');
+      ADOQryAuxiliar.Next;
+    end;
+    TfrmListasRestringidas(gGridForm).RdGrpOrganismo.Itemindex:=0;
+    TfrmListasRestringidas(gGridForm).RdGrpOrganismo.Columns:= ADOQryAuxiliar.RecordCount+1;
+  end;
 end;
 
 procedure TdmListasRestringidas.actWebExecute(Sender: TObject);
@@ -110,24 +134,30 @@ procedure TdmListasRestringidas.CargarDatosBloqueados(Tipo: integer;
      IdPais:Integer;
 
      Entidad:IXMLEntidad;
-     i:integer;
+     i, total, paso:integer;
 begin
   //Eliminar registros de ese Organismo
   //Abrir
+  ShowProgress(1,100,'Preparando XML para Cargar ' + IntToStr(1) + '%');  //Jul 19/20
   XMLDocListaPB_ONU.Active:=False;;
   XMLDocListaPB_ONU.LoadFromFile(Archivo);
   XMLDocListaPB_ONU.active:=true;
   ///Insertar   o ver si see hace con un procedimiento generarl
   Listas:= GetListas(XMLDocListaPB_ONU);
   Lista:=Listas.Lista[0];
-  ShowMessage('Fecha '+Lista.Fecha_Gen+ 'Tipo :'+Lista.Tipo_Lista );
-
+ // ShowMessage('Fecha '+Lista.Fecha_Gen+ 'Tipo :'+Lista.Tipo_Lista );
+  ShowProgress(2,100,'Eliminandor registros anteriores ' + IntToStr(2) + '%');  //Jul 19/20
   EliminarRegistrosPrevios(Lista.Tipo_Lista);
 //  AdodsMaster.Open;
 
   Reportados:=Lista.Reportados;
+
+  Total:=Reportados.Individuo.Count +reportados.entidad.Count;
+  Paso:=1;
+
   for I := 0 to Reportados.Individuo.Count-1 do //Individuos
   begin
+    ShowProgress(Paso,Total,'Cargando registros Individuos ...' + IntToStr(trunc(Paso/Total*100)) + '%');  //Jul 19/20
     Fecha:=0;
     RFC:='';
     FecTexto:='';
@@ -148,10 +178,12 @@ begin
     //Guardar en DB()
     InsertaListaXML(Lista.Tipo_Lista,intToStr(Individuo.DataId),NomC,Nacionalidad, RFC,Individuo.Numero_Referencia,
                     Individuo.Un_Tipo_Lista ,Individuo.Comentarios, puesto,Alias,idPais,Fecha );
+   inc(Paso);
  end;
  //  REportados.Entidad.Count
  for I := 0 to Reportados.Entidad.Count-1 do //Individuos
-  begin
+ begin
+    ShowProgress(Paso,Total,'Cargando registros Entidades ...' + IntToStr(trunc(Paso/Total*100)) + '%');  //Jul 19/20
     IdPais:=0;
     Fecha:=0;
     RFC:='';
@@ -177,11 +209,10 @@ begin
     //Guardar en DB()
     InsertaListaXML(Lista.Tipo_Lista,intToStr(Entidad.DataId),NomC,Nacionalidad, RFC,Entidad.Numero_Referencia,
                     Entidad.Un_Tipo_Lista ,Entidad.Comentarios, puesto,Alias,idPais,Fecha );
+   inc(Paso);
  end;
-
-
-
-
+ ShowProgress(Paso,Total,'Carga Finalizada ... 100 %' );
+ ShowProgress(Total,Total);
 
 end;
 
@@ -196,7 +227,7 @@ begin
   ADOQryAuxiliar.SQL.Clear;
   ADOQryAuxiliar.SQL.Add('Delete From ListasRestringidas where IdOrganismo='+TipoLista);
   Cant:=ADOQryAuxiliar.ExecSQL;
-  ShowMessage('Registros eliminados '+ inttostr(cant));
+ // ShowMessage('Registros eliminados '+ inttostr(cant));
 
 
 
@@ -282,6 +313,7 @@ procedure TdmListasRestringidas.DataModuleCreate(Sender: TObject);
 begin
   inherited;
   gGridForm := TfrmListasRestringidas.Create(Self);
+  TfrmListasRestringidas(gGridForm).ActOrg:=  ActPoneOrganismos;
   gGridForm.DataSet := adodsMaster;
   // Busqueda
   SQLSelect:= 'select IdListaRestringida, IdOrganismo, IdPais, IdEstatus, Identificador, Nombre, Alias , '

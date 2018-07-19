@@ -95,6 +95,10 @@ inherited dmListasRestringidas: TdmListasRestringidas
       Caption = 'Carga LPB'
       OnExecute = ActCargaLPBExecute
     end
+    object ActPoneOrganismos: TAction
+      Caption = 'Pone Organismos'
+      OnExecute = ActPoneOrganismosExecute
+    end
   end
   object adodsOrganismos: TADODataSet
     Active = True

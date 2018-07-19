@@ -43,14 +43,23 @@ type
     edtNombre: TcxBarEditItem;
     dxBarButton8: TdxBarButton;
     dxBrBtnLPB: TdxBarButton;
+    PnlConsulta: TPanel;
+    RdGrpOrganismo: TRadioGroup;
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
+    FActOrg: TBasicAction;
     function GetNombre: String;
     procedure SetNombre(const Value: String);
+    function GetIdOrganismo: Integer;
+    procedure SetIdOrganismo(const Value: Integer);
+    procedure SetActOrg(const Value: TBasicAction);
     { Private declarations }
   public
     { Public declarations }
     property Nombre: String read GetNombre write SetNombre;
+    property IdOrganismo: Integer read GetIdOrganismo write SetIdOrganismo;  //Jul 19/18
+    Property ActOrg:TBasicAction  read FActOrg write SetActOrg;
   end;
 
 implementation
@@ -64,11 +73,51 @@ begin
   inherited;
   gEditForm := TfrmListasRestringidasEdit.Create(Self);
   ApplyBestFit:= False;
+//  Select IdOrganismo, Descripcion from Organismos O where Exists( Select distinct (IdOrganismo) from ListasRestringidas LR where Lr.Idorganismo=O.IdOrganismo )
+
+
+
+end;
+
+procedure TfrmListasRestringidas.FormShow(Sender: TObject);
+begin
+  inherited;
+   ActOrg.Execute; //verificar
+end;
+
+function TfrmListasRestringidas.GetIdOrganismo: Integer;
+var
+  i,j:Integer;
+  texto:String;
+begin
+  result:=-1; //no debe hacer nada si regresa este valor
+  if RdGrpOrganismo.ItemIndex >0 then
+  begin
+    Texto:= RdGrpOrganismo.Items[RdGrpOrganismo.ItemIndex];
+    i:= pos('(',Texto) ;
+    j:= Pos(')',Texto);
+    if i >0 then
+    begin
+      Texto:=Copy (TExto , i+1,j-(i+1));
+      result:=StrToint(TExto); //DEbe solo tener el numero del idorganismo
+    end;
+  end;
+
 end;
 
 function TfrmListasRestringidas.GetNombre: String;
 begin
   Result := edtNombre.EditValue;
+end;
+
+procedure TfrmListasRestringidas.SetActOrg(const Value: TBasicAction);
+begin
+  FActOrg := Value;
+end;
+
+procedure TfrmListasRestringidas.SetIdOrganismo(const Value: Integer);
+begin
+
 end;
 
 procedure TfrmListasRestringidas.SetNombre(const Value: String);
