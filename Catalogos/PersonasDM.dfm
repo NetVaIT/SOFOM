@@ -392,7 +392,6 @@ inherited dmPersona: TdmPersona
     end
   end
   object adodsPersonaTipo: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdPersonaTipo, Descripcion FROM PersonasTipos'
@@ -401,7 +400,6 @@ inherited dmPersona: TdmPersona
     Top = 72
   end
   object adodsRazonSocialTipo: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdRazonSocialTipo, Descripcion FROM RazonesSocialesTipos'
@@ -410,7 +408,6 @@ inherited dmPersona: TdmPersona
     Top = 128
   end
   object adodsSexo: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdSexo, Descripcion FROM Sexos'
@@ -419,7 +416,6 @@ inherited dmPersona: TdmPersona
     Top = 184
   end
   object adodsEstadoCivil: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdEstadoCivil, Descripcion FROM EstadosCiviles'
@@ -428,7 +424,6 @@ inherited dmPersona: TdmPersona
     Top = 240
   end
   object adodsPais: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -623,7 +618,6 @@ inherited dmPersona: TdmPersona
     Top = 48
   end
   object adodsRolesTipos: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdRolTipo, Identificador, Descripcion from RolesTipos'
@@ -632,7 +626,6 @@ inherited dmPersona: TdmPersona
     Top = 360
   end
   object ADOdsPersonaEstatus: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -643,7 +636,6 @@ inherited dmPersona: TdmPersona
     Top = 432
   end
   object ADOdsMetodosPago: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -654,7 +646,6 @@ inherited dmPersona: TdmPersona
     Top = 432
   end
   object ADOdsRegimenFiscal: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -665,7 +656,6 @@ inherited dmPersona: TdmPersona
     Top = 432
   end
   object adodsRiesgosTipos: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdRiesgoTipo, Descripcion from RiesgosTipos'
@@ -674,7 +664,6 @@ inherited dmPersona: TdmPersona
     Top = 432
   end
   object adodsBCCalificacion: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -685,7 +674,6 @@ inherited dmPersona: TdmPersona
     Top = 192
   end
   object adodsBCActividades1: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -696,7 +684,6 @@ inherited dmPersona: TdmPersona
     Top = 248
   end
   object adodsBCActividades2: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -707,7 +694,6 @@ inherited dmPersona: TdmPersona
     Top = 296
   end
   object adodsBCActividades3: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 

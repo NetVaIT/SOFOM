@@ -8,6 +8,7 @@ inherited dmListasRestringidas: TdmListasRestringidas
       'ntificador, Nombre, Alias '#13#10', FechaNacimiento, RFC, NoIdentifica' +
       'cion, Dependencia, '#13#10'Puesto, Comentarios, Nacionalidad'#13#10'from Lis' +
       'tasRestringidas'
+    Left = 56
     object adodsMasterIdListaRestringida: TAutoIncField
       FieldName = 'IdListaRestringida'
       ReadOnly = True
@@ -101,7 +102,6 @@ inherited dmListasRestringidas: TdmListasRestringidas
     end
   end
   object adodsOrganismos: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdOrganismo, Descripcion, Aplica24Horas from Organismos'
@@ -110,7 +110,6 @@ inherited dmListasRestringidas: TdmListasRestringidas
     Top = 72
   end
   object adodsPaises: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdPais, Identificador, Descripcion from Paises'

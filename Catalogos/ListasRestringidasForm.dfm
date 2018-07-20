@@ -1,40 +1,40 @@
 inherited frmListasRestringidas: TfrmListasRestringidas
   BorderStyle = bsToolWindow
   Caption = 'Listas restringidas'
-  ClientHeight = 428
-  ClientWidth = 907
-  ExplicitWidth = 913
-  ExplicitHeight = 457
+  ClientHeight = 415
+  ClientWidth = 1189
+  ExplicitWidth = 1195
+  ExplicitHeight = 444
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Top = 343
-    Width = 907
+    Top = 330
+    Width = 1189
     ExplicitTop = 343
     ExplicitWidth = 645
   end
   inherited splDetail1: TSplitter
-    Top = 255
-    Width = 907
+    Top = 242
+    Width = 1189
     ExplicitTop = 255
     ExplicitWidth = 645
   end
   inherited splDetail2: TSplitter
-    Top = 299
-    Width = 907
+    Top = 286
+    Width = 1189
     ExplicitTop = 299
     ExplicitWidth = 645
   end
   inherited pnlMaster: TPanel
-    Width = 907
-    Height = 227
+    Width = 1189
+    Height = 214
     ExplicitTop = 28
     ExplicitWidth = 907
     ExplicitHeight = 227
     inherited cxGrid: TcxGrid
       Top = 41
-      Width = 907
-      Height = 186
+      Width = 1189
+      Height = 173
       ExplicitWidth = 907
       ExplicitHeight = 227
       inherited tvMaster: TcxGridDBTableView
@@ -74,58 +74,99 @@ inherited frmListasRestringidas: TfrmListasRestringidas
           DataBinding.FieldName = 'Alias'
           Width = 300
         end
+        object tvMasterNacionalidad: TcxGridDBColumn
+          DataBinding.FieldName = 'Nacionalidad'
+          Width = 300
+        end
+        object tvMasterFechaNacimiento: TcxGridDBColumn
+          DataBinding.FieldName = 'FechaNacimiento'
+          Visible = False
+        end
+        object tvMasterRFC: TcxGridDBColumn
+          DataBinding.FieldName = 'RFC'
+          Visible = False
+        end
+        object tvMasterNoIdentificacion: TcxGridDBColumn
+          DataBinding.FieldName = 'NoIdentificacion'
+          Visible = False
+        end
+        object tvMasterDependencia: TcxGridDBColumn
+          DataBinding.FieldName = 'Dependencia'
+          Visible = False
+          Width = 300
+        end
+        object tvMasterPuesto: TcxGridDBColumn
+          DataBinding.FieldName = 'Puesto'
+          Visible = False
+          Width = 300
+        end
+        object tvMasterComentarios: TcxGridDBColumn
+          DataBinding.FieldName = 'Comentarios'
+          Visible = False
+          Width = 300
+        end
       end
     end
     object PnlConsulta: TPanel
       Left = 0
       Top = 0
-      Width = 907
+      Width = 1189
       Height = 41
       Align = alTop
       BevelOuter = bvNone
       ParentBackground = False
       TabOrder = 1
+      ExplicitWidth = 907
       object RdGrpOrganismo: TRadioGroup
         Left = 0
         Top = 0
-        Width = 617
+        Width = 937
         Height = 41
         Align = alLeft
         Caption = 'Organismo'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
         ItemIndex = 0
         Items.Strings = (
           'Todos')
+        ParentFont = False
         TabOrder = 0
       end
     end
   end
   inherited pnlDetail3: TPanel
-    Top = 346
-    Width = 907
+    Top = 333
+    Width = 1189
     ExplicitTop = 346
     ExplicitWidth = 907
   end
   inherited pnlDetail2: TPanel
-    Top = 302
-    Width = 907
+    Top = 289
+    Width = 1189
     ExplicitTop = 302
     ExplicitWidth = 907
   end
   inherited pnlDetail1: TPanel
-    Top = 258
-    Width = 907
+    Top = 245
+    Width = 1189
     ExplicitTop = 258
     ExplicitWidth = 907
   end
   inherited pnlClose: TPanel
-    Top = 387
-    Width = 907
+    Top = 374
+    Width = 1189
     ExplicitTop = 387
     ExplicitWidth = 907
     inherited btnClose: TButton
-      Left = 822
+      Left = 1104
       ExplicitLeft = 822
     end
+  end
+  inherited DataSource: TDataSource
+    DataSet = dmListasRestringidas.adodsMaster
   end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
@@ -183,6 +224,33 @@ inherited frmListasRestringidas: TfrmListasRestringidas
     object dxBrBtnLPB: TdxBarButton
       Action = dmListasRestringidas.ActCargaLPB
       Category = 0
+      Glyph.Data = {
+        36030000424D3603000000000000360000002800000010000000100000000100
+        18000000000000030000C30E0000C30E00000000000000000000FFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        0000000000000000000000000000000000000000000000000000000000000000
+        00FFFFFFFFFFFFFFFFFFFFFFFF00000000F2FF00F2FF00F2FF00F2FF00F2FF00
+        F2FF00F2FF00F2FF00F2FF00F2FF00F2FF000000FFFFFFFFFFFFFFFFFF000000
+        00F2FF00F2FF00F2FF00F2FF00F2FF00F2FF00F2FF00F2FF00F2FF00F2FF00F2
+        FF000000FFFFFFFFFFFFFFFFFF00000000F2FF00F2FF00F2FF00000000000000
+        000000000000000000F2FF00F2FF00F2FF000000FFFFFFFFFFFFFFFFFF000000
+        00F2FF00F2FF00F2FF000000E8A200E8A200E8A20000000000F2FF00F2FF00F2
+        FF000000FFFFFFFFFFFFFFFFFF00000000F2FF00F2FF00F2FF000000E8A200E8
+        A200E8A20000000000F2FF00F2FF00F2FF000000FFFFFFFFFFFFFFFFFF000000
+        00F2FF00F2FF00F2FF000000E8A200E8A200E8A20000000000F2FF00F2FF00F2
+        FF000000FFFFFFFFFFFFFFFFFF00000000F2FF00F2FF00F2FF000000E8A200E8
+        A200E8A20000000000F2FF00F2FF00F2FF000000FFFFFFFFFFFFFFFFFF000000
+        00F2FF000000000000000000E8A200E8A200E8A20000000000000000000000F2
+        FF000000FFFFFFFFFFFFFFFFFF00000000F2FF00F2FF000000E8A200E8A200E8
+        A200E8A200E8A20000000000F2FF00F2FF000000FFFFFFFFFFFFFFFFFF000000
+        00F2FF00F2FF00F2FF000000E8A200E8A200E8A2000000000000000000000000
+        00FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000000000000000FFFFFF000000E8
+        A200000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000FFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
       ImageIndex = 17
       PaintStyle = psCaptionGlyph
     end

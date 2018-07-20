@@ -18,7 +18,8 @@ uses
   dxSkinWhiteprint, dxSkinXmas2008Blue, dxSkinscxPCPainter, cxPCdxBarPopupMenu,
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, Vcl.ImgList,
   System.Actions, Vcl.ActnList, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls, cxPC,
-  cxContainer, cxEdit, Vcl.DBCtrls, cxTextEdit, cxDBEdit;
+  cxContainer, cxEdit, Vcl.DBCtrls, cxTextEdit, cxDBEdit, cxMemo, cxMaskEdit,
+  cxDropDownEdit, cxCalendar;
 
 type
   TfrmListasRestringidasEdit = class(T_frmEdit)
@@ -32,6 +33,18 @@ type
     cxDBTextEdit2: TcxDBTextEdit;
     Label5: TLabel;
     cxDBTextEdit3: TcxDBTextEdit;
+    Label6: TLabel;
+    cxDBDateEdit1: TcxDBDateEdit;
+    Label7: TLabel;
+    cxDBTextEdit4: TcxDBTextEdit;
+    Label8: TLabel;
+    cxDBTextEdit5: TcxDBTextEdit;
+    Label9: TLabel;
+    cxDBTextEdit6: TcxDBTextEdit;
+    Label10: TLabel;
+    cxDBMemo1: TcxDBMemo;
+    Label11: TLabel;
+    cxDBTextEdit7: TcxDBTextEdit;
   private
     { Private declarations }
   public

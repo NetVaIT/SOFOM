@@ -50,7 +50,8 @@ type
     function SacaNombre(Individuo: IXMLIndividuo): String;
     procedure EliminarRegistrosPrevios(TipoLista: String);
     function ReducirTexto(textoOrigen: String; TamCampo: Integer): String;
-    function SacarAliasEntidad(ListaAlias: IXMLAlias_EntidadList): String; //Jul 18/18
+    function SacarAliasEntidad(ListaAlias: IXMLAlias_EntidadList): String;
+    procedure MostrarCArgadas(TipoLista: String); //Jul 18/18
 
 
 
@@ -123,7 +124,7 @@ end;
 procedure TdmListasRestringidas.CargarDatosBloqueados(Tipo: integer;
   Archivo: TFileName);     //jul 16/18 verificar datos enviados
 
- var Listas:IXMLListas;
+var Listas:IXMLListas;
      Lista:IXMLLista;
      Reportados: IXMLReportados;
      Individuo:IXMLIndividuo;
@@ -178,11 +179,11 @@ begin
     //Guardar en DB()
     InsertaListaXML(Lista.Tipo_Lista,intToStr(Individuo.DataId),NomC,Nacionalidad, RFC,Individuo.Numero_Referencia,
                     Individuo.Un_Tipo_Lista ,Individuo.Comentarios, puesto,Alias,idPais,Fecha );
-   inc(Paso);
- end;
- //  REportados.Entidad.Count
- for I := 0 to Reportados.Entidad.Count-1 do //Individuos
- begin
+    inc(Paso);
+  end;
+  //  REportados.Entidad.Count
+  for I := 0 to Reportados.Entidad.Count-1 do //Individuos
+  begin
     ShowProgress(Paso,Total,'Cargando registros Entidades ...' + IntToStr(trunc(Paso/Total*100)) + '%');  //Jul 19/20
     IdPais:=0;
     Fecha:=0;
@@ -190,10 +191,10 @@ begin
     FecTexto:='';
     Puesto:='';
     Entidad:=Reportados.Entidad[i];
-   // FechaNac:=Entidad.Fecha_Nac_Individuo;
-  //  SacarFecha(FechaNac, Fecha, FecTexto); //Para convertir la fecha en caso
-  //  if FEcTexto<>'' then
-   //   RFC:=FecTexto;
+    // FechaNac:=Entidad.Fecha_Nac_Individuo;
+    //  SacarFecha(FechaNac, Fecha, FecTexto); //Para convertir la fecha en caso
+    //  if FEcTexto<>'' then
+    //   RFC:=FecTexto;
     Alias:=SacarAliasEntidad(Entidad.Alias_Entidad);
     if Entidad.Domicilio_entidad.count>0 then
     begin
@@ -209,12 +210,33 @@ begin
     //Guardar en DB()
     InsertaListaXML(Lista.Tipo_Lista,intToStr(Entidad.DataId),NomC,Nacionalidad, RFC,Entidad.Numero_Referencia,
                     Entidad.Un_Tipo_Lista ,Entidad.Comentarios, puesto,Alias,idPais,Fecha );
-   inc(Paso);
- end;
- ShowProgress(Paso,Total,'Carga Finalizada ... 100 %' );
- ShowProgress(Total,Total);
+    inc(Paso);
+  end;
+
+  ShowProgress(Paso,Total,'Carga Finalizada ... 100 %' );
+  //Mostrar cargadas
+  ShowProgress(Paso,Total,'Desplegando información cargada 100 %' );
+  MostrarCArgadas(Lista.Tipo_Lista);
+  ShowProgress(Total,Total);
+
+
 
 end;
+procedure TdmListasRestringidas.MostrarCargadas(TipoLista:String);
+begin
+  if TipoLista ='LPB' then
+    TipoLista:='4'
+  else //deberia ser ONG //Vrificar o buscar
+    TipoLista:= '8';
+
+  adodsMaster.Open;
+  adodsMaster.Filter:='IDOrganismo='+TipoLista;
+  adodsMaster.Filtered:=True;
+
+end;
+
+
+
 
 procedure TdmListasRestringidas.EliminarRegistrosPrevios(TipoLista:String);
 var cant:integer;
@@ -430,10 +452,20 @@ end;
 procedure TdmListasRestringidas.SetFilter;
 var
   Nombre: String;
+  FiltroOrg:String; // Jul 20/18
 begin
   inherited;
+  adodsMaster.Filter:='';  //Por filtro de carga
+  adodsMaster.Filtered:=FAlse;
   Nombre:= TfrmListasRestringidas(gGridForm).Nombre;
-  SQLWhere:= 'WHERE Nombre LIKE ''%' + Nombre + '%''';
+  // Jul 20/18 desde
+  FiltroOrg:= IntToStr(TfrmListasRestringidas(gGridForm).IdOrganismo);
+  if FiltroOrg ='-1' then
+    FiltroOrg:=''
+  else
+    FiltroOrg:= ' and IdOrganismo= '+ FiltroOrg;
+  // Jul 20/18 hasta
+  SQLWhere:= 'WHERE Nombre LIKE ''%' + Nombre + '%''' +FiltroOrg; // Jul 20/18 ;
 end;
 
 end.

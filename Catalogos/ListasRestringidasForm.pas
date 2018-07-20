@@ -45,6 +45,13 @@ type
     dxBrBtnLPB: TdxBarButton;
     PnlConsulta: TPanel;
     RdGrpOrganismo: TRadioGroup;
+    tvMasterFechaNacimiento: TcxGridDBColumn;
+    tvMasterRFC: TcxGridDBColumn;
+    tvMasterNoIdentificacion: TcxGridDBColumn;
+    tvMasterDependencia: TcxGridDBColumn;
+    tvMasterPuesto: TcxGridDBColumn;
+    tvMasterComentarios: TcxGridDBColumn;
+    tvMasterNacionalidad: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
@@ -113,6 +120,7 @@ end;
 procedure TfrmListasRestringidas.SetActOrg(const Value: TBasicAction);
 begin
   FActOrg := Value;
+
 end;
 
 procedure TfrmListasRestringidas.SetIdOrganismo(const Value: Integer);
