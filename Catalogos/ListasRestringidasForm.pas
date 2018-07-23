@@ -27,7 +27,7 @@ uses
   cxGridCustomPopupMenu, cxGridPopupMenu, cxClasses, Vcl.StdActns, Vcl.DBActns,
   System.Actions, Vcl.ActnList, Vcl.StdCtrls, cxGridLevel, cxGridCustomView,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
-  Vcl.ExtCtrls, cxTextEdit, cxBarEditItem, cxCurrencyEdit;
+  Vcl.ExtCtrls, cxTextEdit, cxBarEditItem, cxCurrencyEdit, cxDropDownEdit;
 
 type
   TfrmListasRestringidas = class(T_frmGrid)
@@ -43,8 +43,6 @@ type
     edtNombre: TcxBarEditItem;
     dxBarButton8: TdxBarButton;
     dxBrBtnLPB: TdxBarButton;
-    PnlConsulta: TPanel;
-    RdGrpOrganismo: TRadioGroup;
     tvMasterFechaNacimiento: TcxGridDBColumn;
     tvMasterRFC: TcxGridDBColumn;
     tvMasterNoIdentificacion: TcxGridDBColumn;
@@ -52,6 +50,7 @@ type
     tvMasterPuesto: TcxGridDBColumn;
     tvMasterComentarios: TcxGridDBColumn;
     tvMasterNacionalidad: TcxGridDBColumn;
+    cxBrEdtItmOrganismo: TcxBarEditItem;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
@@ -83,7 +82,6 @@ begin
 //  Select IdOrganismo, Descripcion from Organismos O where Exists( Select distinct (IdOrganismo) from ListasRestringidas LR where Lr.Idorganismo=O.IdOrganismo )
 
 
-
 end;
 
 procedure TfrmListasRestringidas.FormShow(Sender: TObject);
@@ -98,9 +96,10 @@ var
   texto:String;
 begin
   result:=-1; //no debe hacer nada si regresa este valor
-  if RdGrpOrganismo.ItemIndex >0 then
-  begin
-    Texto:= RdGrpOrganismo.Items[RdGrpOrganismo.ItemIndex];
+//Se cambio Jul 23/18   por combo box
+   if pos('(',cxBrEdtItmOrganismo.EditValue )>0 then
+   begin
+    Texto:=   cxBrEdtItmOrganismo.EditValue;
     i:= pos('(',Texto) ;
     j:= Pos(')',Texto);
     if i >0 then
@@ -109,6 +108,7 @@ begin
       result:=StrToint(TExto); //DEbe solo tener el numero del idorganismo
     end;
   end;
+
 
 end;
 

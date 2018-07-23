@@ -29,14 +29,14 @@ inherited frmListasRestringidas: TfrmListasRestringidas
     Width = 1189
     Height = 214
     ExplicitTop = 28
-    ExplicitWidth = 907
-    ExplicitHeight = 227
+    ExplicitWidth = 1189
+    ExplicitHeight = 214
     inherited cxGrid: TcxGrid
-      Top = 41
       Width = 1189
-      Height = 173
-      ExplicitWidth = 907
-      ExplicitHeight = 227
+      Height = 214
+      ExplicitTop = 41
+      ExplicitWidth = 1189
+      ExplicitHeight = 173
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdListaRestringida: TcxGridDBColumn
           DataBinding.FieldName = 'IdListaRestringida'
@@ -107,62 +107,33 @@ inherited frmListasRestringidas: TfrmListasRestringidas
         end
       end
     end
-    object PnlConsulta: TPanel
-      Left = 0
-      Top = 0
-      Width = 1189
-      Height = 41
-      Align = alTop
-      BevelOuter = bvNone
-      ParentBackground = False
-      TabOrder = 1
-      ExplicitWidth = 907
-      object RdGrpOrganismo: TRadioGroup
-        Left = 0
-        Top = 0
-        Width = 937
-        Height = 41
-        Align = alLeft
-        Caption = 'Organismo'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ItemIndex = 0
-        Items.Strings = (
-          'Todos')
-        ParentFont = False
-        TabOrder = 0
-      end
-    end
   end
   inherited pnlDetail3: TPanel
     Top = 333
     Width = 1189
-    ExplicitTop = 346
-    ExplicitWidth = 907
+    ExplicitTop = 333
+    ExplicitWidth = 1189
   end
   inherited pnlDetail2: TPanel
     Top = 289
     Width = 1189
-    ExplicitTop = 302
-    ExplicitWidth = 907
+    ExplicitTop = 289
+    ExplicitWidth = 1189
   end
   inherited pnlDetail1: TPanel
     Top = 245
     Width = 1189
-    ExplicitTop = 258
-    ExplicitWidth = 907
+    ExplicitTop = 245
+    ExplicitWidth = 1189
   end
   inherited pnlClose: TPanel
     Top = 374
     Width = 1189
-    ExplicitTop = 387
-    ExplicitWidth = 907
+    ExplicitTop = 374
+    ExplicitWidth = 1189
     inherited btnClose: TButton
       Left = 1104
-      ExplicitLeft = 822
+      ExplicitLeft = 1104
     end
   end
   inherited DataSource: TDataSource
@@ -187,22 +158,28 @@ inherited frmListasRestringidas: TfrmListasRestringidas
         item
           Visible = True
           ItemName = 'dxBarButton8'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBrBtnLPB'
         end>
     end
     inherited dxbFilter: TdxBar
-      DockedLeft = 381
+      DockedLeft = 463
       ItemLinks = <
         item
           Visible = True
           ItemName = 'edtNombre'
         end
         item
+          UserDefine = [udWidth]
+          UserWidth = 146
           Visible = True
-          ItemName = 'dxbtnSearch'
+          ItemName = 'cxBrEdtItmOrganismo'
         end
         item
           Visible = True
-          ItemName = 'dxBrBtnLPB'
+          ItemName = 'dxbtnSearch'
         end>
       Visible = True
     end
@@ -251,8 +228,17 @@ inherited frmListasRestringidas: TfrmListasRestringidas
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000FFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
-      ImageIndex = 17
       PaintStyle = psCaptionGlyph
+    end
+    object cxBrEdtItmOrganismo: TcxBarEditItem
+      Caption = 'Organismo'
+      Category = 0
+      Hint = 'Organismo'
+      Visible = ivAlways
+      ShowCaption = True
+      PropertiesClassName = 'TcxComboBoxProperties'
+      Properties.Items.Strings = (
+        'Todos')
     end
   end
   inherited cxStyleRepository: TcxStyleRepository

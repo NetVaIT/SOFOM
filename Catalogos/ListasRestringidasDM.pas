@@ -5,7 +5,7 @@ interface
 uses
   System.SysUtils, System.Classes, _StandarDMod, Data.DB, System.Actions,
   Vcl.ActnList, Data.Win.ADODB, ProcesosType, Xml.xmldom, Xml.XMLIntf,
-  Xml.Win.msxmldom, Xml.XMLDoc, Dialogs,LPB;
+  Xml.Win.msxmldom, Xml.XMLDoc, Dialogs,LPB,cxDropDownEdit;
 
 type
   TdmListasRestringidas = class(T_dmStandar)
@@ -74,6 +74,7 @@ uses ListasRestringidasForm, ListasRestringidasWeb, _Utils;
 procedure TdmListasRestringidas.ActCargaLPBExecute(Sender: TObject);
 begin
   inherited;
+//  TfrmListasRestringidas(gGridForm).cxBrEdtItmOrganismo.EditValue:='Todos';
   if OpnDlgXML.Execute then
     CargarDatosBloqueados(1, OpnDlgXML.FileName); //DEberia ser del formato
 end;
@@ -88,15 +89,15 @@ begin
   ADOQryAuxiliar.open;
   if not ADOQryAuxiliar.eof then
   begin
-    TfrmListasRestringidas(gGridForm).RdGrpOrganismo.Items.Clear;
-    TfrmListasRestringidas(gGridForm).RdGrpOrganismo.Items.Add('Todos');
+ //SE cambio por combo Jul 23/18
+    TcxComboBoxProperties(TfrmListasRestringidas(gGridForm).cxBrEdtItmOrganismo.properties).items.Clear;
+    TcxComboBoxProperties(TfrmListasRestringidas(gGridForm).cxBrEdtItmOrganismo.properties).items.Add('Todos');
     while not ADOQryAuxiliar.eof do
     begin
-      TfrmListasRestringidas(gGridForm).RdGrpOrganismo.Items.ADD(ADOQryAuxiliar.FieldByName('Descripcion').asstring +'('+ ADOQryAuxiliar.FieldByName('IDOrganismo').asstring+')');
+      TcxComboBoxProperties(TfrmListasRestringidas(gGridForm).cxBrEdtItmOrganismo.properties).items.Add(ADOQryAuxiliar.FieldByName('Descripcion').asstring +'('+ ADOQryAuxiliar.FieldByName('IDOrganismo').asstring+')');
       ADOQryAuxiliar.Next;
     end;
-    TfrmListasRestringidas(gGridForm).RdGrpOrganismo.Itemindex:=0;
-    TfrmListasRestringidas(gGridForm).RdGrpOrganismo.Columns:= ADOQryAuxiliar.RecordCount+1;
+
   end;
 end;
 
@@ -228,7 +229,11 @@ begin
     TipoLista:='4'
   else //deberia ser ONG //Vrificar o buscar
     TipoLista:= '8';
-
+  SQLSelect:= 'select IdListaRestringida, IdOrganismo, IdPais, IdEstatus, Identificador, Nombre, Alias , '
+             +'FechaNacimiento, RFC, NoIdentificacion, Dependencia, Puesto, Comentarios, Nacionalidad from ListasRestringidas'; //agregado jul 23
+  SQLOrderBy:= ' ORDER BY Nombre ';
+  adodsMaster.Close;
+  adodsMaster.CommandText:= SQLSElect + SqlOrderby;   //agregado jul 23
   adodsMaster.Open;
   adodsMaster.Filter:='IDOrganismo='+TipoLista;
   adodsMaster.Filtered:=True;
