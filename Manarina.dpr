@@ -67,7 +67,7 @@ uses
   BateriaCapacitacionCursoTemaForm in 'Catalogos\BateriaCapacitacionCursoTemaForm.pas' {frmBateriaCapacitacionCursosTema},
   BateriaCapacitacionesForm in 'Catalogos\BateriaCapacitacionesForm.pas' {frmBateriasCapacitacion},
   BateriaCapacitacionForm in 'Catalogos\BateriaCapacitacionForm.pas' {frmBateriaCapacitacion},
-  PersonasDM in 'Catalogos\PersonasDM.pas' {dmPersona: TDataModule},
+  PersonasDM in 'Catalogos\PersonasDM.pas' {dmPersonas: TDataModule},
   PersonasEdit in 'Catalogos\PersonasEdit.pas' {frmPersonaEdit},
   PersonasForm in 'Catalogos\PersonasForm.pas' {frmPersonas},
   PersonasDomiciliosDM in 'Catalogos\PersonasDomiciliosDM.pas' {dmPersonasDomicilios: TDataModule},
@@ -264,6 +264,9 @@ uses
   CFDIRelacionadosForm in 'Procesos\CFDIRelacionadosForm.pas' {frmCFDIRelacionados},
   CFDICPRelacionadosForm in 'Procesos\CFDICPRelacionadosForm.pas' {frmCFDICPRelacionados},
   PagosAplicacionesForm in 'Procesos\PagosAplicacionesForm.pas' {frmPagosAplicaciones},
+  PersonasAdministradoresDM in 'Catalogos\PersonasAdministradoresDM.pas' {dmPersonasAdministradores: TDataModule},
+  PersonasAdministradoresForm in 'Catalogos\PersonasAdministradoresForm.pas' {frmPersonasAdministradores},
+  PersonasAdministradoresEdit in 'Catalogos\PersonasAdministradoresEdit.pas' {frmPersonasAdministradoresEdit},
   LPB in 'Procesos\LPB.pas';
 
 {$R *.res}

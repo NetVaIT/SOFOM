@@ -305,7 +305,8 @@ inherited dmrptReporteCartera: TdmrptReporteCartera
       '           ,[ValorResidual]'
       '           ,[SaldoInsoluto]'
       '           ,[SaldoTotal]'
-      '           ,[Descripcion] from VW_CArteraClientes)')
+      '           ,[Descripcion] from VW_CArteraClientes'
+      '            WHERE IdAnexoEstatus <> 4)')
     Left = 176
     Top = 99
   end

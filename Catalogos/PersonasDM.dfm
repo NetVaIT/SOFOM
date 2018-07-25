@@ -1,4 +1,4 @@
-inherited dmPersona: TdmPersona
+inherited dmPersonas: TdmPersonas
   OldCreateOrder = True
   Height = 593
   Width = 770
@@ -390,6 +390,11 @@ inherited dmPersona: TdmPersona
       OnExecute = actAccionistasExecute
       OnUpdate = actAccionistasUpdate
     end
+    object actAdministradores: TAction
+      Caption = 'Administradores'
+      OnExecute = actAdministradoresExecute
+      OnUpdate = actAdministradoresUpdate
+    end
   end
   object adodsPersonaTipo: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -614,8 +619,8 @@ inherited dmPersona: TdmPersona
   end
   object dsMaster: TDataSource
     DataSet = adodsMaster
-    Left = 600
-    Top = 48
+    Left = 144
+    Top = 16
   end
   object adodsRolesTipos: TADODataSet
     Connection = _dmConection.ADOConnection

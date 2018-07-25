@@ -89,6 +89,8 @@ type
     dxbbGenMoratorios: TdxBarButton;
     dxbbReducirCuota: TdxBarButton;
     dxbbReducirPlazo: TdxBarButton;
+    tvMasterFinanciarEnganche: TcxGridDBColumn;
+    tvMasterFechaLiquidacion: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private

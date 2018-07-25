@@ -1,19 +1,19 @@
 inherited frmAnexosEdit: TfrmAnexosEdit
   Caption = 'frmAnexosEdit'
-  ClientHeight = 661
-  ClientWidth = 682
+  ClientHeight = 667
+  ClientWidth = 672
   OnDestroy = FormDestroy
-  ExplicitWidth = 688
-  ExplicitHeight = 690
+  ExplicitWidth = 678
+  ExplicitHeight = 696
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
-    Width = 682
-    Height = 620
+    Width = 672
+    Height = 626
     ExplicitWidth = 682
     ExplicitHeight = 620
-    ClientRectBottom = 618
-    ClientRectRight = 680
+    ClientRectBottom = 624
+    ClientRectRight = 670
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 2
       ExplicitTop = 26
@@ -21,7 +21,7 @@ inherited frmAnexosEdit: TfrmAnexosEdit
       ExplicitHeight = 592
       object cxGroupBox1: TcxGroupBox
         Left = 3
-        Top = -1
+        Top = 3
         Caption = ' '
         TabOrder = 0
         Height = 218
@@ -140,7 +140,7 @@ inherited frmAnexosEdit: TfrmAnexosEdit
         object DBLookupComboBox1: TDBLookupComboBox
           Left = 311
           Top = 70
-          Width = 150
+          Width = 157
           Height = 21
           DataField = 'Moneda'
           DataSource = DataSource
@@ -219,7 +219,7 @@ inherited frmAnexosEdit: TfrmAnexosEdit
         Top = 223
         Caption = 'Pagos mensuales'
         TabOrder = 4
-        Height = 356
+        Height = 236
         Width = 325
         object Label20: TLabel
           Left = 95
@@ -544,7 +544,7 @@ inherited frmAnexosEdit: TfrmAnexosEdit
         Top = 504
         Caption = 'Valor residual'
         TabOrder = 3
-        Height = 75
+        Height = 89
         Width = 325
         object Label26: TLabel
           Left = 59
@@ -579,28 +579,107 @@ inherited frmAnexosEdit: TfrmAnexosEdit
           Width = 121
         end
       end
+      object cxGroupBox6: TcxGroupBox
+        Left = 334
+        Top = 465
+        Caption = 'Saldos'
+        TabOrder = 5
+        Height = 128
+        Width = 325
+        object Label30: TLabel
+          Left = 103
+          Top = 19
+          Width = 75
+          Height = 13
+          Caption = 'Capital cobrado'
+          FocusControl = cxDBTextEdit1
+        end
+        object Label31: TLabel
+          Left = 112
+          Top = 46
+          Width = 66
+          Height = 13
+          Caption = 'Saldo insoluto'
+          FocusControl = cxDBTextEdit4
+        end
+        object Label32: TLabel
+          Left = 108
+          Top = 73
+          Width = 70
+          Height = 13
+          Caption = 'Monto vencido'
+          FocusControl = cxDBTextEdit22
+        end
+        object Label33: TLabel
+          Left = 82
+          Top = 100
+          Width = 96
+          Height = 13
+          Caption = 'Fecha de liquidaci'#243'n'
+          FocusControl = cxDBDateEdit4
+        end
+        object cxDBTextEdit1: TcxDBTextEdit
+          Left = 184
+          Top = 16
+          DataBinding.DataField = 'CapitalCobrado'
+          DataBinding.DataSource = DataSource
+          Enabled = False
+          TabOrder = 0
+          Width = 121
+        end
+        object cxDBTextEdit4: TcxDBTextEdit
+          Left = 184
+          Top = 43
+          DataBinding.DataField = 'SaldoInsoluto'
+          DataBinding.DataSource = DataSource
+          Enabled = False
+          TabOrder = 1
+          Width = 121
+        end
+        object cxDBTextEdit22: TcxDBTextEdit
+          Left = 184
+          Top = 70
+          DataBinding.DataField = 'MontoVencido'
+          DataBinding.DataSource = DataSource
+          Enabled = False
+          TabOrder = 2
+          Width = 121
+        end
+        object cxDBDateEdit4: TcxDBDateEdit
+          Left = 184
+          Top = 97
+          DataBinding.DataField = 'FechaLiquidacion'
+          DataBinding.DataSource = DataSource
+          TabOrder = 3
+          Width = 121
+        end
+      end
     end
     object tsSegmentos: TcxTabSheet
       Caption = 'Segmentos'
       ImageIndex = 2
       TabVisible = False
+      ExplicitWidth = 678
+      ExplicitHeight = 592
     end
     object tsProductos: TcxTabSheet
       Caption = 'Productos'
       ImageIndex = 1
+      ExplicitWidth = 678
+      ExplicitHeight = 592
     end
   end
   inherited pmlMain: TPanel
-    Top = 620
-    Width = 682
+    Top = 626
+    Width = 672
     ExplicitTop = 620
     ExplicitWidth = 682
     inherited btnCancel: TButton
-      Left = 600
+      Left = 590
       ExplicitLeft = 600
     end
     inherited btnOk: TButton
-      Left = 519
+      Left = 509
       ExplicitLeft = 519
     end
   end

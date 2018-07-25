@@ -332,10 +332,19 @@ inherited frmPersonas: TfrmPersonas
         item
           Visible = True
           ItemName = 'btnAccionistas'
+        end
+        item
+          Visible = True
+          ItemName = 'btnAdministradores'
         end>
     end
     object btnAccionistas: TdxBarButton
       Caption = 'Accionistas'
+      Category = 0
+      Visible = ivAlways
+    end
+    object btnAdministradores: TdxBarButton
+      Caption = 'Administradores'
       Category = 0
       Visible = ivAlways
     end
@@ -349,6 +358,7 @@ inherited frmPersonas: TfrmPersonas
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42664.566576585640000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

@@ -177,6 +177,7 @@ type
     adodsAnexosFinanciarEnganche: TBooleanField;
     actReducirCuota: TAction;
     actReducirPlazo: TAction;
+    adodsAnexosFechaLiquidacion: TDateTimeField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsAnexosPrecioMonedaChange(Sender: TField);
     procedure adodsAnexosNewRecord(DataSet: TDataSet);

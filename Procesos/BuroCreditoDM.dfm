@@ -28,12 +28,32 @@ inherited dmBuroCredito: TdmBuroCredito
     CursorType = ctStatic
     Parameters = <
       item
-        Name = 'FechaV1'
+        Name = 'FechaF1'
         Size = -1
         Value = Null
       end
       item
-        Name = 'FechaV2'
+        Name = 'FechaF2'
+        Size = -1
+        Value = Null
+      end
+      item
+        Name = 'FechaF3'
+        Size = -1
+        Value = Null
+      end
+      item
+        Name = 'FechaF4'
+        Size = -1
+        Value = Null
+      end
+      item
+        Name = 'FechaI5'
+        Size = -1
+        Value = Null
+      end
+      item
+        Name = 'FechaF5'
         Size = -1
         Value = Null
       end>
@@ -49,9 +69,9 @@ inherited dmBuroCredito: TdmBuroCredito
         's, '#39'30'#39' AS FrecuenciaPagos, Anexos.PagoMensual AS ImportePagos,'
       
         'Pago.FechaPago AS FechaUltimoPago, Anexos.FechaTermino AS FechaR' +
-        'eestructura, 0 AS PagoFinalMorosa, Anexos.FechaTermino AS FechaL' +
-        'iquidacion, 0 AS Quita, 0 AS Dacion, 0 AS Quebranto, '#39'   '#39' AS Cl' +
-        'aveObservacion, '#39' '#39' AS CreditoEspecial,'
+        'eestructura, 0 AS PagoFinalMorosa, Anexos.FechaLiquidacion, 0 AS' +
+        ' Quita, 0 AS Dacion, 0 AS Quebranto, '#39'   '#39' AS ClaveObservacion, ' +
+        #39' '#39' AS CreditoEspecial,'
       
         'I.FechaVencimiento AS FechaPrimerIncumplimiento, (Anexos.SaldoIn' +
         'soluto - Anexos.ValorResidual) AS SaldoInsoluto, Anexos.MontoFin' +
@@ -73,15 +93,61 @@ inherited dmBuroCredito: TdmBuroCredito
       
         'LEFT JOIN (SELECT IdAnexo, MIN(FechaVencimiento) AS FechaVencimi' +
         'ento FROM vw_AnexoAmortizacionCXCDiasRetraso WHERE DiasRetraso >' +
-        ' 0 AND FechaVencimiento <= :FechaV1 GROUP BY IdAnexo) AS I ON I.' +
+        ' 0 AND FechaVencimiento <= :FechaF1 GROUP BY IdAnexo) AS I ON I.' +
         'IdAnexo = Anexos.IdAnexo'
       
         'LEFT JOIN (SELECT IdAnexo, MIN(FechaVencimiento) AS FechaVencimi' +
         'ento FROM vw_AnexoAmortizacionCXCDiasRetraso WHERE Saldo > 0.01 ' +
-        'AND FechaVencimiento <= :FechaV2 GROUP BY IdAnexo) AS V ON V.IdA' +
+        'AND FechaVencimiento <= :FechaF2 GROUP BY IdAnexo) AS V ON V.IdA' +
         'nexo = Anexos.IdAnexo'
       'WHERE Anexos.IdAnexoEstatus = 3'
-      'AND Anexos.SaldoInsoluto > 0')
+      'AND Anexos.SaldoInsoluto > 0'
+      'UNION'
+      
+        'SELECT Anexos.IdAnexo, Contratos.IdPersona, Personas.RFC, REPLAC' +
+        'E(dbo.GetAnexoIdentificador(Anexos.IdAnexo),'#39'-'#39','#39#39') AS Contrato,' +
+        ' '#39#39' AS ContratoAnterior, Anexos.Fecha AS FechaApertura, Anexos.P' +
+        'lazo,'
+      
+        'BCTiposCreditos.Identificador AS TipoCredito, Anexos.MontoFinanc' +
+        'iar AS SaldoInicial, '#39'001'#39' AS Moneda, Anexos.Plazo AS NumeroPago' +
+        's, '#39'30'#39' AS FrecuenciaPagos, Anexos.PagoMensual AS ImportePagos,'
+      
+        'Pago.FechaPago AS FechaUltimoPago, Anexos.FechaTermino AS FechaR' +
+        'eestructura, 0 AS PagoFinalMorosa, Anexos.FechaLiquidacion, 0 AS' +
+        ' Quita, 0 AS Dacion, 0 AS Quebranto, '#39'   '#39' AS ClaveObservacion, ' +
+        #39' '#39' AS CreditoEspecial,'
+      
+        'I.FechaVencimiento AS FechaPrimerIncumplimiento, (Anexos.SaldoIn' +
+        'soluto - Anexos.ValorResidual) AS SaldoInsoluto, Anexos.MontoFin' +
+        'anciar AS CreditoMaximo, V.FechaVencimiento AS FechacarteraVenci' +
+        'da'
+      'FROM Anexos'
+      'INNER JOIN Contratos ON Anexos.IdContrato = Contratos.IdContrato'
+      'INNER JOIN Personas ON Contratos.IdPersona = Personas.IdPersona'
+      
+        'INNER JOIN ContratosTipos ON Contratos.IdContratoTipo = Contrato' +
+        'sTipos.IdContratoTipo'
+      
+        'INNER JOIN BCTiposCreditos ON ContratosTipos.IdBCTipoCredito = B' +
+        'CTiposCreditos.IdBCTipoCredito'
+      
+        'LEFT JOIN (SELECT IdAnexo, MAX(FechaPago) AS FechaPago FROM  vw_' +
+        'AnexoAmortizacionCXCDiasRetraso GROUP BY IdAnexo) AS Pago ON Pag' +
+        'o.IdAnexo = Anexos.IdAnexo'
+      
+        'LEFT JOIN (SELECT IdAnexo, MIN(FechaVencimiento) AS FechaVencimi' +
+        'ento FROM vw_AnexoAmortizacionCXCDiasRetraso WHERE DiasRetraso >' +
+        ' 0 AND FechaVencimiento <= :FechaF3 GROUP BY IdAnexo) AS I ON I.' +
+        'IdAnexo = Anexos.IdAnexo'
+      
+        'LEFT JOIN (SELECT IdAnexo, MIN(FechaVencimiento) AS FechaVencimi' +
+        'ento FROM vw_AnexoAmortizacionCXCDiasRetraso WHERE Saldo > 0.01 ' +
+        'AND FechaVencimiento <= :FechaF4 GROUP BY IdAnexo) AS V ON V.IdA' +
+        'nexo = Anexos.IdAnexo'
+      'WHERE Anexos.IdAnexoEstatus = 4'
+      'AND Anexos.SaldoInsoluto = 0'
+      'AND Anexos.FechaLiquidacion BETWEEN :FechaI5 AND :FechaF5')
     Left = 136
     Top = 88
     object adoqCreditoIdAnexo: TAutoIncField

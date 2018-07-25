@@ -180,7 +180,8 @@ var
   TXTArchivo: TextFile;
   Registro: String;
   IdAnexo: Integer;
-  FechaPeriodo: TDateTime;
+  FechaInicial: TDateTime;
+  FechaFinal: TDateTime;
   TotalEmpresas: Integer;
   TotalSaldo: Double;
 
@@ -343,7 +344,7 @@ var
     Result := Result + '25' + PreparaCadena(EmptyStr, 'I', ' ', 40);
   end;
 
-  function GetDE(IdAnexo: Integer; RFC, Contrato: String; FechaPeriodo: TDateTime) : String;
+  function GetDE(IdAnexo: Integer; RFC, Contrato: String; FechaFinal: TDateTime) : String;
   begin
 
   end;
@@ -365,14 +366,19 @@ begin
 //  Result := 0;
   TotalEmpresas := 0;
   TotalSaldo := 0;
-  FechaPeriodo := EncodeDate(Year,Month,DaysInAMonth(Year, Month));
+  FechaInicial := EncodeDate(Year,Month,1);
+  FechaFinal := EncodeDate(Year,Month,DaysInAMonth(Year, Month));
   AssignFile(TXTArchivo, FileName);
   try
     Rewrite(TXTArchivo);
     Write(TXTArchivo, GetHD(Month, Year));
     adoqCredito.Close;
-    adoqCredito.Parameters.ParamByName('FechaV1').Value := FechaPeriodo;
-    adoqCredito.Parameters.ParamByName('FechaV2').Value := FechaPeriodo;
+    adoqCredito.Parameters.ParamByName('FechaF1').Value := FechaFinal;
+    adoqCredito.Parameters.ParamByName('FechaF2').Value := FechaFinal;
+    adoqCredito.Parameters.ParamByName('FechaF3').Value := FechaFinal;
+    adoqCredito.Parameters.ParamByName('FechaF4').Value := FechaFinal;
+    adoqCredito.Parameters.ParamByName('FechaI5').Value := FechaInicial;
+    adoqCredito.Parameters.ParamByName('FechaF5').Value := FechaFinal;
     adoqCredito.Open;
     adoqCredito.First;
     while not adoqCredito.Eof do
@@ -384,9 +390,9 @@ begin
       Inc(TotalEmpresas);
       // Detalle
       adoqDetalle.Close;
-      adoqDetalle.Parameters.ParamByName('FechaV1').Value := FechaPeriodo;
+      adoqDetalle.Parameters.ParamByName('FechaV1').Value := FechaFinal;
       adoqDetalle.Parameters.ParamByName('IdAnexo1').Value := IdAnexo;
-      adoqDetalle.Parameters.ParamByName('FechaV2').Value := FechaPeriodo;
+      adoqDetalle.Parameters.ParamByName('FechaV2').Value := FechaFinal;
       adoqDetalle.Parameters.ParamByName('IdAnexo2').Value := IdAnexo;
       adoqDetalle.Open;
       adoqDetalle.First;

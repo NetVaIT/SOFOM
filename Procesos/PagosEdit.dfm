@@ -14,8 +14,8 @@ inherited FrmEdPagos: TFrmEdPagos
     ClientRectBottom = 459
     ClientRectRight = 593
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 28
+      ExplicitLeft = 2
+      ExplicitTop = 26
       ExplicitWidth = 591
       ExplicitHeight = 433
       object Label7: TLabel
@@ -457,7 +457,6 @@ inherited FrmEdPagos: TFrmEdPagos
   end
   object DSPersonas: TDataSource
     AutoEdit = False
-    DataSet = dmPagos.ADOSPersonas
     Left = 344
   end
   object DSAnexos: TDataSource

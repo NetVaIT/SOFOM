@@ -36,11 +36,25 @@ type
     tvMasterIdAccionista: TcxGridDBColumn;
     tvMasterAccionista: TcxGridDBColumn;
     tvMasterPorcentaje: TcxGridDBColumn;
+    tvMasterCargo: TcxGridDBColumn;
+    tvMasterNivelControl1: TcxGridDBColumn;
+    tvMasterNivelControl2: TcxGridDBColumn;
+    tvMasterNivelControl3: TcxGridDBColumn;
+    tvMasterNivelControl4: TcxGridDBColumn;
+    tvMasterNivelControl5: TcxGridDBColumn;
+    btnAccionistas: TdxBarButton;
+    btnAdministradores: TdxBarButton;
     procedure FormCreate(Sender: TObject);
   private
+    FactAccionistas: TBasicAction;
+    FactAdminostradores: TBasicAction;
+    procedure SetactAccionistas(const Value: TBasicAction);
+    procedure SetactAdminostradores(const Value: TBasicAction);
     { Private declarations }
   public
     { Public declarations }
+    property actAccionistas: TBasicAction read FactAccionistas write SetactAccionistas;
+    property actAdminostradores: TBasicAction read FactAdminostradores write SetactAdminostradores;
   end;
 
 implementation
@@ -53,6 +67,19 @@ procedure TfrmPersonasAccionistas.FormCreate(Sender: TObject);
 begin
   inherited;
   gEditForm:= TfrmPersonasAccionistasEdit.Create(Self);
+end;
+
+procedure TfrmPersonasAccionistas.SetactAccionistas(const Value: TBasicAction);
+begin
+  FactAccionistas := Value;
+  btnAccionistas.Action := Value;
+end;
+
+procedure TfrmPersonasAccionistas.SetactAdminostradores(
+  const Value: TBasicAction);
+begin
+  FactAdminostradores := Value;
+  btnAdministradores.Action := Value;
 end;
 
 end.

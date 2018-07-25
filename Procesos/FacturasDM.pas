@@ -1114,13 +1114,23 @@ begin
     gFormDeatil1.DataSet:= adodsCFDICPRelacionados;
   end;
   // Busqueda
-  SQLSelect:= 'SELECT C.IdCFDI, C.IdCFDITipoDocumento, C.IdCFDIFormaPago, C.IdMetodoPago, C.IdMoneda, C.IdPersonaEmisor, C.IdPersonaReceptor, C.IdDocumentoCBB, C.IdDocumentoXML, C.IdDocumentoPDF, C.IdCFDIEstatus, ' +
-  'C.IdCFDIFacturaGral, C.IdClienteDomicilio, C.IdCuentaXCobrar, C.IdCFDIFormaPago33, C.IdCFDIMetodoPago33, C.IDCFDITipoRelacion, C.IdCFDIUsoCFDI, C.IdPago, C.Version, C.CuentaCte, C.TipoCambio, C.TipoComp, C.Serie, ' +
-  'C.Folio, C.Fecha, C.LugarExpedicion, C.Sello, C.CondPago, C.NoCertificado, C.Certificado, C.SubTotal, C.Descto, C.MotivoDescto, C.Total, C.NumCtaPago, C.CadenaOriginal, C.TotalImpuestoRetenido, C.TotalImpuestoTrasladado, ' +
-  'C.SaldoDocumento, C.FechaCancelacion, C.Observaciones, C.PorcentajeIVA, C.EmailCliente, C.UUID_TB, C.SelloCFD_TB, C.SelloSAT_TB, C.CertificadoSAT_TB, C.FechaTimbrado_TB, C.SaldoFactoraje, C.NumPagosAplicados, ' +
-  'CCP.IdCFDIComplementoPago, CCP.IdCFDITipoCadenaPago, CCP.VersionPago, CCP.FechaPago, CCP.FormaPagoP, CCP.MonedaP, CCP.TipoCambioP, CCP.Monto, CCP.NumOperacion ' +
-  'FROM CFDI AS C ' +
-  'LEFT OUTER JOIN CFDIComplementoPagos AS CCP ON C.IdCFDI = CCP.IdCFDI ';
+  if IdCFDITipoDocumento = tdCFDIPago then
+    SQLSelect:= 'SELECT C.IdCFDI, C.IdCFDITipoDocumento, C.IdCFDIFormaPago, C.IdMetodoPago, C.IdMoneda, C.IdPersonaEmisor, C.IdPersonaReceptor, C.IdDocumentoCBB, C.IdDocumentoXML, C.IdDocumentoPDF, C.IdCFDIEstatus, ' +
+    'C.IdCFDIFacturaGral, C.IdClienteDomicilio, C.IdCuentaXCobrar, C.IdCFDIFormaPago33, C.IdCFDIMetodoPago33, C.IDCFDITipoRelacion, C.IdCFDIUsoCFDI, C.IdPago, C.Version, C.CuentaCte, C.TipoCambio, C.TipoComp, C.Serie, ' +
+    'C.Folio, C.Fecha, C.LugarExpedicion, C.Sello, C.CondPago, C.NoCertificado, C.Certificado, C.SubTotal, C.Descto, C.MotivoDescto, C.Total, C.NumCtaPago, C.CadenaOriginal, C.TotalImpuestoRetenido, C.TotalImpuestoTrasladado, ' +
+    'C.SaldoDocumento, C.FechaCancelacion, C.Observaciones, C.PorcentajeIVA, C.EmailCliente, C.UUID_TB, C.SelloCFD_TB, C.SelloSAT_TB, C.CertificadoSAT_TB, C.FechaTimbrado_TB, C.SaldoFactoraje, C.NumPagosAplicados, ' +
+    'CCP.IdCFDIComplementoPago, CCP.IdCFDITipoCadenaPago, CCP.VersionPago, CCP.FechaPago, CCP.FormaPagoP, CCP.MonedaP, CCP.TipoCambioP, CCP.Monto, CCP.NumOperacion ' +
+    'FROM CFDI AS C ' +
+    'LEFT OUTER JOIN CFDIComplementoPagos AS CCP ON C.IdCFDI = CCP.IdCFDI '
+  else
+    // Se quita la relacion con la tabla compelemwento de pago para que pueda agregar facturas manuales
+    SQLSelect:= 'SELECT C.IdCFDI, C.IdCFDITipoDocumento, C.IdCFDIFormaPago, C.IdMetodoPago, C.IdMoneda, C.IdPersonaEmisor, C.IdPersonaReceptor, C.IdDocumentoCBB, C.IdDocumentoXML, C.IdDocumentoPDF, C.IdCFDIEstatus, ' +
+    'C.IdCFDIFacturaGral, C.IdClienteDomicilio, C.IdCuentaXCobrar, C.IdCFDIFormaPago33, C.IdCFDIMetodoPago33, C.IDCFDITipoRelacion, C.IdCFDIUsoCFDI, C.IdPago, C.Version, C.CuentaCte, C.TipoCambio, C.TipoComp, C.Serie, ' +
+    'C.Folio, C.Fecha, C.LugarExpedicion, C.Sello, C.CondPago, C.NoCertificado, C.Certificado, C.SubTotal, C.Descto, C.MotivoDescto, C.Total, C.NumCtaPago, C.CadenaOriginal, C.TotalImpuestoRetenido, C.TotalImpuestoTrasladado, ' +
+    'C.SaldoDocumento, C.FechaCancelacion, C.Observaciones, C.PorcentajeIVA, C.EmailCliente, C.UUID_TB, C.SelloCFD_TB, C.SelloSAT_TB, C.CertificadoSAT_TB, C.FechaTimbrado_TB, C.SaldoFactoraje, C.NumPagosAplicados, ' +
+    'CAST(NULL AS bigint) AS IdCFDIComplementoPago, NULL AS IdCFDITipoCadenaPago, CAST(NULL AS varchar(5))  AS VersionPago, CAST(NULL AS datetime) AS FechaPago, CAST(NULL AS varchar(2)) AS FormaPagoP, CAST(NULL AS varchar(3)) AS MonedaP, ' +
+    'CAST(NULL AS decimal(18,6)) AS TipoCambioP, CAST(NULL AS decimal(18,6)) AS Monto, CAST(NULL AS varchar(100)) AS NumOperacion ' +
+    'FROM CFDI AS C ';
   actSearch.Execute;
 end;
 

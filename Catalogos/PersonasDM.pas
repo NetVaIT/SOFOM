@@ -9,7 +9,7 @@ uses
 type
   TRolTipo = (rNone, rDuenoProceso, rOutSourcing, rCliente, rProveedor, rEmpleado,
            rSocio, rAutoridad, rComisionista, rEmisor);
-  TdmPersona = class(T_dmStandar)
+  TdmPersonas = class(T_dmStandar)
     adodsMasterIdPersona: TAutoIncField;
     adodsMasterRFC: TStringField;
     adodsMasterIdPersonaTipo: TIntegerField;
@@ -109,41 +109,47 @@ type
     adodsMasterRegimenFiscalPreferente: TBooleanField;
     adodsMasterListaGAFI: TBooleanField;
     adodsMasterSegundoNombre: TStringField;
+    actAdministradores: TAction;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsPersonaRolesNewRecord(DataSet: TDataSet);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure actAccionistasExecute(Sender: TObject);
     procedure actAccionistasUpdate(Sender: TObject);
     procedure adodsMasterNombreChange(Sender: TField);
+    procedure actAdministradoresExecute(Sender: TObject);
+    procedure actAdministradoresUpdate(Sender: TObject);
   private
     { Private declarations }
     FRolTipo: TRolTipo;
-    procedure SetRolTipo(const Value: TRolTipo);
+    FIdPersona: Integer;
     function GetNombreCompleto: string;
-    property RolTipo: TRolTipo read FRolTipo write SetRolTipo;
+    procedure SetIdPersona(const Value: Integer);
+    property RolTipo: TRolTipo read FRolTipo write FRolTipo default rNone;
+//    property IdPersona: Integer read FIdPersona write FIdPersona default 0;
   protected
     procedure SetFilter; override;
   public
     { Public declarations }
-    constructor CreateWRol(AOwner: TComponent; RolTipo: TRolTipo); virtual;
+    constructor CreateWRol(AOwner: TComponent; RolTipo: TRolTipo);
+    constructor CreateWId(AOwner: TComponent; IdPersona: Integer);
+    property IdPersona: Integer read FIdPersona write SetIdPersona;
   end;
 
 implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses PersonasForm, PersonasAccionistasDM;
+uses PersonasForm, PersonasAccionistasDM, PersonasAdministradoresDM;
 
 {$R *.dfm}
 
-procedure TdmPersona.actAccionistasExecute(Sender: TObject);
+procedure TdmPersonas.actAccionistasExecute(Sender: TObject);
 var
   dmPersonasAccionistas: TdmPersonasAccionistas;
 begin
   inherited;
   dmPersonasAccionistas := TdmPersonasAccionistas.Create(Self);
   try
-//    dmPersonasAccionistas.TipoContrato:= TipoContrato;
     dmPersonasAccionistas.MasterSource := dsMaster;
     dmPersonasAccionistas.MasterFields := 'IdPersona';
     dmPersonasAccionistas.ShowModule(nil, '');
@@ -152,13 +158,34 @@ begin
   end;
 end;
 
-procedure TdmPersona.actAccionistasUpdate(Sender: TObject);
+procedure TdmPersonas.actAccionistasUpdate(Sender: TObject);
 begin
   inherited;
-  actAccionistas.Enabled := (adodsMasterIdPersonaTipo.Value = 2); // Solo personas morales
+  TAction(Sender).Enabled := (adodsMasterIdPersonaTipo.Value = 2); // Solo personas morales
 end;
 
-procedure TdmPersona.adodsMasterNewRecord(DataSet: TDataSet);
+procedure TdmPersonas.actAdministradoresExecute(Sender: TObject);
+var
+  dmPersonasAdministradores: TdmPersonasAdministradores;
+begin
+  inherited;
+  dmPersonasAdministradores := TdmPersonasAdministradores.Create(Self);
+  try
+    dmPersonasAdministradores.MasterSource := dsMaster;
+    dmPersonasAdministradores.MasterFields := 'IdPersona';
+    dmPersonasAdministradores.ShowModule(nil, '');
+  finally
+    dmPersonasAdministradores.Free;
+  end;
+end;
+
+procedure TdmPersonas.actAdministradoresUpdate(Sender: TObject);
+begin
+  inherited;
+  TAction(Sender).Enabled := (adodsMasterIdPersonaTipo.Value = 2); // Solo personas morales
+end;
+
+procedure TdmPersonas.adodsMasterNewRecord(DataSet: TDataSet);
 begin
   inherited;
   adodsMasterIdRolTipo.Value :=Ord(RolTipo);
@@ -174,31 +201,38 @@ begin
   adodsMasterPLDPagarEfectivo.Value := False;
 end;
 
-procedure TdmPersona.adodsMasterNombreChange(Sender: TField);
+procedure TdmPersonas.adodsMasterNombreChange(Sender: TField);
 begin
   inherited;
-  adodsMasterRazonSocial.Value := GetNombreCompleto;
+  adodsMasterRazonSocial.AsString := GetNombreCompleto;
 end;
 
-procedure TdmPersona.adodsPersonaRolesNewRecord(DataSet: TDataSet);
+procedure TdmPersonas.adodsPersonaRolesNewRecord(DataSet: TDataSet);
 begin
   inherited;
   adodsPersonaRolesCalcular.Value:= False;
 end;
 
-constructor TdmPersona.CreateWRol(AOwner: TComponent; RolTipo: TRolTipo);
+constructor TdmPersonas.CreateWId(AOwner: TComponent; IdPersona: Integer);
+begin
+  FIdPersona:= IdPersona;
+  inherited Create(AOwner);
+end;
+
+constructor TdmPersonas.CreateWRol(AOwner: TComponent; RolTipo: TRolTipo);
 begin
   FRolTipo:= RolTipo;
   inherited Create(AOwner);
 end;
 
-procedure TdmPersona.DataModuleCreate(Sender: TObject);
+procedure TdmPersonas.DataModuleCreate(Sender: TObject);
 begin
   inherited;
   gGridForm := TfrmPersonas.Create(Self);
   gGridForm.DataSet := adodsMaster;
   TfrmPersonas(gGridForm).RolTipo := RolTipo;
   TfrmPersonas(gGridForm).actAccionistas := actAccionistas;
+  TfrmPersonas(gGridForm).actAdminostradores := actAdministradores;
   // Busqueda
   SQLSelect:= 'SELECT IdPersona, IdPersonaTipo, IdRolTipo, IdRazonSocialTipo, IdSexo, IdEstadoCivil, IdPais, IdPoblacion, IdRiesgoTipo, IdBCCalificacion, IdBCActividad1, IdBCActividad2, IdBCActividad3, RFC, CURP, RazonSocial, ' +
   'Nombre, SegundoNombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, LugarNacimiento, VigenciaFM34, IdMetodoPago, IdRegimenFiscal, IdDocumentoLogo, IdPersonaEstatus, Identificador, NumCtaPagoCliente, ' +
@@ -208,31 +242,34 @@ begin
   actSearch.Execute;
 end;
 
-function TdmPersona.GetNombreCompleto: string;
+function TdmPersonas.GetNombreCompleto: string;
 begin
   Result := EmptyStr;
-  if adodsMasterNombre.Value <> EmptyStr then
-    Result := adodsMasterNombre.Value;
-  if adodsMasterSegundoNombre.Value <> EmptyStr then
-    Result := Result + ' ' + adodsMasterSegundoNombre.Value;
-  if adodsMasterApellidoPaterno.Value <> EmptyStr then
-    Result := Result + ' ' + adodsMasterApellidoPaterno.Value;
-  if adodsMasterApellidoMaterno.Value <> EmptyStr then
-    Result := Result + ' ' + adodsMasterApellidoMaterno.Value;
+  if adodsMasterNombre.AsString <> EmptyStr then
+    Result := adodsMasterNombre.AsString;
+  if adodsMasterSegundoNombre.AsString <> EmptyStr then
+    Result := Result + ' ' + adodsMasterSegundoNombre.AsString;
+  if adodsMasterApellidoPaterno.AsString <> EmptyStr then
+    Result := Result + ' ' + adodsMasterApellidoPaterno.AsString;
+  if adodsMasterApellidoMaterno.AsString <> EmptyStr then
+    Result := Result + ' ' + adodsMasterApellidoMaterno.AsString;
 end;
 
-procedure TdmPersona.SetFilter;
+procedure TdmPersonas.SetFilter;
 begin
   inherited;
   if RolTipo = rNone then
-      SQLWhere := EmptyStr
+      SQLWhere := ' WHERE 0 = 0'
   else
       SQLWhere := Format(' WHERE (IdRolTipo =  %d)', [Ord(RolTipo)]);
+  if IdPersona <> 0 then
+      SQLWhere := SQLWhere + Format(' AND  IdPersona = %d', [IdPersona]);
 end;
 
-procedure TdmPersona.SetRolTipo(const Value: TRolTipo);
+procedure TdmPersonas.SetIdPersona(const Value: Integer);
 begin
-  FRolTipo := Value;
+  FIdPersona := Value;
+  actSearch.Execute;
 end;
 
 end.

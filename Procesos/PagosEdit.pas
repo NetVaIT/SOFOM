@@ -81,6 +81,8 @@ implementation
 uses PagosDM, ListaNotaCreditoForm;
 
 procedure TFrmEdPagos.cxBtnUsaNotaCreditoClick(Sender: TObject);
+var
+  frmListaNotasCredito: TfrmListaNotasCredito;
 begin                             //Jun 27/17
   inherited;
 

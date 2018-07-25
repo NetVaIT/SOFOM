@@ -121,10 +121,9 @@ end;
 
 procedure TdmrptReporteCartera.ActPDFAmortizaYPagoExecute(Sender: TObject);
 var                                                //Jul 19/17
-  dmReporteCarteraPDF:TDmReporteCarteraPDF;
-  ArchiPDF:TFileName;
-  Texto ,TxtSQL:String; //   , GrupoSQL, Fecha
-  FechaIni, FechaFin:TDAteTime;
+  dmReporteCarteraPDF: TDmReporteCarteraPDF;
+  ArchiPDF: TFileName;
+  TxtSQL: String;
 begin
   inherited;
   ArchiPDF:='HojaAmortizacionesYPagos'+'_'+Actual+_ExtensionPDF;
@@ -164,23 +163,22 @@ procedure TdmrptReporteCartera.ActPDFCarteraExecute(Sender: TObject);
 var
   dmReporteCarteraPDF:TDmReporteCarteraPDF;
   ArchiPDF:TFileName;
-  Texto,TxtSQL, GrupoSQL, Fecha:String;
   Monto, Total,ValMax,ValMin:Double;
   Cantidad:integer;
 begin
   inherited;
   ArchiPDF:='CarteraXCliente'+'_'+Actual+_ExtensionPDF;
-  //No se usa esto aca.. verificar... Ago 21 /17 Sum (Vencidos0a30)as Total0a30,  no colocado ???
-  TxtSQL:= 'SElect Cliente,sum("Saldo")  as SaldoTotal,  Sum ("Saldo Total Vencido")as TotalVencido, Sum (vigentes)as TotalVigentes, SUM ("vencidos a 30 días") as Total30Dias,'
-          +' SUM ("vencidos a 60 días") as Total60Dias, SUM ("vencidos a 90 días") as Total90Dias ,'
-        //  +' SUM ("vencidos a 120 días") as Total120Dias ,Sum("Vencidos a mas de 120 días") as TotalMas120Dias,' //May 18/17
-          +' SUM ("Vencidos a mas de 120 días") as TotalMas120Dias  from Vw_AntiguedadSaldosCXC ';
-  Fecha:= ' where fecha>=:Fini and fecha<=:Ffin ';
-  GrupoSQL:=' Group BY Cliente order by Totalvencido desc, SaldoTotal desc'; //adodsMaster.CommandText; ver si se le coloca Fecha
-  TExto:= adodsMaster.CommandText;
-  if pos(':FIni',Texto)>0 then   //REvisa si hizo consulta por fecha Mar 2/17
-     TxtSQL:=TxtSQL+Fecha;
-  TxtSQL:=TxtSQL +GrupoSQL;
+//  //No se usa esto aca.. verificar... Ago 21 /17 Sum (Vencidos0a30)as Total0a30,  no colocado ???
+//  TxtSQL:= 'SElect Cliente,sum("Saldo")  as SaldoTotal,  Sum ("Saldo Total Vencido")as TotalVencido, Sum (vigentes)as TotalVigentes, SUM ("vencidos a 30 días") as Total30Dias,'
+//          +' SUM ("vencidos a 60 días") as Total60Dias, SUM ("vencidos a 90 días") as Total90Dias ,'
+//        //  +' SUM ("vencidos a 120 días") as Total120Dias ,Sum("Vencidos a mas de 120 días") as TotalMas120Dias,' //May 18/17
+//          +' SUM ("Vencidos a mas de 120 días") as TotalMas120Dias  from Vw_AntiguedadSaldosCXC ';
+//  Fecha:= ' where fecha>=:Fini and fecha<=:Ffin ';
+//  GrupoSQL:=' Group BY Cliente order by Totalvencido desc, SaldoTotal desc'; //adodsMaster.CommandText; ver si se le coloca Fecha
+//  TExto:= adodsMaster.CommandText;
+//  if pos(':FIni',Texto)>0 then   //REvisa si hizo consulta por fecha Mar 2/17
+//     TxtSQL:=TxtSQL+Fecha;
+//  TxtSQL:=TxtSQL +GrupoSQL;
   dmReporteCarteraPDF:= TdmReporteCarteraPDF.Create(Self);
   try
     dmReporteCarteraPDF.adodsReport.Open;
@@ -217,7 +215,7 @@ procedure TdmrptReporteCartera.ActPDFHojaControlExecute(Sender: TObject);
 var
   dmReporteCarteraPDF:TDmReporteCarteraPDF;
   ArchiPDF:TFileName;
-  Texto,TxtSQL:String;
+  TxtSQL:String;
 begin
   inherited;
   ArchiPDF:='HojaControlGeneral'+'_'+Actual+_ExtensionPDF;

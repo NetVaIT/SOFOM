@@ -214,8 +214,8 @@ inherited dmContratos: TdmContratos
       'iaAnual, PagoInicialCreado, CapitalCobrado, SaldoInsoluto, Monto' +
       'Vencido, CartaCompensacion, ValorResidualCreado, OpcionCompraCre' +
       'ado, FechaTermino, MontoTermino, ContratadoTotal, PagadoTotal, S' +
-      'aldoTotal, FinanciarEnganche'#13#10'from Anexos'#13#10'where IdContrato = :I' +
-      'dContrato'
+      'aldoTotal, FinanciarEnganche, FechaLiquidacion'#13#10'from Anexos'#13#10'whe' +
+      're IdContrato = :IdContrato'
     DataSource = dsMaster
     MasterFields = 'IdContrato'
     Parameters = <
@@ -523,6 +523,10 @@ inherited dmContratos: TdmContratos
       Precision = 18
       Size = 6
     end
+    object adodsAnexosFechaLiquidacion: TDateTimeField
+      DisplayLabel = 'Fecha de liquidaci'#243'n'
+      FieldName = 'FechaLiquidacion'
+    end
     object adodsAnexosFechaTermino: TDateTimeField
       DisplayLabel = 'Fecha de termino'
       FieldName = 'FechaTermino'
@@ -578,6 +582,7 @@ inherited dmContratos: TdmContratos
     end
   end
   object adodsMonedas: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdMoneda, Descripcion from Monedas'#13#10'order by Descripcion'
@@ -586,6 +591,7 @@ inherited dmContratos: TdmContratos
     Top = 144
   end
   object adodsAnexosEstatus: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdAnexoEstatus, Descripcion from AnexosEstatus'
@@ -1240,6 +1246,7 @@ inherited dmContratos: TdmContratos
     Top = 408
   end
   object adodsEmpleado: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -1254,9 +1261,10 @@ inherited dmContratos: TdmContratos
       'DECLARE @IdAnexo int'#13#10'DECLARE @PagoTotal decimal(18,6)'#13#10'DECLARE ' +
       '@MontoVencido decimal(18,6)'#13#10'DECLARE @SaldoActual decimal(18,6)'#13 +
       #10'SET @IdAnexo = :IdAnexo'#13#10'SELECT @PagoTotal = dbo.GetPagoTotal(@' +
-      'IdAnexo) '#13#10'UPDATE Anexos'#13#10'SET MontoTermino = @PagoTotal,'#13#10'Contra' +
-      'tadoTotal = @PagoTotal + ValorResidual,'#13#10'SaldoTotal = (@PagoTota' +
-      'l + ValorResidual) - PagadoTotal'#13#10'WHERE IdAnexo = @IdAnexo'#13#10
+      'IdAnexo) '#13#10'UPDATE Anexos'#13#10'SET MontoTermino = @PagoTotal,'#13#10'FechaT' +
+      'ermino = DATEADD(MONTH, Plazo, FechaVencimiento),'#13#10'ContratadoTot' +
+      'al = @PagoTotal + ValorResidual,'#13#10'SaldoTotal = (@PagoTotal + Val' +
+      'orResidual) - PagadoTotal'#13#10'WHERE IdAnexo = @IdAnexo'#13#10
     Connection = _dmConection.ADOConnection
     Parameters = <
       item

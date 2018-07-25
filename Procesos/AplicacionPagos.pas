@@ -169,7 +169,7 @@ end;
 procedure TFrmAplicacionPago.BtBtnAplicarClick(Sender: TObject);
 var             //FEb 12/17
    valor, aux, Mora, moraPagado:Double;
-   f, camposaldo,campoimporte, FolioSerie:String;
+   camposaldo,campoimporte, FolioSerie:String;
 //   idActual:integer; //Dic14/16
    ActMora, TieneMora, seguir:boolean; //Feb 12/17
    FechaMora:TDAteTime;
@@ -189,10 +189,12 @@ begin
     campoimporte:='Importe';
   end;
 
-  f:= quitasignos(DSAplicacion.DataSet.FieldByName(CampoImporte).ASString); //Copiado para verificar si alcanza para moratorios
-  Valor:= StrToFloat(f);
-  aux:=strtoFLoat(quitasignos(cxDBLblDisponible.Caption));
+//  f:= quitasignos(DSAplicacion.DataSet.FieldByName(CampoImporte).ASString); //Copiado para verificar si alcanza para moratorios
+//  Valor:= StrToFloat(f);
+//  aux:=strtoFLoat(quitasignos(cxDBLblDisponible.Caption));
 
+  Valor:= DSAplicacion.DataSet.FieldByName(CampoImporte).AsFloat;
+  aux:= DSPago.DataSet.FieldByName('Saldo').AsFloat;
   if (Valor <= aux) then //  //SaldoPago  alcanza para pagar el monto indicado en la aplicacion
   begin                                                                //0.001 jun 23/17
     if (valor-dsConCXCpendientes.dataset.FieldByName(Camposaldo).Asfloat>0.01)  then
@@ -277,8 +279,11 @@ begin
             _dmConection.ADOConnection.CommitTrans;  //Feb 14/17
             ShowMessage('Operacion completa');
           except
-            _dmConection.ADOConnection.RollbackTrans; //Feb 14/17
-            ShowMessage('Operacion cancelada por errores');
+            on E: Exception do
+            begin
+              _dmConection.ADOConnection.RollbackTrans; //Feb 14/17
+              ShowMessage('Operacion cancelada por errores: ' + E.Message);
+            end;
           end;
           RefreshCXCPendientes; //Aplicacion normal
           dsPago.dataset.Refresh;

@@ -10,29 +10,29 @@ inherited frmListaNotasCredito: TfrmListaNotasCredito
   inherited splDetail3: TSplitter
     Top = 343
     Width = 793
+    ExplicitTop = 343
     ExplicitWidth = 799
   end
   inherited splDetail1: TSplitter
     Top = 255
     Width = 793
+    ExplicitTop = 255
     ExplicitWidth = 799
   end
   inherited splDetail2: TSplitter
     Top = 299
     Width = 793
+    ExplicitTop = 299
     ExplicitWidth = 799
   end
   inherited pnlMaster: TPanel
     Width = 793
     Height = 229
-    ExplicitTop = 26
-    ExplicitWidth = 799
-    ExplicitHeight = 258
+    ExplicitWidth = 793
     inherited cxGrid: TcxGrid
       Width = 793
       Height = 229
-      ExplicitWidth = 799
-      ExplicitHeight = 258
+      ExplicitWidth = 793
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdCFDI: TcxGridDBColumn
           DataBinding.FieldName = 'IdCFDI'
@@ -95,26 +95,30 @@ inherited frmListaNotasCredito: TfrmListaNotasCredito
   inherited pnlDetail3: TPanel
     Top = 346
     Width = 793
-    ExplicitWidth = 799
+    ExplicitTop = 346
+    ExplicitWidth = 793
   end
   inherited pnlDetail2: TPanel
     Top = 302
     Width = 793
-    ExplicitWidth = 799
+    ExplicitTop = 302
+    ExplicitWidth = 793
   end
   inherited pnlDetail1: TPanel
     Top = 258
     Width = 793
-    ExplicitWidth = 799
+    ExplicitTop = 258
+    ExplicitWidth = 793
   end
   inherited pnlClose: TPanel
     Top = 387
     Width = 793
     Visible = True
-    ExplicitWidth = 799
+    ExplicitTop = 387
+    ExplicitWidth = 793
     inherited btnClose: TButton
       Left = 708
-      ExplicitLeft = 714
+      ExplicitLeft = 708
     end
     object BtnAceptar: TButton
       Left = 596
@@ -156,6 +160,7 @@ inherited frmListaNotasCredito: TfrmListaNotasCredito
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42913.417505358800000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

@@ -28,13 +28,12 @@ inherited frmAnexos: TfrmAnexos
   inherited pnlMaster: TPanel
     Width = 992
     Height = 229
-    ExplicitTop = 26
-    ExplicitWidth = 678
+    ExplicitWidth = 992
     ExplicitHeight = 229
     inherited cxGrid: TcxGrid
       Width = 992
       Height = 229
-      ExplicitWidth = 678
+      ExplicitWidth = 992
       ExplicitHeight = 229
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdAnexo: TcxGridDBColumn
@@ -189,6 +188,10 @@ inherited frmAnexos: TfrmAnexos
         object tvMasterFechaTermino: TcxGridDBColumn
           DataBinding.FieldName = 'FechaTermino'
         end
+        object tvMasterFechaLiquidacion: TcxGridDBColumn
+          DataBinding.FieldName = 'FechaLiquidacion'
+          Visible = False
+        end
         object tvMasterMontoTermino: TcxGridDBColumn
           DataBinding.FieldName = 'MontoTermino'
         end
@@ -201,6 +204,10 @@ inherited frmAnexos: TfrmAnexos
         object tvMasterSaldoTotal: TcxGridDBColumn
           DataBinding.FieldName = 'SaldoTotal'
         end
+        object tvMasterFinanciarEnganche: TcxGridDBColumn
+          DataBinding.FieldName = 'FinanciarEnganche'
+          Visible = False
+        end
       end
     end
   end
@@ -208,29 +215,32 @@ inherited frmAnexos: TfrmAnexos
     Top = 346
     Width = 992
     ExplicitTop = 346
-    ExplicitWidth = 678
+    ExplicitWidth = 992
   end
   inherited pnlDetail2: TPanel
     Top = 302
     Width = 992
     ExplicitTop = 302
-    ExplicitWidth = 678
+    ExplicitWidth = 992
   end
   inherited pnlDetail1: TPanel
     Top = 258
     Width = 992
     ExplicitTop = 258
-    ExplicitWidth = 678
+    ExplicitWidth = 992
   end
   inherited pnlClose: TPanel
     Top = 387
     Width = 992
     ExplicitTop = 387
-    ExplicitWidth = 678
+    ExplicitWidth = 992
     inherited btnClose: TButton
       Left = 907
-      ExplicitLeft = 593
+      ExplicitLeft = 907
     end
+  end
+  inherited DataSource: TDataSource
+    DataSet = dmContratos.adodsAnexos
   end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
@@ -332,7 +342,6 @@ inherited frmAnexos: TfrmAnexos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42683.688746423620000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

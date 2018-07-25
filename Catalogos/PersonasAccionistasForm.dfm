@@ -26,18 +26,64 @@ inherited frmPersonasAccionistas: TfrmPersonasAccionistas
         object tvMasterPorcentaje: TcxGridDBColumn
           DataBinding.FieldName = 'Porcentaje'
         end
+        object tvMasterCargo: TcxGridDBColumn
+          DataBinding.FieldName = 'Cargo'
+        end
+        object tvMasterNivelControl1: TcxGridDBColumn
+          DataBinding.FieldName = 'NivelControl1'
+        end
+        object tvMasterNivelControl2: TcxGridDBColumn
+          DataBinding.FieldName = 'NivelControl2'
+        end
+        object tvMasterNivelControl3: TcxGridDBColumn
+          DataBinding.FieldName = 'NivelControl3'
+        end
+        object tvMasterNivelControl4: TcxGridDBColumn
+          DataBinding.FieldName = 'NivelControl4'
+        end
+        object tvMasterNivelControl5: TcxGridDBColumn
+          DataBinding.FieldName = 'NivelControl5'
+        end
       end
     end
-  end
-  inherited DataSource: TDataSource
-    DataSet = dmPersonasAccionistas.adodsMaster
   end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
       0
       0
-      31
+      26
       0)
+    inherited dxbTools: TdxBar
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'dxBarButton6'
+        end
+        item
+          Visible = True
+          ItemName = 'dxbbPreview'
+        end
+        item
+          Visible = True
+          ItemName = 'btnAccionistas'
+        end
+        item
+          Visible = True
+          ItemName = 'btnAdministradores'
+        end>
+    end
+    object btnAccionistas: TdxBarButton
+      Caption = 'New Button'
+      Category = 0
+      Hint = 'New Button'
+      Visible = ivAlways
+    end
+    object btnAdministradores: TdxBarButton
+      Caption = 'New Button'
+      Category = 0
+      Hint = 'New Button'
+      Visible = ivAlways
+    end
   end
   inherited cxStyleRepository: TcxStyleRepository
     PixelsPerInch = 96
@@ -48,7 +94,7 @@ inherited frmPersonasAccionistas: TfrmPersonasAccionistas
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42769.723728773150000000
-      AssignedFormatValues = []
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

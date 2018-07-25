@@ -1,4 +1,4 @@
-unit ListaNotaCreditoForm;
+unit PersonasAdministradoresForm;
 
 interface
 
@@ -30,58 +30,30 @@ uses
   cxGrid, Vcl.ExtCtrls;
 
 type
-  TfrmListaNotasCredito = class(T_frmGrid)
-    tvMasterIdCFDI: TcxGridDBColumn;
-    tvMasterIdCFDITipoDocumento: TcxGridDBColumn;
-    tvMasterIdPersonaReceptor: TcxGridDBColumn;
-    tvMasterIdCFDIEstatus: TcxGridDBColumn;
-    tvMasterIdClienteDomicilio: TcxGridDBColumn;
-    tvMasterSerie: TcxGridDBColumn;
-    tvMasterFolio: TcxGridDBColumn;
-    tvMasterFecha: TcxGridDBColumn;
-    tvMasterSubTotal: TcxGridDBColumn;
-    tvMasterTotal: TcxGridDBColumn;
-    tvMasterTotalImpuestoTrasladado: TcxGridDBColumn;
-    tvMasterSaldoDocumento: TcxGridDBColumn;
-    tvMasterObservaciones: TcxGridDBColumn;
-    tvMasterSaldoFactoraje: TcxGridDBColumn;
-    BtnAceptar: TButton;
-    procedure tvMasterCellDblClick(Sender: TcxCustomGridTableView;
-      ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
-      AShift: TShiftState; var AHandled: Boolean);
-    procedure BtnAceptarClick(Sender: TObject);
+  TfrmPersonasAdministradores = class(T_frmGrid)
+    tvMasterIdPersonaAdministrador: TcxGridDBColumn;
+    tvMasterIdPersona: TcxGridDBColumn;
+    tvMasterIdAdministrador: TcxGridDBColumn;
+    tvMasterAdministrador: TcxGridDBColumn;
+    tvMasterRFC: TcxGridDBColumn;
+    tvMasterCargo: TcxGridDBColumn;
+    procedure FormCreate(Sender: TObject);
   private
-    fIDCFDIActual: integer;
-    fMontoAct: Double;
-    FSerieFolioNC: String;
     { Private declarations }
   public
     { Public declarations }
-    Property IdCFDIAct:integer read fIDCFDIActual write fidcfdiActual;
-    property MontoActual: Double read fMontoAct write fMontoAct;
-    property SerieFolioNC:String read FSerieFolioNC write fserieFolioNC;
   end;
 
 implementation
 
 {$R *.dfm}
 
-uses PagosDM;
+uses PersonasAdministradoresDM, PersonasAdministradoresEdit;
 
-procedure TfrmListaNotasCredito.BtnAceptarClick(Sender: TObject);
+procedure TfrmPersonasAdministradores.FormCreate(Sender: TObject);
 begin
   inherited;
-  fIDCFDIActual:=DataSource.DataSet.FieldByName('IdCFDI').AsInteger;
-  fMontoAct:=DataSource.DataSet.FieldByName('SaldoDocumento').AsFloat;
-  fSerieFolioNC:=DataSource.DataSet.FieldByName('Serie').AsString+'-'+DataSource.DataSet.FieldByName('Folio').AsString; //Si estuviese vacio esta sin timbrar.
-end;
-
-procedure TfrmListaNotasCredito.tvMasterCellDblClick(
-  Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo;
-  AButton: TMouseButton; AShift: TShiftState; var AHandled: Boolean);
-begin
-  inherited;
-  BtnAceptar.Click;
+  gEditForm:= TfrmPersonasAdministradoresEdit.Create(Self);
 end;
 
 end.

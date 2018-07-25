@@ -1,4 +1,4 @@
-unit PersonasAccionistasEdit;
+unit PersonasAdministradoresEdit;
 
 interface
 
@@ -18,32 +18,29 @@ uses
   dxSkinWhiteprint, dxSkinXmas2008Blue, dxSkinscxPCPainter, cxPCdxBarPopupMenu,
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, Vcl.ImgList,
   System.Actions, Vcl.ActnList, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls, cxPC,
-  cxContainer, cxEdit, cxTextEdit, cxCurrencyEdit, cxDBEdit, Vcl.DBCtrls,
-  cxCheckBox;
+  cxContainer, cxEdit, cxTextEdit, cxDBEdit, Vcl.DBCtrls;
 
 type
-  TfrmPersonasAccionistasEdit = class(T_frmEdit)
+  TfrmPersonasAdministradoresEdit = class(T_frmEdit)
     Label1: TLabel;
     DBLookupComboBox1: TDBLookupComboBox;
     Label2: TLabel;
-    cxDBCurrencyEdit1: TcxDBCurrencyEdit;
+    DBLookupComboBox2: TDBLookupComboBox;
     Label3: TLabel;
     cxDBTextEdit1: TcxDBTextEdit;
-    cxDBCheckBox1: TcxDBCheckBox;
-    cxDBCheckBox2: TcxDBCheckBox;
-    cxDBCheckBox3: TcxDBCheckBox;
-    cxDBCheckBox4: TcxDBCheckBox;
-    cxDBCheckBox5: TcxDBCheckBox;
   private
     { Private declarations }
   public
     { Public declarations }
   end;
 
+var
+  frmPersonasAdministradoresEdit: TfrmPersonasAdministradoresEdit;
+
 implementation
 
 {$R *.dfm}
 
-uses PersonasAccionistasDM;
+uses PersonasAdministradoresDM;
 
 end.
