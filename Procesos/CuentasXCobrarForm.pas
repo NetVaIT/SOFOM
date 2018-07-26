@@ -92,45 +92,40 @@ type
     procedure ConsultarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
+    { Private declarations }
     FActGeneraPrefactura: TBasicAction;
     FActActualizaMoratorios: TBasicAction;
     FActGeneraCXC: TBasicAction;
     ffiltroNombre: String;
     ffiltroFecha: String;
     ffiltro: String;
-    FActTotalesCXC: TBasicAction;
     FTotalConMora: Double;
-    FActCXCPendFact: TBasicAction;   //Jul 10/17
+    FActCXCPendFact: TBasicAction;
+    FactEliminar: TBasicAction;
+    FActTotalesCXC: TBasicAction;   //Jul 10/17
     procedure SetActGeneraPrefactura(const Value: TBasicAction);
     procedure SetActActualizaMoratorios(const Value: TBasicAction);
     procedure SetActGeneraCXC(const Value: TBasicAction);
     function GetFFiltroNombre: String;//Feb 8/17
     procedure PoneFiltro;
     function VerificaCreacionHoy(tipo: Integer): TdxbarItemvisible;
-    procedure SetActTotalesCXC(const Value: TBasicAction);
     function GetFTotalConMora: Double;
-    procedure SetActCXCPendFact(const Value: TBasicAction);//Mar 9/17
-
-    { Private declarations }
+    procedure SetActCXCPendFact(const Value: TBasicAction);
+    procedure SetactEliminar(const Value: TBasicAction);
+    procedure SetActTotalesCXC(const Value: TBasicAction);//Mar 9/17
   public
     { Public declarations }
     property ActGenerarPrefactura : TBasicAction read FActGeneraPrefactura write SetActGeneraPrefactura;
     property ActActualizaMoratorios : TBasicAction read FActActualizaMoratorios write SetActActualizaMoratorios;  //Feb 8/17
     property ActGenerarCXCs : TBasicAction read FActGeneraCXC write SetActGeneraCXC;  //Feb 14/17
-
-    property ActTotalesCXC : TBasicAction read FActTotalesCXC write SetActTotalesCXC;  //abr 17/17
-
+    property ActTotalesCXC: TBasicAction read FActTotalesCXC write SetActTotalesCXC;
     property FiltroFecha: String read ffiltroFecha write ffiltroFecha; //Mar 9/17
     property FiltroNombre:String read GetFFiltroNombre write ffiltroNombre;
     property FiltroCon:String read ffiltro write ffiltro;
-
-    Property TotalConMora  :Double read GetFTotalConMora write FTotalConMora ;  //Jul 10/17
-
-     property ActListaCXCPendFact : TBasicAction read FActCXCPendFact write SetActCXCPendFact;  //Feb 14/17
+    property TotalConMora  :Double read GetFTotalConMora write FTotalConMora ;  //Jul 10/17
+    property ActListaCXCPendFact : TBasicAction read FActCXCPendFact write SetActCXCPendFact;  //Feb 14/17
+    property actEliminar: TBasicAction read FactEliminar write SetactEliminar;
   end;
-
-var
-  FrmConCuentasXCobrar: TFrmConCuentasXCobrar;
 
 implementation
 
@@ -153,7 +148,6 @@ begin
           if (Sender as TCheckbox).checked then
             ChckBxMostrarMoratorios.Checked:=False;
   end;
-
   SpdBtnBuscarClick(SpdBtnBuscar);//Abr 12/17
 end;
 
@@ -180,9 +174,7 @@ end;
 procedure TFrmConCuentasXCobrar.DataSourceUpdateData(Sender: TObject);
 begin
   inherited;
-
   dxBrBtnPuntoCXC.Visible :=  VerificaCreacionHoy(0);
-
   dxBrBtnPuntoMora.Visible := VerificaCreacionHoy(1);
 end;
 
@@ -206,7 +198,6 @@ begin     //Por terminar...
      Result:=ivAlways
   else
     Result:=ivNever;
-
 end;
 
 procedure TFrmConCuentasXCobrar.dxBrBtnPuntoCXCClick(Sender: TObject);
@@ -258,12 +249,9 @@ begin
   FechaAux:=EncodeDate(a,m,1);
   FechaAux:=FechaAux-1;  //Día anterior
   cxDtEdtHasta.Date:=FechaAux;
-
   SpdBtnBuscarClick(SpdBtnBuscar); //Mar 10/17
-
   dxBrBtnPuntoCXC.Visible :=  VerificaCreacionHoy(0); //Abr 11/17
   dxBrBtnPuntoMora.Visible := VerificaCreacionHoy(1);
-
 end;
 
 procedure TFrmConCuentasXCobrar.FormShow(Sender: TObject);
@@ -277,10 +265,8 @@ begin
   Result := ffiltroNombre;
 end;
 
-
 function TFrmConCuentasXCobrar.GetFTotalConMora: Double;
 begin
-
   Result := FTotalConMora;
 end;
 
@@ -309,7 +295,6 @@ begin
   else
     if Aux<>'where'then
       ffiltro:=Aux;
-
 end;
 
 procedure TFrmConCuentasXCobrar.SetActActualizaMoratorios(   //Feb 8/17
@@ -325,7 +310,12 @@ begin
   FActCXCPendFact := Value;
   dxBrBtnEstatus.Action:=VAlue;
   dxBrBtnEstatus.ImageIndex:=20;
+end;
 
+procedure TFrmConCuentasXCobrar.SetactEliminar(const Value: TBasicAction);
+begin
+  FactEliminar := Value;
+  Delete1.Action := Value;
 end;
 
 procedure TFrmConCuentasXCobrar.SetActGeneraCXC(const Value: TBasicAction);
@@ -341,14 +331,12 @@ begin
   FActGeneraPrefactura := Value;
   dxBtnPrefacturas.Action:=Value;
   dxBtnPrefacturas.ImageIndex:=17;
-
 end;
 
 procedure TFrmConCuentasXCobrar.SetActTotalesCXC(const Value: TBasicAction);
 begin
-//  FActTotalesCXC := Value;
- // dxBrBtnActTotalesCXC.Action:=value;     //TEmporal para ajustar Abr 17/17
-
+  FActTotalesCXC := Value;
+// dxBrBtnActTotalesCXC.Action:=value;     //TEmporal para ajustar Abr 17/17
 end;
 
 procedure TFrmConCuentasXCobrar.SpdBtnBuscarClick(Sender: TObject);
@@ -366,7 +354,6 @@ const  //Mar 9/17
    orden=' order by   IdAnexo, IDAnexosAmortizaciones'; //Mar 27/17
 begin
   inherited;
-
   PoneFiltro;
    //Mar 30/17 Desde
   if ChckBxMostrarMoratorios.Checked then
@@ -402,13 +389,9 @@ begin
   begin
     Tadodataset(datasource.DataSet).Parameters.ParamByName('FIni').Value:=cxDtEdtDesde.Date;
     Tadodataset(datasource.DataSet).Parameters.ParamByName('FFin').Value:=cxDtEdtHasta.Date+1;
-
   end;
-
   Tadodataset(datasource.DataSet).open;
   tvmaster.ApplyBestFit(); //Ab 11/17
-
-
 end;
 
 end.

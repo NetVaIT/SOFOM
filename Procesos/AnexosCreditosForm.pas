@@ -49,18 +49,23 @@ type
     tvMasterImpactoISR: TcxGridDBColumn;
     tvMasterFechaVencimiento: TcxGridDBColumn;
     tvMasterFechaCancelacion: TcxGridDBColumn;
+    tvMasterEliminarCredito: TcxGridDBColumn;
+    btnEliminar: TdxBarButton;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
     FactPreAmortizaciones: TBasicAction;
     FactGenAmortizaciones: TBasicAction;
+    FactEliminar: TBasicAction;
     procedure SetactPreAmortizaciones(const Value: TBasicAction);
     procedure SetactGenAmortizaciones(const Value: TBasicAction);
+    procedure SetactEliminar(const Value: TBasicAction);
   public
     { Public declarations }
+    function AddCredito: Boolean;
     property actPreAmortizaciones: TBasicAction read FactPreAmortizaciones write SetactPreAmortizaciones;
     property actGenAmortizaciones: TBasicAction read FactGenAmortizaciones write SetactGenAmortizaciones;
-    function AddCredito: Boolean;
+    property actEliminar: TBasicAction read FactEliminar write SetactEliminar;
   end;
 
 implementation
@@ -84,6 +89,12 @@ procedure TfrmAnexosCreditos.FormCreate(Sender: TObject);
 begin
   inherited;
   gEditForm:= TfrmAnexosCreditosEdit.Create(Self);
+end;
+
+procedure TfrmAnexosCreditos.SetactEliminar(const Value: TBasicAction);
+begin
+  FactEliminar := Value;
+  btnEliminar.Action := Value;
 end;
 
 procedure TfrmAnexosCreditos.SetactGenAmortizaciones(const Value: TBasicAction);

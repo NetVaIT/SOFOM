@@ -4,7 +4,12 @@ interface
 
 uses
   System.SysUtils, System.Classes, _StandarDMod, System.Actions, Vcl.ActnList,
-  Data.DB, Data.Win.ADODB, dialogs, vcl.controls,forms, winapi.windows, shellapi;
+  Data.DB, Data.Win.ADODB, Vcl.Dialogs, System.UITypes, Vcl.Forms,
+  Winapi.ShellAPI, Winapi.Windows;
+
+resourcestring
+  strAllowGenMoratorios = '¿Desea generar los moratorios de todos los contratos a la fecha: %s ? ';
+  strAllowDelCuentaxCobrar = '¿Deseas eliminr la cuenta por cobrar %d?';
 
 type
   TdmCuentasXCobrar = class(T_dmStandar)
@@ -196,6 +201,8 @@ type
     ADODtStSelMetPagoClaveSAT2016: TStringField;
     adodsMasterDescripcion: TStringField;
     ActRepCxCEstatusFactPendiente: TAction;
+    actEliminar: TAction;
+    adospDelCuentasXCobrar: TADOStoredProc;
     procedure DataModuleCreate(Sender: TObject);
     procedure actGeneraPreFacturasExecute(Sender: TObject);
     procedure ADODtStPrefacturasCFDINewRecord(DataSet: TDataSet);
@@ -209,6 +216,8 @@ type
     procedure ActTotalesCXCExecute(Sender: TObject);
     procedure DSMasterDataChange(Sender: TObject; Field: TField);
     procedure ActRepCxCEstatusFactPendienteExecute(Sender: TObject);
+    procedure actEliminarExecute(Sender: TObject);
+    procedure actEliminarUpdate(Sender: TObject);
   private
     { Private declarations }
     FTotalConMora: Double;
@@ -219,6 +228,7 @@ type
     function GetFFechaActual: TDAteTime;
     function GetFTotalConMora: Double;
     procedure verificaYCambiaEstatusCXC(IDCFDIACT, NvoEstatus, IdCXCAct:integer);
+    function EliminarCuentaXCobrar(IdCuentaxCobrar: Integer): Boolean;
   public
     { Public declarations }
     function CrearCFDI(IdCuentaXCobrar: Integer): Integer;
@@ -259,25 +269,39 @@ begin
     DMListaCXCPendFactPDF.Free;
   end;
   if FileExists(ArchiPDF) then
-    ShellExecute(application.Handle, 'open', PChar(ArchiPDF), nil, nil, SW_SHOWNORMAL);
+    ShellExecute(Application.Handle, 'open', PChar(ArchiPDF), nil, nil, SW_SHOWNORMAL);
 end;
 
 procedure TdmCuentasXCobrar.ActActualizaMoratoriosExecute(Sender: TObject);
-var Fecha:TDAteTime;  //Se cambio la fecha para que no tenga que ir a consultar nuevamente a la Base de datos Oct 16/17
+var
+  Fecha: TDateTime;  //Se cambio la fecha para que no tenga que ir a consultar nuevamente a la Base de datos Oct 16/17
 begin
   FEcha:= FFechaActual;
   inherited;   //Confirmación Oct 4/17
-  if (Application.MessageBox(pChar('Está seguro que desea generar los moratorios de todos los contratos a la fecha:'+ dateToStr(FEcha)+' ?'),
-     'Confirmación',MB_YESNO)=IDYES) then
+  if MessageDlg(Format(strAllowGenMoratorios, [DateToStr(Fecha)]), mtConfirmation, mbYesNo, 0) = mrYes then
   begin
     ADOStrprcActGralMoratorios.Parameters.ParamByName('@Fecha').Value:=FEcha;// may 26/17 date;  //Sin hora
     ADOStrprcActGralMoratorios.ExecProc;
-    Showmessage('Se ejecutó proceso de Moratorios al día: '+ dateToStr(FEcha)) ; // may 26/17 era date
+    ShowMessage('Se ejecutó proceso de Moratorios al día: '+ dateToStr(FEcha)) ; // may 26/17 era date
     RegistraBitacora(1);//Moratorios Abr 12/17
     adodsMaster.Refresh;
   end
   else
     Showmessage('Proceso de generación de Moratorios Cancelado');
+end;
+
+procedure TdmCuentasXCobrar.actEliminarExecute(Sender: TObject);
+begin
+  inherited;
+  if EliminarCuentaXCobrar(adodsMasterIdCuentaXCobrar.Value) then
+    RefreshADODS(adodsMaster, adodsMasterIdCuentaXCobrar);
+end;
+
+procedure TdmCuentasXCobrar.actEliminarUpdate(Sender: TObject);
+begin
+  inherited;
+  TAction(Sender).Enabled := (adodsMasterTotal.AsFloat = adodsMasterSaldo.Value) and
+  ((adodsMasterIdCuentaXCobrarEstatus.Value = -1) or (adodsMasterIdCuentaXCobrarEstatus.Value = 0))
 end;
 
 procedure TdmCuentasXCobrar.ActGeneraCuentasXCobrarExecute(Sender: TObject);
@@ -630,7 +654,6 @@ begin
     ADOQryAuxiliar.ExecSQL;
   end;  //Hasta aca
   ADODtStPrefacturasCFDI.Refresh;
-
 end;
 
 procedure TdmCuentasXCobrar.ADODtStCFDIConceptosPrefNewRecord(
@@ -681,7 +704,6 @@ begin
   if Cuenta <>'' then
      DataSet.FieldByName('NumCtaPago').asString:= cuenta;
   DataSet.FieldByName('IdCuentaXCobrar').AsInteger:=  adodsMasterIdCuentaXCobrar.AsInteger;  //Ajustado Ene 12/17 idcxc
-
   Except
     Raise;
   end;
@@ -722,6 +744,7 @@ begin
   TFrmConCuentasXCobrar(gGridForm).ActTotalesCXC:=ActTotalesCXC;//abr  17/17
   TFrmConCuentasXCobrar(gGridForm).DSAuxiliar.DataSet:=ADOQryAuxiliar; //Abr 11/17
   TFrmConCuentasXCobrar(gGridForm).ActListaCXCPendFact:=ActRepCxCEstatusFactPendiente; //Ago 3/17
+  TFrmConCuentasXCobrar(gGridForm).actEliminar := actEliminar;
 end;
 
 procedure TdmCuentasXCobrar.DSMasterDataChange(Sender: TObject; Field: TField);
@@ -729,6 +752,27 @@ begin
   inherited;          //Verificar que no interfiera
   if not ( gGridForm=nil)  then
     TFrmConCuentasXCobrar(gGridForm).TotalConMora:=totalconMora;
+end;
+
+function TdmCuentasXCobrar.EliminarCuentaXCobrar(
+  IdCuentaxCobrar: Integer): Boolean;
+begin
+  Result:= False;
+  if IdCuentaxCobrar <> 0 then
+  begin
+    if MessageDlg(Format(strAllowDelCuentaxCobrar, [IdCuentaxCobrar]), mtConfirmation, mbYesNo, 0) = mrYes then
+    begin
+      ScreenCursorProc(crSQLWait);
+      try
+        adospDelCuentasXCobrar.Parameters.ParamByName('@IdCuentaxCobrar').Value:= IdCuentaxCobrar;
+        adospDelCuentasXCobrar.Parameters.ParamByName('@IdUsuario').Value:= _dmConection.IdUsuario;
+        adospDelCuentasXCobrar.ExecProc;
+      finally
+        ScreenCursorProc(crDefault);
+      end;
+      Result:= True;
+    end;
+  end;
 end;
 
 function TdmCuentasXCobrar.SacaTipoComp (TipoDoc:Integer) :String;
@@ -765,7 +809,7 @@ begin                                         //Dic 6/16
        CtaPago:= ADOdsAuxiliar.FieldByName('NumCtaPagoCliente').asstring;
   end
   else
-      Result:=5; //Otros
+    Result:=5; //Otros
 end;
 
 end.

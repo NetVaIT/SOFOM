@@ -50,16 +50,13 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
+    { Private declarations }
     FTotalConMora: Double;
     function GetFTotalConMora: Double;
-    { Private declarations }
   public
     { Public declarations }
      Property TotalConMora  :Double read GetFTotalConMora write FTotalConMora ;
   end;
-
-var
-  FrmEdCuentasXCobrar: TFrmEdCuentasXCobrar;
 
 implementation
 
@@ -82,7 +79,6 @@ begin
  // frmConCXCMoratorios.ApplyBestFit:=False;
   frmConCXCMoratorios.Align:=alClient;
   frmConCXCMoratorios.Show;
-
 end;
 
 procedure TFrmEdCuentasXCobrar.FormShow(Sender: TObject);
@@ -93,7 +89,6 @@ end;
 
 function TFrmEdCuentasXCobrar.GetFTotalConMora: Double;
 begin
-
   Result := FTotalConMora;
 end;
 

@@ -154,6 +154,11 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       Hint = 'Reporte CXC pendientes de prefacturar o de emisi'#243'n de Factura'
       OnExecute = ActRepCxCEstatusFactPendienteExecute
     end
+    object actEliminar: TAction
+      ImageIndex = 12
+      OnExecute = actEliminarExecute
+      OnUpdate = actEliminarUpdate
+    end
   end
   object ADOdsCXCDetalle: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -873,7 +878,7 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
         DataType = ftDateTime
         Value = Null
       end>
-    Left = 208
+    Left = 72
     Top = 328
   end
   object ADODTSTCXCMoratorios: TADODataSet
@@ -991,8 +996,8 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
         Precision = 10
         Value = Null
       end>
-    Left = 224
-    Top = 408
+    Left = 216
+    Top = 400
   end
   object ADODtStAdicionalesContratoAnexo: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -1055,5 +1060,30 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       FieldName = 'ClaveSAT2016'
       Size = 10
     end
+  end
+  object adospDelCuentasXCobrar: TADOStoredProc
+    Connection = _dmConection.ADOConnection
+    ProcedureName = 'p_DelCuentasXCobrar;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@IdCuentaXCobrar'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+      end
+      item
+        Name = '@IdUsuario'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+      end>
+    Left = 216
+    Top = 328
   end
 end

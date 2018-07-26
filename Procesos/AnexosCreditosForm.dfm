@@ -3,6 +3,8 @@ inherited frmAnexosCreditos: TfrmAnexosCreditos
   Caption = 'Cr'#233'ditos'
   ClientHeight = 428
   ClientWidth = 645
+  ExplicitWidth = 651
+  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -25,14 +27,14 @@ inherited frmAnexosCreditos: TfrmAnexosCreditos
   end
   inherited pnlMaster: TPanel
     Width = 645
-    Height = 224
+    Height = 229
     ExplicitWidth = 645
-    ExplicitHeight = 224
+    ExplicitHeight = 229
     inherited cxGrid: TcxGrid
       Width = 645
-      Height = 224
+      Height = 229
       ExplicitWidth = 645
-      ExplicitHeight = 224
+      ExplicitHeight = 229
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdAnexoCredito: TcxGridDBColumn
           DataBinding.FieldName = 'IdAnexoCredito'
@@ -93,6 +95,11 @@ inherited frmAnexosCreditos: TfrmAnexosCreditos
           DataBinding.FieldName = 'Usuario'
           Width = 110
         end
+        object tvMasterEliminarCredito: TcxGridDBColumn
+          DataBinding.FieldName = 'EliminarCredito'
+          Visible = False
+          Width = 76
+        end
       end
     end
   end
@@ -128,9 +135,36 @@ inherited frmAnexosCreditos: TfrmAnexosCreditos
     DockControlHeights = (
       0
       0
-      31
+      26
       0)
+    inherited dxbNavigator: TdxBar
+      DockedLeft = 127
+    end
+    inherited dxbEdit: TdxBar
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'Insert1'
+        end
+        item
+          Visible = True
+          ItemName = 'Edit1'
+        end
+        item
+          Visible = True
+          ItemName = 'Delete1'
+        end
+        item
+          Visible = True
+          ItemName = 'btnEliminar'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarButton7'
+        end>
+    end
     inherited dxbTools: TdxBar
+      DockedLeft = 254
       ItemLinks = <
         item
           Visible = True
@@ -157,6 +191,12 @@ inherited frmAnexosCreditos: TfrmAnexosCreditos
       Action = dmContratos.actGenAmortizaciones
       Category = 0
     end
+    object btnEliminar: TdxBarButton
+      Caption = 'Eliminar'
+      Category = 0
+      Visible = ivAlways
+      ImageIndex = 12
+    end
   end
   inherited cxStyleRepository: TcxStyleRepository
     PixelsPerInch = 96
@@ -167,7 +207,6 @@ inherited frmAnexosCreditos: TfrmAnexosCreditos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42697.479886030090000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

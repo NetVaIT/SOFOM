@@ -165,6 +165,12 @@ inherited dmContratos: TdmContratos
       Caption = 'Reducir plazo'
       OnExecute = actReducirPlazoExecute
     end
+    object actEliminarCredito: TAction
+      Caption = 'Eliminar'
+      ImageIndex = 12
+      OnExecute = actEliminarCreditoExecute
+      OnUpdate = actEliminarCreditoUpdate
+    end
   end
   object dsMaster: TDataSource
     AutoEdit = False
@@ -852,8 +858,9 @@ inherited dmContratos: TdmContratos
       'select IdAnexoCredito, IdAnexo, IdAnexoCreditoEstatus, IdUsuario' +
       ', Fecha, MontoFiananciar, ValorResidual, ImpactoISR, TasaAnual, ' +
       'Plazo, PagoMensual, FechaCorte, FechaVencimiento, FechaCancelaci' +
-      'on from AnexosCreditos'#13#10'where IdAnexo = :IdAnexo'#13#10'order by IdAne' +
-      'xoCreditoEstatus, FechaCancelacion DESC'
+      'on, dbo.CanDeleteAnexoCredito(IdAnexoCredito) AS EliminarCredito' +
+      ' from AnexosCreditos'#13#10'where IdAnexo = :IdAnexo'#13#10'order by IdAnexo' +
+      'CreditoEstatus, FechaCancelacion DESC'
     DataSource = dsAnexos
     MasterFields = 'IdAnexo'
     Parameters = <
@@ -964,6 +971,11 @@ inherited dmContratos: TdmContratos
       KeyFields = 'IdUsuario'
       Size = 15
       Lookup = True
+    end
+    object adodsCreditosEliminarCredito: TBooleanField
+      FieldName = 'EliminarCredito'
+      ReadOnly = True
+      Visible = False
     end
   end
   object dsCreditos: TDataSource
@@ -1295,6 +1307,31 @@ inherited dmContratos: TdmContratos
         Attributes = [paNullable]
         DataType = ftDateTime
         Value = Null
+      end>
+    Left = 544
+    Top = 272
+  end
+  object adospDelAnexosCreditos: TADOStoredProc
+    Connection = _dmConection.ADOConnection
+    ProcedureName = 'p_DelAnexosCreditos;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@IdAnexoCredito'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+      end
+      item
+        Name = '@IdUsuario'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
       end>
     Left = 544
     Top = 192

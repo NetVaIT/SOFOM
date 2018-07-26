@@ -15,6 +15,7 @@ resourcestring
   strNeedProduct   = 'Necesita agregar uno o más productos al anexo';
   strProductsPercentage = 'La suma de porcentajes totales de los productos en el anexo debe ser igual al 100%';
   strRestructureAnexo = '¿Deseas restructurar el anexo?';
+  strAllowDelCredito = '¿Deseas eliminar el crédito y sus amortizaciones?';
 
 type
   TdmContratos = class(T_dmStandar)
@@ -178,6 +179,9 @@ type
     actReducirCuota: TAction;
     actReducirPlazo: TAction;
     adodsAnexosFechaLiquidacion: TDateTimeField;
+    actEliminarCredito: TAction;
+    adospDelAnexosCreditos: TADOStoredProc;
+    adodsCreditosEliminarCredito: TBooleanField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsAnexosPrecioMonedaChange(Sender: TField);
     procedure adodsAnexosNewRecord(DataSet: TDataSet);
@@ -215,6 +219,8 @@ type
     procedure actGenMoratoriosUpdate(Sender: TObject);
     procedure actRestructurarUpdate(Sender: TObject);
     procedure actCrearAnexoUpdate(Sender: TObject);
+    procedure actEliminarCreditoExecute(Sender: TObject);
+    procedure actEliminarCreditoUpdate(Sender: TObject);
   private
     { Private declarations }
     FPaymentTime: TPaymentTime;
@@ -237,6 +243,7 @@ type
     procedure Restructurar;
     function ProductosValido(IdAnexo: Integer): Boolean;
     procedure SetAnexoSaldo(IdAnexo: Integer);
+    function EliminarCredito(IdAnexoCredito: integer): Boolean;
   protected
     procedure SetFilter; override;
   public
@@ -268,6 +275,19 @@ procedure TdmContratos.actCrearPagoInicialUpdate(Sender: TObject);
 begin
   inherited;
   TAction(Sender).Enabled := not adodsAnexosPagoInicialCreado.Value;
+end;
+
+procedure TdmContratos.actEliminarCreditoExecute(Sender: TObject);
+begin
+  inherited;
+  if EliminarCredito(adodsCreditosIdAnexoCredito.Value) then
+    RefreshADODS(adodsCreditos, adodsCreditosIdAnexoCredito);
+end;
+
+procedure TdmContratos.actEliminarCreditoUpdate(Sender: TObject);
+begin
+  inherited;
+  TAction(Sender).Enabled := adodsCreditosEliminarCredito.Value;
 end;
 
 procedure TdmContratos.actGenAmortizacionesExecute(Sender: TObject);
@@ -775,6 +795,7 @@ begin
   gFormDeatil2.DataSet:= adodsCreditos;
   TfrmAnexosCreditos(gFormDeatil2).actPreAmortizaciones := actPreAmortizaciones;
   TfrmAnexosCreditos(gFormDeatil2).actgenAmortizaciones := actGenAmortizaciones;
+  TfrmAnexosCreditos(gFormDeatil2).actEliminar := actEliminarCredito;
   if adodsAmortizaciones.CommandText <> EmptyStr then adodsAmortizaciones.Open;
   gFormDeatil3:= TfrmAnexosAmortizaciones.Create(Self);
 //  gFormDeatil3.ApplyBestFit := False;
@@ -811,6 +832,26 @@ begin
   FreeAndNil(dmAmortizaciones);
 end;
 
+
+function TdmContratos.EliminarCredito(IdAnexoCredito: integer): Boolean;
+begin
+  Result:= False;
+  if IdAnexoCredito <> 0 then
+  begin
+    if MessageDlg(strAllowDelCredito, mtConfirmation, mbYesNo, 0) = mrYes then
+    begin
+      ScreenCursorProc(crSQLWait);
+      try
+        adospDelAnexosCreditos.Parameters.ParamByName('@IdAnexoCredito').Value:= IdAnexoCredito;
+        adospDelAnexosCreditos.Parameters.ParamByName('@IdUsuario').Value:= _dmConection.IdUsuario;
+        adospDelAnexosCreditos.ExecProc;
+      finally
+        ScreenCursorProc(crDefault);
+      end;
+      Result:= True;
+    end;
+  end;
+end;
 
 function TdmContratos.GetFechaDia(Fecha: TDateTime; Dia: Integer): TDateTime;
 begin
