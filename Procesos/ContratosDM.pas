@@ -182,6 +182,10 @@ type
     actEliminarCredito: TAction;
     adospDelAnexosCreditos: TADOStoredProc;
     adodsCreditosEliminarCredito: TBooleanField;
+    actAjustarMensualidad1: TAction;
+    adodsAnexosFechaEntrega: TDateTimeField;
+    adoqAmortizacion1: TADOQuery;
+    adoqAmortizacion1CanModificar: TBooleanField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsAnexosPrecioMonedaChange(Sender: TField);
     procedure adodsAnexosNewRecord(DataSet: TDataSet);
@@ -221,6 +225,8 @@ type
     procedure actCrearAnexoUpdate(Sender: TObject);
     procedure actEliminarCreditoExecute(Sender: TObject);
     procedure actEliminarCreditoUpdate(Sender: TObject);
+    procedure actAjustarMensualidad1Execute(Sender: TObject);
+    procedure actAjustarMensualidad1Update(Sender: TObject);
   private
     { Private declarations }
     FPaymentTime: TPaymentTime;
@@ -243,7 +249,8 @@ type
     procedure Restructurar;
     function ProductosValido(IdAnexo: Integer): Boolean;
     procedure SetAnexoSaldo(IdAnexo: Integer);
-    function EliminarCredito(IdAnexoCredito: integer): Boolean;
+    function EliminarCredito(IdAnexoCredito: Integer): Boolean;
+    function PuedeModificarAmortizacion1(IdAnexo: Integer): Boolean;
   protected
     procedure SetFilter; override;
   public
@@ -417,6 +424,19 @@ begin
   inherited;
   dmAmortizaciones.TipoContrato := TipoContrato;
   dmAmortizaciones.SetAmortizaciones(IdAnexo, 0, acReducirPlazo);
+end;
+
+procedure TdmContratos.actAjustarMensualidad1Execute(Sender: TObject);
+begin
+  inherited;
+  dmAmortizaciones.TipoContrato := TipoContrato;
+  dmAmortizaciones.AjustarMensualidad1(adodsAnexosIdAnexo.Value, adodsAnexosFechaEntrega.Value);
+end;
+
+procedure TdmContratos.actAjustarMensualidad1Update(Sender: TObject);
+begin
+  inherited;
+  TAction(Sender).Enabled := PuedeModificarAmortizacion1(adodsAnexosIdAnexo.Value);
 end;
 
 procedure TdmContratos.actCrearAnexoExecute(Sender: TObject);
@@ -781,6 +801,7 @@ begin
 //  gFormDeatil1.ApplyBestFit := False;
   gFormDeatil1.DataSet:= adodsAnexos;
   TfrmAnexos(gFormDeatil1).actGenerar := actGenerar;
+  TfrmAnexos(gFormDeatil1).actAjustarMensualidad1 := actAjustarMensualidad1;
   TfrmAnexos(gFormDeatil1).actGenMoratorios := actGenMoratorios;
   TfrmAnexos(gFormDeatil1).actRestructurar := actRestructurar;
   TfrmAnexos(gFormDeatil1).actAbonar := actAbonarCapital;
@@ -833,7 +854,7 @@ begin
 end;
 
 
-function TdmContratos.EliminarCredito(IdAnexoCredito: integer): Boolean;
+function TdmContratos.EliminarCredito(IdAnexoCredito: Integer): Boolean;
 begin
   Result:= False;
   if IdAnexoCredito <> 0 then
@@ -909,6 +930,15 @@ begin
   finally
     dmProductos.Free;
   end;
+end;
+
+function TdmContratos.PuedeModificarAmortizacion1(IdAnexo: Integer): Boolean;
+begin
+  adoqAmortizacion1.Close;
+  adoqAmortizacion1.Parameters.ParamByName('IdAnexo').Value := IdAnexo;
+  adoqAmortizacion1.Open;
+  Result := adoqAmortizacion1CanModificar.Value;
+  adoqAmortizacion1.Close;
 end;
 
 procedure TdmContratos.Restructurar;

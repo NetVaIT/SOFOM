@@ -10,15 +10,15 @@ inherited frmAnexosEdit: TfrmAnexosEdit
   inherited pcMain: TcxPageControl
     Width = 672
     Height = 626
-    ExplicitWidth = 682
-    ExplicitHeight = 620
+    ExplicitWidth = 672
+    ExplicitHeight = 626
     ClientRectBottom = 624
     ClientRectRight = 670
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 2
       ExplicitTop = 26
-      ExplicitWidth = 678
-      ExplicitHeight = 592
+      ExplicitWidth = 668
+      ExplicitHeight = 598
       object cxGroupBox1: TcxGroupBox
         Left = 3
         Top = 3
@@ -105,6 +105,14 @@ inherited frmAnexosEdit: TfrmAnexosEdit
           Caption = 'Vendedor'
           FocusControl = DBLookupComboBox3
         end
+        object Label34: TLabel
+          Left = 311
+          Top = 153
+          Width = 85
+          Height = 13
+          Caption = 'Fecha de entrega'
+          FocusControl = cxDBDateEdit5
+        end
         object edtIdentificador: TcxDBTextEdit
           Left = 184
           Top = 16
@@ -140,7 +148,7 @@ inherited frmAnexosEdit: TfrmAnexosEdit
         object DBLookupComboBox1: TDBLookupComboBox
           Left = 311
           Top = 70
-          Width = 157
+          Width = 198
           Height = 21
           DataField = 'Moneda'
           DataSource = DataSource
@@ -197,7 +205,7 @@ inherited frmAnexosEdit: TfrmAnexosEdit
         end
         object cxDBCheckBox1: TcxDBCheckBox
           Left = 515
-          Top = 100
+          Top = 70
           Caption = 'Carta compensaci'#243'n'
           DataBinding.DataField = 'CartaCompensacion'
           DataBinding.DataSource = DataSource
@@ -211,7 +219,27 @@ inherited frmAnexosEdit: TfrmAnexosEdit
           Height = 21
           DataField = 'Empleado'
           DataSource = DataSource
+          TabOrder = 13
+        end
+        object cxDBDateEdit5: TcxDBDateEdit
+          Left = 402
+          Top = 150
+          DataBinding.DataField = 'FechaEntrega'
+          DataBinding.DataSource = dmContratos.dsAnexos
           TabOrder = 11
+          Width = 121
+        end
+        object btnAjustar: TcxButton
+          Left = 529
+          Top = 150
+          Width = 107
+          Height = 21
+          Hint = 
+            'Ajusta el importe de la primera mensualidad en base a la fecha d' +
+            'e entrega'
+          Caption = 'Ajustar'
+          OptionsImage.ImageIndex = 17
+          TabOrder = 12
         end
       end
       object cxGroupBox5: TcxGroupBox
@@ -659,28 +687,24 @@ inherited frmAnexosEdit: TfrmAnexosEdit
       Caption = 'Segmentos'
       ImageIndex = 2
       TabVisible = False
-      ExplicitWidth = 678
-      ExplicitHeight = 592
     end
     object tsProductos: TcxTabSheet
       Caption = 'Productos'
       ImageIndex = 1
-      ExplicitWidth = 678
-      ExplicitHeight = 592
     end
   end
   inherited pmlMain: TPanel
     Top = 626
     Width = 672
-    ExplicitTop = 620
-    ExplicitWidth = 682
+    ExplicitTop = 626
+    ExplicitWidth = 672
     inherited btnCancel: TButton
       Left = 590
-      ExplicitLeft = 600
+      ExplicitLeft = 590
     end
     inherited btnOk: TButton
       Left = 509
-      ExplicitLeft = 519
+      ExplicitLeft = 509
     end
   end
   inherited cxImageList: TcxImageList

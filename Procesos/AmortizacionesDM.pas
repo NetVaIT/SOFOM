@@ -95,6 +95,28 @@ type
     adoqCreditoFechaPrestamo: TDateTimeField;
     adoqCreditoPagoMensual: TFMTBCDField;
     adoqCreditoSaldoInsoluto: TFMTBCDField;
+    adoqAmortizacion1: TADOQuery;
+    adoqAmortizacion1IdAnexoAmortizacion: TIntegerField;
+    adoqAmortizacion1IdAnexoCredito: TIntegerField;
+    adoqAmortizacion1IdAnexoSegmento: TIntegerField;
+    adoqAmortizacion1Periodo: TIntegerField;
+    adoqAmortizacion1FechaCorte: TDateTimeField;
+    adoqAmortizacion1FechaVencimiento: TDateTimeField;
+    adoqAmortizacion1TasaAnual: TBCDField;
+    adoqAmortizacion1SaldoInicial: TFMTBCDField;
+    adoqAmortizacion1Pago: TFMTBCDField;
+    adoqAmortizacion1Capital: TFMTBCDField;
+    adoqAmortizacion1CapitalImpuesto: TFMTBCDField;
+    adoqAmortizacion1CapitalTotal: TFMTBCDField;
+    adoqAmortizacion1Interes: TFMTBCDField;
+    adoqAmortizacion1InteresImpuesto: TFMTBCDField;
+    adoqAmortizacion1InteresTotal: TFMTBCDField;
+    adoqAmortizacion1ImpactoISR: TFMTBCDField;
+    adoqAmortizacion1PagoTotal: TFMTBCDField;
+    adoqAmortizacion1SaldoFinal: TFMTBCDField;
+    adoqAmortizacion1FechaMoratorio: TDateTimeField;
+    adoqAmortizacion1Moratorio: TFMTBCDField;
+    adoqAmortizacion1MoratorioImpuesto: TFMTBCDField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actCalcularExecute(Sender: TObject);
   private
@@ -125,8 +147,6 @@ type
     function GetInteresImpuesto(Interes: Extended): Extended;
   public
     { Public declarations }
-    property PaymentTime: TPaymentTime read FPaymentTime write SetPaymentTime;
-    property TipoContrato: TCTipoContrato read FTipoContrato write SetTipoContrato;
     procedure Execute(FechaPrestamo, FechaCorte, FechaVencimiento: TDateTime;
       TasaAnual: Extended; Plazo: Integer; ValorPresente, ValorFuturo, ImpactoISR: Extended);
     function Pago(TasaAnual: Extended; Plazo: Integer; ValorPresente,ValorFuturo: Extended): Extended;
@@ -141,6 +161,9 @@ type
       ComisionInicial, Depositos, ComisionFinal, TasaAnual: Extended;
       DepositosNumero, Plazo: Integer; ValorPresente, ValorFuturo,
       ImpactoISR: Extended): Extended;
+    procedure AjustarMensualidad1(IdAnexo: Integer; FechaPrestamo: TDateTime);
+    property PaymentTime: TPaymentTime read FPaymentTime write SetPaymentTime;
+    property TipoContrato: TCTipoContrato read FTipoContrato write SetTipoContrato;
   end;
 
 implementation
@@ -163,6 +186,54 @@ begin
   TfrmSegmentos(gGridForm).Plazo, TfrmSegmentos(gGridForm).Monto,
   TfrmSegmentos(gGridForm).Futuro, TfrmSegmentos(gGridForm).ImpactoISR, PaymentTime);
 //  GenAmortizacionesSegmento(TfrmSegmentos(gGridForm).FechaInicial,TfrmSegmentos(gGridForm).Monto, 0, PaymentTime);
+end;
+
+procedure TdmAmortizaciones.AjustarMensualidad1(IdAnexo: Integer;
+  FechaPrestamo: TDateTime);
+var
+  IdAnexoAmortizacion: Integer;
+  Amortizacion: TAmortizacion;
+begin
+  // Obtiene la amortizacion origen
+  adoqAmortizacion1.Close;
+  adoqAmortizacion1.Parameters.ParamByName('IdAnexo').Value:= IdAnexo;
+  adoqAmortizacion1.Open;
+  try
+    IdAnexoAmortizacion := adoqAmortizacion1IdAnexoAmortizacion.Value;
+    Amortizacion.Periodo := adoqAmortizacion1Periodo.Value;
+    Amortizacion.FechaCorte := adoqAmortizacion1FechaCorte.Value;
+    Amortizacion.FechaVencimiento := adoqAmortizacion1FechaVencimiento.Value;
+    Amortizacion.TasaAnual := adoqAmortizacion1TasaAnual.Value;
+    Amortizacion.SaldoInicial := adoqAmortizacion1SaldoInicial.AsExtended;
+    Amortizacion.Capital := adoqAmortizacion1Capital.AsExtended;
+    Amortizacion.CapitalImpuesto := adoqAmortizacion1CapitalImpuesto.AsExtended;
+    Amortizacion.CapitalTotal := adoqAmortizacion1CapitalTotal.AsExtended;
+    Amortizacion.Interes := adoqAmortizacion1Interes.AsExtended;
+    Amortizacion.InteresImpuesto := adoqAmortizacion1InteresImpuesto.AsExtended;
+    Amortizacion.InteresTotal := adoqAmortizacion1InteresTotal.AsExtended;
+    Amortizacion.ImpactoISR := adoqAmortizacion1ImpactoISR.AsExtended;
+    Amortizacion.Pago := adoqAmortizacion1Pago.AsExtended;
+    Amortizacion.PagoTotal := adoqAmortizacion1PagoTotal.AsExtended;
+    Amortizacion.SaldoFinal := adoqAmortizacion1SaldoFinal.AsExtended;
+  finally
+    adoqAmortizacion1.Close;
+  end;
+  // Modifica la amortizacion
+  AjustePrimeraMensualidad(FechaPrestamo, Amortizacion);
+  // Actualiza la amortizacion
+  adocUptAnexosAmrtizaciones.Parameters.ParamByName('SaldoInicial').Value := Amortizacion.SaldoInicial;
+  adocUptAnexosAmrtizaciones.Parameters.ParamByName('Pago').Value := Amortizacion.Pago;
+  adocUptAnexosAmrtizaciones.Parameters.ParamByName('Capital').Value := Amortizacion.Capital;
+  adocUptAnexosAmrtizaciones.Parameters.ParamByName('CapitalImpuesto').Value := Amortizacion.CapitalImpuesto;
+  adocUptAnexosAmrtizaciones.Parameters.ParamByName('CapitalTotal').Value := Amortizacion.CapitalTotal;
+  adocUptAnexosAmrtizaciones.Parameters.ParamByName('Interes').Value := Amortizacion.Interes;
+  adocUptAnexosAmrtizaciones.Parameters.ParamByName('InteresImpuesto').Value := Amortizacion.InteresImpuesto;
+  adocUptAnexosAmrtizaciones.Parameters.ParamByName('InteresTotal').Value := Amortizacion.InteresTotal;
+  adocUptAnexosAmrtizaciones.Parameters.ParamByName('ImpactoISR').Value := Amortizacion.ImpactoISR;
+  adocUptAnexosAmrtizaciones.Parameters.ParamByName('PagoTotal').Value := Amortizacion.PagoTotal;
+  adocUptAnexosAmrtizaciones.Parameters.ParamByName('SaldoFinal').Value := Amortizacion.SaldoFinal;
+  adocUptAnexosAmrtizaciones.Parameters.ParamByName('IdAnexoAmortizacion').Value := IdAnexoAmortizacion;
+  adocUptAnexosAmrtizaciones.Execute;
 end;
 
 procedure TdmAmortizaciones.AjustePrimeraMensualidad(FechaPrestamo: TDateTime;

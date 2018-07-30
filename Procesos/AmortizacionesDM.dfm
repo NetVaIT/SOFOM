@@ -758,4 +758,141 @@ inherited dmAmortizaciones: TdmAmortizaciones
     Left = 224
     Top = 208
   end
+  object adoqAmortizacion1: TADOQuery
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    Parameters = <
+      item
+        Name = 'IdAnexo'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    SQL.Strings = (
+      
+        'SELECT        AnexosAmortizaciones.IdAnexoAmortizacion, AnexosAm' +
+        'ortizaciones.IdAnexoCredito, AnexosAmortizaciones.IdAnexoSegment' +
+        'o, AnexosAmortizaciones.Periodo, AnexosAmortizaciones.FechaCorte' +
+        ','
+      
+        '                         AnexosAmortizaciones.FechaVencimiento, ' +
+        'AnexosAmortizaciones.TasaAnual, AnexosAmortizaciones.SaldoInicia' +
+        'l, AnexosAmortizaciones.Pago, AnexosAmortizaciones.Capital,'
+      
+        '                         AnexosAmortizaciones.CapitalImpuesto, A' +
+        'nexosAmortizaciones.CapitalTotal, AnexosAmortizaciones.Interes, ' +
+        'AnexosAmortizaciones.InteresImpuesto, AnexosAmortizaciones.Inter' +
+        'esTotal,'
+      
+        '                         AnexosAmortizaciones.ImpactoISR, Anexos' +
+        'Amortizaciones.PagoTotal, AnexosAmortizaciones.SaldoFinal, Anexo' +
+        'sAmortizaciones.FechaMoratorio,'
+      
+        '                         AnexosAmortizaciones.Moratorio, AnexosA' +
+        'mortizaciones.MoratorioImpuesto'
+      'FROM v_AnexosAmortizaciones AS AnexosAmortizaciones'
+      
+        'INNER JOIN AnexosCreditos ON AnexosAmortizaciones.IdAnexoCredito' +
+        ' = AnexosCreditos.IdAnexoCredito'
+      'WHERE AnexosCreditos.IdAnexoCreditoEstatus = 1'
+      'AND AnexosAmortizaciones.Periodo = 1'
+      
+        'AND AnexosAmortizaciones.PagoTotal = AnexosAmortizaciones.PagoSa' +
+        'ldo AND AnexosAmortizaciones.Saldo = 0'
+      'AND AnexosCreditos.IdAnexo = :IdAnexo')
+    Left = 344
+    Top = 168
+    object adoqAmortizacion1IdAnexoAmortizacion: TIntegerField
+      FieldName = 'IdAnexoAmortizacion'
+    end
+    object adoqAmortizacion1IdAnexoCredito: TIntegerField
+      FieldName = 'IdAnexoCredito'
+    end
+    object adoqAmortizacion1IdAnexoSegmento: TIntegerField
+      FieldName = 'IdAnexoSegmento'
+    end
+    object adoqAmortizacion1Periodo: TIntegerField
+      FieldName = 'Periodo'
+    end
+    object adoqAmortizacion1FechaCorte: TDateTimeField
+      FieldName = 'FechaCorte'
+    end
+    object adoqAmortizacion1FechaVencimiento: TDateTimeField
+      FieldName = 'FechaVencimiento'
+    end
+    object adoqAmortizacion1TasaAnual: TBCDField
+      FieldName = 'TasaAnual'
+      Precision = 19
+    end
+    object adoqAmortizacion1SaldoInicial: TFMTBCDField
+      FieldName = 'SaldoInicial'
+      Precision = 18
+      Size = 6
+    end
+    object adoqAmortizacion1Pago: TFMTBCDField
+      FieldName = 'Pago'
+      Precision = 18
+      Size = 6
+    end
+    object adoqAmortizacion1Capital: TFMTBCDField
+      FieldName = 'Capital'
+      Precision = 18
+      Size = 6
+    end
+    object adoqAmortizacion1CapitalImpuesto: TFMTBCDField
+      FieldName = 'CapitalImpuesto'
+      Precision = 18
+      Size = 6
+    end
+    object adoqAmortizacion1CapitalTotal: TFMTBCDField
+      FieldName = 'CapitalTotal'
+      Precision = 18
+      Size = 6
+    end
+    object adoqAmortizacion1Interes: TFMTBCDField
+      FieldName = 'Interes'
+      Precision = 18
+      Size = 6
+    end
+    object adoqAmortizacion1InteresImpuesto: TFMTBCDField
+      FieldName = 'InteresImpuesto'
+      Precision = 18
+      Size = 6
+    end
+    object adoqAmortizacion1InteresTotal: TFMTBCDField
+      FieldName = 'InteresTotal'
+      Precision = 18
+      Size = 6
+    end
+    object adoqAmortizacion1ImpactoISR: TFMTBCDField
+      FieldName = 'ImpactoISR'
+      Precision = 18
+      Size = 6
+    end
+    object adoqAmortizacion1PagoTotal: TFMTBCDField
+      FieldName = 'PagoTotal'
+      Precision = 18
+      Size = 6
+    end
+    object adoqAmortizacion1SaldoFinal: TFMTBCDField
+      FieldName = 'SaldoFinal'
+      Precision = 18
+      Size = 6
+    end
+    object adoqAmortizacion1FechaMoratorio: TDateTimeField
+      FieldName = 'FechaMoratorio'
+    end
+    object adoqAmortizacion1Moratorio: TFMTBCDField
+      FieldName = 'Moratorio'
+      Precision = 18
+      Size = 6
+    end
+    object adoqAmortizacion1MoratorioImpuesto: TFMTBCDField
+      FieldName = 'MoratorioImpuesto'
+      Precision = 18
+      Size = 6
+    end
+  end
 end

@@ -103,6 +103,7 @@ type
     FactGenMoratorios: TBasicAction;
     FactReducirCuota: TBasicAction;
     FactReducirPlazo: TBasicAction;
+    FactAjustarMensualidad1: TBasicAction;
     procedure SetactGenerar(const Value: TBasicAction);
     procedure SetactAbonar(const Value: TBasicAction);
     procedure SetactRestructurar(const Value: TBasicAction);
@@ -120,6 +121,7 @@ type
     property actOpcionCompra: TBasicAction read FactOpcionCompra write SetactOpcionCompra;
     property actReducirCuota: TBasicAction read FactReducirCuota write SetactReducirCuota;
     property actReducirPlazo: TBasicAction read FactReducirPlazo write SetactReducirPlazo;
+    property actAjustarMensualidad1: TBasicAction read FactAjustarMensualidad1 write FactAjustarMensualidad1;
   end;
 
 implementation
@@ -138,6 +140,7 @@ procedure TfrmAnexos.FormShow(Sender: TObject);
 begin
   inherited;
   TfrmAnexosEdit(gEditForm).actGetTipoCambio := actGetTipoCambio;
+  TfrmAnexosEdit(gEditForm).actAjustarMensualidad1 := actAjustarMensualidad1;
 end;
 
 procedure TfrmAnexos.SetactAbonar(const Value: TBasicAction);

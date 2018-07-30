@@ -171,6 +171,15 @@ inherited dmContratos: TdmContratos
       OnExecute = actEliminarCreditoExecute
       OnUpdate = actEliminarCreditoUpdate
     end
+    object actAjustarMensualidad1: TAction
+      Caption = 'Ajustar'
+      Hint = 
+        'Ajusta el importe de la primera mensualidad en base a la fecha d' +
+        'e entrega'
+      ImageIndex = 17
+      OnExecute = actAjustarMensualidad1Execute
+      OnUpdate = actAjustarMensualidad1Update
+    end
   end
   object dsMaster: TDataSource
     AutoEdit = False
@@ -220,8 +229,8 @@ inherited dmContratos: TdmContratos
       'iaAnual, PagoInicialCreado, CapitalCobrado, SaldoInsoluto, Monto' +
       'Vencido, CartaCompensacion, ValorResidualCreado, OpcionCompraCre' +
       'ado, FechaTermino, MontoTermino, ContratadoTotal, PagadoTotal, S' +
-      'aldoTotal, FinanciarEnganche, FechaLiquidacion'#13#10'from Anexos'#13#10'whe' +
-      're IdContrato = :IdContrato'
+      'aldoTotal, FinanciarEnganche, FechaLiquidacion, FechaEntrega'#13#10'fr' +
+      'om Anexos'#13#10'where IdContrato = :IdContrato'
     DataSource = dsMaster
     MasterFields = 'IdContrato'
     Parameters = <
@@ -586,8 +595,13 @@ inherited dmContratos: TdmContratos
       Size = 300
       Lookup = True
     end
+    object adodsAnexosFechaEntrega: TDateTimeField
+      DisplayLabel = 'Fecha de entrega'
+      FieldName = 'FechaEntrega'
+    end
   end
   object adodsMonedas: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdMoneda, Descripcion from Monedas'#13#10'order by Descripcion'
@@ -596,6 +610,7 @@ inherited dmContratos: TdmContratos
     Top = 144
   end
   object adodsAnexosEstatus: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdAnexoEstatus, Descripcion from AnexosEstatus'
@@ -1256,6 +1271,7 @@ inherited dmContratos: TdmContratos
     Top = 408
   end
   object adodsEmpleado: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -1309,7 +1325,7 @@ inherited dmContratos: TdmContratos
         Value = Null
       end>
     Left = 544
-    Top = 272
+    Top = 248
   end
   object adospDelAnexosCreditos: TADOStoredProc
     Connection = _dmConection.ADOConnection
@@ -1320,20 +1336,53 @@ inherited dmContratos: TdmContratos
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@IdAnexoCredito'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end
       item
         Name = '@IdUsuario'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end>
     Left = 544
     Top = 192
+  end
+  object adoqAmortizacion1: TADOQuery
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    Parameters = <
+      item
+        Name = 'IdAnexo'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    SQL.Strings = (
+      
+        'SELECT dbo.CanModificarAmortizacion(AnexosAmortizaciones.IdAnexo' +
+        'Amortizacion) AS CanModificar'
+      'FROM AnexosAmortizaciones'
+      
+        'INNER JOIN AnexosCreditos ON AnexosAmortizaciones.IdAnexoCredito' +
+        ' = AnexosCreditos.IdAnexoCredito'
+      'WHERE AnexosCreditos.IdAnexoCreditoEstatus = 1'
+      'AND AnexosAmortizaciones.Periodo = 1'
+      'AND AnexosCreditos.IdAnexo = :IdAnexo')
+    Left = 552
+    Top = 304
+    object adoqAmortizacion1CanModificar: TBooleanField
+      FieldName = 'CanModificar'
+      ReadOnly = True
+    end
   end
 end

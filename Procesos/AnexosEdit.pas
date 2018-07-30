@@ -20,7 +20,7 @@ uses
   System.Actions, Vcl.ActnList, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls, cxPC,
   cxContainer, cxEdit, cxSpinEdit, cxDBEdit, cxCurrencyEdit, Vcl.DBCtrls,
   cxMaskEdit, cxDropDownEdit, cxCalendar, cxTextEdit, cxGroupBox, cxButtonEdit,
-  ProductosDM, cxCheckBox;
+  ProductosDM, cxCheckBox, Vcl.Menus, cxButtons;
 
 type
   TfrmAnexosEdit = class(T_frmEdit)
@@ -103,6 +103,9 @@ type
     cxDBTextEdit22: TcxDBTextEdit;
     Label33: TLabel;
     cxDBDateEdit4: TcxDBDateEdit;
+    Label34: TLabel;
+    cxDBDateEdit5: TcxDBDateEdit;
+    btnAjustar: TcxButton;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -111,10 +114,13 @@ type
     { Private declarations }
     dmProductos: TdmProductos;
     FactGetTipoCambio: TBasicAction;
+    FactAjustarMensualidad1: TBasicAction;
     procedure SetactGetTipoCambio(const Value: TBasicAction);
+    procedure SetactAjustarMensualidad1(const Value: TBasicAction);
   public
     { Public declarations }
     property actGetTipoCambio: TBasicAction read FactGetTipoCambio write SetactGetTipoCambio;
+    property actAjustarMensualidad1: TBasicAction read FactAjustarMensualidad1 write SetactAjustarMensualidad1;
   end;
 
 implementation
@@ -160,6 +166,12 @@ begin
   dmProductos.ShowModule(tsProductos,'');
   if edtIdentificador.CanFocus then
     edtIdentificador.SetFocus;
+end;
+
+procedure TfrmAnexosEdit.SetactAjustarMensualidad1(const Value: TBasicAction);
+begin
+  FactAjustarMensualidad1 := Value;
+  btnAjustar.Action := Value
 end;
 
 procedure TfrmAnexosEdit.SetactGetTipoCambio(const Value: TBasicAction);
