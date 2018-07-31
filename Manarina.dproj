@@ -92,10 +92,10 @@
         <VerInfo_Release>2</VerInfo_Release>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <Icon_MainIcon>Manarina_Icon.ico</Icon_MainIcon>
-        <VerInfo_Build>46</VerInfo_Build>
+        <VerInfo_Build>47</VerInfo_Build>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.2.46;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.2.47;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -1136,6 +1136,34 @@
             <Form>frmPersonasAdministradoresEdit</Form>
         </DCCReference>
         <DCCReference Include="Procesos\LPB.pas"/>
+        <DCCReference Include="Catalogos\MatrizRiesgoDM.pas">
+            <Form>dmMatrizRiesgo</Form>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Catalogos\MatrizRiesgoForm.pas">
+            <Form>frmMatrizRiesgo</Form>
+        </DCCReference>
+        <DCCReference Include="Catalogos\MRCalificacionRiesgoForm.pas">
+            <Form>frmMRCalificacionesRiesgos</Form>
+        </DCCReference>
+        <DCCReference Include="Catalogos\MatrizRiesgoEdit.pas">
+            <Form>frmMatrizRiesgoEdit</Form>
+        </DCCReference>
+        <DCCReference Include="Catalogos\MRCalificacionRiesgoEdit.pas">
+            <Form>frmCalificacionRiesgoEdit</Form>
+        </DCCReference>
+        <DCCReference Include="Catalogos\MRPreguntasForm.pas">
+            <Form>frmMRPreguntas</Form>
+        </DCCReference>
+        <DCCReference Include="Catalogos\MRPreguntasOpcionesForm.pas">
+            <Form>frmMRPreguntasOpciones</Form>
+        </DCCReference>
+        <DCCReference Include="Catalogos\MRPreguntasEdit.pas">
+            <Form>frmMRPreguntasEdit</Form>
+        </DCCReference>
+        <DCCReference Include="Catalogos\MRPreguntasOpcionesEdit.pas">
+            <Form>frmMrPreguntasOpcionesEdit</Form>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

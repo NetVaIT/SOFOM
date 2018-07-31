@@ -149,6 +149,8 @@ type
     dxBarButton9: TdxBarButton;
     dxBarButton10: TdxBarButton;
     actCFDIPagos: TAction;
+    dxBrLrgBtnMatrizRiesgo: TdxBarLargeButton;
+    ActMatrizRiesgo: TAction;
     procedure actCatalogoExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -186,7 +188,7 @@ uses ConfiguracionDM, UbicacionesDM, BancosDM, MonedasDM, PuestosDM, PlazasTurno
   RptCoberturaDM, RptExpedientesRecibidosDM, rptReporteCarteraDM,
   RptAnexosProductosDM, RptColocacionAcumuladoDM, PonerFechaActualForm,
   BuroCreditoDM, PLDAlertasDM, RptPagoAplicacionesMensualDM, _ConectionDmod,
-  PLDAlertasConfiguracionDM;
+  PLDAlertasConfiguracionDM, MatrizRiesgoDM;
 
 procedure TfrmMain.actAgregarAlertaExecute(Sender: TObject);
 var
@@ -282,6 +284,7 @@ begin
          gReport.Title := pCaption;
          gReport.Execute;
        end;
+    61: gModulo := TdmMatrizRiesgo.Create(Self); //Matriz Riesgo
   end;
   if Assigned(gModulo) then
   begin

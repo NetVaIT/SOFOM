@@ -267,7 +267,16 @@ uses
   PersonasAdministradoresDM in 'Catalogos\PersonasAdministradoresDM.pas' {dmPersonasAdministradores: TDataModule},
   PersonasAdministradoresForm in 'Catalogos\PersonasAdministradoresForm.pas' {frmPersonasAdministradores},
   PersonasAdministradoresEdit in 'Catalogos\PersonasAdministradoresEdit.pas' {frmPersonasAdministradoresEdit},
-  LPB in 'Procesos\LPB.pas';
+  LPB in 'Procesos\LPB.pas',
+  MatrizRiesgoDM in 'Catalogos\MatrizRiesgoDM.pas' {dmMatrizRiesgo: TDataModule},
+  MatrizRiesgoForm in 'Catalogos\MatrizRiesgoForm.pas' {frmMatrizRiesgo},
+  MRCalificacionRiesgoForm in 'Catalogos\MRCalificacionRiesgoForm.pas' {frmMRCalificacionesRiesgos},
+  MatrizRiesgoEdit in 'Catalogos\MatrizRiesgoEdit.pas' {frmMatrizRiesgoEdit},
+  MRCalificacionRiesgoEdit in 'Catalogos\MRCalificacionRiesgoEdit.pas' {frmCalificacionRiesgoEdit},
+  MRPreguntasForm in 'Catalogos\MRPreguntasForm.pas' {frmMRPreguntas},
+  MRPreguntasOpcionesForm in 'Catalogos\MRPreguntasOpcionesForm.pas' {frmMRPreguntasOpciones},
+  MRPreguntasEdit in 'Catalogos\MRPreguntasEdit.pas' {frmMRPreguntasEdit},
+  MRPreguntasOpcionesEdit in 'Catalogos\MRPreguntasOpcionesEdit.pas' {frmMrPreguntasOpcionesEdit};
 
 {$R *.res}
 
