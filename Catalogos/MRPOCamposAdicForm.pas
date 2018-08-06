@@ -1,4 +1,4 @@
-unit MRPreguntasForm;
+unit MRPOCamposAdicForm;
 
 interface
 
@@ -30,34 +30,37 @@ uses
   Vcl.ExtCtrls;
 
 type
-  TfrmMRPreguntas = class(T_frmGrid)
-    tvMasterIdMRPregunta: TcxGridDBColumn;
-    tvMasterIdMRCuestionario: TcxGridDBColumn;
-    tvMasterPregunta: TcxGridDBColumn;
-    tvMasterAplicaaPersonaFisica: TcxGridDBColumn;
-    tvMasterAplicaaPersonaMoral: TcxGridDBColumn;
-    tvMasterOrden: TcxGridDBColumn;
-    tvMasterCondicionada: TcxGridDBColumn;
-    tvMasterEvaluaARDirecto: TcxGridDBColumn;
+  TfrmMRCamposAdi = class(T_frmGrid)
+    tvMasterIdMRTablaAsociadoCampo: TcxGridDBColumn;
+    tvMasterIdMRPreguntaOpcion: TcxGridDBColumn;
+    tvMasterCampoEspecialAltoRiesgo: TcxGridDBColumn;
+    tvMasterCondicionEnTexto: TcxGridDBColumn;
+    tvMasterPonderacionExtra: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
+     TablaAct:String;
   end;
 
 var
-  frmMRPreguntas: TfrmMRPreguntas;
+  frmMRCamposAdi: TfrmMRCamposAdi;
 
 implementation
 
 {$R *.dfm}
 
-uses MatrizRiesgoDM, MRPreguntasEdit;
+uses MatrizRiesgoDM, MRPOCamposAdicEdit;
 
-procedure TfrmMRPreguntas.FormCreate(Sender: TObject);
+{ TfrmMRCamposAdi }
+
+procedure TfrmMRCamposAdi.FormCreate(Sender: TObject);
 begin
   inherited;
-  gEditForm:=TfrmMRPreguntasEdit.create(self);
+  gEditForm:= TfrmMRPOCampoAdiEdit.Create(Self);
 end;
+
+
+
 end.

@@ -50,12 +50,40 @@ type
     adodsPreguntasOpcionesCondicionTablaExt: TStringField;
     adodsPreguntasOpcionesEvaluaCamposAdicionales: TBooleanField;
     ADOQryAuxiliar: TADOQuery;
+    ADODsCamposAdicionales: TADODataSet;
+    dsPreguntaOpcion: TDataSource;
+    ADODsCamposAdicionalesIdMRTablaAsociadoCampo: TAutoIncField;
+    ADODsCamposAdicionalesIdMRPreguntaOpcion: TIntegerField;
+    ADODsCamposAdicionalesCampoEspecialAltoRiesgo: TStringField;
+    ADODsCamposAdicionalesCondicionEnTexto: TStringField;
+    ADODsCamposAdicionalesPonderacionExtra: TFloatField;
+    ADOdsPaquetesPreguntas: TADODataSet;
+    DSPaquetePregunta: TDataSource;
+    ADOdsPaquetesPreguntasIdMRPaquetePregunta: TAutoIncField;
+    ADOdsPaquetesPreguntasIdMRCuestionario: TIntegerField;
+    ADOdsPaquetesPreguntasDescripcionPaquete: TStringField;
+    ADOdsPaquetesPreguntasPonderacion_Extra: TFloatField;
+    ADODsRelacionPreguntas: TADODataSet;
+    ADODsRelacionPreguntasIdMRRelacionPregunta: TAutoIncField;
+    ADODsRelacionPreguntasIdMRPaquetePregunta: TIntegerField;
+    ADODsRelacionPreguntasIdMRPregunta: TIntegerField;
+    ADODsRelacionPreguntasIdMRPreguntaOpcion: TIntegerField;
+    ADODsRelacionPreguntasValorCondicionante: TStringField;
+    ADODsRelacionPreguntasPreguntaTxt: TStringField;
+    ADODsRelacionPreguntasOpcionTxt: TStringField;
+    ADODsRelacionPreguntasPaqueteTxt: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
+    procedure ADODsCamposAdicionalesNewRecord(DataSet: TDataSet);
+    procedure adodsPreguntasNewRecord(DataSet: TDataSet);
   private
+  //  FListaCampos: TStrings;
+//    function GetListaCampos: TStrings;
     { Private declarations }
   public
     { Public declarations }
+    TablaAct:String;
+ //    property ListaCampos :TStrings read GetListaCampos write FListaCampos;
   end;
 
 var
@@ -70,12 +98,33 @@ uses MatrizRiesgoForm, MRCalificacionRiesgoForm, _ConectionDmod,
 
 {$R *.dfm}
 
+procedure TdmMatrizRiesgo.ADODsCamposAdicionalesNewRecord(DataSet: TDataSet);
+begin
+  inherited;
+  DataSet.FieldByName('IdMRPreguntaOpcion').AsInteger:= adodsPreguntasOpcionesIdMRPreguntaOpcion.AsInteger;
+end;
+
 procedure TdmMatrizRiesgo.adodsMasterNewRecord(DataSet: TDataSet);
 begin
   inherited;
   dataset.FieldByName('IdUsuario').AsInteger:=_dmConection.IdUsuario;
   dataset.FieldByName('IdMRCuestionarioEstatus').AsInteger:=0; //En creacion  //Para evitar que se use si aun no esta concluido
 
+end;
+
+procedure TdmMatrizRiesgo.adodsPreguntasNewRecord(DataSet: TDataSet);
+var ordAct:integer;
+begin
+  inherited;
+  //Ago 2 agregar uno al orden
+  //Saca orden mas grande y le suma 1
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.SQL.Clear;
+  ADOQryAuxiliar.SQL.Add('Select case when (max(orden) is null) then  0 else  max(orden)end as ultimo from  MRPreguntas where IdMRCuestionario='+adodsMasterIdMRCuestionario.asstring);
+  ADOQryAuxiliar.open;
+  ordAct:=  ADOQryAuxiliar.FieldByName('ultimo').AsInteger;
+  ADOQryAuxiliar.Close;
+  DataSet.FieldByName('Orden').asinteger:=ordact+1;
 end;
 
 procedure TdmMatrizRiesgo.DataModuleCreate(Sender: TObject);
@@ -88,6 +137,16 @@ begin
   if adodsPreguntasOpciones.CommandText <> EmptyStr then
      adodsPreguntasOpciones.Open;
 
+  if ADODsCamposAdicionales.CommandText <> EmptyStr then
+    ADODsCamposAdicionales.Open;
+
+  if ADOdsPaquetesPreguntas.CommandText <> EmptyStr then
+    ADOdsPaquetesPreguntas.Open;
+
+  if ADODsRelacionPreguntas.CommandText <> EmptyStr then
+    ADOdsRElacionPreguntas.Open;
+
+
   gGridForm:= TfrmMatrizRiesgo.Create(Self);
 
   gGridForm.DataSet:= adodsMaster;
@@ -97,10 +156,12 @@ begin
   gFormDeatil1:= TfrmMRPreguntas.Create(Self);
   gFormDeatil1.DataSet:= adodsPreguntas;
 
-  gFormDeatil2:= TfrmMRPreguntasOpciones.Create(Self);
-  gFormDeatil2.DataSet:= adodsPreguntasOpciones;
+  gFormDeatil3:= TfrmMRPreguntasOpciones.Create(Self);
+  gFormDeatil3.DataSet:= adodsPreguntasOpciones;
 
 
 end;
+
+
 
 end.

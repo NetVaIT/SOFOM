@@ -4,27 +4,36 @@ inherited frmMRPreguntas: TfrmMRPreguntas
   ClientHeight = 428
   ClientWidth = 746
   ExplicitWidth = 752
-  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
     Top = 343
     Width = 746
+    ExplicitTop = 343
+    ExplicitWidth = 746
   end
   inherited splDetail1: TSplitter
     Top = 255
     Width = 746
+    ExplicitTop = 255
+    ExplicitWidth = 746
   end
   inherited splDetail2: TSplitter
     Top = 299
     Width = 746
+    ExplicitTop = 299
+    ExplicitWidth = 746
   end
   inherited pnlMaster: TPanel
     Width = 746
-    Height = 229
+    Height = 227
+    ExplicitWidth = 746
+    ExplicitHeight = 229
     inherited cxGrid: TcxGrid
       Width = 746
       Height = 229
+      ExplicitWidth = 746
+      ExplicitHeight = 229
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdMRPregunta: TcxGridDBColumn
           DataBinding.FieldName = 'IdMRPregunta'
@@ -64,20 +73,29 @@ inherited frmMRPreguntas: TfrmMRPreguntas
   inherited pnlDetail3: TPanel
     Top = 346
     Width = 746
+    ExplicitTop = 346
+    ExplicitWidth = 746
   end
   inherited pnlDetail2: TPanel
     Top = 302
     Width = 746
+    ExplicitTop = 302
+    ExplicitWidth = 746
   end
   inherited pnlDetail1: TPanel
     Top = 258
     Width = 746
+    ExplicitTop = 258
+    ExplicitWidth = 746
   end
   inherited pnlClose: TPanel
     Top = 387
     Width = 746
+    ExplicitTop = 387
+    ExplicitWidth = 746
     inherited btnClose: TButton
       Left = 661
+      ExplicitLeft = 661
     end
   end
   inherited DataSource: TDataSource
@@ -87,7 +105,7 @@ inherited frmMRPreguntas: TfrmMRPreguntas
     DockControlHeights = (
       0
       0
-      26
+      28
       0)
   end
   inherited cxStyleRepository: TcxStyleRepository
@@ -99,7 +117,6 @@ inherited frmMRPreguntas: TfrmMRPreguntas
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 43312.497022928240000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

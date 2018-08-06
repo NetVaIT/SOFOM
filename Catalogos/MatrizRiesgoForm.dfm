@@ -8,21 +8,21 @@ inherited frmMatrizRiesgo: TfrmMatrizRiesgo
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Top = 633
+    Top = 525
     Width = 810
     Align = alTop
     ExplicitTop = 576
     ExplicitWidth = 645
   end
   inherited splDetail1: TSplitter
-    Top = 333
+    Top = 267
     Width = 810
     Align = alTop
     ExplicitTop = 333
     ExplicitWidth = 810
   end
   inherited splDetail2: TSplitter
-    Top = 484
+    Top = 515
     Width = 810
     Align = alTop
     ExplicitLeft = -10
@@ -31,17 +31,15 @@ inherited frmMatrizRiesgo: TfrmMatrizRiesgo
   end
   inherited pnlMaster: TPanel
     Width = 810
-    Height = 307
+    Height = 239
     Align = alTop
-    ExplicitWidth = 645
-    ExplicitHeight = 307
+    ExplicitWidth = 810
+    ExplicitHeight = 239
     inherited cxGrid: TcxGrid
       Width = 810
-      Height = 307
-      ExplicitLeft = -10
-      ExplicitTop = -3
+      Height = 239
       ExplicitWidth = 810
-      ExplicitHeight = 307
+      ExplicitHeight = 239
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdMRCuestionario: TcxGridDBColumn
           DataBinding.FieldName = 'IdMRCuestionario'
@@ -72,42 +70,42 @@ inherited frmMatrizRiesgo: TfrmMatrizRiesgo
     end
   end
   inherited pnlDetail3: TPanel
-    Top = 636
-    Width = 810
-    Height = 42
-    Align = alTop
-    ExplicitTop = 623
-    ExplicitWidth = 810
-    ExplicitHeight = 42
-  end
-  inherited pnlDetail2: TPanel
-    Top = 487
-    Width = 810
-    Height = 146
-    Align = alTop
-    ExplicitTop = 487
-    ExplicitWidth = 810
-    ExplicitHeight = 146
-  end
-  inherited pnlDetail1: TPanel
-    Top = 336
+    Top = 528
     Width = 810
     Height = 148
-    Align = alTop
-    ExplicitTop = 336
-    ExplicitWidth = 645
+    Align = alClient
+    ExplicitTop = 528
+    ExplicitWidth = 810
     ExplicitHeight = 148
+  end
+  inherited pnlDetail2: TPanel
+    Top = 518
+    Width = 810
+    Height = 7
+    Align = alTop
+    ExplicitTop = 518
+    ExplicitWidth = 810
+    ExplicitHeight = 7
+  end
+  inherited pnlDetail1: TPanel
+    Top = 270
+    Width = 810
+    Height = 245
+    Align = alTop
+    ExplicitTop = 270
+    ExplicitWidth = 810
+    ExplicitHeight = 245
   end
   inherited pnlClose: TPanel
     Top = 676
     Width = 810
     Height = 35
-    ExplicitTop = 607
-    ExplicitWidth = 645
+    ExplicitTop = 676
+    ExplicitWidth = 810
     ExplicitHeight = 35
     inherited btnClose: TButton
       Left = 725
-      ExplicitLeft = 560
+      ExplicitLeft = 725
     end
   end
   inherited DataSource: TDataSource
@@ -117,14 +115,8 @@ inherited frmMatrizRiesgo: TfrmMatrizRiesgo
     DockControlHeights = (
       0
       0
-      26
+      28
       0)
-    inherited dxbNavigator: TdxBar
-      DockedLeft = 107
-    end
-    inherited dxbTools: TdxBar
-      DockedLeft = 238
-    end
   end
   inherited cxStyleRepository: TcxStyleRepository
     PixelsPerInch = 96
@@ -135,7 +127,6 @@ inherited frmMatrizRiesgo: TfrmMatrizRiesgo
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 43311.541016712960000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

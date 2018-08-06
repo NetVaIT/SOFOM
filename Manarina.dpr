@@ -276,7 +276,14 @@ uses
   MRPreguntasForm in 'Catalogos\MRPreguntasForm.pas' {frmMRPreguntas},
   MRPreguntasOpcionesForm in 'Catalogos\MRPreguntasOpcionesForm.pas' {frmMRPreguntasOpciones},
   MRPreguntasEdit in 'Catalogos\MRPreguntasEdit.pas' {frmMRPreguntasEdit},
-  MRPreguntasOpcionesEdit in 'Catalogos\MRPreguntasOpcionesEdit.pas' {frmMrPreguntasOpcionesEdit};
+  MRPreguntasOpcionesEdit in 'Catalogos\MRPreguntasOpcionesEdit.pas' {frmMrPreguntasOpcionesEdit},
+  MRPOCamposAdicForm in 'Catalogos\MRPOCamposAdicForm.pas' {frmMRCamposAdi},
+  MRPOCamposAdicEdit in 'Catalogos\MRPOCamposAdicEdit.pas' {frmMRPOCampoAdiEdit},
+  MRPaquetePreguntasForm in 'Catalogos\MRPaquetePreguntasForm.pas' {frmPaquetePreguntas},
+  MRRelacionPreguntasEdit in 'Catalogos\MRRelacionPreguntasEdit.pas' {frmRelacionPreguntasEdit},
+  MRRelacionPreguntasForm in 'Catalogos\MRRelacionPreguntasForm.pas' {frmRelacionPreguntas},
+  MRPaquetePreguntasEdit in 'Catalogos\MRPaquetePreguntasEdit.pas' {frmPaquetePreguntasEdit},
+  MRPaquetesPreguntasDM in 'Catalogos\MRPaquetesPreguntasDM.pas' {dmMRPaquetesPreguntas: TDataModule};
 
 {$R *.res}
 

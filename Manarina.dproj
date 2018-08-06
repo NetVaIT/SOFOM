@@ -1164,6 +1164,35 @@
         <DCCReference Include="Catalogos\MRPreguntasOpcionesEdit.pas">
             <Form>frmMrPreguntasOpcionesEdit</Form>
         </DCCReference>
+        <DCCReference Include="Catalogos\MRPOCamposAdicForm.pas">
+            <Form>frmMRCamposAdi</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\MRPOCamposAdicEdit.pas">
+            <Form>frmMRPOCampoAdiEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\MRPaquetePreguntasForm.pas">
+            <Form>frmPaquetePreguntas</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\MRRelacionPreguntasEdit.pas">
+            <Form>frmRelacionPreguntasEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\MRRelacionPreguntasForm.pas">
+            <Form>frmRelacionPreguntas</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\MRPaquetePreguntasEdit.pas">
+            <Form>frmPaquetePreguntasEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\MRPaquetesPreguntasDM.pas">
+            <Form>dmMRPaquetesPreguntas</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

@@ -1,4 +1,4 @@
-unit MRPreguntasForm;
+unit MRRelacionPreguntasForm;
 
 interface
 
@@ -30,34 +30,46 @@ uses
   Vcl.ExtCtrls;
 
 type
-  TfrmMRPreguntas = class(T_frmGrid)
+  TfrmRelacionPreguntas = class(T_frmGrid)
+    tvMasterIdMRRelacionPregunta: TcxGridDBColumn;
+    tvMasterIdMRPaquetePregunta: TcxGridDBColumn;
     tvMasterIdMRPregunta: TcxGridDBColumn;
-    tvMasterIdMRCuestionario: TcxGridDBColumn;
+    tvMasterIdMRPreguntaOpcion: TcxGridDBColumn;
+    tvMasterValorCondicionante: TcxGridDBColumn;
     tvMasterPregunta: TcxGridDBColumn;
-    tvMasterAplicaaPersonaFisica: TcxGridDBColumn;
-    tvMasterAplicaaPersonaMoral: TcxGridDBColumn;
-    tvMasterOrden: TcxGridDBColumn;
-    tvMasterCondicionada: TcxGridDBColumn;
-    tvMasterEvaluaARDirecto: TcxGridDBColumn;
+    tvMasterOpcion: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
+    FDataSetPreguntas: TDataSet;
+    FDataSetOpciones: TDataSet;
     { Private declarations }
   public
     { Public declarations }
+    property DataSetPreguntas: TDataSet read FDataSetPreguntas write FDataSetPreguntas;
+    property DataSetOpciones: TDataSet read FDataSetOpciones write FDataSetOpciones;
   end;
 
 var
-  frmMRPreguntas: TfrmMRPreguntas;
+  frmRelacionPreguntas: TfrmRelacionPreguntas;
 
 implementation
 
 {$R *.dfm}
 
-uses MatrizRiesgoDM, MRPreguntasEdit;
+uses MRPaquetesPreguntasDM, MRRelacionPreguntasEdit;
 
-procedure TfrmMRPreguntas.FormCreate(Sender: TObject);
+procedure TfrmRelacionPreguntas.FormCreate(Sender: TObject);
 begin
   inherited;
-  gEditForm:=TfrmMRPreguntasEdit.create(self);
+  gEditForm:= TfrmRelacionPreguntasEdit.Create(Self);
 end;
+
+procedure TfrmRelacionPreguntas.FormShow(Sender: TObject);
+begin
+  inherited;
+  TfrmRelacionPreguntasEdit(gEditForm).DataSetPreguntas:= DataSetPreguntas;
+  TfrmRelacionPreguntasEdit(gEditForm).DataSetOpciones:= DataSetOpciones;
+end;
+
 end.

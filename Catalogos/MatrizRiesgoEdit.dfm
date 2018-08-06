@@ -1,21 +1,24 @@
 inherited frmMatrizRiesgoEdit: TfrmMatrizRiesgoEdit
   Caption = 'Edici'#243'n Matriz de Riesgo'
-  ClientHeight = 392
-  ClientWidth = 720
-  ExplicitWidth = 726
-  ExplicitHeight = 421
+  ClientHeight = 519
+  ClientWidth = 750
+  OnDestroy = FormDestroy
+  ExplicitWidth = 756
+  ExplicitHeight = 548
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
-    Width = 720
-    Height = 351
-    ClientRectBottom = 349
-    ClientRectRight = 718
+    Width = 750
+    Height = 478
+    ExplicitWidth = 720
+    ExplicitHeight = 351
+    ClientRectBottom = 474
+    ClientRectRight = 746
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 82
-      ExplicitTop = 106
-      ExplicitWidth = 761
-      ExplicitHeight = 457
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 712
+      ExplicitHeight = 323
       object Label1: TLabel
         Left = 48
         Top = 40
@@ -96,22 +99,39 @@ inherited frmMatrizRiesgoEdit: TfrmMatrizRiesgoEdit
     object cxTbShtPreguntas: TcxTabSheet
       Caption = 'Calificaciones de Riesgo'
       ImageIndex = 1
+      ExplicitWidth = 712
+      ExplicitHeight = 323
+    end
+    object cxTbShtPaquetes: TcxTabSheet
+      Caption = 'Paquetes Preguntas'
+      ImageIndex = 2
+      ExplicitWidth = 712
+      ExplicitHeight = 323
     end
   end
   inherited pmlMain: TPanel
-    Top = 351
-    Width = 720
+    Top = 478
+    Width = 750
+    ExplicitTop = 351
+    ExplicitWidth = 720
     inherited btnCancel: TButton
-      Left = 638
+      Left = 668
+      ExplicitLeft = 638
     end
     inherited btnOk: TButton
-      Left = 557
+      Left = 587
+      ExplicitLeft = 557
     end
   end
   inherited DataSource: TDataSource
     DataSet = dmMatrizRiesgo.adodsMaster
+    Left = 360
+  end
+  inherited ActionList: TActionList
+    Left = 384
   end
   inherited cxImageList: TcxImageList
     FormatVersion = 1
+    DesignInfo = 65952
   end
 end

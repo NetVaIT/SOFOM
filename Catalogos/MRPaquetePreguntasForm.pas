@@ -1,4 +1,4 @@
-unit MRPreguntasForm;
+unit MRPaquetePreguntasForm;
 
 interface
 
@@ -30,16 +30,13 @@ uses
   Vcl.ExtCtrls;
 
 type
-  TfrmMRPreguntas = class(T_frmGrid)
-    tvMasterIdMRPregunta: TcxGridDBColumn;
+  TfrmPaquetePreguntas = class(T_frmGrid)
+    tvMasterIdMRPaquetePregunta: TcxGridDBColumn;
     tvMasterIdMRCuestionario: TcxGridDBColumn;
-    tvMasterPregunta: TcxGridDBColumn;
-    tvMasterAplicaaPersonaFisica: TcxGridDBColumn;
-    tvMasterAplicaaPersonaMoral: TcxGridDBColumn;
-    tvMasterOrden: TcxGridDBColumn;
-    tvMasterCondicionada: TcxGridDBColumn;
-    tvMasterEvaluaARDirecto: TcxGridDBColumn;
+    tvMasterDescripcionPaquete: TcxGridDBColumn;
+    tvMasterPonderacion_Extra: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -47,17 +44,29 @@ type
   end;
 
 var
-  frmMRPreguntas: TfrmMRPreguntas;
+  frmPaquetePreguntas: TfrmPaquetePreguntas;
 
 implementation
 
 {$R *.dfm}
 
-uses MatrizRiesgoDM, MRPreguntasEdit;
+uses MRPaquetesPreguntasDM, MRPaquetePreguntasEdit;
 
-procedure TfrmMRPreguntas.FormCreate(Sender: TObject);
+procedure TfrmPaquetePreguntas.FormCreate(Sender: TObject);
 begin
   inherited;
-  gEditForm:=TfrmMRPreguntasEdit.create(self);
+  gEditForm:= TfrmPaquetePreguntasEdit.Create(Self);
+
+//  frmRelacionPreguntas:=TfrmRelacionPreguntas.Create(self);
+
 end;
+
+procedure TfrmPaquetePreguntas.FormShow(Sender: TObject);
+begin
+  inherited;
+//  frmRelacionPreguntas.Parent:=  pnlDetail1;
+//  frmRelacionPreguntas.Align:= alClient;
+//  frmRelacionPreguntas.Show;
+end;
+
 end.

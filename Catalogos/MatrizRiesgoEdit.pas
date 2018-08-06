@@ -33,8 +33,10 @@ type
     DBLookupComboBox1: TDBLookupComboBox;
     cxBtnActivarCuestionario: TcxButton;
     cxTbShtPreguntas: TcxTabSheet;
+    cxTbShtPaquetes: TcxTabSheet;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
   public
@@ -48,22 +50,57 @@ implementation
 
 {$R *.dfm}
 
-uses MatrizRiesgoDM, MRCalificacionRiesgoForm;
+uses MatrizRiesgoDM, MRCalificacionRiesgoForm, MRPaquetePreguntasForm,
+  MRPaquetesPreguntasDM;
 
 procedure TfrmMatrizRiesgoEdit.FormCreate(Sender: TObject);
 begin
   inherited;
-  //Crear forma
+  dmMRPaquetesPreguntas:=TdmMRPaquetesPreguntas.create(nil);
+
+
+    //Crear forma
   frmMRCalificacionesRiesgos:=TfrmMRCalificacionesRiesgos.Create(Self);
+
+ // frmPaquetePreguntas:=TfrmPaquetePreguntas.create(self);  //Ago 3/18
+
+
+
+end;
+
+procedure TfrmMatrizRiesgoEdit.FormDestroy(Sender: TObject);
+begin                             //Ago 3/18
+  inherited;
+//DEstruir al terminar
+  FreeandNil(frmMRCalificacionesRiesgos);
+
+  FreeandNil(dmMRPaquetesPreguntas);
 end;
 
 procedure TfrmMatrizRiesgoEdit.FormShow(Sender: TObject);
+var
+   idCuestAct:Integer ;
 begin
   inherited;
   //Mostrar en ts cxTbShtPreguntas
   frmMRCalificacionesRiesgos.Parent:=  cxTbShtPreguntas;
   frmMRCalificacionesRiesgos.Align:= alClient;
-  frmMRCalificacionesRiesgos.Show;
+  frmMRCalificacionesRiesgos.Show;     //Pendiente de destruir al salir
+
+  dmMRPaquetesPreguntas.MasterSource := DataSource;
+  dmMRPaquetesPreguntas.MasterFields := 'IdMRCuestionario';
+
+
+  idCuestAct := DataSource.DataSet.FieldByName('IdMRCuestionario').AsInteger;
+
+  dmMRPaquetesPreguntas.adodsMaster.Parameters.ParamByName('IdMRCuestionario').Value := idCuestAct;
+  dmMRPaquetesPreguntas.ShowModule(cxTbShtPaquetes,'');
+
+ // frmPaquetePreguntas.Parent:=  cxTbShtPaquetes;
+ // frmPaquetePreguntas.Align:= alClient;
+ // frmPaquetePreguntas.Show;     //Pendiente de destruir al salir
+
+
 
 end;
 
