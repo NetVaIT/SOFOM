@@ -12,11 +12,11 @@ inherited dmPagos: TdmPagos
     OnNewRecord = adodsMasterNewRecord
     CommandText = 
       'SELECT IdPago, IdBanco, IdPersonaCliente, IdCuentaBancariaEstado' +
-      'Cuenta, IdMetodoPago, IdContrato, IdAnexo, IdCFDI_NCR, IdMonedaO' +
-      'rigen, FechaPago, FolioPago, SeriePago, Referencia, Importe, Sal' +
-      'do, Observaciones, '#13#10'CuentaPago, OrigenPago, EsDeposito, dbo.Can' +
-      'GenerarCFDIPago(IdPago) AS GenerarCFDIPago, dbo.GetIdCFDIPago(Id' +
-      'Pago) AS IdCFDI'#13#10'FROM Pagos'
+      'Cuenta, IdMetodoPago, IdCFDIFormaPago33, IdContrato, IdAnexo, Id' +
+      'CFDI_NCR, IdMonedaOrigen, FechaPago, FolioPago, SeriePago, Refer' +
+      'encia, Importe, Saldo, Observaciones, '#13#10'CuentaPago, OrigenPago, ' +
+      'EsDeposito, dbo.CanGenerarCFDIPago(IdPago) AS GenerarCFDIPago, d' +
+      'bo.GetIdCFDIPago(IdPago) AS IdCFDI'#13#10'FROM Pagos'
     Left = 48
     object adodsMasterIdPago: TAutoIncField
       FieldName = 'IdPago'
@@ -37,6 +37,10 @@ inherited dmPagos: TdmPagos
     end
     object adodsMasterIdMetodoPago: TIntegerField
       FieldName = 'IdMetodoPago'
+      Visible = False
+    end
+    object adodsMasterIdCFDIFormaPago33: TIntegerField
+      FieldName = 'IdCFDIFormaPago33'
       Visible = False
     end
     object adodsMasterIdContrato: TIntegerField
@@ -96,6 +100,17 @@ inherited dmPagos: TdmPagos
     object adodsMasterGenerarCFDIPago: TBooleanField
       FieldName = 'GenerarCFDIPago'
       ReadOnly = True
+    end
+    object adodsMasterFormaPago: TStringField
+      DisplayLabel = 'Forma de pago'
+      FieldKind = fkLookup
+      FieldName = 'FormaPago'
+      LookupDataSet = adodsFromaPago33
+      LookupKeyFields = 'IdCFDIFormaPago33'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IdCFDIFormaPago33'
+      Size = 50
+      Lookup = True
     end
     object adodsMasterMetodoPago: TStringField
       DisplayLabel = 'M'#233'todo de pago'
@@ -2016,7 +2031,7 @@ inherited dmPagos: TdmPagos
       'ClaveSAT2016 from MetodosPago'#13#10'where idmetodoPago>0'
     Parameters = <>
     Left = 144
-    Top = 328
+    Top = 432
     object ADODtStSelMetPagoIdMetodoPago: TIntegerField
       FieldName = 'IdMetodoPago'
     end
@@ -2157,5 +2172,15 @@ inherited dmPagos: TdmPagos
       Precision = 19
       Size = 6
     end
+  end
+  object adodsFromaPago33: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdCFDIFormaPago33, Identificador, Descripcion from CFDIFo' +
+      'rmasPago33'
+    Parameters = <>
+    Left = 48
+    Top = 345
   end
 end

@@ -85,6 +85,8 @@ type
     dxbbGenCFDIPago: TdxBarButton;
     tvMasterGenerarCFDIPago: TcxGridDBColumn;
     tvMasterIdCFDI: TcxGridDBColumn;
+    tvMasterIdCFDIFormaPago33: TcxGridDBColumn;
+    tvMasterFormaPago: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure dxBrBtnAplicaiconesClick(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
@@ -540,7 +542,7 @@ end;
 
 procedure TFrmConPagos.SpdBtnBuscarClick(Sender: TObject);
 const  //Dic 20/16
-  TxtSQL='SELECT IdPago, IdBanco, IdPersonaCliente, IdCuentaBancariaEstadoCuenta, PA.IdMetodoPago, IdContrato, IdAnexo, IdCFDI_NCR, IdMonedaOrigen, FechaPago, FolioPago, SeriePago, Referencia, Importe, Saldo, Observaciones, ' +
+  TxtSQL='SELECT IdPago, IdBanco, IdPersonaCliente, IdCuentaBancariaEstadoCuenta, PA.IdMetodoPago, IdCFDIFormaPago33, IdContrato, IdAnexo, IdCFDI_NCR, IdMonedaOrigen, FechaPago, FolioPago, SeriePago, Referencia, Importe, Saldo, Observaciones, ' +
   'CuentaPago, OrigenPago, EsDeposito, dbo.CanGenerarCFDIPago(IdPago) AS GenerarCFDIPago, dbo.GetIdCFDIPago(IdPago) AS IdCFDI ' +
   'FROM Pagos PA ';
 begin

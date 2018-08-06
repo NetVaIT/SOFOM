@@ -105,6 +105,7 @@ type
     tvMasterserie: TcxGridDBColumn;
     tvMasterfolio: TcxGridDBColumn;
     tvMasterDescripcion: TcxGridDBColumn;
+    adospUpdPagosAplicacionesCFDI: TADOStoredProc;
     procedure BtBtnAplicarClick(Sender: TObject);
     procedure DSAplicacionStateChange(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -175,6 +176,13 @@ var             //FEb 12/17
    FechaMora:TDAteTime;
   IdAnexoAct:Integer;     //abr 5/17
   FEchaPago:TDateTime;   //abr 5/17
+
+  procedure ActualizaParcialidadCFDI(IdCFDI: Integer);
+  begin
+    adospUpdPagosAplicacionesCFDI.Parameters.ParamByName('@IdCFDI').Value := IdCFDI;
+    adospUpdPagosAplicacionesCFDI.ExecProc
+  end;
+
 begin
         //Comparar antes de facturar para que el valor no sea mayor que el que se necesita...
   //Verificar si se pone una transaccion  // SE movio aca.feb 14/17 Verificar que cambia && ene 13 /17
@@ -271,12 +279,14 @@ begin
             begin
               fieldbyName('IdCuentaXCobrar').AsInteger:=dsConCXCpendientes.dataset.FieldByName('IdCuentaXCobrar').AsInteger;
               fieldbyName('IDPersonacliente').AsInteger:=dsConCXCpendientes.dataset.FieldByName('IDPersona').AsInteger;
+              fieldbyName('IdCFDI').AsInteger:=dsConCXCpendientes.dataset.FieldByName('IdCFDI').AsInteger;
               post;
               // Proceso de Actualizaciones internas puede ser en el after post de la tabla deAplicaciones
              // VerificaYCreaCXCFinales(adodsMasterIdAnexo.AsInteger); //Oct 2/17 ver si se coloca aca
 
             end;
             _dmConection.ADOConnection.CommitTrans;  //Feb 14/17
+            ActualizaParcialidadCFDI(DSAplicacion.DataSet.FieldByName('IdCFDI').AsInteger);
             ShowMessage('Operacion completa');
           except
             on E: Exception do

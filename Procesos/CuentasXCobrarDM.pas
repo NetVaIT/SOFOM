@@ -720,6 +720,7 @@ begin
   dmFacturas := TdmFacturas.Create(Self);
   try
     IdCFDI := dmFacturas.CrearPrefactura(IdCuentaXCobrar);
+    dmFacturas.SetCFDI(IdCFDI);
     CFDITimbrado := dmFacturas.Timbrar(IdCFDI);
   finally
     dmFacturas.Free;

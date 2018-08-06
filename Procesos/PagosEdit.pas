@@ -58,6 +58,8 @@ type
     DSNotasCredito: TDataSource;
     DBLookupComboBox2: TDBLookupComboBox;
     Label13: TLabel;
+    Label14: TLabel;
+    DBLookupComboBox3: TDBLookupComboBox;
     procedure DBLkpCmbBxClienteClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure cxDBTxtEdtImporteExit(Sender: TObject);
@@ -71,8 +73,8 @@ type
     { Public declarations }
   end;
 
-var
-  FrmEdPagos: TFrmEdPagos;
+//var
+//  FrmEdPagos: TFrmEdPagos;
 
 implementation
 

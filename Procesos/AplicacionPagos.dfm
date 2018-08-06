@@ -774,4 +774,23 @@ object FrmAplicacionPago: TFrmAplicacionPago
     Left = 796
     Top = 352
   end
+  object adospUpdPagosAplicacionesCFDI: TADOStoredProc
+    Connection = _dmConection.ADOConnection
+    ProcedureName = 'p_UpdPagosAplicacionesCFDI;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@IdCFDI'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+      end>
+    Left = 976
+    Top = 64
+  end
 end

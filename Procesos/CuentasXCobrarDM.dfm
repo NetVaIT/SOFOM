@@ -1070,18 +1070,21 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@IdCuentaXCobrar'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end
       item
         Name = '@IdUsuario'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end>
     Left = 216
     Top = 328

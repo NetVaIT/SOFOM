@@ -436,7 +436,8 @@ end;
 procedure TdmContratos.actAjustarMensualidad1Update(Sender: TObject);
 begin
   inherited;
-  TAction(Sender).Enabled := PuedeModificarAmortizacion1(adodsAnexosIdAnexo.Value);
+  TAction(Sender).Enabled := (TipoContrato <> tcArrendamientoPuro) and
+  PuedeModificarAmortizacion1(adodsAnexosIdAnexo.Value);
 end;
 
 procedure TdmContratos.actCrearAnexoExecute(Sender: TObject);
@@ -597,6 +598,7 @@ begin
   adodsAnexosIdAnexoEstatus.Value := 1; // Activo
   adodsAnexosIdMoneda.Value := _MONEDAS_ID_DOLAR_USA;
   adodsAnexosFecha.Value := _DmConection.LaFechaActual;//Date;  //May 26/17
+//  adodsAnexosFechaEntrega.Value := adodsAnexosFecha.Value;
   adodsAnexosTipoCambio.Value := 19;
   adodsAnexosPrecioMoneda.Value := 0;
   adodsAnexosEnganchePorcentaje.Value := 0;

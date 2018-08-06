@@ -282,6 +282,10 @@ inherited dmContratos: TdmContratos
       Required = True
       OnChange = adodsAnexosFechaChange
     end
+    object adodsAnexosFechaEntrega: TDateTimeField
+      DisplayLabel = 'Fecha de entrega'
+      FieldName = 'FechaEntrega'
+    end
     object adodsAnexosPrecioMoneda: TFMTBCDField
       DisplayLabel = 'Precio'
       FieldName = 'PrecioMoneda'
@@ -595,13 +599,8 @@ inherited dmContratos: TdmContratos
       Size = 300
       Lookup = True
     end
-    object adodsAnexosFechaEntrega: TDateTimeField
-      DisplayLabel = 'Fecha de entrega'
-      FieldName = 'FechaEntrega'
-    end
   end
   object adodsMonedas: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdMoneda, Descripcion from Monedas'#13#10'order by Descripcion'
@@ -610,7 +609,6 @@ inherited dmContratos: TdmContratos
     Top = 144
   end
   object adodsAnexosEstatus: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdAnexoEstatus, Descripcion from AnexosEstatus'
@@ -1271,7 +1269,6 @@ inherited dmContratos: TdmContratos
     Top = 408
   end
   object adodsEmpleado: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 

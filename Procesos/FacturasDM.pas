@@ -419,21 +419,19 @@ type
     procedure actRelacionarCFDIUpdate(Sender: TObject);
   private
     { Private declarations }
-    FMuestra: Boolean;
     FIdCFDITipoDocumento: TCFDITipoDocumento;
     FCanEdit: Boolean;
+    FIdCFDI: Integer;
     procedure ReadFileCERKEY(FileNameCER,FileNameKEY: TFileName);
     function ConvierteFechaT_DT(Texto: String): TDateTime;
 //    function CargaXMLPDFaFS(Archivo, Describe: string): integer;
 //    procedure SubirXMLPDFaFS(FileName: TFileName);
 //    Function ActualizaSaldoCliente(IdCFDI, IDCliente, IDDomicilioCliente:Integer;Importe :Double; operacion:String):Boolean;
-    procedure SetMuestra(const Value: Boolean);
     function SacaTipoComp(tipoD: Integer): String;
     function InformacionContrato(IdCXC: Integer): String;
     procedure ReadFile(FileName: TFileName);
 //    function CrearArchivos_TimbrePrueba(var Ruta: String;
 //      var TimbradoCFDI: TTimbreCFDI; Adicional: String): Boolean;
-//    procedure RefreshCFDI;
     procedure DesAsociarCFDIdeCXC(Idcfdi: Integer);
     procedure RegistraBitacora(tipoRegistro: Integer; Observacion: String);    //Regresado
 //    function Timbrar32(IdCFDI: Integer): Boolean;
@@ -441,6 +439,9 @@ type
     procedure GenerarPDF(IdCFDI:Integer; ArchivoPDF, ArchivoImagen: TFileName);
     function AgregarDocumento(FileName: TFileName): Integer;
     procedure SetCanEdit(const Value: Boolean);
+    property IdCFDITipoDocumento: TCFDITipoDocumento read FIdCFDITipoDocumento write FIdCFDITipoDocumento default tdFactura;
+    property IdCFDI: Integer read FIdCFDI write FIdCFDI default 0;
+//    property Muestra:Boolean read FMuestra write SetMuestra;
   protected
     procedure SetFilter; override;
   public
@@ -450,9 +451,8 @@ type
       IdCFDITipoDocumento: TCFDITipoDocumento); virtual;
     function CrearPrefactura(IdCuentaXCobrar: Integer): Integer;
     function CrearCFDIPago(IdPago: Integer): Integer;
+    procedure SetCFDI(IdCFDI: Integer);
     function Timbrar(IdCFDI: Integer): Boolean;
-    property IdCFDITipoDocumento: TCFDITipoDocumento read FIdCFDITipoDocumento write FIdCFDITipoDocumento;
-    property Muestra:Boolean read FMuestra write SetMuestra;
     property CanEdit: Boolean read FCanEdit write SetCanEdit;
   end;
 
@@ -977,7 +977,6 @@ begin
     adocUpdCFDITotales.Execute;
   end;
   RefreshADODS(ADODsmaster, adodsMasterIdCFDI);
-//  RefreshCFDI; //jun 27/17
 end;
 
 procedure TdmFacturas.adodsCFDIConceptosBeforeDelete(DataSet: TDataSet);
@@ -1083,7 +1082,6 @@ end;
 constructor TdmFacturas.CreateWMostrar(AOwner: TComponent; Muestra: Boolean;
   IdCFDITipoDocumento: TCFDITipoDocumento);
 begin
-  FMuestra:=Muestra;
   FIdCFDITipoDocumento := IdCFDITipoDocumento;
   inherited Create(AOwner);
 end;
@@ -1139,16 +1137,30 @@ begin
   FCanEdit := Value;
 end;
 
+procedure TdmFacturas.SetCFDI(IdCFDI: Integer);
+begin
+  Self.IdCFDI := IdCFDI;
+  actSearch.Execute;
+end;
+
 procedure TdmFacturas.SetFilter;
 begin
   inherited;
-  SQLWhere := Format(' WHERE (C.IdCFDITipoDocumento =  %d) ', [Ord(IdCFDITipoDocumento)]);
-  if TfrmFacturasGrid(gGridForm).Cliente <> EmptyStr then
-    SQLWhere := SQLWhere + 'AND C.IdPersonaReceptor IN (SELECT IdPersona FROM Personas WHERE RazonSocial LIKE ''%' + TfrmFacturasGrid(gGridForm).Cliente + '%'') ';
-  if TfrmFacturasGrid(gGridForm).UsarFecha then
-    SQLWhere := SQLWhere + Format('AND C.Fecha BETWEEN CONVERT(datetime, ''%s'' , 103) AND CONVERT(datetime, ''%s'' , 103) ', [DateToStr(TfrmFacturasGrid(gGridForm).Desde), DateToStr(TfrmFacturasGrid(gGridForm).Hasta)]);
-  if TfrmFacturasGrid(gGridForm).ConSaldo then
-    SQLWhere := SQLWhere + 'AND C.SaldoDocumento > 0 ';
+  if IdCFDI = 0 then
+  begin
+    if IdCFDITipoDocumento = tdNone then
+      SQLWhere := ' WHERE 0 = 0 '
+    else
+      SQLWhere := Format(' WHERE C.IdCFDITipoDocumento =  %d ', [Ord(IdCFDITipoDocumento)]);
+    if TfrmFacturasGrid(gGridForm).Cliente <> EmptyStr then
+      SQLWhere := SQLWhere + 'AND C.IdPersonaReceptor IN (SELECT IdPersona FROM Personas WHERE RazonSocial LIKE ''%' + TfrmFacturasGrid(gGridForm).Cliente + '%'') ';
+    if TfrmFacturasGrid(gGridForm).UsarFecha then
+      SQLWhere := SQLWhere + Format('AND C.Fecha BETWEEN CONVERT(datetime, ''%s'' , 103) AND CONVERT(datetime, ''%s'' , 103) ', [DateToStr(TfrmFacturasGrid(gGridForm).Desde), DateToStr(TfrmFacturasGrid(gGridForm).Hasta)]);
+    if TfrmFacturasGrid(gGridForm).ConSaldo then
+      SQLWhere := SQLWhere + 'AND C.SaldoDocumento > 0 ';
+  end
+  else
+    SQLWhere := Format(' WHERE C.IdCFDI =  %d ', [IdCFDI]);
 end;
 
 procedure TdmFacturas.ReadFileCERKEY(FileNameCER, FileNameKEY: TFileName);
@@ -1181,11 +1193,6 @@ begin
   finally
     Blob.Free
   end;
-end;
-
-procedure TdmFacturas.SetMuestra(const Value: Boolean);
-begin
-  FMuestra := Value;
 end;
 
 //procedure TdmFacturas.SubirXMLPDFaFS(FileName: TFileName);
@@ -1254,18 +1261,22 @@ var
 begin
   Result := False;
   //Obtiene informacion del CFDI
-  adoqCFDIInfo.Close;
-  adoqCFDIInfo.Parameters.ParamByName('IdCFDI').Value := IdCFDI;
-  adoqCFDIInfo.Open;
-  CFDITipoDocumento := TCFDITipoDocumento(adoqCFDIInfoIdCFDITipoDocumento.Value);
-  CFDICreado :=  (adoqCFDIInfoIdCFDI.Value = IdCFDI);
-  CreadaAntes := (adoqCFDIInfoIdCuentaXCobrar.Value = 2);  // Vigente
-  CFDIVersion := adoqCFDIInfoVersion.AsString;
-  adoqCFDIInfo.Close;
-//  adodsMaster.Open;
-//  CFDICreado :=  adodsMaster.Locate('IDCFDI',IdCFDI,[]);  //SE ubica en el CFDI feb 8/
-//  CreadaAntes := adodsMasterIdCFDIEstatus.Value = 2;  // Vigente
-//  CFDIVersion := adodsMasterVersion.AsString;
+//  adoqCFDIInfo.Close;
+//  adoqCFDIInfo.Parameters.ParamByName('IdCFDI').Value := IdCFDI;
+//  adoqCFDIInfo.Open;
+//  CFDICreado := (adoqCFDIInfoIdCFDI.Value = IdCFDI);
+//  CFDITipoDocumento := TCFDITipoDocumento(adoqCFDIInfoIdCFDITipoDocumento.Value);
+//  CreadaAntes := (adoqCFDIInfoIdCuentaXCobrar.Value = 2);  // Vigente
+//  CFDIVersion := adoqCFDIInfoVersion.AsString;
+//  adoqCFDIInfo.Close;
+
+  adodsMaster.Refresh;
+  CFDICreado :=  adodsMaster.Locate('IDCFDI',IdCFDI,[]);
+//  Self.IdCFDI := IdCFDI;
+//  CFDICreado := (adodsMasterIdCFDI.Value = IdCFDI);
+  CFDITipoDocumento := TCFDITipoDocumento(adodsMasterIdCFDITipoDocumento.Value);
+  CreadaAntes := adodsMasterIdCFDIEstatus.Value = 2;  // Vigente
+  CFDIVersion := adodsMasterVersion.AsString;
   if CFDICreado and (not CreadaAntes) then
   begin
     if ConfirmarGeneracion then

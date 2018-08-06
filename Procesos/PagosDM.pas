@@ -386,6 +386,9 @@ type
     adodsPagosAplicacionesCFDISaldoAnterior: TFMTBCDField;
     adodsPagosAplicacionesCFDISaldoInsoluto: TFMTBCDField;
     adodsMasterIdCFDI: TLargeintField;
+    adodsMasterIdCFDIFormaPago33: TIntegerField;
+    adodsFromaPago33: TADODataSet;
+    adodsMasterFormaPago: TStringField;
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsMasterAfterPost(DataSet: TDataSet);
     procedure adodsMasterBeforePost(DataSet: TDataSet);
@@ -1527,6 +1530,7 @@ begin
   dmFacturas := TdmFacturas.Create(Self);
   try
     IdCFDI := dmFacturas.CrearCFDIPago(IdPago);
+    dmFacturas.SetCFDI(IdCFDI);
     CFDITimbrado := dmFacturas.Timbrar(IdCFDI);
   finally
     dmFacturas.Free;

@@ -56,6 +56,10 @@ inherited FrmConPagos: TFrmConPagos
           DataBinding.FieldName = 'IdCuentaBancariaEstadoCuenta'
           Visible = False
         end
+        object tvMasterIdCFDIFormaPago33: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCFDIFormaPago33'
+          Visible = False
+        end
         object tvMasterIdMetodoPago: TcxGridDBColumn
           DataBinding.FieldName = 'IdMetodoPago'
           Visible = False
@@ -97,6 +101,11 @@ inherited FrmConPagos: TFrmConPagos
         object tvMasterEsDeposito: TcxGridDBColumn
           DataBinding.FieldName = 'EsDeposito'
           Width = 60
+        end
+        object tvMasterFormaPago: TcxGridDBColumn
+          DataBinding.FieldName = 'FormaPago'
+          Visible = False
+          Width = 184
         end
         object tvMasterMetodoPago: TcxGridDBColumn
           DataBinding.FieldName = 'MetodoPago'
@@ -1172,6 +1181,7 @@ inherited FrmConPagos: TFrmConPagos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42712.575441516200000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end
