@@ -10,15 +10,15 @@ inherited frmMatrizRiesgoEdit: TfrmMatrizRiesgoEdit
   inherited pcMain: TcxPageControl
     Width = 750
     Height = 478
-    ExplicitWidth = 720
-    ExplicitHeight = 351
-    ClientRectBottom = 474
-    ClientRectRight = 746
+    ExplicitWidth = 750
+    ExplicitHeight = 478
+    ClientRectBottom = 476
+    ClientRectRight = 748
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
-      ExplicitWidth = 712
-      ExplicitHeight = 323
+      ExplicitLeft = 2
+      ExplicitTop = 26
+      ExplicitWidth = 746
+      ExplicitHeight = 450
       object Label1: TLabel
         Left = 48
         Top = 40
@@ -94,33 +94,30 @@ inherited frmMatrizRiesgoEdit: TfrmMatrizRiesgoEdit
           'so.'
         Caption = ' Activar Cuestionario'
         TabOrder = 4
+        OnClick = cxBtnActivarCuestionarioClick
       end
     end
     object cxTbShtPreguntas: TcxTabSheet
       Caption = 'Calificaciones de Riesgo'
       ImageIndex = 1
-      ExplicitWidth = 712
-      ExplicitHeight = 323
     end
     object cxTbShtPaquetes: TcxTabSheet
       Caption = 'Paquetes Preguntas'
       ImageIndex = 2
-      ExplicitWidth = 712
-      ExplicitHeight = 323
     end
   end
   inherited pmlMain: TPanel
     Top = 478
     Width = 750
-    ExplicitTop = 351
-    ExplicitWidth = 720
+    ExplicitTop = 478
+    ExplicitWidth = 750
     inherited btnCancel: TButton
       Left = 668
-      ExplicitLeft = 638
+      ExplicitLeft = 668
     end
     inherited btnOk: TButton
       Left = 587
-      ExplicitLeft = 557
+      ExplicitLeft = 587
     end
   end
   inherited DataSource: TDataSource

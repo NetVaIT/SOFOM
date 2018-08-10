@@ -37,6 +37,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure cxBtnActivarCuestionarioClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -52,6 +53,14 @@ implementation
 
 uses MatrizRiesgoDM, MRCalificacionRiesgoForm, MRPaquetePreguntasForm,
   MRPaquetesPreguntasDM;
+
+procedure TfrmMatrizRiesgoEdit.cxBtnActivarCuestionarioClick(Sender: TObject);
+begin
+  inherited;
+  //Verificar las preguntas asociadas y ajustar campo bit.   //Proceso pendiente
+  //Cambiar estatus a Activo
+  datasource.DataSet.FieldByName('IdMRCuestionarioEstatus').AsInteger:=1;
+end;
 
 procedure TfrmMatrizRiesgoEdit.FormCreate(Sender: TObject);
 begin

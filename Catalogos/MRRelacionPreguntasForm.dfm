@@ -23,7 +23,6 @@ inherited frmRelacionPreguntas: TfrmRelacionPreguntas
     ExplicitHeight = 256
     inherited cxGrid: TcxGrid
       Width = 744
-      Height = 256
       ExplicitWidth = 744
       ExplicitHeight = 256
       inherited tvMaster: TcxGridDBTableView
@@ -85,7 +84,7 @@ inherited frmRelacionPreguntas: TfrmRelacionPreguntas
     DockControlHeights = (
       0
       0
-      28
+      26
       0)
   end
   inherited cxStyleRepository: TcxStyleRepository

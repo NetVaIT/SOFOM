@@ -7,11 +7,11 @@ inherited frmRelacionPreguntasEdit: TfrmRelacionPreguntasEdit
   inherited pcMain: TcxPageControl
     Width = 578
     ExplicitWidth = 578
-    ClientRectRight = 574
+    ClientRectRight = 576
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 3
-      ExplicitTop = 16
-      ExplicitWidth = 570
+      ExplicitLeft = 1
+      ExplicitTop = 25
+      ExplicitWidth = 574
       ExplicitHeight = 297
       object Label1: TLabel
         Left = 32

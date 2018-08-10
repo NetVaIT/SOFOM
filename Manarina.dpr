@@ -283,7 +283,11 @@ uses
   MRRelacionPreguntasEdit in 'Catalogos\MRRelacionPreguntasEdit.pas' {frmRelacionPreguntasEdit},
   MRRelacionPreguntasForm in 'Catalogos\MRRelacionPreguntasForm.pas' {frmRelacionPreguntas},
   MRPaquetePreguntasEdit in 'Catalogos\MRPaquetePreguntasEdit.pas' {frmPaquetePreguntasEdit},
-  MRPaquetesPreguntasDM in 'Catalogos\MRPaquetesPreguntasDM.pas' {dmMRPaquetesPreguntas: TDataModule};
+  MRPaquetesPreguntasDM in 'Catalogos\MRPaquetesPreguntasDM.pas' {dmMRPaquetesPreguntas: TDataModule},
+  EvaluacionesRiesgoDM in 'Procesos\EvaluacionesRiesgoDM.pas' {dmEvaluacionRiesgo: TDataModule},
+  EvaluacionesRiesgoForm in 'Procesos\EvaluacionesRiesgoForm.pas' {frmEvaluacionesRiesgo},
+  EvaluacionesRiesgoEdit in 'Procesos\EvaluacionesRiesgoEdit.pas' {frmEvaluacionesRiesgoEdit},
+  MRAplicacionCuesionarioEdit in 'Procesos\MRAplicacionCuesionarioEdit.pas' {FrmAplicacionCuestionarioEdt};
 
 {$R *.res}
 
