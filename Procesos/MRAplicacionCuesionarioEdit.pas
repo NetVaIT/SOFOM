@@ -40,7 +40,7 @@ type
     Label3: TLabel;
     DSCuestionarioAplicado: TDataSource;
     PnlOtros: TPanel;
-    cxDBTextEdit1: TcxDBTextEdit;
+    cxDBTxtEdtOtro: TcxDBTextEdit;
     DSConOpciones: TDataSource;
     DSAuxiliar: TDataSource;
     cxCmbBxListaOtrosTablaExt: TcxComboBox;
@@ -130,7 +130,10 @@ begin
      cxCmbBxListaOtrosTablaExt.Visible:=true;                    
    end;
 
-                   
+   cxBtnSiguiente.Enabled:= (not DSREspuestasCuestionario.DataSet.eof) and
+                             (cxDBLkpCmbBxRespuestas.Text<>'') and
+                               ((PnlOtros.Visible and (cxDBTxtEdtOtro.Text<>''))or (not PnlOtros.Visible));
+
 
 end;
 
@@ -149,7 +152,9 @@ begin
                            DSConOpciones.DataSet.FieldByName('CondicionTablaExt').asstring); //ago 8/18
       cxCmbBxListaOtrosTablaExt.Text:=DSREspuestasCuestionario.DataSet.FieldByName('OtroTexto').asString;            
     end;
-    cxBtnSiguiente.Enabled:= not DSREspuestasCuestionario.DataSet.eof;
+    cxBtnSiguiente.Enabled:= (not DSREspuestasCuestionario.DataSet.eof) and
+                             (cxDBLkpCmbBxRespuestas.Text<>'') and
+                               ((PnlOtros.Visible and (cxDBTxtEdtOtro.Text<>''))or (not PnlOtros.Visible));
     cxBtnAtras.Enabled:= not DSREspuestasCuestionario.DataSet.bof;
     cxBtnFin.Enabled:= DSREspuestasCuestionario.DataSet.eof and Completo;
   end;

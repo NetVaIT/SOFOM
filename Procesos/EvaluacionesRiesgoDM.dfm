@@ -1,4 +1,5 @@
 inherited dmEvaluacionRiesgo: TdmEvaluacionRiesgo
+  OldCreateOrder = True
   Height = 695
   Width = 990
   inherited adodsMaster: TADODataSet
@@ -63,6 +64,35 @@ inherited dmEvaluacionRiesgo: TdmEvaluacionRiesgo
       KeyFields = 'IdMRCuestionario'
       Lookup = True
     end
+    object adodsMasterTipoPersona: TStringField
+      FieldKind = fkLookup
+      FieldName = 'TipoPersona'
+      LookupDataSet = adodsPersonas
+      LookupKeyFields = 'IdPersona'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IDPersona'
+      Size = 25
+      Lookup = True
+    end
+    object adodsMasterRiesgo: TStringField
+      FieldKind = fkLookup
+      FieldName = 'Riesgo'
+      LookupDataSet = adodsPersonas
+      LookupKeyFields = 'IdPersona'
+      LookupResultField = 'TipoRiesgo'
+      KeyFields = 'IDPersona'
+      Lookup = True
+    end
+    object adodsMasterRFC: TStringField
+      FieldKind = fkLookup
+      FieldName = 'RFC'
+      LookupDataSet = adodsPersonas
+      LookupKeyFields = 'IdPersona'
+      LookupResultField = 'RFC'
+      KeyFields = 'IDPersona'
+      Size = 15
+      Lookup = True
+    end
   end
   inherited adodsUpdate: TADODataSet
     Left = 352
@@ -89,8 +119,11 @@ inherited dmEvaluacionRiesgo: TdmEvaluacionRiesgo
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'select IdPersona, RazonSocial AS Cliente,  IdPersonaTipo from Pe' +
-      'rsonas'#13#10'WHERE IdRolTipo = 3'#13#10'order by RazonSocial '
+      'select P.IdPersona, P.RazonSocial AS Cliente, P.IdPersonaTipo,P.' +
+      'RFC, '#13#10'Pt.Descripcion, RT.Descripcion as TipoRiesgo '#13#10'from Perso' +
+      'nas P'#13#10'inner Join PersonasTipos PT on Pt.IdPersonaTipo = P.IdPer' +
+      'sonaTipo'#13#10'inner join  RiesgosTipos RT on rt.idriesgotipo=P.idRie' +
+      'sgoTipo'#13#10'WHERE IdRolTipo = 3'#13#10'order by RazonSocial '
     Parameters = <>
     Left = 48
     Top = 80
@@ -106,10 +139,10 @@ inherited dmEvaluacionRiesgo: TdmEvaluacionRiesgo
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'SELECT        IdMRPregunta, IdMRCuestionario, Pregunta, '#13#10'Aplica' +
-      'aPersonaFisica, AplicaaPersonaMoral, Condicionada, EvaluaARDirec' +
-      'to'#13#10'FROM            MRPreguntas'#13#10'Where IdMRCuestionario=:IdMRCue' +
-      'stionario'#13#10'order by Orden'
+      'SELECT        IdMRPregunta, IdMRCuestionario, Pregunta, Orden,'#13#10 +
+      'AplicaaPersonaFisica, AplicaaPersonaMoral, Condicionada, EvaluaA' +
+      'RDirecto'#13#10'FROM            MRPreguntas'#13#10'Where IdMRCuestionario=:I' +
+      'dMRCuestionario'#13#10'order by Orden'
     DataSource = DSCuestionario
     MasterFields = 'IdMRCuestionario'
     Parameters = <
@@ -212,6 +245,7 @@ inherited dmEvaluacionRiesgo: TdmEvaluacionRiesgo
     Top = 160
   end
   object ADODSRespuestasCuestionario: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     AfterPost = ADODSRespuestasCuestionarioAfterPost
@@ -270,9 +304,17 @@ inherited dmEvaluacionRiesgo: TdmEvaluacionRiesgo
       Size = 300
       Lookup = True
     end
+    object ADODSRespuestasCuestionarioOrden: TIntegerField
+      FieldKind = fkLookup
+      FieldName = 'Orden'
+      LookupDataSet = adodsPreguntas
+      LookupKeyFields = 'IdMRPregunta'
+      LookupResultField = 'Orden'
+      KeyFields = 'IdMRPregunta'
+      Lookup = True
+    end
   end
   object ADOdsPaquetesPreguntas: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -648,6 +690,8 @@ inherited dmEvaluacionRiesgo: TdmEvaluacionRiesgo
     Top = 512
   end
   object ppRptCuestionarioAplicado: TppReport
+    AutoStop = False
+    DataPipeline = DBPplnPreguntasRespuestas
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.Duplex = dpVertical
@@ -661,12 +705,13 @@ inherited dmEvaluacionRiesgo: TdmEvaluacionRiesgo
     PrinterSetup.mmPaperHeight = 279400
     PrinterSetup.mmPaperWidth = 215900
     PrinterSetup.PaperSize = 1
+    Template.FileName = 'C:\Desarrollo\SOFOM\Reportes\rptMRCuestionarioAplicado.rtm'
     ArchiveFileName = '($MyDocuments)\ReportArchive.raf'
     DeviceType = 'Screen'
     DefaultFileDeviceType = 'PDF'
     EmailSettings.ReportFormat = 'PDF'
     LanguageID = 'Default'
-    OpenFile = False
+    OpenFile = True
     OutlineSettings.CreateNode = True
     OutlineSettings.CreatePageNodes = True
     OutlineSettings.Enabled = True
@@ -699,25 +744,36 @@ inherited dmEvaluacionRiesgo: TdmEvaluacionRiesgo
     Top = 48
     Version = '15.0'
     mmColumnWidth = 0
+    DataPipelineName = 'DBPplnPreguntasRespuestas'
     object ppHeaderBand1: TppHeaderBand
       Background.Brush.Style = bsClear
       mmBottomOffset = 0
-      mmHeight = 38629
+      mmHeight = 55563
       mmPrintPosition = 0
+      object ppShape1: TppShape
+        UserName = 'Shape1'
+        Shape = stRoundRect
+        mmHeight = 26194
+        mmLeft = 17992
+        mmTop = 28840
+        mmWidth = 159015
+        BandType = 0
+        LayerName = Foreground
+      end
       object ppLabel1: TppLabel
         UserName = 'Label1'
-        AutoSize = False
-        Caption = 'Cliente'
+        HyperlinkColor = clGrayText
+        Caption = 'Cliente:'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
+        Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 12
+        Font.Size = 11
         Font.Style = [fsBold]
         Transparent = True
-        mmHeight = 4763
-        mmLeft = 23019
-        mmTop = 9790
-        mmWidth = 14023
+        mmHeight = 4762
+        mmLeft = 22754
+        mmTop = 30163
+        mmWidth = 14552
         BandType = 0
         LayerName = Foreground
       end
@@ -735,42 +791,43 @@ inherited dmEvaluacionRiesgo: TdmEvaluacionRiesgo
         DataPipelineName = 'DBPplnCuestionario'
         mmHeight = 4763
         mmLeft = 40481
-        mmTop = 9790
-        mmWidth = 155311
+        mmTop = 30163
+        mmWidth = 128852
         BandType = 0
         LayerName = Foreground
       end
       object ppLabel2: TppLabel
         UserName = 'Label2'
-        AutoSize = False
-        Caption = 'Cuestionario Aplicado'
+        HyperlinkColor = clGrayText
+        Caption = 'Cuestionario Aplicado para Matriz de Riesgo'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
+        Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 16
+        Font.Size = 18
         Font.Style = [fsBold]
+        TextAlignment = taCentered
         Transparent = True
         mmHeight = 7673
-        mmLeft = 54504
-        mmTop = 2117
-        mmWidth = 75936
+        mmLeft = 33867
+        mmTop = 10848
+        mmWidth = 135467
         BandType = 0
         LayerName = Foreground
       end
       object ppLabel3: TppLabel
         UserName = 'Label3'
-        AutoSize = False
-        Caption = 'VersionCuestionario'
+        HyperlinkColor = clGrayText
+        Caption = 'Versi'#243'n Cuestionario:'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
+        Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 12
-        Font.Style = []
+        Font.Size = 11
+        Font.Style = [fsBold]
         Transparent = True
-        mmHeight = 4763
-        mmLeft = 24077
-        mmTop = 16404
-        mmWidth = 38894
+        mmHeight = 4762
+        mmLeft = 22754
+        mmTop = 43392
+        mmWidth = 40482
         BandType = 0
         LayerName = Foreground
       end
@@ -784,29 +841,30 @@ inherited dmEvaluacionRiesgo: TdmEvaluacionRiesgo
         Font.Size = 12
         Font.Style = []
         ParentDataPipeline = False
+        TextAlignment = taRightJustified
         Transparent = True
         DataPipelineName = 'DBPplnCuestionario'
         mmHeight = 4763
-        mmLeft = 64029
-        mmTop = 16404
-        mmWidth = 32808
+        mmLeft = 71702
+        mmTop = 43387
+        mmWidth = 13494
         BandType = 0
         LayerName = Foreground
       end
       object ppLabel4: TppLabel
         UserName = 'Label4'
-        AutoSize = False
-        Caption = 'PonderacionTotal'
+        HyperlinkColor = clGrayText
+        Caption = 'Ponderaci'#243'n Total:'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
+        Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 12
-        Font.Style = []
+        Font.Size = 11
+        Font.Style = [fsBold]
         Transparent = True
-        mmHeight = 4763
-        mmLeft = 25929
-        mmTop = 23019
-        mmWidth = 33602
+        mmHeight = 4762
+        mmLeft = 104511
+        mmTop = 43392
+        mmWidth = 35454
         BandType = 0
         LayerName = Foreground
       end
@@ -820,34 +878,36 @@ inherited dmEvaluacionRiesgo: TdmEvaluacionRiesgo
         Font.Size = 12
         Font.Style = []
         ParentDataPipeline = False
+        TextAlignment = taRightJustified
         Transparent = True
         DataPipelineName = 'DBPplnCuestionario'
         mmHeight = 4763
-        mmLeft = 66411
-        mmTop = 23019
-        mmWidth = 32808
+        mmLeft = 159279
+        mmTop = 43387
+        mmWidth = 10054
         BandType = 0
         LayerName = Foreground
       end
       object ppLabel5: TppLabel
         UserName = 'Label5'
-        AutoSize = False
-        Caption = 'Fecha'
+        HyperlinkColor = clGrayText
+        Caption = 'Fecha aplicaci'#243'n:'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
+        Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 12
-        Font.Style = []
+        Font.Size = 11
+        Font.Style = [fsBold]
         Transparent = True
-        mmHeight = 4763
-        mmLeft = 99219
-        mmTop = 17992
-        mmWidth = 12700
+        mmHeight = 4762
+        mmLeft = 22754
+        mmTop = 37042
+        mmWidth = 32279
         BandType = 0
         LayerName = Foreground
       end
       object ppDBText4: TppDBText
         UserName = 'DBText4'
+        AutoSize = True
         DataField = 'Fecha'
         DataPipeline = DBPplnCuestionario
         Font.Charset = DEFAULT_CHARSET
@@ -856,12 +916,126 @@ inherited dmEvaluacionRiesgo: TdmEvaluacionRiesgo
         Font.Size = 12
         Font.Style = []
         ParentDataPipeline = False
+        TextAlignment = taRightJustified
+        Transparent = True
+        DataPipelineName = 'DBPplnCuestionario'
+        mmHeight = 4762
+        mmLeft = 64029
+        mmTop = 37042
+        mmWidth = 21167
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel9: TppLabel
+        UserName = 'Label9'
+        HyperlinkColor = clGrayText
+        Caption = 'Fecha Vencimiento:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Name = 'Arial'
+        Font.Size = 11
+        Font.Style = [fsBold]
+        Transparent = True
+        mmHeight = 4762
+        mmLeft = 104511
+        mmTop = 37042
+        mmWidth = 36512
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppDBText8: TppDBText
+        UserName = 'DBText8'
+        AutoSize = True
+        DataField = 'FechaVencimiento'
+        DataPipeline = DBPplnCuestionario
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = []
+        ParentDataPipeline = False
+        TextAlignment = taRightJustified
+        Transparent = True
+        DataPipelineName = 'DBPplnCuestionario'
+        mmHeight = 4762
+        mmLeft = 148167
+        mmTop = 37042
+        mmWidth = 21167
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel10: TppLabel
+        UserName = 'Label10'
+        HyperlinkColor = clGrayText
+        Caption = 'Tipo Persona:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Name = 'Arial'
+        Font.Size = 11
+        Font.Style = [fsBold]
+        Transparent = True
+        mmHeight = 4762
+        mmLeft = 69586
+        mmTop = 20638
+        mmWidth = 26193
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppDBText9: TppDBText
+        UserName = 'DBText9'
+        AutoSize = True
+        DataField = 'TipoPersona'
+        DataPipeline = DBPplnCuestionario
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = []
+        ParentDataPipeline = False
+        TextAlignment = taRightJustified
+        Transparent = True
+        DataPipelineName = 'DBPplnCuestionario'
+        mmHeight = 4762
+        mmLeft = 98161
+        mmTop = 20638
+        mmWidth = 26987
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel6: TppLabel
+        UserName = 'Label6'
+        HyperlinkColor = clGrayText
+        Caption = 'Riesgo'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Name = 'Arial'
+        Font.Size = 11
+        Font.Style = [fsBold]
+        Transparent = True
+        mmHeight = 4763
+        mmLeft = 104511
+        mmTop = 49477
+        mmWidth = 13229
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppDBText10: TppDBText
+        UserName = 'DBText10'
+        DataField = 'Riesgo'
+        DataPipeline = DBPplnCuestionario
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = []
+        ParentDataPipeline = False
+        TextAlignment = taRightJustified
         Transparent = True
         DataPipelineName = 'DBPplnCuestionario'
         mmHeight = 4763
-        mmLeft = 112977
-        mmTop = 17992
-        mmWidth = 58208
+        mmLeft = 140759
+        mmTop = 49477
+        mmWidth = 28575
         BandType = 0
         LayerName = Foreground
       end
@@ -870,13 +1044,126 @@ inherited dmEvaluacionRiesgo: TdmEvaluacionRiesgo
       Background1.Brush.Style = bsClear
       Background2.Brush.Style = bsClear
       mmBottomOffset = 0
-      mmHeight = 13229
+      mmHeight = 16140
       mmPrintPosition = 0
+      object ppDBText5: TppDBText
+        UserName = 'DBText5'
+        DataField = 'Pregunta'
+        DataPipeline = DBPplnPreguntasRespuestas
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 11
+        Font.Style = [fsBold]
+        ParentDataPipeline = False
+        Transparent = True
+        DataPipelineName = 'DBPplnPreguntasRespuestas'
+        mmHeight = 4763
+        mmLeft = 19844
+        mmTop = 1853
+        mmWidth = 165894
+        BandType = 4
+        LayerName = Foreground
+      end
+      object ppLabel7: TppLabel
+        UserName = 'Label7'
+        AutoSize = False
+        Caption = 'Respuesta:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 11
+        Font.Style = [fsBold, fsItalic]
+        Transparent = True
+        mmHeight = 4763
+        mmLeft = 19844
+        mmTop = 8731
+        mmWidth = 22490
+        BandType = 4
+        LayerName = Foreground
+      end
+      object ppDBText6: TppDBText
+        UserName = 'DBText6'
+        DataField = 'opcion'
+        DataPipeline = DBPplnPreguntasRespuestas
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 11
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        DataPipelineName = 'DBPplnPreguntasRespuestas'
+        mmHeight = 4763
+        mmLeft = 45773
+        mmTop = 8731
+        mmWidth = 127000
+        BandType = 4
+        LayerName = Foreground
+      end
+      object ppLblEspecificar: TppLabel
+        UserName = 'LblEspecificar'
+        Caption = 'Especificar:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 11
+        Font.Style = [fsBold, fsItalic]
+        Transparent = True
+        Visible = False
+        mmHeight = 4498
+        mmLeft = 0
+        mmTop = 8731
+        mmWidth = 21960
+        BandType = 4
+        LayerName = Foreground
+      end
+      object ppDBTxtOtro: TppDBText
+        UserName = 'DBTxtOtro'
+        DataField = 'OtroTexto'
+        DataPipeline = DBPplnPreguntasRespuestas
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 11
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        DataPipelineName = 'DBPplnPreguntasRespuestas'
+        mmHeight = 4763
+        mmLeft = 72761
+        mmTop = 8731
+        mmWidth = 112977
+        BandType = 4
+        LayerName = Foreground
+      end
+      object ppDBCalc1: TppDBCalc
+        UserName = 'DBCalc1'
+        DataField = 'IdMRPregunta'
+        DataPipeline = DBPplnPreguntasRespuestas
+        DisplayFormat = '0 -'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 11
+        Font.Style = [fsBold]
+        TextAlignment = taRightJustified
+        Transparent = True
+        VerticalAlignment = avCenter
+        DBCalcType = dcCount
+        DataPipelineName = 'DBPplnPreguntasRespuestas'
+        mmHeight = 4763
+        mmLeft = 6879
+        mmTop = 1853
+        mmWidth = 11113
+        BandType = 4
+        LayerName = Foreground
+      end
     end
     object ppFooterBand1: TppFooterBand
       Background.Brush.Style = bsClear
       mmBottomOffset = 0
-      mmHeight = 13229
+      mmHeight = 9260
       mmPrintPosition = 0
     end
     object ppDesignLayers1: TppDesignLayers
@@ -900,7 +1187,7 @@ inherited dmEvaluacionRiesgo: TdmEvaluacionRiesgo
       FieldName = 'IdMRCuestionarioAplicado'
       FieldLength = 0
       DataType = dtLongint
-      DisplayWidth = 0
+      DisplayWidth = 10
       Position = 0
     end
     object DBPplnCuestionarioppField2: TppField
@@ -980,6 +1267,27 @@ inherited dmEvaluacionRiesgo: TdmEvaluacionRiesgo
       DisplayWidth = 10
       Position = 9
     end
+    object DBPplnCuestionarioppField11: TppField
+      FieldAlias = 'TipoPersona'
+      FieldName = 'TipoPersona'
+      FieldLength = 25
+      DisplayWidth = 25
+      Position = 10
+    end
+    object DBPplnCuestionarioppField12: TppField
+      FieldAlias = 'Riesgo'
+      FieldName = 'Riesgo'
+      FieldLength = 20
+      DisplayWidth = 20
+      Position = 11
+    end
+    object DBPplnCuestionarioppField13: TppField
+      FieldAlias = 'RFC'
+      FieldName = 'RFC'
+      FieldLength = 15
+      DisplayWidth = 15
+      Position = 12
+    end
   end
   object DBPplnPreguntasRespuestas: TppDBPipeline
     DataSource = DSRespuestasCuestionario
@@ -987,6 +1295,72 @@ inherited dmEvaluacionRiesgo: TdmEvaluacionRiesgo
     Left = 736
     Top = 112
     MasterDataPipelineName = 'DBPplnCuestionario'
+    object DBPplnPreguntasRespuestasppField1: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'IdMRCuestionarioAplicadoRespuesta'
+      FieldName = 'IdMRCuestionarioAplicadoRespuesta'
+      FieldLength = 0
+      DataType = dtLongint
+      DisplayWidth = 10
+      Position = 0
+    end
+    object DBPplnPreguntasRespuestasppField2: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'IdMRCuestionarioAplicado'
+      FieldName = 'IdMRCuestionarioAplicado'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 1
+    end
+    object DBPplnPreguntasRespuestasppField3: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'IdMRPregunta'
+      FieldName = 'IdMRPregunta'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 2
+    end
+    object DBPplnPreguntasRespuestasppField4: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'IdMRPreguntaOpcionResp'
+      FieldName = 'IdMRPreguntaOpcionResp'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 3
+    end
+    object DBPplnPreguntasRespuestasppField5: TppField
+      FieldAlias = 'OtroTexto'
+      FieldName = 'OtroTexto'
+      FieldLength = 300
+      DisplayWidth = 300
+      Position = 4
+    end
+    object DBPplnPreguntasRespuestasppField6: TppField
+      FieldAlias = 'Pregunta'
+      FieldName = 'Pregunta'
+      FieldLength = 300
+      DisplayWidth = 300
+      Position = 5
+    end
+    object DBPplnPreguntasRespuestasppField7: TppField
+      FieldAlias = 'opcion'
+      FieldName = 'opcion'
+      FieldLength = 300
+      DisplayWidth = 300
+      Position = 6
+    end
+    object DBPplnPreguntasRespuestasppField8: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'Orden'
+      FieldName = 'Orden'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 7
+    end
   end
   object DSRespuestasCuestionario: TDataSource
     DataSet = ADODSRespuestasCuestionario

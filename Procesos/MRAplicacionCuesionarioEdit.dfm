@@ -23,7 +23,6 @@ object FrmAplicacionCuestionarioEdt: TFrmAplicacionCuestionarioEdt
     Height = 55
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 277
     object cxBtnAtras: TcxButton
       Left = 280
       Top = 16
@@ -61,16 +60,13 @@ object FrmAplicacionCuestionarioEdt: TFrmAplicacionCuestionarioEdt
     TabOrder = 1
     Properties.ActivePage = tsGeneral
     Properties.CustomButtons.Buttons = <>
-    ExplicitWidth = 578
-    ExplicitHeight = 325
-    ClientRectBottom = 252
-    ClientRectLeft = 2
-    ClientRectRight = 611
-    ClientRectTop = 26
+    ClientRectBottom = 250
+    ClientRectLeft = 4
+    ClientRectRight = 609
+    ClientRectTop = 24
     object tsGeneral: TcxTabSheet
       Caption = 'Evaluaci'#243'n Riesgo'
       ImageIndex = 0
-      ExplicitHeight = 215
       object Label1: TLabel
         Left = 32
         Top = 51
@@ -160,7 +156,7 @@ object FrmAplicacionCuestionarioEdt: TFrmAplicacionCuestionarioEdt
           Height = 13
           Caption = 'Especifique:'
         end
-        object cxDBTextEdit1: TcxDBTextEdit
+        object cxDBTxtEdtOtro: TcxDBTextEdit
           Left = 16
           Top = 36
           DataBinding.DataField = 'OtroTexto'
@@ -172,7 +168,7 @@ object FrmAplicacionCuestionarioEdt: TFrmAplicacionCuestionarioEdt
           Left = 343
           Top = 36
           TabOrder = 1
-          Text = 'cxCmbBxListaOtrosTablaExt'
+          Text = 'Seleccione Actividad'
           OnClick = cxCmbBxListaOtrosTablaExtClick
           Width = 178
         end

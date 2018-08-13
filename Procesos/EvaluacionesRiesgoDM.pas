@@ -115,6 +115,23 @@ type
     ppDBText3: TppDBText;
     ppLabel5: TppLabel;
     ppDBText4: TppDBText;
+    ppDBText5: TppDBText;
+    ppLabel7: TppLabel;
+    ppDBText6: TppDBText;
+    ppLblEspecificar: TppLabel;
+    ppDBTxtOtro: TppDBText;
+    ADODSRespuestasCuestionarioOrden: TIntegerField;
+    ppDBCalc1: TppDBCalc;
+    ppLabel9: TppLabel;
+    ppDBText8: TppDBText;
+    adodsMasterTipoPersona: TStringField;
+    ppLabel10: TppLabel;
+    ppDBText9: TppDBText;
+    ppShape1: TppShape;
+    adodsMasterRiesgo: TStringField;
+    ppLabel6: TppLabel;
+    ppDBText10: TppDBText;
+    adodsMasterRFC: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsMasterIdMRCuestionarioChange(Sender: TField);
@@ -145,10 +162,20 @@ uses EvaluacionesRiesgoForm, MRAplicacionCuesionarioEdit;
 {$R *.dfm}
 
 procedure TdmEvaluacionRiesgo.actAplicaCuestionarioExecute(Sender: TObject);
+var
+  ArchiPDF:TFileName;
 begin
   inherited;
   if adodsMasterPonderacionTotal.AsFloat >0  then
-    //Reporte
+  begin  //Reporte
+    ArchiPDF:='CuestMatrizRiesgo'+'_'+adodsMasterRFC.asstring+'.PDF';
+    ppRptCuestionarioAplicado.ShowPrintDialog:= False;
+    ppRptCuestionarioAplicado.ShowCancelDialog:= False;
+    ppRptCuestionarioAplicado.PrinterSetup.DocumentName:= ArchiPDF;
+    ppRptCuestionarioAplicado.DeviceType:= 'PDF';
+    ppRptCuestionarioAplicado.TextFileName:= ArchiPDF;
+    ppRptCuestionarioAplicado.Print;
+  end
   else  //cuando aun no esta completo
   begin
     actCreaCuestionarioXAplicar.Execute; //Este crea
@@ -166,6 +193,20 @@ begin
     ADODSRespuestasCuestionario.Edit;
     FrmAplicacionCuestionarioEdt.ShowModal;
     FrmAplicacionCuestionarioEdt.Free;
+
+    if adodsMasterPonderacionTotal.AsFloat >0  then
+    begin
+      //Mostrar REporte??
+      ArchiPDF:='CuestMatrizRiesgo'+'_'+adodsMasterRFC.asstring+'.PDF';
+      ppRptCuestionarioAplicado.ShowPrintDialog:= False;
+      ppRptCuestionarioAplicado.ShowCancelDialog:= False;
+      ppRptCuestionarioAplicado.PrinterSetup.DocumentName:= ArchiPDF;
+      ppRptCuestionarioAplicado.DeviceType:= 'PDF';
+      ppRptCuestionarioAplicado.TextFileName:= ArchiPDF;
+      ppRptCuestionarioAplicado.Print;
+
+    end;
+
 
   end;
 end;
