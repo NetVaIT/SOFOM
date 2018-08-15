@@ -50,7 +50,6 @@ inherited dmMatrizRiesgo: TdmMatrizRiesgo
     Left = 344
   end
   object adodsCuestionarioEstatus: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -130,6 +129,7 @@ inherited dmMatrizRiesgo: TdmMatrizRiesgo
   end
   object dsMaster: TDataSource
     DataSet = adodsMaster
+    OnDataChange = dsMasterDataChange
     Left = 140
     Top = 16
   end

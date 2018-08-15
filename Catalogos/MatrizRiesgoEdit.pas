@@ -38,6 +38,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure cxBtnActivarCuestionarioClick(Sender: TObject);
+    procedure DataSourceDataChange(Sender: TObject; Field: TField);
   private
     { Private declarations }
   public
@@ -60,6 +61,16 @@ begin
   //Verificar las preguntas asociadas y ajustar campo bit.   //Proceso pendiente
   //Cambiar estatus a Activo
   datasource.DataSet.FieldByName('IdMRCuestionarioEstatus').AsInteger:=1;
+end;
+
+procedure TfrmMatrizRiesgoEdit.DataSourceDataChange(Sender: TObject;
+  Field: TField);
+begin
+  inherited;
+  cxBtnActivarCuestionario.Visible:= DataSource.DataSet.FieldByName('IDMRCuestionarioEstatus').AsInteger=0;
+  if frmMRCalificacionesRiesgos<>nil then
+    frmMRCalificacionesRiesgos.ReadOnlyGrid:=  DataSource.DataSet.FieldByName('IDMRCuestionarioEstatus').AsInteger<>0;
+
 end;
 
 procedure TfrmMatrizRiesgoEdit.FormCreate(Sender: TObject);
@@ -91,6 +102,8 @@ var
    idCuestAct:Integer ;
 begin
   inherited;
+  view := (DataSource.DataSet.FieldByName('IDMRCuestionarioEstatus').AsInteger <> 0);
+
   //Mostrar en ts cxTbShtPreguntas
   frmMRCalificacionesRiesgos.Parent:=  cxTbShtPreguntas;
   frmMRCalificacionesRiesgos.Align:= alClient;
@@ -101,7 +114,7 @@ begin
 
 
   idCuestAct := DataSource.DataSet.FieldByName('IdMRCuestionario').AsInteger;
-
+  dmMRPaquetesPreguntas.Estatus:= DataSource.DataSet.FieldByName('IDMRCuestionarioEstatus').AsInteger; //ago 14/18
   dmMRPaquetesPreguntas.adodsMaster.Parameters.ParamByName('IdMRCuestionario').Value := idCuestAct;
   dmMRPaquetesPreguntas.ShowModule(cxTbShtPaquetes,'');
 

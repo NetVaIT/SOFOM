@@ -27,7 +27,7 @@ uses
   cxGridCustomPopupMenu, cxGridPopupMenu, cxClasses, Vcl.StdActns, Vcl.DBActns,
   System.Actions, Vcl.ActnList, Vcl.StdCtrls, cxGridLevel, cxGridCustomView,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
-  Vcl.ExtCtrls;
+  Vcl.ExtCtrls, cxLabel, dxColorEdit, cxBarEditItem;
 
 type
   TfrmEvaluacionesRiesgo = class(T_frmGrid)
@@ -40,9 +40,16 @@ type
     tvMasterFechaVencimiento: TcxGridDBColumn;
     tvMasterCliente: TcxGridDBColumn;
     tvMasterVersionCuestionario: TcxGridDBColumn;
-    dxBarLargeButton1: TdxBarLargeButton;
     dxBrBtnAplicaCuestionario: TdxBarButton;
+    cxBarEditItem1: TcxBarEditItem;
+    cxStyleRepository1: TcxStyleRepository;
+    cxStlLblPorVencer: TcxStyle;
+    cxStlVencidos: TcxStyle;
+    cxBarEditItem3: TcxBarEditItem;
     procedure FormCreate(Sender: TObject);
+    procedure tvMasterCustomDrawCell(Sender: TcxCustomGridTableView;
+      ACanvas: TcxCanvas; AViewInfo: TcxGridTableDataCellViewInfo;
+      var ADone: Boolean);
   private
     FactActAplicaCuestionario: TBasicAction;
     procedure SetFActAplicaCuestionario(const Value: TBasicAction);
@@ -76,6 +83,38 @@ begin
   FactActAplicaCuestionario := Value;
   dxBrBtnAplicaCuestionario.Action:=Value;
   dxBrBtnAplicaCuestionario.ImageIndex:=19;
+end;
+
+procedure TfrmEvaluacionesRiesgo.tvMasterCustomDrawCell(
+  Sender: TcxCustomGridTableView; ACanvas: TcxCanvas;
+  AViewInfo: TcxGridTableDataCellViewInfo; var ADone: Boolean);
+var FecVenAct:TDateTime;
+    i :Integer ;
+    TExtoFec:String;
+begin
+  inherited;
+//  if not datasource.DataSet.FieldByName('fechaVencimiento').isNull then
+  begin
+    if tvMaster.GetColumnByFieldName('FechaVencimiento')<>nil then
+    begin
+      i := tvMaster.GetColumnByFieldName('FechaVencimiento').Index;
+      TExtoFec:=VarAsType(AViewInfo.GridRecord.DisplayTexts[i], varString);
+      FecVenAct:=StrToDateTime(TextoFec);
+      if FecVenAct <= date then   //vencidos
+      begin
+        if not AViewInfo.Selected then
+          ACanvas.Canvas.Font.Color := clRed
+      end
+      else   if FecVenAct <= (date+30) then    //Por vencer
+      begin
+         if not AViewInfo.Selected then
+           ACanvas.Canvas.Font.Color :=$000185DC; //$00FF0080;//clFuchsia;//$000B52F9;//clMaroon;
+
+      end;
+
+    end;
+  end;
+
 end;
 
 end.

@@ -35,6 +35,7 @@ type
     Label6: TLabel;
     cxDBLabel1: TcxDBLabel;
     cxDBLabel2: TcxDBLabel;
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -49,5 +50,13 @@ implementation
 {$R *.dfm}
 
 uses EvaluacionesRiesgoDM;
+
+procedure TfrmEvaluacionesRiesgoEdit.FormShow(Sender: TObject);
+begin
+  inherited;
+  view :=not DataSource.DataSet.FieldByName('PonderacionTotal').isnull; //(DataSource.DataSet.FieldByName('PonderacionTotal').AsInteger > 0) ;
+  if view then
+    datasource.DataSet.Cancel;  //Para evitar que parezca que puede cambiarlo.. //ago 15/18
+end;
 
 end.

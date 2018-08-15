@@ -4,30 +4,40 @@ inherited frmEvaluacionesRiesgo: TfrmEvaluacionesRiesgo
   ClientHeight = 428
   ClientWidth = 713
   ExplicitWidth = 719
+  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
     Top = 343
     Width = 713
+    ExplicitTop = 343
+    ExplicitWidth = 713
   end
   inherited splDetail1: TSplitter
     Top = 255
     Width = 713
+    ExplicitTop = 255
+    ExplicitWidth = 713
   end
   inherited splDetail2: TSplitter
     Top = 299
     Width = 713
+    ExplicitTop = 299
+    ExplicitWidth = 713
   end
   inherited pnlMaster: TPanel
     Width = 713
-    Height = 229
+    Height = 227
+    ExplicitTop = 28
+    ExplicitWidth = 713
+    ExplicitHeight = 227
     inherited cxGrid: TcxGrid
       Width = 713
-      Height = 229
-      ExplicitTop = -3
+      Height = 227
       ExplicitWidth = 713
-      ExplicitHeight = 229
+      ExplicitHeight = 227
       inherited tvMaster: TcxGridDBTableView
+        OnCustomDrawCell = tvMasterCustomDrawCell
         object tvMasterIdMRCuestionarioAplicado: TcxGridDBColumn
           DataBinding.FieldName = 'IdMRCuestionarioAplicado'
           Visible = False
@@ -71,20 +81,29 @@ inherited frmEvaluacionesRiesgo: TfrmEvaluacionesRiesgo
   inherited pnlDetail3: TPanel
     Top = 346
     Width = 713
+    ExplicitTop = 346
+    ExplicitWidth = 713
   end
   inherited pnlDetail2: TPanel
     Top = 302
     Width = 713
+    ExplicitTop = 302
+    ExplicitWidth = 713
   end
   inherited pnlDetail1: TPanel
     Top = 258
     Width = 713
+    ExplicitTop = 258
+    ExplicitWidth = 713
   end
   inherited pnlClose: TPanel
     Top = 387
     Width = 713
+    ExplicitTop = 387
+    ExplicitWidth = 713
     inherited btnClose: TButton
       Left = 628
+      ExplicitLeft = 628
     end
   end
   inherited DataSource: TDataSource
@@ -94,7 +113,7 @@ inherited frmEvaluacionesRiesgo: TfrmEvaluacionesRiesgo
     DockControlHeights = (
       0
       0
-      26
+      28
       0)
     inherited dxbTools: TdxBar
       ItemLinks = <
@@ -109,13 +128,17 @@ inherited frmEvaluacionesRiesgo: TfrmEvaluacionesRiesgo
         item
           Visible = True
           ItemName = 'dxBrBtnAplicaCuestionario'
+        end
+        item
+          UserDefine = [udWidth]
+          UserWidth = 68
+          Visible = True
+          ItemName = 'cxBarEditItem1'
+        end
+        item
+          Visible = True
+          ItemName = 'cxBarEditItem3'
         end>
-    end
-    object dxBarLargeButton1: TdxBarLargeButton
-      Caption = 'New Button'
-      Category = 0
-      Hint = 'New Button'
-      Visible = ivAlways
     end
     object dxBrBtnAplicaCuestionario: TdxBarButton
       Caption = 'Aplica Cuestionario'
@@ -123,6 +146,25 @@ inherited frmEvaluacionesRiesgo: TfrmEvaluacionesRiesgo
       Hint = 'Aplica Cuestionario'
       Visible = ivAlways
       ImageIndex = 19
+    end
+    object cxBarEditItem1: TcxBarEditItem
+      Caption = 'Por Vencer'
+      Category = 0
+      Hint = 'Evaluaciones Por Vencer en menos de 30 d'#237'as'
+      Visible = ivAlways
+      ShowCaption = True
+      PropertiesClassName = 'TcxLabelProperties'
+      CanSelect = False
+      StyleEdit = cxStlLblPorVencer
+    end
+    object cxBarEditItem3: TcxBarEditItem
+      Caption = 'Vencidos'
+      Category = 0
+      Hint = 'Vencidos'
+      Style = cxStlVencidos
+      Visible = ivAlways
+      PropertiesClassName = 'TcxLabelProperties'
+      StyleEdit = cxStlVencidos
     end
   end
   inherited cxStyleRepository: TcxStyleRepository
@@ -980,8 +1022,27 @@ inherited frmEvaluacionesRiesgo: TfrmEvaluacionesRiesgo
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 43318.568796585650000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
+    end
+  end
+  object cxStyleRepository1: TcxStyleRepository
+    Left = 65528
+    Top = 40
+    PixelsPerInch = 96
+    object cxStlLblPorVencer: TcxStyle
+      AssignedValues = [svColor, svFont, svTextColor]
+      Color = clWhite
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      TextColor = 99804
+    end
+    object cxStlVencidos: TcxStyle
+      AssignedValues = [svColor, svTextColor]
+      Color = clWhite
+      TextColor = clRed
     end
   end
 end

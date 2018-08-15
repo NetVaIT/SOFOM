@@ -12,12 +12,12 @@ inherited frmMatrizRiesgoEdit: TfrmMatrizRiesgoEdit
     Height = 478
     ExplicitWidth = 750
     ExplicitHeight = 478
-    ClientRectBottom = 476
-    ClientRectRight = 748
+    ClientRectBottom = 474
+    ClientRectRight = 746
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 2
-      ExplicitTop = 26
-      ExplicitWidth = 746
+      ExplicitLeft = 5
+      ExplicitTop = 104
+      ExplicitWidth = 742
       ExplicitHeight = 450
       object Label1: TLabel
         Left = 48
@@ -122,6 +122,7 @@ inherited frmMatrizRiesgoEdit: TfrmMatrizRiesgoEdit
   end
   inherited DataSource: TDataSource
     DataSet = dmMatrizRiesgo.adodsMaster
+    OnDataChange = DataSourceDataChange
     Left = 360
   end
   inherited ActionList: TActionList

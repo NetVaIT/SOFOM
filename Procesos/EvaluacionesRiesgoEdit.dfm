@@ -9,13 +9,15 @@ inherited frmEvaluacionesRiesgoEdit: TfrmEvaluacionesRiesgoEdit
   inherited pcMain: TcxPageControl
     Width = 592
     Height = 322
-    ClientRectBottom = 320
-    ClientRectRight = 590
+    ExplicitWidth = 592
+    ExplicitHeight = 322
+    ClientRectBottom = 318
+    ClientRectRight = 588
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 2
-      ExplicitTop = 26
-      ExplicitWidth = 434
-      ExplicitHeight = 297
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 584
+      ExplicitHeight = 294
       object Label1: TLabel
         Left = 40
         Top = 56
@@ -35,9 +37,9 @@ inherited frmEvaluacionesRiesgoEdit: TfrmEvaluacionesRiesgoEdit
       object Label3: TLabel
         Left = 264
         Top = 112
-        Width = 86
+        Width = 89
         Height = 13
-        Caption = 'FechaVencimiento'
+        Caption = 'Fecha Vencimiento'
         FocusControl = cxDBDateEdit2
       end
       object Label4: TLabel
@@ -61,6 +63,7 @@ inherited frmEvaluacionesRiesgoEdit: TfrmEvaluacionesRiesgoEdit
         Width = 46
         Height = 13
         Caption = 'IdUsuario'
+        Visible = False
       end
       object DBLookupComboBox1: TDBLookupComboBox
         Left = 40
@@ -102,6 +105,7 @@ inherited frmEvaluacionesRiesgoEdit: TfrmEvaluacionesRiesgoEdit
         DataBinding.DataField = 'PonderacionTotal'
         DataBinding.DataSource = DataSource
         ParentFont = False
+        Properties.Orientation = cxoLeft
         Style.Font.Charset = DEFAULT_CHARSET
         Style.Font.Color = clWindowText
         Style.Font.Height = -11
@@ -109,28 +113,31 @@ inherited frmEvaluacionesRiesgoEdit: TfrmEvaluacionesRiesgoEdit
         Style.Font.Style = [fsBold]
         Style.IsFontAssigned = True
         Height = 21
-        Width = 121
-        AnchorX = 161
+        Width = 86
       end
       object cxDBLabel2: TcxDBLabel
         Left = 264
         Top = 203
         DataBinding.DataField = 'IdUsuario'
         DataBinding.DataSource = DataSource
+        Visible = False
         Height = 21
         Width = 121
-        AnchorX = 385
       end
     end
   end
   inherited pmlMain: TPanel
     Top = 322
     Width = 592
+    ExplicitTop = 322
+    ExplicitWidth = 592
     inherited btnCancel: TButton
       Left = 510
+      ExplicitLeft = 510
     end
     inherited btnOk: TButton
       Left = 429
+      ExplicitLeft = 429
     end
   end
   inherited DataSource: TDataSource

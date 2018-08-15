@@ -44,9 +44,12 @@ type
     procedure DataModuleCreate(Sender: TObject);
     procedure AdoDSRElacionpregIdMRPreguntaChange(Sender: TField);
   private
+    FEstatus: integer;
+    procedure SetFEstatus(const Value: integer);
     { Private declarations }
   public
     { Public declarations }
+    Property Estatus: integer read FEstatus write SetFEstatus;
   end;
 
 var
@@ -75,6 +78,7 @@ begin
   gGridForm.DataSet:= adodsMaster;
 
 
+
   if ADODsRelacionPreg.CommandText <> EmptyStr then
     ADODsRelacionPreg.Open;
 
@@ -89,6 +93,15 @@ begin
   adodsPreguntasOpciones.Open;
   ADOdsConPregOpciones.Open;
 
+end;
+
+procedure TdmMRPaquetesPreguntas.SetFEstatus(const Value: integer);
+begin
+  FEstatus := Value;
+  //Colocar Re
+  gGridForm.ReadOnlyGrid := value<>0;  //Ago 14/18
+  if Assigned (gFormDeatil1)then
+    gFormDeatil1.ReadOnlyGrid := value<>0;  //Ago 14/18
 end;
 
 end.

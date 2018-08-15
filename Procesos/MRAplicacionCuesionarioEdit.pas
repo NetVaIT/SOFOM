@@ -83,7 +83,9 @@ begin
   begin
     DSREspuestasCuestionario.DataSet.fieldbyname('OtroTexto').AsString:= cxCmbBxListaOtrosTablaExt.Text;
   end;
-  
+  cxBtnSiguiente.Enabled:= (not DSREspuestasCuestionario.DataSet.eof) and
+                             (cxDBLkpCmbBxRespuestas.Text<>'') and
+                               ((PnlOtros.Visible and (cxDBTxtEdtOtro.Text<>''))or (not PnlOtros.Visible));
 end;
 
 procedure TFrmAplicacionCuestionarioEdt.cxBtnAtrasClick(Sender: TObject);
@@ -193,7 +195,8 @@ begin
      cxCmbBxListaOtrosTablaExt.Properties.Items.add(dsAuxiliar.DataSet.fieldbyname(Campo).asString);
      dsAuxiliar.DataSet.next;
   end;
-  cxCmbBxListaOtrosTablaExt.Visible:=true; 
+  cxCmbBxListaOtrosTablaExt.Visible:=true;
+  cxCmbBxListaOtrosTablaExt.Text:='Seleccione';//Ago 15/18
  except 
     ShowMessage('Verifique la definición de la Tabla asocida, el campo y la condición. No es posible realizar la consulta');
  end;

@@ -76,6 +76,7 @@ type
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure ADODsCamposAdicionalesNewRecord(DataSet: TDataSet);
     procedure adodsPreguntasNewRecord(DataSet: TDataSet);
+    procedure dsMasterDataChange(Sender: TObject; Field: TField);
   private
   //  FListaCampos: TStrings;
 //    function GetListaCampos: TStrings;
@@ -163,5 +164,17 @@ begin
 end;
 
 
+
+procedure TdmMatrizRiesgo.dsMasterDataChange(Sender: TObject; Field: TField);
+begin
+  inherited;
+  if adodsMaster.State in [dsBrowse] then
+  begin
+    if Assigned(gFormDeatil1) then
+      gFormDeatil1.ReadOnlyGrid := (adodsMasterIdMRCuestionarioEstatus.Value <> 0);
+    if Assigned(gFormDeatil3) then
+      gFormDeatil3.ReadOnlyGrid := (adodsMasterIdMRCuestionarioEstatus.Value <> 0);
+  end;
+end;
 
 end.

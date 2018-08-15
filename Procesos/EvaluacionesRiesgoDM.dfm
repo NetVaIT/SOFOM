@@ -3,7 +3,6 @@ inherited dmEvaluacionRiesgo: TdmEvaluacionRiesgo
   Height = 695
   Width = 990
   inherited adodsMaster: TADODataSet
-    Active = True
     CursorType = ctStatic
     OnNewRecord = adodsMasterNewRecord
     CommandText = 
@@ -102,7 +101,7 @@ inherited dmEvaluacionRiesgo: TdmEvaluacionRiesgo
     Top = 72
     object actAplicaCuestionario: TAction
       Caption = 'Aplica Cuestionario'
-      Hint = 'Aplicar Cuestionario'
+      Hint = 'Aplicar o Mostrar Cuestionario'
       OnExecute = actAplicaCuestionarioExecute
     end
     object actCreaCuestionarioXAplicar: TAction
@@ -115,7 +114,6 @@ inherited dmEvaluacionRiesgo: TdmEvaluacionRiesgo
     end
   end
   object adodsPersonas: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -135,7 +133,6 @@ inherited dmEvaluacionRiesgo: TdmEvaluacionRiesgo
     Top = 16
   end
   object adodsPreguntas: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -157,7 +154,6 @@ inherited dmEvaluacionRiesgo: TdmEvaluacionRiesgo
     Top = 216
   end
   object adodsPreguntasOpciones: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -228,7 +224,6 @@ inherited dmEvaluacionRiesgo: TdmEvaluacionRiesgo
     Top = 232
   end
   object ADOdsCuestionarios: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -245,10 +240,8 @@ inherited dmEvaluacionRiesgo: TdmEvaluacionRiesgo
     Top = 160
   end
   object ADODSRespuestasCuestionario: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
-    AfterPost = ADODSRespuestasCuestionarioAfterPost
     CommandText = 
       'select IdMRCuestionarioAplicadoRespuesta, IdMRCuestionarioAplica' +
       'do, '#13#10'IdMRPregunta, IdMRPreguntaOpcionResp, OtroTexto '#13#10'from MRC' +
@@ -1181,113 +1174,6 @@ inherited dmEvaluacionRiesgo: TdmEvaluacionRiesgo
     UserName = 'DBPplnCuestionario'
     Left = 624
     Top = 112
-    object DBPplnCuestionarioppField1: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdMRCuestionarioAplicado'
-      FieldName = 'IdMRCuestionarioAplicado'
-      FieldLength = 0
-      DataType = dtLongint
-      DisplayWidth = 10
-      Position = 0
-    end
-    object DBPplnCuestionarioppField2: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdMRCuestionario'
-      FieldName = 'IdMRCuestionario'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 1
-    end
-    object DBPplnCuestionarioppField3: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IDPersona'
-      FieldName = 'IDPersona'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 2
-    end
-    object DBPplnCuestionarioppField4: TppField
-      FieldAlias = 'Fecha'
-      FieldName = 'Fecha'
-      FieldLength = 0
-      DataType = dtDateTime
-      DisplayWidth = 18
-      Position = 3
-    end
-    object DBPplnCuestionarioppField5: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'PonderacionTotal'
-      FieldName = 'PonderacionTotal'
-      FieldLength = 0
-      DataType = dtDouble
-      DisplayWidth = 10
-      Position = 4
-    end
-    object DBPplnCuestionarioppField6: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdUsuario'
-      FieldName = 'IdUsuario'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 5
-    end
-    object DBPplnCuestionarioppField7: TppField
-      FieldAlias = 'FechaVencimiento'
-      FieldName = 'FechaVencimiento'
-      FieldLength = 0
-      DataType = dtDateTime
-      DisplayWidth = 18
-      Position = 6
-    end
-    object DBPplnCuestionarioppField8: TppField
-      FieldAlias = 'Cliente'
-      FieldName = 'Cliente'
-      FieldLength = 200
-      DisplayWidth = 200
-      Position = 7
-    end
-    object DBPplnCuestionarioppField9: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'VersionCuestionario'
-      FieldName = 'VersionCuestionario'
-      FieldLength = 0
-      DataType = dtDouble
-      DisplayWidth = 10
-      Position = 8
-    end
-    object DBPplnCuestionarioppField10: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'mesesVen'
-      FieldName = 'mesesVen'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 9
-    end
-    object DBPplnCuestionarioppField11: TppField
-      FieldAlias = 'TipoPersona'
-      FieldName = 'TipoPersona'
-      FieldLength = 25
-      DisplayWidth = 25
-      Position = 10
-    end
-    object DBPplnCuestionarioppField12: TppField
-      FieldAlias = 'Riesgo'
-      FieldName = 'Riesgo'
-      FieldLength = 20
-      DisplayWidth = 20
-      Position = 11
-    end
-    object DBPplnCuestionarioppField13: TppField
-      FieldAlias = 'RFC'
-      FieldName = 'RFC'
-      FieldLength = 15
-      DisplayWidth = 15
-      Position = 12
-    end
   end
   object DBPplnPreguntasRespuestas: TppDBPipeline
     DataSource = DSRespuestasCuestionario
@@ -1295,72 +1181,6 @@ inherited dmEvaluacionRiesgo: TdmEvaluacionRiesgo
     Left = 736
     Top = 112
     MasterDataPipelineName = 'DBPplnCuestionario'
-    object DBPplnPreguntasRespuestasppField1: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdMRCuestionarioAplicadoRespuesta'
-      FieldName = 'IdMRCuestionarioAplicadoRespuesta'
-      FieldLength = 0
-      DataType = dtLongint
-      DisplayWidth = 10
-      Position = 0
-    end
-    object DBPplnPreguntasRespuestasppField2: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdMRCuestionarioAplicado'
-      FieldName = 'IdMRCuestionarioAplicado'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 1
-    end
-    object DBPplnPreguntasRespuestasppField3: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdMRPregunta'
-      FieldName = 'IdMRPregunta'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 2
-    end
-    object DBPplnPreguntasRespuestasppField4: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdMRPreguntaOpcionResp'
-      FieldName = 'IdMRPreguntaOpcionResp'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 3
-    end
-    object DBPplnPreguntasRespuestasppField5: TppField
-      FieldAlias = 'OtroTexto'
-      FieldName = 'OtroTexto'
-      FieldLength = 300
-      DisplayWidth = 300
-      Position = 4
-    end
-    object DBPplnPreguntasRespuestasppField6: TppField
-      FieldAlias = 'Pregunta'
-      FieldName = 'Pregunta'
-      FieldLength = 300
-      DisplayWidth = 300
-      Position = 5
-    end
-    object DBPplnPreguntasRespuestasppField7: TppField
-      FieldAlias = 'opcion'
-      FieldName = 'opcion'
-      FieldLength = 300
-      DisplayWidth = 300
-      Position = 6
-    end
-    object DBPplnPreguntasRespuestasppField8: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'Orden'
-      FieldName = 'Orden'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 7
-    end
   end
   object DSRespuestasCuestionario: TDataSource
     DataSet = ADODSRespuestasCuestionario

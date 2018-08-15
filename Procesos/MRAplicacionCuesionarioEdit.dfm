@@ -168,7 +168,7 @@ object FrmAplicacionCuestionarioEdt: TFrmAplicacionCuestionarioEdt
           Left = 343
           Top = 36
           TabOrder = 1
-          Text = 'Seleccione Actividad'
+          Text = 'Seleccione'
           OnClick = cxCmbBxListaOtrosTablaExtClick
           Width = 178
         end

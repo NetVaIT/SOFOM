@@ -38,9 +38,12 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
+    FEstatus: integer;
+    procedure SetFEstatus(const Value: integer);
     { Private declarations }
   public
     { Public declarations }
+    Property Estatus: integer read FEstatus write SetFEstatus;
   end;
 
 var
@@ -67,6 +70,12 @@ begin
 //  frmRelacionPreguntas.Parent:=  pnlDetail1;
 //  frmRelacionPreguntas.Align:= alClient;
 //  frmRelacionPreguntas.Show;
+end;
+
+procedure TfrmPaquetePreguntas.SetFEstatus(const Value: integer);
+begin
+  FEstatus := Value;
+  ReadOnlyGrid:=Value<>0;
 end;
 
 end.

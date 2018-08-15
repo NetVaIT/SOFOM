@@ -11,12 +11,12 @@ inherited frmMRPreguntasEdit: TfrmMRPreguntasEdit
     Height = 351
     ExplicitWidth = 625
     ExplicitHeight = 351
-    ClientRectBottom = 349
-    ClientRectRight = 623
+    ClientRectBottom = 347
+    ClientRectRight = 621
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 1
-      ExplicitTop = 28
-      ExplicitWidth = 621
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 617
       ExplicitHeight = 323
       object Label1: TLabel
         Left = 40
@@ -74,6 +74,16 @@ inherited frmMRPreguntasEdit: TfrmMRPreguntasEdit
         Caption = 'Condicionada'
         DataBinding.DataField = 'Condicionada'
         DataBinding.DataSource = DataSource
+        ParentBackground = False
+        ParentColor = False
+        ParentFont = False
+        Style.Color = clBtnFace
+        Style.Font.Charset = DEFAULT_CHARSET
+        Style.Font.Color = clWindowText
+        Style.Font.Height = -11
+        Style.Font.Name = 'Tahoma'
+        Style.Font.Style = []
+        Style.IsFontAssigned = True
         TabOrder = 3
         Width = 121
       end
@@ -91,11 +101,15 @@ inherited frmMRPreguntasEdit: TfrmMRPreguntasEdit
   inherited pmlMain: TPanel
     Top = 351
     Width = 625
+    ExplicitTop = 351
+    ExplicitWidth = 625
     inherited btnCancel: TButton
       Left = 543
+      ExplicitLeft = 543
     end
     inherited btnOk: TButton
       Left = 462
+      ExplicitLeft = 462
     end
   end
   inherited DataSource: TDataSource

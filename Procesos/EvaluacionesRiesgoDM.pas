@@ -137,7 +137,6 @@ type
     procedure adodsMasterIdMRCuestionarioChange(Sender: TField);
     procedure actCreaCuestionarioXAplicarExecute(Sender: TObject);
     procedure actAplicaCuestionarioExecute(Sender: TObject);
-    procedure ADODSRespuestasCuestionarioAfterPost(DataSet: TDataSet);
     procedure actCalcularPonderacionExecute(Sender: TObject);
   private
     function SacaTipoPersona(idpesonaAct: integer): Integer;
@@ -157,7 +156,8 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses EvaluacionesRiesgoForm, MRAplicacionCuesionarioEdit;
+uses EvaluacionesRiesgoForm, MRAplicacionCuesionarioEdit, _ConectionDmod,
+  _Utils;
 
 {$R *.dfm}
 
@@ -197,6 +197,10 @@ begin
     if adodsMasterPonderacionTotal.AsFloat >0  then
     begin
       //Mostrar REporte??
+
+      adodspersonas.Close; //Ago 15/18
+      adodsPersonas.Open;
+      RefreshADODS(adodsMaster,adodsMasterIdMRCuestionarioAplicado);
       ArchiPDF:='CuestMatrizRiesgo'+'_'+adodsMasterRFC.asstring+'.PDF';
       ppRptCuestionarioAplicado.ShowPrintDialog:= False;
       ppRptCuestionarioAplicado.ShowCancelDialog:= False;
@@ -376,6 +380,9 @@ begin
   else
      Showmessage('No se crearon preguntas.. ');*)
   //adodsMasterIdMRCuestionario
+  adodsMaster.Edit;
+  adodsMasterPonderacionTotal.AsInteger:=0; //Para indicar que ya se crearon las preguntas  //Ago 15/18
+  adodsMaster.Post;
 end;
 
 function TdmEvaluacionRiesgo.SacaTipoPersona(idpesonaAct:integer):Integer;
@@ -414,14 +421,9 @@ procedure TdmEvaluacionRiesgo.adodsMasterNewRecord(DataSet: TDataSet);
 begin
   inherited;
   dataset.FieldByName('Fecha').asdatetime:= date;
-end;
+  dataset.FieldByName('IdUsuario').AsInteger:=_dmConection.IdUsuario;//Ago 14/18
 
-procedure TdmEvaluacionRiesgo.ADODSRespuestasCuestionarioAfterPost(
-  DataSet: TDataSet);
-begin
-  inherited;
-  //Aca deberia hacerse la evaluacion de algo ???
-
+  dataset.FieldByName('FechaVencimiento').asdatetime:= date+45;   //Ago 15/18 para que tenga valor de referencia
 end;
 
 procedure TdmEvaluacionRiesgo.DataModuleCreate(Sender: TObject);
