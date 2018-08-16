@@ -50,6 +50,7 @@ type
     tvMasterCFDIParcialidad: TcxGridDBColumn;
     tvMasterCFDISaldoAnterior: TcxGridDBColumn;
     tvMasterCFDISaldoInsoluto: TcxGridDBColumn;
+    tvMasterIdCFDIPago: TcxGridDBColumn;
   private
     { Private declarations }
   public

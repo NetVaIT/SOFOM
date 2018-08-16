@@ -60,6 +60,18 @@ inherited FrmConPagos: TFrmConPagos
           DataBinding.FieldName = 'IdCFDIFormaPago33'
           Visible = False
         end
+        object tvMasterIdCuentaBancariaOrdenante: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCuentaBancariaOrdenante'
+          Visible = False
+        end
+        object tvMasterIdCuentaBancariaBeneficiario: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCuentaBancariaBeneficiario'
+          Visible = False
+        end
+        object tvMasterIdCFDITipoCadenaPago: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCFDITipoCadenaPago'
+          Visible = False
+        end
         object tvMasterIdMetodoPago: TcxGridDBColumn
           DataBinding.FieldName = 'IdMetodoPago'
           Visible = False
@@ -145,8 +157,29 @@ inherited FrmConPagos: TFrmConPagos
           DataBinding.FieldName = 'GenerarCFDIPago'
           Width = 92
         end
-        object tvMasterIdCFDI: TcxGridDBColumn
-          DataBinding.FieldName = 'IdCFDI'
+        object tvMasterCuentaOrdenante: TcxGridDBColumn
+          DataBinding.FieldName = 'CuentaOrdenante'
+          Visible = False
+        end
+        object tvMasterCuentaBeneficiario: TcxGridDBColumn
+          DataBinding.FieldName = 'CuentaBeneficiario'
+          Visible = False
+        end
+        object tvMasterTipoCadena: TcxGridDBColumn
+          DataBinding.FieldName = 'TipoCadena'
+          Visible = False
+        end
+        object tvMasterCertificado: TcxGridDBColumn
+          DataBinding.FieldName = 'Certificado'
+          Visible = False
+        end
+        object tvMasterCadena: TcxGridDBColumn
+          DataBinding.FieldName = 'Cadena'
+          Visible = False
+        end
+        object tvMasterSello: TcxGridDBColumn
+          DataBinding.FieldName = 'Sello'
+          Visible = False
         end
       end
     end
@@ -1181,7 +1214,6 @@ inherited FrmConPagos: TFrmConPagos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42712.575441516200000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end
@@ -1197,10 +1229,6 @@ inherited FrmConPagos: TFrmConPagos
   object DSAplicacion: TDataSource
     DataSet = dmPagos.ADODtStAplicacionesPagos
     Left = 640
-  end
-  object DSPersonas: TDataSource
-    Left = 648
-    Top = 120
   end
   object DSDetalleMostrar: TDataSource
     DataSet = dmPagos.ADODtStDetalleCXCMostrar

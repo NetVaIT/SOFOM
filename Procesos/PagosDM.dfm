@@ -11,12 +11,16 @@ inherited dmPagos: TdmPagos
     AfterCancel = adodsMasterAfterCancel
     OnNewRecord = adodsMasterNewRecord
     CommandText = 
-      'SELECT IdPago, IdBanco, IdPersonaCliente, IdCuentaBancariaEstado' +
-      'Cuenta, IdMetodoPago, IdCFDIFormaPago33, IdContrato, IdAnexo, Id' +
-      'CFDI_NCR, IdMonedaOrigen, FechaPago, FolioPago, SeriePago, Refer' +
-      'encia, Importe, Saldo, Observaciones, '#13#10'CuentaPago, OrigenPago, ' +
-      'EsDeposito, dbo.CanGenerarCFDIPago(IdPago) AS GenerarCFDIPago, d' +
-      'bo.GetIdCFDIPago(IdPago) AS IdCFDI'#13#10'FROM Pagos'
+      'SELECT        PA.IdPago, PA.IdBanco, PA.IdPersonaCliente, PA.IdC' +
+      'uentaBancariaEstadoCuenta, PA.IdMetodoPago, PA.IdCFDIFormaPago33' +
+      ', PA.IdCuentaBancariaOrdenante, PA.IdCuentaBancariaBeneficiario,' +
+      ' PA.IdCFDITipoCadenaPago, '#13#10'                         PA.IdContra' +
+      'to, PA.IdAnexo, PA.IdCFDI_NCR, PA.IdMonedaOrigen, PA.FechaPago, ' +
+      'PA.FolioPago, PA.SeriePago, PA.Referencia, PA.Importe, PA.Saldo,' +
+      ' PA.Observaciones, PA.CuentaPago, PA.OrigenPago, PA.EsDeposito, ' +
+      #13#10'                         PA.Certificado, PA.Cadena, PA.Sello, ' +
+      'dbo.CanGenerarCFDIPago(PA.IdPago) AS GenerarCFDIPago'#13#10'FROM      ' +
+      '      Pagos AS PA '#13#10
     Left = 48
     object adodsMasterIdPago: TAutoIncField
       FieldName = 'IdPago'
@@ -30,6 +34,7 @@ inherited dmPagos: TdmPagos
     object adodsMasterIdPersonaCliente: TIntegerField
       FieldName = 'IdPersonaCliente'
       Visible = False
+      OnChange = adodsMasterIdPersonaClienteChange
     end
     object adodsMasterIdCuentaBancariaEstadoCuenta: TIntegerField
       FieldName = 'IdCuentaBancariaEstadoCuenta'
@@ -41,6 +46,18 @@ inherited dmPagos: TdmPagos
     end
     object adodsMasterIdCFDIFormaPago33: TIntegerField
       FieldName = 'IdCFDIFormaPago33'
+      Visible = False
+    end
+    object adodsMasterIdCuentaBancariaOrdenante: TIntegerField
+      FieldName = 'IdCuentaBancariaOrdenante'
+      Visible = False
+    end
+    object adodsMasterIdCuentaBancariaBeneficiario: TIntegerField
+      FieldName = 'IdCuentaBancariaBeneficiario'
+      Visible = False
+    end
+    object adodsMasterIdCFDITipoCadenaPago: TIntegerField
+      FieldName = 'IdCFDITipoCadenaPago'
       Visible = False
     end
     object adodsMasterIdContrato: TIntegerField
@@ -167,18 +184,59 @@ inherited dmPagos: TdmPagos
       Size = 80
       Lookup = True
     end
-    object adodsMasterObservaciones: TStringField
-      FieldName = 'Observaciones'
-      Size = 255
-    end
     object adodsMasterOrigenPago: TIntegerField
       DisplayLabel = 'Or'#237'gen de pago'
       FieldName = 'OrigenPago'
       Visible = False
     end
-    object adodsMasterIdCFDI: TLargeintField
-      FieldName = 'IdCFDI'
-      ReadOnly = True
+    object adodsMasterObservaciones: TStringField
+      FieldName = 'Observaciones'
+      Size = 255
+    end
+    object adodsMasterCuentaOrdenante: TStringField
+      DisplayLabel = 'Cuenta ordenante'
+      FieldKind = fkLookup
+      FieldName = 'CuentaOrdenante'
+      LookupDataSet = adodsCuentasOrdenante
+      LookupKeyFields = 'IdCuentaBancaria'
+      LookupResultField = 'Cuenta'
+      KeyFields = 'IdCuentaBancariaOrdenante'
+      Size = 100
+      Lookup = True
+    end
+    object adodsMasterCuentaBeneficiario: TStringField
+      DisplayLabel = 'Cuenta beneficiario'
+      FieldKind = fkLookup
+      FieldName = 'CuentaBeneficiario'
+      LookupDataSet = adodsCuentasBeneficiario
+      LookupKeyFields = 'IdCuentaBancaria'
+      LookupResultField = 'Cuenta'
+      KeyFields = 'IdCuentaBancariaBeneficiario'
+      Size = 100
+      Lookup = True
+    end
+    object adodsMasterTipoCadena: TStringField
+      DisplayLabel = 'Tipo de cadena'
+      FieldKind = fkLookup
+      FieldName = 'TipoCadena'
+      LookupDataSet = adodsCadenaPago
+      LookupKeyFields = 'IdCFDITipoCadenaPago'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IdCFDITipoCadenaPago'
+      Size = 15
+      Lookup = True
+    end
+    object adodsMasterCertificado: TStringField
+      FieldName = 'Certificado'
+      Size = 2000
+    end
+    object adodsMasterCadena: TStringField
+      FieldName = 'Cadena'
+      Size = 8000
+    end
+    object adodsMasterSello: TStringField
+      FieldName = 'Sello'
+      Size = 2000
     end
   end
   inherited adodsUpdate: TADODataSet
@@ -214,6 +272,12 @@ inherited dmPagos: TdmPagos
       OnExecute = actGenCFDIPagoExecute
       OnUpdate = actGenCFDIPagoUpdate
     end
+    object actAddCuentaOrdenante: TAction
+      Caption = '...'
+      Hint = 'Agrega una cuenta bancaria'
+      Visible = False
+      OnExecute = actAddCuentaOrdenanteExecute
+    end
   end
   object adodsPersonas: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -227,6 +291,65 @@ inherited dmPagos: TdmPagos
     Parameters = <>
     Left = 48
     Top = 120
+    object adodsPersonasIdPersona: TAutoIncField
+      FieldName = 'IdPersona'
+      ReadOnly = True
+    end
+    object adodsPersonasIdPersonaTipo: TIntegerField
+      FieldName = 'IdPersonaTipo'
+    end
+    object adodsPersonasIdRolTipo: TIntegerField
+      FieldName = 'IdRolTipo'
+    end
+    object adodsPersonasIdRazonSocialTipo: TIntegerField
+      FieldName = 'IdRazonSocialTipo'
+    end
+    object adodsPersonasIdSexo: TIntegerField
+      FieldName = 'IdSexo'
+    end
+    object adodsPersonasIdEstadoCivil: TIntegerField
+      FieldName = 'IdEstadoCivil'
+    end
+    object adodsPersonasIdPais: TIntegerField
+      FieldName = 'IdPais'
+    end
+    object adodsPersonasIdPoblacion: TIntegerField
+      FieldName = 'IdPoblacion'
+    end
+    object adodsPersonasRFC: TStringField
+      FieldName = 'RFC'
+      Size = 13
+    end
+    object adodsPersonasCURP: TStringField
+      FieldName = 'CURP'
+      Size = 18
+    end
+    object adodsPersonasRazonSocial: TStringField
+      FieldName = 'RazonSocial'
+      Size = 300
+    end
+    object adodsPersonasNombre: TStringField
+      FieldName = 'Nombre'
+      Size = 100
+    end
+    object adodsPersonasApellidoPaterno: TStringField
+      FieldName = 'ApellidoPaterno'
+      Size = 100
+    end
+    object adodsPersonasApellidoMaterno: TStringField
+      FieldName = 'ApellidoMaterno'
+      Size = 100
+    end
+    object adodsPersonasIdMetodoPago: TIntegerField
+      FieldName = 'IdMetodoPago'
+    end
+    object adodsPersonasIdPersonaEstatus: TIntegerField
+      FieldName = 'IdPersonaEstatus'
+    end
+    object adodsPersonasNumCtaPagoCliente: TStringField
+      FieldName = 'NumCtaPagoCliente'
+      Size = 30
+    end
   end
   object ADODtStConfiguraciones: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -284,7 +407,7 @@ inherited dmPagos: TdmPagos
       'select IdPagoAplicacion, IdPago, IdCFDI, IdPersonaCliente,'#13#10' IdC' +
       'uentaXCobrar, FechaAplicacion, Importe, ImporteFactoraje'#13#10' from ' +
       'PagosAplicaciones'#13#10'where IdPersonaCliente=:IdPersonaCliente'
-    DataSource = DSMaster
+    DataSource = dsMaster
     IndexFieldNames = 'IdPersonaCliente'
     MasterFields = 'IdPersonaCliente'
     Parameters = <
@@ -352,7 +475,7 @@ inherited dmPagos: TdmPagos
       'tus=-1 and puede que esten facturadas'#13#10' and CXC.IDAnexo=:IdAnexo' +
       #13#10'order by CXC.idanexosamortizaciones,EsMoratorio DEsc, CXC.Fech' +
       'aVencimiento'
-    DataSource = DSMaster
+    DataSource = dsMaster
     IndexFieldNames = 'IdPersona;IdAnexo'
     MasterFields = 'IdPersonaCliente;IdAnexo'
     Parameters = <
@@ -641,7 +764,7 @@ inherited dmPagos: TdmPagos
       FieldName = 'EstatusCFDI2'
     end
   end
-  object DSMaster: TDataSource
+  object dsMaster: TDataSource
     DataSet = adodsMaster
     Left = 148
     Top = 16
@@ -907,8 +1030,8 @@ inherited dmPagos: TdmPagos
         DataType = ftDateTime
         Value = Null
       end>
-    Left = 56
-    Top = 528
+    Left = 264
+    Top = 496
   end
   object ADODtStPrefacturasCFDI: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -1773,8 +1896,8 @@ inherited dmPagos: TdmPagos
         Precision = 10
         Value = Null
       end>
-    Left = 200
-    Top = 528
+    Left = 408
+    Top = 496
   end
   object adoqAnexosSel: TADOQuery
     Connection = _dmConection.ADOConnection
@@ -1806,8 +1929,8 @@ inherited dmPagos: TdmPagos
         'WHERE        (Anexos.MontoVencido = 0) AND (Anexos.SaldoInsoluto' +
         ' >= 0)'
       'and Anexos.idanexo=:IdAnexo --Abr 17/17')
-    Left = 56
-    Top = 584
+    Left = 264
+    Top = 552
     object adoqAnexosSelIdContrato: TAutoIncField
       FieldName = 'IdContrato'
       ReadOnly = True
@@ -1885,8 +2008,8 @@ inherited dmPagos: TdmPagos
         Precision = 10
         Value = Null
       end>
-    Left = 200
-    Top = 584
+    Left = 408
+    Top = 552
   end
   object ADOStrdPrcGenCXCXAmortiza: TADOStoredProc
     Connection = _dmConection.ADOConnection
@@ -1914,8 +2037,8 @@ inherited dmPagos: TdmPagos
         Precision = 10
         Value = Null
       end>
-    Left = 328
-    Top = 544
+    Left = 536
+    Top = 512
   end
   object ADOQryVerificaSaldoFinal: TADOQuery
     Connection = _dmConection.ADOConnection
@@ -1945,8 +2068,8 @@ inherited dmPagos: TdmPagos
         'zaciones=aa.idanexoamortizacion and cc.Saldo>0) )'
       ''
       'Group by c.IdAnexo, aa.IdAnexoCredito')
-    Left = 332
-    Top = 595
+    Left = 540
+    Top = 563
   end
   object ADODtStCFDINotaCredito: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -1963,8 +2086,8 @@ inherited dmPagos: TdmPagos
         Size = 4
         Value = Null
       end>
-    Left = 463
-    Top = 593
+    Left = 671
+    Top = 561
     object ADODtStCFDINotaCreditoIdCFDI: TLargeintField
       FieldName = 'IdCFDI'
       ReadOnly = True
@@ -2031,7 +2154,7 @@ inherited dmPagos: TdmPagos
       'ClaveSAT2016 from MetodosPago'#13#10'where idmetodoPago>0'
     Parameters = <>
     Left = 144
-    Top = 432
+    Top = 312
     object ADODtStSelMetPagoIdMetodoPago: TIntegerField
       FieldName = 'IdMetodoPago'
     end
@@ -2067,9 +2190,10 @@ inherited dmPagos: TdmPagos
       'taXCobrar, IDCFDI, FechaAplicacion, Importe, ImporteFactoraje, C' +
       'XCFechaVencimiento, Anexo, CXCDescripcion, CFDISerie, CFDIFolio,' +
       ' UUID, CFDIMoneda, CFDIMetodoPago, '#13#10'                         CF' +
-      'DIParcialidad, CFDISaldoAnterior, CFDISaldoInsoluto'#13#10'FROM       ' +
-      '     v_PagosAplicaciones'#13#10'WHERE IdPago = :IdPago'
-    DataSource = DSMaster
+      'DIParcialidad, CFDISaldoAnterior, CFDISaldoInsoluto, IdCFDIPago'#13 +
+      #10'FROM            v_PagosAplicaciones'#13#10'WHERE IdPago = :IdPago'
+    DataSource = dsMaster
+    MasterFields = 'IdPago'
     Parameters = <
       item
         Name = 'IdPago'
@@ -2172,15 +2296,67 @@ inherited dmPagos: TdmPagos
       Precision = 19
       Size = 6
     end
+    object adodsPagosAplicacionesIdCFDIPago: TLargeintField
+      FieldName = 'IdCFDIPago'
+      ReadOnly = True
+    end
   end
   object adodsFromaPago33: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'select IdCFDIFormaPago33, Identificador, Descripcion from CFDIFo' +
-      'rmasPago33'
+      'select IdCFDIFormaPago33, Identificador, Descripcion, Bancarizad' +
+      'o from CFDIFormasPago33'
     Parameters = <>
     Left = 48
     Top = 345
+  end
+  object adodsCuentasOrdenante: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'SELECT        CuentasBancarias.IdCuentaBancaria, CuentasBancaria' +
+      's.CuentaBancaria + '#39'-'#39' +Bancos.Nombre AS Cuenta, CuentasBancaria' +
+      's.ClabeInterbancaria'#13#10'FROM            CuentasBancarias INNER JOI' +
+      'N'#13#10'                         Bancos ON CuentasBancarias.IdBanco =' +
+      ' Bancos.IdBanco'#13#10'WHERE CuentasBancarias.IdPersona = :IdPersonaCl' +
+      'iente'
+    DataSource = dsMaster
+    MasterFields = 'IdPersonaCliente'
+    Parameters = <
+      item
+        Name = 'IdPersonaClientE'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = 570
+      end>
+    Left = 48
+    Top = 400
+  end
+  object adodsCuentasBeneficiario: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'SELECT        CuentasBancarias.IdCuentaBancaria, CuentasBancaria' +
+      's.CuentaBancaria + '#39'-'#39' +Bancos.Nombre AS Cuenta, CuentasBancaria' +
+      's.ClabeInterbancaria'#13#10'FROM            CuentasBancarias INNER JOI' +
+      'N'#13#10'                         Bancos ON CuentasBancarias.IdBanco =' +
+      ' Bancos.IdBanco'#13#10'WHERE CuentasBancarias.IdPersona IN (SELECT IdP' +
+      'ersona FROM Personas WHERE IdRolTipo = 9)'#13#10
+    Parameters = <>
+    Left = 48
+    Top = 456
+  end
+  object adodsCadenaPago: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdCFDITipoCadenaPago, Identificador, Descripcion from CFD' +
+      'ITiposCadenaPago'
+    Parameters = <>
+    Left = 48
+    Top = 512
   end
 end

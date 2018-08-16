@@ -1,16 +1,14 @@
 inherited dmCuentasBancarias: TdmCuentasBancarias
   OldCreateOrder = True
   Height = 413
-  Width = 457
+  Width = 452
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     OnNewRecord = adodsMasterNewRecord
     CommandText = 
-      'SELECT IdCuentaBancaria,'#13#10'             IdPersona,'#13#10'             ' +
-      'IdCuentaBancariaTipo,'#13#10'             IdBanco,'#13#10'             Cuent' +
-      'aBancaria,'#13#10'             ClabeInterbancaria,'#13#10'             IdMon' +
-      'eda,             '#13#10'             IdDocumento,'#13#10'             Saldo' +
-      'Cuenta, IdCuentaBancariaEstatus'#13#10'  FROM CuentasBancarias'#13#10
+      'SELECT IdCuentaBancaria, IdPersona, IdCuentaBancariaTipo, IdBanc' +
+      'o, CuentaBancaria, ClabeInterbancaria, IdMoneda, IdDocumento, Sa' +
+      'ldoCuenta, IdCuentaBancariaEstatus'#13#10'FROM CuentasBancarias'
     Left = 32
     object adodsMasterIdCuentaBancaria: TAutoIncField
       FieldName = 'IdCuentaBancaria'
@@ -25,6 +23,21 @@ inherited dmCuentasBancarias: TdmCuentasBancarias
       FieldName = 'IdCuentaBancariaTipo'
       Visible = False
     end
+    object adodsMasterIdBanco: TIntegerField
+      FieldName = 'IdBanco'
+      Visible = False
+    end
+    object adodsMasterIdMoneda: TIntegerField
+      FieldName = 'IdMoneda'
+      Visible = False
+    end
+    object adodsMasterIdDocumento: TIntegerField
+      FieldName = 'IdDocumento'
+    end
+    object adodsMasterIdCuentaBancariaEstatus: TIntegerField
+      FieldName = 'IdCuentaBancariaEstatus'
+      Visible = False
+    end
     object adodsMasterCuentaBancariaTipo: TStringField
       FieldKind = fkLookup
       FieldName = 'CuentaBancariaTipo'
@@ -34,10 +47,6 @@ inherited dmCuentasBancarias: TdmCuentasBancarias
       KeyFields = 'IdCuentaBancariaTipo'
       Size = 50
       Lookup = True
-    end
-    object adodsMasterIdBanco: TIntegerField
-      FieldName = 'IdBanco'
-      Visible = False
     end
     object adodsMasterBanco: TStringField
       FieldKind = fkLookup
@@ -57,10 +66,6 @@ inherited dmCuentasBancarias: TdmCuentasBancarias
       FieldName = 'ClabeInterbancaria'
       Size = 18
     end
-    object adodsMasterIdMoneda: TIntegerField
-      FieldName = 'IdMoneda'
-      Visible = False
-    end
     object adodsMasterMoneda: TStringField
       FieldKind = fkLookup
       FieldName = 'Moneda'
@@ -70,9 +75,6 @@ inherited dmCuentasBancarias: TdmCuentasBancarias
       KeyFields = 'IdMoneda'
       Size = 10
       Lookup = True
-    end
-    object adodsMasterIdDocumento: TIntegerField
-      FieldName = 'IdDocumento'
     end
     object adodsMasterEstructuraEstadoCuenta: TStringField
       FieldKind = fkLookup
@@ -89,10 +91,6 @@ inherited dmCuentasBancarias: TdmCuentasBancarias
       Precision = 18
       Size = 0
     end
-    object adodsMasterIdCuentaBancariaEstatus: TIntegerField
-      FieldName = 'IdCuentaBancariaEstatus'
-      Visible = False
-    end
     object adodsMasterEstatus: TStringField
       FieldKind = fkLookup
       FieldName = 'Estatus'
@@ -105,7 +103,114 @@ inherited dmCuentasBancarias: TdmCuentasBancarias
     end
   end
   inherited adodsUpdate: TADODataSet
+    CursorType = ctStatic
+    OnNewRecord = adodsUpdateNewRecord
+    CommandText = 
+      'SELECT IdCuentaBancaria, IdPersona, IdCuentaBancariaTipo, IdBanc' +
+      'o, CuentaBancaria, ClabeInterbancaria, IdMoneda, IdDocumento, Sa' +
+      'ldoCuenta, IdCuentaBancariaEstatus'#13#10'FROM CuentasBancarias'#13#10'WHERE' +
+      ' IdCuentaBancaria = :IdCuentaBancaria'
+    Parameters = <
+      item
+        Name = 'IdCuentaBancaria'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
     Left = 392
+    object adodsUpdateIdCuentaBancaria: TAutoIncField
+      FieldName = 'IdCuentaBancaria'
+      ReadOnly = True
+      Visible = False
+    end
+    object adodsUpdateIdPersona: TIntegerField
+      FieldName = 'IdPersona'
+      Visible = False
+    end
+    object adodsUpdateIdCuentaBancariaTipo: TIntegerField
+      FieldName = 'IdCuentaBancariaTipo'
+      Visible = False
+    end
+    object adodsUpdateCuentaBancariaTipo: TStringField
+      FieldKind = fkLookup
+      FieldName = 'CuentaBancariaTipo'
+      LookupDataSet = adodsCuentaBancariaTipo
+      LookupKeyFields = 'IdCuentaBancariaTipo'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IdCuentaBancariaTipo'
+      Size = 50
+      Lookup = True
+    end
+    object adodsUpdateIdBanco: TIntegerField
+      FieldName = 'IdBanco'
+      Visible = False
+    end
+    object adodsUpdateBanco: TStringField
+      FieldKind = fkLookup
+      FieldName = 'Banco'
+      LookupDataSet = adodsBanco
+      LookupKeyFields = 'IdBanco'
+      LookupResultField = 'Nombre'
+      KeyFields = 'IdBanco'
+      Size = 50
+      Lookup = True
+    end
+    object adodsUpdateCuentaBancaria: TStringField
+      FieldName = 'CuentaBancaria'
+      Size = 50
+    end
+    object adodsUpdateClabeInterbancaria: TStringField
+      FieldName = 'ClabeInterbancaria'
+      Size = 18
+    end
+    object adodsUpdateIdMoneda: TIntegerField
+      FieldName = 'IdMoneda'
+      Visible = False
+    end
+    object adodsUpdateMoneda: TStringField
+      FieldKind = fkLookup
+      FieldName = 'Moneda'
+      LookupDataSet = adodsMoneda
+      LookupKeyFields = 'IdMoneda'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IdMoneda'
+      Size = 10
+      Lookup = True
+    end
+    object adodsUpdateIdDocumento: TIntegerField
+      FieldName = 'IdDocumento'
+    end
+    object adodsUpdateEstructuraEstadoCuenta: TStringField
+      FieldKind = fkLookup
+      FieldName = 'EstructuraEstadoCuenta'
+      LookupDataSet = adodsDocumento
+      LookupKeyFields = 'IdDocumento'
+      LookupResultField = 'NombreArchivo'
+      KeyFields = 'IdDocumento'
+      Size = 200
+      Lookup = True
+    end
+    object adodsUpdateSaldoCuenta: TBCDField
+      FieldName = 'SaldoCuenta'
+      Precision = 18
+      Size = 0
+    end
+    object adodsUpdateIdCuentaBancariaEstatus: TIntegerField
+      FieldName = 'IdCuentaBancariaEstatus'
+      Visible = False
+    end
+    object adodsUpdateEstatus: TStringField
+      FieldKind = fkLookup
+      FieldName = 'Estatus'
+      LookupDataSet = adodsEstatus
+      LookupKeyFields = 'IdCuentaBancariaEstatus'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IdCuentaBancariaEstatus'
+      Size = 50
+      Lookup = True
+    end
   end
   inherited ActionList: TActionList
     Left = 384
@@ -116,6 +221,7 @@ inherited dmCuentasBancarias: TdmCuentasBancarias
     end
   end
   object dsMaster: TDataSource
+    AutoEdit = False
     DataSet = adodsMaster
     Left = 120
     Top = 16
@@ -139,8 +245,8 @@ inherited dmCuentasBancarias: TdmCuentasBancarias
         Size = 4
         Value = 1
       end>
-    Left = 64
-    Top = 264
+    Left = 200
+    Top = 192
     object adodsUsuariosXCtaBanIdCuentaBancariaUsuario: TAutoIncField
       FieldName = 'IdCuentaBancariaUsuario'
       ReadOnly = True
@@ -192,8 +298,8 @@ inherited dmCuentasBancarias: TdmCuentasBancarias
       'select IdPersona, RFC, RazonSocial, Nombre, ApellidoPaterno, Ape' +
       'llidoMaterno '#13#10'from Personas'
     Parameters = <>
-    Left = 400
-    Top = 160
+    Left = 200
+    Top = 88
     object adodsPersonaIdPersona: TAutoIncField
       FieldName = 'IdPersona'
       ReadOnly = True
@@ -226,16 +332,16 @@ inherited dmCuentasBancarias: TdmCuentasBancarias
       'select IdCuentaBancariaTipo, Descripcion from CuentasBancariasTi' +
       'pos'
     Parameters = <>
-    Left = 232
-    Top = 24
+    Left = 56
+    Top = 80
   end
   object adodsBanco: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdBanco, Nombre from Bancos'
     Parameters = <>
-    Left = 232
-    Top = 80
+    Left = 56
+    Top = 136
     object adodsBancoIdBanco: TAutoIncField
       FieldName = 'IdBanco'
       ReadOnly = True
@@ -250,8 +356,8 @@ inherited dmCuentasBancarias: TdmCuentasBancarias
     CursorType = ctStatic
     CommandText = 'select IdMoneda, Descripcion from Monedas'
     Parameters = <>
-    Left = 232
-    Top = 136
+    Left = 56
+    Top = 192
     object adodsMonedaIdMoneda: TAutoIncField
       FieldName = 'IdMoneda'
       ReadOnly = True
@@ -268,8 +374,8 @@ inherited dmCuentasBancarias: TdmCuentasBancarias
       'select IdPersona, RFC, RazonSocial, Nombre, ApellidoPaterno, Ape' +
       'llidoMaterno '#13#10'from Personas where IDPersonaTipo=1'
     Parameters = <>
-    Left = 232
-    Top = 208
+    Left = 200
+    Top = 136
     object AutoIncField1: TAutoIncField
       FieldName = 'IdPersona'
       ReadOnly = True
@@ -306,8 +412,8 @@ inherited dmCuentasBancarias: TdmCuentasBancarias
     CursorType = ctStatic
     CommandText = 'SELECT IdDocumento, NombreArchivo FROM Documentos'
     Parameters = <>
-    Left = 232
-    Top = 272
+    Left = 56
+    Top = 240
   end
   object adodsEstatus: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -316,7 +422,7 @@ inherited dmCuentasBancarias: TdmCuentasBancarias
       'select IdCuentaBancariaEstatus, Descripcion from CuentasBancaria' +
       'sEstatus'
     Parameters = <>
-    Left = 232
-    Top = 344
+    Left = 56
+    Top = 288
   end
 end

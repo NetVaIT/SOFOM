@@ -2,7 +2,6 @@ inherited frmCuentasBancariasEdit: TfrmCuentasBancariasEdit
   Caption = 'Cuentas Bancarias'
   ClientHeight = 358
   ClientWidth = 542
-  OnCreate = FormCreate
   OnDestroy = FormDestroy
   ExplicitWidth = 548
   ExplicitHeight = 387
@@ -17,9 +16,9 @@ inherited frmCuentasBancariasEdit: TfrmCuentasBancariasEdit
     ClientRectRight = 540
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 2
-      ExplicitTop = 28
+      ExplicitTop = 26
       ExplicitWidth = 538
-      ExplicitHeight = 287
+      ExplicitHeight = 289
       object Label2: TLabel
         Left = 24
         Top = 103
@@ -98,7 +97,7 @@ inherited frmCuentasBancariasEdit: TfrmCuentasBancariasEdit
         Left = 362
         Top = 122
         DataBinding.DataField = 'SaldoCuenta'
-        DataBinding.DataSource = dmCuentasBancarias.dsMaster
+        DataBinding.DataSource = DataSource
         TabOrder = 5
         Width = 150
       end
@@ -106,7 +105,7 @@ inherited frmCuentasBancariasEdit: TfrmCuentasBancariasEdit
         Left = 24
         Top = 167
         DataBinding.DataField = 'ClabeInterbancaria'
-        DataBinding.DataSource = dmCuentasBancarias.dsMaster
+        DataBinding.DataSource = DataSource
         TabOrder = 6
         Width = 488
       end
@@ -185,9 +184,6 @@ inherited frmCuentasBancariasEdit: TfrmCuentasBancariasEdit
       Left = 379
       ExplicitLeft = 379
     end
-  end
-  inherited DataSource: TDataSource
-    DataSet = dmCuentasBancarias.adodsMaster
   end
   inherited cxImageList: TcxImageList
     FormatVersion = 1

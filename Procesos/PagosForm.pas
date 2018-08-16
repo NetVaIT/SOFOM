@@ -37,7 +37,6 @@ type
     dsConCXCPendientes: TDataSource;
     DSDetallesCXC: TDataSource;
     DSAplicacion: TDataSource;
-    DSPersonas: TDataSource;
     PnlBusqueda: TPanel;
     Button1: TButton;
     Panel1: TPanel;
@@ -84,14 +83,23 @@ type
     tvMasterMonedaOrigen: TcxGridDBColumn;
     dxbbGenCFDIPago: TdxBarButton;
     tvMasterGenerarCFDIPago: TcxGridDBColumn;
-    tvMasterIdCFDI: TcxGridDBColumn;
     tvMasterIdCFDIFormaPago33: TcxGridDBColumn;
     tvMasterFormaPago: TcxGridDBColumn;
+    tvMasterIdCuentaBancariaOrdenante: TcxGridDBColumn;
+    tvMasterIdCuentaBancariaBeneficiario: TcxGridDBColumn;
+    tvMasterIdCFDITipoCadenaPago: TcxGridDBColumn;
+    tvMasterCuentaOrdenante: TcxGridDBColumn;
+    tvMasterCuentaBeneficiario: TcxGridDBColumn;
+    tvMasterTipoCadena: TcxGridDBColumn;
+    tvMasterCertificado: TcxGridDBColumn;
+    tvMasterCadena: TcxGridDBColumn;
+    tvMasterSello: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure dxBrBtnAplicaiconesClick(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
     procedure SpdBtnBuscarClick(Sender: TObject);
     procedure EdtNombreChange(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
     ffiltroNombre: String;
@@ -102,6 +110,7 @@ type
     FActCreaFinales: TBasicAction;
     FactFacturarMoratorios: TBasicAction;
     FactGenCFDIPago: TBasicAction;
+    FactAddCuentaOrdenante: TBasicAction;
     function GetFFiltroNombre: String;
     procedure PoneFiltro;
     function HayCXCSinFacturaPrevia: boolean;
@@ -122,6 +131,7 @@ type
     property actPagoAnticipado: TBasicAction read FactPagoAnticipado write FactPagoAnticipado;    //Jun 29/17
     property ActVerificayCreaFinal: TBasicAction read FActCreaFinales write SetFCreaFinales; //Oct 3/17
     property actGenCFDIPago: TBasicAction read FactGenCFDIPago write SetactGenCFDIPago;
+    property actAddCuentaOrdenante: TBasicAction read FactAddCuentaOrdenante write FactAddCuentaOrdenante;
   end;
 
 implementation
@@ -446,7 +456,7 @@ begin
   inherited;
   if  edtNombre.Text<>'' then
   begin
-    FfiltroNombre:=' inner join Personas P On P.IdPersona=Pa.IdPersonaCliente and P.RazonSocial Like ''%'+edtNombre.Text+'%''';
+    FfiltroNombre:=' INNER JOIN Personas AS P ON P.IdPersona = PA.IdPersonaCliente AND P.RazonSocial LIKE ''%'+edtNombre.Text+'%''';
   end
   else
     FfiltroNombre:='';
@@ -459,7 +469,6 @@ var         //Dic 20/16
 begin
   inherited;
   gEditForm:= TfrmEdPagos.Create(Self);
-  TfrmEdPagos(gEditForm).DSPersonas.DataSet:=DSPersonas.DataSet;
   TfrmEdPagos(gEditForm).DSAnexos.DataSet:=DSAnexos.DataSet;  //Mar 9/17
              //May 26/17  Date
   DEcodeDate(_DmConection.LafechaActual,a,m,d);
@@ -477,6 +486,12 @@ begin
   ApplyBestFit:=False;
 end;
 
+procedure TFrmConPagos.FormShow(Sender: TObject);
+begin
+  inherited;
+  TfrmEdPagos(gEditForm).actAddCuentaOrdenante := actAddCuentaOrdenante;
+end;
+
 function TFrmConPagos.GetFFiltroNombre: String;
 begin
   Result := ffiltroNombre;
@@ -488,18 +503,18 @@ var
   FiltroDepo:String;
 begin
   if ChckBxDeposito.Checked then    //Jun 29/17
-    FiltroDepo:=' EsDeposito = 1 '
+    FiltroDepo:=' PA.EsDeposito = 1 '
   else
     FiltroDepo:='';
 
   Aux:='where';
   if ChckBxXFecha.Checked then
-    ffiltroFecha:=' FechaPago >=:Fini and FechaPago<:FFin '
+    ffiltroFecha:=' PA.FechaPago >=:Fini and PA.FechaPago<:FFin '
   else
     ffiltroFecha:='';
   Aux:=Aux+ffiltroFecha;
   if ChckBxConSaldo.Checked then
-    Ffiltro:=' Saldo > 0.01 ' //0.0001
+    Ffiltro:=' PA.Saldo > 0.01 ' //0.0001
   else
     Ffiltro:='';
 
@@ -542,9 +557,10 @@ end;
 
 procedure TFrmConPagos.SpdBtnBuscarClick(Sender: TObject);
 const  //Dic 20/16
-  TxtSQL='SELECT IdPago, IdBanco, IdPersonaCliente, IdCuentaBancariaEstadoCuenta, PA.IdMetodoPago, IdCFDIFormaPago33, IdContrato, IdAnexo, IdCFDI_NCR, IdMonedaOrigen, FechaPago, FolioPago, SeriePago, Referencia, Importe, Saldo, Observaciones, ' +
-  'CuentaPago, OrigenPago, EsDeposito, dbo.CanGenerarCFDIPago(IdPago) AS GenerarCFDIPago, dbo.GetIdCFDIPago(IdPago) AS IdCFDI ' +
-  'FROM Pagos PA ';
+  TxtSQL='SELECT PA.IdPago, PA.IdBanco, PA.IdPersonaCliente, PA.IdCuentaBancariaEstadoCuenta, PA.IdMetodoPago, PA.IdCFDIFormaPago33, PA.IdCuentaBancariaOrdenante, PA.IdCuentaBancariaBeneficiario, PA.IdCFDITipoCadenaPago, ' +
+  'PA.IdContrato, PA.IdAnexo, PA.IdCFDI_NCR, PA.IdMonedaOrigen, PA.FechaPago, PA.FolioPago, PA.SeriePago, PA.Referencia, PA.Importe, PA.Saldo, PA.Observaciones, PA.CuentaPago, PA.OrigenPago, PA.EsDeposito, ' +
+  'PA.Certificado, PA.Cadena, PA.Sello, dbo.CanGenerarCFDIPago(PA.IdPago) AS GenerarCFDIPago ' +
+  'FROM Pagos AS PA ';
 begin
   inherited;
   PoneFiltro;

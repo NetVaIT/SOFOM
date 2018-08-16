@@ -62,9 +62,25 @@ type
     adodsMasterIdCuentaBancariaEstatus: TIntegerField;
     adodsEstatus: TADODataSet;
     adodsMasterEstatus: TStringField;
+    adodsUpdateIdCuentaBancaria: TAutoIncField;
+    adodsUpdateIdPersona: TIntegerField;
+    adodsUpdateIdCuentaBancariaTipo: TIntegerField;
+    adodsUpdateCuentaBancariaTipo: TStringField;
+    adodsUpdateIdBanco: TIntegerField;
+    adodsUpdateBanco: TStringField;
+    adodsUpdateCuentaBancaria: TStringField;
+    adodsUpdateClabeInterbancaria: TStringField;
+    adodsUpdateIdMoneda: TIntegerField;
+    adodsUpdateMoneda: TStringField;
+    adodsUpdateIdDocumento: TIntegerField;
+    adodsUpdateEstructuraEstadoCuenta: TStringField;
+    adodsUpdateSaldoCuenta: TBCDField;
+    adodsUpdateIdCuentaBancariaEstatus: TIntegerField;
+    adodsUpdateEstatus: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure actUpdateFileExecute(Sender: TObject);
+    procedure adodsUpdateNewRecord(DataSet: TDataSet);
   private
     { Private declarations }
     fFiltroPersona:String; //Mar 25/15
@@ -118,6 +134,13 @@ begin
   inherited;
   adodsMasterIdMoneda.Value := IdMoneda_Predeterminado;
   adodsMasterIdCuentaBancariaEstatus.Value:= IdCuentaBancariaEstatus_Predeterminado;
+end;
+
+procedure TdmCuentasBancarias.adodsUpdateNewRecord(DataSet: TDataSet);
+begin
+  inherited;
+  adodsUpdateIdMoneda.Value := IdMoneda_Predeterminado;
+  adodsUpdateIdCuentaBancariaEstatus.Value:= IdCuentaBancariaEstatus_Predeterminado;
 end;
 
 procedure TdmCuentasBancarias.DataModuleCreate(Sender: TObject);

@@ -35,7 +35,7 @@ type
     ADODtStAplicacionesPagos: TADODataSet;
     ADODtStCXCPendientes: TADODataSet;
     ADODtStCxCDetallePend: TADODataSet;
-    DSMaster: TDataSource;
+    dsMaster: TDataSource;
     DSCXCPendientes: TDataSource;
     ADODtStCXCPendientesIdCuentaXCobrar: TAutoIncField;
     ADODtStCXCPendientesIdCuentaXCobrarEstatus: TIntegerField;
@@ -385,10 +385,40 @@ type
     adodsPagosAplicacionesCFDIParcialidad: TIntegerField;
     adodsPagosAplicacionesCFDISaldoAnterior: TFMTBCDField;
     adodsPagosAplicacionesCFDISaldoInsoluto: TFMTBCDField;
-    adodsMasterIdCFDI: TLargeintField;
     adodsMasterIdCFDIFormaPago33: TIntegerField;
     adodsFromaPago33: TADODataSet;
     adodsMasterFormaPago: TStringField;
+    adodsPagosAplicacionesIdCFDIPago: TLargeintField;
+    adodsMasterIdCuentaBancariaOrdenante: TIntegerField;
+    adodsMasterIdCuentaBancariaBeneficiario: TIntegerField;
+    adodsMasterIdCFDITipoCadenaPago: TIntegerField;
+    adodsMasterCertificado: TStringField;
+    adodsMasterCadena: TStringField;
+    adodsMasterSello: TStringField;
+    adodsCuentasOrdenante: TADODataSet;
+    adodsCuentasBeneficiario: TADODataSet;
+    adodsCadenaPago: TADODataSet;
+    adodsMasterCuentaOrdenante: TStringField;
+    adodsMasterCuentaBeneficiario: TStringField;
+    adodsMasterTipoCadena: TStringField;
+    actAddCuentaOrdenante: TAction;
+    adodsPersonasIdPersona: TAutoIncField;
+    adodsPersonasIdPersonaTipo: TIntegerField;
+    adodsPersonasIdRolTipo: TIntegerField;
+    adodsPersonasIdRazonSocialTipo: TIntegerField;
+    adodsPersonasIdSexo: TIntegerField;
+    adodsPersonasIdEstadoCivil: TIntegerField;
+    adodsPersonasIdPais: TIntegerField;
+    adodsPersonasIdPoblacion: TIntegerField;
+    adodsPersonasRFC: TStringField;
+    adodsPersonasCURP: TStringField;
+    adodsPersonasRazonSocial: TStringField;
+    adodsPersonasNombre: TStringField;
+    adodsPersonasApellidoPaterno: TStringField;
+    adodsPersonasApellidoMaterno: TStringField;
+    adodsPersonasIdMetodoPago: TIntegerField;
+    adodsPersonasIdPersonaEstatus: TIntegerField;
+    adodsPersonasNumCtaPagoCliente: TStringField;
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsMasterAfterPost(DataSet: TDataSet);
     procedure adodsMasterBeforePost(DataSet: TDataSet);
@@ -412,6 +442,8 @@ type
     procedure ActVerYCreaCXCFinalesExecute(Sender: TObject);
     procedure actGenCFDIPagoExecute(Sender: TObject);
     procedure actGenCFDIPagoUpdate(Sender: TObject);
+    procedure actAddCuentaOrdenanteExecute(Sender: TObject);
+    procedure adodsMasterIdPersonaClienteChange(Sender: TField);
   private
     { Private declarations }
     Inserto:Boolean;
@@ -474,7 +506,8 @@ implementation
 
 uses PagosForm, _ConectionDmod, AbonarCapitalDM, AbonarCapitalEdit,
   FacturasDM, MetodoPagoFacturaEdt, FacturaConfirmacionForm,
-  AmortizacionesDM, CuentasXCobrarDM, _Utils, PagosAplicacionesForm;
+  AmortizacionesDM, CuentasXCobrarDM, _Utils, PagosAplicacionesForm,
+  CuentasBancariasDM;
 
 {$R *.dfm}
 
@@ -573,6 +606,16 @@ begin
     adodsMaster.FieldByName('IdMetodoPAgo').asInteger:=5;// Otro
     adodsMaster.FieldByName('Referencia').asString:='';
     abort;
+  end;
+end;
+
+procedure TdmPagos.adodsMasterIdPersonaClienteChange(Sender: TField);
+begin
+  inherited;
+  if adodsMaster.State in [dsInsert, dsEdit] then
+  begin
+    adodsMasterIdMetodoPago.Value := adodsPersonasIdMetodoPago.Value;
+    adodsMasterCuentaPago.AsString := adodsPersonasNumCtaPagoCliente.AsString;
   end;
 end;
 
@@ -879,6 +922,28 @@ begin
     dmAbonarCapital.Execute;
   finally
     dmAbonarCapital.Free;
+  end;
+end;
+
+procedure TdmPagos.actAddCuentaOrdenanteExecute(Sender: TObject);
+var
+  dmCuentasBancarias: TdmCuentasBancarias;
+  Id: Integer;
+begin
+  inherited;
+  dmCuentasBancarias:= TdmCuentasBancarias.Create(nil);
+  try
+    dmCuentasBancarias.MasterSource := dsMaster;
+    dmCuentasBancarias.MasterFields := 'IdPersonaCliente';
+    Id:= dmCuentasBancarias.Add;
+    if  Id <> 0 then
+    begin
+      adodsCuentasOrdenante.Requery();
+//      adodsMasterDomicilio.RefreshLookupList;
+      adodsMasterIdCuentaBancariaOrdenante.AsInteger:= Id;
+    end;
+  finally
+    dmCuentasBancarias.Free;
   end;
 end;
 
@@ -1734,7 +1799,6 @@ begin
   adodtstAnexoSeleccion.Open;  //Mar 9/17
 //  TFrmConPagos(gGridForm).DSAplicacion.DataSet:=ADODtStAplicacionesPagos;
   TFrmConPagos(gGridForm).actFacturarMoratorios:=ActGeneraPrefMoratorios;
-  TFrmConPagos(gGridForm).dsPersonas.dataset:=adodsPersonas;
   TFrmConPagos(gGridForm).dsanexos.dataset:=adodtstAnexoSeleccion;  //Mar 9/17
   TFrmConPagos(gGridForm).DSDetallesCXC.dataset:= ADODtStCxCDetallePend;
   TFrmConPagos(gGridForm).dsConCXCPendientes.DataSet:=ADODtStCXCPendientes;
@@ -1747,6 +1811,7 @@ begin
   TFrmConPagos(gGridForm).ActVerificayCreaFinal:=ActVerYCreaCXCFinales; //Oct 3/17
   TFrmConPagos(gGridForm).DSVerificaSaldoFinal.dataset :=adoQryVerificaSaldoFinal; //Oct 3/17
   TFrmConPagos(gGridForm).actGenCFDIPago := actGenCFDIPago;
+  TFrmConPagos(gGridForm).actAddCuentaOrdenante := actAddCuentaOrdenante;
   if adodsPagosAplicaciones.CommandText <> EmptyStr then adodsPagosAplicaciones.Open;
   gFormDeatil1:= TfrmPagosAplicaciones.Create(Self);
   gFormDeatil1.ReadOnlyGrid := True;

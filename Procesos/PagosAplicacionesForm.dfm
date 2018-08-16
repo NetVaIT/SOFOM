@@ -104,6 +104,9 @@ inherited frmPagosAplicaciones: TfrmPagosAplicaciones
         object tvMasterCFDISaldoInsoluto: TcxGridDBColumn
           DataBinding.FieldName = 'CFDISaldoInsoluto'
         end
+        object tvMasterIdCFDIPago: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCFDIPago'
+        end
       end
     end
   end
@@ -151,6 +154,7 @@ inherited frmPagosAplicaciones: TfrmPagosAplicaciones
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 43264.700645682870000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

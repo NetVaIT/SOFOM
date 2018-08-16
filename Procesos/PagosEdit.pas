@@ -20,18 +20,17 @@ uses
   cxEdit, cxMemo, cxDBEdit, Vcl.DBCtrls, cxTextEdit, cxMaskEdit, cxDropDownEdit,
   cxCalendar, Vcl.StdCtrls, Vcl.ImgList, System.Actions, Vcl.ActnList, Data.DB,
   Vcl.ExtCtrls, cxPC, cxLabel, cxDBLabel, cxGroupBox, cxRadioGroup, Data.Win.ADODB,
-  cxCheckBox, Vcl.Menus, cxButtons;
+  cxCheckBox, Vcl.Menus, cxButtons, Vcl.Buttons, cxLookupEdit, cxDBLookupEdit,
+  cxDBLookupComboBox;
 
 type
   TFrmEdPagos = class(T_frmEdit)
     Label7: TLabel;
     cxDBMemo1: TcxDBMemo;
-    DSPersonas: TDataSource;
     PnlDatosBase: TPanel;
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
-    Label4: TLabel;
     Label5: TLabel;
     Label6: TLabel;
     Label8: TLabel;
@@ -40,7 +39,6 @@ type
     Label11: TLabel;
     cxDBDateEdit1: TcxDBDateEdit;
     cxDBTextEdit1: TcxDBTextEdit;
-    cxDBTextEdit2: TcxDBTextEdit;
     cxDBTxtEdtImporte: TcxDBTextEdit;
     DBLookupComboBox1: TDBLookupComboBox;
     DBLkpCmbBxCliente: TDBLookupComboBox;
@@ -58,8 +56,26 @@ type
     DSNotasCredito: TDataSource;
     DBLookupComboBox2: TDBLookupComboBox;
     Label13: TLabel;
+    tsCFDI: TcxTabSheet;
+    gbBancarizado: TcxGroupBox;
+    Label15: TLabel;
+    DBLookupComboBox4: TcxDBLookupComboBox;
+    Label16: TLabel;
+    DBLookupComboBox5: TcxDBLookupComboBox;
+    gbCadena: TcxGroupBox;
+    Label17: TLabel;
+    DBLookupComboBox6: TcxDBLookupComboBox;
+    Label18: TLabel;
+    Label19: TLabel;
+    Label20: TLabel;
+    cxDBMemo2: TcxDBMemo;
+    cxDBMemo3: TcxDBMemo;
+    cxDBMemo4: TcxDBMemo;
+    btnAddCuentaOrdenante: TSpeedButton;
     Label14: TLabel;
-    DBLookupComboBox3: TDBLookupComboBox;
+    DBLookupComboBox3: TcxDBLookupComboBox;
+    Label4: TLabel;
+    cxDBTextEdit2: TcxDBTextEdit;
     procedure DBLkpCmbBxClienteClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure cxDBTxtEdtImporteExit(Sender: TObject);
@@ -68,9 +84,12 @@ type
     procedure cxDBLblAnexoClick(Sender: TObject);
     procedure cxBtnUsaNotaCreditoClick(Sender: TObject);
   private
+    FactAddCuentaOrdenante: TBasicAction;
+    procedure SetactAddCuentaOrdenante(const Value: TBasicAction);
     { Private declarations }
   public
     { Public declarations }
+    property actAddCuentaOrdenante: TBasicAction read FactAddCuentaOrdenante write SetactAddCuentaOrdenante;
   end;
 
 //var
@@ -150,11 +169,6 @@ begin//Dic 19/16
   inherited;
   if datasource.state in[dsEdit,dsInsert]  then
   begin
-    if not dsPersonas.dataset.Fieldbyname('IdMetodoPago').Isnull then
-     begin
-       datasource.dataset.FieldByName('IdMetodoPago').AsInteger:= dsPersonas.dataset.Fieldbyname('IdMetodoPago').AsInteger;
-       datasource.dataset.FieldByName('CuentaPago').AsString:=dsPersonas.dataset.Fieldbyname('NumCtaPagoCliente').AsString;
-     end;
     //Visualizar lookup.
     dsAnexos.DataSet.Close;
     TadoDAtaset(dsAnexos.DataSet).Parameters.ParamByName('IDPersona').Value:= datasource.dataset.FieldByName('IdPersonaCliente').AsInteger;
@@ -172,11 +186,22 @@ begin
 end;
 
 procedure TFrmEdPagos.FormShow(Sender: TObject);
+var
+  GenerarCFDIPago: Boolean;
 begin
   inherited;             //SE cambio por si son diferntes a mas de 3 decimales                                               //0.001
+  GenerarCFDIPago := DataSource.DataSet.FieldByName('GenerarCFDIPago').AsBoolean;
   PnlDatosBase.Enabled:=(abs(DataSource.DataSet.FieldByName('Saldo').AsFloat- DataSource.DataSet.FieldByName('Importe').AsFloat)<0.01)
                         and DataSource.DataSet.FieldByName('IDCFDI_NCR').IsNULL ; //Ajustado paera que no se pueda modificar una de Nota de crédito
   cxBtnUsaNotaCredito.Enabled:= PnlDatosBase.Enabled and  not DataSource.DataSet.FieldByName('EsDeposito').asBoolean;
+  gbBancarizado.Enabled := GenerarCFDIPago;
+  gbCadena.Enabled := GenerarCFDIPago;
+end;
+
+procedure TFrmEdPagos.SetactAddCuentaOrdenante(const Value: TBasicAction);
+begin
+  FactAddCuentaOrdenante := Value;
+  btnAddCuentaOrdenante.Action := Value;
 end;
 
 end.
