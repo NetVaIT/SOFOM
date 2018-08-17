@@ -1,5 +1,5 @@
 inherited frmPaquetePreguntas: TfrmPaquetePreguntas
-  Caption = 'frmPaquetePreguntas'
+  Caption = 'Paquetes de preguntas'
   ClientWidth = 743
   ExplicitWidth = 743
   PixelsPerInch = 96
@@ -104,7 +104,6 @@ inherited frmPaquetePreguntas: TfrmPaquetePreguntas
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 43314.759753159720000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

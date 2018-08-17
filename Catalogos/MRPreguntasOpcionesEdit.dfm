@@ -1,21 +1,23 @@
 inherited frmMrPreguntasOpcionesEdit: TfrmMrPreguntasOpcionesEdit
-  Caption = 'Edici'#243'n Opciones para Pregunta Actual'
-  ClientHeight = 481
+  Caption = 'Edici'#243'n Opciones para pregunta actual'
+  ClientHeight = 367
   ClientWidth = 539
   ExplicitWidth = 545
-  ExplicitHeight = 510
+  ExplicitHeight = 396
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
     Width = 539
-    Height = 440
+    Height = 326
     ExplicitWidth = 539
-    ExplicitHeight = 348
-    ClientRectBottom = 438
-    ClientRectRight = 537
+    ExplicitHeight = 440
+    ClientRectBottom = 322
+    ClientRectRight = 535
     inherited tsGeneral: TcxTabSheet
-      ExplicitWidth = 535
-      ExplicitHeight = 320
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 531
+      ExplicitHeight = 412
       object Label1: TLabel
         Left = 24
         Top = 16
@@ -51,7 +53,7 @@ inherited frmMrPreguntasOpcionesEdit: TfrmMrPreguntasOpcionesEdit
       object cxDBChckBxTextoAdicional: TcxDBCheckBox
         Left = 24
         Top = 95
-        Caption = 'Requiere Texto Adicional'
+        Caption = 'Requiere texto adicional'
         DataBinding.DataField = 'ReqTextoAdi'
         DataBinding.DataSource = DataSource
         TabOrder = 2
@@ -60,35 +62,36 @@ inherited frmMrPreguntasOpcionesEdit: TfrmMrPreguntasOpcionesEdit
       end
       object PnlTablaExterna: TPanel
         Left = 0
-        Top = 120
-        Width = 535
-        Height = 292
+        Top = 117
+        Width = 531
+        Height = 181
         Align = alBottom
         BevelOuter = bvNone
         TabOrder = 3
         Visible = False
+        ExplicitTop = 208
         object Label3: TLabel
           Left = 24
           Top = 16
           Width = 67
           Height = 13
-          Caption = 'Tabla Externa'
+          Caption = 'Tabla externa'
           FocusControl = cxDBTxtEdtTablaExt
         end
         object Label4: TLabel
           Left = 24
           Top = 56
-          Width = 94
+          Width = 92
           Height = 13
-          Caption = 'Campo A Desplegar'
+          Caption = 'Campo a desplegar'
           FocusControl = cxDBTxtEdtCampoDes
         end
         object Label5: TLabel
           Left = 24
           Top = 96
-          Width = 116
+          Width = 114
           Height = 13
-          Caption = 'Condicion Tabla Externa'
+          Caption = 'Condicion tabla externa'
           FocusControl = cxDBTextEdit4
         end
         object cxDBTxtEdtTablaExt: TcxDBTextEdit
@@ -119,7 +122,7 @@ inherited frmMrPreguntasOpcionesEdit: TfrmMrPreguntasOpcionesEdit
         object cxDBChckBxCampoAdicional: TcxDBCheckBox
           Left = 24
           Top = 139
-          Caption = 'Evalua Campos Adicionales'
+          Caption = 'Evalua campos adicionales'
           DataBinding.DataField = 'EvaluaCamposAdicionales'
           DataBinding.DataSource = DataSource
           TabOrder = 3
@@ -149,7 +152,7 @@ inherited frmMrPreguntasOpcionesEdit: TfrmMrPreguntasOpcionesEdit
           Top = 139
           Width = 81
           Height = 22
-          Caption = 'Definir Campos'
+          Caption = 'Definir campos'
           TabOrder = 6
           OnClick = cxBtnDefineCamposClick
         end
@@ -239,12 +242,13 @@ inherited frmMrPreguntasOpcionesEdit: TfrmMrPreguntasOpcionesEdit
       Caption = 'Campos Adicionales'
       ImageIndex = 1
       TabVisible = False
+      ExplicitHeight = 412
     end
   end
   inherited pmlMain: TPanel
-    Top = 440
+    Top = 326
     Width = 539
-    ExplicitTop = 348
+    ExplicitTop = 440
     ExplicitWidth = 539
     inherited btnCancel: TButton
       Left = 457

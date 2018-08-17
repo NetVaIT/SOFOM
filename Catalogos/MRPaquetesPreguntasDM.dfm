@@ -26,12 +26,12 @@ inherited dmMRPaquetesPreguntas: TdmMRPaquetesPreguntas
       FieldName = 'IdMRCuestionario'
     end
     object adodsMasterDescripcionPaquete: TStringField
-      DisplayLabel = 'Descripci'#243'n Paquete'
+      DisplayLabel = 'Descripci'#243'n paquete'
       FieldName = 'DescripcionPaquete'
       Size = 300
     end
     object adodsMasterPonderacion_Extra: TFloatField
-      DisplayLabel = 'Ponderaci'#243'n Extra'
+      DisplayLabel = 'Ponderaci'#243'n extra'
       FieldName = 'Ponderacion_Extra'
     end
   end
@@ -54,10 +54,9 @@ inherited dmMRPaquetesPreguntas: TdmMRPaquetesPreguntas
         Attributes = [paSigned, paNullable]
         DataType = ftInteger
         Precision = 10
-        Size = 4
-        Value = Null
+        Value = 1
       end>
-    Left = 56
+    Left = 48
     Top = 168
   end
   object adodsPreguntasOpciones: TADODataSet
@@ -111,6 +110,7 @@ inherited dmMRPaquetesPreguntas: TdmMRPaquetesPreguntas
       FieldName = 'IdMRPregunta'
     end
     object ADOdsConPregOpcionesOpcion: TStringField
+      DisplayLabel = 'Opci'#243'n'
       FieldName = 'Opcion'
       Size = 200
     end
@@ -150,11 +150,11 @@ inherited dmMRPaquetesPreguntas: TdmMRPaquetesPreguntas
       Size = 300
     end
     object BooleanField1: TBooleanField
-      DisplayLabel = 'Aplica a Persona F'#237'sica'
+      DisplayLabel = 'Aplica a persona f'#237'sica'
       FieldName = 'AplicaaPersonaFisica'
     end
     object BooleanField2: TBooleanField
-      DisplayLabel = 'Aplica a Persona Moral'
+      DisplayLabel = 'Aplica a persona moral'
       FieldName = 'AplicaaPersonaMoral'
     end
     object IntegerField2: TIntegerField
@@ -164,7 +164,7 @@ inherited dmMRPaquetesPreguntas: TdmMRPaquetesPreguntas
       FieldName = 'Condicionada'
     end
     object BooleanField4: TBooleanField
-      DisplayLabel = 'Evalua Alto Riesgo'
+      DisplayLabel = 'Evalua alto riesgo'
       FieldName = 'EvaluaARDirecto'
     end
   end
@@ -184,10 +184,10 @@ inherited dmMRPaquetesPreguntas: TdmMRPaquetesPreguntas
         Attributes = [paSigned, paNullable]
         DataType = ftInteger
         Precision = 10
-        Value = Null
+        Value = 4
       end>
     Left = 48
-    Top = 88
+    Top = 80
     object AdoDSRElacionpregIdMRRelacionPregunta: TAutoIncField
       FieldName = 'IdMRRelacionPregunta'
       ReadOnly = True
@@ -203,6 +203,7 @@ inherited dmMRPaquetesPreguntas: TdmMRPaquetesPreguntas
       FieldName = 'IdMRPreguntaOpcion'
     end
     object AdoDSRElacionpregValorCondicionante: TStringField
+      DisplayLabel = 'Valor condicionante'
       FieldName = 'ValorCondicionante'
       Size = 300
     end
@@ -217,6 +218,7 @@ inherited dmMRPaquetesPreguntas: TdmMRPaquetesPreguntas
       Lookup = True
     end
     object AdoDSRElacionpregOpcion: TStringField
+      DisplayLabel = 'Opci'#243'n'
       FieldKind = fkLookup
       FieldName = 'Opcion'
       LookupDataSet = adodsPreguntasOpciones

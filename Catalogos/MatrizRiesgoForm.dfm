@@ -1,6 +1,6 @@
 inherited frmMatrizRiesgo: TfrmMatrizRiesgo
   BorderStyle = bsToolWindow
-  Caption = 'Matriz de Riesgo'
+  Caption = 'Matriz de riesgo'
   ClientHeight = 711
   ClientWidth = 810
   ExplicitWidth = 816
@@ -127,6 +127,7 @@ inherited frmMatrizRiesgo: TfrmMatrizRiesgo
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 43311.541016712960000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

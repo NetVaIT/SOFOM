@@ -1,6 +1,6 @@
 inherited frmMRPreguntas: TfrmMRPreguntas
   BorderStyle = bsToolWindow
-  Caption = 'Preguntas Matriz de Riesgo'
+  Caption = 'Preguntas matriz de riesgo'
   ClientHeight = 428
   ClientWidth = 746
   ExplicitWidth = 752
@@ -26,14 +26,15 @@ inherited frmMRPreguntas: TfrmMRPreguntas
   end
   inherited pnlMaster: TPanel
     Width = 746
-    Height = 227
+    Height = 229
+    ExplicitTop = 28
     ExplicitWidth = 746
-    ExplicitHeight = 229
+    ExplicitHeight = 227
     inherited cxGrid: TcxGrid
       Width = 746
       Height = 229
       ExplicitWidth = 746
-      ExplicitHeight = 229
+      ExplicitHeight = 227
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdMRPregunta: TcxGridDBColumn
           DataBinding.FieldName = 'IdMRPregunta'
@@ -57,10 +58,14 @@ inherited frmMRPreguntas: TfrmMRPreguntas
         end
         object tvMasterCondicionada: TcxGridDBColumn
           DataBinding.FieldName = 'Condicionada'
+          Visible = False
+          VisibleForCustomization = False
           Width = 87
         end
         object tvMasterEvaluaARDirecto: TcxGridDBColumn
           DataBinding.FieldName = 'EvaluaARDirecto'
+          Visible = False
+          VisibleForCustomization = False
           Width = 104
         end
         object tvMasterOrden: TcxGridDBColumn
@@ -105,7 +110,7 @@ inherited frmMRPreguntas: TfrmMRPreguntas
     DockControlHeights = (
       0
       0
-      28
+      26
       0)
   end
   inherited cxStyleRepository: TcxStyleRepository
@@ -117,6 +122,7 @@ inherited frmMRPreguntas: TfrmMRPreguntas
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 43312.497022928240000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

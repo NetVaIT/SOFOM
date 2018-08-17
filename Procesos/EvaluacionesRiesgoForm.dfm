@@ -4,7 +4,6 @@ inherited frmEvaluacionesRiesgo: TfrmEvaluacionesRiesgo
   ClientHeight = 428
   ClientWidth = 713
   ExplicitWidth = 719
-  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -67,7 +66,6 @@ inherited frmEvaluacionesRiesgo: TfrmEvaluacionesRiesgo
           Width = 129
         end
         object tvMasterFechaVencimiento: TcxGridDBColumn
-          Caption = 'Fecha Vencimiento'
           DataBinding.FieldName = 'FechaVencimiento'
           Width = 128
         end
@@ -1022,6 +1020,7 @@ inherited frmEvaluacionesRiesgo: TfrmEvaluacionesRiesgo
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 43318.568796585650000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

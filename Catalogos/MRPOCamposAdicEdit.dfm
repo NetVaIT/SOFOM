@@ -1,42 +1,48 @@
 inherited frmMRPOCampoAdiEdit: TfrmMRPOCampoAdiEdit
-  Caption = 'Edici'#243'n Campos Adicionales'
-  ExplicitWidth = 444
-  ExplicitHeight = 395
+  Caption = 'Edici'#243'n Campos adicionales'
+  ClientHeight = 278
+  ClientWidth = 423
+  ExplicitWidth = 429
+  ExplicitHeight = 307
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
+    Width = 423
+    Height = 237
+    ClientRectBottom = 233
+    ClientRectRight = 419
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 2
-      ExplicitTop = 26
-      ExplicitWidth = 434
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 430
       ExplicitHeight = 297
       object Label1: TLabel
-        Left = 32
-        Top = 40
-        Width = 78
+        Left = 35
+        Top = 30
+        Width = 77
         Height = 13
-        Caption = 'Campo Adicional'
+        Caption = 'Campo adicional'
         FocusControl = cxDBTxtEdtCampo
       end
       object Label2: TLabel
-        Left = 32
-        Top = 97
-        Width = 92
+        Left = 35
+        Top = 87
+        Width = 90
         Height = 13
-        Caption = 'Condicion En Texto'
+        Caption = 'Condicion en texto'
         FocusControl = cxDBTextEdit2
       end
       object Label3: TLabel
-        Left = 32
-        Top = 156
+        Left = 35
+        Top = 146
         Width = 88
         Height = 13
-        Caption = 'Ponderaci'#243'n Extra'
+        Caption = 'Ponderaci'#243'n extra'
         FocusControl = cxDBCalcEdit1
       end
       object cxCmbBxListaCampos: TcxComboBox
-        Left = 192
-        Top = 56
+        Left = 195
+        Top = 46
         TabOrder = 0
         Text = 'Lista Campos'
         Visible = False
@@ -44,32 +50,32 @@ inherited frmMRPOCampoAdiEdit: TfrmMRPOCampoAdiEdit
         Width = 137
       end
       object cxDBTxtEdtCampo: TcxDBTextEdit
-        Left = 32
-        Top = 56
+        Left = 35
+        Top = 46
         DataBinding.DataField = 'CampoEspecialAltoRiesgo'
         DataBinding.DataSource = DataSource
         TabOrder = 1
         Width = 121
       end
       object cxDBTextEdit2: TcxDBTextEdit
-        Left = 32
-        Top = 113
+        Left = 35
+        Top = 103
         DataBinding.DataField = 'CondicionEnTexto'
         DataBinding.DataSource = DataSource
         TabOrder = 2
         Width = 297
       end
       object cxDBCalcEdit1: TcxDBCalcEdit
-        Left = 32
-        Top = 172
+        Left = 35
+        Top = 162
         DataBinding.DataField = 'PonderacionExtra'
         DataBinding.DataSource = DataSource
         TabOrder = 3
         Width = 121
       end
       object cxBtnCampos: TcxButton
-        Left = 159
-        Top = 56
+        Left = 162
+        Top = 46
         Width = 25
         Height = 22
         OptionsImage.Glyph.Data = {
@@ -102,6 +108,16 @@ inherited frmMRPOCampoAdiEdit: TfrmMRPOCampoAdiEdit
         TabOrder = 4
         OnClick = cxBtnCamposClick
       end
+    end
+  end
+  inherited pmlMain: TPanel
+    Top = 237
+    Width = 423
+    inherited btnCancel: TButton
+      Left = 341
+    end
+    inherited btnOk: TButton
+      Left = 260
     end
   end
   inherited DataSource: TDataSource

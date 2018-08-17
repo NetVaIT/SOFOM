@@ -1,9 +1,10 @@
 object FrmAplicacionCuestionarioEdt: TFrmAplicacionCuestionarioEdt
   Left = 0
   Top = 0
+  BorderStyle = bsDialog
   Caption = 'Aplicaci'#243'n de  Cuestionario'
-  ClientHeight = 309
-  ClientWidth = 613
+  ClientHeight = 284
+  ClientWidth = 644
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,14 +19,16 @@ object FrmAplicacionCuestionarioEdt: TFrmAplicacionCuestionarioEdt
   TextHeight = 13
   object Panel1: TPanel
     Left = 0
-    Top = 254
-    Width = 613
-    Height = 55
+    Top = 235
+    Width = 644
+    Height = 49
     Align = alBottom
     TabOrder = 0
+    ExplicitTop = 234
+    ExplicitWidth = 623
     object cxBtnAtras: TcxButton
       Left = 280
-      Top = 16
+      Top = 13
       Width = 75
       Height = 25
       Caption = 'Atr'#225's'
@@ -34,7 +37,7 @@ object FrmAplicacionCuestionarioEdt: TFrmAplicacionCuestionarioEdt
     end
     object cxBtnSiguiente: TcxButton
       Left = 400
-      Top = 16
+      Top = 13
       Width = 75
       Height = 25
       Caption = 'Siguiente'
@@ -43,53 +46,71 @@ object FrmAplicacionCuestionarioEdt: TFrmAplicacionCuestionarioEdt
     end
     object cxBtnFin: TcxButton
       Left = 512
-      Top = 16
+      Top = 13
       Width = 75
       Height = 25
       Caption = 'Finalizar'
       TabOrder = 2
       OnClick = cxBtnFinClick
     end
+    object cxLblNumpregunta: TcxLabel
+      Left = 30
+      Top = 14
+      Caption = 'Pregunta 5 de 10'
+      ParentFont = False
+      Style.Font.Charset = DEFAULT_CHARSET
+      Style.Font.Color = clWindowText
+      Style.Font.Height = -11
+      Style.Font.Name = 'Tahoma'
+      Style.Font.Style = [fsBold]
+      Style.IsFontAssigned = True
+    end
   end
   object pcMain: TcxPageControl
     Left = 0
     Top = 0
-    Width = 613
-    Height = 254
+    Width = 644
+    Height = 235
     Align = alClient
     TabOrder = 1
     Properties.ActivePage = tsGeneral
     Properties.CustomButtons.Buttons = <>
-    ClientRectBottom = 250
-    ClientRectLeft = 4
-    ClientRectRight = 609
-    ClientRectTop = 24
+    ExplicitWidth = 613
+    ExplicitHeight = 254
+    ClientRectBottom = 233
+    ClientRectLeft = 2
+    ClientRectRight = 642
+    ClientRectTop = 26
     object tsGeneral: TcxTabSheet
       Caption = 'Evaluaci'#243'n Riesgo'
       ImageIndex = 0
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 615
+      ExplicitHeight = 215
       object Label1: TLabel
-        Left = 32
+        Left = 28
         Top = 51
         Width = 44
         Height = 13
         Caption = 'Pregunta'
       end
       object Label2: TLabel
-        Left = 32
+        Left = 28
         Top = 88
         Width = 33
         Height = 13
         Caption = 'Opci'#243'n'
       end
       object Label3: TLabel
-        Left = 32
-        Top = 3
+        Left = 28
+        Top = 10
         Width = 33
         Height = 13
         Caption = 'Cliente'
       end
       object cxDBLookupComboBox2: TcxDBLookupComboBox
-        Left = 488
+        Left = 484
         Top = 107
         DataBinding.DataField = 'opcion'
         DataBinding.DataSource = DSREspuestasCuestionario
@@ -99,7 +120,7 @@ object FrmAplicacionCuestionarioEdt: TFrmAplicacionCuestionarioEdt
         Width = 44
       end
       object cxDBLkpCmbBxRespuestas: TcxDBLookupComboBox
-        Left = 32
+        Left = 28
         Top = 107
         DataBinding.DataField = 'IdMRPreguntaOpcionResp'
         DataBinding.DataSource = DSREspuestasCuestionario
@@ -115,7 +136,7 @@ object FrmAplicacionCuestionarioEdt: TFrmAplicacionCuestionarioEdt
         Width = 500
       end
       object cxDBLabel1: TcxDBLabel
-        Left = 32
+        Left = 28
         Top = 65
         AutoSize = True
         DataBinding.DataField = 'Pregunta'
@@ -129,8 +150,8 @@ object FrmAplicacionCuestionarioEdt: TFrmAplicacionCuestionarioEdt
         Style.IsFontAssigned = True
       end
       object cxDBLblCliente: TcxDBLabel
-        Left = 32
-        Top = 22
+        Left = 28
+        Top = 23
         AutoSize = True
         DataBinding.DataField = 'Cliente'
         DataBinding.DataSource = DSCuestionarioAplicado
@@ -143,38 +164,39 @@ object FrmAplicacionCuestionarioEdt: TFrmAplicacionCuestionarioEdt
         Style.IsFontAssigned = True
       end
       object PnlOtros: TPanel
-        Left = 16
+        Left = 28
         Top = 134
-        Width = 585
-        Height = 75
+        Width = 580
+        Height = 67
+        BevelInner = bvLowered
         TabOrder = 4
         Visible = False
         object Label4: TLabel
-          Left = 19
-          Top = 17
+          Left = 11
+          Top = 11
           Width = 58
           Height = 13
           Caption = 'Especifique:'
         end
         object cxDBTxtEdtOtro: TcxDBTextEdit
-          Left = 16
-          Top = 36
+          Left = 11
+          Top = 30
           DataBinding.DataField = 'OtroTexto'
           DataBinding.DataSource = DSREspuestasCuestionario
           TabOrder = 0
           Width = 305
         end
         object cxCmbBxListaOtrosTablaExt: TcxComboBox
-          Left = 343
-          Top = 36
+          Left = 338
+          Top = 30
           TabOrder = 1
           Text = 'Seleccione'
           OnClick = cxCmbBxListaOtrosTablaExtClick
           Width = 178
         end
         object cxBtnUsar: TcxButton
-          Left = 527
-          Top = 32
+          Left = 522
+          Top = 26
           Width = 49
           Height = 25
           Caption = 'Usar'

@@ -1,17 +1,17 @@
 inherited frmEvaluacionesRiesgoEdit: TfrmEvaluacionesRiesgoEdit
   Caption = 'Edici'#243'n de Evaluaciones de Riesgo'
-  ClientHeight = 363
+  ClientHeight = 307
   ClientWidth = 592
   ExplicitWidth = 598
-  ExplicitHeight = 392
+  ExplicitHeight = 336
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
     Width = 592
-    Height = 322
+    Height = 266
     ExplicitWidth = 592
     ExplicitHeight = 322
-    ClientRectBottom = 318
+    ClientRectBottom = 262
     ClientRectRight = 588
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 4
@@ -20,7 +20,7 @@ inherited frmEvaluacionesRiesgoEdit: TfrmEvaluacionesRiesgoEdit
       ExplicitHeight = 294
       object Label1: TLabel
         Left = 40
-        Top = 56
+        Top = 68
         Width = 33
         Height = 13
         Caption = 'Cliente'
@@ -28,7 +28,7 @@ inherited frmEvaluacionesRiesgoEdit: TfrmEvaluacionesRiesgoEdit
       end
       object Label2: TLabel
         Left = 40
-        Top = 10
+        Top = 17
         Width = 29
         Height = 13
         Caption = 'Fecha'
@@ -36,26 +36,26 @@ inherited frmEvaluacionesRiesgoEdit: TfrmEvaluacionesRiesgoEdit
       end
       object Label3: TLabel
         Left = 264
-        Top = 112
+        Top = 119
         Width = 89
-        Height = 13
-        Caption = 'Fecha Vencimiento'
+        Height = 12
+        Caption = 'Fecha vencimiento'
         FocusControl = cxDBDateEdit2
       end
       object Label4: TLabel
         Left = 40
-        Top = 112
-        Width = 98
+        Top = 119
+        Width = 96
         Height = 13
-        Caption = 'Versi'#243'n Cuestionario'
+        Caption = 'Versi'#243'n cuestionario'
         FocusControl = DBLookupComboBox2
       end
       object Label5: TLabel
         Left = 40
         Top = 184
-        Width = 86
+        Width = 84
         Height = 13
-        Caption = 'Ponderaci'#243'n Total'
+        Caption = 'Ponderaci'#243'n total'
       end
       object Label6: TLabel
         Left = 264
@@ -67,7 +67,7 @@ inherited frmEvaluacionesRiesgoEdit: TfrmEvaluacionesRiesgoEdit
       end
       object DBLookupComboBox1: TDBLookupComboBox
         Left = 40
-        Top = 72
+        Top = 85
         Width = 500
         Height = 21
         DataField = 'Cliente'
@@ -76,7 +76,7 @@ inherited frmEvaluacionesRiesgoEdit: TfrmEvaluacionesRiesgoEdit
       end
       object cxDBDateEdit1: TcxDBDateEdit
         Left = 40
-        Top = 29
+        Top = 36
         DataBinding.DataField = 'Fecha'
         DataBinding.DataSource = DataSource
         TabOrder = 0
@@ -84,7 +84,7 @@ inherited frmEvaluacionesRiesgoEdit: TfrmEvaluacionesRiesgoEdit
       end
       object cxDBDateEdit2: TcxDBDateEdit
         Left = 264
-        Top = 128
+        Top = 135
         DataBinding.DataField = 'FechaVencimiento'
         DataBinding.DataSource = DataSource
         TabOrder = 3
@@ -92,7 +92,7 @@ inherited frmEvaluacionesRiesgoEdit: TfrmEvaluacionesRiesgoEdit
       end
       object DBLookupComboBox2: TDBLookupComboBox
         Left = 40
-        Top = 128
+        Top = 135
         Width = 144
         Height = 21
         DataField = 'VersionCuestionario'
@@ -101,7 +101,7 @@ inherited frmEvaluacionesRiesgoEdit: TfrmEvaluacionesRiesgoEdit
       end
       object cxDBLabel1: TcxDBLabel
         Left = 40
-        Top = 208
+        Top = 205
         DataBinding.DataField = 'PonderacionTotal'
         DataBinding.DataSource = DataSource
         ParentFont = False
@@ -127,7 +127,7 @@ inherited frmEvaluacionesRiesgoEdit: TfrmEvaluacionesRiesgoEdit
     end
   end
   inherited pmlMain: TPanel
-    Top = 322
+    Top = 266
     Width = 592
     ExplicitTop = 322
     ExplicitWidth = 592

@@ -81,7 +81,7 @@ type
     Label22: TLabel;
     DBLookupComboBox5: TcxDBLookupComboBox;
     Label21: TLabel;
-    DBLookupComboBox4: TDBLookupComboBox;
+    DBLkpCmbBxRiesgo: TDBLookupComboBox;
     Label23: TLabel;
     DBLookupComboBox6: TcxDBLookupComboBox;
     Label24: TLabel;

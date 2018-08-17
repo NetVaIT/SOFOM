@@ -1,34 +1,40 @@
 inherited frmMRCalificacionesRiesgos: TfrmMRCalificacionesRiesgos
   BorderStyle = bsToolWindow
-  Caption = 'Calificaciones de Riesgos'
+  Caption = 'Calificaciones de riesgos'
   ClientHeight = 513
   ClientWidth = 645
-  ExplicitWidth = 651
   ExplicitHeight = 542
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
     Top = 463
     Width = 645
+    ExplicitTop = 463
+    ExplicitWidth = 645
   end
   inherited splDetail1: TSplitter
     Top = 419
     Width = 645
+    ExplicitTop = 419
+    ExplicitWidth = 645
   end
   inherited splDetail2: TSplitter
     Top = 439
     Width = 645
+    ExplicitTop = 439
+    ExplicitWidth = 645
   end
   inherited pnlMaster: TPanel
     Width = 645
-    Height = 393
+    Height = 391
     ExplicitTop = 28
-    ExplicitHeight = 256
+    ExplicitWidth = 645
+    ExplicitHeight = 391
     inherited cxGrid: TcxGrid
       Width = 645
-      Height = 393
+      Height = 391
       ExplicitWidth = 645
-      ExplicitHeight = 282
+      ExplicitHeight = 391
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdMRCalificacionRiesgo: TcxGridDBColumn
           DataBinding.FieldName = 'IdMRCalificacionRiesgo'
@@ -64,7 +70,7 @@ inherited frmMRCalificacionesRiesgos: TfrmMRCalificacionesRiesgos
     Top = 466
     Width = 645
     Height = 21
-    ExplicitTop = 458
+    ExplicitTop = 466
     ExplicitWidth = 645
     ExplicitHeight = 21
   end
@@ -72,7 +78,7 @@ inherited frmMRCalificacionesRiesgos: TfrmMRCalificacionesRiesgos
     Top = 442
     Width = 645
     Height = 21
-    ExplicitTop = 400
+    ExplicitTop = 442
     ExplicitWidth = 645
     ExplicitHeight = 21
   end
@@ -80,7 +86,7 @@ inherited frmMRCalificacionesRiesgos: TfrmMRCalificacionesRiesgos
     Top = 422
     Width = 645
     Height = 17
-    ExplicitTop = 360
+    ExplicitTop = 422
     ExplicitWidth = 645
     ExplicitHeight = 17
   end
@@ -88,7 +94,7 @@ inherited frmMRCalificacionesRiesgos: TfrmMRCalificacionesRiesgos
     Top = 487
     Width = 645
     Height = 26
-    ExplicitTop = 480
+    ExplicitTop = 487
     ExplicitWidth = 645
     ExplicitHeight = 26
     inherited btnClose: TButton
@@ -105,7 +111,7 @@ inherited frmMRCalificacionesRiesgos: TfrmMRCalificacionesRiesgos
     DockControlHeights = (
       0
       0
-      26
+      28
       0)
   end
   inherited cxStyleRepository: TcxStyleRepository
@@ -117,7 +123,6 @@ inherited frmMRCalificacionesRiesgos: TfrmMRCalificacionesRiesgos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 43311.602271053240000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

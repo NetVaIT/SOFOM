@@ -1,32 +1,36 @@
 inherited frmCalificacionRiesgoEdit: TfrmCalificacionRiesgoEdit
-  Caption = 'Calificaci'#243'n de Riesgo'
-  ClientWidth = 569
-  ExplicitWidth = 575
-  ExplicitHeight = 395
+  Caption = 'Calificaci'#243'n de riesgo'
+  ClientHeight = 272
+  ClientWidth = 505
+  ExplicitWidth = 511
+  ExplicitHeight = 301
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
-    Width = 569
-    ClientRectRight = 567
+    Width = 505
+    Height = 231
+    ExplicitWidth = 569
+    ClientRectBottom = 227
+    ClientRectRight = 501
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 3
-      ExplicitTop = 28
-      ExplicitWidth = 586
-      ExplicitHeight = 297
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 561
+      ExplicitHeight = 241
       object Label1: TLabel
         Left = 40
         Top = 24
         Width = 62
         Height = 13
-        Caption = 'Tipo Persona'
+        Caption = 'Tipo persona'
         FocusControl = DBLkpCmbBxPertonaTipo
       end
       object Label2: TLabel
         Left = 40
         Top = 80
-        Width = 58
+        Width = 55
         Height = 13
-        Caption = 'Nivel Riesgo'
+        Caption = 'Nivel riesgo'
         FocusControl = cxDBTextEdit1
       end
       object Label3: TLabel
@@ -34,7 +38,7 @@ inherited frmCalificacionRiesgoEdit: TfrmCalificacionRiesgoEdit
         Top = 135
         Width = 59
         Height = 13
-        Caption = 'Valor M'#237'nimo'
+        Caption = 'Valor m'#237'nimo'
         FocusControl = cxDBCalcEdit1
       end
       object Label4: TLabel
@@ -42,8 +46,16 @@ inherited frmCalificacionRiesgoEdit: TfrmCalificacionRiesgoEdit
         Top = 135
         Width = 63
         Height = 13
-        Caption = 'Valor M'#225'ximo'
+        Caption = 'Valor m'#225'ximo'
         FocusControl = cxDBCalcEdit2
+      end
+      object Label5: TLabel
+        Left = 241
+        Top = 80
+        Width = 52
+        Height = 13
+        Caption = 'Tipo riesgo'
+        FocusControl = DBLookupComboBox1
       end
       object DBLkpCmbBxPertonaTipo: TDBLookupComboBox
         Left = 40
@@ -67,7 +79,7 @@ inherited frmCalificacionRiesgoEdit: TfrmCalificacionRiesgoEdit
         Top = 151
         DataBinding.DataField = 'ValorMinimo'
         DataBinding.DataSource = DataSource
-        TabOrder = 2
+        TabOrder = 3
         Width = 121
       end
       object cxDBCalcEdit2: TcxDBCalcEdit
@@ -75,7 +87,7 @@ inherited frmCalificacionRiesgoEdit: TfrmCalificacionRiesgoEdit
         Top = 151
         DataBinding.DataField = 'ValorMaximo'
         DataBinding.DataSource = DataSource
-        TabOrder = 3
+        TabOrder = 4
         Width = 121
       end
       object cxBtnQuitarLimite: TcxButton
@@ -84,17 +96,30 @@ inherited frmCalificacionRiesgoEdit: TfrmCalificacionRiesgoEdit
         Width = 75
         Height = 25
         Caption = 'Sin L'#237'mite'
-        TabOrder = 4
+        TabOrder = 5
+      end
+      object DBLookupComboBox1: TDBLookupComboBox
+        Left = 241
+        Top = 96
+        Width = 201
+        Height = 21
+        DataField = 'TipoRiesgo'
+        DataSource = DataSource
+        TabOrder = 2
       end
     end
   end
   inherited pmlMain: TPanel
-    Width = 569
+    Top = 231
+    Width = 505
+    ExplicitWidth = 569
     inherited btnCancel: TButton
-      Left = 487
+      Left = 423
+      ExplicitLeft = 487
     end
     inherited btnOk: TButton
-      Left = 406
+      Left = 342
+      ExplicitLeft = 406
     end
   end
   inherited DataSource: TDataSource

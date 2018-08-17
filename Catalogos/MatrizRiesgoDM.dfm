@@ -25,11 +25,11 @@ inherited dmMatrizRiesgo: TdmMatrizRiesgo
       FieldName = 'Version'
     end
     object adodsMasterFechaCreacion: TDateTimeField
-      DisplayLabel = 'Fecha Creaci'#243'n'
+      DisplayLabel = 'Fecha creaci'#243'n'
       FieldName = 'FechaCreacion'
     end
     object adodsMasterMesesVigenciaAplicacion: TIntegerField
-      DisplayLabel = 'Vigencia Aplicaci'#243'n (Meses)'
+      DisplayLabel = 'Vigencia aplicaci'#243'n (meses)'
       FieldName = 'MesesVigenciaAplicacion'
     end
     object adodsMasterEstatus: TStringField
@@ -76,8 +76,8 @@ inherited dmMatrizRiesgo: TdmMatrizRiesgo
     CursorType = ctStatic
     CommandText = 
       'select IdMRCalificacionRiesgo, IdMRCuestionario, IdPersonaTipo, ' +
-      #13#10'NivelRiesgo, ValorMinimo, ValorMaximo '#13#10'from MRCalificacionesR' +
-      'iesgos'#13#10#13#10'where IdMRCuestionario=:IdMRCuestionario'
+      #13#10'NivelRiesgo, ValorMinimo, ValorMaximo, IDRiesgoTipo'#13#10'from MRCa' +
+      'lificacionesRiesgos'#13#10#13#10'where IdMRCuestionario=:IdMRCuestionario'
     DataSource = dsMaster
     IndexFieldNames = 'IdMRCuestionario'
     MasterFields = 'IdMRCuestionario'
@@ -103,26 +103,39 @@ inherited dmMatrizRiesgo: TdmMatrizRiesgo
       FieldName = 'IdPersonaTipo'
     end
     object adodsCalificacionRiesgoNivelRiesgo: TStringField
-      DisplayLabel = 'Nivel Riesgo'
+      DisplayLabel = 'Nivel riesgo'
       FieldName = 'NivelRiesgo'
       Size = 25
     end
     object adodsCalificacionRiesgoValorMinimo: TFloatField
-      DisplayLabel = 'Valor M'#237'nimo'
+      DisplayLabel = 'Valor m'#237'nimo'
       FieldName = 'ValorMinimo'
     end
     object adodsCalificacionRiesgoValorMaximo: TFloatField
-      DisplayLabel = 'Valor M'#225'ximo'
+      DisplayLabel = 'Valor m'#225'ximo'
       FieldName = 'ValorMaximo'
     end
     object adodsCalificacionRiesgoPersonaTipo: TStringField
-      DisplayLabel = 'Tipo Persona'
+      DisplayLabel = 'Tipo persona'
       FieldKind = fkLookup
       FieldName = 'PersonaTipo'
       LookupDataSet = adodsPersonaTipo
       LookupKeyFields = 'IdPersonaTipo'
       LookupResultField = 'Descripcion'
       KeyFields = 'IdPersonaTipo'
+      Size = 25
+      Lookup = True
+    end
+    object adodsCalificacionRiesgoIDRiesgoTipo: TIntegerField
+      FieldName = 'IDRiesgoTipo'
+    end
+    object adodsCalificacionRiesgoTipoRiesgo: TStringField
+      FieldKind = fkLookup
+      FieldName = 'TipoRiesgo'
+      LookupDataSet = ADODSRiesgosTipos
+      LookupKeyFields = 'IdRiesgoTipo'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IDRiesgoTipo'
       Size = 25
       Lookup = True
     end
@@ -176,11 +189,11 @@ inherited dmMatrizRiesgo: TdmMatrizRiesgo
       Size = 300
     end
     object adodsPreguntasAplicaaPersonaFisica: TBooleanField
-      DisplayLabel = 'Aplica a Persona F'#237'sica'
+      DisplayLabel = 'Aplica a persona f'#237'sica'
       FieldName = 'AplicaaPersonaFisica'
     end
     object adodsPreguntasAplicaaPersonaMoral: TBooleanField
-      DisplayLabel = 'Aplica a Persona Moral'
+      DisplayLabel = 'Aplica a persona moral'
       FieldName = 'AplicaaPersonaMoral'
     end
     object adodsPreguntasOrden: TIntegerField
@@ -190,8 +203,9 @@ inherited dmMatrizRiesgo: TdmMatrizRiesgo
       FieldName = 'Condicionada'
     end
     object adodsPreguntasEvaluaARDirecto: TBooleanField
-      DisplayLabel = 'Evalua Alto Riesgo'
+      DisplayLabel = 'Evalua alto riesgo'
       FieldName = 'EvaluaARDirecto'
+      Visible = False
     end
   end
   object adodsPreguntasOpciones: TADODataSet
@@ -224,26 +238,26 @@ inherited dmMatrizRiesgo: TdmMatrizRiesgo
       FieldName = 'Ponderacion'
     end
     object adodsPreguntasOpcionesReqTextoAdi: TBooleanField
-      DisplayLabel = 'Requiere Texto Adicional'
+      DisplayLabel = 'Requiere texto adicional'
       FieldName = 'ReqTextoAdi'
     end
     object adodsPreguntasOpcionesTablaExterna: TStringField
-      DisplayLabel = 'Tabla Externa'
+      DisplayLabel = 'Tabla externa'
       FieldName = 'TablaExterna'
       Size = 200
     end
     object adodsPreguntasOpcionesCampoADesplegar: TStringField
-      DisplayLabel = 'Campo A Desplegar'
+      DisplayLabel = 'Campo a desplegar'
       FieldName = 'CampoADesplegar'
       Size = 30
     end
     object adodsPreguntasOpcionesCondicionTablaExt: TStringField
-      DisplayLabel = 'Condicion Tabla Externa'
+      DisplayLabel = 'Condicion tabla externa'
       FieldName = 'CondicionTablaExt'
       Size = 300
     end
     object adodsPreguntasOpcionesEvaluaCamposAdicionales: TBooleanField
-      DisplayLabel = 'Evalua Campos Adicionales'
+      DisplayLabel = 'Evalua campos adicionales'
       FieldName = 'EvaluaCamposAdicionales'
     end
   end
@@ -325,11 +339,12 @@ inherited dmMatrizRiesgo: TdmMatrizRiesgo
       FieldName = 'IdMRCuestionario'
     end
     object ADOdsPaquetesPreguntasDescripcionPaquete: TStringField
-      DisplayLabel = 'Descripci'#243'n Paquete'
+      DisplayLabel = 'Descripci'#243'n paquete'
       FieldName = 'DescripcionPaquete'
       Size = 300
     end
     object ADOdsPaquetesPreguntasPonderacion_Extra: TFloatField
+      DisplayLabel = 'Ponderaci'#243'n extra'
       FieldName = 'Ponderacion_Extra'
     end
   end
@@ -363,7 +378,7 @@ inherited dmMatrizRiesgo: TdmMatrizRiesgo
       FieldName = 'IdMRPreguntaOpcion'
     end
     object ADODsRelacionPreguntasValorCondicionante: TStringField
-      DisplayLabel = 'Valor Condicionante'
+      DisplayLabel = 'Valor condicionante'
       FieldName = 'ValorCondicionante'
       Size = 300
     end
@@ -390,6 +405,7 @@ inherited dmMatrizRiesgo: TdmMatrizRiesgo
       Lookup = True
     end
     object ADODsRelacionPreguntasPaqueteTxt: TStringField
+      DisplayLabel = 'Paquete'
       FieldKind = fkLookup
       FieldName = 'PaqueteTxt'
       LookupDataSet = ADOdsPaquetesPreguntas
@@ -399,5 +415,15 @@ inherited dmMatrizRiesgo: TdmMatrizRiesgo
       Size = 300
       Lookup = True
     end
+  end
+  object ADODSRiesgosTipos: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdRiesgoTipo, Identificador, Descripcion from RiesgosTipo' +
+      's'
+    Parameters = <>
+    Left = 432
+    Top = 152
   end
 end

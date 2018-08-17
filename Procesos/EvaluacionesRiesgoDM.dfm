@@ -25,13 +25,14 @@ inherited dmEvaluacionRiesgo: TdmEvaluacionRiesgo
       FieldName = 'Fecha'
     end
     object adodsMasterPonderacionTotal: TFloatField
-      DisplayLabel = 'Ponderaci'#243'n Total'
+      DisplayLabel = 'Ponderaci'#243'n total'
       FieldName = 'PonderacionTotal'
     end
     object adodsMasterIdUsuario: TIntegerField
       FieldName = 'IdUsuario'
     end
     object adodsMasterFechaVencimiento: TDateTimeField
+      DisplayLabel = 'Fecha vencimiento'
       FieldName = 'FechaVencimiento'
     end
     object adodsMasterCliente: TStringField
@@ -45,7 +46,7 @@ inherited dmEvaluacionRiesgo: TdmEvaluacionRiesgo
       Lookup = True
     end
     object adodsMasterVersionCuestionario: TFloatField
-      DisplayLabel = 'Versi'#243'n Cuestionario'
+      DisplayLabel = 'Versi'#243'n cuestionario'
       FieldKind = fkLookup
       FieldName = 'VersionCuestionario'
       LookupDataSet = ADOdsCuestionarios
@@ -55,6 +56,7 @@ inherited dmEvaluacionRiesgo: TdmEvaluacionRiesgo
       Lookup = True
     end
     object adodsMastermesesVen: TIntegerField
+      DisplayLabel = 'Meses de vencimiento'
       FieldKind = fkLookup
       FieldName = 'mesesVen'
       LookupDataSet = ADOdsCuestionarios
@@ -64,6 +66,7 @@ inherited dmEvaluacionRiesgo: TdmEvaluacionRiesgo
       Lookup = True
     end
     object adodsMasterTipoPersona: TStringField
+      DisplayLabel = 'Tipo persona'
       FieldKind = fkLookup
       FieldName = 'TipoPersona'
       LookupDataSet = adodsPersonas
@@ -327,11 +330,12 @@ inherited dmEvaluacionRiesgo: TdmEvaluacionRiesgo
       FieldName = 'IdMRCuestionario'
     end
     object ADOdsPaquetesPreguntasDescripcionPaquete: TStringField
-      DisplayLabel = 'Descripci'#243'n Paquete'
+      DisplayLabel = 'Descripci'#243'n paquete'
       FieldName = 'DescripcionPaquete'
       Size = 300
     end
     object ADOdsPaquetesPreguntasPonderacion_Extra: TFloatField
+      DisplayLabel = 'Ponderaci'#243'n extra'
       FieldName = 'Ponderacion_Extra'
     end
   end
@@ -361,17 +365,17 @@ inherited dmEvaluacionRiesgo: TdmEvaluacionRiesgo
       FieldName = 'IdMRPreguntaOpcion'
     end
     object ADODsCamposAdicionalesCampoEspecialAltoRiesgo: TStringField
-      DisplayLabel = 'Campo Adicional'
+      DisplayLabel = 'Campo adicional'
       FieldName = 'CampoEspecialAltoRiesgo'
       Size = 30
     end
     object ADODsCamposAdicionalesCondicionEnTexto: TStringField
-      DisplayLabel = 'Condicion En Texto'
+      DisplayLabel = 'Condicion en texto'
       FieldName = 'CondicionEnTexto'
       Size = 100
     end
     object ADODsCamposAdicionalesPonderacionExtra: TFloatField
-      DisplayLabel = 'Ponderaci'#243'n Extra'
+      DisplayLabel = 'Ponderaci'#243'n extra'
       FieldName = 'PonderacionExtra'
     end
   end
@@ -402,7 +406,7 @@ inherited dmEvaluacionRiesgo: TdmEvaluacionRiesgo
       FieldName = 'IdMRPreguntaOpcion'
     end
     object ADODsRelacionPreguntasValorCondicionante: TStringField
-      DisplayLabel = 'Valor Condicionante'
+      DisplayLabel = 'Valor condicionante'
       FieldName = 'ValorCondicionante'
       Size = 300
     end
@@ -429,6 +433,7 @@ inherited dmEvaluacionRiesgo: TdmEvaluacionRiesgo
       Lookup = True
     end
     object ADODsRelacionPreguntasPaqueteTxt: TStringField
+      DisplayLabel = 'Paquete'
       FieldKind = fkLookup
       FieldName = 'PaqueteTxt'
       LookupDataSet = ADOdsPaquetesPreguntas
@@ -543,6 +548,7 @@ inherited dmEvaluacionRiesgo: TdmEvaluacionRiesgo
       FieldName = 'IdMRPreguntaOpcionResp'
     end
     object ADOQryEvaluacionRespuestasOtroTexto: TStringField
+      DisplayLabel = 'Otro'
       FieldName = 'OtroTexto'
       Size = 300
     end
@@ -551,24 +557,30 @@ inherited dmEvaluacionRiesgo: TdmEvaluacionRiesgo
       Size = 300
     end
     object ADOQryEvaluacionRespuestasOpcion: TStringField
+      DisplayLabel = 'Opci'#243'n'
       FieldName = 'Opcion'
       Size = 200
     end
     object ADOQryEvaluacionRespuestasPonderacion: TFloatField
+      DisplayLabel = 'Ponderaci'#243'n'
       FieldName = 'Ponderacion'
     end
     object ADOQryEvaluacionRespuestasReqTextoAdi: TBooleanField
+      DisplayLabel = 'Requiere texto adicional'
       FieldName = 'ReqTextoAdi'
     end
     object ADOQryEvaluacionRespuestasTablaExterna: TStringField
+      DisplayLabel = 'Tabla externa'
       FieldName = 'TablaExterna'
       Size = 200
     end
     object ADOQryEvaluacionRespuestasCondicionTablaExt: TStringField
+      DisplayLabel = 'Condici'#243'n de tabla externa'
       FieldName = 'CondicionTablaExt'
       Size = 300
     end
     object ADOQryEvaluacionRespuestasEvaluaCamposAdicionales: TBooleanField
+      DisplayLabel = 'Evalua campos adicionales'
       FieldName = 'EvaluaCamposAdicionales'
     end
   end
@@ -607,24 +619,30 @@ inherited dmEvaluacionRiesgo: TdmEvaluacionRiesgo
       Size = 30
     end
     object ADOQryCamposAdicionalesCondicionEnTexto: TStringField
+      DisplayLabel = 'Condici'#243'n ent exto'
       FieldName = 'CondicionEnTexto'
       Size = 100
     end
     object ADOQryCamposAdicionalesPonderacionExtra: TFloatField
+      DisplayLabel = 'Ponderac'#243'n extra'
       FieldName = 'PonderacionExtra'
     end
     object ADOQryCamposAdicionalesTablaExterna: TStringField
+      DisplayLabel = 'Tabla externa'
       FieldName = 'TablaExterna'
       Size = 200
     end
     object ADOQryCamposAdicionalesCondicionTablaExt: TStringField
+      DisplayLabel = 'Condicion tabla externa'
       FieldName = 'CondicionTablaExt'
       Size = 300
     end
     object ADOQryCamposAdicionalesPonderacion: TFloatField
+      DisplayLabel = 'Ponderaci'#243'n'
       FieldName = 'Ponderacion'
     end
     object ADOQryCamposAdicionalesCAmpoaDesplegar: TStringField
+      DisplayLabel = 'Campo a desplegar'
       FieldName = 'CAmpoaDesplegar'
       Size = 30
     end

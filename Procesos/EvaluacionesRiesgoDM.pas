@@ -178,40 +178,42 @@ begin
   end
   else  //cuando aun no esta completo
   begin
-    actCreaCuestionarioXAplicar.Execute; //Este crea
-    ADODSRespuestasCuestionario.Close; //Solo se puede
-    ADODSRespuestasCuestionario.Open;
-    ADOdsConPregOpciones.Open;
-    FrmAplicacionCuestionarioEdt:= TFrmAplicacionCuestionarioEdt.create(nil);
-    FrmAplicacionCuestionarioEdt.dsCuestionarioaplicado.DataSet:=ADODSMaster;
-    FrmAplicacionCuestionarioEdt.dsrespuestasCuestionario.DataSet:=ADODSRespuestasCuestionario;   //Verificar si se deja auto edit
-  
-    FrmAplicacionCuestionarioEdt.DSConOpciones.DataSet:=ADOdsConPregOpciones;
-    FrmAplicacionCuestionarioEdt.ActCalculaPonderacion:=actCalcularPonderacion; //Ago 9/18
-
-  
-    ADODSRespuestasCuestionario.Edit;
-    FrmAplicacionCuestionarioEdt.ShowModal;
-    FrmAplicacionCuestionarioEdt.Free;
-
-    if adodsMasterPonderacionTotal.AsFloat >0  then
+    if not  adodsMasterIdMRCuestionario.isnull then  //Ago 17/18
     begin
-      //Mostrar REporte??
+      actCreaCuestionarioXAplicar.Execute; //Este crea
+      ADODSRespuestasCuestionario.Close; //Solo se puede
+      ADODSRespuestasCuestionario.Open;
+      ADOdsConPregOpciones.Open;
+      FrmAplicacionCuestionarioEdt:= TFrmAplicacionCuestionarioEdt.create(nil);
+      FrmAplicacionCuestionarioEdt.dsCuestionarioaplicado.DataSet:=ADODSMaster;
+      FrmAplicacionCuestionarioEdt.dsrespuestasCuestionario.DataSet:=ADODSRespuestasCuestionario;   //Verificar si se deja auto edit
 
-      adodspersonas.Close; //Ago 15/18
-      adodsPersonas.Open;
-      RefreshADODS(adodsMaster,adodsMasterIdMRCuestionarioAplicado);
-      ArchiPDF:='CuestMatrizRiesgo'+'_'+adodsMasterRFC.asstring+'.PDF';
-      ppRptCuestionarioAplicado.ShowPrintDialog:= False;
-      ppRptCuestionarioAplicado.ShowCancelDialog:= False;
-      ppRptCuestionarioAplicado.PrinterSetup.DocumentName:= ArchiPDF;
-      ppRptCuestionarioAplicado.DeviceType:= 'PDF';
-      ppRptCuestionarioAplicado.TextFileName:= ArchiPDF;
-      ppRptCuestionarioAplicado.Print;
-
-    end;
+      FrmAplicacionCuestionarioEdt.DSConOpciones.DataSet:=ADOdsConPregOpciones;
+      FrmAplicacionCuestionarioEdt.ActCalculaPonderacion:=actCalcularPonderacion; //Ago 9/18
 
 
+      ADODSRespuestasCuestionario.Edit;
+      FrmAplicacionCuestionarioEdt.ShowModal;
+      FrmAplicacionCuestionarioEdt.Free;
+
+      if adodsMasterPonderacionTotal.AsFloat >0  then
+      begin
+        //Mostrar REporte
+        adodspersonas.Close; //Ago 15/18
+        adodsPersonas.Open;
+        RefreshADODS(adodsMaster,adodsMasterIdMRCuestionarioAplicado);
+        ArchiPDF:='CuestMatrizRiesgo'+'_'+adodsMasterRFC.asstring+'.PDF';
+        ppRptCuestionarioAplicado.ShowPrintDialog:= False;
+        ppRptCuestionarioAplicado.ShowCancelDialog:= False;
+        ppRptCuestionarioAplicado.PrinterSetup.DocumentName:= ArchiPDF;
+        ppRptCuestionarioAplicado.DeviceType:= 'PDF';
+        ppRptCuestionarioAplicado.TextFileName:= ArchiPDF;
+        ppRptCuestionarioAplicado.Print;
+
+      end;
+    end
+    else//Ago 17/18
+      ShowMessage('No se ha definido el cuestionario que se desea aplicar. No es posible continuar');
   end;
 end;
 
@@ -358,6 +360,7 @@ var
 
 begin
   inherited;
+
   EsPF:=0;
   EsPM:=0;
   IdPersonaTipo:= SacaTipoPersona(adodsMasterIDPersona.AsInteger);
@@ -375,14 +378,12 @@ begin
   ADOQryInsertaPreguntas.Parameters.ParamByName('PF').Value:=EsPF;
   ADOQryInsertaPreguntas.Parameters.ParamByName('PM').Value:=EsPM;
   idAplica:= ADOQryInsertaPreguntas.ExecSQL;
- (* if  idAplica >0 then     //DEshabilitado Ago 9/18
-      ShowMessage('Se crearon '+ intTostr(idaplica)+' preguntas ')
-  else
-     Showmessage('No se crearon preguntas.. ');*)
-  //adodsMasterIdMRCuestionario
+
   adodsMaster.Edit;
   adodsMasterPonderacionTotal.AsInteger:=0; //Para indicar que ya se crearon las preguntas  //Ago 15/18
   adodsMaster.Post;
+
+
 end;
 
 function TdmEvaluacionRiesgo.SacaTipoPersona(idpesonaAct:integer):Integer;

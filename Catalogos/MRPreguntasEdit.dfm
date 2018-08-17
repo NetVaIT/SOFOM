@@ -1,76 +1,76 @@
 inherited frmMRPreguntasEdit: TfrmMRPreguntasEdit
   Caption = 'Edici'#243'n de Preguntas'
-  ClientHeight = 392
-  ClientWidth = 625
-  ExplicitWidth = 631
-  ExplicitHeight = 421
+  ClientHeight = 263
+  ClientWidth = 628
+  ExplicitWidth = 634
+  ExplicitHeight = 292
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
-    Width = 625
-    Height = 351
+    Width = 628
+    Height = 222
     ExplicitWidth = 625
     ExplicitHeight = 351
-    ClientRectBottom = 347
-    ClientRectRight = 621
+    ClientRectBottom = 220
+    ClientRectRight = 626
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 4
       ExplicitTop = 24
       ExplicitWidth = 617
       ExplicitHeight = 323
       object Label1: TLabel
-        Left = 40
-        Top = 24
+        Left = 39
+        Top = 22
         Width = 44
         Height = 13
         Caption = 'Pregunta'
         FocusControl = cxDBTextEdit1
       end
       object Label2: TLabel
-        Left = 40
-        Top = 224
+        Left = 39
+        Top = 137
         Width = 30
         Height = 13
         Caption = 'Orden'
         FocusControl = cxDBSpinEdit1
       end
       object cxDBTextEdit1: TcxDBTextEdit
-        Left = 40
-        Top = 40
+        Left = 39
+        Top = 38
         DataBinding.DataField = 'Pregunta'
         DataBinding.DataSource = DataSource
         TabOrder = 0
         Width = 545
       end
       object cxDBCheckBox1: TcxDBCheckBox
-        Left = 40
-        Top = 80
-        Caption = 'Aplica a Persona F'#237'sica'
+        Left = 39
+        Top = 78
+        Caption = 'Aplica a persona f'#237'sica'
         DataBinding.DataField = 'AplicaaPersonaFisica'
         DataBinding.DataSource = DataSource
         TabOrder = 1
         Width = 193
       end
       object cxDBCheckBox2: TcxDBCheckBox
-        Left = 40
-        Top = 104
-        Caption = 'Aplica a Persona Moral'
+        Left = 39
+        Top = 102
+        Caption = 'Aplica a persona moral'
         DataBinding.DataField = 'AplicaaPersonaMoral'
         DataBinding.DataSource = DataSource
         TabOrder = 2
         Width = 193
       end
       object cxDBSpinEdit1: TcxDBSpinEdit
-        Left = 40
-        Top = 240
+        Left = 39
+        Top = 153
         DataBinding.DataField = 'Orden'
         DataBinding.DataSource = DataSource
         TabOrder = 5
         Width = 121
       end
       object cxDBCheckBox3: TcxDBCheckBox
-        Left = 40
-        Top = 152
+        Left = 367
+        Top = 78
         Caption = 'Condicionada'
         DataBinding.DataField = 'Condicionada'
         DataBinding.DataSource = DataSource
@@ -85,30 +85,32 @@ inherited frmMRPreguntasEdit: TfrmMRPreguntasEdit
         Style.Font.Style = []
         Style.IsFontAssigned = True
         TabOrder = 3
+        Visible = False
         Width = 121
       end
       object cxDBCheckBox4: TcxDBCheckBox
-        Left = 40
-        Top = 176
-        Caption = 'Evaluaci'#243'n Directa Alto Riesgo'
+        Left = 367
+        Top = 102
+        Caption = 'Evaluaci'#243'n directa de alto riesgo'
         DataBinding.DataField = 'EvaluaARDirecto'
         DataBinding.DataSource = DataSource
         TabOrder = 4
+        Visible = False
         Width = 193
       end
     end
   end
   inherited pmlMain: TPanel
-    Top = 351
-    Width = 625
+    Top = 222
+    Width = 628
     ExplicitTop = 351
     ExplicitWidth = 625
     inherited btnCancel: TButton
-      Left = 543
+      Left = 546
       ExplicitLeft = 543
     end
     inherited btnOk: TButton
-      Left = 462
+      Left = 465
       ExplicitLeft = 462
     end
   end

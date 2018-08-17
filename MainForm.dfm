@@ -15,6 +15,7 @@ inherited frmMain: TfrmMain
       Index = 0
     end
     object dxRibbon1Tab2: TdxRibbonTab
+      Active = True
       Caption = 'Cat'#225'logos'
       Groups = <
         item
@@ -36,7 +37,6 @@ inherited frmMain: TfrmMain
       Index = 1
     end
     object dxRibbon1Tab3: TdxRibbonTab
-      Active = True
       Caption = 'Procesos'
       Groups = <
         item
@@ -318,7 +318,7 @@ inherited frmMain: TfrmMain
       FloatLeft = 1133
       FloatTop = 8
       FloatClientWidth = 178
-      FloatClientHeight = 348
+      FloatClientHeight = 402
       ItemLinks = <
         item
           Visible = True
@@ -618,6 +618,7 @@ inherited frmMain: TfrmMain
     end
     object dxBrLrgBtnMatrizRiesgo: TdxBarLargeButton
       Action = ActMatrizRiesgo
+      Caption = 'Matriz de riesgo'
       Category = 0
     end
     object dxBarLargeButton13: TdxBarLargeButton
@@ -628,6 +629,7 @@ inherited frmMain: TfrmMain
     end
     object dxBrLrgBtnEvaluacionRiesgo: TdxBarLargeButton
       Action = actEvaluacionRiesgo
+      Caption = 'Evaluaciones de riesgo'
       Category = 0
     end
     object dxBarButton13: TdxBarButton

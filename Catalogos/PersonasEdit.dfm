@@ -12,17 +12,17 @@ inherited frmPersonaEdit: TfrmPersonaEdit
     Height = 646
     ExplicitWidth = 654
     ExplicitHeight = 646
-    ClientRectBottom = 644
-    ClientRectRight = 652
+    ClientRectBottom = 642
+    ClientRectRight = 650
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 2
-      ExplicitTop = 26
-      ExplicitWidth = 650
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 646
       ExplicitHeight = 618
       object PnlEmisor: TPanel
         Left = 0
         Top = 351
-        Width = 650
+        Width = 646
         Height = 267
         Align = alClient
         BevelOuter = bvNone
@@ -42,14 +42,14 @@ inherited frmPersonaEdit: TfrmPersonaEdit
           Width = 300
           Height = 21
           DataField = 'RegimenFiscal'
-          DataSource = dmPersona.dsMaster
+          DataSource = dmPersonas.dsMaster
           TabOrder = 0
         end
       end
       object pnlPersona: TPanel
         Left = 0
         Top = 0
-        Width = 650
+        Width = 646
         Height = 49
         Align = alTop
         BevelOuter = bvNone
@@ -123,7 +123,7 @@ inherited frmPersonaEdit: TfrmPersonaEdit
       object pnlPersonaMoral: TPanel
         Left = 0
         Top = 49
-        Width = 650
+        Width = 646
         Height = 93
         Align = alTop
         BevelOuter = bvNone
@@ -210,7 +210,7 @@ inherited frmPersonaEdit: TfrmPersonaEdit
       object pnlPersonaFisica: TPanel
         Left = 0
         Top = 142
-        Width = 650
+        Width = 646
         Height = 209
         Align = alTop
         BevelOuter = bvNone
@@ -404,7 +404,7 @@ inherited frmPersonaEdit: TfrmPersonaEdit
       object pnlOrigen: TPanel
         Left = 0
         Top = 351
-        Width = 650
+        Width = 646
         Height = 267
         Align = alClient
         BevelOuter = bvNone
@@ -414,7 +414,7 @@ inherited frmPersonaEdit: TfrmPersonaEdit
       object PnlCliente: TPanel
         Left = 0
         Top = 351
-        Width = 650
+        Width = 646
         Height = 267
         Align = alClient
         BevelOuter = bvNone
@@ -442,7 +442,7 @@ inherited frmPersonaEdit: TfrmPersonaEdit
           Width = 32
           Height = 13
           Caption = 'Riesgo'
-          FocusControl = DBLookupComboBox4
+          FocusControl = DBLkpCmbBxRiesgo
         end
         object Label23: TLabel
           Left = 16
@@ -527,13 +527,14 @@ inherited frmPersonaEdit: TfrmPersonaEdit
           TabOrder = 0
           Width = 200
         end
-        object DBLookupComboBox4: TDBLookupComboBox
+        object DBLkpCmbBxRiesgo: TDBLookupComboBox
           Left = 224
           Top = 16
           Width = 200
           Height = 21
           DataField = 'Riesgo'
           DataSource = DataSource
+          ReadOnly = True
           TabOrder = 1
         end
         object DBLookupComboBox6: TcxDBLookupComboBox
@@ -602,7 +603,7 @@ inherited frmPersonaEdit: TfrmPersonaEdit
           Left = 463
           Top = 96
           DataBinding.DataField = 'CalificacionInicial'
-          DataBinding.DataSource = dmPersona.dsMaster
+          DataBinding.DataSource = dmPersonas.dsMaster
           TabOrder = 8
           Width = 45
         end
@@ -610,7 +611,7 @@ inherited frmPersonaEdit: TfrmPersonaEdit
           Left = 586
           Top = 96
           DataBinding.DataField = 'CalificacionActual'
-          DataBinding.DataSource = dmPersona.dsMaster
+          DataBinding.DataSource = dmPersonas.dsMaster
           TabOrder = 9
           Width = 44
         end

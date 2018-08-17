@@ -46,6 +46,7 @@ type
     cxCmbBxListaOtrosTablaExt: TcxComboBox;
     Label4: TLabel;
     cxBtnUsar: TcxButton;
+    cxLblNumpregunta: TcxLabel;
     procedure FormShow(Sender: TObject);
     procedure cxBtnSiguienteClick(Sender: TObject);
     procedure cxBtnAtrasClick(Sender: TObject);
@@ -160,7 +161,7 @@ begin
     cxBtnAtras.Enabled:= not DSREspuestasCuestionario.DataSet.bof;
     cxBtnFin.Enabled:= DSREspuestasCuestionario.DataSet.eof and Completo;
   end;
-
+  cxLblNumpregunta.Caption:='Pregunta '+intTostr(DSREspuestasCuestionario.DataSet.recno)+' de '+intToStr(DSREspuestasCuestionario.DataSet.RecordCount);
 end;
 
 function TFrmAplicacionCuestionarioEdt.Completo:Boolean; //Ago 9/18
@@ -197,7 +198,7 @@ begin
   end;
   cxCmbBxListaOtrosTablaExt.Visible:=true;
   cxCmbBxListaOtrosTablaExt.Text:='Seleccione';//Ago 15/18
- except 
+ except
     ShowMessage('Verifique la definición de la Tabla asocida, el campo y la condición. No es posible realizar la consulta');
  end;
 end;

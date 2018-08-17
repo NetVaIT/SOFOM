@@ -1,22 +1,22 @@
 inherited frmMatrizRiesgoEdit: TfrmMatrizRiesgoEdit
-  Caption = 'Edici'#243'n Matriz de Riesgo'
-  ClientHeight = 519
+  Caption = 'Edici'#243'n Matriz de riesgo'
+  ClientHeight = 459
   ClientWidth = 750
   OnDestroy = FormDestroy
   ExplicitWidth = 756
-  ExplicitHeight = 548
+  ExplicitHeight = 488
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
     Width = 750
-    Height = 478
+    Height = 418
     ExplicitWidth = 750
     ExplicitHeight = 478
-    ClientRectBottom = 474
+    ClientRectBottom = 414
     ClientRectRight = 746
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 5
-      ExplicitTop = 104
+      ExplicitLeft = 4
+      ExplicitTop = 24
       ExplicitWidth = 742
       ExplicitHeight = 450
       object Label1: TLabel
@@ -30,17 +30,17 @@ inherited frmMatrizRiesgoEdit: TfrmMatrizRiesgoEdit
       object Label2: TLabel
         Left = 48
         Top = 96
-        Width = 74
+        Width = 72
         Height = 13
-        Caption = 'Fecha Creaci'#243'n'
+        Caption = 'Fecha creaci'#243'n'
         FocusControl = cxDBDateEdit1
       end
       object Label3: TLabel
         Left = 48
         Top = 152
-        Width = 130
+        Width = 129
         Height = 13
-        Caption = 'Vigencia Aplicaci'#243'n (Meses)'
+        Caption = 'Vigencia aplicaci'#243'n (meses)'
         FocusControl = cxDBSpinEdit1
       end
       object Label4: TLabel
@@ -98,16 +98,18 @@ inherited frmMatrizRiesgoEdit: TfrmMatrizRiesgoEdit
       end
     end
     object cxTbShtPreguntas: TcxTabSheet
-      Caption = 'Calificaciones de Riesgo'
+      Caption = 'Calificaciones de riesgo'
       ImageIndex = 1
+      ExplicitHeight = 450
     end
     object cxTbShtPaquetes: TcxTabSheet
-      Caption = 'Paquetes Preguntas'
+      Caption = 'Paquetes preguntas'
       ImageIndex = 2
+      ExplicitHeight = 450
     end
   end
   inherited pmlMain: TPanel
-    Top = 478
+    Top = 418
     Width = 750
     ExplicitTop = 478
     ExplicitWidth = 750

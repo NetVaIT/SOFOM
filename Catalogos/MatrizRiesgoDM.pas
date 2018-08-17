@@ -72,6 +72,9 @@ type
     ADODsRelacionPreguntasPreguntaTxt: TStringField;
     ADODsRelacionPreguntasOpcionTxt: TStringField;
     ADODsRelacionPreguntasPaqueteTxt: TStringField;
+    ADODSRiesgosTipos: TADODataSet;
+    adodsCalificacionRiesgoIDRiesgoTipo: TIntegerField;
+    adodsCalificacionRiesgoTipoRiesgo: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure ADODsCamposAdicionalesNewRecord(DataSet: TDataSet);

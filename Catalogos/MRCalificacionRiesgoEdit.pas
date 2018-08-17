@@ -32,6 +32,8 @@ type
     Label4: TLabel;
     cxDBCalcEdit2: TcxDBCalcEdit;
     cxBtnQuitarLimite: TcxButton;
+    Label5: TLabel;
+    DBLookupComboBox1: TDBLookupComboBox;
   private
     { Private declarations }
   public

@@ -1,35 +1,39 @@
 inherited frmRelacionPreguntasEdit: TfrmRelacionPreguntasEdit
-  Caption = 'Relaci'#243'n Preguntas'
-  ClientWidth = 578
-  ExplicitWidth = 584
+  Caption = 'Relaci'#243'n preguntas'
+  ClientHeight = 305
+  ClientWidth = 569
+  ExplicitWidth = 575
+  ExplicitHeight = 334
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
-    Width = 578
+    Width = 569
+    Height = 264
     ExplicitWidth = 578
-    ClientRectRight = 576
+    ClientRectBottom = 262
+    ClientRectRight = 567
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 1
-      ExplicitTop = 25
+      ExplicitLeft = 2
+      ExplicitTop = 26
       ExplicitWidth = 574
-      ExplicitHeight = 297
+      ExplicitHeight = 263
       object Label1: TLabel
         Left = 32
-        Top = 66
+        Top = 61
         Width = 44
         Height = 13
         Caption = 'Pregunta'
       end
       object Label2: TLabel
         Left = 32
-        Top = 120
+        Top = 115
         Width = 33
         Height = 13
         Caption = 'Opci'#243'n'
       end
       object Label3: TLabel
         Left = 32
-        Top = 177
+        Top = 172
         Width = 95
         Height = 13
         Caption = 'Valor Condicionante'
@@ -37,7 +41,7 @@ inherited frmRelacionPreguntasEdit: TfrmRelacionPreguntasEdit
       end
       object cxDBTextEdit1: TcxDBTextEdit
         Left = 32
-        Top = 194
+        Top = 189
         DataBinding.DataField = 'ValorCondicionante'
         DataBinding.DataSource = DataSource
         TabOrder = 0
@@ -45,27 +49,35 @@ inherited frmRelacionPreguntasEdit: TfrmRelacionPreguntasEdit
       end
       object cxDBLookupComboBox1: TcxDBLookupComboBox
         Left = 32
-        Top = 85
+        Top = 80
         DataBinding.DataField = 'Pregunta'
         DataBinding.DataSource = DataSource
-        Properties.ListColumns = <>
+        Properties.KeyFieldNames = 'IdMRPregunta'
+        Properties.ListColumns = <
+          item
+            FieldName = 'Pregunta'
+          end>
         Properties.ListOptions.SyncMode = True
         TabOrder = 1
         Width = 500
       end
       object cxDBLookupComboBox2: TcxDBLookupComboBox
         Left = 32
-        Top = 139
+        Top = 134
         DataBinding.DataField = 'Opcion'
         DataBinding.DataSource = DataSource
-        Properties.ListColumns = <>
+        Properties.KeyFieldNames = 'IdMRPreguntaOpcion'
+        Properties.ListColumns = <
+          item
+            FieldName = 'Opcion'
+          end>
         Properties.ListOptions.SyncMode = True
         TabOrder = 2
         Width = 500
       end
       object cxDBLookupComboBox3: TcxDBLookupComboBox
         Left = 32
-        Top = 139
+        Top = 134
         DataBinding.DataField = 'IdMRPreguntaOpcion'
         DataBinding.DataSource = DataSource
         Properties.KeyFieldNames = 'IdMRPreguntaOpcion'
@@ -80,7 +92,7 @@ inherited frmRelacionPreguntasEdit: TfrmRelacionPreguntasEdit
       end
       object cxDBLblPaquete: TcxDBLabel
         Left = 32
-        Top = 34
+        Top = 29
         AutoSize = True
         DataBinding.DataField = 'Paquete'
         DataBinding.DataSource = DataSource
@@ -91,11 +103,10 @@ inherited frmRelacionPreguntasEdit: TfrmRelacionPreguntasEdit
         Style.Font.Name = 'Tahoma'
         Style.Font.Style = [fsBold]
         Style.IsFontAssigned = True
-        Visible = False
       end
       object cxDBLabel1: TcxDBLabel
         Left = 82
-        Top = 64
+        Top = 59
         AutoSize = True
         DataBinding.DataField = 'Pregunta'
         DataBinding.DataSource = DataSource
@@ -111,14 +122,15 @@ inherited frmRelacionPreguntasEdit: TfrmRelacionPreguntasEdit
     end
   end
   inherited pmlMain: TPanel
-    Width = 578
+    Top = 264
+    Width = 569
     ExplicitWidth = 578
     inherited btnCancel: TButton
-      Left = 496
+      Left = 487
       ExplicitLeft = 496
     end
     inherited btnOk: TButton
-      Left = 415
+      Left = 406
       ExplicitLeft = 415
     end
   end
