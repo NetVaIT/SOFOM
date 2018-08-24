@@ -19,7 +19,7 @@ uses
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, Vcl.ImgList,
   System.Actions, Vcl.ActnList, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls, cxPC,
   cxContainer, cxEdit, cxTextEdit, cxDBEdit, Vcl.DBCtrls, cxMaskEdit,
-  cxDropDownEdit, cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox;
+  cxDropDownEdit, cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox, cxCheckBox;
 
 type
   TfrmBanco = class(T_frmEdit)
@@ -33,6 +33,9 @@ type
     cxDBTextEdit4: TcxDBTextEdit;
     Label5: TLabel;
     cxDBLookupComboBox1: TcxDBLookupComboBox;
+    Label6: TLabel;
+    cxDBTextEdit5: TcxDBTextEdit;
+    cxDBCheckBox1: TcxDBCheckBox;
   private
     { Private declarations }
   public

@@ -3,9 +3,8 @@ inherited frmBancos: TfrmBancos
   Caption = 'Bancos'
   ClientHeight = 433
   ClientWidth = 645
-  OnCreate = FormCreate
   ExplicitWidth = 651
-  ExplicitHeight = 457
+  ExplicitHeight = 462
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -28,14 +27,14 @@ inherited frmBancos: TfrmBancos
   end
   inherited pnlMaster: TPanel
     Width = 645
-    Height = 229
+    Height = 234
     ExplicitWidth = 645
-    ExplicitHeight = 229
+    ExplicitHeight = 234
     inherited cxGrid: TcxGrid
       Width = 645
-      Height = 229
+      Height = 234
       ExplicitWidth = 645
-      ExplicitHeight = 229
+      ExplicitHeight = 234
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdBanco: TcxGridDBColumn
           DataBinding.FieldName = 'IdBanco'
@@ -55,12 +54,21 @@ inherited frmBancos: TfrmBancos
         end
         object tvMasterNombre: TcxGridDBColumn
           DataBinding.FieldName = 'Nombre'
+          Width = 150
         end
         object tvMasterDescripcion: TcxGridDBColumn
           DataBinding.FieldName = 'Descripcion'
+          Width = 300
+        end
+        object tvMasterRFC: TcxGridDBColumn
+          DataBinding.FieldName = 'RFC'
         end
         object tvMasterSiglas: TcxGridDBColumn
           DataBinding.FieldName = 'Siglas'
+        end
+        object tvMasterUsoComun: TcxGridDBColumn
+          DataBinding.FieldName = 'UsoComun'
+          Width = 56
         end
       end
     end
@@ -100,7 +108,7 @@ inherited frmBancos: TfrmBancos
     DockControlHeights = (
       0
       0
-      31
+      26
       0)
   end
   inherited cxStyleRepository: TcxStyleRepository
@@ -111,6 +119,8 @@ inherited frmBancos: TfrmBancos
   end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
+      ReportDocument.CreationDate = 43335.499403449080000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

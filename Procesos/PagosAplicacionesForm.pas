@@ -51,6 +51,7 @@ type
     tvMasterCFDISaldoAnterior: TcxGridDBColumn;
     tvMasterCFDISaldoInsoluto: TcxGridDBColumn;
     tvMasterIdCFDIPago: TcxGridDBColumn;
+    tvMasterCFDIImporte: TcxGridDBColumn;
   private
     { Private declarations }
   public

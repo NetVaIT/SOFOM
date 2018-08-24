@@ -142,7 +142,9 @@ begin
   if IdCuentaXCobrar <> 0 then
   begin
     // Filtrar
-    SQLSelect:= 'select IdAnexoMoratorio, IdAnexoAmortizacion, IdAnexoMoratorioEstatus, IdCuentaXCobrar, Fecha, ImporteBase, Importe, Descuento, Impuesto, ImporteAplicado, Cancelacion from AnexosMoratorios';
+    SQLSelect:= 'select IdAnexoMoratorio, IdAnexoAmortizacion, IdAnexoMoratorioEstatus, IdCuentaXCobrar, Fecha, ImporteBase, Importe, Descuento, ' +
+    'CASE WHEN IdAnexoMoratorioEstatus = 2 THEN 0 ELSE Importe-Descuento END AS Moratorio, CASE WHEN IdAnexoMoratorioEstatus = 2 THEN 0 ELSE Impuesto END AS Impuesto, ' +
+    'CASE WHEN IdAnexoMoratorioEstatus = 2 THEN 0 ELSE Importe-Descuento+Impuesto END AS MoratorioTotal, ImporteAplicado, Cancelacion from AnexosMoratorios ';
     SQLWhere:= Format('WHERE IdCuentaXCobrar = %d', [IdCuentaXCobrar]);
     SQLOrderBy:= 'ORDER BY Fecha ';
     OpenDataSet;

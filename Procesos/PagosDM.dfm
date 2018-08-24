@@ -2190,8 +2190,9 @@ inherited dmPagos: TdmPagos
       'taXCobrar, IDCFDI, FechaAplicacion, Importe, ImporteFactoraje, C' +
       'XCFechaVencimiento, Anexo, CXCDescripcion, CFDISerie, CFDIFolio,' +
       ' UUID, CFDIMoneda, CFDIMetodoPago, '#13#10'                         CF' +
-      'DIParcialidad, CFDISaldoAnterior, CFDISaldoInsoluto, IdCFDIPago'#13 +
-      #10'FROM            v_PagosAplicaciones'#13#10'WHERE IdPago = :IdPago'
+      'DIParcialidad, CFDISaldoAnterior, CFDIImporte, CFDISaldoInsoluto' +
+      ', IdCFDIPago'#13#10'FROM            v_PagosAplicaciones'#13#10'WHERE IdPago ' +
+      '= :IdPago'
     DataSource = dsMaster
     MasterFields = 'IdPago'
     Parameters = <
@@ -2228,6 +2229,12 @@ inherited dmPagos: TdmPagos
     object adodsPagosAplicacionesFechaAplicacion: TDateTimeField
       DisplayLabel = 'Fecha de aplicaci'#243'n'
       FieldName = 'FechaAplicacion'
+    end
+    object adodsPagosAplicacionesImporte: TFMTBCDField
+      FieldName = 'Importe'
+      currency = True
+      Precision = 18
+      Size = 6
     end
     object adodsPagosAplicacionesImporteFactoraje: TFMTBCDField
       DisplayLabel = 'Importe factoraje'
@@ -2276,20 +2283,20 @@ inherited dmPagos: TdmPagos
       FieldName = 'CFDIParcialidad'
     end
     object adodsPagosAplicacionesCFDISaldoAnterior: TFMTBCDField
-      DisplayLabel = 'CFDI Saldo anterior'
+      DisplayLabel = 'CFDI saldo anterior'
       FieldName = 'CFDISaldoAnterior'
       currency = True
       Precision = 18
       Size = 6
     end
-    object adodsPagosAplicacionesImporte: TFMTBCDField
-      FieldName = 'Importe'
-      currency = True
+    object adodsPagosAplicacionesCFDIImporte: TFMTBCDField
+      DisplayLabel = 'CFDI importe'
+      FieldName = 'CFDIImporte'
       Precision = 18
       Size = 6
     end
     object adodsPagosAplicacionesCFDISaldoInsoluto: TFMTBCDField
-      DisplayLabel = 'CFDI Saldo insoluto'
+      DisplayLabel = 'CFDI saldo insoluto'
       FieldName = 'CFDISaldoInsoluto'
       ReadOnly = True
       currency = True

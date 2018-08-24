@@ -419,6 +419,7 @@ type
     adodsPersonasIdMetodoPago: TIntegerField;
     adodsPersonasIdPersonaEstatus: TIntegerField;
     adodsPersonasNumCtaPagoCliente: TStringField;
+    adodsPagosAplicacionesCFDIImporte: TFMTBCDField;
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsMasterAfterPost(DataSet: TDataSet);
     procedure adodsMasterBeforePost(DataSet: TDataSet);

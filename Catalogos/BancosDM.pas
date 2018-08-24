@@ -16,6 +16,8 @@ type
     adodsMasterIdPaisBanco: TIntegerField;
     adodsPais: TADODataSet;
     adodsMasterPais: TStringField;
+    adodsMasterRFC: TStringField;
+    adodsMasterUsoComun: TBooleanField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }

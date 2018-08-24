@@ -68,10 +68,10 @@ inherited dmBuroCredito: TdmBuroCredito
         'iar AS SaldoInicial, '#39'001'#39' AS Moneda, Anexos.Plazo AS NumeroPago' +
         's, '#39'30'#39' AS FrecuenciaPagos, Anexos.PagoMensual AS ImportePagos,'
       
-        'Pago.FechaPago AS FechaUltimoPago, Anexos.FechaTermino AS FechaR' +
-        'eestructura, 0 AS PagoFinalMorosa, Anexos.FechaLiquidacion, 0 AS' +
-        ' Quita, 0 AS Dacion, 0 AS Quebranto, '#39'   '#39' AS ClaveObservacion, ' +
-        #39' '#39' AS CreditoEspecial,'
+        'Pago.FechaPago AS FechaUltimoPago, CAST(NULL as datetime) AS Fec' +
+        'haReestructura, 0 AS PagoFinalMorosa, Anexos.FechaLiquidacion, 0' +
+        ' AS Quita, 0 AS Dacion, 0 AS Quebranto, '#39'   '#39' AS ClaveObservacio' +
+        'n, '#39' '#39' AS CreditoEspecial,'
       
         'I.FechaVencimiento AS FechaPrimerIncumplimiento, (Anexos.SaldoIn' +
         'soluto - Anexos.ValorResidual) AS SaldoInsoluto, Anexos.MontoFin' +
@@ -113,10 +113,10 @@ inherited dmBuroCredito: TdmBuroCredito
         'iar AS SaldoInicial, '#39'001'#39' AS Moneda, Anexos.Plazo AS NumeroPago' +
         's, '#39'30'#39' AS FrecuenciaPagos, Anexos.PagoMensual AS ImportePagos,'
       
-        'Pago.FechaPago AS FechaUltimoPago, Anexos.FechaTermino AS FechaR' +
-        'eestructura, 0 AS PagoFinalMorosa, Anexos.FechaLiquidacion, 0 AS' +
-        ' Quita, 0 AS Dacion, 0 AS Quebranto, '#39'   '#39' AS ClaveObservacion, ' +
-        #39' '#39' AS CreditoEspecial,'
+        'Pago.FechaPago AS FechaUltimoPago, CAST(NULL as datetime) AS Fec' +
+        'haReestructura, 0 AS PagoFinalMorosa, Anexos.FechaLiquidacion, 0' +
+        ' AS Quita, 0 AS Dacion, 0 AS Quebranto, '#39'   '#39' AS ClaveObservacio' +
+        'n, '#39' '#39' AS CreditoEspecial,'
       
         'I.FechaVencimiento AS FechaPrimerIncumplimiento, (Anexos.SaldoIn' +
         'soluto - Anexos.ValorResidual) AS SaldoInsoluto, Anexos.MontoFin' +

@@ -4,7 +4,7 @@ inherited dmBancos: TdmBancos
     CursorType = ctStatic
     CommandText = 
       'SELECT IdBanco, IdPaisBanco, Identificador, Nombre, Descripcion,' +
-      ' Siglas FROM Bancos'
+      ' Siglas, RFC, UsoComun FROM Bancos'
     FieldDefs = <
       item
         Name = 'IdBanco'
@@ -35,6 +35,16 @@ inherited dmBancos: TdmBancos
         Name = 'Siglas'
         DataType = ftString
         Size = 10
+      end
+      item
+        Name = 'RFC'
+        DataType = ftString
+        Size = 13
+      end
+      item
+        Name = 'UsoComun'
+        Attributes = [faFixed]
+        DataType = ftBoolean
       end>
     StoreDefs = True
     object adodsMasterIdBanco: TAutoIncField
@@ -45,6 +55,17 @@ inherited dmBancos: TdmBancos
     object adodsMasterIdPaisBanco: TIntegerField
       FieldName = 'IdPaisBanco'
       Visible = False
+    end
+    object adodsMasterPais: TStringField
+      DisplayLabel = 'Pa'#237's'
+      FieldKind = fkLookup
+      FieldName = 'Pais'
+      LookupDataSet = adodsPais
+      LookupKeyFields = 'IdPais'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IdPaisBanco'
+      Size = 100
+      Lookup = True
     end
     object adodsMasterIdentificador: TStringField
       FieldName = 'Identificador'
@@ -58,20 +79,17 @@ inherited dmBancos: TdmBancos
       FieldName = 'Descripcion'
       Size = 150
     end
+    object adodsMasterRFC: TStringField
+      FieldName = 'RFC'
+      Size = 13
+    end
     object adodsMasterSiglas: TStringField
       FieldName = 'Siglas'
       Size = 10
     end
-    object adodsMasterPais: TStringField
-      DisplayLabel = 'Pa'#237's'
-      FieldKind = fkLookup
-      FieldName = 'Pais'
-      LookupDataSet = adodsPais
-      LookupKeyFields = 'IdPais'
-      LookupResultField = 'Descripcion'
-      KeyFields = 'IdPaisBanco'
-      Size = 100
-      Lookup = True
+    object adodsMasterUsoComun: TBooleanField
+      DisplayLabel = 'Com'#250'n'
+      FieldName = 'UsoComun'
     end
   end
   object adodsPais: TADODataSet

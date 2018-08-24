@@ -59,6 +59,9 @@ inherited frmPagosAplicaciones: TfrmPagosAplicaciones
         object tvMasterFechaAplicacion: TcxGridDBColumn
           DataBinding.FieldName = 'FechaAplicacion'
         end
+        object tvMasterImporte: TcxGridDBColumn
+          DataBinding.FieldName = 'Importe'
+        end
         object tvMasterImporteFactoraje: TcxGridDBColumn
           DataBinding.FieldName = 'ImporteFactoraje'
           Visible = False
@@ -98,8 +101,8 @@ inherited frmPagosAplicaciones: TfrmPagosAplicaciones
         object tvMasterCFDISaldoAnterior: TcxGridDBColumn
           DataBinding.FieldName = 'CFDISaldoAnterior'
         end
-        object tvMasterImporte: TcxGridDBColumn
-          DataBinding.FieldName = 'Importe'
+        object tvMasterCFDIImporte: TcxGridDBColumn
+          DataBinding.FieldName = 'CFDIImporte'
         end
         object tvMasterCFDISaldoInsoluto: TcxGridDBColumn
           DataBinding.FieldName = 'CFDISaldoInsoluto'
@@ -154,7 +157,6 @@ inherited frmPagosAplicaciones: TfrmPagosAplicaciones
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 43264.700645682870000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

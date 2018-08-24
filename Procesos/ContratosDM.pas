@@ -300,6 +300,14 @@ end;
 procedure TdmContratos.actGenAmortizacionesExecute(Sender: TObject);
 begin
   inherited;
+  // Generar Credito
+  FCreditosFecha := _DmConection.LaFechaActual;//Date;  //May 26/17
+  FCreditosFechaVencimiento := adodsAnexosFechaVencimiento.Value;
+  FCreditosFechaCorte := adodsAnexosFechaCorte.Value;
+  FCreditosMontoFiananciar := adodsAnexosMontoFinanciar.AsExtended;
+  adodsCreditos.Insert;
+  adodsCreditos.Post;
+  // Generar Amortizaciones
   dmAmortizaciones.TipoContrato := TipoContrato;
   if dmAmortizaciones.GenAnexosAmortizaciones(adodsCreditosIdAnexoCredito.Value,
   adodsAnexosFecha.Value, adodsCreditosFechaCorte.Value, adodsCreditosFechaVencimiento.Value,
@@ -310,6 +318,8 @@ begin
     adodsAmortizaciones.Close;
     adodsAmortizaciones.Open;
   end;
+//  // Actualiza saldo incial del anexo
+//  SetAnexoSaldo(IdAnexo);
 end;
 
 procedure TdmContratos.actGenerarExecute(Sender: TObject);

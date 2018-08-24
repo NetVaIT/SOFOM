@@ -1,23 +1,23 @@
 inherited frmBanco: TfrmBanco
   Caption = 'Banco'
-  ClientHeight = 322
+  ClientHeight = 333
   ClientWidth = 630
   ExplicitWidth = 636
-  ExplicitHeight = 350
+  ExplicitHeight = 362
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
     Width = 630
-    Height = 281
+    Height = 292
     ExplicitWidth = 630
-    ExplicitHeight = 234
-    ClientRectBottom = 279
+    ExplicitHeight = 281
+    ClientRectBottom = 290
     ClientRectRight = 628
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 2
-      ExplicitTop = 28
+      ExplicitTop = 26
       ExplicitWidth = 626
-      ExplicitHeight = 204
+      ExplicitHeight = 253
       object Label1: TLabel
         Left = 16
         Top = 16
@@ -44,7 +44,7 @@ inherited frmBanco: TfrmBanco
       end
       object Label4: TLabel
         Left = 16
-        Top = 136
+        Top = 176
         Width = 27
         Height = 13
         Caption = 'Siglas'
@@ -52,10 +52,18 @@ inherited frmBanco: TfrmBanco
       end
       object Label5: TLabel
         Left = 16
-        Top = 176
+        Top = 216
         Width = 19
         Height = 13
         Caption = 'Pa'#237's'
+      end
+      object Label6: TLabel
+        Left = 16
+        Top = 136
+        Width = 20
+        Height = 13
+        Caption = 'RFC'
+        FocusControl = cxDBTextEdit5
       end
       object cxDBTextEdit1: TcxDBTextEdit
         Left = 16
@@ -70,7 +78,7 @@ inherited frmBanco: TfrmBanco
         Top = 72
         DataBinding.DataField = 'Nombre'
         DataBinding.DataSource = DataSource
-        TabOrder = 1
+        TabOrder = 2
         Width = 201
       end
       object cxDBTextEdit3: TcxDBTextEdit
@@ -78,44 +86,58 @@ inherited frmBanco: TfrmBanco
         Top = 112
         DataBinding.DataField = 'Descripcion'
         DataBinding.DataSource = DataSource
-        TabOrder = 2
+        TabOrder = 3
         Width = 593
       end
       object cxDBTextEdit4: TcxDBTextEdit
         Left = 16
-        Top = 152
+        Top = 192
         DataBinding.DataField = 'Siglas'
         DataBinding.DataSource = DataSource
-        TabOrder = 3
+        TabOrder = 5
         Width = 61
       end
       object cxDBLookupComboBox1: TcxDBLookupComboBox
         Left = 16
-        Top = 191
+        Top = 231
         DataBinding.DataField = 'Pais'
         DataBinding.DataSource = DataSource
         Properties.ListColumns = <>
-        TabOrder = 4
+        TabOrder = 6
         Width = 300
+      end
+      object cxDBTextEdit5: TcxDBTextEdit
+        Left = 16
+        Top = 152
+        DataBinding.DataField = 'RFC'
+        DataBinding.DataSource = DataSource
+        TabOrder = 4
+        Width = 121
+      end
+      object cxDBCheckBox1: TcxDBCheckBox
+        Left = 488
+        Top = 34
+        Caption = 'Com'#250'n'
+        DataBinding.DataField = 'UsoComun'
+        DataBinding.DataSource = DataSource
+        TabOrder = 1
+        Width = 121
       end
     end
   end
   inherited pmlMain: TPanel
-    Top = 281
+    Top = 292
     Width = 630
-    ExplicitTop = 234
+    ExplicitTop = 281
     ExplicitWidth = 630
-    inherited btnOk: TButton
-      Left = 467
-      ExplicitLeft = 467
-    end
     inherited btnCancel: TButton
       Left = 548
       ExplicitLeft = 548
     end
-  end
-  inherited DataSource: TDataSource
-    DataSet = dmBancos.adodsMaster
+    inherited btnOk: TButton
+      Left = 467
+      ExplicitLeft = 467
+    end
   end
   inherited cxImageList: TcxImageList
     FormatVersion = 1

@@ -38,6 +38,8 @@ type
     tvMasterDescripcion: TcxGridDBColumn;
     tvMasterSiglas: TcxGridDBColumn;
     tvMasterPais: TcxGridDBColumn;
+    tvMasterRFC: TcxGridDBColumn;
+    tvMasterUsoComun: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
