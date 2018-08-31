@@ -171,7 +171,6 @@ procedure TFrmAplicacionPago.BtBtnAplicarClick(Sender: TObject);
 var             //FEb 12/17
    valor, aux, Mora, moraPagado:Double;
    camposaldo,campoimporte, FolioSerie:String;
-//   idActual:integer; //Dic14/16
    ActMora, TieneMora, seguir:boolean; //Feb 12/17
    FechaMora:TDAteTime;
   IdAnexoAct:Integer;     //abr 5/17
@@ -184,7 +183,7 @@ var             //FEb 12/17
   end;
 
 begin
-        //Comparar antes de facturar para que el valor no sea mayor que el que se necesita...
+  //Comparar antes de facturar para que el valor no sea mayor que el que se necesita...
   //Verificar si se pone una transaccion  // SE movio aca.feb 14/17 Verificar que cambia && ene 13 /17
   if EsFactoraje then      //Ene 13/17
   begin
@@ -196,11 +195,6 @@ begin
     camposaldo:='Saldo';
     campoimporte:='Importe';
   end;
-
-//  f:= quitasignos(DSAplicacion.DataSet.FieldByName(CampoImporte).ASString); //Copiado para verificar si alcanza para moratorios
-//  Valor:= StrToFloat(f);
-//  aux:=strtoFLoat(quitasignos(cxDBLblDisponible.Caption));
-
   Valor:= DSAplicacion.DataSet.FieldByName(CampoImporte).AsFloat;
   aux:= DSPago.DataSet.FieldByName('Saldo').AsFloat;
   if (Valor <= aux) then //  //SaldoPago  alcanza para pagar el monto indicado en la aplicacion
@@ -216,7 +210,6 @@ begin
         showMessage('Pago Parcial, valor de diferencia: '+ floattoStrF(dsConCXCpendientes.dataset.FieldByName(Camposaldo).Asfloat - DSAplicacion.DataSet.FieldByName(Campoimporte).Asfloat,ffCurrency,10,2));   //Ene 13/17
       Seguir:=True;
     end;
-      //
   end
   else
   begin //No alcanza para pagar lo que se dice
@@ -227,7 +220,6 @@ begin
     //VErifica FEcha Pago respecto a Moratorios. abr 5/17
     IdAnexoAct:= DSPago.DataSet.FieldByName('IdAnexo').AsInteger; // Abr 5/17
     FEchaPago:= FechaSinHora(DSPago.DataSet.FieldByName('FechaPago').AsDAteTime);// abr 17/17
-
     if not UltimaFechaPagoAplicado(FechaPago,IdAnexoAct)or
        (application.MessageBox('Existen Pagos posteriores aplicados. Esta seguro que va aplicar el importe a la Cuenta x Cobrar ? ',
                             'Confirmación',MB_ICONEXCLAMATION or MB_YESNO)=ID_YES)  then   //abr 5/17 pago anterior a algun aplicado
@@ -239,8 +231,10 @@ begin
                             +' generados a la fecha:'+dateToSTR(FEchaMora)),    // deberia ser esta pero no es --> dsConCXCpendientes.DataSet.FieldByName('Fecha').AsString) ,
                             'Confirmación',MB_ICONEXCLAMATION or MB_YESNO)=ID_YES  then
         begin
-         //Genera FActura
+          // Genera Factura
           ActFacturaMora.Execute;
+          // Actualiza que se tenga asignado el nuevo CFDI a la CxC
+          RefreshCXCPendientes;
           Seguir :=True;
           TieneMora:=True;   //Es mora y se facturo
         end
@@ -249,17 +243,9 @@ begin
       end
       else
         TieneMora:=False;// No Es mora
-
     end;
-                                                     //  'Importe'  //Ene 13/17
-{  //DEben tener valores ya
-   f:= quitasignos(DSAplicacion.DataSet.FieldByName(CampoImporte).ASString);  //Ago 15/16
-   aux:=strtoFLoat(quitasignos(cxDBLblDisponible.Caption));   //Es el del pago no cambia
-    Valor:= StrToFloat(f);//DSAplicacion.DataSet.FieldByName('Importe').ASFloat;//cxDBTxtEdtImporteAplicar.Field.Asfloat;
- }
     FolioSerie:=dsPago.DataSet.FieldByName('SeriePago').AsString+'-'+ dsPago.DataSet.FieldByName('FolioPago').AsString;
     inherited;
-
     if not Seguir then
       ShowMessage('Proceso cancelado por alguna de las siguietes razones: '+#13
                  +'1. Cancelacion por Pagos posteriores'+#13
@@ -275,18 +261,13 @@ begin
         begin
           try
             _dmConection.ADOConnection.BeginTrans; //Feb 14/17
-            with DSAplicacion.DataSet do
-            begin
-              fieldbyName('IdCuentaXCobrar').AsInteger:=dsConCXCpendientes.dataset.FieldByName('IdCuentaXCobrar').AsInteger;
-              fieldbyName('IDPersonacliente').AsInteger:=dsConCXCpendientes.dataset.FieldByName('IDPersona').AsInteger;
-              fieldbyName('IdCFDI').AsInteger:=dsConCXCpendientes.dataset.FieldByName('IdCFDI').AsInteger;
-              post;
-              // Proceso de Actualizaciones internas puede ser en el after post de la tabla deAplicaciones
-             // VerificaYCreaCXCFinales(adodsMasterIdAnexo.AsInteger); //Oct 2/17 ver si se coloca aca
-
-            end;
+            DSAplicacion.DataSet.fieldbyName('IdCuentaXCobrar').AsInteger:=dsConCXCpendientes.dataset.FieldByName('IdCuentaXCobrar').AsInteger;
+            DSAplicacion.DataSet.fieldbyName('IDPersonacliente').AsInteger:=dsConCXCpendientes.dataset.FieldByName('IDPersona').AsInteger;
+            DSAplicacion.DataSet.post;
+            // Proceso de Actualizaciones internas puede ser en el after post de la tabla deAplicaciones
+            // VerificaYCreaCXCFinales(adodsMasterIdAnexo.AsInteger); //Oct 2/17 ver si se coloca aca
+            ActualizaParcialidadCFDI(dsConCXCPendientes.DataSet.FieldByName('IdCFDI').AsInteger);
             _dmConection.ADOConnection.CommitTrans;  //Feb 14/17
-            ActualizaParcialidadCFDI(DSAplicacion.DataSet.FieldByName('IdCFDI').AsInteger);
             ShowMessage('Operacion completa');
           except
             on E: Exception do
@@ -306,32 +287,22 @@ begin
             begin   //CAmbio de nombre                                        //Ajustado Jul 4/17
               SpdBtnSaldoAFavor.Enabled:=(dsPago.dataset.Fieldbyname('Saldo').AsExtended>0.01); //Habilitar boton para abono a Capital.
              // SpdBtnAbonoCapital.Action:= FActAbonoCApital; //Para ver si lo deja usar?? abr 19/17
-
             end;
           end;
           //Si ya se acabo el saldo del Pago o si Ya no hay mas cuentas XCobrar  Oct 3/17
-
           if dsConCXCpendientes.DataSet.RecordCount =0 then //Ya no hay mas cuentas XCobrar Oct 3/17
           begin
             ActVerificayCreaFinal.Execute; //Sólo crea CXC y avisa..
           end;
-
-
-
-
         end;
       end
       else                                                                                                           //Ene 13/17 'Importe'                                                  'Saldo'
         ShowMessage('No se puede aplicar un valor de 0');
-
       // dsConCXCpendientes.DataSet.RefresH; //Oct 17/17 DA error , pero no se requiere
       //showmessage(quitasignos (cxDBLblDisponible.Caption) ); //Ago 15/16    //Ajustado Jul 4/17
       BtBtnAplicar.Enabled:= (strtoFLoat(quitasignos(cxDBLblDisponible.Caption))>0.01) and (DSAplicacion.DataSet.state =dsInsert);
    //DH Abr 17/17   BtBtnAgregar.Enabled:= (strtoFLoat(quitasignos(cxDBLblDisponible.Caption))>0) and (DsAplicacion.state =dsBrowse)and (not dsConCXCpendientes.dataset.eof);
       cxDBTxtEdtImporteAplicar.Enabled:= (DSAplicacion.DataSet.state =dsInsert);//Ago 15/16
-
-
-    {   }
     end;// del seguir opor si se require facturar Moratorios //Feb 12/17
   end
   else

@@ -174,7 +174,7 @@ inherited dmConfiguracion: TdmConfiguracion
     CursorType = ctStatic
     Parameters = <>
     SQL.Strings = (
-      'SELECT dbo.GetRutaBasePagos() AS Valor')
+      'SELECT RutaBasePagos AS Valor FROM Configuraciones')
     Left = 48
     Top = 280
     object adoqGetRutaBasePagosValor: TStringField

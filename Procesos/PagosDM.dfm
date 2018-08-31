@@ -43,6 +43,7 @@ inherited dmPagos: TdmPagos
     object adodsMasterIdMetodoPago: TIntegerField
       FieldName = 'IdMetodoPago'
       Visible = False
+      OnChange = adodsMasterIdMetodoPagoChange
     end
     object adodsMasterIdCFDIFormaPago33: TIntegerField
       FieldName = 'IdCFDIFormaPago33'
@@ -986,8 +987,9 @@ inherited dmPagos: TdmPagos
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'select IdMetodoPago, Identificador, Descripcion, ExigeCuenta '#13#10'f' +
-      'rom MetodosPago'#13#10
+      'select MP.IdMetodoPago, MP.Identificador, MP.Descripcion, MP.Exi' +
+      'geCuenta, FP.IdCFDIFormaPago33'#13#10'from MetodosPago MP'#13#10'LEFT OUTER ' +
+      'JOIN CFDIFormasPago33 FP ON MP.ClaveSAT2016 = FP.Identificador'#13#10
     Parameters = <>
     Left = 48
     Top = 171
@@ -1004,6 +1006,10 @@ inherited dmPagos: TdmPagos
     end
     object adodsMetodoPagoExigeCuenta: TIntegerField
       FieldName = 'ExigeCuenta'
+    end
+    object adodsMetodoPagoIdCFDIFormaPago33: TAutoIncField
+      FieldName = 'IdCFDIFormaPago33'
+      ReadOnly = True
     end
   end
   object adopSetCXCUPMoratorio: TADOStoredProc
@@ -2292,6 +2298,7 @@ inherited dmPagos: TdmPagos
     object adodsPagosAplicacionesCFDIImporte: TFMTBCDField
       DisplayLabel = 'CFDI importe'
       FieldName = 'CFDIImporte'
+      currency = True
       Precision = 18
       Size = 6
     end

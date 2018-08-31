@@ -783,12 +783,14 @@ object FrmAplicacionPago: TFrmAplicacionPago
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@IdCFDI'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end>
     Left = 976
     Top = 64

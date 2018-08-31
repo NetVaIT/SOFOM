@@ -1270,7 +1270,8 @@ begin
 //  CFDIVersion := adoqCFDIInfoVersion.AsString;
 //  adoqCFDIInfo.Close;
 
-  adodsMaster.Refresh;
+//  adodsMaster.Refresh;
+  RefreshADODS(adodsMaster, adodsMasterIdCFDI);
   CFDICreado :=  adodsMaster.Locate('IDCFDI',IdCFDI,[]);
 //  Self.IdCFDI := IdCFDI;
 //  CFDICreado := (adodsMasterIdCFDI.Value = IdCFDI);
@@ -1627,11 +1628,15 @@ var
     RutaBase: string;
   begin
     DecodeDate(Now, Anio, Mes, Dia);
-    {$IFDEF DEBUG}
-      RutaBase := ExtractFilePath(application.ExeName);
-    {$ELSE}
+//    {$IFDEF DEBUG}
+//      RutaBase := ExtractFilePath(application.ExeName);
+//    {$ELSE}
+//      RutaBase := dmConfiguracion.RutaFacturas;
+//    {$ENDIF}
+    if IdCFDITipoDocumento = tdCFDIPago then
+      RutaBase := dmConfiguracion.RutaPagos
+    else
       RutaBase := dmConfiguracion.RutaFacturas;
-    {$ENDIF}
     if RutaBase=EmptyStr then
       RutaBase := ExtractFilePath(application.ExeName);
     Result := RutaBase + EmisorRFC + PathDelim +

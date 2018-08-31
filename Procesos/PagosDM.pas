@@ -6,6 +6,9 @@ uses
    Winapi.windows,System.SysUtils, System.Classes, _StandarDMod, Data.DB, System.Actions,
   Vcl.ActnList,Data.Win.ADODB, math, dialogs,ProcesosType, Controls, forms;
 
+resourcestring
+  strAllowGenCFDIPago = 'No fue posible generar el CFDI falta asignarle alguna forma de pago.';
+
 type
   TdmPagos = class(T_dmStandar)
     adodsMasterIdPago: TAutoIncField;
@@ -420,6 +423,7 @@ type
     adodsPersonasIdPersonaEstatus: TIntegerField;
     adodsPersonasNumCtaPagoCliente: TStringField;
     adodsPagosAplicacionesCFDIImporte: TFMTBCDField;
+    adodsMetodoPagoIdCFDIFormaPago33: TAutoIncField;
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsMasterAfterPost(DataSet: TDataSet);
     procedure adodsMasterBeforePost(DataSet: TDataSet);
@@ -445,6 +449,7 @@ type
     procedure actGenCFDIPagoUpdate(Sender: TObject);
     procedure actAddCuentaOrdenanteExecute(Sender: TObject);
     procedure adodsMasterIdPersonaClienteChange(Sender: TField);
+    procedure adodsMasterIdMetodoPagoChange(Sender: TField);
   private
     { Private declarations }
     Inserto:Boolean;
@@ -607,6 +612,16 @@ begin
     adodsMaster.FieldByName('IdMetodoPAgo').asInteger:=5;// Otro
     adodsMaster.FieldByName('Referencia').asString:='';
     abort;
+  end;
+end;
+
+procedure TdmPagos.adodsMasterIdMetodoPagoChange(Sender: TField);
+begin
+  inherited;
+  if adodsMaster.State in [dsInsert, dsEdit] then
+  begin
+    // Asigna Forma de pago 3.3 en base al metod de pago 3.2
+    adodsMasterIdCFDIFormaPago33.Value := adodsMetodoPagoIdCFDIFormaPago33.Value;
   end;
 end;
 
@@ -1013,10 +1028,15 @@ var
   IdCFDI: Integer;
 begin
   inherited;
-  IdPago := adodsMasterIdPago.Value;
-  IdCFDI := CrearCFDIPago(IdPago);
-  if IdCFDI <> 0  then
-    RefreshADODS(adodsMaster, adodsMasterIdPago);
+  if not adodsMasterIdCFDIFormaPago33.IsNull then
+  begin
+    IdPago := adodsMasterIdPago.Value;
+    IdCFDI := CrearCFDIPago(IdPago);
+    if IdCFDI <> 0  then
+      RefreshADODS(adodsMaster, adodsMasterIdPago);
+  end
+  else
+    MessageDlg(strAllowGenCFDIPago, mtWarning, [mbOK], 0);
 end;
 
 procedure TdmPagos.actGenCFDIPagoUpdate(Sender: TObject);
