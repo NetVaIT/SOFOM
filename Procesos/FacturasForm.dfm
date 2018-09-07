@@ -29,12 +29,12 @@ inherited frmFacturasGrid: TfrmFacturasGrid
     Width = 969
     Height = 228
     ExplicitWidth = 969
-    ExplicitHeight = 334
+    ExplicitHeight = 228
     inherited cxGrid: TcxGrid
       Width = 969
       Height = 228
       ExplicitWidth = 969
-      ExplicitHeight = 334
+      ExplicitHeight = 228
       inherited tvMaster: TcxGridDBTableView
         DataController.KeyFieldNames = 'IdCFDI'
         object tvMasterIdCFDI: TcxGridDBColumn
@@ -322,27 +322,27 @@ inherited frmFacturasGrid: TfrmFacturasGrid
   inherited pnlDetail3: TPanel
     Top = 504
     Width = 969
-    ExplicitTop = 451
+    ExplicitTop = 504
     ExplicitWidth = 969
   end
   inherited pnlDetail2: TPanel
     Top = 460
     Width = 969
-    ExplicitTop = 407
+    ExplicitTop = 460
     ExplicitWidth = 969
   end
   inherited pnlDetail1: TPanel
     Top = 257
     Width = 969
     Height = 200
-    ExplicitTop = 392
+    ExplicitTop = 257
     ExplicitWidth = 969
     ExplicitHeight = 200
   end
   inherited pnlClose: TPanel
     Top = 545
     Width = 969
-    ExplicitTop = 492
+    ExplicitTop = 545
     ExplicitWidth = 969
     DesignSize = (
       969
@@ -1344,7 +1344,6 @@ inherited frmFacturasGrid: TfrmFacturasGrid
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42699.643536909720000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

@@ -126,6 +126,7 @@ type
     FactImprimirCFDI: TBasicAction;
     FactTimbrarCFDI: TBasicAction;
     FactRelacionarCFDI: TBasicAction;
+    FactEliminar: TBasicAction;
     function GetFFiltroNombre: String;
     procedure SetactCancelarCFDI(const Value: TBasicAction);
     procedure SetactImprimirCFDI(const Value: TBasicAction);
@@ -140,12 +141,14 @@ type
     procedure SetDesde(const Value: TDateTime);
     procedure SetHasta(const Value: TDateTime);
     procedure SetUsarFecha(const Value: Boolean);
+    procedure SetactEliminar(const Value: TBasicAction);
   public
     { Public declarations }
     property actTimbrarCFDI: TBasicAction read FactTimbrarCFDI write SetactTimbrarCFDI;
     property actImprimirCFDI: TBasicAction read FactImprimirCFDI write SetactImprimirCFDI;
     property actCancelarCFDI: TBasicAction read FactCancelarCFDI write SetactCancelarCFDI;
     property actRelacionarCFDI: TBasicAction read FactRelacionarCFDI write FactRelacionarCFDI;
+    property actEliminar: TBasicAction read FactEliminar write SetactEliminar;
     property FiltroFecha: String read ffiltroFecha write ffiltroFecha;
     property FiltroNombre:String read GetFFiltroNombre write ffiltroNombre;
     property Cliente: string read GetCliente write SetCliente;
@@ -233,6 +236,12 @@ procedure TfrmFacturasGrid.SetactCancelarCFDI(const Value: TBasicAction);
 begin
   FactCancelarCFDI := Value;
   dxbbCancelarCFDI.Action := Value;
+end;
+
+procedure TfrmFacturasGrid.SetactEliminar(const Value: TBasicAction);
+begin
+  FactEliminar := Value;
+  Delete1.Action := Value;
 end;
 
 procedure TfrmFacturasGrid.SetactImprimirCFDI(const Value: TBasicAction);

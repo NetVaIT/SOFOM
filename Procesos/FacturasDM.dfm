@@ -469,6 +469,12 @@ inherited dmFacturas: TdmFacturas
       OnExecute = actRelacionarCFDIExecute
       OnUpdate = actRelacionarCFDIUpdate
     end
+    object actEliminar: TAction
+      Caption = 'ELiminar'
+      ImageIndex = 12
+      OnExecute = actEliminarExecute
+      OnUpdate = actEliminarUpdate
+    end
   end
   object adodsCFDIConceptos: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -2476,5 +2482,40 @@ inherited dmFacturas: TdmFacturas
     DataSet = adoqCFDIComplementoPagos
     Left = 808
     Top = 136
+  end
+  object adospDelCFDI: TADOStoredProc
+    Connection = _dmConection.ADOConnection
+    ProcedureName = 'p_DelCFDI;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@IdCFDI'
+        Attributes = [paNullable]
+        DataType = ftLargeint
+        Precision = 19
+        Value = Null
+      end
+      item
+        Name = '@IdUsuario'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@Eliminar'
+        Attributes = [paNullable]
+        DataType = ftBoolean
+        Direction = pdInputOutput
+        Value = Null
+      end>
+    Left = 808
+    Top = 512
   end
 end

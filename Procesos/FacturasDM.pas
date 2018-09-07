@@ -9,6 +9,9 @@ uses
   VirtualXML,
   XMLIntf, Activex,VirtualXML33, DocumentosDM, ProcesosType;
 
+resourcestring
+  strAllowDelCFDI = '¿Deseas eliminar el CFDI seleccionado?';
+
 type
   TdmFacturas = class(T_dmStandar)
     adodsMasterIdCFDI: TLargeintField;
@@ -397,6 +400,8 @@ type
     adoqCFDIComplementoPagosRelacionadoImpSaldoAnt: TFMTBCDField;
     adoqCFDIComplementoPagosRelacionadoImpPagado: TFMTBCDField;
     adoqCFDIComplementoPagosRelacionadoImpSaldoInsoluto: TFMTBCDField;
+    actEliminar: TAction;
+    adospDelCFDI: TADOStoredProc;
     procedure DataModuleCreate(Sender: TObject);
     procedure actTimbrarCFDIExecute(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
@@ -417,6 +422,8 @@ type
     procedure actRelacionarCFDIExecute(Sender: TObject);
     procedure dsMasterDataChange(Sender: TObject; Field: TField);
     procedure actRelacionarCFDIUpdate(Sender: TObject);
+    procedure actEliminarExecute(Sender: TObject);
+    procedure actEliminarUpdate(Sender: TObject);
   private
     { Private declarations }
     FIdCFDITipoDocumento: TCFDITipoDocumento;
@@ -442,6 +449,7 @@ type
     property IdCFDITipoDocumento: TCFDITipoDocumento read FIdCFDITipoDocumento write FIdCFDITipoDocumento default tdFactura;
     property IdCFDI: Integer read FIdCFDI write FIdCFDI default 0;
 //    property Muestra:Boolean read FMuestra write SetMuestra;
+    function EliminarCFDI(IdCFDI: LongInt): Boolean;
   protected
     procedure SetFilter; override;
   public
@@ -668,6 +676,26 @@ begin
     gGridForm.CanEdit:= CanEdit;
 end;
 
+function TdmFacturas.EliminarCFDI(IdCFDI: LongInt): Boolean;
+begin
+  Result:= False;
+  if IdCFDI <> 0 then
+  begin
+    if MessageDlg(strAllowDelCFDI, mtConfirmation, mbYesNo, 0) = mrYes then
+    begin
+      ScreenCursorProc(crSQLWait);
+      try
+        adospDelCFDI.Parameters.ParamByName('@IdCFDI').Value:= IdCFDI;
+        adospDelCFDI.Parameters.ParamByName('@IdUsuario').Value:= _dmConection.IdUsuario;
+        adospDelCFDI.ExecProc;
+      finally
+        ScreenCursorProc(crDefault);
+      end;
+      Result:= True;
+    end;
+  end;
+end;
+
 procedure TdmFacturas.GenerarPDF(IdCFDI: Integer; ArchivoPDF,
   ArchivoImagen: TFileName);
 var
@@ -708,6 +736,19 @@ begin
   actCancelarCFDI.Enabled:= (adodsMasterIdCFDIEstatus.Value=2)
   and (adodsMasterSaldoDocumento.Value = adodsMasterTotal.Value)
   and (adodsMasterSaldoDocumento.Value = adodsMasterSaldoFactoraje.Value);
+end;
+
+procedure TdmFacturas.actEliminarExecute(Sender: TObject);
+begin
+  inherited;
+  if EliminarCFDI(adodsMasterIdCFDI.Value) then
+    RefreshADODS(adodsMaster, adodsMasterIdCFDI);
+end;
+
+procedure TdmFacturas.actEliminarUpdate(Sender: TObject);
+begin
+  inherited;
+  TAction(Sender).Enabled := (adodsMasterIdCFDIEstatus.Value = 1) and (adodsMasterTotal.Value = adodsMasterSaldoDocumento.Value);
 end;
 
 procedure TdmFacturas.actImprimirCFDIExecute(Sender: TObject);
@@ -793,9 +834,13 @@ end;
 procedure TdmFacturas.actRelacionarCFDIExecute(Sender: TObject);
 var
   dmCFDIRelacionados: TdmCFDIRelacionados;
+  IdPersona: Integer;
+  IdCFDITipoDocumento: Integer;
 begin
   inherited;
-  dmCFDIRelacionados := TdmCFDIRelacionados.CreateWith(Self, adodsMasterIdPersonaReceptor.Value, not CanEdit);
+  IdPersona := adodsMasterIdPersonaReceptor.Value;
+  IdCFDITipoDocumento := adodsMasterIdCFDITipoDocumento.Value;
+  dmCFDIRelacionados := TdmCFDIRelacionados.CreateWith(Self, IdPersona, IdCFDITipoDocumento, False);
   try
     dmCFDIRelacionados.MasterSource := dsMaster;
     dmCFDIRelacionados.MasterFields:= 'IdCFDI';
@@ -1104,6 +1149,7 @@ begin
   TfrmFacturasGrid(gGridForm).actImprimirCFDI := actImprimirCFDI;
   TfrmFacturasGrid(gGridForm).actCancelarCFDI := actCancelarCFDI;
   TfrmFacturasGrid(gGridForm).actRelacionarCFDI := actRelacionarCFDI;
+  TfrmFacturasGrid(gGridForm).actEliminar := actEliminar;
   if IdCFDITipoDocumento = tdCFDIPago then
   begin
     adodsCFDICPRelacionados.Open;
@@ -1621,6 +1667,7 @@ var
   pagoComplementPagoV1: IPagos_PagoV1;
   doctoRelacionadoListV1: IPagos_Pago_DoctoRelacionadoListV1;
   doctoRelacionadoComplementoPagoV1: IPagos_Pago_DoctoRelacionadoV1;
+  CFDIGenerado: Boolean;
 
   function GetRutaFactura(EmisorRFC: string): string;
   var
@@ -1870,8 +1917,11 @@ begin
       if  DirectoryExists (RutaFactura) then
       begin
         ShowProgress(60,100,'Timbrando CFDI ' + IntToStr(60) + '%');
-        if GenerarCFDI33(Virtualxml33.tcIngreso, facturaCFDIv33, rutaCertificado,
-        rutaLlavePrivada, claveLlavePrivada,RutaFactura,TimbreCFDI, Esproduccion) then
+        if IdCFDITipoDocumento = tdCFDIPago then
+          CFDIGenerado:= GenerarCFDI33(Virtualxml33.tcPagos, facturaCFDIv33, rutaCertificado, rutaLlavePrivada, claveLlavePrivada,RutaFactura,TimbreCFDI, Esproduccion)
+        else
+          CFDIGenerado:= GenerarCFDI33(Virtualxml33.tcIngreso, facturaCFDIv33, rutaCertificado, rutaLlavePrivada, claveLlavePrivada,RutaFactura,TimbreCFDI, Esproduccion);
+        if CFDIGenerado then
         begin
           SetCFDITimbre(IdCFDI);
 //          TipoDocumento:= adoqCFDITipoDocumento.AsString;

@@ -22,14 +22,17 @@ type
   private
     { Private declarations }
     FIdPersonaReceptor: Integer;
+    FIdCFDITipoDocumento: Integer;
     FSoloLectura: Boolean;
     procedure SetIdPersonaReceptor(const Value: Integer);
     procedure SetSoloLectura(const Value: Boolean);
+    procedure SetIdCFDITipoDocumento(const Value: Integer);
     property IdPersonaReceptor: Integer read FIdPersonaReceptor write SetIdPersonaReceptor;
+    property IdCFDITipoDocumento: Integer read FIdCFDITipoDocumento write SetIdCFDITipoDocumento;
     property SoloLectura: Boolean read FSoloLectura write SetSoloLectura;
   public
     { Public declarations }
-    constructor CreateWith(AOwner: TComponent; IdPersona: Integer;
+    constructor CreateWith(AOwner: TComponent; IdPersona,IdCFDITipoDocumento: Integer;
       SoloLectura: Boolean);
   end;
 
@@ -51,9 +54,10 @@ begin
 end;
 
 constructor TdmCFDIRelacionados.CreateWith(AOwner: TComponent;
-  IdPersona: Integer; SoloLectura: Boolean);
+  IdPersona,IdCFDITipoDocumento: Integer; SoloLectura: Boolean);
 begin
   FIdPersonaReceptor:= IdPersona;
+  FIdCFDITipoDocumento:= IdCFDITipoDocumento;
   FSoloLectura := SoloLectura;
   inherited Create(AOwner);
 end;
@@ -65,6 +69,12 @@ begin
   gGridForm.DataSet:= adodsMaster;
   gGridForm.ReadOnlyGrid:= SoloLectura;
   adodsCFDIParaRelacionar.Parameters.ParamByName('IdPersonaReceptor').Value := IdPersonaReceptor;
+  adodsCFDIParaRelacionar.Parameters.ParamByName('IdCFDITipoDocumento').Value := IdCFDITipoDocumento;
+end;
+
+procedure TdmCFDIRelacionados.SetIdCFDITipoDocumento(const Value: Integer);
+begin
+  FIdCFDITipoDocumento := Value;
 end;
 
 procedure TdmCFDIRelacionados.SetIdPersonaReceptor(const Value: Integer);
