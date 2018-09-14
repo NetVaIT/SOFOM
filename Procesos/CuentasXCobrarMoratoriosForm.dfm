@@ -1,6 +1,6 @@
-inherited frmConCXCMoratorios: TfrmConCXCMoratorios
+inherited frmCuentasXCobrarMoratorios: TfrmCuentasXCobrarMoratorios
   BorderStyle = bsToolWindow
-  Caption = 'Cuentas X Cobrar de Moratorios'
+  Caption = 'Detalle de moratorios'
   ClientHeight = 428
   ClientWidth = 771
   ExplicitWidth = 777
@@ -27,14 +27,14 @@ inherited frmConCXCMoratorios: TfrmConCXCMoratorios
   end
   inherited pnlMaster: TPanel
     Width = 771
-    Height = 224
+    Height = 229
     ExplicitWidth = 771
-    ExplicitHeight = 224
+    ExplicitHeight = 229
     inherited cxGrid: TcxGrid
       Width = 771
-      Height = 224
+      Height = 229
       ExplicitWidth = 771
-      ExplicitHeight = 224
+      ExplicitHeight = 229
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdCuentaXCobrar: TcxGridDBColumn
           DataBinding.FieldName = 'IdCuentaXCobrar'
@@ -141,7 +141,7 @@ inherited frmConCXCMoratorios: TfrmConCXCMoratorios
     DockControlHeights = (
       0
       0
-      31
+      26
       0)
   end
   inherited cxStyleRepository: TcxStyleRepository
@@ -153,7 +153,6 @@ inherited frmConCXCMoratorios: TfrmConCXCMoratorios
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42821.676877581020000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

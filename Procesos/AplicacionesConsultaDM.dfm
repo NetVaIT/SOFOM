@@ -3,18 +3,18 @@ inherited dmAplicacionesConsulta: TdmAplicacionesConsulta
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     CommandText = 
-      'select PA.FechaAplicacion ,pa.importe, PR.FechaPago as FechaPago' +
-      ','#13#10' PR.FolioPago, Pr.SeriePago,Cc.IdCuentaXCobrar NoCuentaXCobra' +
-      'r,'#13#10' CC.FechaVencimiento as FechaCXC ,P.RazonSocial as Cliente,C' +
-      'C.IDAnexo,A.DEscripcion Anexo,'#13#10'PA.IdPagoAplicacion, Pa.IdPago, ' +
-      'PA.IdPersonaCliente,'#13#10'A.IdContrato, P.idMetodoPago , CC.IdCFDI, ' +
-      'cc.Saldo SaldoCXC,'#13#10'Ci.Serie SerieFactura, Ci.Folio FolioFactura' +
-      ', Ci.Total TotalFactura -- jul 11/17'#13#10',CC.Descripcion '#13#10'from Pag' +
-      'osAplicaciones PA'#13#10'inner join Pagos PR on PA.IdPago=PR.IdPago'#13#10'i' +
-      'nner join CuentasXCobrar CC on PA.IdCuentaXCobrar =Cc.IdcuentaXC' +
-      'obrar'#13#10'inner join CFDI Ci on Ci.IdCFDI =CC.IdCFDI -- jul 11/17'#13#10 +
-      ' inner join Anexos A on A.IdAnexo=cc.IdAnexo '#13#10'inner join Person' +
-      'as P on P.IdPersona =Cc.IdPersona'
+      'SELECT PA.FechaAplicacion, PA.Importe, PR.FechaPago, PR.FolioPag' +
+      'o, PR.SeriePago, CC.IdCuentaXCobrar AS NoCuentaXCobrar, CC.Fecha' +
+      'Vencimiento AS FechaCXC, P.RazonSocial AS Cliente, CC.IdAnexo, A' +
+      '.Descripcion AS Anexo, '#13#10'PA.IdPagoAplicacion, PA.IdPago, PA.IdPe' +
+      'rsonaCliente, A.IdContrato, P.IdMetodoPago, CC.IdCFDI, CC.Saldo ' +
+      'AS SaldoCXC, Ci.Serie AS SerieFactura, Ci.Folio AS FolioFactura,' +
+      ' Ci.Total AS TotalFactura, CC.Descripcion'#13#10'FROM PagosAplicacione' +
+      's AS PA '#13#10'INNER JOIN Pagos AS PR ON PA.IdPago = PR.IdPago '#13#10'INNE' +
+      'R JOIN CuentasXCobrar AS CC ON PA.IdCuentaXCobrar = CC.IdCuentaX' +
+      'Cobrar '#13#10'INNER JOIN CFDI AS Ci ON Ci.IdCFDI = CC.IdCFDI '#13#10'INNER ' +
+      'JOIN Personas AS P ON P.IdPersona = CC.IdPersona'#13#10'LEFT OUTER JOI' +
+      'N Anexos AS A ON A.IdAnexo = CC.IdAnexo '#13#10
     object adodsMasterCliente: TStringField
       FieldName = 'Cliente'
       Size = 300

@@ -279,6 +279,10 @@ inherited dmPagos: TdmPagos
       Visible = False
       OnExecute = actAddCuentaOrdenanteExecute
     end
+    object actSoloCXCDelAnexo: TAction
+      Caption = 'S'#243'lo cuentas por cobrar asociadas al anexo'
+      OnExecute = actSoloCXCDelAnexoExecute
+    end
   end
   object adodsPersonas: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -476,9 +480,6 @@ inherited dmPagos: TdmPagos
       'tus=-1 and puede que esten facturadas'#13#10' and CXC.IDAnexo=:IdAnexo' +
       #13#10'order by CXC.idanexosamortizaciones,EsMoratorio DEsc, CXC.Fech' +
       'aVencimiento'
-    DataSource = dsMaster
-    IndexFieldNames = 'IdPersona;IdAnexo'
-    MasterFields = 'IdPersonaCliente;IdAnexo'
     Parameters = <
       item
         Name = 'IdPersonaCliente'

@@ -1,6 +1,6 @@
-inherited FrmCXCDetalle: TFrmCXCDetalle
+inherited frmCuentasXCobrarDetalle: TfrmCuentasXCobrarDetalle
   BorderStyle = bsToolWindow
-  Caption = 'Detalle de Cuenta X Cobrar'
+  Caption = 'Detalle de la cuenta por cobrar'
   ClientHeight = 428
   ClientWidth = 645
   ExplicitWidth = 651
@@ -28,7 +28,6 @@ inherited FrmCXCDetalle: TFrmCXCDetalle
   inherited pnlMaster: TPanel
     Width = 645
     Height = 229
-    ExplicitTop = 26
     ExplicitWidth = 645
     ExplicitHeight = 229
     inherited cxGrid: TcxGrid
@@ -108,7 +107,6 @@ inherited FrmCXCDetalle: TFrmCXCDetalle
   end
   inherited DataSource: TDataSource
     DataSet = dmCuentasXCobrar.ADOdsCXCDetalle
-    OnDataChange = DataSourceDataChange
   end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
@@ -116,9 +114,6 @@ inherited FrmCXCDetalle: TFrmCXCDetalle
       0
       26
       0)
-    inherited Insert1: TdxBarButton
-      Visible = ivNever
-    end
   end
   inherited cxStyleRepository: TcxStyleRepository
     PixelsPerInch = 96

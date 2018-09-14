@@ -30,7 +30,7 @@ uses
   Vcl.ExtCtrls;
 
 type
-  TFrmCXCDetalle = class(T_frmGrid)
+  TfrmCuentasXCobrarDetalle = class(T_frmGrid)
     tvMasterIdCuentaXCobrar: TcxGridDBColumn;
     tvMasterIdCuentaXCobrarTipo: TcxGridDBColumn;
     tvMasterIdentificador: TcxGridDBColumn;
@@ -41,34 +41,28 @@ type
     tvMasterSaldoFactoraje: TcxGridDBColumn;
     tvMasterPagosAplicados: TcxGridDBColumn;
     tvMasterPagosAplicadosFactoraje: TcxGridDBColumn;
-    procedure FormCreate(Sender: TObject);
-    procedure DataSourceDataChange(Sender: TObject; Field: TField);
   private
+    FactAgregarCXCDetalle: TBasicAction;
+    procedure SetactAgregarCXCDetalle(const Value: TBasicAction);
     { Private declarations }
   public
     { Public declarations }
+    property actAgregarCXCDetalle: TBasicAction read FactAgregarCXCDetalle write SetactAgregarCXCDetalle;
   end;
-
-var
-  FrmCXCDetalle: TFrmCXCDetalle;
 
 implementation
 
 {$R *.dfm}
 
-uses CuentasXCobrarDM, CuentasXCobrarConceptosEdit;
+uses CuentasXCobrarDM;
 
-procedure TFrmCXCDetalle.DataSourceDataChange(Sender: TObject; Field: TField);
+{ TfrmCuentasXCobrarDetalle }
+
+procedure TfrmCuentasXCobrarDetalle.SetactAgregarCXCDetalle(
+  const Value: TBasicAction);
 begin
-  inherited;
-  edit1.Enabled:= pos('Opción de compra', datasource.DataSet.FieldByName('Descripcion').AsString)>0;
-
-end;
-
-procedure TFrmCXCDetalle.FormCreate(Sender: TObject);
-begin
-  inherited;
-//  gEditForm:= TfrmCuentasXCobrarConceptosEdit.Create(Self);
+  FactAgregarCXCDetalle := Value;
+  DatasetInsert.OnExecute := Value.OnExecute;
 end;
 
 end.

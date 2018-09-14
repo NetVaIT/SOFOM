@@ -92,10 +92,10 @@
         <VerInfo_Release>2</VerInfo_Release>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <Icon_MainIcon>Manarina_Icon.ico</Icon_MainIcon>
-        <VerInfo_Build>47</VerInfo_Build>
+        <VerInfo_Build>48</VerInfo_Build>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.2.47;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.2.48;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -722,10 +722,13 @@
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Procesos\CuentasXCobrarDetalleForm.pas">
-            <Form>FrmCXCDetalle</Form>
+            <Form>frmCuentasXCobrarDetalle</Form>
         </DCCReference>
         <DCCReference Include="Procesos\CuentasXCobrarEdit.pas">
             <Form>FrmEdCuentasXCobrar</Form>
+        </DCCReference>
+        <DCCReference Include="Procesos\CuentasXCobrarDetalleAddEdit.pas">
+            <Form>frmCuentasXCobrarDetalleAddEdit</Form>
         </DCCReference>
         <DCCReference Include="Procesos\PagosDM.pas">
             <Form>dmPagos</Form>
@@ -742,7 +745,6 @@
         </DCCReference>
         <DCCReference Include="Procesos\AnexosCreditosEdit.pas">
             <Form>frmAnexosCreditosEdit</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\CotizacionesDM.pas">
             <Form>dmCotizaciones</Form>
@@ -764,45 +766,35 @@
         </DCCReference>
         <DCCReference Include="Procesos\CotizacionesCreditosForm.pas">
             <Form>frmCotizacionesCreditos</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\CotizacionesCreditosEdit.pas">
             <Form>frmCotizacionesCreditosEdit</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\CotizacionesSeleccionarForm.pas">
             <Form>frmCotizacionesSeleccionar</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\AplicacionesConsultaInd.pas">
             <Form>frmAplicacionesInd</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\AplicacionesConsultaDM.pas">
             <Form>dmAplicacionesConsulta</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Procesos\AplicacionesConsultaGrid.pas">
             <Form>frmConaplicaciones</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\AplicacionesInternasCon.pas">
             <Form>frmConAplicacionesInternas</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\EstadosCuentaDM.pas">
             <Form>dmEstadosCuenta</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Procesos\EstadosCuentaForm.pas">
             <Form>FrmConEstadosCuenta</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\EstadosCuentaDetalleForm.pas">
             <Form>FrmConEstadoCtaDetalle</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\ContratosDocumentosDM.pas">
             <Form>dmContratosDocumentos</Form>
@@ -843,104 +835,81 @@
         </DCCReference>
         <DCCReference Include="Catalogos\ListasRestringidasDM.pas">
             <Form>dmListasRestringidas</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Catalogos\ListasRestringidasForm.pas">
             <Form>frmListasRestringidas</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Catalogos\ListasRestringidasEdit.pas">
             <Form>frmListasRestringidasEdit</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\SeguimientoCobranzaCon.pas">
             <Form>FrmSeguimientoCobranza</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\SeguimientoCobranzaDM.pas">
             <Form>dmSeguimientoCobranza</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Procesos\SeguimientoRegistroEd.pas">
             <Form>FrmSeguimientoRegistro</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\AbonarCapitalDM.pas">
             <Form>dmAbonarCapital</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Procesos\AbonarCapitalEdit.pas">
             <Form>frmAbonarCapitalEdit</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Standard\_ReportSOFOMDM.pas">
             <Form>_dmReportSOFOM</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Reportes\PDFAntiguedadSaldosDM.pas">
             <Form>dmAntiguedadSaldosPDF</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Reportes\PDFEStadoCuentaDM.pas">
             <Form>dmRepEstadoCta</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Catalogos\ConfiguracionDM.pas">
             <Form>dmConfiguracion</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Catalogos\ConfiguracionesEdit.pas">
             <Form>frmConfiguracionesEdit</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Catalogos\ConfiguracionesForm.pas">
             <Form>frmConfiguraciones</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\AnexosMoratoriosDM.pas">
             <Form>dmAnexosMoratorios</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Procesos\AnexosMoratoriosForm.pas">
             <Form>frmAnexosMoratorios</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\AnexosMoratoriosEdit.pas">
             <Form>frmAnexosMoratoriosEdit</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\CuentasXCobrarMoratoriosForm.pas">
-            <Form>frmConCXCMoratorios</Form>
-            <FormType>dfm</FormType>
+            <Form>frmCuentasXCobrarMoratorios</Form>
         </DCCReference>
         <DCCReference Include="Procesos\CotizacionesDetalleForm.pas">
             <Form>frmCotizacionesDetalle</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\CotizacionesDetalleEdit.pas">
             <Form>frmCotizacionesDetalleEdit</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Reportes\rptInformacionContratosDM.pas">
             <Form>DMRptInformacionContratos</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Reportes\rptInformacionContratosForm.pas">
             <Form>FrmInformacionContratosGrid</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\ImpactoISRDM.pas">
             <Form>dmImpactoISR</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Procesos\ImpactoISREdit.pas">
@@ -967,30 +936,24 @@
         </DCCReference>
         <DCCReference Include="Catalogos\MonedasCotizacionesDM.pas">
             <Form>dmMonedasCotizaciones</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Catalogos\MonedasCotizacionesEdit.pas">
             <Form>frmMonedasCotizacionesEdit</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Catalogos\MonedasCotizacionesForm.pas">
             <Form>frmMonedasCotizaciones</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Reportes\RptAnexosProductosDM.pas">
             <Form>dmRptAnexosProductos</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Reportes\RptColocacionAcumuladoDM.pas">
             <Form>dmRptColocacionAcumulado</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Catalogos\PonerFechaActualForm.pas">
             <Form>FrmPoneFechaActual</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\BuroCreditoDM.pas">
             <Form>dmBuroCredito</Form>
@@ -1001,36 +964,28 @@
         </DCCReference>
         <DCCReference Include="Procesos\CuentasBancariasMovimientosDM.pas">
             <Form>DMCuentasBancariasMovimientos</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Procesos\CuentasBancariasMovimientosForm.pas">
             <Form>FrmCuentasBancariasMovimientos</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\MovimientosXCuentaForm.pas">
             <Form>FrmMovimientosXCtaBan</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\ListaNotaCreditoForm.pas">
             <Form>frmListaNotasCredito</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\ConceptoOpcionCEdt.pas">
             <Form>FrmConcFacturaOpcCompra</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\SeleccionAplicacionForm.pas">
             <Form>FrmSeleccionAplicacion</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\ClaveAutorizacionForm.pas">
             <Form>FrmClaveAutorizacion</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\MetodoPagoFacturaEdt.pas">
             <Form>FrmMetodoPagoFactura</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\PLDAlertasDM.pas">
             <Form>dmPLDAlertas</Form>
@@ -1047,7 +1002,6 @@
         </DCCReference>
         <DCCReference Include="Reportes\PDFReporteEstatusCXC.pas">
             <Form>DMListaCXCPendFactPDF</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Reportes\PDFAplicacionSaldosDM.pas">
@@ -1066,7 +1020,6 @@
         </DCCReference>
         <DCCReference Include="Procesos\FacturaConfirmacionForm.pas">
             <Form>FrmDatosFacturaPrev</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Facturar33\Versiones\Facturacion.ComplementoPagoV1.pas"/>
         <DCCReference Include="Facturar33\Versiones\Facturacion.ComprobanteV33.pas"/>
@@ -1086,29 +1039,23 @@
         </DCCReference>
         <DCCReference Include="Procesos\FacturasPropiedadesEdit.pas">
             <Form>frmFacturasPropiedadesEdit</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Catalogos\ListasRestringidasWeb.pas">
             <Form>frmListasRestringidasWeb</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Catalogos\MSHTML_TLB.pas"/>
         <DCCReference Include="Procesos\PLDAlertasPreocupanteForm.pas">
             <Form>frmPLDAlertasPreocupante</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Catalogos\PLDAlertasConfiguracionDM.pas">
             <Form>dmPLDAlertasConfiguracion</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Catalogos\PLDAlertasConfiguracionForm.pas">
             <Form>frmPLDAlertasConfiguracion</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Catalogos\PLDAlertasConfiguracionEdit.pas">
             <Form>frmPLDAlertasConfiguracionEdit</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\CFDIRelacionadosDM.pas">
             <Form>dmCFDIRelacionados</Form>
@@ -1119,11 +1066,9 @@
         </DCCReference>
         <DCCReference Include="Procesos\CFDICPRelacionadosForm.pas">
             <Form>frmCFDICPRelacionados</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\PagosAplicacionesForm.pas">
             <Form>frmPagosAplicaciones</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Catalogos\PersonasAdministradoresDM.pas">
             <Form>dmPersonasAdministradores</Form>
@@ -1166,49 +1111,38 @@
         </DCCReference>
         <DCCReference Include="Catalogos\MRPOCamposAdicForm.pas">
             <Form>frmMRCamposAdi</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Catalogos\MRPOCamposAdicEdit.pas">
             <Form>frmMRPOCampoAdiEdit</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Catalogos\MRPaquetePreguntasForm.pas">
             <Form>frmPaquetePreguntas</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Catalogos\MRRelacionPreguntasEdit.pas">
             <Form>frmRelacionPreguntasEdit</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Catalogos\MRRelacionPreguntasForm.pas">
             <Form>frmRelacionPreguntas</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Catalogos\MRPaquetePreguntasEdit.pas">
             <Form>frmPaquetePreguntasEdit</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Catalogos\MRPaquetesPreguntasDM.pas">
             <Form>dmMRPaquetesPreguntas</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Procesos\EvaluacionesRiesgoDM.pas">
             <Form>dmEvaluacionRiesgo</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Procesos\EvaluacionesRiesgoForm.pas">
             <Form>frmEvaluacionesRiesgo</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\EvaluacionesRiesgoEdit.pas">
             <Form>frmEvaluacionesRiesgoEdit</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\MRAplicacionCuesionarioEdit.pas">
             <Form>FrmAplicacionCuestionarioEdt</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>

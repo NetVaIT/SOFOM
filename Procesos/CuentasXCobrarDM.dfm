@@ -6,41 +6,107 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     CursorType = ctStatic
     AfterOpen = adodsMasterAfterOpen
     BeforeInsert = adodsMasterBeforeInsert
+    OnNewRecord = adodsMasterNewRecord
     CommandText = 
-      'select IdCuentaXCobrar, IdCuentaXCobrarEstatus, IdPersona,'#13#10' IdA' +
-      'nexosAmortizaciones, CXC.Fecha, Importe, CXC.Impuesto,'#13#10'CXC. Int' +
-      'eres, CXC.Total, Saldo, SaldoFactoraje, IdCFDI ,'#13#10'CXC.IdAnexo, C' +
-      'XC.IdCuentaXCobrarBase,CXC.FechaVencimiento, EsMoratorio'#13#10', CXC.' +
-      'Descripcion'#13#10'from CuentasXCobrar CXC '#13#10'where EsMoratorio=0'#13#10#13#10'or' +
-      'der by   IdAnexo, IDAnexosAmortizaciones'#13#10#13#10'--where idcuentaxcob' +
-      'rarEstatus =-1 -- precargada'
+      'SELECT IdCuentaXCobrar, IdCuentaXCobrarBase, IdCuentaXCobrarEsta' +
+      'tus, IdPersona, IdAnexosAmortizaciones, IdAnexo, IdCFDI, Fecha, ' +
+      'FechaVencimiento, Descripcion, Importe, Impuesto, Interes, Total' +
+      ', Saldo, SaldoFactoraje, EsMoratorio'#13#10'FROM CuentasXCobrar AS CXC' +
+      #13#10'WHERE EsMoratorio = 0'#13#10'ORDER BY IdAnexo, IdAnexosAmortizacione' +
+      's'#13#10
     Left = 56
     Top = 24
     object adodsMasterIdCuentaXCobrar: TAutoIncField
-      DisplayLabel = 'No.Cuenta X Cobrar'
+      DisplayLabel = 'Cuenta por cobrar'
       FieldName = 'IdCuentaXCobrar'
       ReadOnly = True
+      Visible = False
+    end
+    object adodsMasterIdCuentaXCobrarBase: TIntegerField
+      FieldName = 'IdCuentaXCobrarBase'
+      Visible = False
     end
     object adodsMasterIdCuentaXCobrarEstatus: TIntegerField
       FieldName = 'IdCuentaXCobrarEstatus'
+      Visible = False
     end
     object adodsMasterIdPersona: TIntegerField
       FieldName = 'IdPersona'
+      Required = True
+      Visible = False
     end
     object adodsMasterIdAnexo: TIntegerField
       FieldName = 'IdAnexo'
+      Visible = False
     end
     object adodsMasterIdAnexosAmortizaciones: TIntegerField
       FieldName = 'IdAnexosAmortizaciones'
+      Visible = False
+    end
+    object adodsMasterIdCFDI: TLargeintField
+      FieldName = 'IdCFDI'
+      Visible = False
+    end
+    object adodsMasterCliente: TStringField
+      FieldKind = fkLookup
+      FieldName = 'Cliente'
+      LookupDataSet = ADOSPersonas
+      LookupKeyFields = 'IdPersona'
+      LookupResultField = 'RazonSocial'
+      KeyFields = 'IdPersona'
+      Size = 150
+      Lookup = True
+    end
+    object adodsMasterContrato: TStringField
+      FieldKind = fkLookup
+      FieldName = 'Contrato'
+      LookupDataSet = ADODtStAdicionalesContratoAnexo
+      LookupKeyFields = 'IdAnexo'
+      LookupResultField = 'Contrato'
+      KeyFields = 'IdAnexo'
+      Size = 100
+      Lookup = True
+    end
+    object adodsMasterAnexo: TStringField
+      FieldKind = fkLookup
+      FieldName = 'Anexo'
+      LookupDataSet = ADODtStAdicionalesContratoAnexo
+      LookupKeyFields = 'IdAnexo'
+      LookupResultField = 'Anexo'
+      KeyFields = 'IdAnexo'
+      Size = 100
+      Lookup = True
+    end
+    object adodsMasterFecha: TDateTimeField
+      FieldName = 'Fecha'
+    end
+    object adodsMasterFechaVencimiento: TDateTimeField
+      DisplayLabel = 'Fecha vencimiento'
+      FieldName = 'FechaVencimiento'
+      Required = True
+    end
+    object adodsMasterDescripcion: TStringField
+      DisplayLabel = 'Descripci'#243'n'
+      FieldName = 'Descripcion'
+      Required = True
+      Size = 100
+    end
+    object adodsMasterEstatusCXC: TStringField
+      DisplayLabel = 'Estatus'
+      FieldKind = fkLookup
+      FieldName = 'EstatusCXC'
+      LookupDataSet = ADODSCXCEstatus
+      LookupKeyFields = 'IdCuentaXCobrarEstatus'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IdCuentaXCobrarEstatus'
+      Size = 15
+      Lookup = True
     end
     object adodsMasterImporte: TFMTBCDField
       FieldName = 'Importe'
       currency = True
       Precision = 18
       Size = 6
-    end
-    object adodsMasterFecha: TDateTimeField
-      FieldName = 'Fecha'
     end
     object adodsMasterImpuesto: TFMTBCDField
       FieldName = 'Impuesto'
@@ -66,73 +132,25 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       Precision = 18
       Size = 6
     end
-    object adodsMasterEstatusCXC: TStringField
-      FieldKind = fkLookup
-      FieldName = 'EstatusCXC'
-      LookupDataSet = ADODSCXCEstatus
-      LookupKeyFields = 'IdCuentaXCobrarEstatus'
-      LookupResultField = 'Descripcion'
-      KeyFields = 'IdCuentaXCobrarEstatus'
-      Size = 15
-      Lookup = True
-    end
-    object adodsMasterCliente: TStringField
-      FieldKind = fkLookup
-      FieldName = 'Cliente'
-      LookupDataSet = ADOSPersonas
-      LookupKeyFields = 'IdPersona'
-      LookupResultField = 'RazonSocial'
-      KeyFields = 'IdPersona'
-      Size = 150
-      Lookup = True
-    end
     object adodsMasterSaldoFactoraje: TFMTBCDField
+      DisplayLabel = 'Saldo factoraje'
       FieldName = 'SaldoFactoraje'
+      Visible = False
       currency = True
       Precision = 18
       Size = 6
     end
-    object adodsMasterIdCFDI: TLargeintField
-      FieldName = 'IdCFDI'
-    end
-    object adodsMasterIdCuentaXCobrarBase: TIntegerField
-      FieldName = 'IdCuentaXCobrarBase'
-    end
-    object adodsMasterFechaVencimiento: TDateTimeField
-      FieldName = 'FechaVencimiento'
-    end
     object adodsMasterEsMoratorio: TBooleanField
+      DisplayLabel = 'Es moratorio'
       FieldName = 'EsMoratorio'
-    end
-    object adodsMasterAnexo: TStringField
-      FieldKind = fkLookup
-      FieldName = 'Anexo'
-      LookupDataSet = ADODtStAdicionalesContratoAnexo
-      LookupKeyFields = 'IdAnexo'
-      LookupResultField = 'Anexo'
-      KeyFields = 'IdAnexo'
-      Size = 100
-      Lookup = True
-    end
-    object adodsMasterContrato: TStringField
-      FieldKind = fkLookup
-      FieldName = 'Contrato'
-      LookupDataSet = ADODtStAdicionalesContratoAnexo
-      LookupKeyFields = 'IdAnexo'
-      LookupResultField = 'Contrato'
-      KeyFields = 'IdAnexo'
-      Size = 100
-      Lookup = True
-    end
-    object adodsMasterDescripcion: TStringField
-      FieldName = 'Descripcion'
-      Size = 100
+      Visible = False
     end
   end
   inherited adodsUpdate: TADODataSet
     Left = 328
   end
   inherited ActionList: TActionList
+    Left = 328
     object actGeneraPreFacturas: TAction
       Caption = 'Generar Factura'
       OnExecute = actGeneraPreFacturasExecute
@@ -147,7 +165,6 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     end
     object ActTotalesCXC: TAction
       Caption = 'TotalesCXC'
-      OnExecute = ActTotalesCXCExecute
     end
     object ActRepCxCEstatusFactPendiente: TAction
       Caption = 'CXC Pendiente Factura'
@@ -155,14 +172,24 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       OnExecute = ActRepCxCEstatusFactPendienteExecute
     end
     object actEliminar: TAction
+      Caption = '&Eliminar'
+      Hint = 'Eliminar'
       ImageIndex = 12
       OnExecute = actEliminarExecute
       OnUpdate = actEliminarUpdate
+    end
+    object actAgregarCXCDetalle: TAction
+      Caption = '&Insertar'
+      Hint = 'Insertar'
+      ImageIndex = 10
+      OnExecute = actAgregarCXCDetalleExecute
     end
   end
   object ADOdsCXCDetalle: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
+    AfterPost = ADOdsCXCDetalleAfterPost
+    AfterDelete = ADOdsCXCDetalleAfterDelete
     CommandText = 
       'select IdCuentaXCobrarDetalle, IdCuentaXCobrar, '#13#10'IdCuentaXCobra' +
       'rTipo, Identificador, Descripcion, '#13#10'Importe, Saldo, SaldoFactor' +
@@ -180,8 +207,12 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
         Size = 4
         Value = Null
       end>
-    Left = 48
-    Top = 96
+    Left = 168
+    Top = 80
+    object ADOdsCXCDetalleIdCuentaXCobrarDetalle: TAutoIncField
+      FieldName = 'IdCuentaXCobrarDetalle'
+      ReadOnly = True
+    end
     object ADOdsCXCDetalleIdCuentaXCobrar: TIntegerField
       FieldName = 'IdCuentaXCobrar'
     end
@@ -207,10 +238,6 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       currency = True
       Precision = 18
       Size = 6
-    end
-    object ADOdsCXCDetalleIdCuentaXCobrarDetalle: TAutoIncField
-      FieldName = 'IdCuentaXCobrarDetalle'
-      ReadOnly = True
     end
     object ADOdsCXCDetalleSaldoFactoraje: TFMTBCDField
       FieldName = 'SaldoFactoraje'
@@ -239,8 +266,8 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       'tadoCuenta, Fase, Temporalidad'#13#10' from CuentasXCobrarTiposConcept' +
       'os'
     Parameters = <>
-    Left = 40
-    Top = 176
+    Left = 168
+    Top = 136
   end
   object ADODSCXCEstatus: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -249,20 +276,18 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       'select IdCuentaXCobrarEstatus, Identificador, Descripcion'#13#10'from ' +
       'CuentasXCobrarEstatus'
     Parameters = <>
-    Left = 192
-    Top = 96
+    Left = 56
+    Top = 80
   end
   object ADOSPersonas: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'select IdPersona, IdPersonaTipo, IdRolTipo, IdRazonSocialTipo,'#13#10 +
-      ' IdSexo, IdEstadoCivil, IdPais, IdPoblacion, RFC, CURP,'#13#10' RazonS' +
-      'ocial, Nombre, ApellidoPaterno, ApellidoMaterno,'#13#10'IdMetodoPago,I' +
-      'dPersonaEstatus,NumCtaPagoCliente '#13#10'from Personas'
+      'SELECT IdPersona, RazonSocial FROM Personas'#13#10'WHERE IdRolTipo = 3' +
+      #13#10'ORDER BY RazonSocial'
     Parameters = <>
-    Left = 192
-    Top = 176
+    Left = 56
+    Top = 128
   end
   object DSMaster: TDataSource
     DataSet = adodsMaster
@@ -294,8 +319,8 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
         Size = 4
         Value = Null
       end>
-    Left = 56
-    Top = 256
+    Left = 616
+    Top = 240
     object DetallesCXCParaFacturarIdCuentaXCobrar: TIntegerField
       FieldName = 'IdCuentaXCobrar'
     end
@@ -362,8 +387,8 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
         Size = 4
         Value = Null
       end>
-    Left = 472
-    Top = 168
+    Left = 568
+    Top = 192
   end
   object ADODtStPrefacturasCFDI: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -384,8 +409,8 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       'ldoFactoraje'#13#10' from CFDI C'#13#10'where fecha>DATEADD(MM, DATEDIFF(MM,' +
       '0,[dbo].getDateAux()), 0)'#13#10'order by IDCFDIESTATUS, Fecha '
     Parameters = <>
-    Left = 456
-    Top = 24
+    Left = 552
+    Top = 64
     object ADODtStPrefacturasCFDIIdCFDI: TLargeintField
       FieldName = 'IdCFDI'
       ReadOnly = True
@@ -557,8 +582,8 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
         Size = 8
         Value = '8534'
       end>
-    Left = 464
-    Top = 96
+    Left = 560
+    Top = 136
     object ADODtStCFDIConceptosPrefIdCFDI: TLargeintField
       FieldName = 'IdCFDI'
     end
@@ -667,8 +692,8 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     IndexFieldNames = 'idpersona'
     MasterFields = 'IdPersonaEmisor'
     Parameters = <>
-    Left = 736
-    Top = 96
+    Left = 688
+    Top = 120
     object ADODtStPersonaEmisoridpersona: TAutoIncField
       FieldName = 'idpersona'
       ReadOnly = True
@@ -766,8 +791,8 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
         Size = 4
         Value = Null
       end>
-    Left = 728
-    Top = 24
+    Left = 680
+    Top = 48
     object ADODtStDireccionesClienteIdPersonaDomicilio: TAutoIncField
       FieldName = 'IdPersonaDomicilio'
       ReadOnly = True
@@ -832,14 +857,14 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     Parameters = <>
-    Left = 760
-    Top = 152
+    Left = 672
+    Top = 200
   end
   object ADOQryAuxiliar: TADOQuery
     Connection = _dmConection.ADOConnection
     Parameters = <>
-    Left = 580
-    Top = 409
+    Left = 324
+    Top = 145
   end
   object ADOStrprcActGralMoratorios: TADOStoredProc
     Connection = _dmConection.ADOConnection
@@ -906,7 +931,7 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
         Size = 4
         Value = Null
       end>
-    Left = 624
+    Left = 104
     Top = 256
     object ADODTSTCXCMoratoriosIdCuentaXCobrar: TAutoIncField
       FieldName = 'IdCuentaXCobrar'
@@ -978,7 +1003,7 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       FieldName = 'FechaVencimiento'
     end
   end
-  object ADOPActualizaTotalesCXC: TADOStoredProc
+  object adospUpdCuentasXCobrarTotales: TADOStoredProc
     Connection = _dmConection.ADOConnection
     ProcedureName = 'p_UpdCuentasXCobrarTotales;1'
     Parameters = <
@@ -996,8 +1021,8 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
         Precision = 10
         Value = Null
       end>
-    Left = 216
-    Top = 400
+    Left = 232
+    Top = 392
   end
   object ADODtStAdicionalesContratoAnexo: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -1009,8 +1034,8 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       'tificador As Contrato'#13#10' from Anexos A, Contratos C '#13#10'where A.idC' +
       'ontrato=C.IdContrato '
     Parameters = <>
-    Left = 192
-    Top = 240
+    Left = 104
+    Top = 192
     object ADODtStAdicionalesContratoAnexoIdAnexo: TAutoIncField
       FieldName = 'IdAnexo'
       ReadOnly = True
@@ -1030,8 +1055,8 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
   object ADOQryAux2: TADOQuery
     Connection = _dmConection.ADOConnection
     Parameters = <>
-    Left = 764
-    Top = 217
+    Left = 324
+    Top = 209
   end
   object ADODtStSelMetPago: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -1040,8 +1065,8 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       'select IdMetodoPago, Identificador, Descripcion, ExigeCuenta, '#13#10 +
       'ClaveSAT2016 from MetodosPago'#13#10'where idmetodoPago>0'
     Parameters = <>
-    Left = 688
-    Top = 408
+    Left = 608
+    Top = 168
     object ADODtStSelMetPagoIdMetodoPago: TIntegerField
       FieldName = 'IdMetodoPago'
     end
@@ -1088,5 +1113,56 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       end>
     Left = 216
     Top = 328
+  end
+  object adospGenCuentasXCobrarDetalle: TADOStoredProc
+    Connection = _dmConection.ADOConnection
+    ProcedureName = 'p_GenCuentasXCobrarDetalle;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@IdCuentaXCobrar'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@IdCuentaXCobrarTipoBase'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@DescripcionBase'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 100
+        Value = Null
+      end
+      item
+        Name = '@ImporteBase'
+        Attributes = [paNullable]
+        DataType = ftBCD
+        NumericScale = 6
+        Precision = 18
+        Value = Null
+      end
+      item
+        Name = '@IdCuentaXCobrarDetalle'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Direction = pdInputOutput
+        Precision = 10
+        Value = Null
+      end>
+    Left = 376
+    Top = 336
   end
 end

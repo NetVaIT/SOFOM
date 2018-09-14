@@ -424,6 +424,7 @@ type
     adodsPersonasNumCtaPagoCliente: TStringField;
     adodsPagosAplicacionesCFDIImporte: TFMTBCDField;
     adodsMetodoPagoIdCFDIFormaPago33: TAutoIncField;
+    actSoloCXCDelAnexo: TAction;
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsMasterAfterPost(DataSet: TDataSet);
     procedure adodsMasterBeforePost(DataSet: TDataSet);
@@ -450,6 +451,7 @@ type
     procedure actAddCuentaOrdenanteExecute(Sender: TObject);
     procedure adodsMasterIdPersonaClienteChange(Sender: TField);
     procedure adodsMasterIdMetodoPagoChange(Sender: TField);
+    procedure actSoloCXCDelAnexoExecute(Sender: TObject);
   private
     { Private declarations }
     Inserto:Boolean;
@@ -495,6 +497,8 @@ type
     function SacaSaldoApagar(SaldoPago: Double; IdCXC: integer): Double;
     procedure RefreshAplicaPago;
     function CrearCFDIPago(IdPago: Integer): Integer;
+    procedure AbrirCXCPendientes(EsAnticipado: Integer;
+      SoloCXCdelAnexo: Boolean);
     property PaymentTime: TPaymentTime read FPaymentTime write SetPaymentTime;
   public
     { Public declarations }
@@ -527,8 +531,7 @@ procedure TdmPagos.adodsMasterAfterOpen(DataSet: TDataSet);
 begin
   inherited;
   ADODtStAplicacionesPagos.Open;
-  ADODtStCXCPendientes.parameters.parambyname('EsAnti').Value:=0; //Oct 9/17
-  ADODtStCXCPendientes.Open;
+  AbrirCXCPendientes(0,False);
   ADODtStCxCDetallePend.Open;
   ADODtStConfiguraciones.Open;
 //  ADoSPersonas.Open;
@@ -596,11 +599,11 @@ begin
   Inserto:=dataset.state=dsInsert;
   if dataset.State = dsInsert then
   begin
-    if adodsMaster.FieldByName('IdAnexo').IsNULL then
-    begin
-      ShowMessage('Debe registrar el Anexo correspondiente al Pago');
-      abort;
-    end;
+//    if adodsMaster.FieldByName('IdAnexo').IsNULL then
+//    begin
+//      ShowMessage('Debe registrar el Anexo correspondiente al Pago');
+//      abort;
+//    end;
     adodsMaster.FieldByName('Saldo').Value:=adodsMaster.FieldByName('Importe').Value;  //Se debe usar value cuando tiene mas de 4 decimales para que no lo redondee.. sino no quedan iguales
   end
   else
@@ -928,6 +931,32 @@ begin
   end;
 end;
 
+procedure TdmPagos.AbrirCXCPendientes(EsAnticipado: Integer; SoloCXCdelAnexo: Boolean);
+const
+  cSQL = 'SELECT CXC.Descripcion, CXC.IdCuentaXCobrar, CXC.IdCuentaXCobrarBase, CXC.IdCuentaXCobrarEstatus, CXC.IdPersona, CXC.IdAnexosAmortizaciones AS IdAnexoAmortizacion, CXC.IdAnexo, CXC.IdEstadoCuenta, CXC.IdCFDI, ' +
+  'CXC.Fecha, CXC.FechaVencimiento, CXC.Importe, CXC.Impuesto, CXC.Interes, CXC.Total, CXC.Saldo, CXC.SaldoFactoraje, CXC.EsMoratorio, CI.SaldoDocumento, CI.SaldoFactoraje AS SaldoFactorajeCFDI, CI.Serie, CI.Folio ' +
+  'FROM CuentasXCobrar AS CXC ' +
+  'LEFT OUTER JOIN CFDI AS CI ON CI.IdCFDI = CXC.IdCFDI ' +
+  'WHERE (((IdCuentaXCobrarEstatus=0 or (IdCuentaXCobrarEstatus=1))  and  ESMoratorio=0)or( Esmoratorio=1) or( (CXC.Fecha<=dbo.GetDateAux() and IdCuentaXCobrarEstatus=-1) and 1=:EsAnti) ' +
+  'or (exists (select * from CuentasXCobrarDetalle CXCD where CXCD.descripcion like ''%Abono Capital%'' and CXC.IdCuentaXCobrar=CXCD.idcuentaXCobrar )and CXC.IdCFDI is null)) ' +
+  'AND CXC.Saldo > 0 ' +
+  'AND CXC.IdPersona = :IdPersona ';
+var
+  vSQL: string;
+begin
+  vSQL := cSQL;
+  if not adodsMasterIdAnexo.IsNull then
+    vSQL := vSQL + Format('AND CXC.IdAnexo = %d ', [adodsMasterIdAnexo.Value]);
+  if SoloCXCdelAnexo then
+    vSQL := vSQL + 'AND CXC.IdAnexosAmortizaciones IS NOT NULL ';
+  vSQL := vSQL + 'ORDER BY CXC.IdAnexosAmortizaciones, CXC.EsMoratorio DESC, CXC.FechaVencimiento';
+  ADODtStCXCPendientes.Close;
+  ADODtStCXCPendientes.CommandText := vSQL;
+  ADODtStCXCPendientes.Parameters.ParamByName('Esanti').value:= EsAnticipado;
+  ADODtStCXCPendientes.Parameters.ParamByName('IdPersona').value:= adodsMasterIdPersonaCliente.Value;
+  ADODtStCXCPendientes.Open;
+end;
+
 procedure TdmPagos.actAbonarCapitalExecute(Sender: TObject);    //No usada
 var
   dmAbonarCapital: TdmAbonarCapital;
@@ -1000,9 +1029,7 @@ begin
           if AplicaPago(adodsMasterIdPago.AsInteger,idcxc,idcfdiactual,frmAbonarCapitalEdit.Importe) then
             if  AjustarAmortizaciones(IdAnexoAct,TipoContrato,frmAbonarCapitalEdit.Importe,TipoAbono,frmAbonarCapitalEdit.Fecha ) then //Ajustar Amortizacion
             begin
-              ADODtStCXCPendientes.Close;
-              ADODtStCXCPendientes.Parameters.ParamByName('Esanti').value:= 1;
-              ADODtStCXCPendientes.Open;
+              AbrirCXCPendientes(1,False);
               ADODtStCXCPendientes.Locate('IdCuentaXCobrar', IDCXC,[]);
               adodsMaster.Refresh; //Pago
               //REgistrar en bitacora el abono a CApital
@@ -1102,9 +1129,8 @@ var
   dmCuentasXCobrar: TdmCuentasXCobrar;
 begin
   Result := 0;
-  ADODtStCXCPendientes.Close;      //Consulta ajustada para que muestre -1 de pagos adelantados jun 30/17
-  ADODtStCXCPendientes.Parameters.ParamByName('Esanti').value:= 1; //Oct 9/17
-  ADODtStCXCPendientes.Open;
+  //Consulta ajustada para que muestre -1 de pagos adelantados jun 30/17
+  AbrirCXCPendientes(1,False);
   if ADODtStCXCPendientes.Locate('IdCuentaXCobrar',IdCXC,[]) then
   begin
     dmCuentasXCobrar := TdmCuentasXCobrar.Create(Self);
@@ -1134,9 +1160,8 @@ begin
   inherited;
   Existen:=true;
   IdCFDIActual:=0;
-  ADODtStCXCPendientes.Close;      //SE agregó aca  oct 9/17 Para que pueda encontrar la informacion para facturar
-  ADODtStCXCPendientes.Parameters.ParamByName('EsAnti').Value:=1;  //Oct 9/17
-  ADODtStCXCPendientes.Open;
+  //SE agregó aca  oct 9/17 Para que pueda encontrar la informacion para facturar
+  AbrirCXCPendientes(1,False);
   while (adodsMasterSaldo.AsFloat >0.01) and Existen do //tiene saldo.. verificar si en un ciclo.
   begin
     if CrearSiguienteCXC(adodsMasterIdAnexo.AsInteger,Idcxc)then //Se ajusto por i hubiese creada pero no timbrada
@@ -1150,10 +1175,7 @@ begin
         //no hace ajuste porque no es abono a capital  if  AjustarAmortizaciones(IdAnexoAct,TipoContrato,ImportePago,TipoAbono,frmAbonarCapitalEdit.Fecha ) then //Ajustar Amortizacion
           begin
           //CAmbiar consulta   //Oct 9/17
-            ADODtStCXCPendientes.Close;
-         //   ADODtStCXCPendientes.CommandText:= ConsultaConAnticipados;  Se cambio arrriba
-            ADODtStCXCPendientes.Parameters.ParamByName('EsAnti').Value:=1; //oct 9/17
-            ADODtStCXCPendientes.Open;
+            AbrirCXCPendientes(1,False);
             ADODtStCXCPendientes.Locate('IdCuentaXCobrar', IDCXC,[]);
             adodsMaster.Refresh; //Pago
             ObsBitacora:='IDPago:'+ intToSTr(adodsMasterIdPago.AsInteger)+' IdAnexo: '+intToSTR(adodsMasterIdAnexo.AsInteger)
@@ -1170,14 +1192,23 @@ begin
     else
       Existen:=False;
   end;
-  ADODtStCXCPendientes.Close;   //Para que regrese como estaba..   oct 9/17
-  ADODtStCXCPendientes.Parameters.ParamByName('EsAnti').Value:=0; //oct 9/17
- // ADODtStCXCPendientes.CommandText:= ConsultaBase;
-  ADODtStCXCPendientes.Open;
+  AbrirCXCPendientes(0,False);
   if adodsMasterSaldo.AsFloat<=0.01  then   //Ago 2/17
   begin
     RefreshAplicaPago;
   end;
+end;
+
+procedure TdmPagos.actSoloCXCDelAnexoExecute(Sender: TObject);
+var
+  Solo: Boolean;
+begin
+  inherited;
+//  if Assigned(TFrmConPagos(gGridForm).FrmAplicacionPago) then
+//    Solo := TFrmConPagos(gGridForm).FrmAplicacionPago.SoloCXCDelAnexo
+//  else
+    Solo:= False;
+  AbrirCXCPendientes(0, Solo);
 end;
 
 procedure TdmPagos.RefreshAplicaPago;  //Ago 2/17
@@ -1663,9 +1694,7 @@ begin
   adopSetCXCUPMoratorio.Parameters.ParamByName('@IdCuentaXCobrar').Value:=  ADODtStCXCPendientes.FieldByName('IDCuentaXCobrar').asinteger;        //May 22/17
   adopSetCXCUPMoratorio.ExecProc;
   idActual:= ADODtStCXCPendientes.FieldByName('IdCuentaXCobrar').AsInteger;
-  ADODtStCXCPendientes.Close;
-  ADODtStCXCPendientes.Parameters.ParamByName('EsAnti').Value:=0; //oct 9/17 Son moratorios.. verificar
-  ADODtStCXCPendientes.Open;
+  AbrirCXCPendientes(0,False);
   ADODtStCXCPendientes.Locate('IdCuentaXCobrar', idActual,[]);
   if ADODtStCXCPendientes.FieldByName('EsMoratorio').asBoolean then   //Se supone que tendría los moratorios creados???
   begin
@@ -1833,6 +1862,7 @@ begin
   TFrmConPagos(gGridForm).DSVerificaSaldoFinal.dataset :=adoQryVerificaSaldoFinal; //Oct 3/17
   TFrmConPagos(gGridForm).actGenCFDIPago := actGenCFDIPago;
   TFrmConPagos(gGridForm).actAddCuentaOrdenante := actAddCuentaOrdenante;
+  TFrmConPagos(gGridForm).actSoloCXCDelAnexo := actSoloCXCDelAnexo;
   if adodsPagosAplicaciones.CommandText <> EmptyStr then adodsPagosAplicaciones.Open;
   gFormDeatil1:= TfrmPagosAplicaciones.Create(Self);
   gFormDeatil1.ReadOnlyGrid := True;

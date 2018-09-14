@@ -1,216 +1,285 @@
 inherited FrmEdCuentasXCobrar: TFrmEdCuentasXCobrar
-  Caption = 'Edici'#243'n Cuentas X Cobrar'
-  ClientHeight = 699
-  ClientWidth = 724
-  ExplicitWidth = 730
-  ExplicitHeight = 728
+  Caption = 'Cuenta por cobrar'
+  ClientHeight = 696
+  ClientWidth = 668
+  ExplicitWidth = 674
+  ExplicitHeight = 725
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
-    Width = 724
-    Height = 658
-    ExplicitWidth = 724
-    ExplicitHeight = 658
-    ClientRectBottom = 656
-    ClientRectRight = 722
+    Width = 668
+    Height = 655
+    ExplicitWidth = 668
+    ExplicitHeight = 655
+    ClientRectBottom = 653
+    ClientRectRight = 666
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 2
       ExplicitTop = 26
-      ExplicitWidth = 720
-      ExplicitHeight = 630
-      object Label1: TLabel
-        Left = 24
-        Top = 23
-        Width = 97
+      ExplicitWidth = 664
+      ExplicitHeight = 627
+      object Label2: TLabel
+        Left = 16
+        Top = 45
+        Width = 33
         Height = 13
-        Caption = 'No.Cuenta X Cobrar'
+        Caption = 'Cliente'
+        FocusControl = lcbCliente
       end
-      object Label5: TLabel
-        Left = 24
-        Top = 64
+      object Label3: TLabel
+        Left = 16
+        Top = 88
+        Width = 43
+        Height = 13
+        Caption = 'Contrato'
+        FocusControl = DBLookupComboBox2
+      end
+      object Label4: TLabel
+        Left = 270
+        Top = 88
+        Width = 31
+        Height = 13
+        Caption = 'Anexo'
+        FocusControl = DBLookupComboBox3
+      end
+      object Label6: TLabel
+        Left = 397
+        Top = 88
         Width = 29
         Height = 13
         Caption = 'Fecha'
         FocusControl = cxDBDateEdit1
       end
-      object Label6: TLabel
-        Left = 24
-        Top = 125
+      object Label7: TLabel
+        Left = 524
+        Top = 88
+        Width = 89
+        Height = 13
+        Caption = 'Fecha vencimiento'
+        FocusControl = edtFechaVencimiento
+      end
+      object Label8: TLabel
+        Left = 16
+        Top = 128
+        Width = 54
+        Height = 13
+        Caption = 'Descripci'#243'n'
+        FocusControl = edtDescripcion
+      end
+      object Label9: TLabel
+        Left = 524
+        Top = 6
+        Width = 36
+        Height = 13
+        Caption = 'Estatus'
+        FocusControl = DBLookupComboBox4
+      end
+      object Label5: TLabel
+        Left = 16
+        Top = 168
         Width = 38
         Height = 13
         Caption = 'Importe'
-        FocusControl = cxDBTextEdit1
+        FocusControl = cxDBTextEdit2
       end
-      object Label7: TLabel
-        Left = 192
-        Top = 125
+      object Label10: TLabel
+        Left = 143
+        Top = 168
         Width = 45
         Height = 13
         Caption = 'Impuesto'
-        FocusControl = cxDBTextEdit2
+        FocusControl = cxDBTextEdit3
       end
-      object Label8: TLabel
-        Left = 352
-        Top = 125
+      object Label11: TLabel
+        Left = 270
+        Top = 168
         Width = 35
         Height = 13
         Caption = 'Interes'
-        FocusControl = cxDBTextEdit3
+        FocusControl = cxDBTextEdit4
       end
-      object Label9: TLabel
-        Left = 192
-        Top = 176
+      object Label12: TLabel
+        Left = 397
+        Top = 168
         Width = 24
         Height = 13
         Caption = 'Total'
-        FocusControl = cxDBTextEdit4
+        FocusControl = cxDBTextEdit5
       end
-      object Label10: TLabel
-        Left = 352
-        Top = 176
+      object Label13: TLabel
+        Left = 524
+        Top = 168
         Width = 26
         Height = 13
         Caption = 'Saldo'
-        FocusControl = cxDBTextEdit5
+        FocusControl = cxDBTextEdit6
       end
-      object Label11: TLabel
-        Left = 483
-        Top = 67
-        Width = 56
+      object Label1: TLabel
+        Left = 16
+        Top = 3
+        Width = 88
         Height = 13
-        Caption = 'EstatusCXC'
-        FocusControl = DBLookupComboBox1
-      end
-      object Label12: TLabel
-        Left = 192
-        Top = 23
-        Width = 33
-        Height = 13
-        Caption = 'Cliente'
-        FocusControl = DBLookupComboBox2
-      end
-      object Label2: TLabel
-        Left = 192
-        Top = 64
-        Width = 89
-        Height = 13
-        Caption = 'Fecha Vencimiento'
-        FocusControl = cxDBDateEdit2
-      end
-      object cxDBDateEdit1: TcxDBDateEdit
-        Left = 24
-        Top = 80
-        DataBinding.DataField = 'Fecha'
-        DataBinding.DataSource = DataSource
-        TabOrder = 0
-        Width = 121
-      end
-      object cxDBTextEdit1: TcxDBTextEdit
-        Left = 24
-        Top = 141
-        DataBinding.DataField = 'Importe'
-        DataBinding.DataSource = DataSource
-        TabOrder = 1
-        Width = 121
-      end
-      object cxDBTextEdit2: TcxDBTextEdit
-        Left = 192
-        Top = 141
-        DataBinding.DataField = 'Impuesto'
-        DataBinding.DataSource = DataSource
-        TabOrder = 2
-        Width = 121
-      end
-      object cxDBTextEdit3: TcxDBTextEdit
-        Left = 352
-        Top = 141
-        DataBinding.DataField = 'Interes'
-        DataBinding.DataSource = DataSource
-        TabOrder = 3
-        Width = 121
-      end
-      object cxDBTextEdit4: TcxDBTextEdit
-        Left = 192
-        Top = 192
-        DataBinding.DataField = 'Total'
-        DataBinding.DataSource = DataSource
-        TabOrder = 4
-        Width = 121
-      end
-      object cxDBTextEdit5: TcxDBTextEdit
-        Left = 352
-        Top = 192
-        DataBinding.DataField = 'Saldo'
-        DataBinding.DataSource = DataSource
-        TabOrder = 5
-        Width = 121
-      end
-      object DBLookupComboBox1: TDBLookupComboBox
-        Left = 483
-        Top = 83
-        Width = 209
-        Height = 21
-        DataField = 'EstatusCXC'
-        DataSource = DataSource
-        TabOrder = 6
-      end
-      object DBLookupComboBox2: TDBLookupComboBox
-        Left = 192
-        Top = 40
-        Width = 500
-        Height = 21
-        DataField = 'Cliente'
-        DataSource = DataSource
-        TabOrder = 7
+        Caption = 'Cuenta por cobrar'
+        FocusControl = cxDBTextEdit7
       end
       object PnlDetalleFact: TPanel
         Left = 0
-        Top = 234
-        Width = 720
-        Height = 204
+        Top = 227
+        Width = 664
+        Height = 200
         Align = alBottom
-        BevelKind = bkTile
-        TabOrder = 8
-      end
-      object cxDBLabel1: TcxDBLabel
-        Left = 24
-        Top = 39
-        DataBinding.DataField = 'IdCuentaXCobrar'
-        DataBinding.DataSource = DataSource
-        Height = 21
-        Width = 121
+        TabOrder = 13
+        OnEnter = PnlDetalleFactEnter
       end
       object pnlMoratorios: TPanel
         Left = 0
-        Top = 438
-        Width = 720
-        Height = 192
+        Top = 427
+        Width = 664
+        Height = 200
         Align = alBottom
-        BevelKind = bkTile
-        TabOrder = 10
+        TabOrder = 14
       end
-      object cxDBDateEdit2: TcxDBDateEdit
-        Left = 192
-        Top = 80
+      object lcbCliente: TDBLookupComboBox
+        Left = 16
+        Top = 61
+        Width = 629
+        Height = 21
+        DataField = 'Cliente'
+        DataSource = DataSource
+        TabOrder = 2
+      end
+      object DBLookupComboBox2: TDBLookupComboBox
+        Left = 16
+        Top = 104
+        Width = 250
+        Height = 21
+        DataField = 'Contrato'
+        DataSource = DataSource
+        Enabled = False
+        ReadOnly = True
+        TabOrder = 3
+      end
+      object DBLookupComboBox3: TDBLookupComboBox
+        Left = 270
+        Top = 104
+        Width = 121
+        Height = 21
+        DataField = 'Anexo'
+        DataSource = DataSource
+        Enabled = False
+        ReadOnly = True
+        TabOrder = 4
+      end
+      object cxDBDateEdit1: TcxDBDateEdit
+        Left = 397
+        Top = 104
+        TabStop = False
+        DataBinding.DataField = 'Fecha'
+        DataBinding.DataSource = DataSource
+        Properties.ReadOnly = True
+        TabOrder = 5
+        Width = 121
+      end
+      object edtFechaVencimiento: TcxDBDateEdit
+        Left = 524
+        Top = 104
         DataBinding.DataField = 'FechaVencimiento'
         DataBinding.DataSource = DataSource
+        TabOrder = 6
+        Width = 121
+      end
+      object edtDescripcion: TcxDBTextEdit
+        Left = 16
+        Top = 144
+        DataBinding.DataField = 'Descripcion'
+        DataBinding.DataSource = DataSource
+        TabOrder = 7
+        Width = 629
+      end
+      object DBLookupComboBox4: TDBLookupComboBox
+        Left = 524
+        Top = 22
+        Width = 121
+        Height = 21
+        DataField = 'EstatusCXC'
+        DataSource = DataSource
+        Enabled = False
+        TabOrder = 1
+      end
+      object cxDBTextEdit2: TcxDBTextEdit
+        Left = 16
+        Top = 184
+        TabStop = False
+        DataBinding.DataField = 'Importe'
+        DataBinding.DataSource = DataSource
+        Properties.ReadOnly = True
+        TabOrder = 8
+        Width = 121
+      end
+      object cxDBTextEdit3: TcxDBTextEdit
+        Left = 143
+        Top = 184
+        TabStop = False
+        DataBinding.DataField = 'Impuesto'
+        DataBinding.DataSource = DataSource
+        Properties.ReadOnly = True
+        TabOrder = 9
+        Width = 121
+      end
+      object cxDBTextEdit4: TcxDBTextEdit
+        Left = 270
+        Top = 184
+        TabStop = False
+        DataBinding.DataField = 'Interes'
+        DataBinding.DataSource = DataSource
+        Properties.ReadOnly = True
+        TabOrder = 10
+        Width = 121
+      end
+      object cxDBTextEdit5: TcxDBTextEdit
+        Left = 397
+        Top = 184
+        TabStop = False
+        DataBinding.DataField = 'Total'
+        DataBinding.DataSource = DataSource
+        Properties.ReadOnly = True
         TabOrder = 11
+        Width = 121
+      end
+      object cxDBTextEdit6: TcxDBTextEdit
+        Left = 524
+        Top = 184
+        TabStop = False
+        DataBinding.DataField = 'Saldo'
+        DataBinding.DataSource = DataSource
+        Properties.ReadOnly = True
+        TabOrder = 12
+        Width = 121
+      end
+      object cxDBTextEdit7: TcxDBTextEdit
+        Left = 16
+        Top = 22
+        TabStop = False
+        DataBinding.DataField = 'IdCuentaXCobrar'
+        DataBinding.DataSource = DataSource
+        Properties.ReadOnly = True
+        TabOrder = 0
         Width = 121
       end
     end
   end
   inherited pmlMain: TPanel
-    Top = 658
-    Width = 724
-    ExplicitTop = 658
-    ExplicitWidth = 724
+    Top = 655
+    Width = 668
+    ExplicitTop = 655
+    ExplicitWidth = 668
     inherited btnCancel: TButton
-      Left = 642
-      ExplicitLeft = 642
+      Left = 586
+      ExplicitLeft = 586
     end
     inherited btnOk: TButton
-      Left = 561
-      ExplicitLeft = 561
+      Left = 505
+      ExplicitLeft = 505
     end
     object cxLabel1: TcxLabel
       Left = 26
@@ -225,20 +294,21 @@ inherited FrmEdCuentasXCobrar: TFrmEdCuentasXCobrar
       Style.IsFontAssigned = True
     end
     object cxLblTotalConMora: TcxLabel
-      Left = 156
+      Left = 207
       Top = 16
-      AutoSize = False
-      Caption = '$25.00'
+      Caption = '$ 0.00'
       Properties.Alignment.Horz = taRightJustify
-      Height = 17
-      Width = 86
       AnchorX = 242
     end
   end
   inherited DataSource: TDataSource
-    DataSet = dmCuentasXCobrar.adodsMaster
+    Left = 176
+  end
+  inherited ActionList: TActionList
+    Left = 208
   end
   inherited cxImageList: TcxImageList
     FormatVersion = 1
+    DesignInfo = 65776
   end
 end

@@ -645,10 +645,9 @@ object FrmAplicacionPago: TFrmAplicacionPago
         'Proceso '#250'nicamente en versi'#243'n de pruebas. '#13#10'Desglosa unicamente ' +
         'las CXC asociadas a anexos . '#13#10'Seleccione la cuenta por cobrar p' +
         'ara colocar el valor a pagar.'
-      Caption = 'S'#243'lo CXC asociadas a anexos'
+      Caption = 'S'#243'lo cuentas por cobrar asociadas al anexo'
       TabOrder = 0
-      OnClick = cxChckBxCambioconsultaClick
-      Width = 257
+      Width = 305
     end
   end
   object Panel1: TPanel

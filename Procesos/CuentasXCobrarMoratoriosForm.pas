@@ -30,7 +30,7 @@ uses
   cxGrid, Vcl.ExtCtrls;
 
 type
-  TfrmConCXCMoratorios = class(T_frmGrid)
+  TfrmCuentasXCobrarMoratorios = class(T_frmGrid)
     tvMasterIdCuentaXCobrar: TcxGridDBColumn;
     tvMasterIdCuentaXCobrarEstatus: TcxGridDBColumn;
     tvMasterIdPersona: TcxGridDBColumn;
@@ -52,9 +52,6 @@ type
   public
     { Public declarations }
   end;
-
-var
-  frmConCXCMoratorios: TfrmConCXCMoratorios;
 
 implementation
 

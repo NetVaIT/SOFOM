@@ -29,7 +29,7 @@ uses
   System.Actions, Vcl.ActnList, Vcl.StdCtrls, cxGridLevel, cxGridCustomView,
   cxGrid, Vcl.ExtCtrls,Data.Win.ADODB, cxContainer, Vcl.ComCtrls, dxCore,
   cxDateUtils, cxTextEdit, cxMaskEdit, cxDropDownEdit, cxCalendar, Vcl.Buttons,
-  Math;
+  Math, AplicacionPagos;
 
 type
   TFrmConPagos = class(T_frmGrid)
@@ -111,6 +111,7 @@ type
     FactFacturarMoratorios: TBasicAction;
     FactGenCFDIPago: TBasicAction;
     FactAddCuentaOrdenante: TBasicAction;
+    FactSoloCXCDelAnexo: TBasicAction;
     function GetFFiltroNombre: String;
     procedure PoneFiltro;
     function HayCXCSinFacturaPrevia: boolean;
@@ -123,6 +124,7 @@ type
     procedure SetactGenCFDIPago(const Value: TBasicAction);
   public
     { Public declarations }
+    FrmAplicacionPago: TFrmAplicacionPago;
     property FiltroCon:String read ffiltro write ffiltro;
     property FiltroFecha: String read ffiltroFecha write ffiltroFecha;
     property FiltroNombre:String read GetFFiltroNombre write ffiltroNombre;
@@ -132,13 +134,14 @@ type
     property ActVerificayCreaFinal: TBasicAction read FActCreaFinales write SetFCreaFinales; //Oct 3/17
     property actGenCFDIPago: TBasicAction read FactGenCFDIPago write SetactGenCFDIPago;
     property actAddCuentaOrdenante: TBasicAction read FactAddCuentaOrdenante write FactAddCuentaOrdenante;
+    property actSoloCXCDelAnexo: TBasicAction read FactSoloCXCDelAnexo write FactSoloCXCDelAnexo;
   end;
 
 implementation
 
 {$R *.dfm}
 
-uses PagosDM, PagosEdit, AplicacionPagos, _ConectionDmod, ClaveAutorizacionForm;
+uses PagosDM, PagosEdit, _ConectionDmod, ClaveAutorizacionForm;
 
 procedure TFrmConPagos.DataSourceDataChange(Sender: TObject; Field: TField);
 var
@@ -244,59 +247,97 @@ end;
 function TFrmConPagos.HayCXCPorGenerar: boolean;
 begin
   if datasource.DataSet.FieldByName('IdAnexo').asstring<>'' then
- begin
-  dsAuxiliar.DataSet.Close;
-  TADOQuery(dsAuxiliar.dataset).SQL.clear;
-  TADOQuery(dsAuxiliar.dataset).SQL.Add('Select c.idanexo,aa.IdAnexoCredito,aa.FechaCorte ,PagoTotal from AnexosAmortizaciones aa'+
-  ' inner join AnexosCreditos C on C.IdAnexoCredito=aa.IdAnexoCredito and c.IdAnexoCreditoEstatus=1 ' +
-  ' where idAnexo ='+ datasource.DataSet.FieldByName('IdAnexo').asstring+
-  ' and (not Exists (select * from CuentasXCobrar cxc where cxc.IdAnexosAmortizaciones=aa.idanexoamortizacion and aa.Fechacorte<=dbo.GetDateAux()) '+   //Ago 22/17 si no esta que sea en rango de fecha corte
-  ' or Exists (select * from CuentasXCobrar cc where cc.IdAnexosAmortizaciones=aa.idanexoamortizacion and '+
-  ' cc.IdCuentaXCobrarEstatus=-1 and EsMoratorio=0  and aa.FechaVencimiento<=dbo.GetDateAux() ) )  '+       //Si esta que sea del rando de fec vencimiento     ago 22/17
-  ' and aa.FechaVencimiento<=dbo.GetDateAux()'+           //' era ago 22/17 and aa.FechaCorte<=dbo.GetDateAux() ');    //Respecto al vencimiento
-  ' and PagoTotal>0.01 '); //Oct 24/17 Ajustado por que hay Amortizaciones que tienen por definicion un valor  de 0.008
-               //REajustado si liberar                             // jun21/17
-  dsAuxiliar.dataset.Open;
-  if not dsAuxiliar.dataset.eof  then
   begin
-    REsult:= true;
+    dsAuxiliar.DataSet.Close;
+    TADOQuery(dsAuxiliar.dataset).SQL.clear;
+    TADOQuery(dsAuxiliar.dataset).SQL.Add('Select c.idanexo,aa.IdAnexoCredito,aa.FechaCorte ,PagoTotal from AnexosAmortizaciones aa'+
+    ' inner join AnexosCreditos C on C.IdAnexoCredito=aa.IdAnexoCredito and c.IdAnexoCreditoEstatus=1 ' +
+    ' where idAnexo ='+ datasource.DataSet.FieldByName('IdAnexo').asstring+
+    ' and (not Exists (select * from CuentasXCobrar cxc where cxc.IdAnexosAmortizaciones=aa.idanexoamortizacion and aa.Fechacorte<=dbo.GetDateAux()) '+   //Ago 22/17 si no esta que sea en rango de fecha corte
+    ' or Exists (select * from CuentasXCobrar cc where cc.IdAnexosAmortizaciones=aa.idanexoamortizacion and '+
+    ' cc.IdCuentaXCobrarEstatus=-1 and EsMoratorio=0  and aa.FechaVencimiento<=dbo.GetDateAux() ) )  '+       //Si esta que sea del rando de fec vencimiento     ago 22/17
+    ' and aa.FechaVencimiento<=dbo.GetDateAux()'+           //' era ago 22/17 and aa.FechaCorte<=dbo.GetDateAux() ');    //Respecto al vencimiento
+    ' and PagoTotal>0.01 '); //Oct 24/17 Ajustado por que hay Amortizaciones que tienen por definicion un valor  de 0.008
+                 //REajustado si liberar                             // jun21/17
+    dsAuxiliar.dataset.Open;
+    if not dsAuxiliar.dataset.eof  then
+    begin
+      Result:= true;
+    end
+    else
+      Result:=False;
   end
   else
-    REsult:=False;
- end
- else
- begin
-   Showmessage('Pago registrado sin anexo');
-   REsult:=true;
- end;
+  begin
+   Result:=False;
+  end;
+
+//  if datasource.DataSet.FieldByName('IdAnexo').asstring<>'' then
+// begin
+//  dsAuxiliar.DataSet.Close;
+//  TADOQuery(dsAuxiliar.dataset).SQL.clear;
+//  TADOQuery(dsAuxiliar.dataset).SQL.Add('Select c.idanexo,aa.IdAnexoCredito,aa.FechaCorte ,PagoTotal from AnexosAmortizaciones aa'+
+//  ' inner join AnexosCreditos C on C.IdAnexoCredito=aa.IdAnexoCredito and c.IdAnexoCreditoEstatus=1 ' +
+//  ' where idAnexo ='+ datasource.DataSet.FieldByName('IdAnexo').asstring+
+//  ' and (not Exists (select * from CuentasXCobrar cxc where cxc.IdAnexosAmortizaciones=aa.idanexoamortizacion and aa.Fechacorte<=dbo.GetDateAux()) '+   //Ago 22/17 si no esta que sea en rango de fecha corte
+//  ' or Exists (select * from CuentasXCobrar cc where cc.IdAnexosAmortizaciones=aa.idanexoamortizacion and '+
+//  ' cc.IdCuentaXCobrarEstatus=-1 and EsMoratorio=0  and aa.FechaVencimiento<=dbo.GetDateAux() ) )  '+       //Si esta que sea del rando de fec vencimiento     ago 22/17
+//  ' and aa.FechaVencimiento<=dbo.GetDateAux()'+           //' era ago 22/17 and aa.FechaCorte<=dbo.GetDateAux() ');    //Respecto al vencimiento
+//  ' and PagoTotal>0.01 '); //Oct 24/17 Ajustado por que hay Amortizaciones que tienen por definicion un valor  de 0.008
+//               //REajustado si liberar                             // jun21/17
+//  dsAuxiliar.dataset.Open;
+//  if not dsAuxiliar.dataset.eof  then
+//  begin
+//    REsult:= true;
+//  end
+//  else
+//    REsult:=False;
+// end
+// else
+// begin
+//   Showmessage('Pago registrado sin anexo');
+//   REsult:=true;
+// end;
 end;
 
 function TFrmConPagos.HayCXCSinFacturaPrevia: boolean;
 begin
- if datasource.DataSet.FieldByName('IdAnexo').asstring<>'' then
- begin
   dsAuxiliar.DataSet.Close;
-
   TADOQuery(dsAuxiliar.dataset).SQL.clear;
-
-  TADOQuery(dsAuxiliar.dataset).SQL.Add('Select * from  CuentasXCobrar  where idAnexo ='+ datasource.DataSet.FieldByName('IdAnexo').asstring+
-                                        ' and IDPersona='+  datasource.DataSet.FieldByName('IdPersonaCliente').asstring+
-                                      //Ago 18/17 Pendiente de Habilitar para que no tome las que estan fuera de fecha
-                                       '  and dbo.getDateAux() >= FechaVencimiento ' +
-                                       ' and Saldo >0 and IdCuentaXCobrarEstatus=-1  and  ESMoratorio=0' );
+  TADOQuery(dsAuxiliar.dataset).SQL.Add(
+  'SELECT * FROM CuentasXCobrar '+
+  'WHERE Saldo > 0 AND IdCuentaXCobrarEstatus = -1 AND  ESMoratorio=0 AND dbo.getDateAux() >= FechaVencimiento '+
+  'AND IdPersona = ' + datasource.DataSet.FieldByName('IdPersonaCliente').asstring);
+  if not datasource.DataSet.FieldByName('IdAnexo').IsNull then
+    TADOQuery(dsAuxiliar.dataset).SQL.Add('AND IdAnexo = ' + datasource.DataSet.FieldByName('IdAnexo').asstring);
   dsAuxiliar.dataset.Open;
-  if not dsAuxiliar.dataset.eof and  (dsAuxiliar.dataset.fieldbyname('IdCFDI').isnull) then
-  begin
-    REsult:= true;
-  end
+  if not dsAuxiliar.dataset.eof and (dsAuxiliar.dataset.fieldbyname('IdCFDI').isnull) then
+    Result:= true
   else
-    REsult:=False;
- end
- else
- begin
-   Showmessage('Pago registrado sin anexo');
-   REsult:=true;
- end;
+    Result:=False;
+
+// if datasource.DataSet.FieldByName('IdAnexo').asstring<>'' then
+// begin
+//  dsAuxiliar.DataSet.Close;
+//  TADOQuery(dsAuxiliar.dataset).SQL.clear;
+//  TADOQuery(dsAuxiliar.dataset).SQL.Add('Select * from  CuentasXCobrar  where idAnexo ='+ datasource.DataSet.FieldByName('IdAnexo').asstring+
+//                                        ' and IDPersona='+  datasource.DataSet.FieldByName('IdPersonaCliente').asstring+
+//                                      //Ago 18/17 Pendiente de Habilitar para que no tome las que estan fuera de fecha
+//                                       '  and dbo.getDateAux() >= FechaVencimiento ' +
+//                                       ' and Saldo >0 and IdCuentaXCobrarEstatus=-1  and  ESMoratorio=0' );
+//  dsAuxiliar.dataset.Open;
+//  if not dsAuxiliar.dataset.eof and  (dsAuxiliar.dataset.fieldbyname('IdCFDI').isnull) then
+//  begin
+//    REsult:= true;
+//  end
+//  else
+//    REsult:=False;
+// end
+// else
+// begin
+//   Showmessage('Pago registrado sin anexo');
+//   REsult:=true;
+// end;
 end;
 
 procedure TFrmConPagos.ActualizarFechaPago (IdPagoAct:integer);//Jun 29/17
@@ -330,7 +371,7 @@ end;
 
 
 procedure TFrmConPagos.dxBrBtnAplicaiconesClick(Sender: TObject);
-var FrmAplicacionPago:TFrmAplicacionPago;
+var
     Mensaje:String;
     seguir :Boolean;
 begin
@@ -367,15 +408,16 @@ begin
         if datasource.State in [dsEdit, DSInsert] then
            datasource.DataSet.Post;
 
-        dsConCXCPendientes.DataSet.Close;
-        Tadodataset(dsConCXCPendientes.DataSet).parameters.parambyname('EsAnti').Value:=0;    //Oct 9/17
-        dsConCXCPendientes.DataSet.Open;
-
+//        dsConCXCPendientes.DataSet.Close;
+//        Tadodataset(dsConCXCPendientes.DataSet).parameters.parambyname('EsAnti').Value:=0;    //Oct 9/17
+//        dsConCXCPendientes.DataSet.Open;
+        actSoloCXCDelAnexo.Execute;
         if dsConCXCPendientes.DataSet.Eof then
         begin
           ShowMessage('No existen Cuentas Por Cobrar pendientes de Pago para ese Cliente. Puede actualizar moratorios a la fecha del Pago o Abonar a Capital');
           //Colocado aca Abr 17/17
           FrmAplicacionPago:=TFrmAplicacionPago.create(self);
+          FrmAplicacionPago.actSoloCXCDelAnexo := actSoloCXCDelAnexo;
           FrmAplicacionPago.ActFacturaMora:= actFacturarMoratorios;
           FrmAplicacionPago.ActPagoAnticipado:= ActPagoAnticipado; //Jun 30/17
           FrmAplicacionPago.EsFactoraje:= Datasource.DataSet.FieldByName('OrigenPago').AsInteger=1; //Ene 13/17
@@ -395,8 +437,8 @@ begin
           FrmAplicacionPago.DSAuxiliar.Dataset:= DSAuxiliar.DataSet; //Abr 3/17
           FrmAplicacionPago.DSP_CalcMoratorioNueva.DataSet:= DSP_CalcMoratorioNueva.DataSet; //Abr 6/17
           FrmAplicacionPago.DSP_ActTotalCXC.DataSet:=DSP_ActTotalCXC.DataSet; //May 22/17
-          TadoDataset( FrmAplicacionPago.dsConCXCPendientes.DataSet).Parameters.ParamByName('EsAnti').Value:=0; //Oct 9/17
-          FrmAplicacionPago.dsConCXCPendientes.DataSet.Open;
+//          TadoDataset( FrmAplicacionPago.dsConCXCPendientes.DataSet).Parameters.ParamByName('EsAnti').Value:=0; //Oct 9/17
+//          FrmAplicacionPago.dsConCXCPendientes.DataSet.Open;
           FrmAplicacionPago.DSDetalleMostrar.dataset.Open;   //Agregado Feb 16/17
           FrmAplicacionPago.DSDetallesCXC.DataSet.Open;
          // FrmAplicacionPago.DSAplicacion.DataSet.Open;
@@ -407,6 +449,7 @@ begin
         else
         begin
           FrmAplicacionPago:=TFrmAplicacionPago.create(self);
+          FrmAplicacionPago.actSoloCXCDelAnexo := actSoloCXCDelAnexo;
           FrmAplicacionPago.ActFacturaMora:= actFacturarMoratorios;
           FrmAplicacionPago.ActPagoAnticipado:= ActPagoAnticipado; //Jun 30/17
           FrmAplicacionPago.ActVerificayCreaFinal:=ActVerificayCreaFinal; //Oct 3/17
@@ -428,8 +471,8 @@ begin
           FrmAplicacionPago.DSAuxiliar.Dataset:= DSAuxiliar.DataSet; //Abr 3/17
           FrmAplicacionPago.DSP_CalcMoratorioNueva.DataSet:= DSP_CalcMoratorioNueva.DataSet; //Abr 6/17
           FrmAplicacionPago.DSP_ActTotalCXC.DataSet:=DSP_ActTotalCXC.DataSet; //May 22/17
-          TadoDataset( FrmAplicacionPago.dsConCXCPendientes.DataSet).Parameters.ParamByName('EsAnti').Value:=0; //Oct 9/17
-          FrmAplicacionPago.dsConCXCPendientes.DataSet.Open;
+//          TadoDataset( FrmAplicacionPago.dsConCXCPendientes.DataSet).Parameters.ParamByName('EsAnti').Value:=0; //Oct 9/17
+//          FrmAplicacionPago.dsConCXCPendientes.DataSet.Open;
           FrmAplicacionPago.DSDetalleMostrar.dataset.Open;   //Agregado Feb 16/17
           FrmAplicacionPago.DSDetallesCXC.DataSet.Open;
           FrmAplicacionPago.DSAplicacion.DataSet.Open;

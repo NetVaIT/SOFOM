@@ -168,28 +168,34 @@ end;
 
 procedure TfrmConaplicaciones.SpdBtnConsultaClick(Sender: TObject);
 const
-   TxtSQL='select PA.FechaAplicacion ,pa.importe, PR.FechaPago as FechaPago,'+
-          ' PR.FolioPago, Pr.SeriePago,Cc.IdCuentaXCobrar NoCuentaXCobrar, '+
-          ' CC.FechaVencimiento as FechaCXC ,P.RazonSocial as Cliente,CC.IDAnexo,A.DEscripcion Anexo,'+   //FV abr 11/17
-          ' PA.IdPagoAplicacion, Pa.IdPago,  PA.IdPersonaCliente, A.IdContrato, P.idMetodoPago, ' +  //  jun 21/17 A.IdContrato, P.idMetodoPago
-          ' CC.IdCFDI, Ci.Serie SerieFactura, Ci.Folio FolioFactura, ci.Total TotalFActura, CC.SAldo SaldoCXC'+   //-- jul 11/17  se quito no tiene dato PA.IdCFDI,
-          ' ,cc.Descripcion '+ //jul 17/17                          //Ago 7/17 total y Saldo CXC
-          ' from PagosAplicaciones PA inner join Pagos PR on PA.IdPago=PR.IdPago' +
-          ' inner join CuentasXCobrar CC on PA.IdCuentaXCobrar =Cc.IdcuentaXCobrar' +
-          ' inner join CFDI Ci on Ci.IdCFDI =CC.IdCFDI ' +  // -- jul 11/17
-          ' inner join Anexos A on A.IdAnexo=cc.IdAnexo ' +
-          ' inner join Personas P on P.IdPersona =Cc.IdPersona ';
+  TxtSQL='SELECT PA.FechaAplicacion, PA.Importe, PR.FechaPago, PR.FolioPago, PR.SeriePago, CC.IdCuentaXCobrar AS NoCuentaXCobrar, CC.FechaVencimiento AS FechaCXC, P.RazonSocial AS Cliente, CC.IdAnexo, A.Descripcion AS Anexo, ' +
+  'PA.IdPagoAplicacion, PA.IdPago, PA.IdPersonaCliente, A.IdContrato, P.IdMetodoPago, CC.IdCFDI, CC.Saldo AS SaldoCXC, Ci.Serie AS SerieFactura, Ci.Folio AS FolioFactura, Ci.Total AS TotalFactura, CC.Descripcion ' +
+  'FROM PagosAplicaciones AS PA ' +
+  'INNER JOIN Pagos AS PR ON PA.IdPago = PR.IdPago ' +
+  'INNER JOIN CuentasXCobrar AS CC ON PA.IdCuentaXCobrar = CC.IdCuentaXCobrar ' +
+  'INNER JOIN CFDI AS Ci ON Ci.IdCFDI = CC.IdCFDI ' +
+  'INNER JOIN Personas AS P ON P.IdPersona = CC.IdPersona ' +
+  'LEFT OUTER JOIN Anexos AS A ON A.IdAnexo = CC.IdAnexo ';
+
+//   TxtSQL='select PA.FechaAplicacion ,pa.importe, PR.FechaPago as FechaPago,'+
+//          ' PR.FolioPago, Pr.SeriePago,Cc.IdCuentaXCobrar NoCuentaXCobrar, '+
+//          ' CC.FechaVencimiento as FechaCXC ,P.RazonSocial as Cliente,CC.IDAnexo,A.DEscripcion Anexo,'+   //FV abr 11/17
+//          ' PA.IdPagoAplicacion, Pa.IdPago,  PA.IdPersonaCliente, A.IdContrato, P.idMetodoPago, ' +  //  jun 21/17 A.IdContrato, P.idMetodoPago
+//          ' CC.IdCFDI, Ci.Serie SerieFactura, Ci.Folio FolioFactura, ci.Total TotalFActura, CC.SAldo SaldoCXC'+   //-- jul 11/17  se quito no tiene dato PA.IdCFDI,
+//          ' ,cc.Descripcion '+ //jul 17/17                          //Ago 7/17 total y Saldo CXC
+//          ' from PagosAplicaciones PA inner join Pagos PR on PA.IdPago=PR.IdPago' +
+//          ' inner join CuentasXCobrar CC on PA.IdCuentaXCobrar =Cc.IdcuentaXCobrar' +
+//          ' inner join CFDI Ci on Ci.IdCFDI =CC.IdCFDI ' +  // -- jul 11/17
+//          ' inner join Anexos A on A.IdAnexo=cc.IdAnexo ' +
+//          ' inner join Personas P on P.IdPersona =Cc.IdPersona ';
 var
    FiltroCliente:String;
-
 begin
   inherited;
   if EdtNombre.Text<>'' then
     FiltroCliente:=' and P.Razonsocial like ''%'+EdtNombre.Text+'%'''
   else
     FiltroCliente:='';
- //FEcha ya viene
- // Showmessage('Consulta '+TxtSQL+FiltroCliente+filtroFecha);
   Tadodataset(datasource.DataSet).Close;
   Tadodataset(datasource.DataSet).CommandText:=TxtSQL+FiltroCliente+filtroFecha;
   if filtroFecha <>''then

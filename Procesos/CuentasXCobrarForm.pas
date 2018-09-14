@@ -33,20 +33,8 @@ uses
 
 type
   TFrmConCuentasXCobrar = class(T_frmGrid)
-    tvMasterIdCuentaXCobrarEstatus: TcxGridDBColumn;
-    tvMasterIdPersona: TcxGridDBColumn;
-    tvMasterIdAnexosAmortizaciones: TcxGridDBColumn;
-    tvMasterFecha: TcxGridDBColumn;
-    tvMasterImporte: TcxGridDBColumn;
-    tvMasterImpuesto: TcxGridDBColumn;
-    tvMasterInteres: TcxGridDBColumn;
-    tvMasterTotal: TcxGridDBColumn;
-    tvMasterSaldo: TcxGridDBColumn;
-    tvMasterEstatusCXC: TcxGridDBColumn;
-    tvMasterCliente: TcxGridDBColumn;
     dxBarButton8: TdxBarButton;
     dxBtnPrefacturas: TdxBarButton;
-    tvMasterIdCuentaXCobrar: TcxGridDBColumn;
     dxBrBtnMoratorios: TdxBarButton;
     dxBrBtnGenerarCXC: TdxBarButton;
     PnlBusqueda: TPanel;
@@ -62,25 +50,34 @@ type
     cxDtEdtHasta: TcxDateEdit;
     ChckBxXFecha: TCheckBox;
     ChckBxConSaldo: TCheckBox;
-    tvMasterSaldoFactoraje: TcxGridDBColumn;
-    tvMasterIdAnexo: TcxGridDBColumn;
     ChckBxMostrarMoratorios: TCheckBox;
-    tvMasterIdCFDI: TcxGridDBColumn;
-    tvMasterIdCuentaXCobrarBase: TcxGridDBColumn;
-    tvMasterFechaVencimiento: TcxGridDBColumn;
-    cxBarEditItem1: TcxBarEditItem;
-    cxBarEditItem2: TcxBarEditItem;
     dxBrBtnPuntoCXC: TdxBarButton;
     dxBrBtnPuntoMora: TdxBarButton;
     dxBrBtnPuntoFAct: TdxBarButton;
     DSAuxiliar: TDataSource;
-    dxBrBtnActTotalesCXC: TdxBarButton;
-    tvMasterEsMoratorio: TcxGridDBColumn;
-    tvMasterAnexo: TcxGridDBColumn;
-    tvMasterContrato: TcxGridDBColumn;
     ChckBxOpcionCompra: TCheckBox;
-    tvMasterDescripcion: TcxGridDBColumn;
     dxBrBtnEstatus: TdxBarButton;
+    tvMasterIdCuentaXCobrar: TcxGridDBColumn;
+    tvMasterIdCuentaXCobrarBase: TcxGridDBColumn;
+    tvMasterIdCuentaXCobrarEstatus: TcxGridDBColumn;
+    tvMasterIdPersona: TcxGridDBColumn;
+    tvMasterIdAnexo: TcxGridDBColumn;
+    tvMasterIdAnexosAmortizaciones: TcxGridDBColumn;
+    tvMasterIdCFDI: TcxGridDBColumn;
+    tvMasterCliente: TcxGridDBColumn;
+    tvMasterContrato: TcxGridDBColumn;
+    tvMasterAnexo: TcxGridDBColumn;
+    tvMasterFecha: TcxGridDBColumn;
+    tvMasterFechaVencimiento: TcxGridDBColumn;
+    tvMasterDescripcion: TcxGridDBColumn;
+    tvMasterEstatusCXC: TcxGridDBColumn;
+    tvMasterImporte: TcxGridDBColumn;
+    tvMasterImpuesto: TcxGridDBColumn;
+    tvMasterInteres: TcxGridDBColumn;
+    tvMasterTotal: TcxGridDBColumn;
+    tvMasterSaldo: TcxGridDBColumn;
+    tvMasterSaldoFactoraje: TcxGridDBColumn;
+    tvMasterEsMoratorio: TcxGridDBColumn;
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
     procedure FormCreate(Sender: TObject);
     procedure SpdBtnBuscarClick(Sender: TObject);
@@ -102,7 +99,7 @@ type
     FTotalConMora: Double;
     FActCXCPendFact: TBasicAction;
     FactEliminar: TBasicAction;
-    FActTotalesCXC: TBasicAction;   //Jul 10/17
+    FactAgregarCXCDetalle: TBasicAction;
     procedure SetActGeneraPrefactura(const Value: TBasicAction);
     procedure SetActActualizaMoratorios(const Value: TBasicAction);
     procedure SetActGeneraCXC(const Value: TBasicAction);
@@ -112,19 +109,18 @@ type
     function GetFTotalConMora: Double;
     procedure SetActCXCPendFact(const Value: TBasicAction);
     procedure SetactEliminar(const Value: TBasicAction);
-    procedure SetActTotalesCXC(const Value: TBasicAction);//Mar 9/17
   public
     { Public declarations }
     property ActGenerarPrefactura : TBasicAction read FActGeneraPrefactura write SetActGeneraPrefactura;
     property ActActualizaMoratorios : TBasicAction read FActActualizaMoratorios write SetActActualizaMoratorios;  //Feb 8/17
     property ActGenerarCXCs : TBasicAction read FActGeneraCXC write SetActGeneraCXC;  //Feb 14/17
-    property ActTotalesCXC: TBasicAction read FActTotalesCXC write SetActTotalesCXC;
     property FiltroFecha: String read ffiltroFecha write ffiltroFecha; //Mar 9/17
     property FiltroNombre:String read GetFFiltroNombre write ffiltroNombre;
     property FiltroCon:String read ffiltro write ffiltro;
     property TotalConMora  :Double read GetFTotalConMora write FTotalConMora ;  //Jul 10/17
     property ActListaCXCPendFact : TBasicAction read FActCXCPendFact write SetActCXCPendFact;  //Feb 14/17
     property actEliminar: TBasicAction read FactEliminar write SetactEliminar;
+    property actAgregarCXCDetalle: TBasicAction read FactAgregarCXCDetalle write FactAgregarCXCDetalle;
   end;
 
 implementation
@@ -249,7 +245,6 @@ begin
   FechaAux:=EncodeDate(a,m,1);
   FechaAux:=FechaAux-1;  //Día anterior
   cxDtEdtHasta.Date:=FechaAux;
-  SpdBtnBuscarClick(SpdBtnBuscar); //Mar 10/17
   dxBrBtnPuntoCXC.Visible :=  VerificaCreacionHoy(0); //Abr 11/17
   dxBrBtnPuntoMora.Visible := VerificaCreacionHoy(1);
 end;
@@ -257,7 +252,9 @@ end;
 procedure TFrmConCuentasXCobrar.FormShow(Sender: TObject);
 begin
   inherited;
-   TFrmEdCuentasXCobrar(gEditForm).TotalConMora:= TotalConMora;
+  SpdBtnBuscarClick(SpdBtnBuscar); //Mar 10/17
+  TfrmEdCuentasXCobrar(gEditForm).TotalConMora:= TotalConMora;
+  TfrmEdCuentasXCobrar(gEditForm).actAgregarCXCDetalle:= actAgregarCXCDetalle;
 end;
 
 function TFrmConCuentasXCobrar.GetFFiltroNombre: String;
@@ -331,12 +328,6 @@ begin
   FActGeneraPrefactura := Value;
   dxBtnPrefacturas.Action:=Value;
   dxBtnPrefacturas.ImageIndex:=17;
-end;
-
-procedure TFrmConCuentasXCobrar.SetActTotalesCXC(const Value: TBasicAction);
-begin
-  FActTotalesCXC := Value;
-// dxBrBtnActTotalesCXC.Action:=value;     //TEmporal para ajustar Abr 17/17
 end;
 
 procedure TFrmConCuentasXCobrar.SpdBtnBuscarClick(Sender: TObject);

@@ -70,7 +70,8 @@ end;
 
 procedure T_frmEdit.actPostExecute(Sender: TObject);
 begin
-  if DataSource.DataSet.State in [dsInsert, dsEdit] then
+  if Assigned(DataSource.DataSet) then
+    if DataSource.DataSet.State in [dsInsert, dsEdit] then
 //    try
       DataSource.DataSet.Post;
 //    except on E: EDatabaseError do

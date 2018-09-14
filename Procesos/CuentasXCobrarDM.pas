@@ -5,11 +5,11 @@ interface
 uses
   System.SysUtils, System.Classes, _StandarDMod, System.Actions, Vcl.ActnList,
   Data.DB, Data.Win.ADODB, Vcl.Dialogs, System.UITypes, Vcl.Forms,
-  Winapi.ShellAPI, Winapi.Windows;
+  Winapi.ShellAPI, Winapi.Windows, dxmdaset;
 
 resourcestring
-  strAllowGenMoratorios = '¿Desea generar los moratorios de todos los contratos a la fecha: %s ? ';
-  strAllowDelCuentaxCobrar = '¿Deseas eliminr la cuenta por cobrar %d?';
+  strAllowGenMoratorios = '¿Desea generar los moratorios de todos los contratos a la fecha: %s?';
+  strAllowDelCuentaxCobrar = '¿Deseas eliminar la cuenta por cobrar %d?';
 
 type
   TdmCuentasXCobrar = class(T_dmStandar)
@@ -183,7 +183,7 @@ type
     adodsMasterFechaVencimiento: TDateTimeField;
     ADODTSTCXCMoratoriosFechaVencimiento: TDateTimeField;
     adodsMasterEsMoratorio: TBooleanField;
-    ADOPActualizaTotalesCXC: TADOStoredProc;
+    adospUpdCuentasXCobrarTotales: TADOStoredProc;
     ActTotalesCXC: TAction;
     ADODtStAdicionalesContratoAnexo: TADODataSet;
     ADODtStAdicionalesContratoAnexoIdAnexo: TAutoIncField;
@@ -203,6 +203,8 @@ type
     ActRepCxCEstatusFactPendiente: TAction;
     actEliminar: TAction;
     adospDelCuentasXCobrar: TADOStoredProc;
+    actAgregarCXCDetalle: TAction;
+    adospGenCuentasXCobrarDetalle: TADOStoredProc;
     procedure DataModuleCreate(Sender: TObject);
     procedure actGeneraPreFacturasExecute(Sender: TObject);
     procedure ADODtStPrefacturasCFDINewRecord(DataSet: TDataSet);
@@ -213,22 +215,28 @@ type
     procedure ActActualizaMoratoriosExecute(Sender: TObject);
     procedure ActGeneraCuentasXCobrarExecute(Sender: TObject);
     procedure adodsMasterBeforeInsert(DataSet: TDataSet);
-    procedure ActTotalesCXCExecute(Sender: TObject);
     procedure DSMasterDataChange(Sender: TObject; Field: TField);
     procedure ActRepCxCEstatusFactPendienteExecute(Sender: TObject);
     procedure actEliminarExecute(Sender: TObject);
     procedure actEliminarUpdate(Sender: TObject);
+    procedure adodsMasterNewRecord(DataSet: TDataSet);
+    procedure ADOdsCXCDetalleAfterPost(DataSet: TDataSet);
+    procedure ADOdsCXCDetalleAfterDelete(DataSet: TDataSet);
+    procedure actAgregarCXCDetalleExecute(Sender: TObject);
   private
     { Private declarations }
-    FTotalConMora: Double;
-    function SacaTipoComp(TipoDoc: Integer): String;
-    function SacaDireccion(IDCliente: Integer): Integer;
-    function SacaMetodo(IDCliente: Integer; var CtaPago:String): Integer;
+//    function SacaTipoComp(TipoDoc: Integer): String;
+//    function SacaDireccion(IDCliente: Integer): Integer;
+//    function SacaMetodo(IDCliente: Integer; var CtaPago:String): Integer;
     procedure RegistraBitacora(tipoRegistro: Integer);
     function GetFFechaActual: TDAteTime;
     function GetFTotalConMora: Double;
-    procedure verificaYCambiaEstatusCXC(IDCFDIACT, NvoEstatus, IdCXCAct:integer);
+//    procedure verificaYCambiaEstatusCXC(IDCFDIACT, NvoEstatus, IdCXCAct:integer);
     function EliminarCuentaXCobrar(IdCuentaxCobrar: Integer): Boolean;
+    function ActualizarTotales(IdCuentaxCobrar: Integer): Boolean;
+    function AgregarDetalle(IdCuentaXCobrar, IdCuentaXCobrarTipo: Integer;
+      Descripcion: string; Importe: Currency): Integer;
+
   public
     { Public declarations }
     function CrearCFDI(IdCuentaXCobrar: Integer): Integer;
@@ -241,7 +249,8 @@ implementation
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
 uses CuentasXCobrarForm, FacturasDM, _ConectionDmod, ConceptoOpcionCEdt, MetodoPagoFacturaEdt,
-  PDFReporteEstatusCXC, FacturaConfirmacionForm, _Utils, ProcesosType;
+  PDFReporteEstatusCXC, FacturaConfirmacionForm, _Utils, ProcesosType,
+  CuentasXCobrarDetalleAddEdit;
 
 {$R *.dfm}
 
@@ -288,6 +297,27 @@ begin
   end
   else
     Showmessage('Proceso de generación de Moratorios Cancelado');
+end;
+
+procedure TdmCuentasXCobrar.actAgregarCXCDetalleExecute(Sender: TObject);
+var
+  frmCuentasXCobrarDetalleAddEdit: TfrmCuentasXCobrarDetalleAddEdit;
+begin
+  inherited;
+  frmCuentasXCobrarDetalleAddEdit := TfrmCuentasXCobrarDetalleAddEdit.Create(Self);
+  try
+    frmCuentasXCobrarDetalleAddEdit.Descripcion:= EmptyStr;
+    frmCuentasXCobrarDetalleAddEdit.Importe := 0;
+    if frmCuentasXCobrarDetalleAddEdit.Execute then
+    begin
+      AgregarDetalle(adodsMasterIdCuentaXCobrar.Value, 102,
+      frmCuentasXCobrarDetalleAddEdit.Descripcion, frmCuentasXCobrarDetalleAddEdit.Importe);
+      RefreshADODS(ADOdsCXCDetalle, ADOdsCXCDetalleIdCuentaXCobrarDetalle);
+      RefreshADODS(adodsMaster, adodsMasterIdCuentaXCobrar);
+    end;
+  finally
+    frmCuentasXCobrarDetalleAddEdit.Free;
+  end;
 end;
 
 procedure TdmCuentasXCobrar.actEliminarExecute(Sender: TObject);
@@ -454,26 +484,34 @@ end;
 //  end;
 //end;
 
-procedure TdmCuentasXCobrar.verificaYCambiaEstatusCXC(IDCFDIACT, NvoEstatus, IdCXCAct:integer);
-begin                                //Jul 19/17
-  ADOQryAuxiliar.Close;
-  ADOQryAuxiliar.SQL.Clear;
-  ADOQryAuxiliar.SQL.Add('Select * from CFDI where IDCFDI='+intTostr(IDCFDIACT));
-  ADOQryAuxiliar.Open;
-  if (ADOQryAuxiliar.FieldByName('IdCFDIEstatus').asInteger=2)      //vigente
-      and (ADOQryAuxiliar.FieldByName('IdCuentaXCobrar').asInteger=IDCXCAct)  and (adodsmaster.fieldbyname('IdcuentaXCobrarEstatus').AsInteger=0) then
+function TdmCuentasXCobrar.ActualizarTotales(IdCuentaxCobrar: Integer): Boolean;
+begin
+  Result:= False;
+  if IdCuentaxCobrar <> 0 then
   begin
-    adodsmaster.Edit;
-    adodsmaster.FieldByName('IdCuentaXCobrarEstatus').AsInteger:=NvoEstatus;// FACTURADA  jul 19/17
-    adodsmaster.post;
+    ScreenCursorProc(crSQLWait);
+    try
+      adospUpdCuentasXCobrarTotales.Parameters.ParamByName('@IdCuentaXCobrar').Value:= IdCuentaxCobrar;
+      adospUpdCuentasXCobrarTotales.ExecProc;
+    finally
+      ScreenCursorProc(crDefault);
+    end;
+    Result:= True;
   end;
 end;
 
-procedure TdmCuentasXCobrar.ActTotalesCXCExecute(Sender: TObject);
+procedure TdmCuentasXCobrar.ADOdsCXCDetalleAfterDelete(DataSet: TDataSet);
 begin
   inherited;
-  ADOPActualizaTotalesCXC.Parameters.ParamByName('@IdCuentaXCobrar').Value:=  adodsmaster.FieldByName('IDCuentaXCobrar').asinteger;
-  ADOPActualizaTotalesCXC.ExecProc;
+  if ActualizarTotales(adodsMasterIdCuentaXCobrar.Value) then
+    RefreshADODS(adodsMaster, adodsMasterIdCuentaXCobrar);
+end;
+
+procedure TdmCuentasXCobrar.ADOdsCXCDetalleAfterPost(DataSet: TDataSet);
+begin
+  inherited;
+  if ActualizarTotales(adodsMasterIdCuentaXCobrar.Value) then
+    RefreshADODS(adodsMaster, adodsMasterIdCuentaXCobrar);
 end;
 
 //procedure TdmCuentasXCobrar.Facturar(IDCFDIGen: Integer;var CFDICreado, CFDITimbrado:Boolean;IDGenTipoDoc:integer); //abr7/17 Copiado desde Pagos
@@ -531,13 +569,17 @@ begin
 end;
 
 function TdmCuentasXCobrar.GetFTotalConMora: Double;
+//var
+//  FTotalConMora: Double;
 begin //Jul 10/17 Calcular si tiene mora
- if not ADODTSTCXCMoratorios.eof then
-    FTotalConMora:=adodsMasterSaldo.AsCurrency + ADODTSTCXCMoratoriosSaldo.AsCurrency
-  else
-    FTotalConMora:=adodsMasterSaldo.AsCurrency;
-
-  Result := FTotalConMora;
+  Result := 0;
+  if adodsmaster.State in [dsInsert, dsEdit] then
+  begin
+    if not ADODTSTCXCMoratorios.eof then
+      Result:=adodsMasterSaldo.AsCurrency + ADODTSTCXCMoratoriosSaldo.AsCurrency
+    else
+      Result:=adodsMasterSaldo.AsCurrency;
+  end;
 end;
 
 procedure TdmCuentasXCobrar.adodsMasterAfterOpen(DataSet: TDataSet);
@@ -549,163 +591,195 @@ begin
 end;
 
 procedure TdmCuentasXCobrar.adodsMasterBeforeInsert(DataSet: TDataSet);
-const      //Ajustado por si hay que dar de alta CXC manual mar 10/17
-   TxtSQL=' select IdCuentaXCobrar, IdCuentaXCobrarEstatus, IdPersona, '+
-   'IdAnexosAmortizaciones, Fecha, Importe, Impuesto, Interes,'+
-   'Total, Saldo, SaldoFactoraje, IdCFDI, IDAnexo from CuentasXCobrar';  // Normal era mar 30/17
-   orden=' order by  IdAnexo, IDAnexosAmortizaciones'; //Mar 27/17
-var Txt:String;
+//const //Ajustado por si hay que dar de alta CXC manual mar 10/17
+//   TxtSQL=' select IdCuentaXCobrar, IdCuentaXCobrarEstatus, IdPersona, '+
+//   'IdAnexosAmortizaciones, Fecha, Importe, Impuesto, Interes,'+
+//   'Total, Saldo, SaldoFactoraje, IdCFDI, IDAnexo from CuentasXCobrar';  // Normal era mar 30/17
+//   orden=' order by  IdAnexo, IDAnexosAmortizaciones'; //Mar 27/17
+//var Txt:String;
 begin
-  Txt:=   Tadodataset(adodsMaster).CommandText;
-  if pos('inner ',Txt)>0 then
-  begin
-    Tadodataset(adodsMaster).Close;
-    Tadodataset(adodsMaster).CommandText:=TxtSQL + Orden;   //Mar 27/17
-    Tadodataset(adodsMaster).open;
-  end;
+//  Txt:=   Tadodataset(adodsMaster).CommandText;
+//  if pos('inner ',Txt)>0 then
+//  begin
+//    Tadodataset(adodsMaster).Close;
+//    Tadodataset(adodsMaster).CommandText:=TxtSQL + Orden;   //Mar 27/17
+//    Tadodataset(adodsMaster).open;
+//  end;
   inherited;
+end;
+
+procedure TdmCuentasXCobrar.adodsMasterNewRecord(DataSet: TDataSet);
+begin
+  inherited;
+  adodsMasterIdCuentaXCobrarEstatus.Value := -1;
+  adodsMasterFecha.Value := _DmConection.LaFechaActual;//Date;
+  adodsMasterFechaVencimiento.Value := adodsMasterFecha.Value;
+//  adodsMasterDescripcion.Value :=
+  adodsMasterImporte.Value := 0;
+  adodsMasterImpuesto.Value := 0;
+  adodsMasterInteres.Value := 0;
+  adodsMasterTotal.Value := 0;
+  adodsMasterSaldo.Value := 0;
+  adodsMasterSaldoFactoraje.Value := 0;
+  adodsMasterEsMoratorio.Value := False;
 end;
 
 procedure TdmCuentasXCobrar.ADODtStCFDIConceptosPrefAfterPost(
   DataSet: TDataSet);
-var                             //Copiado de Mas
-  idDocCFDI, idImp:Integer;
-  Subtotal,IVACal,TotalCal, IVAReg:Double; //Agregado ago 25/16
-//  Existe:Boolean;
+//var                             //Copiado de Mas
+//  idDocCFDI, idImp:Integer;
+//  Subtotal,IVACal,TotalCal, IVAReg:Double; //Agregado ago 25/16
+////  Existe:Boolean;
 begin
   inherited;  //Mar 29/16     //Verificar que no intertfiera con el  proceso normal de facturacion
-  idImp:=-1;
-  IVAreg:=0; //
-  //Verificar si aca actualizar el item respectivo del detalle del documento
-//  IDDocItem:=DataSet.FieldByName('IDCFDIConcepto').AsInteger;
-  idDocCFDI:=DataSet.FieldByName('IDCFDI').AsInteger;
-
-  //Verificar si tiene conceptos de IVA .. Poner y no calcular, pero si no  calcular..//Ene 16/17
-  ADOSumaIVA.Close;
-  ADOSumaIVA.Parameters.ParamByName('IdCuentaXCobrar').Value:=adodsMasterIdCuentaXCobrar.AsInteger; // ya que no tierne mas campos ino la suma ene 28/17
-  ADOSumaIVA.Open; // SE supone esta amarrado a la CuentaXCobrar
-  if not ADOSumaIVA.eof then // Pendiente de terminar
-  begin
-    IVAReg:= ADOSumaIVA.fieldbyname('IVAREG').asFloat;
-  end;
-  //Siempre actualizar
-  IVACal:=IVAReg;  //  feb 23/17
-
-  ADOQryAuxiliar.Close;
-  ADOQryAuxiliar.SQL.Clear;
-  ADOQryAuxiliar.SQL.Add('Select Sum(Importe) as ValorST From CFDIConceptos where IDCFDI='+intToStr(idDocCFDI));
-  ADOQryAuxiliar.open;
-
-  Subtotal:= ADOQryAuxiliar.FieldByName('ValorST').AsFloat;
-
-  TotalCal:= Subtotal+IVACal;   //feb 23/17
-  {  deshabilitado feb 23/17
-  IVACal:= subtotal*0.16;
-  TotalCal:= Subtotal+IVACal; //subtotal*1.16 ;    //Ago 25/16
-
-  //Ver si va a ir decto?? Nov 29/16
-  if iVACAl <> IVAReg then
-  begin
-    if IVAREG>0 then
-    begin
-      TotalCal:=Subtotal+ IVAReg;
-      IVACal:=IVAReg;
-    end
-    else
-      Showmessage('El total de IVA registrado es 0 o negativo' + floatToStr(IVAREG));
-    Showmessage('El total de IVA calculado no coincide con el registrado !') ;
-  end;   }
-
-  //Se usa siempre en registrado
-
-  ADOQryAuxiliar.Close;                                                                                       //   subtotal*0.16
-  ADOQryAuxiliar.SQL.Clear;                                                                                                                  //  subtotal*1.16                      //  subtotal*1.16
-  ADOQryAuxiliar.SQL.Add('UPDATE CFDI SET Subtotal='+FloattoSTR(subtotal)+' , TotalImpuestoTrasladado='+FloatToSTR(IVACal)+', Total='+FloatToSTR(TotalCal) +', SaldoDocumento='+FloatToSTR(TotalCal)
-                         +', SaldoFactoraje ='+FloatToSTR(TotalCal)+' where IDCFDI ='+IntToStr(idDocCFDI));
-                           //FEb 9/17 saldoFactoraje
-  ADOQryAuxiliar.ExecSQL;
-
-  //Acualizar impuestos si no tiene Impuestos //Mar 30/16
-  //Si existe actualizar si no existe crear en tabla de impuestos          //Ago 31/16
-
-  ADOQryAuxiliar.Close;
-  ADOQryAuxiliar.SQL.Clear;
-  ADOQryAuxiliar.SQL.Add('SElect * from  CFDIImpuestos where IDCFDI ='+IntToStr(idDocCFDI)
-                         +' and TipoImp=''Trasladado'' and Impuesto=''IVA''');
-  ADOQryAuxiliar.Open;
-
-  if not ADOQryAuxiliar.eof then//No existe
-    idImp:=ADOQryAuxiliar.FieldByName('IDCFDIImpuesto').AsInteger;
-    // Mar 31/16
-  if idImp=-1 then //No existe
-  begin
-    ADOQryAuxiliar.Close;
-    ADOQryAuxiliar.SQL.Clear;
-    ADOQryAuxiliar.SQL.Add('Insert into CFDIImpuestos (IDCFDI, TipoIMP,Impuesto, Tasa, Importe) VAlues('
-                          +IntToStr(idDocCFDI) +', ''Trasladado'', ''IVA'', 16, '+FloatToSTR(IVACal)+')');
-    ADOQryAuxiliar.ExecSQL;                                                                 //  subtotal*0.16 Ago 30 /16 ajustado
-  end
-  else
-  begin
-    ADOQryAuxiliar.Close;
-    ADOQryAuxiliar.SQL.Clear;
-    ADOQryAuxiliar.SQL.Add('UPDATE CFDIImpuestos SET Importe='+FloatToSTR(IVACal)   //subtotal*0.16
-                            +' where IDCFDIImpuesto ='+IntToStr(idImp));
-    ADOQryAuxiliar.ExecSQL;
-  end;  //Hasta aca
-  ADODtStPrefacturasCFDI.Refresh;
+//  idImp:=-1;
+//  IVAreg:=0; //
+//  //Verificar si aca actualizar el item respectivo del detalle del documento
+////  IDDocItem:=DataSet.FieldByName('IDCFDIConcepto').AsInteger;
+//  idDocCFDI:=DataSet.FieldByName('IDCFDI').AsInteger;
+//
+//  //Verificar si tiene conceptos de IVA .. Poner y no calcular, pero si no  calcular..//Ene 16/17
+//  ADOSumaIVA.Close;
+//  ADOSumaIVA.Parameters.ParamByName('IdCuentaXCobrar').Value:=adodsMasterIdCuentaXCobrar.AsInteger; // ya que no tierne mas campos ino la suma ene 28/17
+//  ADOSumaIVA.Open; // SE supone esta amarrado a la CuentaXCobrar
+//  if not ADOSumaIVA.eof then // Pendiente de terminar
+//  begin
+//    IVAReg:= ADOSumaIVA.fieldbyname('IVAREG').asFloat;
+//  end;
+//  //Siempre actualizar
+//  IVACal:=IVAReg;  //  feb 23/17
+//
+//  ADOQryAuxiliar.Close;
+//  ADOQryAuxiliar.SQL.Clear;
+//  ADOQryAuxiliar.SQL.Add('Select Sum(Importe) as ValorST From CFDIConceptos where IDCFDI='+intToStr(idDocCFDI));
+//  ADOQryAuxiliar.open;
+//
+//  Subtotal:= ADOQryAuxiliar.FieldByName('ValorST').AsFloat;
+//
+//  TotalCal:= Subtotal+IVACal;   //feb 23/17
+//  {  deshabilitado feb 23/17
+//  IVACal:= subtotal*0.16;
+//  TotalCal:= Subtotal+IVACal; //subtotal*1.16 ;    //Ago 25/16
+//
+//  //Ver si va a ir decto?? Nov 29/16
+//  if iVACAl <> IVAReg then
+//  begin
+//    if IVAREG>0 then
+//    begin
+//      TotalCal:=Subtotal+ IVAReg;
+//      IVACal:=IVAReg;
+//    end
+//    else
+//      Showmessage('El total de IVA registrado es 0 o negativo' + floatToStr(IVAREG));
+//    Showmessage('El total de IVA calculado no coincide con el registrado !') ;
+//  end;   }
+//
+//  //Se usa siempre en registrado
+//
+//  ADOQryAuxiliar.Close;                                                                                       //   subtotal*0.16
+//  ADOQryAuxiliar.SQL.Clear;                                                                                                                  //  subtotal*1.16                      //  subtotal*1.16
+//  ADOQryAuxiliar.SQL.Add('UPDATE CFDI SET Subtotal='+FloattoSTR(subtotal)+' , TotalImpuestoTrasladado='+FloatToSTR(IVACal)+', Total='+FloatToSTR(TotalCal) +', SaldoDocumento='+FloatToSTR(TotalCal)
+//                         +', SaldoFactoraje ='+FloatToSTR(TotalCal)+' where IDCFDI ='+IntToStr(idDocCFDI));
+//                           //FEb 9/17 saldoFactoraje
+//  ADOQryAuxiliar.ExecSQL;
+//
+//  //Acualizar impuestos si no tiene Impuestos //Mar 30/16
+//  //Si existe actualizar si no existe crear en tabla de impuestos          //Ago 31/16
+//
+//  ADOQryAuxiliar.Close;
+//  ADOQryAuxiliar.SQL.Clear;
+//  ADOQryAuxiliar.SQL.Add('SElect * from  CFDIImpuestos where IDCFDI ='+IntToStr(idDocCFDI)
+//                         +' and TipoImp=''Trasladado'' and Impuesto=''IVA''');
+//  ADOQryAuxiliar.Open;
+//
+//  if not ADOQryAuxiliar.eof then//No existe
+//    idImp:=ADOQryAuxiliar.FieldByName('IDCFDIImpuesto').AsInteger;
+//    // Mar 31/16
+//  if idImp=-1 then //No existe
+//  begin
+//    ADOQryAuxiliar.Close;
+//    ADOQryAuxiliar.SQL.Clear;
+//    ADOQryAuxiliar.SQL.Add('Insert into CFDIImpuestos (IDCFDI, TipoIMP,Impuesto, Tasa, Importe) VAlues('
+//                          +IntToStr(idDocCFDI) +', ''Trasladado'', ''IVA'', 16, '+FloatToSTR(IVACal)+')');
+//    ADOQryAuxiliar.ExecSQL;                                                                 //  subtotal*0.16 Ago 30 /16 ajustado
+//  end
+//  else
+//  begin
+//    ADOQryAuxiliar.Close;
+//    ADOQryAuxiliar.SQL.Clear;
+//    ADOQryAuxiliar.SQL.Add('UPDATE CFDIImpuestos SET Importe='+FloatToSTR(IVACal)   //subtotal*0.16
+//                            +' where IDCFDIImpuesto ='+IntToStr(idImp));
+//    ADOQryAuxiliar.ExecSQL;
+//  end;  //Hasta aca
+//  ADODtStPrefacturasCFDI.Refresh;
 end;
 
 procedure TdmCuentasXCobrar.ADODtStCFDIConceptosPrefNewRecord(
   DataSet: TDataSet);
 begin                     //Copiado desde FActuras //Verificar idCFDI de relacion
   inherited;
-  dataset.FieldByName('IDUnidadMedida').AsInteger:=2; //NA
-  dataset.FieldByName('Unidad').AsString:='NA';
-  dataset.FieldByName('Cantidad').AsFloat:=1;
+//  dataset.FieldByName('IDUnidadMedida').AsInteger:=2; //NA
+//  dataset.FieldByName('Unidad').AsString:='NA';
+//  dataset.FieldByName('Cantidad').AsFloat:=1;
 end;
 
 procedure TdmCuentasXCobrar.ADODtStPrefacturasCFDIBeforeOpen(DataSet: TDataSet);
 begin
   inherited;
-  ADODtStPersonaEmisor.open;
+//  ADODtStPersonaEmisor.open;
 end;
 
 procedure TdmCuentasXCobrar.ADODtStPrefacturasCFDINewRecord(DataSet: TDataSet);
-var cuenta:String;
-    idPersonaDomi:Integer; //Ene 29/17
+//var cuenta:String;
+//    idPersonaDomi:Integer; //Ene 29/17
 begin
   inherited;
- try
-  DataSet.FieldByName('IDCFDIEstatus').AsInteger:=1; //Prefactura
-                                                       //Modificado Mar 29/16
-  DataSet.FieldByName('IDCFDITipoDocumento').AsInteger:=1; //Factura    //ADODtSTOrdenSalida.fieldByname('IdGeneraCFDITipoDoc').ASInteger;//Mod. Mar 28/16
-                                            //Verificar que se tenga Mar 31/16
-  DataSet.FieldByName('TipoComp').AsString:=SacaTipoComp(1); //DataSet.FieldByName('TipoComprobante').AsString;//'ingreso'; //columna TipoComprobante de Tabla CFDItipoDocumento
-  //Verificar si serie yFolio se colocan aca o se colocan justo antes de generar el CFDI
-  DataSet.FieldByName('Folio').AsInteger:=0; //Sin asignar aun
-  DataSet.FieldByName('Fecha').AsDateTime:=now; //Prefactura Se supondría que se van a generar inmediatamente pero hay que verificar(por si se requiere cambio de fecha antes de generar)
-  DataSet.FieldByName('LugarExpedicion').AsString:=ADODtStPersonaEmisorMunicipio.AsString +', '+ADODtStPersonaEmisorEstado.AsString;//'Zapopan, Jalisco' ; //Verificar si se saca de  la direccion del emisor?
+// try
+//  DataSet.FieldByName('IDCFDIEstatus').AsInteger:=1; //Prefactura
+//                                                       //Modificado Mar 29/16
+//  DataSet.FieldByName('IDCFDITipoDocumento').AsInteger:=1; //Factura    //ADODtSTOrdenSalida.fieldByname('IdGeneraCFDITipoDoc').ASInteger;//Mod. Mar 28/16
+//                                            //Verificar que se tenga Mar 31/16
+//  DataSet.FieldByName('TipoComp').AsString:=SacaTipoComp(1); //DataSet.FieldByName('TipoComprobante').AsString;//'ingreso'; //columna TipoComprobante de Tabla CFDItipoDocumento
+//  //Verificar si serie yFolio se colocan aca o se colocan justo antes de generar el CFDI
+//  DataSet.FieldByName('Folio').AsInteger:=0; //Sin asignar aun
+//  DataSet.FieldByName('Fecha').AsDateTime:=now; //Prefactura Se supondría que se van a generar inmediatamente pero hay que verificar(por si se requiere cambio de fecha antes de generar)
+//  DataSet.FieldByName('LugarExpedicion').AsString:=ADODtStPersonaEmisorMunicipio.AsString +', '+ADODtStPersonaEmisorEstado.AsString;//'Zapopan, Jalisco' ; //Verificar si se saca de  la direccion del emisor?
+//
+//// DataSet.FieldByName('Serie').AsString:=
+//  DataSet.FieldByName('IdCFDIFormaPago').AsInteger :=1;
+//  DataSet.FieldByName('IDMoneda').AsInteger:=106;
+//  DataSet.fieldbyname('TipoCambio').AsInteger:=1; //Jun 27/16
+//
+//
+//  DataSet.FieldByName('IdPersonaEmisor').AsInteger:=ADODtStPersonaEmisoridpersona.AsInteger; //Debe estar abierta y debe tener una direccion fiscal
+//  //DE CuentasXCobrar
+//  DataSet.FieldByName('IdPersonaReceptor').AsInteger:=  adodsMasterIdPersona.AsInteger;
+//  idPersonaDomi:= SacaDireccion(adodsMasterIdPersona.AsInteger);//Ene 29/17
+//  if IDpersonaDomi<>-1 then
+//     DataSet.FieldByName('IdClienteDomicilio').AsInteger:= IDpersonaDomi;// SacaDireccion(adodsMasterIdPersona.AsInteger); // Ver si no tiene que pasa.... Dic 6/16   (Truena no lo deja crear)
+//
+//  DataSet.FieldByName('IDMetodoPago').AsInteger:= SacaMetodo(adodsMasterIdPersona.AsInteger, Cuenta); //CXC   DataSet.FieldByName('IDMetodoPago').AsInteger:=5; //Otros  si no tiene
+//  if Cuenta <>'' then
+//     DataSet.FieldByName('NumCtaPago').asString:= cuenta;
+//  DataSet.FieldByName('IdCuentaXCobrar').AsInteger:=  adodsMasterIdCuentaXCobrar.AsInteger;  //Ajustado Ene 12/17 idcxc
+//  Except
+//    Raise;
+//  end;
+end;
 
-// DataSet.FieldByName('Serie').AsString:=
-  DataSet.FieldByName('IdCFDIFormaPago').AsInteger :=1;
-  DataSet.FieldByName('IDMoneda').AsInteger:=106;
-  DataSet.fieldbyname('TipoCambio').AsInteger:=1; //Jun 27/16
-
-
-  DataSet.FieldByName('IdPersonaEmisor').AsInteger:=ADODtStPersonaEmisoridpersona.AsInteger; //Debe estar abierta y debe tener una direccion fiscal
-  //DE CuentasXCobrar
-  DataSet.FieldByName('IdPersonaReceptor').AsInteger:=  adodsMasterIdPersona.AsInteger;
-  idPersonaDomi:= SacaDireccion(adodsMasterIdPersona.AsInteger);//Ene 29/17
-  if IDpersonaDomi<>-1 then
-     DataSet.FieldByName('IdClienteDomicilio').AsInteger:= IDpersonaDomi;// SacaDireccion(adodsMasterIdPersona.AsInteger); // Ver si no tiene que pasa.... Dic 6/16   (Truena no lo deja crear)
-
-  DataSet.FieldByName('IDMetodoPago').AsInteger:= SacaMetodo(adodsMasterIdPersona.AsInteger, Cuenta); //CXC   DataSet.FieldByName('IDMetodoPago').AsInteger:=5; //Otros  si no tiene
-  if Cuenta <>'' then
-     DataSet.FieldByName('NumCtaPago').asString:= cuenta;
-  DataSet.FieldByName('IdCuentaXCobrar').AsInteger:=  adodsMasterIdCuentaXCobrar.AsInteger;  //Ajustado Ene 12/17 idcxc
-  Except
-    Raise;
+function TdmCuentasXCobrar.AgregarDetalle(IdCuentaXCobrar,
+  IdCuentaXCobrarTipo: Integer; Descripcion: string;
+  Importe: Currency): Integer;
+begin
+  ScreenCursorProc(crSQLWait);
+  try
+    adospGenCuentasXCobrarDetalle.Parameters.ParamByName('@IdCuentaxCobrar').Value:= IdCuentaxCobrar;
+    adospGenCuentasXCobrarDetalle.Parameters.ParamByName('@IdCuentaXCobrarTipoBase').Value:= IdCuentaXCobrarTipo;
+    adospGenCuentasXCobrarDetalle.Parameters.ParamByName('@DescripcionBase').Value:= Descripcion;
+    adospGenCuentasXCobrarDetalle.Parameters.ParamByName('@ImporteBase').Value:= Importe;
+    adospGenCuentasXCobrarDetalle.ExecProc;
+  finally
+    ScreenCursorProc(crDefault);
   end;
 end;
 
@@ -714,6 +788,22 @@ var
   dmFacturas: TdmFacturas;
   IdCFDI: Integer;
   CFDITimbrado: Boolean;
+
+  procedure verificaYCambiaEstatusCXC(IDCFDIACT, NvoEstatus, IdCXCAct:integer);
+  begin                                //Jul 19/17
+    ADOQryAuxiliar.Close;
+    ADOQryAuxiliar.SQL.Clear;
+    ADOQryAuxiliar.SQL.Add('Select * from CFDI where IDCFDI='+intTostr(IDCFDIACT));
+    ADOQryAuxiliar.Open;
+    if (ADOQryAuxiliar.FieldByName('IdCFDIEstatus').asInteger=2)      //vigente
+        and (ADOQryAuxiliar.FieldByName('IdCuentaXCobrar').asInteger=IDCXCAct)  and (adodsmaster.fieldbyname('IdcuentaXCobrarEstatus').AsInteger=0) then
+    begin
+      adodsmaster.Edit;
+      adodsmaster.FieldByName('IdCuentaXCobrarEstatus').AsInteger:=NvoEstatus;// FACTURADA  jul 19/17
+      adodsmaster.post;
+    end;
+  end;
+
 begin
   // Cabiar metodo de pago
   // Opcion de compra
@@ -742,10 +832,10 @@ begin
   TFrmConCuentasXCobrar(gGridForm).ActGenerarPrefactura := actGeneraPreFacturas; //Dic 7/16
   TFrmConCuentasXCobrar(gGridForm).ActActualizaMoratorios:= ActActualizaMoratorios;//Feb 8/17
   TFrmConCuentasXCobrar(gGridForm).ActGenerarCXCs:=ActGeneraCuentasXCobrar;//Feb 15/17
-  TFrmConCuentasXCobrar(gGridForm).ActTotalesCXC:=ActTotalesCXC;//abr  17/17
   TFrmConCuentasXCobrar(gGridForm).DSAuxiliar.DataSet:=ADOQryAuxiliar; //Abr 11/17
   TFrmConCuentasXCobrar(gGridForm).ActListaCXCPendFact:=ActRepCxCEstatusFactPendiente; //Ago 3/17
   TFrmConCuentasXCobrar(gGridForm).actEliminar := actEliminar;
+  TFrmConCuentasXCobrar(gGridForm).actAgregarCXCDetalle := actAgregarCXCDetalle;
 end;
 
 procedure TdmCuentasXCobrar.DSMasterDataChange(Sender: TObject; Field: TField);
@@ -776,42 +866,42 @@ begin
   end;
 end;
 
-function TdmCuentasXCobrar.SacaTipoComp (TipoDoc:Integer) :String;
-begin
-  ADOdsAuxiliar.Close;
-  ADOdsAuxiliar.CommandText:='Select * from CFDITipoDocumento where idCFDITipoDocumento = '+ intToSTR(TipoDoc);
-  ADOdsAuxiliar.Open;
-  if not ADOdsAuxiliar.eof then
-    Result:=ADOdsAuxiliar.FieldByName('TipoComprobante').AsString;
-end;
+//function TdmCuentasXCobrar.SacaTipoComp (TipoDoc:Integer) :String;
+//begin
+//  ADOdsAuxiliar.Close;
+//  ADOdsAuxiliar.CommandText:='Select * from CFDITipoDocumento where idCFDITipoDocumento = '+ intToSTR(TipoDoc);
+//  ADOdsAuxiliar.Open;
+//  if not ADOdsAuxiliar.eof then
+//    Result:=ADOdsAuxiliar.FieldByName('TipoComprobante').AsString;
+//end;
 
-function TdmCuentasXCobrar.SacaDireccion (IDCliente:Integer) :Integer;
-begin    //Verificar que pasa en caso que no tenga          //Dic 6/16
-  Result:=-1;
-  ADODtStDireccionesCliente.Close;
-  ADODtStDireccionesCliente.Parameters.ParamByName('idPersona').Value:=   IDCliente;
-  ADODtStDireccionesCliente.Open;
-  if not ADODtStDireccionesCliente.eof then
-  begin
-    REsult:= ADODtStDireccionesCliente.FieldByName('IDPersonaDomicilio').AsInteger;
-  end;
-end;
+//function TdmCuentasXCobrar.SacaDireccion (IDCliente:Integer) :Integer;
+//begin    //Verificar que pasa en caso que no tenga          //Dic 6/16
+//  Result:=-1;
+//  ADODtStDireccionesCliente.Close;
+//  ADODtStDireccionesCliente.Parameters.ParamByName('idPersona').Value:=   IDCliente;
+//  ADODtStDireccionesCliente.Open;
+//  if not ADODtStDireccionesCliente.eof then
+//  begin
+//    REsult:= ADODtStDireccionesCliente.FieldByName('IDPersonaDomicilio').AsInteger;
+//  end;
+//end;
 
-function TdmCuentasXCobrar.SacaMetodo (IDCliente:Integer; var CtaPago:String) :Integer;
-begin                                         //Dic 6/16
-  CtaPago:='';
-  ADOdsAuxiliar.Close;
-  ADOdsAuxiliar.CommandText:='Select * from Personas where idPersona = '+ intToSTR(IDCliente);
-  ADOdsAuxiliar.Open;
-  if (not ADOdsAuxiliar.eof)  and not (ADOdsAuxiliar.FieldByName('IdMetodoPago').isnull) then
-  begin
-    Result:=ADOdsAuxiliar.FieldByName('IdMetodoPago').asInteger;
-    if not ADOdsAuxiliar.FieldByName('NumCtaPagoCliente').isnull then
-       CtaPago:= ADOdsAuxiliar.FieldByName('NumCtaPagoCliente').asstring;
-  end
-  else
-    Result:=5; //Otros
-end;
+//function TdmCuentasXCobrar.SacaMetodo (IDCliente:Integer; var CtaPago:String) :Integer;
+//begin                                         //Dic 6/16
+//  CtaPago:='';
+//  ADOdsAuxiliar.Close;
+//  ADOdsAuxiliar.CommandText:='Select * from Personas where idPersona = '+ intToSTR(IDCliente);
+//  ADOdsAuxiliar.Open;
+//  if (not ADOdsAuxiliar.eof)  and not (ADOdsAuxiliar.FieldByName('IdMetodoPago').isnull) then
+//  begin
+//    Result:=ADOdsAuxiliar.FieldByName('IdMetodoPago').asInteger;
+//    if not ADOdsAuxiliar.FieldByName('NumCtaPagoCliente').isnull then
+//       CtaPago:= ADOdsAuxiliar.FieldByName('NumCtaPagoCliente').asstring;
+//  end
+//  else
+//    Result:=5; //Otros
+//end;
 
 end.
 
