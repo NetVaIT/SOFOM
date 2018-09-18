@@ -94,12 +94,14 @@ type
     tvMasterCertificado: TcxGridDBColumn;
     tvMasterCadena: TcxGridDBColumn;
     tvMasterSello: TcxGridDBColumn;
+    dxBrBtnPagoReal: TdxBarButton;
     procedure FormCreate(Sender: TObject);
     procedure dxBrBtnAplicaiconesClick(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
     procedure SpdBtnBuscarClick(Sender: TObject);
     procedure EdtNombreChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure ActPagoRealExecute(Sender: TObject);
   private
     { Private declarations }
     ffiltroNombre: String;
@@ -141,7 +143,7 @@ implementation
 
 {$R *.dfm}
 
-uses PagosDM, PagosEdit, _ConectionDmod, ClaveAutorizacionForm;
+uses PagosDM, PagosEdit, _ConectionDmod, ClaveAutorizacionForm,  PagosRealesDM;
 
 procedure TFrmConPagos.DataSourceDataChange(Sender: TObject; Field: TField);
 var
@@ -338,6 +340,51 @@ begin
 //   Showmessage('Pago registrado sin anexo');
 //   REsult:=true;
 // end;
+end;
+
+procedure TFrmConPagos.ActPagoRealExecute(Sender: TObject);
+var               //Sep 3/18
+  DMPagosReales: TDMPagosReales;
+  IdPagoAct:Integer;
+begin
+  inherited;
+  DMPagosReales := TDMPagosReales.Create(Self);
+  DMPagosReales.cFechaIni:=cxDtEdtDesde.Date;
+  DMPagosReales.cFechaFin:=cxDtEdtHasta.Date;
+  DMPagosReales.CUsaFecha:=ChckBxXFecha.Checked;
+  DMPagosReales.CClienteTxt:=EdtNombre.Text;
+  DMPagosReales.CConSaldo:=ChckBxConSaldo.Checked;
+  DMPagosReales.CSoloDepGar:=ChckBxDeposito.Checked;
+
+  if not Datasource.DataSet.eof then
+     DMPagosReales.IdPagoAct:= Datasource.DataSet.FieldByName('IDPago').AsInteger
+  else
+    DMPagosReales.IdPagoAct:=-1;
+  try
+   // DMPagosReales.MasterSource := dsAmortizaciones;          //No se requiere porque se da de alta  y cuando regresa es cuando puede ser necesario
+  //  DMPagosReales.MasterFields:= 'IdAnexoAmortizacion';
+
+    DMPagosReales.MostrarFormulario;
+    IdPagoAct:= DMPagosReales.ADOdsPagosFragmentos.FieldByName('IDPago').AsInteger;
+    //poner filtro
+    cxDtEdtDesde.Date :=DMPagosReales.cFechaIni;
+    cxDtEdtHasta.Date:=DMPagosReales.cFechaFin;
+    ChckBxXFecha.Checked:= DMPagosReales.CUsaFecha;
+    EdtNombre.Text:=DMPagosReales.CClienteTxt;
+    ChckBxConSaldo.Checked:=DMPagosReales.CConSaldo;
+{   DMPagosReales.CSoloDepGar:=ChckBxDeposito.Checked;}
+
+
+
+    SpdBtnBuscarClick(SpdBtnBuscar);
+  //  DAtasource.DataSet.Close;
+  //  DAtasource.DataSet.open;
+    DAtasource.DataSet.Locate('IDPago',IdPagoAct,[]);
+
+    //REfrescar la actual  y Acomodarse en el Id del pago individual.
+  finally
+    DMPagosReales.Free;
+  end;
 end;
 
 procedure TFrmConPagos.ActualizarFechaPago (IdPagoAct:integer);//Jun 29/17
@@ -602,7 +649,7 @@ procedure TFrmConPagos.SpdBtnBuscarClick(Sender: TObject);
 const  //Dic 20/16
   TxtSQL='SELECT PA.IdPago, PA.IdBanco, PA.IdPersonaCliente, PA.IdCuentaBancariaEstadoCuenta, PA.IdMetodoPago, PA.IdCFDIFormaPago33, PA.IdCuentaBancariaOrdenante, PA.IdCuentaBancariaBeneficiario, PA.IdCFDITipoCadenaPago, ' +
   'PA.IdContrato, PA.IdAnexo, PA.IdCFDI_NCR, PA.IdMonedaOrigen, PA.FechaPago, PA.FolioPago, PA.SeriePago, PA.Referencia, PA.Importe, PA.Saldo, PA.Observaciones, PA.CuentaPago, PA.OrigenPago, PA.EsDeposito, ' +
-  'PA.Certificado, PA.Cadena, PA.Sello, dbo.CanGenerarCFDIPago(PA.IdPago) AS GenerarCFDIPago ' +
+  'PA.Certificado, PA.Cadena, PA.Sello,Pa.IDPagoReal, dbo.CanGenerarCFDIPago(PA.IdPago) AS GenerarCFDIPago ' +
   'FROM Pagos AS PA ';
 begin
   inherited;

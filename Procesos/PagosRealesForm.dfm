@@ -1,135 +1,71 @@
-inherited FrmConPagos: TFrmConPagos
+inherited FrmConPagosReales: TFrmConPagosReales
   BorderStyle = bsToolWindow
-  Caption = 'Pagos'
-  ClientHeight = 560
-  ClientWidth = 1101
-  ExplicitWidth = 1107
-  ExplicitHeight = 589
+  Caption = 'Consulta Pagos reales'
+  ClientHeight = 635
+  ClientWidth = 959
+  Position = poOwnerFormCenter
+  ExplicitWidth = 965
+  ExplicitHeight = 664
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Top = 475
-    Width = 1101
-    ExplicitTop = 343
-    ExplicitWidth = 1107
+    Top = 550
+    Width = 959
+    ExplicitTop = 550
+    ExplicitWidth = 959
   end
   inherited splDetail1: TSplitter
-    Top = 228
-    Width = 1101
-    ExplicitLeft = -10
-    ExplicitTop = 425
-    ExplicitWidth = 1101
+    Top = 317
+    Width = 959
+    ExplicitTop = 317
+    ExplicitWidth = 959
   end
   inherited splDetail2: TSplitter
-    Top = 431
-    Width = 1101
-    ExplicitLeft = 8
-    ExplicitTop = 440
-    ExplicitWidth = 1101
+    Top = 506
+    Width = 959
+    ExplicitTop = 506
+    ExplicitWidth = 959
   end
   inherited pnlMaster: TPanel
-    Top = 72
-    Width = 1101
-    Height = 156
-    ExplicitTop = 72
-    ExplicitWidth = 1101
-    ExplicitHeight = 156
+    Top = 70
+    Width = 959
+    Height = 247
+    ExplicitTop = 70
+    ExplicitWidth = 959
+    ExplicitHeight = 247
     inherited cxGrid: TcxGrid
-      Width = 1101
-      Height = 156
-      ExplicitWidth = 1101
-      ExplicitHeight = 156
+      Width = 959
+      Height = 247
+      ExplicitWidth = 959
+      ExplicitHeight = 247
       inherited tvMaster: TcxGridDBTableView
-        object tvMasterIdPago: TcxGridDBColumn
-          DataBinding.FieldName = 'IdPago'
-          Visible = False
-        end
-        object tvMasterIdBanco: TcxGridDBColumn
-          DataBinding.FieldName = 'IdBanco'
+        object tvMasterIDPagoReal: TcxGridDBColumn
+          DataBinding.FieldName = 'IDPagoReal'
           Visible = False
         end
         object tvMasterIdPersonaCliente: TcxGridDBColumn
           DataBinding.FieldName = 'IdPersonaCliente'
           Visible = False
         end
-        object tvMasterIdCuentaBancariaEstadoCuenta: TcxGridDBColumn
-          DataBinding.FieldName = 'IdCuentaBancariaEstadoCuenta'
-          Visible = False
-        end
-        object tvMasterIdCFDIFormaPago33: TcxGridDBColumn
-          DataBinding.FieldName = 'IdCFDIFormaPago33'
-          Visible = False
-        end
-        object tvMasterIdCuentaBancariaOrdenante: TcxGridDBColumn
-          DataBinding.FieldName = 'IdCuentaBancariaOrdenante'
-          Visible = False
-        end
-        object tvMasterIdCuentaBancariaBeneficiario: TcxGridDBColumn
-          DataBinding.FieldName = 'IdCuentaBancariaBeneficiario'
-          Visible = False
-        end
-        object tvMasterIdCFDITipoCadenaPago: TcxGridDBColumn
-          DataBinding.FieldName = 'IdCFDITipoCadenaPago'
-          Visible = False
-        end
-        object tvMasterIdMetodoPago: TcxGridDBColumn
-          DataBinding.FieldName = 'IdMetodoPago'
-          Visible = False
-        end
-        object tvMasterIdContrato: TcxGridDBColumn
-          DataBinding.FieldName = 'IdContrato'
-          Visible = False
-        end
-        object tvMasterIdAnexo: TcxGridDBColumn
-          DataBinding.FieldName = 'IdAnexo'
-          Visible = False
-        end
-        object tvMasterIdCFDI_NCR: TcxGridDBColumn
-          DataBinding.FieldName = 'IdCFDI_NCR'
-          Visible = False
-        end
-        object tvMasterIdMonedaOrigen: TcxGridDBColumn
-          DataBinding.FieldName = 'IdMonedaOrigen'
+        object tvMasterIdBanco: TcxGridDBColumn
+          DataBinding.FieldName = 'IdBanco'
           Visible = False
         end
         object tvMasterCliente: TcxGridDBColumn
           DataBinding.FieldName = 'Cliente'
-          Width = 300
-        end
-        object tvMasterAnexo: TcxGridDBColumn
-          DataBinding.FieldName = 'Anexo'
-          Visible = False
-          Width = 300
+          Width = 328
         end
         object tvMasterFechaPago: TcxGridDBColumn
           DataBinding.FieldName = 'FechaPago'
-        end
-        object tvMasterSeriePago: TcxGridDBColumn
-          DataBinding.FieldName = 'SeriePago'
-        end
-        object tvMasterFolioPago: TcxGridDBColumn
-          DataBinding.FieldName = 'FolioPago'
-        end
-        object tvMasterEsDeposito: TcxGridDBColumn
-          DataBinding.FieldName = 'EsDeposito'
-          Width = 60
+          Width = 127
         end
         object tvMasterFormaPago: TcxGridDBColumn
           DataBinding.FieldName = 'FormaPago'
-          Visible = False
-          Width = 184
+          Width = 175
         end
-        object tvMasterMetodoPago: TcxGridDBColumn
-          DataBinding.FieldName = 'MetodoPago'
-          Visible = False
-        end
-        object tvMasterCuentaPago: TcxGridDBColumn
-          DataBinding.FieldName = 'CuentaPago'
-          Visible = False
-        end
-        object tvMasterBanco: TcxGridDBColumn
-          DataBinding.FieldName = 'Banco'
-          Visible = False
+        object tvMasterReferencia: TcxGridDBColumn
+          DataBinding.FieldName = 'Referencia'
+          Width = 200
         end
         object tvMasterImporte: TcxGridDBColumn
           DataBinding.FieldName = 'Importe'
@@ -137,36 +73,28 @@ inherited FrmConPagos: TFrmConPagos
         object tvMasterSaldo: TcxGridDBColumn
           DataBinding.FieldName = 'Saldo'
         end
-        object tvMasterMonedaOrigen: TcxGridDBColumn
-          DataBinding.FieldName = 'MonedaOrigen'
+        object tvMasterMoneda: TcxGridDBColumn
+          DataBinding.FieldName = 'Moneda'
+          Width = 134
+        end
+        object tvMasterIdMoneda: TcxGridDBColumn
+          DataBinding.FieldName = 'IdMoneda'
           Visible = False
         end
-        object tvMasterReferencia: TcxGridDBColumn
-          DataBinding.FieldName = 'Referencia'
-        end
-        object tvMasterObservaciones: TcxGridDBColumn
-          DataBinding.FieldName = 'Observaciones'
-          Width = 300
-        end
-        object tvMasterOrigenPago: TcxGridDBColumn
-          DataBinding.FieldName = 'OrigenPago'
-          Visible = False
-          Width = 79
-        end
-        object tvMasterGenerarCFDIPago: TcxGridDBColumn
-          DataBinding.FieldName = 'GenerarCFDIPago'
-          Width = 92
-        end
-        object tvMasterCuentaOrdenante: TcxGridDBColumn
-          DataBinding.FieldName = 'CuentaOrdenante'
+        object tvMasterIdFormaPago33: TcxGridDBColumn
+          DataBinding.FieldName = 'IdFormaPago33'
           Visible = False
         end
-        object tvMasterCuentaBeneficiario: TcxGridDBColumn
-          DataBinding.FieldName = 'CuentaBeneficiario'
+        object tvMasterIdCuentaBancoOrdenante: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCuentaBancoOrdenante'
           Visible = False
         end
-        object tvMasterTipoCadena: TcxGridDBColumn
-          DataBinding.FieldName = 'TipoCadena'
+        object tvMasterIdCuentaBancoBeneficiario: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCuentaBancoBeneficiario'
+          Visible = False
+        end
+        object tvMasterIdCFDITipoCadenaTipo: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCFDITipoCadenaTipo'
           Visible = False
         end
         object tvMasterCertificado: TcxGridDBColumn
@@ -181,52 +109,68 @@ inherited FrmConPagos: TFrmConPagos
           DataBinding.FieldName = 'Sello'
           Visible = False
         end
+        object tvMasterBanco: TcxGridDBColumn
+          DataBinding.FieldName = 'Banco'
+          Visible = False
+        end
+        object tvMasterCuentaOrdenante: TcxGridDBColumn
+          DataBinding.FieldName = 'CuentaOrdenante'
+          Visible = False
+        end
+        object tvMasterCuentaBeneficiario: TcxGridDBColumn
+          DataBinding.FieldName = 'CuentaBeneficiario'
+          Visible = False
+        end
+        object tvMasterTipoCadena: TcxGridDBColumn
+          DataBinding.FieldName = 'TipoCadena'
+          Visible = False
+        end
       end
     end
   end
   inherited pnlDetail3: TPanel
-    Top = 478
-    Width = 1101
-    ExplicitTop = 478
-    ExplicitWidth = 1101
+    Top = 553
+    Width = 959
+    ExplicitTop = 553
+    ExplicitWidth = 959
   end
   inherited pnlDetail2: TPanel
-    Top = 434
-    Width = 1101
-    ExplicitTop = 434
-    ExplicitWidth = 1101
+    Top = 509
+    Width = 959
+    ExplicitTop = 509
+    ExplicitWidth = 959
   end
   inherited pnlDetail1: TPanel
-    Top = 231
-    Width = 1101
-    Height = 200
-    ExplicitTop = 231
-    ExplicitWidth = 1101
-    ExplicitHeight = 200
+    Top = 320
+    Width = 959
+    Height = 186
+    ExplicitTop = 320
+    ExplicitWidth = 959
+    ExplicitHeight = 186
   end
   inherited pnlClose: TPanel
-    Top = 519
-    Width = 1101
-    ExplicitTop = 519
-    ExplicitWidth = 1101
+    Top = 594
+    Width = 959
+    ExplicitTop = 594
+    ExplicitWidth = 959
     inherited btnClose: TButton
-      Left = 1016
-      ExplicitLeft = 1016
+      Left = 874
+      ExplicitLeft = 874
     end
   end
   object PnlBusqueda: TPanel [8]
     Left = 0
-    Top = 28
-    Width = 1101
+    Top = 26
+    Width = 959
     Height = 44
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 9
     DesignSize = (
-      1101
+      959
       44)
     object Button1: TButton
-      Left = 1018
+      Left = 876
       Top = 6
       Width = 75
       Height = 25
@@ -264,7 +208,7 @@ inherited FrmConPagos: TFrmConPagos
     object PnlFechas: TPanel
       Left = 199
       Top = 0
-      Width = 902
+      Width = 760
       Height = 44
       Align = alClient
       BevelOuter = bvNone
@@ -343,56 +287,26 @@ inherited FrmConPagos: TFrmConPagos
         Height = 33
         Caption = 'S'#243'lo Dep'#243'sito en Garant'#237'a'
         TabOrder = 4
+        Visible = False
         WordWrap = True
       end
     end
   end
-  inherited ActionList: TActionList
-    object ActPagoReal: TAction
-      Caption = 'Pago Real'
-      Hint = 'Insertar Pagos por cliente'
-      ImageIndex = 19
-      OnExecute = ActPagoRealExecute
-    end
-  end
   inherited DataSource: TDataSource
-    DataSet = dmPagos.adodsMaster
+    DataSet = DMPagosReales.adodsMaster
     OnDataChange = DataSourceDataChange
   end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
       0
       0
-      28
+      26
       0)
     inherited dxbNavigator: TdxBar
-      DockedLeft = 131
-    end
-    inherited dxbEdit: TdxBar
-      ItemLinks = <
-        item
-          Visible = True
-          ItemName = 'dxBrBtnPagoReal'
-        end
-        item
-          Visible = True
-          ItemName = 'Insert1'
-        end
-        item
-          Visible = True
-          ItemName = 'Edit1'
-        end
-        item
-          Visible = True
-          ItemName = 'Delete1'
-        end
-        item
-          Visible = True
-          ItemName = 'dxBarButton7'
-        end>
+      DockedLeft = 107
     end
     inherited dxbTools: TdxBar
-      DockedLeft = 262
+      DockedLeft = 238
       ItemLinks = <
         item
           Visible = True
@@ -404,35 +318,15 @@ inherited FrmConPagos: TFrmConPagos
         end
         item
           Visible = True
-          ItemName = 'dxBrBtnAplicaicones'
-        end
-        item
-          Visible = True
-          ItemName = 'dxbbGenCFDIPago'
+          ItemName = 'dxBrBtnFragmentaPago'
         end>
     end
-    inherited Insert1: TdxBarButton
-      Visible = ivNever
-    end
-    object dxBrBtnAplicaicones: TdxBarButton
-      Caption = 'Aplicaciones'
+    object dxBrBtnFragmentaPago: TdxBarButton
+      Caption = 'Fragmentar pago'
       Category = 0
-      Hint = 'Aplicaciones'
+      Hint = 'Fragmentar pago'
       Visible = ivAlways
       ImageIndex = 17
-      PaintStyle = psCaptionGlyph
-      OnClick = dxBrBtnAplicaiconesClick
-    end
-    object dxbbGenCFDIPago: TdxBarButton
-      Caption = 'Generar CFDI'
-      Category = 0
-      Visible = ivAlways
-      ImageIndex = 18
-      PaintStyle = psCaptionGlyph
-    end
-    object dxBrBtnPagoReal: TdxBarButton
-      Action = ActPagoReal
-      Category = 0
     end
   end
   inherited cxStyleRepository: TcxStyleRepository
@@ -1175,166 +1069,53 @@ inherited FrmConPagos: TFrmConPagos
       item
         Image.Data = {
           36040000424D3604000000000000360000002800000010000000100000000100
-          2000000000000004000000000000000000000000000000000000FFFFFF00FFFF
-          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00D5D5D500E5E5E500FFFF
-          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-          FF00FFFFFF00FFFFFF00FFFFFF00F9F9F900A4A4A400ECECEC00616161009D9D
-          9D00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-          FF00FFFFFF00FFFFFF00C1C1C100B2B2B200FDFDFD00FFFFFF00797979007373
-          730069696900C4C4C400FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-          FF00EEEEEE00A3A3A300DBDBDB00EEEEEE00E7E7E700FFFFFF00828282007373
-          73007B7B7B00686868007B7B7B00F0F0F000FFFFFF00FFFFFF00FFFFFF00F0F0
-          F000AAAAAA00E3E3E300DADADA00E1E1E100FFFFFF00E3E3E300F4F4F400CACA
-          CA0074747400737373007575750057575700EAEAEA00FFFFFF00FFFFFF00DFDF
-          DF00C2C2C200CFCFCF00F8F8F800F6F6F6009E9F9E008F828E0099959800B6B7
-          B600ECECEC00A7A7A7006D6D6D0064646400DEDEDE00FFFFFF00FFFFFF00D9D9
-          D900D7D7D700F9F9F900969696005D5D5D007967780046964D007E967A00E6D2
-          E600E3E4E300F5F5F500E8E8E8008A8A8A00D7D7D700FFFFFF00FFFFFF00F9F9
-          F900C7C7C700C4C4C400BEBEBE00908B8F00626F5E0029E6620011C6380064B2
-          6100FFEFFF00DDDEDD00ADADAD00BDBDBD00F9F9F900FFFFFF00FFFFFF00FFFF
-          FF00FFFFFF00FFFFFF00D7D8D800E5CBDF002DC54D0045E07D004EE7860033D6
-          5E001F922000E1CBDE00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-          FF00FFFFFF00FFFFFF00FFFFFF00AEE8B4002FD7660044DD780048E17B004AE9
-          820056EF870029B12F00FCFDFA00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-          FF00FFFFFF00FFFFFF00FFFFFF0023C8510047E27C0048E17B004EE580006DF3
-          9D0050E484001BC54B0065C76A00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-          FF00FFFFFF00FFFFFF0077DA91004AE7810052E784004AE57E006AF49D000095
-          00007BCF8500F8FBF400FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-          FF00FFFFFF00FFFFFF003FD2690040DB6D0045E0770050EA83006AF79C0004A4
-          1800CAEDD000FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF003DE16F0052EE86006BFC9E000DB0
-          2F00BCE8C300FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF002EE3690059F38E004DE17C0023C4
-          4D00C8EECD00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00C6ECD000ADE5BB00E0F4E300FFFF
-          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00}
-        MaskColor = clWhite
-      end
-      item
-        Image.Data = {
-          36040000424D3604000000000000360000002800000010000000100000000100
-          2000000000000004000000000000000000000000000000000000000000000000
-          0000000000000000000000000000000000000000000000000000000000000000
-          0000000000000000000000000000000000000000000000000000000000000000
-          0000000000000000000000000000000000000000000000000000000000000000
-          0000000000000000000000000000000000000000000000000000000000000000
-          0000000000000000000000000000000000000000000000000000000000000000
-          0000000000000000000000000000000000000000000000000000000000000000
-          0000000000000000000000000000000000000000000000000000000000000000
-          0000000000000000000000000000000000000000000000000000000000000000
-          0000000000000000000000000000000000000000000000000000000000000000
-          0000000000000000000000000000000000000000000000000000000000000000
-          0000000000000000000000000000000000000000000000000000000000000000
-          0000000000000000000000000000000000000000000000000000000000000000
-          0000000000000000000000000000000000000000000000000000000000000000
-          0000000000000000000000000000000000000000000000000000000000000000
-          0000000000000000000000000000000000000000000000000000000000000000
-          0000000000000000000000000000000000000000000000000000000000000000
-          0000000000000000000000000000000000000000000000000000000000000000
-          0000000000000000000000000000000000000000000000000000000000000000
-          0000000000000000000000000000000000000000000000000000000000000000
-          0000000000000000000000000000000000000000000000000000000000000000
-          0000000000000000000000000000000000000000000000000000000000000000
-          0000000000000000000000000000000000000000000000000000000000000000
-          0000000000000000000000000000000000000000000000000000000000000000
-          0000000000000000000000000000000000000000000000000000000000000000
-          0000000000000000000000000000000000000000000000000000000000000000
-          0000000000000000000000000000000000000000000000000000000000000000
-          0000000000000000000000000000000000000000000000000000000000000000
-          0000000000000000000000000000000000000000000000000000000000000000
-          0000000000000000000000000000000000000000000000000000000000000000
-          0000000000000000000000000000000000000000000000000000000000000000
-          0000000000000000000000000000000000000000000000000000000000000000
-          0000000000000000000000000000000000000000000000000000}
-        MaskColor = clBlack
-      end
-      item
-        Image.Data = {
-          36040000424D3604000000000000360000002800000010000000100000000100
-          2000000000000004000000000000000000000000000000000000FFFFFF00FFFF
-          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0000006500FFFFFF00FFFFFF00FFFF
-          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-          FF00FFFFFF00FFFFFF008D6580000079000000620000007900008D658000FFFF
-          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-          FF00FFFFFF000000000000D7000000D30000004C000000D3000000D700000000
-          0000DFC3DF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-          FF00A69AA6000050000000D3000000D700000004000000D7000000C7000000D4
-          000000980000285C2800D7BBD700FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-          FF0044303C00005C0000007B00000057000000FF0000005B00000067000000D0
-          000000C8000000CC000000980000705C7000FFFFFF00FFFFFF00FFFFFF00FFFF
-          FF0000202000427692000071000000FF000000FF000000F3000000D300000060
-          00000098000000CC000000D0000080688000FFFFFF00FFFFFF00FFFFFF00FFFF
-          FF00002222003C747400008595002C4474000079000000AD00000068000000F7
-          000000BF00000064000000AA000078647900FFFFFF00FFFFFF00FFFFFF00FFFF
-          FF00002222003C7474000085850022626200301F32007F0F1B00007C000000FF
-          000000FF000000D700001F480B00C7BABD00FFFFFF00FFFFFF00FFFFFF00FFFF
-          FF000022220042727200008585002666660013161900FF9A7C00CB5854003067
-          22002E4B0C00C3323600FA9E7900FFFFFC00FFFFFF00FFFFFF00FFFFFF00FFFF
-          FF00001C1C000079790000777700001E1E006E666600FFFFFF00E55A2B008278
-          9A00884E4E00FF865C00FFFBE100FEF6EE00FFFFFF00FFFFFF00FFFFFF00FFFF
-          FF00002C2C0000FFFF0000FFFF0000CDCD00A48C8C00FFFFFF00233B7D000844
-          B00008296F0000000000BF9F8800FFFEF500FFFFFF00FFFFFF00FFFFFF00FFFF
-          FF00FBF3F3007353530079595900B9A1A100FDFDFD00FFFFFF00004EBC002577
-          D500227FEB0021170C0008090800FFFFF200FFFFFF00FFFFFF00FFFFFF00FFFF
-          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF000E7FEA002B9A
-          FF001A62BC002F292B00372A2900FFFFF400FFFFFF00FFFFFF00FFFFFF00FFFF
-          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00180B17006055
-          5B008F795E002D2E3200E0CCB600FFFFFE00FFFFFF00FFFFFF00FFFFFF00FFFF
-          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00F0E6CB008266
-          4D0097795A00E0CB9A00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00}
-        MaskColor = clWhite
+          200000000000000400000000000000000000000000000000000000808000FFFF
+          FF00FFFFFF000000000000000000000000000000000000000000000000000000
+          0000FFFFFF00000000000000000000000000000000000000000000808000FFFF
+          FF00FFFFFF00FFFFFF0000000000FF000000FF000000FF00000000000000FFFF
+          FF00FFFFFF00000000000000FF000000FF000000FF0000000000008080000080
+          8000FFFFFF00FFFFFF00FFFFFF0000000000FF00000000000000FFFFFF00FFFF
+          FF00FFFFFF00000000000000FF000000FF000000FF0000000000008080000080
+          800000808000FFFFFF00FFFFFF00FFFFFF0000000000FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00000000000000FF000000FF000000FF0000000000008080000080
+          80000080800000808000FFFFFF00FFFFFF00FFFFFF0000000000000000000000
+          0000FFFFFF000000000000000000000000000000000000000000008080000080
+          8000008080000080800000808000FFFFFF00000000007F7F7F0000FFFF007F7F
+          7F0000000000FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00008080000080
+          8000008080000080800000808000008080000000000000FFFF0000FFFF0000FF
+          FF0000000000FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00008080000080
+          800000808000008080000080800000808000000000007F7F7F0000FFFF007F7F
+          7F0000000000FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00008080000080
+          8000008080000080800000808000008080000080800000000000000000000000
+          0000FFFFFF00FFFFFF0000000000FFFFFF00FFFFFF00FFFFFF00008080000080
+          800000808000008080000080800000808000008080000080800000808000FFFF
+          FF00FFFFFF00000000000000000000000000FFFFFF00FFFFFF00008080000000
+          0000000000000000000000000000000000000080800000808000008080000080
+          80000000000000000000000000000000000000000000FFFFFF00008080000000
+          0000FFFF0000FFFF0000FFFF0000000000000080800000808000008080000000
+          0000000000000000000000000000000000000000000000000000008080000000
+          0000FFFF0000FFFF0000FFFF0000000000000080800000808000008080000080
+          800000808000000000000000000000000000FFFFFF00FFFFFF00008080000000
+          0000FFFF0000FFFF0000FFFF0000000000000080800000808000008080000080
+          800000808000000000000000000000000000FFFFFF00FFFFFF00008080000000
+          0000000000000000000000000000000000000080800000808000008080000080
+          800000808000000000000000000000000000FFFFFF00FFFFFF00008080000080
+          8000008080000080800000808000008080000080800000808000008080000000
+          00000000000000000000000000000080800000808000FFFFFF00}
+        MaskColor = clOlive
       end>
   end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
-      ReportDocument.CreationDate = 42712.575441516200000000
-      AssignedFormatValues = []
+      ReportDocument.CreationDate = 43335.532713877310000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end
-  object dsConCXCPendientes: TDataSource
-    DataSet = dmPagos.ADODtStCXCPendientes
-    Left = 732
-  end
-  object DSDetallesCXC: TDataSource
-    DataSet = dmPagos.ADODtStCxCDetallePend
-    Left = 564
-    Top = 5
-  end
-  object DSAplicacion: TDataSource
-    DataSet = dmPagos.ADODtStAplicacionesPagos
-    Left = 640
-  end
-  object DSDetalleMostrar: TDataSource
-    DataSet = dmPagos.ADODtStDetalleCXCMostrar
-    Left = 900
-    Top = 5
-  end
-  object DSAnexos: TDataSource
+  object DSPagosFragmento: TDataSource
     AutoEdit = False
-    DataSet = dmPagos.ADODtStAnexoSeleccion
-    Left = 640
-    Top = 176
-  end
-  object DSAuxiliar: TDataSource
-    DataSet = dmPagos.ADOQryAuxiliar
-    Left = 940
-    Top = 128
-  end
-  object DSP_CalcMoratorioNueva: TDataSource
-    Left = 1004
-    Top = 8
-  end
-  object DSP_ActTotalCXC: TDataSource
-    DataSet = dmPagos.ADOPActualizaTotalesCXC
-    Left = 796
-    Top = 352
-  end
-  object DSVerificaSaldoFinal: TDataSource
-    DataSet = dmPagos.ADOQryVerificaSaldoFinal
-    Left = 1028
-    Top = 128
+    DataSet = DMPagosReales.ADOdsPagosFragmentos
+    Left = 680
+    Top = 72
   end
 end

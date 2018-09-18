@@ -19,8 +19,8 @@ inherited dmPagos: TdmPagos
       'PA.FolioPago, PA.SeriePago, PA.Referencia, PA.Importe, PA.Saldo,' +
       ' PA.Observaciones, PA.CuentaPago, PA.OrigenPago, PA.EsDeposito, ' +
       #13#10'                         PA.Certificado, PA.Cadena, PA.Sello, ' +
-      'dbo.CanGenerarCFDIPago(PA.IdPago) AS GenerarCFDIPago'#13#10'FROM      ' +
-      '      Pagos AS PA '#13#10
+      'PA.IDPagoReal, dbo.CanGenerarCFDIPago(PA.IdPago) AS GenerarCFDIP' +
+      'ago'#13#10'FROM            Pagos AS PA '#13#10
     Left = 48
     object adodsMasterIdPago: TAutoIncField
       FieldName = 'IdPago'
@@ -239,6 +239,9 @@ inherited dmPagos: TdmPagos
       FieldName = 'Sello'
       Size = 2000
     end
+    object adodsMasterIDPagoReal: TIntegerField
+      FieldName = 'IDPagoReal'
+    end
   end
   inherited adodsUpdate: TADODataSet
     Left = 632
@@ -285,6 +288,7 @@ inherited dmPagos: TdmPagos
     end
   end
   object adodsPersonas: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -371,6 +375,7 @@ inherited dmPagos: TdmPagos
     end
   end
   object adodsBancos: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -985,6 +990,7 @@ inherited dmPagos: TdmPagos
     end
   end
   object adodsMetodoPago: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -992,7 +998,7 @@ inherited dmPagos: TdmPagos
       'geCuenta, FP.IdCFDIFormaPago33'#13#10'from MetodosPago MP'#13#10'LEFT OUTER ' +
       'JOIN CFDIFormasPago33 FP ON MP.ClaveSAT2016 = FP.Identificador'#13#10
     Parameters = <>
-    Left = 48
+    Left = 40
     Top = 171
     object adodsMetodoPagoIdMetodoPago: TIntegerField
       FieldName = 'IdMetodoPago'
@@ -1714,6 +1720,7 @@ inherited dmPagos: TdmPagos
     end
   end
   object adodsAnexos: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -2182,6 +2189,7 @@ inherited dmPagos: TdmPagos
     end
   end
   object adodsMonedas: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdMoneda, Descripcion from Monedas'#13#10'where UsoComun = 1'
@@ -2317,6 +2325,7 @@ inherited dmPagos: TdmPagos
     end
   end
   object adodsFromaPago33: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -2327,6 +2336,7 @@ inherited dmPagos: TdmPagos
     Top = 345
   end
   object adodsCuentasOrdenante: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -2337,7 +2347,7 @@ inherited dmPagos: TdmPagos
       ' Bancos.IdBanco'#13#10'WHERE CuentasBancarias.IdPersona = :IdPersonaCl' +
       'iente'
     DataSource = dsMaster
-    MasterFields = 'IdPersonaCliente'
+    MasterFields = 'IdPersonaClientE'
     Parameters = <
       item
         Name = 'IdPersonaClientE'
@@ -2351,6 +2361,7 @@ inherited dmPagos: TdmPagos
     Top = 400
   end
   object adodsCuentasBeneficiario: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -2365,6 +2376,7 @@ inherited dmPagos: TdmPagos
     Top = 456
   end
   object adodsCadenaPago: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -2373,5 +2385,132 @@ inherited dmPagos: TdmPagos
     Parameters = <>
     Left = 48
     Top = 512
+  end
+  object ADOSP_CreaPagoDepoGar: TADOStoredProc
+    Connection = _dmConection.ADOConnection
+    ProcedureName = 'p_GenPagoXDeposito;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@idPersonaCliente'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@FechaPago'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Value = Null
+      end
+      item
+        Name = '@IdAnexo'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@IdContrato'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@IDMetodoPago'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@SeriePago'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 20
+        Value = Null
+      end
+      item
+        Name = '@FolioPago'
+        Attributes = [paNullable]
+        DataType = ftLargeint
+        Precision = 19
+        Value = Null
+      end
+      item
+        Name = '@Importe'
+        Attributes = [paNullable]
+        DataType = ftBCD
+        NumericScale = 6
+        Precision = 18
+        Value = Null
+      end
+      item
+        Name = '@Saldo'
+        Attributes = [paNullable]
+        DataType = ftBCD
+        NumericScale = 6
+        Precision = 18
+        Value = Null
+      end
+      item
+        Name = '@Referencia'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 30
+        Value = Null
+      end
+      item
+        Name = '@observaciones'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 255
+        Value = Null
+      end
+      item
+        Name = '@EsDEposito'
+        Attributes = [paNullable]
+        DataType = ftBoolean
+        Value = Null
+      end
+      item
+        Name = '@IdFormaPago33'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@idBanco'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@idmoneda'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@IdPago'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Direction = pdInputOutput
+        Precision = 10
+        Value = Null
+      end>
+    Left = 944
+    Top = 352
   end
 end

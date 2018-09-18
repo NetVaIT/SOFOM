@@ -425,6 +425,8 @@ type
     adodsPagosAplicacionesCFDIImporte: TFMTBCDField;
     adodsMetodoPagoIdCFDIFormaPago33: TAutoIncField;
     actSoloCXCDelAnexo: TAction;
+    ADOSP_CreaPagoDepoGar: TADOStoredProc;
+    adodsMasterIDPagoReal: TIntegerField;
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsMasterAfterPost(DataSet: TDataSet);
     procedure adodsMasterBeforePost(DataSet: TDataSet);
@@ -775,11 +777,41 @@ function TdmPagos.CrearPagoXDeposito (Importe:Double; ADatosPago: TADODataSet):B
 var serieAct:String;
     FolioAct, res:Integer;
 begin
-  Result:=False;
+    Result:=False;   //Sep 4/18
   SerieAct:= ADODtStConfiguraciones.FieldByName('UltimaSeriePago').AsString;
   FolioAct:= ADODtStConfiguraciones.FieldByName('UltimoFolioPago').AsInteger;
   SerieAct:=SerieAct;
   FolioAct:=FolioAct+1;
+
+  ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@idPersonaCliente').Value:= ADatosPago.FieldByName('IdPersonaCliente').asInteger;
+  ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@FechaPago').Value:= ADatosPago.FieldByName('FechaPago').asdatetime;
+  ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@IdAnexo').Value:= ADatosPago.FieldByName('IdAnexo').asInteger;
+  ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@IdContrato').Value:= ADatosPago.FieldByName('IdContrato').asInteger;
+  if not aDatosPago.FieldByName('IDMetodoPago').isnull then
+    ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@IDMetodoPago').Value:= ADatosPago.FieldByName('IDMetodoPago').asInteger
+  else
+    ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@IDMetodoPago').Value:=5;
+
+  ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@SeriePago').Value:=  serieAct;
+  ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@FolioPago').Value:= FolioAct;
+  ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@Importe').Value:=simpleroundto(Importe,-2);
+  ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@Saldo').Value:=simpleroundto(Importe,-2);
+  ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@Referencia').Value:= '';
+  ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@Observaciones').value:= 'Trasladado por Deposito en Garantía. API : '
+                                                                           + ADODtstAplicacionesInternasIDPagoAplicacionInterna.AsString;
+  ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@EsDeposito').Value:= True;
+
+  if not ADatosPago.FieldByName('IDBanco').IsNull then
+     ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@IDBanco').Value:= ADatosPago.FieldByName('IDBanco').asInteger
+  else
+    ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@IDBanco').Value:= ADatosPago.FieldByName('IDBanco').Value;  //Verificar
+
+  ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@IDFormaPago33').Value:= 3; ///por default
+  ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@IDMoneda').Value:= _MONEDAS_ID_PESO_MXN;///Default
+  ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@IDFormaPago33').Value:= ADatosPago.FieldByName('IDFormaPago33').Value;
+  ADOSP_CreaPagoDepoGar.ExecProc;
+  REs:= ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@idPago').Value;
+  (*
   ADOQryAuxiliar.Close;
   ADOQryAuxiliar.SQl.Clear;
   ADOQryAuxiliar.SQL.Add(' Insert Into Pagos(idPersonaCliente,FechaPago,IdAnexo, IdContrato, IDMetodoPago,  ' +
@@ -803,7 +835,9 @@ begin
   + ADODtstAplicacionesInternasIDPagoAplicacionInterna.AsString;
   ADOQryAuxiliar.Parameters.ParamByName('EsDeposito').value:=  True;
   Res:= ADOQryAuxiliar.ExecSQL;
-  if Res=1 then
+  *)
+
+  if Res>0 then
   begin
      REsult:=True;
     //Para actualizar folio pago
@@ -945,7 +979,9 @@ var
   vSQL: string;
 begin
   vSQL := cSQL;
-  if not adodsMasterIdAnexo.IsNull then
+  if  adodsMasterIdAnexo.IsNull then    //Sep 17/18   not
+    vSQL := vSQL + 'AND CXC.IdAnexo is NULL  '
+  else
     vSQL := vSQL + Format('AND CXC.IdAnexo = %d ', [adodsMasterIdAnexo.Value]);
   if SoloCXCdelAnexo then
     vSQL := vSQL + 'AND CXC.IdAnexosAmortizaciones IS NOT NULL ';
@@ -1585,6 +1621,15 @@ begin        //FEb 10/17                 //No requerido aca
   ADOQryAuxiliar.SQL.Add('UPDATE Pagos SET SALDO=SALDO - '+DataSet.FieldByName('Importe').AsString
                         +' where IDPago='+DAtaSEt.FieldByName('IDPago').ASString);
   ADOQryAuxiliar.ExecSQL;
+
+  if not AdodsMaster.FieldByName('IDPagoREal').Isnull then //Actualizar Saldo de Pago Real.
+  begin
+  ADOQryAuxiliar.SQL.Clear;    //sep 14/18
+  ADOQryAuxiliar.SQL.Add('UPDATE PagosReales SET SALDO=SALDO - '+DataSet.FieldByName('Importe').AsString
+                        +' where IDPagoREal='+AdodsMaster.FieldByName('IDPagoREal').ASString);
+  ADOQryAuxiliar.ExecSQL;
+  end;
+
   //Abr 17/17 Actualiza Totales de CXC para que actualice mnto vencido en anexo
   ADOPActualizaTotalesCXC.Parameters.ParamByName('@IdCuentaXCobrar').Value:=  DAtaSEt.FieldByName('IDCuentaXCobrar').asinteger;
   ADOPActualizaTotalesCXC.ExecProc;

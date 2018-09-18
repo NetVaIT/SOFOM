@@ -288,7 +288,12 @@ uses
   EvaluacionesRiesgoDM in 'Procesos\EvaluacionesRiesgoDM.pas' {dmEvaluacionRiesgo: TDataModule},
   EvaluacionesRiesgoForm in 'Procesos\EvaluacionesRiesgoForm.pas' {frmEvaluacionesRiesgo},
   EvaluacionesRiesgoEdit in 'Procesos\EvaluacionesRiesgoEdit.pas' {frmEvaluacionesRiesgoEdit},
-  MRAplicacionCuesionarioEdit in 'Procesos\MRAplicacionCuesionarioEdit.pas' {FrmAplicacionCuestionarioEdt};
+  MRAplicacionCuesionarioEdit in 'Procesos\MRAplicacionCuesionarioEdit.pas' {FrmAplicacionCuestionarioEdt},
+  PagosRealesDM in 'Procesos\PagosRealesDM.pas' {DMPagosReales: TDataModule},
+  PagosRealesForm in 'Procesos\PagosRealesForm.pas' {FrmConPagosReales},
+  PagosRealesEdit in 'Procesos\PagosRealesEdit.pas' {FrmEdPagosReales},
+  PagosFragmentosForm in 'Procesos\PagosFragmentosForm.pas' {frmFragmentosPagos},
+  PagosFragmentadosEdit in 'PagosFragmentadosEdit.pas' {FrmEdtPagosFragmentados};
 
 {$R *.res}
 

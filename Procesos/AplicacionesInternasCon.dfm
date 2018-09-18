@@ -27,7 +27,6 @@ inherited frmConAplicacionesInternas: TfrmConAplicacionesInternas
   inherited pnlMaster: TPanel
     Width = 862
     Height = 229
-    ExplicitTop = 26
     ExplicitWidth = 862
     ExplicitHeight = 229
     inherited cxGrid: TcxGrid

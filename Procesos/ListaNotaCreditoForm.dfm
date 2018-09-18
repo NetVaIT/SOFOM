@@ -4,7 +4,6 @@ inherited frmListaNotasCredito: TfrmListaNotasCredito
   ClientHeight = 428
   ClientWidth = 793
   ExplicitWidth = 799
-  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -29,10 +28,12 @@ inherited frmListaNotasCredito: TfrmListaNotasCredito
     Width = 793
     Height = 229
     ExplicitWidth = 793
+    ExplicitHeight = 229
     inherited cxGrid: TcxGrid
       Width = 793
       Height = 229
       ExplicitWidth = 793
+      ExplicitHeight = 229
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdCFDI: TcxGridDBColumn
           DataBinding.FieldName = 'IdCFDI'
@@ -160,7 +161,6 @@ inherited frmListaNotasCredito: TfrmListaNotasCredito
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42913.417505358800000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

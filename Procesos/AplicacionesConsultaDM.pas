@@ -53,6 +53,8 @@ type
     adodsMasterTotalFactura: TFMTBCDField;
     actDesaplicar: TAction;
     adopDelPagosAplicaciones: TADOStoredProc;
+    ADOSP_CreaPagoDepoGar: TADOStoredProc;
+    adodsMasteridBAnco: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
     procedure ActAplicaMoratorioIntenoExecute(Sender: TObject);
     procedure ActCreaPagoDepositoExecute(Sender: TObject);
@@ -243,7 +245,63 @@ begin
 end;
 
 function TdmAplicacionesConsulta.CrearPagoXDeposito (Importe:Double; ADatosPago: TADODataSet):Boolean; //Jun 8/17
-var serieAct:String;                                               //Es la de aplicaciones
+var serieAct:String;                                               //Es la de aplicaciones      //Es posible que aca se deba generar el deposito padre antes de....Ago 24/18
+    FolioAct, res:Integer;
+begin
+  Result:=False;
+  ADODtStConfiguraciones.Open;
+  SerieAct:= ADODtStConfiguraciones.FieldByName('UltimaSeriePago').AsString;
+  FolioAct:= ADODtStConfiguraciones.FieldByName('UltimoFolioPago').AsInteger;
+  SerieAct:=SerieAct;
+  FolioAct:=FolioAct+1;
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.SQl.Clear;
+  //Sep 4/18
+
+
+  ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@idPersonaCliente').Value:= ADatosPago.FieldByName('IdPersonaCliente').asInteger;
+  ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@FechaPago').Value:= ADatosPago.FieldByName('FechaPago').asdatetime;
+  ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@IdAnexo').Value:= ADatosPago.FieldByName('IdAnexo').asInteger;
+  ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@IdContrato').Value:= ADatosPago.FieldByName('IdContrato').asInteger;
+  if not aDatosPago.FieldByName('IDMetodoPago').isnull then
+    ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@IDMetodoPago').Value:= ADatosPago.FieldByName('IDMetodoPago').asInteger
+  else
+    ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@IDMetodoPago').Value:=5;
+
+  ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@SeriePago').Value:=  serieAct;
+  ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@FolioPago').Value:= FolioAct;
+  ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@Importe').Value:=simpleroundto(Importe,-2);
+  ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@Saldo').Value:=simpleroundto(Importe,-2);
+  ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@Referencia').Value:= '';
+  ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@Observaciones').value:= 'Trasladado por Deposito en Garantía. API : '
+                                                                           + ADODtstAplicacionesInternasIDPagoAplicacionInterna.AsString;
+  ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@EsDeposito').Value:= True;
+
+  if not ADatosPago.FieldByName('IDBanco').IsNull then
+     ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@IDBanco').Value:= ADatosPago.FieldByName('IDBanco').asInteger
+  else
+    ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@IDBanco').Value:= ADatosPago.FieldByName('IDBanco').Value;  //Verificar
+  ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@IDFormaPago33').Value:= 3; ///por default
+  ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@IDMoneda').Value:= _MONEDAS_ID_PESO_MXN;///Default
+ //ADatosPago.FieldByName('IDFormaPago33').Value;
+  ADOSP_CreaPagoDepoGar.ExecProc;
+  REs:= ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@idPago').Value;
+
+  if Res>0 then
+  begin
+     REsult:=True;
+    //Para actualizar folio pago
+    ADODtStConfiguraciones.Edit;
+    ADODtStConfiguraciones.FieldByName('UltimaSeriePago').AsString:=SerieAct;
+    ADODtStConfiguraciones.FieldByName('UltimoFolioPago').AsInteger :=FolioAct;
+    ADODtStConfiguraciones.Post;
+  end;
+  ADODtStConfiguraciones.Close;
+end;
+
+(*  //CReacion previa del deposito sep 3/18
+function TdmAplicacionesConsulta.CrearPagoXDeposito (Importe:Double; ADatosPago: TADODataSet):Boolean; //Jun 8/17
+var serieAct:String;                                               //Es la de aplicaciones      //Es posible que aca se deba generar el deposito padre antes de....Ago 24/18
     FolioAct, res:Integer;
 begin
   Result:=False;
@@ -286,4 +344,10 @@ begin
   end;
   ADODtStConfiguraciones.Close;
 end;
+
+
+
+*)
+
+
 end.
