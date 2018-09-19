@@ -982,6 +982,7 @@ begin
   if  adodsMasterIdAnexo.IsNull then    //Sep 17/18   not
     vSQL := vSQL + 'AND CXC.IdAnexo is NULL  '
   else
+   if  not adodsMasterIdAnexo.IsNull then    //Sep 17/18   not
     vSQL := vSQL + Format('AND CXC.IdAnexo = %d ', [adodsMasterIdAnexo.Value]);
   if SoloCXCdelAnexo then
     vSQL := vSQL + 'AND CXC.IdAnexosAmortizaciones IS NOT NULL ';

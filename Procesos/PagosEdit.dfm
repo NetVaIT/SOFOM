@@ -9,16 +9,14 @@ inherited FrmEdPagos: TFrmEdPagos
   inherited pcMain: TcxPageControl
     Width = 595
     Height = 507
-    ExplicitLeft = 32
-    ExplicitTop = 8
     ExplicitWidth = 595
     ExplicitHeight = 507
-    ClientRectBottom = 505
-    ClientRectRight = 593
+    ClientRectBottom = 503
+    ClientRectRight = 591
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 2
-      ExplicitTop = 26
-      ExplicitWidth = 591
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 587
       ExplicitHeight = 479
       object Label7: TLabel
         Left = 27
@@ -39,7 +37,7 @@ inherited FrmEdPagos: TFrmEdPagos
       object PnlDatosBase: TPanel
         Left = 0
         Top = 0
-        Width = 591
+        Width = 587
         Height = 300
         Align = alTop
         BevelOuter = bvNone
@@ -309,6 +307,10 @@ inherited FrmEdPagos: TFrmEdPagos
       Caption = 'Complemento de pago'
       ImageIndex = 1
       TabVisible = False
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object gbBancarizado: TcxGroupBox
         Left = 3
         Top = 3

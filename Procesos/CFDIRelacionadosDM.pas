@@ -63,13 +63,27 @@ begin
 end;
 
 procedure TdmCFDIRelacionados.DataModuleCreate(Sender: TObject);
+var
+   IdEstatusCon:Integer;  //SEp 19/18
+   IdTipoDocConsulta:Integer;
 begin
   inherited;
   gGridForm:= TfrmCFDIRelacionados.Create(Self);
   gGridForm.DataSet:= adodsMaster;
   gGridForm.ReadOnlyGrid:= SoloLectura;
+
+  IdTipoDocConsulta:=IdCFDITipoDocumento; // //SEp 19/18porque para Notas de credito se relaciona  con FActuras y no con notas de Credito
+  if IdCFDITipoDocumento =2 then //Nota credito  //SEp 19/18
+  begin
+    IdEstatusCon:=2;  //Vigentes
+    IdTipoDocConsulta:=1; //Solo FActuras  ??
+  end
+  else
+    IdEstatusCon:=3; //Cancelados para facturas y para pagos
+
+  adodsCFDIParaRelacionar.Parameters.ParamByName('IdCFDIEstatus').Value := IdEstatusCon;  //SEp 19/18
   adodsCFDIParaRelacionar.Parameters.ParamByName('IdPersonaReceptor').Value := IdPersonaReceptor;
-  adodsCFDIParaRelacionar.Parameters.ParamByName('IdCFDITipoDocumento').Value := IdCFDITipoDocumento;
+  adodsCFDIParaRelacionar.Parameters.ParamByName('IdCFDITipoDocumento').Value := IdTipoDocConsulta; // sept 19/18 IdCFDITipoDocumento;
 end;
 
 procedure TdmCFDIRelacionados.SetIdCFDITipoDocumento(const Value: Integer);

@@ -41,9 +41,9 @@ type
     Label12: TLabel;
     Label13: TLabel;
     cxDBLblAnexo: TcxDBLabel;
-    cxDBTextEdit1: TcxDBTextEdit;
+    cxDBTxtEdtSerie: TcxDBTextEdit;
     cxDBTxtEdtImporte: TcxDBTextEdit;
-    cxDBTextEdit5: TcxDBTextEdit;
+    cxDBTxtEdtFolio: TcxDBTextEdit;
     cxDBLabel1: TcxDBLabel;
     DBLkpCmbBxMetodoPago: TDBLookupComboBox;
     cxDBTextEdit4: TcxDBTextEdit;
@@ -84,6 +84,7 @@ type
     procedure btnOkClick(Sender: TObject);
     procedure btnCancelClick(Sender: TObject);
     procedure cxBtnUsaNotaCreditoClick(Sender: TObject);
+    procedure DataSourceDataChange(Sender: TObject; Field: TField);
   private
     { Private declarations }
   public
@@ -112,7 +113,8 @@ procedure TFrmEdtPagosFragmentados.btnOkClick(Sender: TObject);
 begin
   if DAtasource.State=dsedit then    //Solo puede estar en edit si sus saldo e importe son iguales
   begin
-    DAtasource.DataSet.FieldByName('Saldo').AsFloat:=DAtasource.DataSet.FieldByName('Importe').AsFloat;
+    if (not cxDBTxtEdtImporte.Properties.readonly)  then
+       DAtasource.DataSet.FieldByName('Saldo').AsFloat:=DAtasource.DataSet.FieldByName('Importe').AsFloat;
     DAtasource.DataSet.Post;
   end;
   Close;
@@ -149,11 +151,26 @@ begin
       end;
     end
     else
-      ShowMessage('No existen Notas de crédito disponibles para este cliente');
+    begin
+        ShowMessage('No existen Notas de crédito disponibles para este cliente');
+    end;
     frmListaNotasCredito.Free;
   end
   else
     ShowMessage('Debe seleccionar el cliente');
+end;
+
+procedure TFrmEdtPagosFragmentados.DataSourceDataChange(Sender: TObject;
+  Field: TField);
+begin
+//Sep 18/18
+  cxDBTxtEdtImporte.Properties.ReadOnly:= Datasource.DataSet.FieldByName('importe').AsFloat<>Datasource.DataSet.FieldByName('saldo').AsFloat; //sep 18/18
+  DBLkpCmbBxAnexos.ReadOnly:=  cxDBTxtEdtImporte.Properties.ReadOnly;
+
+  cxDBTxtEdtSerie.Properties.ReadOnly:= DBLkpCmbBxAnexos.ReadOnly;
+
+  cxDBTxtEdtFolio.Properties.ReadOnly:= DBLkpCmbBxAnexos.ReadOnly;
+  cxDBRdGrpOrigenPago.Properties.ReadOnly:= DBLkpCmbBxAnexos.ReadOnly;
 end;
 
 end.

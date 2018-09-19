@@ -27,17 +27,17 @@ inherited FrmConPagosReales: TFrmConPagosReales
     ExplicitWidth = 959
   end
   inherited pnlMaster: TPanel
-    Top = 70
+    Top = 72
     Width = 959
-    Height = 247
-    ExplicitTop = 70
+    Height = 245
+    ExplicitTop = 72
     ExplicitWidth = 959
-    ExplicitHeight = 247
+    ExplicitHeight = 245
     inherited cxGrid: TcxGrid
       Width = 959
-      Height = 247
+      Height = 245
       ExplicitWidth = 959
-      ExplicitHeight = 247
+      ExplicitHeight = 245
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIDPagoReal: TcxGridDBColumn
           DataBinding.FieldName = 'IDPagoReal'
@@ -160,7 +160,7 @@ inherited FrmConPagosReales: TFrmConPagosReales
   end
   object PnlBusqueda: TPanel [8]
     Left = 0
-    Top = 26
+    Top = 28
     Width = 959
     Height = 44
     Align = alTop
@@ -300,13 +300,9 @@ inherited FrmConPagosReales: TFrmConPagosReales
     DockControlHeights = (
       0
       0
-      26
+      28
       0)
-    inherited dxbNavigator: TdxBar
-      DockedLeft = 107
-    end
     inherited dxbTools: TdxBar
-      DockedLeft = 238
       ItemLinks = <
         item
           Visible = True
@@ -1108,7 +1104,7 @@ inherited FrmConPagosReales: TFrmConPagosReales
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 43335.532713877310000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

@@ -34,7 +34,7 @@ type
     Label13: TLabel;
     cxDBDateEdit1: TcxDBDateEdit;
     cxDBTxtEdtImporte: TcxDBTextEdit;
-    DBLookupComboBox1: TDBLookupComboBox;
+    DBLkpCmbBxBanco: TDBLookupComboBox;
     DBLkpCmbBxCliente: TDBLookupComboBox;
     cxDBLabel1: TcxDBLabel;
     DBLookupComboBox2: TDBLookupComboBox;
@@ -48,7 +48,7 @@ type
     Label4: TLabel;
     DBLookupComboBox4: TcxDBLookupComboBox;
     DBLookupComboBox5: TcxDBLookupComboBox;
-    DBLookupComboBox3: TcxDBLookupComboBox;
+    DBLkpCmbBxformaPAgo33: TcxDBLookupComboBox;
     cxDBTextEdit2: TcxDBTextEdit;
     gbCadena: TcxGroupBox;
     Label17: TLabel;
@@ -60,7 +60,7 @@ type
     cxDBMemo3: TcxDBMemo;
     cxDBMemo4: TcxDBMemo;
     Label2: TLabel;
-    cxDBTextEdit1: TcxDBTextEdit;
+    cxDBTxtEdtRefe: TcxDBTextEdit;
     cxDBChckBxNC: TcxDBCheckBox;
     cxBtnUsaNotaCredito: TcxButton;
     procedure cxDBTxtEdtImporteExit(Sender: TObject);
@@ -119,7 +119,11 @@ begin                             //Jun 27/17
       end;
     end
     else
+    begin
+      cxDBChckBxNC.Checked:= False;
       ShowMessage('No existen Notas de crédito disponibles para este cliente');
+    end;
+
     frmListaNotasCredito.Free;
   end
   else
@@ -141,9 +145,9 @@ end;
 procedure TFrmEdPagosReales.cxDBTxtEdtImporteExit(Sender: TObject);
 begin
   inherited;
-  if DataSource.State in [dsInsert,dsEdit] then //Asegurarse que no se pueda editar si tieme asociados más de 1 pago
+  if (DataSource.State in [dsInsert,dsEdit]) and (not cxDBTxtEdtImporte.Properties.readonly) then //Asegurarse que no se pueda editar si tieme asociados más de 1 pago
   begin
-    Datasource.Dataset.fieldbyname('Saldo').ASFloat:=Datasource.Dataset.fieldbyname('Importe').ASFloat;
+     Datasource.Dataset.fieldbyname('Saldo').ASFloat:=Datasource.Dataset.fieldbyname('Importe').ASFloat;
   end;
 end;
 
@@ -152,9 +156,21 @@ procedure TFrmEdPagosReales.DataSourceDataChange(Sender: TObject;
 begin
   inherited;
   cxBtnUsaNotaCredito.Visible:=cxDBChckBxNC.Checked;     //Solo si esta editando o insertando //sep 3/18
-  cxDBTxtEdtImporte.Properties.ReadOnly:= cxDBChckBxNC.Checked; //sep 5/18
+ // cxDBTxtEdtImporte.Properties.ReadOnly:= ; //sep 5/18
+  //Sep 18/18
+  cxDBTxtEdtImporte.Properties.ReadOnly:= cxDBChckBxNC.Checked or (Datasource.DataSet.FieldByName('importe').AsFloat<>Datasource.DataSet.FieldByName('saldo').AsFloat); //sep 18/18
 
-end;
+  DBLkpCmbBxMetodoPago.readonly:= cxDBTxtEdtImporte.Properties.ReadOnly;
+
+  DBLkpCmbBxformaPago33.Properties.readonly:= cxDBTxtEdtImporte.Properties.ReadOnly;
+
+  DBLkpCmbBxBanco.readonly:= cxDBTxtEdtImporte.Properties.ReadOnly;
+  cxDBChckBxNC.properties.readonly:=cxDBTxtEdtImporte.Properties.ReadOnly;
+   //Ajustado para que se puedan ver sep19/18             //Era cxTbShtDatosComplemento
+  gbBancarizado.Enabled:= (Datasource.DataSet.FieldByName('importe').AsFloat=Datasource.DataSet.FieldByName('saldo').AsFloat);
+  gbCadena.Enabled:= gbBancarizado.Enabled;
+  cxDBTxtEdtRefe.Properties.ReadOnly:= not gbBancarizado.Enabled;
+ end;
 
 procedure TFrmEdPagosReales.FormShow(Sender: TObject);
 begin

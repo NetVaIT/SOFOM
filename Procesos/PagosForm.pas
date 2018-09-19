@@ -424,23 +424,27 @@ var
 begin
   inherited;
   Seguir :=True;
-  if (DataSource.DataSet.FieldByName('EsDeposito').asboolean and
-                   not SonUltimas(DataSource.DataSet.FieldByName('Saldo').AsFloat, Mensaje)) then
+  if DataSource.DataSet.FieldByName('idAnexo').isnull   then //Sep 19/18
+    Seguir := application.MessageBox('Este es un Pago que no tiene Anexo relacionado. ¿Desea Continuar?','Confirmación',MB_YESNO)=IdYES
+  else //Sep 19/18
   begin
-    SEguir:=False;
-    if application.MessageBox('Este es un Pago por Depósito en Garantía. ¿Desea usarlo para liquidar pendientes?','Confirmación',MB_YESNO)=IdYES then
+    if (DataSource.DataSet.FieldByName('EsDeposito').asboolean and
+                     not SonUltimas(DataSource.DataSet.FieldByName('Saldo').AsFloat, Mensaje)) then
     begin
-      FrmClaveAutorizacion:=TFrmClaveAutorizacion.Create(Self);
+      SEguir:=False;
+      if application.MessageBox('Este es un Pago por Depósito en Garantía. ¿Desea usarlo para liquidar pendientes?','Confirmación',MB_YESNO)=IdYES then
+      begin
+        FrmClaveAutorizacion:=TFrmClaveAutorizacion.Create(Self);
 
-      FrmClaveAutorizacion.ShowModal;
-      if  FrmClaveAutorizacion.Respuesta =  1 then    //Solo si es 1 se sigue
-         Seguir:=True;
-      FrmClaveAutorizacion.Free;
-    end;
-  end
-  else                    //Corresponde al parga  Oct3/17
-   Seguir := VerificaFinales(DataSource.DataSet.FieldByName('IdAnexo').AsInteger);
-
+        FrmClaveAutorizacion.ShowModal;
+        if  FrmClaveAutorizacion.Respuesta =  1 then    //Solo si es 1 se sigue
+           Seguir:=True;
+        FrmClaveAutorizacion.Free;
+      end;
+    end
+    else                    //Corresponde al parga  Oct3/17
+     Seguir := VerificaFinales(DataSource.DataSet.FieldByName('IdAnexo').AsInteger);
+  end;
   if Seguir then
   begin
                                 //Se debe obligar  antes

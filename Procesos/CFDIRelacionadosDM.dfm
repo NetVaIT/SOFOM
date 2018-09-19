@@ -49,10 +49,16 @@ inherited dmCFDIRelacionados: TdmCFDIRelacionados
     CursorType = ctStatic
     CommandText = 
       'SELECT IdCFDI, Serie+CAST(Folio AS varchar(10)) AS Folio, UUID_T' +
-      'B AS UUID'#13#10'FROM CFDI'#13#10'WHERE IdCFDIEstatus = 3'#13#10'AND IdPersonaRece' +
-      'ptor = :IdPersonaReceptor'#13#10'AND IdCFDITipoDocumento = :IdCFDITipo' +
-      'Documento'#13#10
+      'B AS UUID'#13#10'FROM CFDI'#13#10'WHERE IdCFDIEstatus = :IdCFDIEstatus -- SE' +
+      'p 19/18   3'#13#10'AND IdPersonaReceptor = :IdPersonaReceptor'#13#10'AND IdC' +
+      'FDITipoDocumento = :IdCFDITipoDocumento'#13#10
     Parameters = <
+      item
+        Name = 'IdCFDIEstatus'
+        DataType = ftInteger
+        Size = -1
+        Value = Null
+      end
       item
         Name = 'IdPersonaReceptor'
         Attributes = [paSigned, paNullable]

@@ -131,7 +131,9 @@ begin                             //Jun 27/17
       end;
     end
     else
+    begin
       ShowMessage('No existen Notas de crédito disponibles para este cliente');
+    end;
     frmListaNotasCredito.Free;
   end
   else

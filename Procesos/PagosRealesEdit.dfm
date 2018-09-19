@@ -10,14 +10,15 @@ inherited FrmEdPagosReales: TFrmEdPagosReales
   inherited pcMain: TcxPageControl
     Width = 590
     Height = 517
+    Properties.ActivePage = cxTbShtDatosComplemento
     ExplicitWidth = 590
     ExplicitHeight = 517
-    ClientRectBottom = 515
-    ClientRectRight = 588
+    ClientRectBottom = 513
+    ClientRectRight = 586
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 2
-      ExplicitTop = 26
-      ExplicitWidth = 586
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 582
       ExplicitHeight = 489
       object Label1: TLabel
         Left = 31
@@ -48,7 +49,7 @@ inherited FrmEdPagosReales: TFrmEdPagosReales
         Width = 29
         Height = 13
         Caption = 'Banco'
-        FocusControl = DBLookupComboBox1
+        FocusControl = DBLkpCmbBxBanco
       end
       object Label9: TLabel
         Left = 31
@@ -79,7 +80,7 @@ inherited FrmEdPagosReales: TFrmEdPagosReales
         Width = 52
         Height = 13
         Caption = 'Referencia'
-        FocusControl = cxDBTextEdit1
+        FocusControl = cxDBTxtEdtRefe
       end
       object cxDBDateEdit1: TcxDBDateEdit
         Left = 31
@@ -98,7 +99,7 @@ inherited FrmEdPagosReales: TFrmEdPagosReales
         OnExit = cxDBTxtEdtImporteExit
         Width = 121
       end
-      object DBLookupComboBox1: TDBLookupComboBox
+      object DBLkpCmbBxBanco: TDBLookupComboBox
         Left = 31
         Top = 176
         Width = 250
@@ -149,7 +150,7 @@ inherited FrmEdPagosReales: TFrmEdPagosReales
         DataSource = DataSource
         TabOrder = 2
       end
-      object cxDBTextEdit1: TcxDBTextEdit
+      object cxDBTxtEdtRefe: TcxDBTextEdit
         Left = 31
         Top = 224
         DataBinding.DataField = 'Referencia'
@@ -188,8 +189,9 @@ inherited FrmEdPagosReales: TFrmEdPagosReales
         Align = alTop
         Caption = 'Pago bancarizado'
         TabOrder = 0
+        ExplicitTop = -6
         Height = 169
-        Width = 586
+        Width = 582
         object Label15: TLabel
           Left = 17
           Top = 64
@@ -220,7 +222,7 @@ inherited FrmEdPagosReales: TFrmEdPagosReales
           Width = 72
           Height = 13
           Caption = 'Forma de pago'
-          FocusControl = DBLookupComboBox3
+          FocusControl = DBLkpCmbBxformaPAgo33
         end
         object Label4: TLabel
           Left = 322
@@ -266,7 +268,7 @@ inherited FrmEdPagosReales: TFrmEdPagosReales
           TabOrder = 3
           Width = 530
         end
-        object DBLookupComboBox3: TcxDBLookupComboBox
+        object DBLkpCmbBxformaPAgo33: TcxDBLookupComboBox
           Left = 16
           Top = 36
           DataBinding.DataField = 'FormaPago'
@@ -299,7 +301,7 @@ inherited FrmEdPagosReales: TFrmEdPagosReales
         Caption = 'Informaci'#243'n del tipo de cadena'
         TabOrder = 1
         Height = 320
-        Width = 586
+        Width = 582
         object Label17: TLabel
           Left = 16
           Top = 16

@@ -34,11 +34,13 @@ inherited DMPagosReales: TDMPagosReales
     end
     object adodsMasterImporte: TFMTBCDField
       FieldName = 'Importe'
+      currency = True
       Precision = 18
       Size = 6
     end
     object adodsMasterSaldo: TFMTBCDField
       FieldName = 'Saldo'
+      currency = True
       Precision = 18
       Size = 6
     end
@@ -426,11 +428,13 @@ inherited DMPagosReales: TDMPagosReales
     end
     object ADOdsPagosFragmentosImporte: TFMTBCDField
       FieldName = 'Importe'
+      currency = True
       Precision = 18
       Size = 6
     end
     object ADOdsPagosFragmentosSaldo: TFMTBCDField
       FieldName = 'Saldo'
+      currency = True
       Precision = 18
       Size = 6
     end

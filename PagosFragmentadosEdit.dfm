@@ -23,10 +23,10 @@ object FrmEdtPagosFragmentados: TFrmEdtPagosFragmentados
     TabOrder = 0
     Properties.ActivePage = tsGeneral
     Properties.CustomButtons.Buttons = <>
-    ClientRectBottom = 513
-    ClientRectLeft = 2
-    ClientRectRight = 601
-    ClientRectTop = 26
+    ClientRectBottom = 511
+    ClientRectLeft = 4
+    ClientRectRight = 599
+    ClientRectTop = 24
     object tsGeneral: TcxTabSheet
       Caption = 'General'
       ImageIndex = 0
@@ -49,7 +49,7 @@ object FrmEdtPagosFragmentados: TFrmEdtPagosFragmentados
       object PnlDatosBase: TPanel
         Left = 0
         Top = 0
-        Width = 599
+        Width = 595
         Height = 300
         Align = alTop
         BevelOuter = bvNone
@@ -74,7 +74,7 @@ object FrmEdtPagosFragmentados: TFrmEdtPagosFragmentados
           Width = 24
           Height = 13
           Caption = 'Serie'
-          FocusControl = cxDBTextEdit1
+          FocusControl = cxDBTxtEdtSerie
         end
         object Label5: TLabel
           Left = 27
@@ -152,7 +152,7 @@ object FrmEdtPagosFragmentados: TFrmEdtPagosFragmentados
           Height = 39
           Width = 540
         end
-        object cxDBTextEdit1: TcxDBTextEdit
+        object cxDBTxtEdtSerie: TcxDBTextEdit
           Left = 208
           Top = 138
           DataBinding.DataField = 'SeriePago'
@@ -168,7 +168,7 @@ object FrmEdtPagosFragmentados: TFrmEdtPagosFragmentados
           TabOrder = 8
           Width = 121
         end
-        object cxDBTextEdit5: TcxDBTextEdit
+        object cxDBTxtEdtFolio: TcxDBTextEdit
           Left = 338
           Top = 138
           DataBinding.DataField = 'FolioPago'
@@ -548,6 +548,7 @@ object FrmEdtPagosFragmentados: TFrmEdtPagosFragmentados
   object DataSource: TDataSource
     AutoEdit = False
     DataSet = DMPagosReales.ADOdsPagosFragmentos
+    OnDataChange = DataSourceDataChange
     Left = 256
   end
   object cxImageList: TcxImageList

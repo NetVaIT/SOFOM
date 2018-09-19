@@ -137,7 +137,7 @@ procedure TFrmConPagosReales.DataSourceDataChange(Sender: TObject;
 begin
   inherited;
   if (DSPagosFragmento.DataSet<>nil)  and (DSPagosFragmento.DataSet.state <>dsInactive) then
-    PuedeCambiar:= DSPagosFragmento.DataSet.RecordCount<=1;
+    PuedeCambiar:= DSPagosFragmento.DataSet.RecordCount<=1 ;
 
 end;
 
