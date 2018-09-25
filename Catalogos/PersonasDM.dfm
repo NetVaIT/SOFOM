@@ -15,7 +15,8 @@ inherited dmPersonas: TdmPersonas
       'Identificador, NumCtaPagoCliente, '#13#10'SaldoCliente, CalificacionIn' +
       'icial, CalificacionActual, PLDOrigenRecurso, PLDDestinoRecurso, ' +
       'PLDMontoMaximo, PLDPagarEfectivo, PLDMontoMaximoEfectivo, PLDNum' +
-      'eroPagos, IdCFDIFormaPago33, IdCFDIUsoCFDI, PPE'#13#10'FROM Personas'
+      'eroPagos, IdCFDIFormaPago33, IdCFDIUsoCFDI, PPE,'#13#10'IdBancoDeposit' +
+      'o, CuentaDeposito, CLABEDeposito'#13#10'FROM Personas'
     Left = 64
     object adodsMasterIdPersona: TAutoIncField
       FieldName = 'IdPersona'
@@ -92,6 +93,10 @@ inherited dmPersonas: TdmPersonas
     end
     object adodsMasterIdDocumentoLogo: TIntegerField
       FieldName = 'IdDocumentoLogo'
+      Visible = False
+    end
+    object adodsMasterIdBancoDeposito: TIntegerField
+      FieldName = 'IdBancoDeposito'
       Visible = False
     end
     object adodsMasterIdentificador: TStringField
@@ -378,6 +383,26 @@ inherited dmPersonas: TdmPersonas
       DisplayLabel = 'Persona politicamente expuesta'
       FieldName = 'PPE'
     end
+    object adodsMasterBancoDeposito: TStringField
+      DisplayLabel = 'Banco'
+      FieldKind = fkLookup
+      FieldName = 'BancoDeposito'
+      LookupDataSet = adodsBancos
+      LookupKeyFields = 'IdBanco'
+      LookupResultField = 'Nombre'
+      KeyFields = 'IdBancoDeposito'
+      Size = 50
+      Lookup = True
+    end
+    object adodsMasterCuentaDeposito: TStringField
+      DisplayLabel = 'Cuenta'
+      FieldName = 'CuentaDeposito'
+      Size = 50
+    end
+    object adodsMasterCLABEDeposito: TStringField
+      DisplayLabel = 'CLABE'
+      FieldName = 'CLABEDeposito'
+    end
   end
   inherited adodsUpdate: TADODataSet
     Left = 224
@@ -637,8 +662,8 @@ inherited dmPersonas: TdmPersonas
       'select IdPersonaEstatus, Identificador, Descripcion from Persona' +
       'sEstatus'
     Parameters = <>
-    Left = 216
-    Top = 432
+    Left = 48
+    Top = 488
   end
   object ADOdsMetodosPago: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -647,8 +672,8 @@ inherited dmPersonas: TdmPersonas
       'select IdMetodoPago, Identificador, Descripcion, ExigeCuenta,'#13#10' ' +
       'ClaveSAT2016  from MetodosPago'
     Parameters = <>
-    Left = 336
-    Top = 432
+    Left = 48
+    Top = 544
   end
   object ADOdsRegimenFiscal: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -657,7 +682,7 @@ inherited dmPersonas: TdmPersonas
       'select IdRegimenFiscal, Identificador, Descripcion from Regimene' +
       'sFiscales'
     Parameters = <>
-    Left = 472
+    Left = 160
     Top = 432
   end
   object adodsRiesgosTipos: TADODataSet
@@ -707,5 +732,13 @@ inherited dmPersonas: TdmPersonas
     Parameters = <>
     Left = 160
     Top = 352
+  end
+  object adodsBancos: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 'select IdBanco, Nombre from Bancos'
+    Parameters = <>
+    Left = 168
+    Top = 496
   end
 end

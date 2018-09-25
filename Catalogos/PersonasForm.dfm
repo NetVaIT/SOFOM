@@ -113,6 +113,10 @@ inherited frmPersonas: TfrmPersonas
           DataBinding.FieldName = 'IdDocumentoLogo'
           Visible = False
         end
+        object tvMasterIdBancoDeposito: TcxGridDBColumn
+          DataBinding.FieldName = 'IdBancoDeposito'
+          Visible = False
+        end
         object tvMasterIdentificador: TcxGridDBColumn
           DataBinding.FieldName = 'Identificador'
           Visible = False
@@ -277,6 +281,18 @@ inherited frmPersonas: TfrmPersonas
           DataBinding.FieldName = 'PLDNumeroPagos'
           Visible = False
         end
+        object tvMasterBancoDeposito: TcxGridDBColumn
+          DataBinding.FieldName = 'BancoDeposito'
+          Visible = False
+        end
+        object tvMasterCuentaDeposito: TcxGridDBColumn
+          DataBinding.FieldName = 'CuentaDeposito'
+          Visible = False
+        end
+        object tvMasterCLABEDeposito: TcxGridDBColumn
+          DataBinding.FieldName = 'CLABEDeposito'
+          Visible = False
+        end
       end
     end
   end
@@ -358,7 +374,6 @@ inherited frmPersonas: TfrmPersonas
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42664.566576585640000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

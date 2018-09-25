@@ -81,9 +81,9 @@ type
     function GetFAFecIni: TDateTime;
     procedure SetRepAplicaPDF(const Value: TBasicAction);
     procedure SetactDesaplicar(const Value: TBasicAction);
+    property filtroFecha:String read ffiltroFec write ffiltroFec; //Ene 5/17
   public
     { Public declarations }
-    property filtroFecha:String read ffiltroFec write ffiltroFec; //Ene 5/17
     property AFecIni :TDateTime read GetFAFecIni write FAFecIni; // Ago 7/17
     property AFecFin :TDateTime read GetFAFecFin write FAFecFin;  // Ago 7/17
     property ActAplicaMoraInterno : TBasicAction read FAplicaMoraInt write SetAplicaMoraInt;
@@ -108,7 +108,6 @@ begin
   inherited;
   // May 26/17      Date
   DEcodeDate(_DmConection.LafechaActual,a,m,d);
-
   cxDtEdtInicio.Date:=EncodeDate(a,m,1);
   m:=m+1;
   if m=13 then
@@ -120,7 +119,7 @@ begin
   FechaAux:=FechaAux-1;  //Día anterior
   cxDtEdtFin.Date:=FechaAux;
  // TlBtnDesaplicaPago.Visible:=pos('autoriza',_dmConection.PerFuncion)>0 ; //Jun 2/16
-  ffiltroFec:=' where PA.FechaAplicacion >=:Fini and PA.FechaAplicacion<= :FFin';  //Mar 14/17
+  ffiltroFec:=' AND PA.FechaAplicacion >=:Fini and PA.FechaAplicacion<= :FFin';  //Mar 14/17
   SpdBtnConsultaClick(SpdBtnConsulta); //Mar 14/17
 end;
 
@@ -140,10 +139,10 @@ procedure TfrmConaplicaciones.RdGrpSeleccionClick(Sender: TObject);
 begin
   inherited;
   case RdGrpSeleccion.itemindex of
-    0:ffiltroFec:=' where PA.FechaAplicacion >=:Fini and PA.FechaAplicacion<= :FFin';// ' Where idCFDIEstatus=1'
-    1:ffiltroFec:=' where PR.FechaPago >=:Fini and PR.FechaPago<= :FFin';
-    2:ffiltroFec:=' where CC.FechaVencimiento >=:Fini and CC.FechaVencimiento<= :FFin';    //Abr 11/17 FV
-    3:ffiltroFec:='' ;    //Todos
+    0:ffiltroFec:=' AND PA.FechaAplicacion >=:Fini and PA.FechaAplicacion<= :FFin';// ' Where idCFDIEstatus=1'
+    1:ffiltroFec:=' AND PR.FechaPago >=:Fini and PR.FechaPago<= :FFin';
+    2:ffiltroFec:=' AND CC.FechaVencimiento >=:Fini and CC.FechaVencimiento<= :FFin';    //Abr 11/17 FV
+    3:ffiltroFec:=EmptyStr;    //Todos
   end;
 end;
 
@@ -175,7 +174,8 @@ const
   'INNER JOIN CuentasXCobrar AS CC ON PA.IdCuentaXCobrar = CC.IdCuentaXCobrar ' +
   'INNER JOIN CFDI AS Ci ON Ci.IdCFDI = CC.IdCFDI ' +
   'INNER JOIN Personas AS P ON P.IdPersona = CC.IdPersona ' +
-  'LEFT OUTER JOIN Anexos AS A ON A.IdAnexo = CC.IdAnexo ';
+  'LEFT OUTER JOIN Anexos AS A ON A.IdAnexo = CC.IdAnexo ' +
+  'WHERE 0=0 ';
 
 //   TxtSQL='select PA.FechaAplicacion ,pa.importe, PR.FechaPago as FechaPago,'+
 //          ' PR.FolioPago, Pr.SeriePago,Cc.IdCuentaXCobrar NoCuentaXCobrar, '+
@@ -192,13 +192,13 @@ var
    FiltroCliente:String;
 begin
   inherited;
-  if EdtNombre.Text<>'' then
-    FiltroCliente:=' and P.Razonsocial like ''%'+EdtNombre.Text+'%'''
+  if EdtNombre.Text <> EmptyStr then
+    FiltroCliente:=' AND P.Razonsocial LIKE ''%'+EdtNombre.Text+'%'''
   else
-    FiltroCliente:='';
+    FiltroCliente:= EmptyStr;
   Tadodataset(datasource.DataSet).Close;
   Tadodataset(datasource.DataSet).CommandText:=TxtSQL+FiltroCliente+filtroFecha;
-  if filtroFecha <>''then
+  if filtroFecha <> EmptyStr then
   begin
     Tadodataset(datasource.DataSet).Parameters.ParamByName('FIni').Value:=cxDtEdtInicio.Date;
     Tadodataset(datasource.DataSet).Parameters.ParamByName('FFin').Value:=cxDtEdtFin.Date+1;

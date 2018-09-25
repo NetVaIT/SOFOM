@@ -92,6 +92,10 @@ type
     tvMasterListaGAFI: TcxGridDBColumn;
     tvMasterSegundoNombre: TcxGridDBColumn;
     btnAdministradores: TdxBarButton;
+    tvMasterIdBancoDeposito: TcxGridDBColumn;
+    tvMasterBancoDeposito: TcxGridDBColumn;
+    tvMasterCuentaDeposito: TcxGridDBColumn;
+    tvMasterCLABEDeposito: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private

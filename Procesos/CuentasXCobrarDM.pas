@@ -205,6 +205,7 @@ type
     adospDelCuentasXCobrar: TADOStoredProc;
     actAgregarCXCDetalle: TAction;
     adospGenCuentasXCobrarDetalle: TADOStoredProc;
+    adocUpdEstatusCXC: TADOCommand;
     procedure DataModuleCreate(Sender: TObject);
     procedure actGeneraPreFacturasExecute(Sender: TObject);
     procedure ADODtStPrefacturasCFDINewRecord(DataSet: TDataSet);
@@ -790,19 +791,36 @@ var
   CFDITimbrado: Boolean;
 
   procedure verificaYCambiaEstatusCXC(IDCFDIACT, NvoEstatus, IdCXCAct:integer);
+  const
+    _SQL = 'SELECT CFDI.IdCFDIEstatus, CFDI.IdCuentaXCobrar, CuentasXCobrar.IdCuentaXCobrarEstatus '+
+    'FROM CFDI INNER JOIN CuentasXCobrar ON CFDI.IdCuentaXCobrar = CuentasXCobrar.IdCuentaXCobrar WHERE CFDI.IdCFDI = %d';
   begin                                //Jul 19/17
     ADOQryAuxiliar.Close;
     ADOQryAuxiliar.SQL.Clear;
-    ADOQryAuxiliar.SQL.Add('Select * from CFDI where IDCFDI='+intTostr(IDCFDIACT));
+    ADOQryAuxiliar.SQL.Add(Format(_SQL, [IDCFDIACT]));
     ADOQryAuxiliar.Open;
     if (ADOQryAuxiliar.FieldByName('IdCFDIEstatus').asInteger=2)      //vigente
-        and (ADOQryAuxiliar.FieldByName('IdCuentaXCobrar').asInteger=IDCXCAct)  and (adodsmaster.fieldbyname('IdcuentaXCobrarEstatus').AsInteger=0) then
+        and (ADOQryAuxiliar.FieldByName('IdCuentaXCobrar').asInteger=IDCXCAct)  and (ADOQryAuxiliar.FieldByName('IdCuentaXCobrarEstatus').AsInteger=0) then
     begin
-      adodsmaster.Edit;
-      adodsmaster.FieldByName('IdCuentaXCobrarEstatus').AsInteger:=NvoEstatus;// FACTURADA  jul 19/17
-      adodsmaster.post;
+      adocUpdEstatusCXC.Parameters.ParamByName('IdCuentaXCobrarEstatus').Value := NvoEstatus;
+      adocUpdEstatusCXC.Parameters.ParamByName('IdCuentaXCobrar').Value := IdCXCAct;
+      adocUpdEstatusCXC.Execute;
     end;
   end;
+//  procedure verificaYCambiaEstatusCXC(IDCFDIACT, NvoEstatus, IdCXCAct:integer);
+//  begin                                //Jul 19/17
+//    ADOQryAuxiliar.Close;
+//    ADOQryAuxiliar.SQL.Clear;
+//    ADOQryAuxiliar.SQL.Add('Select * from CFDI where IDCFDI='+intTostr(IDCFDIACT));
+//    ADOQryAuxiliar.Open;
+//    if (ADOQryAuxiliar.FieldByName('IdCFDIEstatus').asInteger=2)      //vigente
+//        and (ADOQryAuxiliar.FieldByName('IdCuentaXCobrar').asInteger=IDCXCAct)  and (adodsmaster.fieldbyname('IdcuentaXCobrarEstatus').AsInteger=0) then
+//    begin
+//      adodsmaster.Edit;
+//      adodsmaster.FieldByName('IdCuentaXCobrarEstatus').AsInteger:=NvoEstatus;// FACTURADA  jul 19/17
+//      adodsmaster.post;
+//    end;
+//  end;
 
 begin
   // Cabiar metodo de pago

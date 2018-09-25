@@ -1,33 +1,34 @@
 inherited frmPersonaEdit: TfrmPersonaEdit
   Caption = 'Persona'
-  ClientHeight = 687
+  ClientHeight = 733
   ClientWidth = 654
   OnDestroy = FormDestroy
   ExplicitWidth = 660
-  ExplicitHeight = 716
+  ExplicitHeight = 762
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
     Width = 654
-    Height = 646
+    Height = 692
     ExplicitWidth = 654
     ExplicitHeight = 646
-    ClientRectBottom = 642
-    ClientRectRight = 650
+    ClientRectBottom = 690
+    ClientRectRight = 652
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
-      ExplicitWidth = 646
+      ExplicitLeft = 2
+      ExplicitTop = 26
+      ExplicitWidth = 650
       ExplicitHeight = 618
       object PnlEmisor: TPanel
         Left = 0
         Top = 351
-        Width = 646
-        Height = 267
+        Width = 650
+        Height = 313
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 5
         Visible = False
+        ExplicitHeight = 267
         object Label20: TLabel
           Left = 16
           Top = 4
@@ -49,7 +50,7 @@ inherited frmPersonaEdit: TfrmPersonaEdit
       object pnlPersona: TPanel
         Left = 0
         Top = 0
-        Width = 646
+        Width = 650
         Height = 49
         Align = alTop
         BevelOuter = bvNone
@@ -123,7 +124,7 @@ inherited frmPersonaEdit: TfrmPersonaEdit
       object pnlPersonaMoral: TPanel
         Left = 0
         Top = 49
-        Width = 646
+        Width = 650
         Height = 93
         Align = alTop
         BevelOuter = bvNone
@@ -210,7 +211,7 @@ inherited frmPersonaEdit: TfrmPersonaEdit
       object pnlPersonaFisica: TPanel
         Left = 0
         Top = 142
-        Width = 646
+        Width = 650
         Height = 209
         Align = alTop
         BevelOuter = bvNone
@@ -404,22 +405,24 @@ inherited frmPersonaEdit: TfrmPersonaEdit
       object pnlOrigen: TPanel
         Left = 0
         Top = 351
-        Width = 646
-        Height = 267
+        Width = 650
+        Height = 313
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 3
         Visible = False
+        ExplicitHeight = 267
       end
       object PnlCliente: TPanel
         Left = 0
         Top = 351
-        Width = 646
-        Height = 267
+        Width = 650
+        Height = 313
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 4
         Visible = False
+        ExplicitHeight = 267
         object Label17: TLabel
           Left = 16
           Top = 80
@@ -617,10 +620,10 @@ inherited frmPersonaEdit: TfrmPersonaEdit
         end
         object cxGroupBox1: TcxGroupBox
           Left = 16
-          Top = 131
+          Top = 123
           Caption = 'Perfil transaccional'
           TabOrder = 10
-          Height = 118
+          Height = 107
           Width = 616
           object Label29: TLabel
             Left = 16
@@ -721,43 +724,108 @@ inherited frmPersonaEdit: TfrmPersonaEdit
           TabOrder = 2
           Width = 200
         end
+        object cxGroupBox2: TcxGroupBox
+          Left = 16
+          Top = 236
+          Caption = 'Informaci'#243'n para deposto'
+          TabOrder = 11
+          Height = 69
+          Width = 616
+          object Label35: TLabel
+            Left = 5
+            Top = 16
+            Width = 29
+            Height = 13
+            Caption = 'Banco'
+            FocusControl = DBLookupComboBox4
+          end
+          object Label36: TLabel
+            Left = 208
+            Top = 16
+            Width = 35
+            Height = 13
+            Caption = 'Cuenta'
+            FocusControl = cxDBTextEdit12
+          end
+          object Label37: TLabel
+            Left = 410
+            Top = 16
+            Width = 31
+            Height = 13
+            Caption = 'CLABE'
+            FocusControl = cxDBTextEdit13
+          end
+          object DBLookupComboBox4: TDBLookupComboBox
+            Left = 5
+            Top = 32
+            Width = 200
+            Height = 21
+            DataField = 'BancoDeposito'
+            DataSource = DataSource
+            TabOrder = 0
+          end
+          object cxDBTextEdit12: TcxDBTextEdit
+            Left = 208
+            Top = 32
+            DataBinding.DataField = 'CuentaDeposito'
+            DataBinding.DataSource = DataSource
+            TabOrder = 1
+            Width = 200
+          end
+          object cxDBTextEdit13: TcxDBTextEdit
+            Left = 410
+            Top = 32
+            DataBinding.DataField = 'CLABEDeposito'
+            DataBinding.DataSource = DataSource
+            TabOrder = 2
+            Width = 200
+          end
+        end
       end
     end
     object tsDomicilio: TcxTabSheet
       Caption = 'Domicilio'
       ImageIndex = 1
+      ExplicitHeight = 618
     end
     object tsTelefono: TcxTabSheet
       Caption = 'Telefono'
       ImageIndex = 2
+      ExplicitHeight = 618
     end
     object tsCorreo: TcxTabSheet
       Caption = 'Correo Electronico'
       ImageIndex = 3
+      ExplicitHeight = 618
     end
     object tsContacto: TcxTabSheet
       Caption = 'Contactos'
       ImageIndex = 4
+      ExplicitHeight = 618
     end
     object tsPerfil: TcxTabSheet
       Caption = 'PLD'
       ImageIndex = 8
+      ExplicitHeight = 618
     end
     object tsDocumentos: TcxTabSheet
       Caption = 'Documentos'
       ImageIndex = 7
+      ExplicitHeight = 618
     end
     object tsCuentasBancarias: TcxTabSheet
       Caption = 'Cuentas Bancarias'
       ImageIndex = 5
+      ExplicitHeight = 618
     end
     object tsCSD: TcxTabSheet
       Caption = 'Sello digital'
       ImageIndex = 6
+      ExplicitHeight = 618
     end
   end
   inherited pmlMain: TPanel
-    Top = 646
+    Top = 692
     Width = 654
     ExplicitTop = 646
     ExplicitWidth = 654

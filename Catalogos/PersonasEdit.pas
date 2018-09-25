@@ -114,6 +114,13 @@ type
     cxDBCheckBox2: TcxDBCheckBox;
     Label19: TLabel;
     edtSegundoNombre: TcxDBTextEdit;
+    cxGroupBox2: TcxGroupBox;
+    Label35: TLabel;
+    DBLookupComboBox4: TDBLookupComboBox;
+    Label36: TLabel;
+    cxDBTextEdit12: TcxDBTextEdit;
+    Label37: TLabel;
+    cxDBTextEdit13: TcxDBTextEdit;
     procedure FormShow(Sender: TObject);
     procedure cxDBLookupComboBox1PropertiesChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);

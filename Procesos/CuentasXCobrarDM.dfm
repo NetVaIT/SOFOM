@@ -1165,4 +1165,29 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     Left = 376
     Top = 336
   end
+  object adocUpdEstatusCXC: TADOCommand
+    CommandText = 
+      'UPDATE CuentasXCobrar SET IdCuentaXCobrarEstatus = :IdCuentaXCob' +
+      'rarEstatus WHERE IdCuentaXCobrar = :IdCuentaXCobrar'
+    Connection = _dmConection.ADOConnection
+    Parameters = <
+      item
+        Name = 'IdCuentaXCobrarEstatus'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end
+      item
+        Name = 'IdCuentaXCobrar'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 384
+    Top = 392
+  end
 end
