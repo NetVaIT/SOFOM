@@ -786,7 +786,7 @@ begin
   ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@idPersonaCliente').Value:= ADatosPago.FieldByName('IdPersonaCliente').asInteger;
   ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@FechaPago').Value:= ADatosPago.FieldByName('FechaPago').asdatetime;
   ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@IdAnexo').Value:= ADatosPago.FieldByName('IdAnexo').asInteger;
-  ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@IdContrato').Value:= ADatosPago.FieldByName('IdContrato').asInteger;
+  ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@IdContrato').Value:= ADatosPago.FieldByName('IdContrato').asInteger;   //VAcio esta???
   if not aDatosPago.FieldByName('IDMetodoPago').isnull then
     ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@IDMetodoPago').Value:= ADatosPago.FieldByName('IDMetodoPago').asInteger
   else
@@ -806,9 +806,9 @@ begin
   else
     ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@IDBanco').Value:= ADatosPago.FieldByName('IDBanco').Value;  //Verificar
 
-  ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@IDFormaPago33').Value:= 3; ///por default
+ // ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@IDFormaPago33').Value:= 3; ///por default
   ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@IDMoneda').Value:= _MONEDAS_ID_PESO_MXN;///Default
-  ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@IDFormaPago33').Value:= ADatosPago.FieldByName('IDFormaPago33').Value;
+  ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@IDFormaPago33').Value:= ADatosPago.FieldByName('IDCFDIFormaPago33').Value;
   ADOSP_CreaPagoDepoGar.ExecProc;
   REs:= ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@idPago').Value;
   (*
@@ -1759,7 +1759,7 @@ begin
   ADOQryAuxiliar.Close;
   ADOQryAuxiliar.sql.Clear;
   ADOQryAuxiliar.sql.Add(' Select CXC.Descripcion, CXC.IdCuentaXCobrar, CXC.IdCuentaXCobrarBase, CXC.IdCuentaXCobrarEstatus, CXC.IdPersona, CXC.IdAnexosAmortizaciones AS IdAnexoAmortizacion, CXC.IdAnexo, CXC.IdEstadoCuenta, CXC.IdCFDI,'
-      +' CXC.Fecha, CXC.FechaVencimiento, CXC.Importe, CXC.Impuesto, CXC.Interes, CXC.Total, CXC.Saldo, CXC.SaldoFactoraje, CXC.EsMoratorio, CI.SaldoDocumento, Ci.SaldoFactoraje as SaldoFactorajeCFDI,'
+      +' CXC.Fecha, CXC.FechaVencimiento, CXC.Importe , CXC.Impuesto, CXC.Interes, CXC.Total, CXC.Saldo, CXC.SaldoFactoraje, CXC.EsMoratorio, CI.SaldoDocumento, Ci.SaldoFactoraje as SaldoFactorajeCFDI,'
       +' ci.serie, Ci.folio from CuentasXCobrar CXC left Join CFDI CI on CI.IdCFDI= CXC.IdCFDI where '
       +' Saldo >0 and IDPersona= '+adodsMasteridpersonaCliente.asString + ' and (( (CXC.Fecha<=dbo.GetDateAux() and IdCuentaXCobrarEstatus=-1) ) and CXC.IdCFDI is null) and CXC.IDAnexo='
       + intToSTR(idAnexo)+' order by CXC.idanexosamortizaciones,EsMoratorio DEsc, CXC.FechaVencimiento');
@@ -1815,6 +1815,7 @@ begin
   //SAca todos los anexos moratotios activos  de la CXC.. y se va pagando hata que se acabe el saldo.
   ADOQryAuxiliar.close;
   ADOQryAuxiliar.SQL.Clear;
+
   ADOQryAuxiliar.SQL.Add('Select *, (Importe + Impuesto -Descuento-ImporteAplicado) as Saldo  from AnexosMoratorios  where IdCuentaXCobrar = '+intToSTR(idCXC)+' and IdAnexoMoratorioEstatus =1 ');
   ADOQryAuxiliar.Open;
   while (not ADOQryAuxiliar.eof) and  (ImporteAplicado>0) do

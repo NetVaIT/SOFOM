@@ -288,7 +288,6 @@ inherited dmPagos: TdmPagos
     end
   end
   object adodsPersonas: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -375,7 +374,6 @@ inherited dmPagos: TdmPagos
     end
   end
   object adodsBancos: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -990,7 +988,6 @@ inherited dmPagos: TdmPagos
     end
   end
   object adodsMetodoPago: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -1720,7 +1717,6 @@ inherited dmPagos: TdmPagos
     end
   end
   object adodsAnexos: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -2189,7 +2185,6 @@ inherited dmPagos: TdmPagos
     end
   end
   object adodsMonedas: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdMoneda, Descripcion from Monedas'#13#10'where UsoComun = 1'
@@ -2219,7 +2214,7 @@ inherited dmPagos: TdmPagos
         Size = 4
         Value = Null
       end>
-    Left = 264
+    Left = 272
     Top = 16
     object adodsPagosAplicacionesIdPagoAplicacion: TIntegerField
       FieldName = 'IdPagoAplicacion'
@@ -2325,18 +2320,16 @@ inherited dmPagos: TdmPagos
     end
   end
   object adodsFromaPago33: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
       'select IdCFDIFormaPago33, Identificador, Descripcion, Bancarizad' +
-      'o from CFDIFormasPago33'
+      'o'#13#10' from CFDIFormasPago33'
     Parameters = <>
     Left = 48
     Top = 345
   end
   object adodsCuentasOrdenante: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -2361,7 +2354,6 @@ inherited dmPagos: TdmPagos
     Top = 400
   end
   object adodsCuentasBeneficiario: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -2376,7 +2368,6 @@ inherited dmPagos: TdmPagos
     Top = 456
   end
   object adodsCadenaPago: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
