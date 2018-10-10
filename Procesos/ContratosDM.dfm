@@ -145,6 +145,13 @@ inherited dmContratos: TdmContratos
       Visible = False
       OnExecute = actGenAmortizacionesExecute
     end
+    object actImportarAmortizaciones: TAction
+      Caption = 'Importar'
+      Hint = 'Importar las amortizaciones desde un archivo XLSX'
+      ImageIndex = 10
+      OnExecute = actImportarAmortizacionesExecute
+      OnUpdate = actImportarAmortizacionesUpdate
+    end
     object actCrearPagoInicial: TAction
       Caption = 'Crear pago inicial'
       Hint = 'Crear pago inicial'
@@ -229,8 +236,9 @@ inherited dmContratos: TdmContratos
       'iaAnual, PagoInicialCreado, CapitalCobrado, SaldoInsoluto, Monto' +
       'Vencido, CartaCompensacion, ValorResidualCreado, OpcionCompraCre' +
       'ado, FechaTermino, MontoTermino, ContratadoTotal, PagadoTotal, S' +
-      'aldoTotal, FinanciarEnganche, FechaLiquidacion, FechaEntrega'#13#10'fr' +
-      'om Anexos'#13#10'where IdContrato = :IdContrato'
+      'aldoTotal, FinanciarEnganche, FechaLiquidacion, FechaEntrega,'#13#10'd' +
+      'bo.CanAddAnexoCredito(IdAnexo) AS AgregarCredito'#13#10'from Anexos'#13#10'w' +
+      'here IdContrato = :IdContrato'
     DataSource = dsMaster
     MasterFields = 'IdContrato'
     Parameters = <
@@ -599,6 +607,10 @@ inherited dmContratos: TdmContratos
       Size = 300
       Lookup = True
     end
+    object adodsAnexosAgregarCredito: TBooleanField
+      FieldName = 'AgregarCredito'
+      ReadOnly = True
+    end
   end
   object adodsMonedas: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -871,9 +883,9 @@ inherited dmContratos: TdmContratos
       'select IdAnexoCredito, IdAnexo, IdAnexoCreditoEstatus, IdUsuario' +
       ', Fecha, MontoFiananciar, ValorResidual, ImpactoISR, TasaAnual, ' +
       'Plazo, PagoMensual, FechaCorte, FechaVencimiento, FechaCancelaci' +
-      'on, dbo.CanDeleteAnexoCredito(IdAnexoCredito) AS EliminarCredito' +
-      ' from AnexosCreditos'#13#10'where IdAnexo = :IdAnexo'#13#10'order by IdAnexo' +
-      'CreditoEstatus, FechaCancelacion DESC'
+      'on, Manual, dbo.CanDeleteAnexoCredito(IdAnexoCredito) AS Elimina' +
+      'rCredito'#13#10'from AnexosCreditos'#13#10'where IdAnexo = :IdAnexo'#13#10'order b' +
+      'y IdAnexoCreditoEstatus, FechaCancelacion DESC'
     DataSource = dsAnexos
     MasterFields = 'IdAnexo'
     Parameters = <
@@ -984,6 +996,10 @@ inherited dmContratos: TdmContratos
       KeyFields = 'IdUsuario'
       Size = 15
       Lookup = True
+    end
+    object adodsCreditosManual: TBooleanField
+      FieldName = 'Manual'
+      Visible = False
     end
     object adodsCreditosEliminarCredito: TBooleanField
       FieldName = 'EliminarCredito'
@@ -1381,5 +1397,11 @@ inherited dmContratos: TdmContratos
       FieldName = 'CanModificar'
       ReadOnly = True
     end
+  end
+  object odAmortizaciones: TOpenDialog
+    Filter = 'Archivo Microsoft Excel|*.xlsx'
+    Title = 'Abrir archivo de amortizaciones'
+    Left = 184
+    Top = 344
   end
 end

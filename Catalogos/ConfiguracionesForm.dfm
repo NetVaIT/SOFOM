@@ -5,11 +5,7 @@ inherited frmConfiguraciones: TfrmConfiguraciones
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlMaster: TPanel
-    ExplicitTop = 26
-    ExplicitHeight = 258
     inherited cxGrid: TcxGrid
-      Height = 258
-      ExplicitHeight = 258
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdPais: TcxGridDBColumn
           DataBinding.FieldName = 'IdPais'
@@ -116,6 +112,7 @@ inherited frmConfiguraciones: TfrmConfiguraciones
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42790.505809502310000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

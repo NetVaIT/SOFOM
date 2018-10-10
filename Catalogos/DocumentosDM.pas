@@ -65,10 +65,11 @@ type
     procedure SetFileAllowed(const Value: TFileAllowed);
     procedure SetLoadFileAllowed(const Value: Boolean);
     procedure SetIdDocumentoTipo(const Value: Integer);
-//    function SetFile(FileName: TFileName): Integer;
+    function GetFileName(IdDocumento: Integer): TFileName;
   public
     { Public declarations }
-    function GetFileName(IdDocumento: Integer): TFileName;
+    function GetFile(IdDocumento: Integer): TFileName; overload;
+    procedure GetFile(IdDocumento: Integer; FileName: TFileName); overload;
     function SetFile: Integer; overload;
     function SetFile(FileName: TFileName): Integer; overload;
     property FileAllowed: TFileAllowed read FFileAllowed write SetFileAllowed default faXLSx;
@@ -168,16 +169,36 @@ begin
   IdDocumentoTipo:= 1;
 end;
 
-function TdmDocumentos.GetFileName(IdDocumento: Integer): TFileName;
-var
-  FileName: TFileName;
+function TdmDocumentos.GetFile(IdDocumento: Integer): TFileName;
+begin
+  Result := EmptyStr;
+  FFilename := GetFileName(IdDocumento);
+  SaveDialog.FileName:= FFilename;
+  if SaveDialog.Execute then
+  begin
+    FFilename:= SaveDialog.FileName;
+    GetFile(IdDocumento, FFileName);
+    Result := FFilename;
+  end
+end;
+
+procedure TdmDocumentos.GetFile(IdDocumento: Integer; FileName: TFileName);
 begin
   adodsUpdate.Close;
   adodsUpdate.Parameters[0].Value:= IdDocumento;
   adodsUpdate.Open;
-  FileName:= TPath.GetTempPath + adodsUpdateNombreArchivo.AsString;
+//  FileName:= TPath.GetTempPath + adodsUpdateNombreArchivo.AsString;
   ReadFile(FileName);
-  Result:= FileName;
+//  Result:= FileName;
+end;
+
+function TdmDocumentos.GetFileName(IdDocumento: Integer): TFileName;
+begin
+  adodsUpdate.Close;
+  adodsUpdate.Parameters[0].Value:= IdDocumento;
+  adodsUpdate.Open;
+  Result:= adodsUpdateNombreArchivo.AsString;
+  adodsUpdate.Close;
 end;
 
 procedure TdmDocumentos.ReadFile(FileName: TFileName);

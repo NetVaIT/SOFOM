@@ -19,7 +19,7 @@ uses
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, Vcl.ImgList,
   System.Actions, Vcl.ActnList, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls, cxPC,
   Vcl.DBCtrls, cxContainer, cxEdit, cxTextEdit, cxDBEdit, cxMaskEdit, cxSpinEdit,
-  cxCurrencyEdit;
+  cxCurrencyEdit, Vcl.Menus, cxButtons;
 
 type
   TfrmConfiguracionesEdit = class(T_frmEdit)
@@ -61,10 +61,14 @@ type
     cxDBTextEdit12: TcxDBTextEdit;
     Label18: TLabel;
     cxDBTextEdit13: TcxDBTextEdit;
+    btnGetPlantillaAmortizacion: TcxButton;
   private
     { Private declarations }
+    FactGetPlantillaAmortizacion: TBasicAction;
+    procedure SetactGetPlantillaAmortizacion(const Value: TBasicAction);
   public
     { Public declarations }
+    property actGetPlantillaAmortizacion: TBasicAction read FactGetPlantillaAmortizacion write SetactGetPlantillaAmortizacion;
   end;
 
 implementation
@@ -72,5 +76,14 @@ implementation
 {$R *.dfm}
 
 uses ConfiguracionDM;
+
+{ TfrmConfiguracionesEdit }
+
+procedure TfrmConfiguracionesEdit.SetactGetPlantillaAmortizacion(
+  const Value: TBasicAction);
+begin
+  FactGetPlantillaAmortizacion := Value;
+  btnGetPlantillaAmortizacion.Action := Value;
+end;
 
 end.

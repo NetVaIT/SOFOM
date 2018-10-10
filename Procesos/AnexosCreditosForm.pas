@@ -51,6 +51,7 @@ type
     tvMasterFechaCancelacion: TcxGridDBColumn;
     tvMasterEliminarCredito: TcxGridDBColumn;
     btnEliminar: TdxBarButton;
+    tvMasterManual: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }

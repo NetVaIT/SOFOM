@@ -16,6 +16,7 @@ resourcestring
   strProductsPercentage = 'La suma de porcentajes totales de los productos en el anexo debe ser igual al 100%';
   strRestructureAnexo = '¿Deseas restructurar el anexo?';
   strAllowDelCredito = '¿Deseas eliminar el crédito y sus amortizaciones?';
+  strNotValidXLSXAmortizaciones = 'El archivo %s no es valido, por lo que no se puede importar.';
 
 type
   TdmContratos = class(T_dmStandar)
@@ -186,6 +187,10 @@ type
     adodsAnexosFechaEntrega: TDateTimeField;
     adoqAmortizacion1: TADOQuery;
     adoqAmortizacion1CanModificar: TBooleanField;
+    actImportarAmortizaciones: TAction;
+    odAmortizaciones: TOpenDialog;
+    adodsAnexosAgregarCredito: TBooleanField;
+    adodsCreditosManual: TBooleanField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsAnexosPrecioMonedaChange(Sender: TField);
     procedure adodsAnexosNewRecord(DataSet: TDataSet);
@@ -227,6 +232,8 @@ type
     procedure actEliminarCreditoUpdate(Sender: TObject);
     procedure actAjustarMensualidad1Execute(Sender: TObject);
     procedure actAjustarMensualidad1Update(Sender: TObject);
+    procedure actImportarAmortizacionesExecute(Sender: TObject);
+    procedure actImportarAmortizacionesUpdate(Sender: TObject);
   private
     { Private declarations }
     FPaymentTime: TPaymentTime;
@@ -234,6 +241,7 @@ type
     FCreditosFechaVencimiento: TDateTime;
     FCreditosFechaCorte: TDateTime;
     FCreditosMontoFiananciar: Extended;
+    FCreditosManual: Boolean;
     dmAmortizaciones: TdmAmortizaciones;
     procedure SetPaymentTime(const Value: TPaymentTime);
     function GetTipoContrato: TCTipoContrato;
@@ -288,7 +296,10 @@ procedure TdmContratos.actEliminarCreditoExecute(Sender: TObject);
 begin
   inherited;
   if EliminarCredito(adodsCreditosIdAnexoCredito.Value) then
+  begin
     RefreshADODS(adodsCreditos, adodsCreditosIdAnexoCredito);
+    RefreshADODS(adodsAnexos, adodsAnexosIdAnexo);
+  end;
 end;
 
 procedure TdmContratos.actEliminarCreditoUpdate(Sender: TObject);
@@ -304,7 +315,8 @@ begin
   FCreditosFecha := _DmConection.LaFechaActual;//Date;  //May 26/17
   FCreditosFechaVencimiento := adodsAnexosFechaVencimiento.Value;
   FCreditosFechaCorte := adodsAnexosFechaCorte.Value;
-  FCreditosMontoFiananciar := adodsAnexosMontoFinanciar.AsExtended;
+  FCreditosMontoFiananciar := adodsAnexosSaldoInsoluto.AsExtended;
+  FCreditosManual := False;
   adodsCreditos.Insert;
   adodsCreditos.Post;
   // Generar Amortizaciones
@@ -318,8 +330,6 @@ begin
     adodsAmortizaciones.Close;
     adodsAmortizaciones.Open;
   end;
-//  // Actualiza saldo incial del anexo
-//  SetAnexoSaldo(IdAnexo);
 end;
 
 procedure TdmContratos.actGenerarExecute(Sender: TObject);
@@ -332,6 +342,7 @@ begin
     FCreditosFechaVencimiento := adodsAnexosFechaVencimiento.Value;
     FCreditosFechaCorte := adodsAnexosFechaCorte.Value;
     FCreditosMontoFiananciar := adodsAnexosMontoFinanciar.AsExtended;
+    FCreditosManual := False;
     adodsCreditos.Insert;
     adodsCreditos.Post;
     // Generar Amortizaciones
@@ -344,12 +355,12 @@ begin
     begin
       adodsAmortizaciones.Close;
       adodsAmortizaciones.Open;
-    end;
-    // Actualiza saldo incial del anexo
-    SetAnexoSaldo(IdAnexo);
-    // Generar Pago Inicial
-    if CrearPagoInicial then
+      // Actualiza saldo incial del anexo
+      SetAnexoSaldo(IdAnexo);
+      // Generar Pago Inicial
+      CrearPagoInicial;
       RefreshADODS(adodsAnexos, adodsAnexosIdAnexo);
+    end;
   end;
 end;
 
@@ -369,7 +380,8 @@ end;
 procedure TdmContratos.actGenMoratoriosUpdate(Sender: TObject);
 begin
   inherited;
-  TAction(Sender).Enabled := (not adodsAnexosIdAnexo.IsNull);
+  TAction(Sender).Enabled := (not adodsAnexosIdAnexo.IsNull)
+  and (adodsAnexosIdAnexoEstatus.Value <> 5);
 end;
 
 procedure TdmContratos.actGetTipoCambioExecute(Sender: TObject);
@@ -379,6 +391,46 @@ begin
   begin
     adodsAnexosTipoCambio.Value := dmConfiguracion.GetTipoCambio(adodsAnexosIdMoneda.Value)
   end;
+end;
+
+procedure TdmContratos.actImportarAmortizacionesExecute(Sender: TObject);
+begin
+  inherited;
+  // Obtiene las amotizaciones de un XLSX
+  if odAmortizaciones.Execute then
+  begin
+    dmAmortizaciones.TipoContrato := TipoContrato;
+    if dmAmortizaciones.ValidarArchivoAmortizaciones(adodsAnexosSaldoInsoluto.AsFloat, odAmortizaciones.FileName) then
+    begin
+      // Generar Credito
+      FCreditosFecha := _DmConection.LaFechaActual;
+      FCreditosFechaVencimiento := adodsAnexosFechaVencimiento.Value;
+      FCreditosFechaCorte := adodsAnexosFechaCorte.Value;
+      FCreditosMontoFiananciar := adodsAnexosSaldoInsoluto.AsExtended;
+      FCreditosManual := True;
+      adodsCreditos.Insert;
+      adodsCreditos.Post;
+      if dmAmortizaciones.GenAnexosAmortizaciones(adodsCreditosIdAnexoCredito.Value, odAmortizaciones.FileName) then
+      begin
+        adodsAmortizaciones.Close;
+        adodsAmortizaciones.Open;
+        // Actualiza saldo incial del anexo
+        SetAnexoSaldo(IdAnexo);
+        // Generar Pago Inicial
+        CrearPagoInicial;
+        RefreshADODS(adodsAnexos, adodsAnexosIdAnexo);
+      end;
+    end
+    else
+      MessageDlg(Format(strNotValidXLSXAmortizaciones, [odAmortizaciones.FileName]), mtInformation, [mbOK], 0);
+  end;
+end;
+
+procedure TdmContratos.actImportarAmortizacionesUpdate(Sender: TObject);
+begin
+  inherited;
+  TAction(Sender).Enabled := (not adodsAnexosIdAnexo.IsNull)
+  and adodsAnexosAgregarCredito.Value;
 end;
 
 procedure TdmContratos.actMoratoriosExecute(Sender: TObject);
@@ -405,8 +457,9 @@ end;
 procedure TdmContratos.actOpcionCompraUpdate(Sender: TObject);
 begin
   inherited;
-  TAction(Sender).Enabled := (not adodsAnexosIdAnexo.IsNull) and
-  (adodsAnexosOpcionCompra.Value > 0) and (not adodsAnexosOpcionCompraCreado.Value);
+  TAction(Sender).Enabled := (not adodsAnexosIdAnexo.IsNull)
+  and (adodsAnexosIdAnexoEstatus.Value <> 5)
+  and (adodsAnexosOpcionCompra.Value > 0) and (not adodsAnexosOpcionCompraCreado.Value);
 end;
 
 procedure TdmContratos.actAbonarCapitalExecute(Sender: TObject);
@@ -523,7 +576,8 @@ end;
 procedure TdmContratos.actRestructurarUpdate(Sender: TObject);
 begin
   inherited;
-  TAction(Sender).Enabled := (not adodsAnexosIdAnexo.IsNull);
+  TAction(Sender).Enabled := (not adodsAnexosIdAnexo.IsNull)
+  and (adodsAnexosIdAnexoEstatus.Value <> 5);
 end;
 
 procedure TdmContratos.adodsAnexosComisionChange(Sender: TField);
@@ -701,6 +755,7 @@ begin
   adodsCreditosPlazo.Value := adodsAnexosPlazo.Value;
   adodsCreditosFechaVencimiento.Value := FCreditosFechaVencimiento;
   adodsCreditosFechaCorte.Value := FCreditosFechaCorte;
+  adodsCreditosManual.Value := FCreditosManual;
 end;
 
 procedure TdmContratos.CalcularImportes;
@@ -813,6 +868,7 @@ begin
 //  gFormDeatil1.ApplyBestFit := False;
   gFormDeatil1.DataSet:= adodsAnexos;
   TfrmAnexos(gFormDeatil1).actGenerar := actGenerar;
+  TfrmAnexos(gFormDeatil1).actImportarAmortizaciones := actImportarAmortizaciones;
   TfrmAnexos(gFormDeatil1).actAjustarMensualidad1 := actAjustarMensualidad1;
   TfrmAnexos(gFormDeatil1).actGenMoratorios := actGenMoratorios;
   TfrmAnexos(gFormDeatil1).actRestructurar := actRestructurar;
@@ -996,6 +1052,7 @@ begin
       FCreditosFechaVencimiento := GetFechaDia(FCreditosFecha, adodsMasterDiaVencimiento.Value);
       FCreditosFechaCorte := GetFechaDia(FCreditosFecha, adodsMasterDiaCorte.Value);
       FCreditosMontoFiananciar := GetMonto(IdAnexo);
+      FCreditosManual := False;
       if TfrmAnexosCreditos(gFormDeatil2).AddCredito then
       begin
         // Generar Amortizaciones

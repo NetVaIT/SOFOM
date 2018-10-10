@@ -91,6 +91,9 @@ type
     dxbbReducirPlazo: TdxBarButton;
     tvMasterFinanciarEnganche: TcxGridDBColumn;
     tvMasterFechaLiquidacion: TcxGridDBColumn;
+    tvMasterFechaEntrega: TcxGridDBColumn;
+    tvMasterAgregarCredito: TcxGridDBColumn;
+    btnImportarAmortizaciones: TdxBarButton;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
@@ -104,6 +107,7 @@ type
     FactReducirCuota: TBasicAction;
     FactReducirPlazo: TBasicAction;
     FactAjustarMensualidad1: TBasicAction;
+    FactImportarAmortizaciones: TBasicAction;
     procedure SetactGenerar(const Value: TBasicAction);
     procedure SetactAbonar(const Value: TBasicAction);
     procedure SetactRestructurar(const Value: TBasicAction);
@@ -111,9 +115,11 @@ type
     procedure SetactGenMoratorios(const Value: TBasicAction);
     procedure SetactReducirCuota(const Value: TBasicAction);
     procedure SetactReducirPlazo(const Value: TBasicAction);
+    procedure SetactImportarAmortizaciones(const Value: TBasicAction);
   public
     { Public declarations }
     property actGenerar: TBasicAction read FactGenerar write SetactGenerar;
+    property actImportarAmortizaciones: TBasicAction read FactImportarAmortizaciones write SetactImportarAmortizaciones;
     property actGenMoratorios: TBasicAction read FactGenMoratorios write SetactGenMoratorios;
     property actRestructurar: TBasicAction read FactRestructurar write SetactRestructurar;
     property actGetTipoCambio: TBasicAction read FactGetTipoCambio write FactGetTipoCambio;
@@ -159,6 +165,12 @@ procedure TfrmAnexos.SetactGenMoratorios(const Value: TBasicAction);
 begin
   FactGenMoratorios := Value;
   dxbbGenMoratorios.Action := Value;
+end;
+
+procedure TfrmAnexos.SetactImportarAmortizaciones(const Value: TBasicAction);
+begin
+  FactImportarAmortizaciones := Value;
+  btnImportarAmortizaciones.Action := Value;
 end;
 
 procedure TfrmAnexos.SetactOpcionCompra(const Value: TBasicAction);

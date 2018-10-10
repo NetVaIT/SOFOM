@@ -53,10 +53,13 @@ type
     tvMasterPLDLocalidad: TcxGridDBColumn;
     tvMasterPLDCodigoPostal: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
+    FactGetPlantillaAmortizacion: TBasicAction;
   public
     { Public declarations }
+    property actGetPlantillaAmortizacion: TBasicAction read FactGetPlantillaAmortizacion write FactGetPlantillaAmortizacion;
   end;
 
 implementation
@@ -69,6 +72,12 @@ procedure TfrmConfiguraciones.FormCreate(Sender: TObject);
 begin
   inherited;
   gEditForm:= TfrmConfiguracionesEdit.Create(Self);
+end;
+
+procedure TfrmConfiguraciones.FormShow(Sender: TObject);
+begin
+  inherited;
+  TfrmConfiguracionesEdit(gEditForm).actGetPlantillaAmortizacion := actGetPlantillaAmortizacion
 end;
 
 end.

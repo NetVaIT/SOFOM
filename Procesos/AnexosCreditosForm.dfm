@@ -95,6 +95,10 @@ inherited frmAnexosCreditos: TfrmAnexosCreditos
           DataBinding.FieldName = 'Usuario'
           Width = 110
         end
+        object tvMasterManual: TcxGridDBColumn
+          DataBinding.FieldName = 'Manual'
+          Visible = False
+        end
         object tvMasterEliminarCredito: TcxGridDBColumn
           DataBinding.FieldName = 'EliminarCredito'
           Visible = False

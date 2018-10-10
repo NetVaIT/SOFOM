@@ -126,6 +126,12 @@ inherited dmConfiguracion: TdmConfiguracion
       Size = 5
     end
   end
+  inherited ActionList: TActionList
+    object actGetPlantillaAmortizacion: TAction
+      Caption = 'Obtener plantilla amortizaciones'
+      OnExecute = actGetPlantillaAmortizacionExecute
+    end
+  end
   object adoqGetIdPeriodoActual: TADOQuery
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic

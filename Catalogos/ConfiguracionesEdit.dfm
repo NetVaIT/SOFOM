@@ -1,17 +1,17 @@
 inherited frmConfiguracionesEdit: TfrmConfiguracionesEdit
   Caption = 'Configuraci'#243'n'
-  ClientHeight = 408
+  ClientHeight = 436
   ClientWidth = 339
   ExplicitWidth = 345
-  ExplicitHeight = 437
+  ExplicitHeight = 465
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
     Width = 339
-    Height = 367
+    Height = 395
     ExplicitWidth = 339
     ExplicitHeight = 367
-    ClientRectBottom = 365
+    ClientRectBottom = 393
     ClientRectRight = 337
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 2
@@ -131,6 +131,14 @@ inherited frmConfiguracionesEdit: TfrmConfiguracionesEdit
         DataBinding.DataSource = DataSource
         TabOrder = 6
         Width = 121
+      end
+      object btnGetPlantillaAmortizacion: TcxButton
+        Left = 16
+        Top = 312
+        Width = 304
+        Height = 25
+        Caption = 'Obtener plantilla amortizaciones'
+        TabOrder = 7
       end
     end
     object cxTabSheet1: TcxTabSheet
@@ -319,7 +327,7 @@ inherited frmConfiguracionesEdit: TfrmConfiguracionesEdit
     end
   end
   inherited pmlMain: TPanel
-    Top = 367
+    Top = 395
     Width = 339
     ExplicitTop = 367
     ExplicitWidth = 339

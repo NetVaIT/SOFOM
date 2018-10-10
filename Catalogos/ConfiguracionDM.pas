@@ -43,7 +43,9 @@ type
     adodsMasterPLDCodigoPostal: TStringField;
     adoqGetDateAux: TADOQuery;
     adoqGetDateAuxValor: TDateTimeField;
+    actGetPlantillaAmortizacion: TAction;
     procedure DataModuleCreate(Sender: TObject);
+    procedure actGetPlantillaAmortizacionExecute(Sender: TObject);
   private
     { Private declarations }
     function GetIdPeridoActual: Integer;
@@ -68,17 +70,32 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses ConfiguracionesForm;
+uses ConfiguracionesForm, DocumentosDM;
 
 {$R *.dfm}
 
 { TdmConfiguracion }
+
+procedure TdmConfiguracion.actGetPlantillaAmortizacionExecute(Sender: TObject);
+var
+  dmDocumentos: TdmDocumentos;
+begin
+  inherited;
+  dmDocumentos := TdmDocumentos.Create(Self);
+  try
+//    dmDocumentos.IdDocumentoTipo := 2;
+    dmDocumentos.GetFile(1);
+  finally
+    dmDocumentos.Free;
+  end;
+end;
 
 procedure TdmConfiguracion.DataModuleCreate(Sender: TObject);
 begin
   inherited;
   gGridForm:= TfrmConfiguraciones.Create(Self);
   gGridForm.DataSet:= adodsMaster;
+  TfrmConfiguraciones(gGridForm).actGetPlantillaAmortizacion:= actGetPlantillaAmortizacion;
 end;
 
 function TdmConfiguracion.GetDiaPagoActual: TDateTime;

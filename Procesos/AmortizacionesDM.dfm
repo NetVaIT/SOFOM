@@ -65,6 +65,7 @@ inherited dmAmortizaciones: TdmAmortizaciones
       6E7465726573546F74616C000A0000001C000B0053616C646F46696E616C000A
       0000001C000A005061676F546F74616C00}
     SortOptions = []
+    SortedField = 'Periodo'
     Left = 72
     Top = 144
     object dxmAmortizacionesSegmento: TIntegerField
@@ -589,7 +590,9 @@ inherited dmAmortizaciones: TdmAmortizaciones
       
         'AnexosCreditos.FechaVencimiento, AnexosCreditos.Plazo, AnexosCre' +
         'ditos.TasaAnual, AnexosCreditos.ValorResidual,'
-      'AnexosCreditos.ImpactoISR, AnexosCreditos.PagoMensual'
+      
+        'AnexosCreditos.ImpactoISR, AnexosCreditos.PagoMensual, AnexosCre' +
+        'ditos.Manual'
       'FROM AnexosCreditos'
       'INNER JOIN Anexos ON AnexosCreditos.IdAnexo = Anexos.IdAnexo'
       'WHERE AnexosCreditos.IdAnexoCreditoEstatus = 1'
@@ -635,6 +638,9 @@ inherited dmAmortizaciones: TdmAmortizaciones
       FieldName = 'PagoMensual'
       Precision = 18
       Size = 6
+    end
+    object adoqCreditoManual: TBooleanField
+      FieldName = 'Manual'
     end
   end
   object adocUptAnexosAmrtizaciones: TADOCommand
@@ -894,5 +900,27 @@ inherited dmAmortizaciones: TdmAmortizaciones
       Precision = 18
       Size = 6
     end
+  end
+  object QImport3Xlsx1: TQImport3Xlsx
+    DataSet = dxmAmortizaciones
+    Formats.DecimalSeparator = '.'
+    Formats.ThousandSeparator = ','
+    Formats.DateSeparator = '/'
+    Formats.TimeSeparator = ':'
+    Formats.BooleanTrue.Strings = (
+      'True')
+    Formats.BooleanFalse.Strings = (
+      'False')
+    Formats.NullValues.Strings = (
+      'Null')
+    Formats.ShortDateFormat = 'dd/MM/yyyy'
+    Formats.LongDateFormat = 'dddd, d'#39' de '#39'MMMM'#39' de '#39'yyyy'
+    Formats.ShortTimeFormat = 'hh:mm AMPM'
+    Formats.LongTimeFormat = 'hh:mm:ss AMPM'
+    FieldFormats = <>
+    ErrorLogFileName = 'error.log'
+    AddType = qatInsert
+    Left = 352
+    Top = 264
   end
 end

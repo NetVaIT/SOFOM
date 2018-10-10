@@ -67,6 +67,10 @@ inherited frmAnexos: TfrmAnexos
         object tvMasterFecha: TcxGridDBColumn
           DataBinding.FieldName = 'Fecha'
         end
+        object tvMasterFechaEntrega: TcxGridDBColumn
+          DataBinding.FieldName = 'FechaEntrega'
+          Visible = False
+        end
         object tvMasterIdentificador: TcxGridDBColumn
           DataBinding.FieldName = 'Identificador'
           Width = 66
@@ -208,6 +212,10 @@ inherited frmAnexos: TfrmAnexos
           DataBinding.FieldName = 'FinanciarEnganche'
           Visible = False
         end
+        object tvMasterAgregarCredito: TcxGridDBColumn
+          DataBinding.FieldName = 'AgregarCredito'
+          Visible = False
+        end
       end
     end
   end
@@ -239,9 +247,6 @@ inherited frmAnexos: TfrmAnexos
       ExplicitLeft = 907
     end
   end
-  inherited DataSource: TDataSource
-    DataSet = dmContratos.adodsAnexos
-  end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
       0
@@ -265,6 +270,10 @@ inherited frmAnexos: TfrmAnexos
         item
           Visible = True
           ItemName = 'dxbbGenerar'
+        end
+        item
+          Visible = True
+          ItemName = 'btnImportarAmortizaciones'
         end
         item
           Visible = True
@@ -331,6 +340,14 @@ inherited frmAnexos: TfrmAnexos
       Caption = 'Reducir plazo'
       Category = 0
       Visible = ivAlways
+    end
+    object btnImportarAmortizaciones: TdxBarButton
+      Caption = 'Importar'
+      Category = 0
+      Hint = 'Importar las amortizaciones desde un archivo XLSX'
+      Visible = ivAlways
+      ImageIndex = 10
+      PaintStyle = psCaptionGlyph
     end
   end
   inherited cxStyleRepository: TcxStyleRepository

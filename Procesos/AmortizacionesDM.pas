@@ -4,8 +4,9 @@ interface
 
 uses
   System.SysUtils, System.Classes, _StandarDMod, System.Actions, Vcl.ActnList,
-  System.DateUtils,
-  Data.DB, Data.Win.ADODB, System.Math, dxmdaset, ProcesosType;
+  System.DateUtils, Vcl.Dialogs, System.UITypes,
+  Data.DB, Data.Win.ADODB, System.Math, dxmdaset, ProcesosType,
+  QImport3, QImport3Xlsx;
 
 type
   TdmAmortizaciones = class(T_dmStandar)
@@ -117,6 +118,8 @@ type
     adoqAmortizacion1FechaMoratorio: TDateTimeField;
     adoqAmortizacion1Moratorio: TFMTBCDField;
     adoqAmortizacion1MoratorioImpuesto: TFMTBCDField;
+    QImport3Xlsx1: TQImport3Xlsx;
+    adoqCreditoManual: TBooleanField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actCalcularExecute(Sender: TObject);
   private
@@ -145,14 +148,18 @@ type
     procedure AjustePrimeraMensualidad(FechaPrestamo: TDateTime;
       var Amortizacion: TAmortizacion);
     function GetInteresImpuesto(Interes: Extended): Extended;
+    function GuardarAnexosAmortizaciones(IdAnexoCredito: Integer): Boolean;
+    function ImportAmortizaciones(XLSXFileName: TFileName): Boolean;
+    function ValidarAmortizaciones(SaldoInsoluto: Extended): Boolean;
   public
     { Public declarations }
     procedure Execute(FechaPrestamo, FechaCorte, FechaVencimiento: TDateTime;
       TasaAnual: Extended; Plazo: Integer; ValorPresente, ValorFuturo, ImpactoISR: Extended);
     function Pago(TasaAnual: Extended; Plazo: Integer; ValorPresente,ValorFuturo: Extended): Extended;
+    function GenAnexosAmortizaciones(IdAnexoCredito: Integer; XLSXFileName: TFileName): Boolean; overload;
     function GenAnexosAmortizaciones(IdAnexoCredito: Integer;
       FechaPrestamo, FechaCorte, FechaVencimiento: TDateTime; TasaAnual: Extended; NPeriodo: Integer;
-      ValorPresente, ValorFuturo, ImpactoISR: Extended): Boolean;
+      ValorPresente, ValorFuturo, ImpactoISR: Extended): Boolean; overload;
     function SetAmortizaciones(IdAnexo: Integer; Importe: Extended; Tipo: TAbonoCapital): Boolean;
     procedure GetCapitalAnual(FechaVencimiento: TDateTime; TasaAnual: Extended;
       Plazo: Integer; ValorPresente, ValorFuturo: Extended;
@@ -161,6 +168,7 @@ type
       ComisionInicial, Depositos, ComisionFinal, TasaAnual: Extended;
       DepositosNumero, Plazo: Integer; ValorPresente, ValorFuturo,
       ImpactoISR: Extended): Extended;
+    function ValidarArchivoAmortizaciones(SaldoInsoluto: Extended; XLSXFileName: TFileName): Boolean;
     procedure AjustarMensualidad1(IdAnexo: Integer; FechaPrestamo: TDateTime);
     property PaymentTime: TPaymentTime read FPaymentTime write SetPaymentTime;
     property TipoContrato: TCTipoContrato read FTipoContrato write SetTipoContrato;
@@ -476,6 +484,68 @@ begin
   Result := InternalRateOfReturn(0, CashFlows)*100*12;
 end;
 
+function TdmAmortizaciones.GuardarAnexosAmortizaciones(IdAnexoCredito: Integer): Boolean;
+begin
+  Result:= False;
+  dxmAmortizaciones.First;
+  while not dxmAmortizaciones.Eof do
+  begin
+    adocInsAnexosAmrtizaciones.Parameters.ParamByName('IdAnexoCredito').Value := IdAnexoCredito;
+//    adocInsAnexosAmrtizaciones.Parameters.ParamByName('IdAnexoSegmento').Value :=
+    adocInsAnexosAmrtizaciones.Parameters.ParamByName('Periodo').Value := dxmAmortizacionesPeriodo.Value;
+    adocInsAnexosAmrtizaciones.Parameters.ParamByName('FechaCorte').Value := dxmAmortizacionesFechaCorte.Value;
+    adocInsAnexosAmrtizaciones.Parameters.ParamByName('FechaVencimiento').Value := dxmAmortizacionesFechaVencimiento.Value;
+    adocInsAnexosAmrtizaciones.Parameters.ParamByName('SaldoInicial').Value := dxmAmortizacionesSaldoInicial.Value;
+    adocInsAnexosAmrtizaciones.Parameters.ParamByName('TasaAnual').Value := dxmAmortizacionesTasaAnual.Value;
+    adocInsAnexosAmrtizaciones.Parameters.ParamByName('Capital').Value := dxmAmortizacionesCapital.Value;
+    adocInsAnexosAmrtizaciones.Parameters.ParamByName('CapitalImpuesto').Value := dxmAmortizacionesCapitalImpuesto.Value;
+    adocInsAnexosAmrtizaciones.Parameters.ParamByName('CapitalTotal').Value := dxmAmortizacionesCapitalTotal.Value;
+    adocInsAnexosAmrtizaciones.Parameters.ParamByName('Interes').Value := dxmAmortizacionesInteres.Value;
+    adocInsAnexosAmrtizaciones.Parameters.ParamByName('InteresImpuesto').Value := dxmAmortizacionesInteresImpuesto.Value;
+    adocInsAnexosAmrtizaciones.Parameters.ParamByName('InteresTotal').Value := dxmAmortizacionesInteresTotal.Value;
+    adocInsAnexosAmrtizaciones.Parameters.ParamByName('ImpactoISR').Value := dxmAmortizacionesImpactoISR.Value;
+    adocInsAnexosAmrtizaciones.Parameters.ParamByName('Pago').Value := dxmAmortizacionesPago.Value;
+    adocInsAnexosAmrtizaciones.Parameters.ParamByName('PagoTotal').Value := dxmAmortizacionesPagoTotal.Value;
+    adocInsAnexosAmrtizaciones.Parameters.ParamByName('SaldoFinal').Value := dxmAmortizacionesSaldoFinal.Value;
+    adocInsAnexosAmrtizaciones.Execute;
+    dxmAmortizaciones.Next;
+  end;
+  Result:= True;
+end;
+
+function TdmAmortizaciones.ImportAmortizaciones(
+  XLSXFileName: TFileName): Boolean;
+begin
+  Result:= False;
+  dxmAmortizaciones.Close;
+  dxmAmortizaciones.Open;
+  if not FileExists(XLSXFileName) then exit;
+  QImport3Xlsx1.FileName := XLSXFileName;
+  QImport3Xlsx1.Map.Clear;
+  QImport3Xlsx1.Map.Add('Periodo=[:1]A2-COLFINISH;');
+  QImport3Xlsx1.Map.Add('FechaCorte=[:1]B2-COLFINISH;');
+  QImport3Xlsx1.Map.Add('FechaVencimiento=[:1]C2-COLFINISH;');
+  QImport3Xlsx1.Map.Add('TasaAnual=[:1]D2-COLFINISH;');
+  QImport3Xlsx1.Map.Add('SaldoInicial=[:1]E2-COLFINISH;');
+  QImport3Xlsx1.Map.Add('Capital=[:1]F2-COLFINISH;');
+  QImport3Xlsx1.Map.Add('CapitalImpuesto=[:1]G2-COLFINISH;');
+  QImport3Xlsx1.Map.Add('CapitalTotal=[:1]H2-COLFINISH;');
+  QImport3Xlsx1.Map.Add('Interes=[:1]I2-COLFINISH;');
+  QImport3Xlsx1.Map.Add('InteresImpuesto=[:1]J2-COLFINISH;');
+  QImport3Xlsx1.Map.Add('InteresTotal=[:1]K2-COLFINISH;');
+  QImport3Xlsx1.Map.Add('ImpactoISR=[:1]L2-COLFINISH;');
+  QImport3Xlsx1.Map.Add('Pago=[:1]M2-COLFINISH;');
+  QImport3Xlsx1.Map.Add('PagoTotal=[:1]N2-COLFINISH;');
+  QImport3Xlsx1.Map.Add('SaldoFinal=[:1]O2-COLFINISH;');
+  try
+    QImport3Xlsx1.Execute;
+    dxmAmortizaciones.First;
+    Result:= True;
+  except on E: Exception do
+    ShowMessage(E.Message);
+  end;
+end;
+
 procedure TdmAmortizaciones.GenAmortizaciones(FechaPrestamo, FechaCorte, FechaVencimiento: TDateTime;
   TasaAnual: Extended; NPeriodo: Integer; ValorPresente,ValorFuturo, ImpactoISR: Extended;
   PaymentTime: TPaymentTime);
@@ -518,6 +588,16 @@ begin
     SaldoInicial := Amortizacion.SaldoFinal;
   end;
   dxmAmortizaciones.First;
+end;
+
+
+function TdmAmortizaciones.GenAnexosAmortizaciones(IdAnexoCredito: Integer;
+  XLSXFileName: TFileName): Boolean;
+begin
+  Result:= False;
+  Result:= ImportAmortizaciones(XLSXFileName);
+  if Result then
+    Result:=GuardarAnexosAmortizaciones(IdAnexoCredito);
 end;
 
 //procedure TdmAmortizaciones.GenAmortizacionesSegmento(FechaInicial: TDateTime;
@@ -620,30 +700,7 @@ begin
   if GetTotalAmortizaciones > 0 then exit;
   GenAmortizaciones(FechaPrestamo, FechaCorte, FechaVencimiento, TasaAnual, NPeriodo, ValorPresente, ValorFuturo, ImpactoISR, PaymentTime);
   // Guardar en BD
-  dxmAmortizaciones.First;
-  while not dxmAmortizaciones.Eof do
-  begin
-    adocInsAnexosAmrtizaciones.Parameters.ParamByName('IdAnexoCredito').Value := IdAnexoCredito;
-//    adocInsAnexosAmrtizaciones.Parameters.ParamByName('IdAnexoSegmento').Value :=
-    adocInsAnexosAmrtizaciones.Parameters.ParamByName('Periodo').Value := dxmAmortizacionesPeriodo.Value;
-    adocInsAnexosAmrtizaciones.Parameters.ParamByName('FechaCorte').Value := dxmAmortizacionesFechaCorte.Value;
-    adocInsAnexosAmrtizaciones.Parameters.ParamByName('FechaVencimiento').Value := dxmAmortizacionesFechaVencimiento.Value;
-    adocInsAnexosAmrtizaciones.Parameters.ParamByName('SaldoInicial').Value := dxmAmortizacionesSaldoInicial.Value;
-    adocInsAnexosAmrtizaciones.Parameters.ParamByName('TasaAnual').Value := dxmAmortizacionesTasaAnual.Value;
-    adocInsAnexosAmrtizaciones.Parameters.ParamByName('Capital').Value := dxmAmortizacionesCapital.Value;
-    adocInsAnexosAmrtizaciones.Parameters.ParamByName('CapitalImpuesto').Value := dxmAmortizacionesCapitalImpuesto.Value;
-    adocInsAnexosAmrtizaciones.Parameters.ParamByName('CapitalTotal').Value := dxmAmortizacionesCapitalTotal.Value;
-    adocInsAnexosAmrtizaciones.Parameters.ParamByName('Interes').Value := dxmAmortizacionesInteres.Value;
-    adocInsAnexosAmrtizaciones.Parameters.ParamByName('InteresImpuesto').Value := dxmAmortizacionesInteresImpuesto.Value;
-    adocInsAnexosAmrtizaciones.Parameters.ParamByName('InteresTotal').Value := dxmAmortizacionesInteresTotal.Value;
-    adocInsAnexosAmrtizaciones.Parameters.ParamByName('ImpactoISR').Value := dxmAmortizacionesImpactoISR.Value;
-    adocInsAnexosAmrtizaciones.Parameters.ParamByName('Pago').Value := dxmAmortizacionesPago.Value;
-    adocInsAnexosAmrtizaciones.Parameters.ParamByName('PagoTotal').Value := dxmAmortizacionesPagoTotal.Value;
-    adocInsAnexosAmrtizaciones.Parameters.ParamByName('SaldoFinal').Value := dxmAmortizacionesSaldoFinal.Value;
-    adocInsAnexosAmrtizaciones.Execute;
-    dxmAmortizaciones.Next;
-  end;
-  Result:= True;
+  Result:= GuardarAnexosAmortizaciones(IdAnexoCredito);
 end;
 
 //procedure TdmAmortizaciones.GenSegmentos(NPeriodo: Integer;
@@ -725,7 +782,9 @@ var
   PagoCredito: Extended;
   SaldoInicial: Extended;
   SaldoInsoluto: Extended;
+  CreditoManual: Boolean;
   Amortizacion: TAmortizacion;
+
 
   procedure CargarCredito;
   begin
@@ -743,6 +802,7 @@ var
       ImpactoISR := adoqCreditoImpactoISR.AsFloat;
       PagoCredito := adoqCreditoPagoMensual.AsFloat-adoqCreditoImpactoISR.AsFloat;
       SaldoInsoluto := adoqCreditoSaldoInsoluto.AsFloat;
+      CreditoManual := adoqCreditoManual.Value;
     finally
       adoqCredito.Close;
     end;
@@ -752,7 +812,6 @@ var
   begin
     adoqAnexosAmortizaciones.Close;
     adoqAnexosAmortizaciones.Parameters.ParamByName('IdAnexo').Value:= IdAnexo;
-//    adoqAnexosAmortizaciones.Parameters.ParamByName('Fecha').Value:= Fecha;   //Abr 19/17
     adoqAnexosAmortizaciones.Open;
     try
       dxmAnexosAmortizaciones.Close;
@@ -765,6 +824,11 @@ var
 
 begin
   CargarCredito;
+  if CreditoManual then
+  begin
+    MessageDlg('Las amortizaciones se importaron, no es posible efectuar esta operacion', mtInformation, [mbOk], 0);
+    Exit;
+  end;
   CargaAmortizaciones;
   PeriodoInicial := dxmAnexosAmortizacionesPeriodo.Value;
   ValorPresente := SaldoInsoluto - Importe;
@@ -854,6 +918,106 @@ end;
 procedure TdmAmortizaciones.SetTipoContrato(const Value: TCTipoContrato);
 begin
   FTipoContrato := Value;
+end;
+
+function TdmAmortizaciones.ValidarAmortizaciones(
+  SaldoInsoluto: Extended): Boolean;
+const
+  ROUND_RANGE = -2;
+var
+  Valido: Boolean;
+  SaldoInsolutoR: Currency;
+  SaldoFinalAnterior: Extended;
+  ImporteOrigen, ImporteCalculado: Currency;
+  Periodo: Integer;
+begin
+  Result:= False;
+  // Valida Saldo inicial
+  dxmAmortizaciones.First;
+  SaldoInsolutoR := SimpleRoundTo(SaldoInsoluto, ROUND_RANGE);
+  if SaldoInsolutoR <> SimpleRoundTo(dxmAmortizacionesSaldoInicial.AsCurrency, ROUND_RANGE) then
+  begin
+    MessageDlg(Format('El saldo insoluto %m no coincide con el saldo incial del primer periodo', [SaldoInsolutoR]), mtError, [mbOk], 0);
+    Exit;
+  end;
+  // Valida Saldo final
+  dxmAmortizaciones.First;
+  Valido := True;
+  while not dxmAmortizaciones.Eof and Valido do
+  begin
+    Periodo := dxmAmortizacionesPeriodo.Value;
+    ImporteOrigen := SimpleRoundTo(dxmAmortizacionesSaldoFinal.AsCurrency, ROUND_RANGE);
+    ImporteCalculado := SimpleRoundTo(dxmAmortizacionesSaldoInicial.AsCurrency-dxmAmortizacionesCapitalTotal.AsCurrency, ROUND_RANGE);
+    Valido := (ImporteOrigen = ImporteCalculado);
+    dxmAmortizaciones.Next;
+  end;
+  if not Valido then
+  begin
+    MessageDlg(Format('El saldo inicial menos el capital (%m) no es igual al saldo final. Error en el periodo %d', [ImporteCalculado, Periodo]), mtError, [mbOk], 0);
+    Exit;
+  end;
+  // Valida saldo inicial con su anterior saldo final
+  SaldoFinalAnterior := SaldoInsolutoR;
+  dxmAmortizaciones.First;
+  Valido := True;
+  while not dxmAmortizaciones.Eof and Valido do
+  begin
+    Periodo := dxmAmortizacionesPeriodo.Value;
+    Valido := (SaldoFinalAnterior = SimpleRoundTo(dxmAmortizacionesSaldoInicial.AsCurrency, ROUND_RANGE));
+    SaldoFinalAnterior := SimpleRoundTo(dxmAmortizacionesSaldoFinal.AsCurrency, ROUND_RANGE);
+    dxmAmortizaciones.Next;
+  end;
+  if not Valido then
+  begin
+    MessageDlg(Format('El saldo final anterior no es igual al saldo inicial. Error en el periodo %d', [Periodo]), mtError, [mbOk], 0);
+    Exit;
+  end;
+  // Valida impuesto del interes en base al tipo de contrato
+  dxmAmortizaciones.First;
+  Valido := True;
+  while not dxmAmortizaciones.Eof and Valido do
+  begin
+    Periodo := dxmAmortizacionesPeriodo.Value;
+    ImporteOrigen := SimpleRoundTo(dxmAmortizacionesInteresImpuesto.AsCurrency, ROUND_RANGE);
+    ImporteCalculado := SimpleRoundTo(GetInteresImpuesto(dxmAmortizacionesInteres.AsCurrency), ROUND_RANGE);
+    Valido := (ImporteOrigen = ImporteCalculado);
+    dxmAmortizaciones.Next;
+  end;
+  if not Valido then
+  begin
+    MessageDlg(Format('El IVA Interes calculado (%m) en base al tipo de contrato no coincide. Error en el periodo %d', [ImporteCalculado, Periodo]), mtError, [mbOk], 0);
+    Exit;
+  end;
+  // Valida Pago total
+  dxmAmortizaciones.First;
+  Valido := True;
+  while not dxmAmortizaciones.Eof and Valido do
+  begin
+    Periodo := dxmAmortizacionesPeriodo.Value;
+    ImporteOrigen := SimpleRoundTo(dxmAmortizacionesPagoTotal.AsCurrency, ROUND_RANGE);
+    ImporteCalculado := SimpleRoundTo(dxmAmortizacionesPago.AsCurrency + dxmAmortizacionesInteresImpuesto.AsCurrency + dxmAmortizacionesImpactoISR.AsCurrency, ROUND_RANGE);
+    Valido := (ImporteOrigen = ImporteCalculado);
+    dxmAmortizaciones.Next;
+  end;
+  if not Valido then
+  begin
+    MessageDlg(Format('El pago total no coincide con la suma del Pago+IVA Interes+Impacto ISR (%m). Error en el periodo %d', [ImporteCalculado, Periodo]), mtError, [mbOk], 0);
+    Exit;
+  end;
+  Result:= Valido;
+end;
+
+function TdmAmortizaciones.ValidarArchivoAmortizaciones(SaldoInsoluto: Extended;
+  XLSXFileName: TFileName): Boolean;
+begin
+  Result:= False;
+  if not FileExists(XLSXFileName) then
+  begin
+    MessageDlg(Format('El archivo no existe %s', [XLSXFileName]), mtError, [mbOk], 0);
+    Exit;
+  end;
+  ImportAmortizaciones(XLSXFileName);
+  Result:= ValidarAmortizaciones(SaldoInsoluto);
 end;
 
 end.
