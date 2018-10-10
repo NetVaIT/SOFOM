@@ -41,16 +41,12 @@ type
     procedure ActPDFCtasActualClienteExecute(Sender: TObject);
     procedure ActPDFXContratosVencidosExecute(Sender: TObject);
   private
-    function GetActual: string;
     { Private declarations }
+    function GetActual: string;
     property Actual: string read GetActual;
   public
     { Public declarations }
-
   end;
-
-var
-  dmRptAntiguedadSaldos: TdmRptAntiguedadSaldos;
 
 implementation
 
@@ -64,34 +60,49 @@ uses rptAntiguedadSaldosForm, PDFAntiguedadSaldosDM, _ConectionDmod,
 procedure TdmRptAntiguedadSaldos.ActPDFCtasActualClienteExecute(Sender: TObject);
 var
   dmAntiguedadSaldosPDF: TdmAntiguedadSaldosPDF;
-  ArchiPDF: TFileName;
-  Texto: String;
-//  FechaIni, FechaFin: TDAteTime;
+  ArchivoPDF: TFileName;
 begin
   inherited;
-//  FechaIni:=  TfrmrptantiguedadSaldos(gGridForm).AFecIni;
-//  FechaFin:=  TfrmrptantiguedadSaldos(gGridForm).AFecFin;
-  ArchiPDF:='EstadoCuentaCliente'+'_'+Actual+_ExtensionPDF;
+  ArchivoPDF:='EstadoCuentaCliente'+'_'+Actual+_ExtensionPDF;
   dmAntiguedadSaldosPDF:= TdmAntiguedadSaldosPDF.Create(Self);
   try
-    dmAntiguedadSaldosPDF.ADODtStCtaActCliente.Close;
-    TADoDAtaset(dmAntiguedadSaldosPDF.ADODtStCtaActCliente).Parameters.ParamByName('IdPersona').Value:=adodsMasterIdPersona.AsInteger; //DEl que tenga actualmente  siempre usa fechas
-    Texto:= 'ESTADO DE CUENTA POR CLIENTE AL' +#13+ UpperCase(FormatDateTime('dd ''de'' mmmm ''del'' yyyy',_DmConection.LaFechaActual));
-    dmAntiguedadSaldosPDF.ADODtStCtaActCliente.Open;
-    dmAntiguedadSaldosPDF.ppRptCtaActCliente.ShowPrintDialog:= False;
-    dmAntiguedadSaldosPDF.ppRptCtaActCliente.ShowCancelDialog:= False;
-    dmAntiguedadSaldosPDF.ppRptCtaActCliente.PrinterSetup.DocumentName:= ArchiPDF;
-    dmAntiguedadSaldosPDF.ppRptCtaActCliente.DeviceType:= 'PDF';
-    dmAntiguedadSaldosPDF.ppRptCtaActCliente.TextFileName:= ArchiPDF;
-    dmAntiguedadSaldosPDF.ppTituloAdeudo.Caption:= Texto;
-    dmAntiguedadSaldosPDF.ppRptCtaActCliente.Print;
-    dmAntiguedadSaldosPDF.ADODtStCtaActCliente.Close;
+    dmAntiguedadSaldosPDF.Title := 'ESTADO DE CUENTA EN MONEDA NACIONAL "PESOS"';
+    dmAntiguedadSaldosPDF.PDFFileName := ArchivoPDF;
+    dmAntiguedadSaldosPDF.ExecuteEstadoCuenta(adodsMasterIdPersona.Value);
   finally
     dmAntiguedadSaldosPDF.Free;
   end;
-  if FileExists(ArchiPDF) then
-    ShellExecute(application.Handle, 'open', PChar(ArchiPDF), nil, nil, SW_SHOWNORMAL);
+  if FileExists(ArchivoPDF) then
+    ShellExecute(application.Handle, 'open', PChar(ArchivoPDF), nil, nil, SW_SHOWNORMAL);
 end;
+//procedure TdmRptAntiguedadSaldos.ActPDFCtasActualClienteExecute(Sender: TObject);
+//var
+//  dmAntiguedadSaldosPDF: TdmAntiguedadSaldosPDF;
+//  ArchiPDF: TFileName;
+//  Texto: String;
+//begin
+//  inherited;
+//  ArchiPDF:='EstadoCuentaCliente'+'_'+Actual+_ExtensionPDF;
+//  dmAntiguedadSaldosPDF:= TdmAntiguedadSaldosPDF.Create(Self);
+//  try
+//    dmAntiguedadSaldosPDF.ADODtStCtaActCliente.Close;
+//    TADoDAtaset(dmAntiguedadSaldosPDF.ADODtStCtaActCliente).Parameters.ParamByName('IdPersona').Value:=adodsMasterIdPersona.AsInteger; //DEl que tenga actualmente  siempre usa fechas
+//    Texto:= 'ESTADO DE CUENTA EN MONEDA NACIONAL "PESOS"';
+//    dmAntiguedadSaldosPDF.ADODtStCtaActCliente.Open;
+//    dmAntiguedadSaldosPDF.ppRptCtaActCliente.ShowPrintDialog:= False;
+//    dmAntiguedadSaldosPDF.ppRptCtaActCliente.ShowCancelDialog:= False;
+//    dmAntiguedadSaldosPDF.ppRptCtaActCliente.PrinterSetup.DocumentName:= ArchiPDF;
+//    dmAntiguedadSaldosPDF.ppRptCtaActCliente.DeviceType:= 'PDF';
+//    dmAntiguedadSaldosPDF.ppRptCtaActCliente.TextFileName:= ArchiPDF;
+//    dmAntiguedadSaldosPDF.ppTituloAdeudo.Caption:= Texto;
+//    dmAntiguedadSaldosPDF.ppRptCtaActCliente.Print;
+//    dmAntiguedadSaldosPDF.ADODtStCtaActCliente.Close;
+//  finally
+//    dmAntiguedadSaldosPDF.Free;
+//  end;
+//  if FileExists(ArchiPDF) then
+//    ShellExecute(application.Handle, 'open', PChar(ArchiPDF), nil, nil, SW_SHOWNORMAL);
+//end;
 
 procedure TdmRptAntiguedadSaldos.ActPDFXContratosVencidosExecute(
   Sender: TObject);

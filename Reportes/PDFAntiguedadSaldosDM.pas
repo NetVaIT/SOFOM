@@ -287,16 +287,110 @@ type
     ppLabel70: TppLabel;
     ppLabel71: TppLabel;
     ppMemo1: TppMemo;
+    adoqEstadoCuenta: TADOQuery;
+    dsEstadoCuenta: TDataSource;
+    ppRptEstadoCuenta: TppReport;
+    ppTitleBand5: TppTitleBand;
+    ppHeaderBand5: TppHeaderBand;
+    ppLabel60: TppLabel;
+    ppDBText54: TppDBText;
+    ppLabel61: TppLabel;
+    ppDBText55: TppDBText;
+    ppLabel62: TppLabel;
+    ppDBText56: TppDBText;
+    ppLabel69: TppLabel;
+    ppDBText61: TppDBText;
+    ppLabel72: TppLabel;
+    ppImage5: TppImage;
+    pplblTituloEstadoCuenta: TppLabel;
+    ppLabel79: TppLabel;
+    ppDBText62: TppDBText;
+    ppLabel80: TppLabel;
+    ppDBText63: TppDBText;
+    ppLabel81: TppLabel;
+    ppDBText64: TppDBText;
+    ppLabel82: TppLabel;
+    ppDBText65: TppDBText;
+    ppLabel84: TppLabel;
+    ppDBText66: TppDBText;
+    ppDetailBand5: TppDetailBand;
+    ppFooterBand5: TppFooterBand;
+    ppLine21: TppLine;
+    ppSystemVariable5: TppSystemVariable;
+    ppSystemVariable8: TppSystemVariable;
+    ppGroup3: TppGroup;
+    ppGroupHeaderBand3: TppGroupHeaderBand;
+    ppGroupFooterBand3: TppGroupFooterBand;
+    ppDBCalc41: TppDBCalc;
+    ppLine24: TppLine;
+    ppLabel87: TppLabel;
+    ppDBText74: TppDBText;
+    ppShape2: TppShape;
+    ppLabel88: TppLabel;
+    ppDBCalc42: TppDBCalc;
+    ppDBCalc43: TppDBCalc;
+    ppLabel90: TppLabel;
+    ppMemo2: TppMemo;
+    ppDesignLayers4: TppDesignLayers;
+    ppDesignLayer4: TppDesignLayer;
+    ppParameterList5: TppParameterList;
+    ppdbpEstadoCuenta: TppDBPipeline;
+    ppLabel73: TppLabel;
+    ppDBText67: TppDBText;
+    ppLabel74: TppLabel;
+    ppDBText68: TppDBText;
+    ppLabel75: TppLabel;
+    ppDBText69: TppDBText;
+    ppLine19: TppLine;
+    ppLabel76: TppLabel;
+    ppLabel77: TppLabel;
+    ppLabel83: TppLabel;
+    ppDBText70: TppDBText;
+    ppLabel92: TppLabel;
+    ppDBText71: TppDBText;
+    ppLabel93: TppLabel;
+    ppLabel94: TppLabel;
+    ppDBText72: TppDBText;
+    ppLabel95: TppLabel;
+    ppDBText73: TppDBText;
+    ppDBText75: TppDBText;
+    ppLabel96: TppLabel;
+    ppLabel97: TppLabel;
+    ppLabel98: TppLabel;
+    ppLabel99: TppLabel;
+    ppShape3: TppShape;
+    ppShape4: TppShape;
+    ppLabel85: TppLabel;
+    ppDBCalc38: TppDBCalc;
+    ppDBCalc39: TppDBCalc;
+    ppDBCalc40: TppDBCalc;
+    ppLabel86: TppLabel;
+    ppLabel89: TppLabel;
+    ppLabel91: TppLabel;
+    ppLabel100: TppLabel;
+    ppDBText76: TppDBText;
+    ppDBText77: TppDBText;
+    ppShape5: TppShape;
+    ppLabel101: TppLabel;
+    ppDBText78: TppDBText;
+    ppLabel102: TppLabel;
+    ppDBText79: TppDBText;
+    ppLabel103: TppLabel;
+    ppDBText80: TppDBText;
+    ppLabel104: TppLabel;
+    ppDBText81: TppDBText;
+    ppDBText82: TppDBText;
+    ppDBText83: TppDBText;
+    ppDBText84: TppDBText;
+    ppLabel78: TppLabel;
     procedure ppHeaderBand3BeforePrint(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
       procedure AssignParam; override;
+      procedure ExecuteEstadoCuenta(IdPersona: Integer);
   end;
-
-var
-  dmAntiguedadSaldosPDF: TdmAntiguedadSaldosPDF;
 
 implementation
 
@@ -304,14 +398,28 @@ implementation
 
 {$R *.dfm}
 
-
-
 { TdmAntiguedadSaldosPDF }
 
 procedure TdmAntiguedadSaldosPDF.AssignParam;
 begin
   inherited;
 //
+end;
+
+procedure TdmAntiguedadSaldosPDF.ExecuteEstadoCuenta(IdPersona: Integer);
+begin
+  inherited;
+    adoqEstadoCuenta.Close;
+    adoqEstadoCuenta.Parameters.ParamByName('IdPersona').Value := IdPersona;
+    adoqEstadoCuenta.Open;
+    ppRptEstadoCuenta.ShowPrintDialog:= False;
+    ppRptEstadoCuenta.ShowCancelDialog:= False;
+    ppRptEstadoCuenta.PrinterSetup.DocumentName:= PDFFileName;
+    ppRptEstadoCuenta.DeviceType:= 'PDF';
+    ppRptEstadoCuenta.TextFileName:= PDFFileName;
+    pplblTituloEstadoCuenta.Caption:= Title;
+    ppRptEstadoCuenta.Print;
+    adoqEstadoCuenta.Close;
 end;
 
 procedure TdmAntiguedadSaldosPDF.ppHeaderBand3BeforePrint(Sender: TObject);
