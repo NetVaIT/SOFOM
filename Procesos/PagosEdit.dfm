@@ -307,10 +307,6 @@ inherited FrmEdPagos: TFrmEdPagos
       Caption = 'Complemento de pago'
       ImageIndex = 1
       TabVisible = False
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object gbBancarizado: TcxGroupBox
         Left = 3
         Top = 3

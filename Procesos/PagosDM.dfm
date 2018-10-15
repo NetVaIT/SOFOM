@@ -468,21 +468,22 @@ inherited dmPagos: TdmPagos
       'Base, CXC.IdCuentaXCobrarEstatus, CXC.IdPersona, CXC.IdAnexosAmo' +
       'rtizaciones AS IdAnexoAmortizacion, CXC.IdAnexo, CXC.IdEstadoCue' +
       'nta, CXC.IdCFDI, '#13#10'CXC.Fecha, CXC.FechaVencimiento, CXC.Importe,' +
-      ' CXC.Impuesto, CXC.Interes, CXC.Total, CXC.Saldo, CXC.SaldoFacto' +
-      'raje, CXC.EsMoratorio, CI.SaldoDocumento, Ci.SaldoFactoraje as S' +
-      'aldoFactorajeCFDI, '#13#10'ci.serie, Ci.folio'#13#10' from CuentasXCobrar CX' +
-      'C  '#13#10'left Join CFDI CI on CI.IdCFDI= CXC.IdCFDI where '#13#10'-- CXC.i' +
-      'danexosamortizaciones is not null and -- jun 30/17 '#13#10' Saldo >0 a' +
-      'nd IDPersona=:IdPersonaCliente '#13#10'and (((IdCuentaXCobrarEstatus=0' +
-      ' or (IdCuentaXCobrarEstatus=1))  and  ESMoratorio=0)'#13#10'or( Esmora' +
-      'torio=1)'#13#10' or( (CXC.Fecha<=dbo.GetDateAux() and IdCuentaXCobrarE' +
-      'status=-1) and 1=:EsAnti) -- para poder facturar addelantados'#13#10'o' +
-      'r (exists (select * from CuentasXCobrarDetalle CXCD where CXCD.d' +
-      'escripcion like'#39'%Abono Capital%'#39' and CXC.IdCuentaXCobrar=CXCD.id' +
-      'cuentaXCobrar )'#13#10'and CXC.IdCFDI is null) )-- IdCuentaXCobrarEsta' +
-      'tus=-1 and puede que esten facturadas'#13#10' and CXC.IDAnexo=:IdAnexo' +
-      #13#10'order by CXC.idanexosamortizaciones,EsMoratorio DEsc, CXC.Fech' +
-      'aVencimiento'
+      'CXC.Descuento, CXC.Impuesto, CXC.Interes, CXC.Total, CXC.Saldo, ' +
+      'CXC.SaldoFactoraje, CXC.EsMoratorio, CI.SaldoDocumento, Ci.Saldo' +
+      'Factoraje as SaldoFactorajeCFDI, '#13#10'ci.serie, Ci.folio           ' +
+      '                                             --oct 4/18'#13#10' from C' +
+      'uentasXCobrar CXC  '#13#10'left Join CFDI CI on CI.IdCFDI= CXC.IdCFDI ' +
+      'where '#13#10'-- CXC.idanexosamortizaciones is not null and -- jun 30/' +
+      '17 '#13#10' Saldo >0 and IDPersona=:IdPersonaCliente '#13#10'and (((IdCuenta' +
+      'XCobrarEstatus=0 or (IdCuentaXCobrarEstatus=1))  and  ESMoratori' +
+      'o=0)'#13#10'or( Esmoratorio=1)'#13#10' or( (CXC.Fecha<=dbo.GetDateAux() and ' +
+      'IdCuentaXCobrarEstatus=-1) and 1=:EsAnti) -- para poder facturar' +
+      ' addelantados'#13#10'or (exists (select * from CuentasXCobrarDetalle C' +
+      'XCD where CXCD.descripcion like'#39'%Abono Capital%'#39' and CXC.IdCuent' +
+      'aXCobrar=CXCD.idcuentaXCobrar )'#13#10'and CXC.IdCFDI is null) )-- IdC' +
+      'uentaXCobrarEstatus=-1 and puede que esten facturadas'#13#10' and CXC.' +
+      'IDAnexo=:IdAnexo'#13#10'order by CXC.idanexosamortizaciones,EsMoratori' +
+      'o DEsc, CXC.FechaVencimiento'
     Parameters = <
       item
         Name = 'IdPersonaCliente'
@@ -603,6 +604,11 @@ inherited dmPagos: TdmPagos
     object ADODtStCXCPendientesDescripcion: TStringField
       FieldName = 'Descripcion'
       Size = 100
+    end
+    object ADODtStCXCPendientesDescuento: TFMTBCDField
+      FieldName = 'Descuento'
+      Precision = 18
+      Size = 6
     end
   end
   object ADODtStCxCDetallePend: TADODataSet
@@ -767,6 +773,16 @@ inherited dmPagos: TdmPagos
     end
     object ADODtStCxCDetallePendEstatusCFDI2: TIntegerField
       FieldName = 'EstatusCFDI2'
+    end
+    object ADODtStCxCDetallePendCFDIdescto: TFMTBCDField
+      FieldName = 'CFDIdescto'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStCxCDetallePendDescuento: TFMTBCDField
+      FieldName = 'Descuento'
+      Precision = 18
+      Size = 6
     end
   end
   object dsMaster: TDataSource
@@ -1715,6 +1731,11 @@ inherited dmPagos: TdmPagos
       Precision = 18
       Size = 6
     end
+    object ADODtStDetalleCXCMostrarDescuento: TFMTBCDField
+      FieldName = 'Descuento'
+      Precision = 18
+      Size = 6
+    end
   end
   object adodsAnexos: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -2503,5 +2524,73 @@ inherited dmPagos: TdmPagos
       end>
     Left = 944
     Top = 352
+  end
+  object AdoQryAnexoMoraAcumula: TADOQuery
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    Filter = 'Acumulado>0'
+    Parameters = <
+      item
+        Name = 'IdCuentaXCobrar'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    SQL.Strings = (
+      
+        ' Select IdCuentaXCobrar,idanexomoratorio,fecha, importe,descuent' +
+        'o, impuesto, sum(sum(importe-Descuento+ impuesto)) over (order b' +
+        'y idanexomoratorio,fecha)as acumulado'
+      ' from AnexosMoratorios'
+      
+        'where IdAnexoMoratorioEstatus=1   and IdCuentaXCobrar=:IdCuentaX' +
+        'Cobrar'
+      ' and IdCuentaXCobrar is not null'
+      ' Group by '
+      
+        'IdCuentaXCobrar,idanexomoratorio,fecha, importe, descuento, Impu' +
+        'esto'
+      ''
+      ''
+      ''
+      ''
+      ' order by IdCuentaXCobrar,idanexomoratorio,fecha'
+      ''
+      '')
+    Left = 844
+    Top = 547
+    object AdoQryAnexoMoraAcumulaIdCuentaXCobrar: TIntegerField
+      FieldName = 'IdCuentaXCobrar'
+    end
+    object AdoQryAnexoMoraAcumulaidanexomoratorio: TAutoIncField
+      FieldName = 'idanexomoratorio'
+      ReadOnly = True
+    end
+    object AdoQryAnexoMoraAcumulafecha: TDateTimeField
+      FieldName = 'fecha'
+    end
+    object AdoQryAnexoMoraAcumulaimporte: TFMTBCDField
+      FieldName = 'importe'
+      Precision = 18
+      Size = 6
+    end
+    object AdoQryAnexoMoraAcumulaacumulado: TFMTBCDField
+      FieldName = 'acumulado'
+      ReadOnly = True
+      Precision = 38
+      Size = 6
+    end
+    object AdoQryAnexoMoraAcumuladescuento: TFMTBCDField
+      FieldName = 'descuento'
+      Precision = 18
+      Size = 6
+    end
+    object AdoQryAnexoMoraAcumulaimpuesto: TFMTBCDField
+      FieldName = 'impuesto'
+      Precision = 18
+      Size = 6
+    end
   end
 end

@@ -10,10 +10,10 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     CommandText = 
       'SELECT IdCuentaXCobrar, IdCuentaXCobrarBase, IdCuentaXCobrarEsta' +
       'tus, IdPersona, IdAnexosAmortizaciones, IdAnexo, IdCFDI, Fecha, ' +
-      'FechaVencimiento, Descripcion, Importe, Impuesto, Interes, Total' +
-      ', Saldo, SaldoFactoraje, EsMoratorio'#13#10'FROM CuentasXCobrar AS CXC' +
-      #13#10'WHERE EsMoratorio = 0'#13#10'ORDER BY IdAnexo, IdAnexosAmortizacione' +
-      's'#13#10
+      'FechaVencimiento, '#13#10'Descripcion, (Importe-descuento) as Importe,' +
+      ' Descuento,  Impuesto, Interes, Total, Saldo, SaldoFactoraje, Es' +
+      'Moratorio'#13#10'FROM CuentasXCobrar AS CXC'#13#10'WHERE EsMoratorio = 0'#13#10'OR' +
+      'DER BY IdAnexo, IdAnexosAmortizaciones'#13#10
     Left = 56
     Top = 24
     object adodsMasterIdCuentaXCobrar: TAutoIncField
@@ -108,6 +108,11 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       Precision = 18
       Size = 6
     end
+    object adodsMasterDescuento: TFMTBCDField
+      FieldName = 'Descuento'
+      Precision = 18
+      Size = 6
+    end
     object adodsMasterImpuesto: TFMTBCDField
       FieldName = 'Impuesto'
       currency = True
@@ -192,9 +197,10 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     AfterDelete = ADOdsCXCDetalleAfterDelete
     CommandText = 
       'select IdCuentaXCobrarDetalle, IdCuentaXCobrar, '#13#10'IdCuentaXCobra' +
-      'rTipo, Identificador, Descripcion, '#13#10'Importe, Saldo, SaldoFactor' +
-      'aje,'#13#10' PagosAplicados, PagosAplicadosFactoraje'#13#10' from CuentasXCo' +
-      'brarDetalle '#13#10'where IdCuentaXCobrar =:IDCuentaXCobrar'
+      'rTipo, Identificador, Descripcion, '#13#10' (Importe-descuento) as Imp' +
+      'orte, Descuento,'#13#10'Saldo, SaldoFactoraje,'#13#10' PagosAplicados, Pagos' +
+      'AplicadosFactoraje'#13#10' from CuentasXCobrarDetalle '#13#10'where IdCuenta' +
+      'XCobrar =:IDCuentaXCobrar'
     DataSource = DSMaster
     IndexFieldNames = 'IdCuentaXCobrar'
     MasterFields = 'IDCuentaXCobrar'
@@ -230,6 +236,11 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     object ADOdsCXCDetalleImporte: TFMTBCDField
       FieldName = 'Importe'
       currency = True
+      Precision = 18
+      Size = 6
+    end
+    object ADOdsCXCDetalleDescuento: TFMTBCDField
+      FieldName = 'Descuento'
       Precision = 18
       Size = 6
     end
@@ -270,6 +281,7 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     Top = 136
   end
   object ADODSCXCEstatus: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -280,6 +292,7 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     Top = 80
   end
   object ADOSPersonas: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -1025,6 +1038,7 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     Top = 392
   end
   object ADODtStAdicionalesContratoAnexo: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     AfterOpen = adodsMasterAfterOpen

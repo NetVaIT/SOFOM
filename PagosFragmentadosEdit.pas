@@ -85,7 +85,9 @@ type
     procedure btnCancelClick(Sender: TObject);
     procedure cxBtnUsaNotaCreditoClick(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
+    procedure DBLkpCmbBxAnexosClick(Sender: TObject);
   private
+    function Quitasignos(TextoPesos: String): String;
     { Private declarations }
   public
     { Public declarations }
@@ -113,8 +115,17 @@ procedure TFrmEdtPagosFragmentados.btnOkClick(Sender: TObject);
 begin
   if DAtasource.State=dsedit then    //Solo puede estar en edit si sus saldo e importe son iguales
   begin
-    if (not cxDBTxtEdtImporte.Properties.readonly)  then
-       DAtasource.DataSet.FieldByName('Saldo').AsFloat:=DAtasource.DataSet.FieldByName('Importe').AsFloat;
+  //  showmessage('Esedit');
+    if (not cxDBTxtEdtImporte.Properties.readonly)  then //Se estaba cambiando antes de guardar... Oct3/18
+    begin
+      if (not cxDBTxtEdtImporte.Properties.readonly)  then //Se estaba cambiando antes de guardar... Oct3/18
+    begin
+       if StrTofloat(Quitasignos(cxDBTxtEdtImporte.Text)) <> DAtasource.DataSet.FieldByName('Importe').AsFloat then
+          DAtasource.DataSet.FieldByName('Saldo').AsFloat:=  StrTofloat(Quitasignos(cxDBTxtEdtImporte.Text))
+       else
+         DAtasource.DataSet.FieldByName('Saldo').AsFloat:=DAtasource.DataSet.FieldByName('Importe').AsFloat;
+    end;    end;
+
     DAtasource.DataSet.Post;
   end;
   Close;
@@ -164,7 +175,8 @@ procedure TFrmEdtPagosFragmentados.DataSourceDataChange(Sender: TObject;
   Field: TField);
 begin
 //Sep 18/18
-  cxDBTxtEdtImporte.Properties.ReadOnly:= Datasource.DataSet.FieldByName('importe').AsFloat<>Datasource.DataSet.FieldByName('saldo').AsFloat; //sep 18/18
+  if Datasource.DataSet.state <> dsEdit then   //Oct3/18
+    cxDBTxtEdtImporte.Properties.ReadOnly:= Datasource.DataSet.FieldByName('importe').AsFloat<>Datasource.DataSet.FieldByName('saldo').AsFloat; //sep 18/18
   DBLkpCmbBxAnexos.ReadOnly:=  cxDBTxtEdtImporte.Properties.ReadOnly;
 
   cxDBTxtEdtSerie.Properties.ReadOnly:= DBLkpCmbBxAnexos.ReadOnly;
@@ -173,4 +185,29 @@ begin
   cxDBRdGrpOrigenPago.Properties.ReadOnly:= DBLkpCmbBxAnexos.ReadOnly;
 end;
 
+procedure TFrmEdtPagosFragmentados.DBLkpCmbBxAnexosClick(Sender: TObject);
+begin
+ if datasource.state in[dsEdit,dsInsert]  then
+  begin
+    datasource.dataset.FieldByName('IdContrato').AsInteger:= dsAnexos.dataset.Fieldbyname('IdContrato').AsInteger;
+  end;
+end;
+
+
+function TFrmEdtPagosFragmentados.Quitasignos(TextoPesos:String):String;//Copiado de Aplicaciones Oct 15/18
+var
+  i:integer;
+begin
+  while pos('$',TextoPesos)>0 do
+  begin
+    i:= pos('$',TextoPesos);
+    DElete(TextoPesos,i,1);
+  end;
+  while pos(',',TextoPesos)>0 do
+  begin
+    i:= pos(',',TextoPesos);
+    DElete(TextoPesos,i,1);
+  end;
+  Result:= TextoPesos;
+end;
 end.

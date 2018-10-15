@@ -27,9 +27,9 @@ inherited FrmConPagosReales: TFrmConPagosReales
     ExplicitWidth = 959
   end
   inherited pnlMaster: TPanel
-    Top = 72
+    Top = 70
     Width = 959
-    Height = 245
+    Height = 247
     ExplicitTop = 72
     ExplicitWidth = 959
     ExplicitHeight = 245
@@ -160,12 +160,13 @@ inherited FrmConPagosReales: TFrmConPagosReales
   end
   object PnlBusqueda: TPanel [8]
     Left = 0
-    Top = 28
+    Top = 26
     Width = 959
     Height = 44
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 9
+    ExplicitTop = 28
     DesignSize = (
       959
       44)
@@ -300,9 +301,13 @@ inherited FrmConPagosReales: TFrmConPagosReales
     DockControlHeights = (
       0
       0
-      28
+      26
       0)
+    inherited dxbNavigator: TdxBar
+      DockedLeft = 107
+    end
     inherited dxbTools: TdxBar
+      DockedLeft = 238
       ItemLinks = <
         item
           Visible = True

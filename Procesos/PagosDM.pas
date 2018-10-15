@@ -427,6 +427,18 @@ type
     actSoloCXCDelAnexo: TAction;
     ADOSP_CreaPagoDepoGar: TADOStoredProc;
     adodsMasterIDPagoReal: TIntegerField;
+    ADODtStCXCPendientesDescuento: TFMTBCDField;
+    ADODtStCxCDetallePendCFDIdescto: TFMTBCDField;
+    ADODtStCxCDetallePendDescuento: TFMTBCDField;
+    ADODtStDetalleCXCMostrarDescuento: TFMTBCDField;
+    AdoQryAnexoMoraAcumula: TADOQuery;
+    AdoQryAnexoMoraAcumulaIdCuentaXCobrar: TIntegerField;
+    AdoQryAnexoMoraAcumulaidanexomoratorio: TAutoIncField;
+    AdoQryAnexoMoraAcumulafecha: TDateTimeField;
+    AdoQryAnexoMoraAcumulaimporte: TFMTBCDField;
+    AdoQryAnexoMoraAcumulaacumulado: TFMTBCDField;
+    AdoQryAnexoMoraAcumuladescuento: TFMTBCDField;
+    AdoQryAnexoMoraAcumulaimpuesto: TFMTBCDField;
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsMasterAfterPost(DataSet: TDataSet);
     procedure adodsMasterBeforePost(DataSet: TDataSet);
@@ -968,8 +980,8 @@ end;
 procedure TdmPagos.AbrirCXCPendientes(EsAnticipado: Integer; SoloCXCdelAnexo: Boolean);
 const
   cSQL = 'SELECT CXC.Descripcion, CXC.IdCuentaXCobrar, CXC.IdCuentaXCobrarBase, CXC.IdCuentaXCobrarEstatus, CXC.IdPersona, CXC.IdAnexosAmortizaciones AS IdAnexoAmortizacion, CXC.IdAnexo, CXC.IdEstadoCuenta, CXC.IdCFDI, ' +
-  'CXC.Fecha, CXC.FechaVencimiento, CXC.Importe, CXC.Impuesto, CXC.Interes, CXC.Total, CXC.Saldo, CXC.SaldoFactoraje, CXC.EsMoratorio, CI.SaldoDocumento, CI.SaldoFactoraje AS SaldoFactorajeCFDI, CI.Serie, CI.Folio ' +
-  'FROM CuentasXCobrar AS CXC ' +
+  'CXC.Fecha, CXC.FechaVencimiento, (CXC.Importe- CXC.descuento) as Importe  ,CXC.Descuento, CXC.Impuesto, CXC.Interes, CXC.Total, CXC.Saldo, CXC.SaldoFactoraje, CXC.EsMoratorio, CI.SaldoDocumento, CI.SaldoFactoraje AS SaldoFactorajeCFDI, CI.Serie, CI.Folio ' +
+  'FROM CuentasXCobrar AS CXC ' +   //oct 1/18
   'LEFT OUTER JOIN CFDI AS CI ON CI.IdCFDI = CXC.IdCFDI ' +
   'WHERE (((IdCuentaXCobrarEstatus=0 or (IdCuentaXCobrarEstatus=1))  and  ESMoratorio=0)or( Esmoratorio=1) or( (CXC.Fecha<=dbo.GetDateAux() and IdCuentaXCobrarEstatus=-1) and 1=:EsAnti) ' +
   'or (exists (select * from CuentasXCobrarDetalle CXCD where CXCD.descripcion like ''%Abono Capital%'' and CXC.IdCuentaXCobrar=CXCD.idcuentaXCobrar )and CXC.IdCFDI is null)) ' +
@@ -1759,7 +1771,8 @@ begin
   ADOQryAuxiliar.Close;
   ADOQryAuxiliar.sql.Clear;
   ADOQryAuxiliar.sql.Add(' Select CXC.Descripcion, CXC.IdCuentaXCobrar, CXC.IdCuentaXCobrarBase, CXC.IdCuentaXCobrarEstatus, CXC.IdPersona, CXC.IdAnexosAmortizaciones AS IdAnexoAmortizacion, CXC.IdAnexo, CXC.IdEstadoCuenta, CXC.IdCFDI,'
-      +' CXC.Fecha, CXC.FechaVencimiento, CXC.Importe , CXC.Impuesto, CXC.Interes, CXC.Total, CXC.Saldo, CXC.SaldoFactoraje, CXC.EsMoratorio, CI.SaldoDocumento, Ci.SaldoFactoraje as SaldoFactorajeCFDI,'
+                                           //Oct 1/18
+      +' CXC.Fecha, CXC.FechaVencimiento, (CXC.Importe - CXC.DEscuento) as Importe, CxC.DEscuento, CXC.Impuesto, CXC.Interes, CXC.Total, CXC.Saldo, CXC.SaldoFactoraje, CXC.EsMoratorio, CI.SaldoDocumento, Ci.SaldoFactoraje as SaldoFactorajeCFDI,'
       +' ci.serie, Ci.folio from CuentasXCobrar CXC left Join CFDI CI on CI.IdCFDI= CXC.IdCFDI where '
       +' Saldo >0 and IDPersona= '+adodsMasteridpersonaCliente.asString + ' and (( (CXC.Fecha<=dbo.GetDateAux() and IdCuentaXCobrarEstatus=-1) ) and CXC.IdCFDI is null) and CXC.IDAnexo='
       + intToSTR(idAnexo)+' order by CXC.idanexosamortizaciones,EsMoratorio DEsc, CXC.FechaVencimiento');
@@ -1901,6 +1914,9 @@ begin
   TFrmConPagos(gGridForm).dsConCXCPendientes.DataSet:=ADODtStCXCPendientes;
   TFrmConPagos(gGridForm).DSDetalleMostrar.DataSet:=ADODtStDetalleCXCMostrar;
   TFrmConPagos(gGridForm).DSAplicacion.DataSet :=ADODtStAplicacionesPagos;
+
+  TFrmConPagos(gGridForm).DSAnexoMoraAcumula.DataSet:= AdoQryAnexoMoraAcumula; //Oct 9/18
+
   TFrmConPagos(gGridForm).DSauxiliar.DataSet :=ADOQryAuxiliar; //Abr 3/17
   TFrmConPagos(gGridForm).DSP_CalcMoratorioNueva.DataSet:=adopSetCXCUPMoratorio; //Abr 6/17
   TFrmConPagos(gGridForm).actAbonarCapital:=actCrearCXCAbonoCapital; //Abr 18/17

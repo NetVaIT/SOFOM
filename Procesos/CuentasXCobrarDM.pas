@@ -206,6 +206,8 @@ type
     actAgregarCXCDetalle: TAction;
     adospGenCuentasXCobrarDetalle: TADOStoredProc;
     adocUpdEstatusCXC: TADOCommand;
+    adodsMasterDescuento: TFMTBCDField;
+    ADOdsCXCDetalleDescuento: TFMTBCDField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actGeneraPreFacturasExecute(Sender: TObject);
     procedure ADODtStPrefacturasCFDINewRecord(DataSet: TDataSet);

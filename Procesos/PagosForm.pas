@@ -95,6 +95,7 @@ type
     tvMasterCadena: TcxGridDBColumn;
     tvMasterSello: TcxGridDBColumn;
     dxBrBtnPagoReal: TdxBarButton;
+    DSAnexoMoraAcumula: TDataSource;
     procedure FormCreate(Sender: TObject);
     procedure dxBrBtnAplicaiconesClick(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
@@ -517,6 +518,8 @@ begin
           FrmAplicacionPago.dsConCXCPendientes.DataSet:=dsConCXCPendientes.DataSet;
           FrmAplicacionPago.DSDetallesCXC.dataset:=DSDetallesCXC.DataSet;
           FrmAplicacionPago.DSDetalleMostrar.dataset:=DSDetalleMostrar.DataSet;   //Agregado Feb 16/17
+
+          FrmAplicacionPago.DSAnexoMoraAcumula.DataSet:=DSAnexoMoraAcumula.DataSet; //Oct 9/18
 
           FrmAplicacionPago.DSAplicacion.DataSet:=DSAplicacion.DataSet;
           FrmAplicacionPago.DSAuxiliar.Dataset:= DSAuxiliar.DataSet; //Abr 3/17

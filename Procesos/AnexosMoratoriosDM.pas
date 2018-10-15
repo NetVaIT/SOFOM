@@ -140,7 +140,7 @@ begin
   TfrmAnexosMoratorios(gGridForm).actEliminarDescuento := actEliminarDescuento;
   TfrmAnexosMoratorios(gGridForm).actDescuentoParcial := actDescuentoParcial;
   if IdCuentaXCobrar <> 0 then
-  begin
+  begin                              //posible cambio para mostrar el descuento sep 25/18
     // Filtrar
     SQLSelect:= 'select IdAnexoMoratorio, IdAnexoAmortizacion, IdAnexoMoratorioEstatus, IdCuentaXCobrar, Fecha, ImporteBase, Importe, Descuento, ' +
     'CASE WHEN IdAnexoMoratorioEstatus = 2 THEN 0 ELSE Importe-Descuento END AS Moratorio, CASE WHEN IdAnexoMoratorioEstatus = 2 THEN 0 ELSE Impuesto END AS Impuesto, ' +

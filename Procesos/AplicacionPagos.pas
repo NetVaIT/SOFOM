@@ -106,6 +106,10 @@ type
     tvMasterfolio: TcxGridDBColumn;
     tvMasterDescripcion: TcxGridDBColumn;
     adospUpdPagosAplicacionesCFDI: TADOStoredProc;
+    tvMasterDescuento: TcxGridDBColumn;
+    cxGridDBTableView1Descuento: TcxGridDBColumn;
+    DSAnexoMoraAcumula: TDataSource;
+    ADOStrdPrcSeparaAnexoMora: TADOStoredProc;
     procedure BtBtnAplicarClick(Sender: TObject);
     procedure DSAplicacionStateChange(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -146,6 +150,9 @@ type
     procedure SetactSoloCXCDelAnexo(const Value: TBasicAction);
     function GetSoloCXCDelAnexo: Boolean;
     procedure SetSoloCXCDelAnexo(const Value: Boolean);
+    function ActualizaTodo(IdCXCMora, IdAnexoMora: Integer; ListaAM: String;
+      ValImporte1, ValImporte2,ValIVA1, ValIVA2, ValDescto1,ValDescto2:Double) :Boolean;
+    function ManejoMoratorios(IdCXCMora: Integer; valorAplica: Double): Boolean;
   public
     { Public declarations }
     EsFactoraje:Boolean;
@@ -213,8 +220,22 @@ begin
     else// Valor a aplicar menor o igual que saldo CXC
     begin  //Solo se informa que es menor..
       if abs(dsConCXCpendientes.dataset.FieldByName(Camposaldo).Asfloat - DSAplicacion.DataSet.FieldByName(Campoimporte).Asfloat)>0 then                                          //Abr 17/17
+      begin
         showMessage('Pago Parcial, valor de diferencia: '+ floattoStrF(dsConCXCpendientes.dataset.FieldByName(Camposaldo).Asfloat - DSAplicacion.DataSet.FieldByName(Campoimporte).Asfloat,ffCurrency,10,2));   //Ene 13/17
-      Seguir:=True;
+        //Verificar si es Moratorios y si hay que partirlos , en caso separarlos y crear la otra CXC de moratorios
+
+        if dsConCXCpendientes.DataSet.FieldByName('EsMoratorio').Asboolean then      //Si no son moratorios debe regresar TRue;
+        begin
+          Seguir:=ManejoMoratorios(dsConCXCpendientes.DataSet.FieldByName('IdCuentaXCobrar').asinteger, Valor);
+          //Actualizar
+          //DEbe venir actualizado Oct 12/18
+        end
+        else
+          Seguir:=True;
+
+      end
+      else
+        Seguir:=True;
     end;
   end
   else
@@ -316,6 +337,179 @@ begin
     ShowMessage('Verifique el monto a Aplicar!!... ') ;
   end;
 end;
+
+
+function TFrmAplicacionPago.ManejoMoratorios(IdCXCMora:Integer; valorAplica:Double):Boolean;
+var
+  IdAnexoMora: Integer;
+  ValXRepartir, ValMoraParte1, ValMoraParte2 , AcumAnt, ValImporte1, ValImporte2, Vaux,
+  ValDescto1,ValDescto2, ValIVA1, ValIVA2, desctXRep :Double;
+  ListaAM:String;
+
+begin
+  ListaAM:='';
+   Result:=False; //Oct 12/18
+  if application.MessageBox('¿Desea generar la factura de moratorios, únicamente por el pago realizado?. En caso que no, se intentará generar la factura completa, puede confirmar o cancelar en el siguiente paso.','Confirmación',MB_ICONEXCLAMATION or MB_YESNO)=ID_YES  then
+  begin
+    //Partir    //oct 10/18
+    DSAnexoMoraAcumula.dataset.Close;
+    TADOQuery(DSAnexoMoraAcumula.dataset).parameters.ParamByName('IdCuentaXCobrar').value:=IDCXCMora;
+    DSAnexoMoraAcumula.dataset.open;
+    DSAnexoMoraAcumula.dataset.Filter:=' Acumulado <='+floatToStr(ValorAplica);
+    DSAnexoMoraAcumula.dataset.Filtered:=True;
+    DSAnexoMoraAcumula.dataset.last; //Ir al ultimo
+    AcumAnt:= DSAnexoMoraAcumula.dataset.fieldbyname('acumulado').asFloat;//  (1895.92)
+
+    if DSAnexoMoraAcumula.dataset.fieldbyname('acumulado').asFloat= ValorAplica then   //Solo debe separar  y no debe partir
+    begin
+      //Solo repartir, no genera nuevo anexomoratorio
+      DSAnexoMoraAcumula.dataset.Filter:=' Acumulado >'+floatToStr(ValorAplica); //Verificar que muestre
+      DSAnexoMoraAcumula.dataset.First; //DEberia estar ahi
+      IdAnexoMora:= DSAnexoMoraAcumula.dataset.fieldbyname('IDAnexoMoratorio').asInteger;
+
+      while not DSAnexoMoraAcumula.dataset.Eof do
+      begin
+        if ListaAM='' then
+           ListaAM:= DSAnexoMoraAcumula.dataset.fieldbyname('IDAnexoMoratorio').asString
+
+        else
+          ListaAM:= ListaAM +','+DSAnexoMoraAcumula.dataset.fieldbyname('IDAnexoMoratorio').asString;
+
+        DSAnexoMoraAcumula.dataset.next;
+      end;
+
+      if ActualizaTodo(IdCXCMora, IdAnexoMora,ListaAM,
+                       0,  0,0, 0, 0,0) then
+      begin
+         Result:=True;
+         ShowMessage('Actualizó sin necesidad de partir anexo moratorio ')
+      end
+      else
+        ShowMessage('Algún error SAM. Rollback' ) ;
+
+    end
+    else
+    begin
+    //Generar nueva CXC                                                 //(2000)
+      DSAnexoMoraAcumula.dataset.Filter:=' Acumulado >'+floatToStr(ValorAplica); //Verificar que muestre
+      DSAnexoMoraAcumula.dataset.First; //DEberia estar ahi
+      IdAnexoMora:= DSAnexoMoraAcumula.dataset.fieldbyname('IDAnexoMoratorio').asInteger;
+      //Verificar si tiene descunto y en caso sacar porcentaje respectivo para asignar a cada uno
+      // 0
+      // 20
+      desctXRep:= DSAnexoMoraAcumula.dataset.fieldbyname('Descuento').asFloat;
+      //   139.2
+      //   116
+      valXREpartir:= DSAnexoMoraAcumula.dataset.fieldbyname('Importe').asfloat;// //corresponde menos descuento mas impuestos  139.2
+      //  100    =     2000      -1900  //supuestos
+      //  100
+      ValMoraParte1:=  ValorAplica-AcumAnt; // Seria el nuevo valor del amexomoraexistente
+     //  39.2     =      139.2 - 100
+     //  16       = 116 - 100
+      ValmoraParte2:= valXREpartir-  ValMoraParte1;
+
+     // 86.21     =         100/1.16
+     // 86.21     =       100/1.16
+      ValImporte1:=ValMoraParte1 /1.16; //VAlor sin IVA  (correspóde a Importe menos descuento)
+      //13.79    100          -86.21 = 86.21 * 0.16
+      //13.79    100 - 86.21
+      ValIVA1:=  ValMoraParte1- ValImporte1;   //o ValImporte1 *.16   OK
+      // 0=         0* 100/139.2
+      // 17.24=    20 * 100/116
+      ValDescto1:=desctXrep*(ValMoraParte1/ValXRepartir);  //Valor del descto 1
+      //86.21     = 86.21   +0
+      //103.45    = 86.21 +17.24
+      VAux:= ValImporte1+ValDescto1;
+      ValImporte1:=VAux;    //El que va en el importe (antes de quitar descuento)
+
+      // 33.79=    39.2/1.16
+      // 13.79=    16/1.16
+      ValImporte2:= ValmoraParte2/1.16; // valor sin IVA (Contiene desccuento aplicado)
+      // 5.41    =33.79 * 0.16  o restar
+      // 2.21    = 16*0.16   o  restar
+      ValIVA2 := ValImporte2*0.16;  //Verificar
+
+      // 0      =0 * 39.2/139.2
+      // 2.76        =   20 *16/116
+//      ValDescto2:=desctXrep*(ValMoraParte2/ValXRepartir);
+     // o
+      //0
+      // 2.76 = 20- 17.24
+      ValDescto2:=desctXrep-ValDescto1; // PAra evitar decimales???
+
+
+      //Creat Anexomoratotio  como copia del anterior  y si tiene descuento con su porcentaje
+      DSAnexoMoraAcumula.dataset.next;//A partir del segundo
+      while not DSAnexoMoraAcumula.dataset.Eof do
+      begin
+        if ListaAM='' then
+           ListaAM:= DSAnexoMoraAcumula.dataset.fieldbyname('IDAnexoMoratorio').asString
+
+        else
+          ListaAM:= ListaAM +','+DSAnexoMoraAcumula.dataset.fieldbyname('IDAnexoMoratorio').asString;
+
+        DSAnexoMoraAcumula.dataset.next;
+      end;
+     // if ListaAM<>'' then
+     //   ListaAM:=ListaAM; //Mandar sin parentesis  opara que se pueda usar en el procedimiento almacenado
+      if ActualizaTodo(IdCXCMora, IdAnexoMora,ListaAM,
+                       ValImporte1,  ValImporte2,ValIVA1, ValIVA2, ValDescto1,ValDescto2) then
+      begin
+        Result:=True;
+        ShowMessage('Actualizo bien ');
+      end
+      else
+        ShowMessage('Algún error. Rollback' ) ;
+
+    end;
+    //Actualizar la consulta de pendientes....
+    RefreshCXCPendientes; //Oct 12/18
+  end
+  else
+    Result:=True; //Se genera normal completa
+end;
+
+function TFrmAplicacionPago.ActualizaTodo(IdCXCMora, IdAnexoMora:Integer; ListaAM:String;
+         ValImporte1,  ValImporte2,ValIVA1, ValIVA2, ValDescto1,ValDescto2:Double) :Boolean;
+var res:Integer;
+
+begin  //oct 10/18
+
+  try
+    _dmConection.ADOConnection.BeginTrans;
+    ADOStrdPrcSeparaAnexoMora.Parameters.ParamByName('@IdCXCMoraBase').Value:=IdCXCMora; //Existente
+    ADOStrdPrcSeparaAnexoMora.Parameters.ParamByName('@IdAnexoMoraBase').Value:=IdAnexoMora;
+    ADOStrdPrcSeparaAnexoMora.Parameters.ParamByName('@ValImporte1').Value:=ValImporte1;
+    ADOStrdPrcSeparaAnexoMora.Parameters.ParamByName('@ValImporte2').Value:=ValImporte2;
+    ADOStrdPrcSeparaAnexoMora.Parameters.ParamByName('@ValDescto1').Value:=ValDescto1;
+    ADOStrdPrcSeparaAnexoMora.Parameters.ParamByName('@ValDescto2').Value:=ValDescto2;
+    ADOStrdPrcSeparaAnexoMora.Parameters.ParamByName('@ValIVA1').Value:=ValIVA1;
+    ADOStrdPrcSeparaAnexoMora.Parameters.ParamByName('@ValIVA2').Value:=ValIVA2;
+    ADOStrdPrcSeparaAnexoMora.Parameters.ParamByName('@ListaAneMoraAparte').Value:=  ListaAM;
+
+    ADOStrdPrcSeparaAnexoMora.ExecProc;
+    res:=ADOStrdPrcSeparaAnexoMora.Parameters.ParamByName('@IdAnexoMoratorio').Value;
+
+
+
+    //@IdCXCMoraBase int, @IdAnexoMoraBase int, @ValImporte1  decimal(18,6),@ValImporte2  decimal(18,6),@valDescto1  decimal(18,6),
+//@valDescto2  decimal(18,6), @valIVA1  decimal(18,6), @valIVA2  decimal(18,6) , @ListaAneMoraAparte varchar(2000),
+
+
+    _dmConection.ADOConnection.CommitTrans;
+   // showMessage('Creo IdAnexoMoratorio = '+ intTostr(res));
+    REsult:=TRue;
+  except
+    _dmConection.ADOConnection.RollbackTrans;
+    showMessage('Ocurrio algun  error');
+    result:=False;
+    raise;
+  end;
+
+
+end;
+
+
 
 function TFrmAplicacionPago.SacaFechaMora(IDAnexoAmorAct:Integer):TDAteTime; //Abr6/17
 begin

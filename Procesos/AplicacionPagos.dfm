@@ -395,6 +395,9 @@ object FrmAplicacionPago: TFrmAplicacionPago
       object tvMasterTotal: TcxGridDBColumn
         DataBinding.FieldName = 'Total'
       end
+      object tvMasterDescuento: TcxGridDBColumn
+        DataBinding.FieldName = 'Descuento'
+      end
       object tvMasterSaldo: TcxGridDBColumn
         DataBinding.FieldName = 'Saldo'
       end
@@ -710,6 +713,9 @@ object FrmAplicacionPago: TFrmAplicacionPago
         DataBinding.FieldName = 'Importe'
         Width = 77
       end
+      object cxGridDBTableView1Descuento: TcxGridDBColumn
+        DataBinding.FieldName = 'Descuento'
+      end
       object cxGridDBTableView1PagosAplicados: TcxGridDBColumn
         DataBinding.FieldName = 'PagosAplicados'
         Width = 90
@@ -792,6 +798,93 @@ object FrmAplicacionPago: TFrmAplicacionPago
         Value = Null
       end>
     Left = 976
+    Top = 64
+  end
+  object DSAnexoMoraAcumula: TDataSource
+    DataSet = dmPagos.AdoQryAnexoMoraAcumula
+    OnDataChange = dsConCXCPendientesDataChange
+    OnUpdateData = dsConCXCPendientesUpdateData
+    Left = 836
+    Top = 8
+  end
+  object ADOStrdPrcSeparaAnexoMora: TADOStoredProc
+    Connection = _dmConection.ADOConnection
+    ProcedureName = 'p_SeparaAnexosMoratorios;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@IdCXCMoraBase'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+      end
+      item
+        Name = '@IdAnexoMoraBase'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+      end
+      item
+        Name = '@ValImporte1'
+        Attributes = [paNullable]
+        DataType = ftFMTBcd
+        NumericScale = 6
+        Precision = 18
+      end
+      item
+        Name = '@ValImporte2'
+        Attributes = [paNullable]
+        DataType = ftFMTBcd
+        NumericScale = 6
+        Precision = 18
+      end
+      item
+        Name = '@valDescto1'
+        Attributes = [paNullable]
+        DataType = ftFMTBcd
+        NumericScale = 6
+        Precision = 18
+      end
+      item
+        Name = '@valDescto2'
+        Attributes = [paNullable]
+        DataType = ftFMTBcd
+        NumericScale = 6
+        Precision = 18
+      end
+      item
+        Name = '@valIVA1'
+        Attributes = [paNullable]
+        DataType = ftFMTBcd
+        NumericScale = 6
+        Precision = 18
+      end
+      item
+        Name = '@valIVA2'
+        Attributes = [paNullable]
+        DataType = ftFMTBcd
+        NumericScale = 6
+        Precision = 18
+      end
+      item
+        Name = '@ListaAneMoraAparte'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 2000
+      end
+      item
+        Name = '@IdAnexoMoratorio'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Direction = pdInputOutput
+        Precision = 10
+      end>
+    Left = 592
     Top = 64
   end
 end

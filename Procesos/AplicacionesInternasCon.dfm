@@ -26,15 +26,14 @@ inherited frmConAplicacionesInternas: TfrmConAplicacionesInternas
   end
   inherited pnlMaster: TPanel
     Width = 862
-    Height = 229
+    Height = 227
     ExplicitWidth = 862
-    ExplicitHeight = 229
+    ExplicitHeight = 227
     inherited cxGrid: TcxGrid
       Width = 862
-      Height = 229
-      ExplicitTop = -3
+      Height = 227
       ExplicitWidth = 862
-      ExplicitHeight = 229
+      ExplicitHeight = 227
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIDPagoAplicacionInterna: TcxGridDBColumn
           DataBinding.FieldName = 'IDPagoAplicacionInterna'
@@ -108,13 +107,9 @@ inherited frmConAplicacionesInternas: TfrmConAplicacionesInternas
     DockControlHeights = (
       0
       0
-      26
+      28
       0)
-    inherited dxbNavigator: TdxBar
-      DockedLeft = 107
-    end
     inherited dxbTools: TdxBar
-      DockedLeft = 238
       ItemLinks = <
         item
           Visible = True
@@ -915,6 +910,7 @@ inherited frmConAplicacionesInternas: TfrmConAplicacionesInternas
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42739.414081597220000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

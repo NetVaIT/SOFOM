@@ -333,9 +333,11 @@ end;
 procedure TFrmConCuentasXCobrar.SpdBtnBuscarClick(Sender: TObject);
 const  //Mar 9/17
    TxtSQL='select CXC.IdCuentaXCobrar, IdCuentaXCobrarEstatus, CXC.IdPersona,'+
-          'IdAnexosAmortizaciones, Fecha, FechaVencimiento, Importe, Impuesto, Interes,' +  //FV ab 11/17
-          'Total, CXC.Saldo, SaldoFactoraje, IdCFDI, IDAnexo, CXC.IdCuentaXCobrarBase, '                            //  ''Interés Moratorio'' as Descripcion,
-          +' EsMoratorio, CXC.Descripcion  from CuentasXCobrar CXC ';   //Agregada Descripcion de CXC   Jul 17/17
+                                                           //oct 1/18  Importe
+          'IdAnexosAmortizaciones, Fecha, FechaVencimiento, (Importe-Descuento) as Importe, Impuesto, Interes,' +  //FV ab 11/17
+          'Total, CXC.Saldo, SaldoFactoraje, IdCFDI, IDAnexo, CXC.IdCuentaXCobrarBase, '
+                                         //oct 1/18                           //  ''Interés Moratorio'' as Descripcion,
+          +' EsMoratorio, CXC.Descripcion ,Descuento from CuentasXCobrar CXC ';   //Agregada Descripcion de CXC   Jul 17/17
    whereNoMora=' EsMoratorio=0';
    whereMora=' EsMoratorio=1';
 

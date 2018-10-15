@@ -1290,7 +1290,6 @@ inherited FrmConPagos: TFrmConPagos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42712.575441516200000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end
@@ -1336,5 +1335,10 @@ inherited FrmConPagos: TFrmConPagos
     DataSet = dmPagos.ADOQryVerificaSaldoFinal
     Left = 1028
     Top = 128
+  end
+  object DSAnexoMoraAcumula: TDataSource
+    DataSet = dmPagos.AdoQryAnexoMoraAcumula
+    Left = 1028
+    Top = 376
   end
 end

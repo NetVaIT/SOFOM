@@ -127,6 +127,7 @@ type
     procedure ADOdsPagosFragmentosBeforePost(DataSet: TDataSet);
     procedure ADOdsPagosFragmentosAfterPost(DataSet: TDataSet);
     procedure dsMasterDataChange(Sender: TObject; Field: TField);
+    procedure ADOdsPagosFragmentosSeriePagoChange(Sender: TField);
   private
     fvaloract: Double;
     FCFecFin: TDAteTime;
@@ -136,6 +137,7 @@ type
     FCFecIni: TDAteTime;
     FCClienteTxt: String;
     FIdPagoAct: integer;
+    Fedito: Boolean;
     function verificaCompleto(idPagoReal, IdPago: Integer; var falta: Double): Boolean;
     function BuscaMetodoPagoAlt(ClaveSAT: string): String;
     function BuscaPagoReal(IdPagoAct: Integer): Integer;
@@ -155,6 +157,7 @@ type
      Property CSoloDepGar:boolean read FSoloDepGar write FSoloDepGar;
 
      property IdPagoAct:integer read FIdPagoAct write FIdPagoAct; //Sep 06/18
+     property Edito: Boolean read Fedito write FEdito; //Oct 1/18
   end;
 
 var
@@ -291,6 +294,7 @@ begin                                      //Copiado parcialmente de Pagos ago 2
   inherited;
   DataSet.FieldByName('FechaPago').AsDateTime:=_DmConection.LaFechaActual;
   adodsMasterIdMoneda.Value:= _MONEDAS_ID_PESO_MXN;
+  Dataset.FieldByName('EsNotaCredito').AsBoolean:=False;
 end;
 
 procedure TDMPagosReales.ADOdsPagosFragmentosAfterPost(DataSet: TDataSet);
@@ -330,14 +334,25 @@ begin            //Solo si tiene pago real
     begin
       //Para actualizar folio pago
       ADODtStConfiguraciones.Edit;
-      ADODtStConfiguraciones.FieldByName('UltimaSeriePago').AsString:=SerieAct;
+      ADODtStConfiguraciones.FieldByName('UltimaSeriePago').AsString:=SerieAct; //
       ADODtStConfiguraciones.FieldByName('UltimoFolioPago').AsInteger :=FolioAct;
       ADODtStConfiguraciones.Post;
 
       ShowMessage('Se creó un pago adicional, con el monto sobrante.');
     end;
   end;
+
   //Pago Completo
+  if Edito then   //Solo se habilita si se cambia la serie
+  begin
+    if ADODtStConfiguraciones.FieldByName('UltimaSeriePago').AsString <> Dataset.FieldByName('SeriePago').asstring then
+    begin
+      ADODtStConfiguraciones.Edit;
+      ADODtStConfiguraciones.FieldByName('UltimaSeriePago').AsString:=Dataset.FieldByName('SeriePago').asstring; //
+      ADODtStConfiguraciones.Post;
+    end;
+    Edito:=False;
+  end;
   ADOdsPagosFragmentos.Close;
   ADOdsPagosFragmentos.Open;
 
@@ -374,7 +389,18 @@ begin
   begin
     showMessage('No es posible poner un valor mayor');
     abort;
-  end;
+  end
+ // else
+ //   dataset.FieldByName('Saldo').AsFloat:=dataset.FieldByName('Importe').AsFloat ;  //Oct3 /18 ???
+
+end;
+
+procedure TDMPagosReales.ADOdsPagosFragmentosSeriePagoChange(Sender: TField);
+begin
+  inherited;
+  Edito:= ADOdsPagosFragmentos.state=dsedit; //Oct 3/18 Verificar
+
+
 end;
 
 function TDMPagosReales.CrearOActualizarPagoInicial(
@@ -394,6 +420,7 @@ begin
       if adodsMasterIdFormaPago33.asinteger <10 then
         NotaC:='0'+  adodsMasterIdFormaPago33.asstring
       else
+
          NotaC:= adodsMasterIdFormaPago33.asstring; //Coincide con la Clave
       NotaC:=BuscaMetodoPagoAlt(NotaC);      //Probar
     end;

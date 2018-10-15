@@ -67,7 +67,7 @@ begin
 end;
 
 procedure TfrmConAplicacionesInternas.SetFCreaPagoDeposito(
-  const Value: TBasicAction);                   //Jun 21/17
+  const Value: TBasicAction);                   //Jun 21/17     //ESta invisible desde el action y no se esta usando
 begin
   FActCreaPagoDeposito := Value;
   dxBrBtnPAgosXDepo.Action:=Value;

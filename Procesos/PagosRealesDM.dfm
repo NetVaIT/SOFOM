@@ -165,7 +165,6 @@ inherited DMPagosReales: TDMPagosReales
     end
   end
   object adodsBancos: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -199,7 +198,6 @@ inherited DMPagosReales: TDMPagosReales
     end
   end
   object adodsPersonas: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -272,7 +270,6 @@ inherited DMPagosReales: TDMPagosReales
     end
   end
   object adodsFormaPago33: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -283,7 +280,6 @@ inherited DMPagosReales: TDMPagosReales
     Top = 211
   end
   object adodsCuentasOrdenante: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -307,7 +303,6 @@ inherited DMPagosReales: TDMPagosReales
     Top = 259
   end
   object adodsCuentasBeneficiario: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -322,7 +317,6 @@ inherited DMPagosReales: TDMPagosReales
     Top = 315
   end
   object adodsCadenaPago: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -333,7 +327,6 @@ inherited DMPagosReales: TDMPagosReales
     Top = 379
   end
   object adodsMonedas: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdMoneda, Descripcion from Monedas'#13#10'where UsoComun = 1'
@@ -417,6 +410,7 @@ inherited DMPagosReales: TDMPagosReales
     object ADOdsPagosFragmentosSeriePago: TStringField
       DisplayLabel = 'Serie de pago'
       FieldName = 'SeriePago'
+      OnChange = ADOdsPagosFragmentosSeriePagoChange
     end
     object ADOdsPagosFragmentosFolioPago: TIntegerField
       DisplayLabel = 'Folio pago'
@@ -513,7 +507,7 @@ inherited DMPagosReales: TDMPagosReales
   object dsMaster: TDataSource
     DataSet = adodsMaster
     OnDataChange = dsMasterDataChange
-    Left = 148
+    Left = 156
     Top = 16
   end
   object ADOQryAuxiliar: TADOQuery

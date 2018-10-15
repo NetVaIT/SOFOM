@@ -4,7 +4,6 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
   ClientHeight = 428
   ClientWidth = 1072
   ExplicitWidth = 1078
-  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -26,9 +25,9 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
     ExplicitWidth = 1078
   end
   inherited pnlMaster: TPanel
-    Top = 70
+    Top = 72
     Width = 1072
-    Height = 185
+    Height = 183
     ExplicitTop = 70
     ExplicitWidth = 1072
     ExplicitHeight = 185
@@ -149,12 +148,13 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
   end
   object PnlBusqueda: TPanel [8]
     Left = 0
-    Top = 26
+    Top = 28
     Width = 1072
     Height = 44
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 9
+    ExplicitTop = 26
     DesignSize = (
       1072
       44)
@@ -313,13 +313,9 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
     DockControlHeights = (
       0
       0
-      26
+      28
       0)
-    inherited dxbNavigator: TdxBar
-      DockedLeft = 107
-    end
     inherited dxbTools: TdxBar
-      DockedLeft = 238
       ItemLinks = <
         item
           Visible = True
@@ -1450,7 +1446,7 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42709.621321724540000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

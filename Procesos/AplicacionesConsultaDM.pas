@@ -149,7 +149,7 @@ begin//Sólo para probar creacion de los no creados en aplicacion Jun 21/17
   ADOQryAuxiliar.sql.Clear;
   ADOQryAuxiliar.SQL.add('Select * From CuentasXCobrarDEtalle where IdCuentaXCobrarDEtalle ='+ADODtstAplicacionesInternasIdCuentaXCobrarDetalle.AsString);
   ADOQryAuxiliar.Open;
-  impDepo:=ADOQryAuxiliar.fieldbyname('Importe').AsFloat;
+  impDepo:=ADOQryAuxiliar.fieldbyname('Importe').AsFloat - ADOQryAuxiliar.fieldbyname('Descuento').AsFloat; //verificar  oct 1/18
  //Oct 17/17 hasta aca
   i:=Pos('Deposito en garantia',ADODtstAplicacionesInternasItemCXC.AsString);
   if (i>0) and (ADODtstAplicacionesInternassaldoCXC.AsFloat<0.01)
@@ -281,7 +281,8 @@ begin
      ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@IDBanco').Value:= ADatosPago.FieldByName('IDBanco').asInteger
   else
     ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@IDBanco').Value:= ADatosPago.FieldByName('IDBanco').Value;  //Verificar
-  ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@IDFormaPago33').Value:= 3; ///por default
+ // ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@IDFormaPago33').Value:= 3; ///por default
+  ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@IDFormaPago33').Value:= ADatosPago.FieldByName('IDCFDIFormaPago33').Value; //SEp 28/18 para que quede igual que la de pagos
   ADOSP_CreaPagoDepoGar.Parameters.ParamByName('@IDMoneda').Value:= _MONEDAS_ID_PESO_MXN;///Default
  //ADatosPago.FieldByName('IDFormaPago33').Value;
   ADOSP_CreaPagoDepoGar.ExecProc;

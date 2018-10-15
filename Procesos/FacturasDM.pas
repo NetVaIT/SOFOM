@@ -1675,15 +1675,21 @@ var
     RutaBase: string;
   begin
     DecodeDate(Now, Anio, Mes, Dia);
-//    {$IFDEF DEBUG}
-//      RutaBase := ExtractFilePath(application.ExeName);
-//    {$ELSE}
-//      RutaBase := dmConfiguracion.RutaFacturas;
-//    {$ENDIF}
-    if IdCFDITipoDocumento = tdCFDIPago then
-      RutaBase := dmConfiguracion.RutaPagos
-    else
-      RutaBase := dmConfiguracion.RutaFacturas;
+    {$IFDEF DEBUG}         //habilitado  oct 3/18
+      RutaBase := ExtractFilePath(application.ExeName);
+    {$ELSE}
+     // RutaBase := dmConfiguracion.RutaFacturas;
+      if IdCFDITipoDocumento = tdCFDIPago then
+        RutaBase := dmConfiguracion.RutaPagos
+      else
+        RutaBase := dmConfiguracion.RutaFacturas;
+
+    {$ENDIF}
+
+ //   if IdCFDITipoDocumento = tdCFDIPago then
+ //     RutaBase := dmConfiguracion.RutaPagos
+  //  else
+  //    RutaBase := dmConfiguracion.RutaFacturas;
     if RutaBase=EmptyStr then
       RutaBase := ExtractFilePath(application.ExeName);
     Result := RutaBase + EmisorRFC + PathDelim +

@@ -241,6 +241,7 @@ object FrmEdtPagosFragmentados: TFrmEdtPagosFragmentados
           ListField = 'identificadorCompleto'
           ListSource = DSAnexos
           TabOrder = 0
+          OnClick = DBLkpCmbBxAnexosClick
         end
         object cxDBCheckBox1: TcxDBCheckBox
           Left = 487
