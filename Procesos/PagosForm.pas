@@ -553,7 +553,8 @@ begin
   inherited;
   if  edtNombre.Text<>'' then
   begin
-    FfiltroNombre:=' INNER JOIN Personas AS P ON P.IdPersona = PA.IdPersonaCliente AND P.RazonSocial LIKE ''%'+edtNombre.Text+'%''';
+    FfiltroNombre:=' PA.IdPersonaCliente IN (SELECT IdPersona FROM Personas P WHERE P.RazonSocial LIKE ''%' +edtNombre.Text+'%'') ';
+    //FfiltroNombre:=' INNER JOIN Personas AS P ON P.IdPersona = PA.IdPersonaCliente AND P.RazonSocial LIKE ''%'+edtNombre.Text+'%''';
   end
   else
     FfiltroNombre:='';
@@ -662,7 +663,20 @@ begin
   inherited;
   PoneFiltro;
   Tadodataset(datasource.DataSet).Close;
-  Tadodataset(datasource.DataSet).CommandText:=TxtSQL+ ffiltroNombre+ffiltro;
+//  Tadodataset(datasource.DataSet).CommandText:=TxtSQL+ffiltroNombre+ ffiltro;    //  oct 17/18   desde
+  if (ffiltroNombre <>'') then    //sep 6/18
+  begin
+    if (ffiltro ='') then
+      Tadodataset(datasource.DataSet).CommandText:=TxtSQL+' where '+ ffiltroNombre
+    else
+      Tadodataset(datasource.DataSet).CommandText:=TxtSQL+ ffiltro+' and '+ ffiltroNombre;
+  end
+  else
+    Tadodataset(datasource.DataSet).CommandText:=TxtSQL+ ffiltro;
+
+
+
+  //  oct 17/18 hasta aca
  // ShowMessage(TxtSQL+ ffiltroNombre+ffiltro);
   if ffiltroFecha <>''then
   begin

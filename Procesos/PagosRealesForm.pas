@@ -147,7 +147,7 @@ begin
  if  edtNombre.Text<>'' then
   begin
    // FfiltroNombre:=' INNER JOIN Personas AS P ON P.IdPersona = PR.IdPersonaCliente AND P.RazonSocial LIKE ''%'+edtNombre.Text+'%''';
-    FfiltroNombre:=' PR.IdPersonaCliente IN (SELECT IdPersona FROM Personas WHERE RazonSocial LIKE ''%' +edtNombre.Text+'%'') ';
+    FfiltroNombre:=' PR.IdPersonaCliente IN (SELECT IdPersona FROM Personas WHERE RazonSocial LIKE ''%' +edtNombre.Text+'%'') '; // oct 17/18
   end
   else
     FfiltroNombre:='';
@@ -184,7 +184,7 @@ var
   FiltroDepo:String;  //Aca no es
 begin
   if ChckBxDeposito.Checked then    //No se usara sep 3/18
-    FiltroDepo:=' PP.EsDeposito = 1 '
+    FiltroDepo:=' PR.EsDeposito = 1 '
   else
     FiltroDepo:='';
 

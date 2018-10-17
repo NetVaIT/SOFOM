@@ -316,14 +316,14 @@ begin            //Solo si tiene pago real
     ADOQryAuxiliar.SQL.Add('Insert Into Pagos(idPersonaCliente, IdCFDIFormaPago33,'+
                          //  'IDBanco,IDCuentaBancariaOrdenante ,IDCuentaBancariaBeneficiario, '+
                         //   ' IDCFDITipoCadenaPago,certificado, cadena, sello,  IDMonedaOrigen, ,Referencia, ' +         //  IDMetodoPago,
-                           ' FechaPago,SeriePago, FolioPago, Importe, Saldo ,IdPagoReal,IdMetodoPago ) ' +
+                           ' FechaPago,SeriePago, FolioPago, Importe, Saldo ,IdPagoReal,IdMetodoPago, Observaciones, EsDeposito ) ' +
                                                                                           //ago 31/18
                            ' SElect idPersonaCliente, IdCFDIFormaPago33,'+
                         //   ' IDBanco,IDCuentaBancariaOrdenante,IDCuentaBancariaBeneficiario, '+
                         //   ' IDCFDITipoCadenaPago,certificado, cadena, sello, IDMonedaOrigen ,Referencia,  ' +         //  IDMetodoPago,
                            ' FechaPago,'''+serieAct+''',' + intTostr(FolioAct)  +                                   //ago 31/18
-                           ' ,'+FloatToSTR(faltante)+','+FloatToSTR(faltante)+ ',IdPagoReal, IDMetodoPago From Pagos where '+
-                           ' IdPago = '+ Dataset.FieldByName('IdPago').AsString );
+                           ' ,'+FloatToSTR(faltante)+','+FloatToSTR(faltante)+ ',IdPagoReal, IDMetodoPago , Observaciones, EsDeposito From Pagos where '+
+                           ' IdPago = '+ Dataset.FieldByName('IdPago').AsString );                         //Oct 17/18
 
      // tener en cuenta en registro ADOQryAuxiliar.Parameters.ParamByName('Saldo').value:= simpleRoundto(AdodsMasterImporte.AsFloat,-2);
 
