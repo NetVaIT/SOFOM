@@ -281,7 +281,6 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     Top = 136
   end
   object ADODSCXCEstatus: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -292,7 +291,6 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     Top = 80
   end
   object ADOSPersonas: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -1038,7 +1036,6 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     Top = 392
   end
   object ADODtStAdicionalesContratoAnexo: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     AfterOpen = adodsMasterAfterOpen

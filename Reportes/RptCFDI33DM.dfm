@@ -434,7 +434,6 @@ object dmRptCFDI33: TdmRptCFDI33
     Top = 32
   end
   object adoqCFDIConceptos: TADOQuery
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     OnCalcFields = adoqCFDIConceptosCalcFields
