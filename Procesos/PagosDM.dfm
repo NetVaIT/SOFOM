@@ -1909,7 +1909,7 @@ inherited dmPagos: TdmPagos
       FieldName = 'EsMoratorios'
     end
   end
-  object ADOPActualizaTotalesCXC: TADOStoredProc
+  object adospUpdCuentasXCobrarTotales: TADOStoredProc
     Connection = _dmConection.ADOConnection
     ProcedureName = 'p_UpdCuentasXCobrarTotales;1'
     Parameters = <
@@ -1926,8 +1926,14 @@ inherited dmPagos: TdmPagos
         DataType = ftInteger
         Precision = 10
         Value = Null
+      end
+      item
+        Name = '@Temporal'
+        Attributes = [paNullable]
+        DataType = ftBoolean
+        Value = Null
       end>
-    Left = 408
+    Left = 416
     Top = 496
   end
   object adoqAnexosSel: TADOQuery
@@ -2051,14 +2057,17 @@ inherited dmPagos: TdmPagos
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@IdAnexoAmortizacion'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
-        Value = Null
+      end
+      item
+        Name = '@Temporal'
+        Attributes = [paNullable]
+        DataType = ftBoolean
       end
       item
         Name = '@IdCuentaXCobrar'
@@ -2066,7 +2075,6 @@ inherited dmPagos: TdmPagos
         DataType = ftInteger
         Direction = pdInputOutput
         Precision = 10
-        Value = Null
       end>
     Left = 536
     Top = 512

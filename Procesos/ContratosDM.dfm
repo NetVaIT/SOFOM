@@ -1322,20 +1322,22 @@ inherited dmContratos: TdmContratos
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@IdAnexo'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
-        Value = Null
       end
       item
         Name = '@Fecha'
         Attributes = [paNullable]
         DataType = ftDateTime
-        Value = Null
+      end
+      item
+        Name = '@Temporal'
+        Attributes = [paNullable]
+        DataType = ftBoolean
       end>
     Left = 544
     Top = 248

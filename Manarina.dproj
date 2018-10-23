@@ -1165,6 +1165,11 @@
             <Form>FrmEdtPagosFragmentados</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Reportes\RptEstadoCuentaDM.pas">
+            <Form>dmRptEstadoCuenta</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

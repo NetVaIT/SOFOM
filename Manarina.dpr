@@ -293,7 +293,8 @@ uses
   PagosRealesForm in 'Procesos\PagosRealesForm.pas' {FrmConPagosReales},
   PagosRealesEdit in 'Procesos\PagosRealesEdit.pas' {FrmEdPagosReales},
   PagosFragmentosForm in 'Procesos\PagosFragmentosForm.pas' {frmFragmentosPagos},
-  PagosFragmentadosEdit in 'PagosFragmentadosEdit.pas' {FrmEdtPagosFragmentados};
+  PagosFragmentadosEdit in 'PagosFragmentadosEdit.pas' {FrmEdtPagosFragmentados},
+  RptEstadoCuentaDM in 'Reportes\RptEstadoCuentaDM.pas' {dmRptEstadoCuenta: TDataModule};
 
 {$R *.res}
 

@@ -495,6 +495,7 @@ begin
     ScreenCursorProc(crSQLWait);
     try
       adospUpdCuentasXCobrarTotales.Parameters.ParamByName('@IdCuentaXCobrar').Value:= IdCuentaxCobrar;
+      adospUpdCuentasXCobrarTotales.Parameters.ParamByName('@Temporal').Value:= 0;
       adospUpdCuentasXCobrarTotales.ExecProc;
     finally
       ScreenCursorProc(crDefault);

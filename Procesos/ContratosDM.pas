@@ -809,6 +809,7 @@ begin
       try
         adopGenMoratorio.Parameters.ParamByName('@IdAnexo').Value:= IdAnexo;
         adopGenMoratorio.Parameters.ParamByName('@Fecha').Value:= dmConfiguracion.FechaSistema;
+        adopGenMoratorio.Parameters.ParamByName('@Temporal').Value:= 0;
         adopGenMoratorio.ExecProc;
       finally
         ScreenCursorProc(crDefault);
@@ -1089,7 +1090,7 @@ begin
   if TfrmContratos(gGridForm).Cliente <> EmptyStr then
     SQLWhere := SQLWhere + 'AND Contratos.IdPersona IN (SELECT IdPersona FROM Personas WHERE RazonSocial LIKE ''%' + TfrmContratos(gGridForm).Cliente + '%'') ';
   if TfrmContratos(gGridForm).UsarFecha then
-    SQLWhere := SQLWhere + Format('AND Fecha BETWEEN CONVERT(datetime, ''%s'' , 103) AND CONVERT(datetime, ''%s'' , 103) ', [DateToStr(TfrmContratos(gGridForm).Desde), DateToStr(TfrmContratos(gGridForm).Hasta)]);
+    SQLWhere := SQLWhere + Format('AND Fecha BETWEEN CONVERT(datetime, ''%s'' , 103) AND CONVERT(datetime, ''%s'' , 103) ', [DateToStr(TfrmContratos(gGridForm).Desde), DateToStr(TfrmContratos(gGridForm).Hasta+1)]);
 end;
 
 procedure TdmContratos.SetPaymentTime(const Value: TPaymentTime);

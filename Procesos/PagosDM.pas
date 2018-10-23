@@ -314,7 +314,7 @@ type
     DetallesCXCParaFacturarMoraIdCuentaXCobrarDetalle: TAutoIncField;
     DetallesCXCParaFacturarMoraEsMoratorios: TBooleanField;
     ADODtStCXCPendientesFechaVencimiento: TDateTimeField;
-    ADOPActualizaTotalesCXC: TADOStoredProc;
+    adospUpdCuentasXCobrarTotales: TADOStoredProc;
     adoqAnexosSel: TADOQuery;
     adoqAnexosSelIdContrato: TAutoIncField;
     adoqAnexosSelIdPersona: TIntegerField;
@@ -1642,10 +1642,10 @@ begin        //FEb 10/17                 //No requerido aca
                         +' where IDPagoREal='+AdodsMaster.FieldByName('IDPagoREal').ASString);
   ADOQryAuxiliar.ExecSQL;
   end;
-
   //Abr 17/17 Actualiza Totales de CXC para que actualice mnto vencido en anexo
-  ADOPActualizaTotalesCXC.Parameters.ParamByName('@IdCuentaXCobrar').Value:=  DAtaSEt.FieldByName('IDCuentaXCobrar').asinteger;
-  ADOPActualizaTotalesCXC.ExecProc;
+  adospUpdCuentasXCobrarTotales.Parameters.ParamByName('@IdCuentaXCobrar').Value:= DataSet.FieldByName('IDCuentaXCobrar').AsInteger;
+  adospUpdCuentasXCobrarTotales.Parameters.ParamByName('@Temporal').Value:= 0;
+  adospUpdCuentasXCobrarTotales.ExecProc;
   //VErificación de  Existencia Pago de Deposito en GArantia y Saldo Final, preguntar si se generan moratotrios al día o ver ??
  //Quitar de aca.. o al menos evitar si se estan pagando anticipos.. para evitar mala aplicacion... Mover para   el punto donde se llama el pos y verificar si es antcipo o pago a Capital
  // quitado Oct 2/17  VerificaYCreaCXCFinales(adodsMasterIdAnexo.AsInteger); //DEl que se acaba de aplicar
@@ -1731,7 +1731,8 @@ begin
   ADOQryAuxiliar.Open;
   while not ADOQryAuxiliar.eof  do
   begin
-    ADOStrdPrcGenCXCXAmortiza.Parameters.ParamByName('@IdAnexoAmortizacion').value:=  ADOQryAuxiliar.fieldbyname('IdAnexoAmortizacion').AsInteger;
+    ADOStrdPrcGenCXCXAmortiza.Parameters.ParamByName('@IdAnexoAmortizacion').Value:= ADOQryAuxiliar.FieldByName('IdAnexoAmortizacion').AsInteger;
+    ADOStrdPrcGenCXCXAmortiza.Parameters.ParamByName('@Temporal').Value:= 0;
     ADOStrdPrcGenCXCXAmortiza.ExecProc;
     if ADOStrdPrcGenCXCXAmortiza.Parameters.ParamByName('@IDCuentaXCobrar').Value>0 then //Ajustado Jun 30/17
       res:=1;
@@ -1793,7 +1794,8 @@ begin
     ADOQryAuxiliar.Open; //TRae todas las siguientes
     if not ADOQryAuxiliar.eof then
     begin
-      ADOStrdPrcGenCXCXAmortiza.Parameters.ParamByName('@IdAnexoAmortizacion').value:=  ADOQryAuxiliar.fieldbyname('IdAnexoAmortizacion').AsInteger;
+      ADOStrdPrcGenCXCXAmortiza.Parameters.ParamByName('@IdAnexoAmortizacion').Value:= ADOQryAuxiliar.FieldByName('IdAnexoAmortizacion').AsInteger;
+      ADOStrdPrcGenCXCXAmortiza.Parameters.ParamByName('@Temporal').Value:= 0;
       ADOStrdPrcGenCXCXAmortiza.ExecProc;
       if ADOStrdPrcGenCXCXAmortiza.Parameters.ParamByName('@IDCuentaXCobrar').Value>0 then //Ajustado Jun 30/17
         res:=1;

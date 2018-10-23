@@ -35,15 +35,21 @@ type
     ActPDFCtasActualCliente: TAction;
     ActPDFXContratosVencidos: TAction;
     adodsMasterVencidos0a30: TFMTBCDField;
+    actEstadoCuenta: TAction;
+    actEstadoCuentaFuturo: TAction;
     procedure DataModuleCreate(Sender: TObject);
     procedure ActGenPDFAntigSaldosExecute(Sender: TObject);
     procedure ActPDFAntiguedadXClienteExecute(Sender: TObject);
     procedure ActPDFCtasActualClienteExecute(Sender: TObject);
     procedure ActPDFXContratosVencidosExecute(Sender: TObject);
+    procedure actEstadoCuentaExecute(Sender: TObject);
+    procedure actEstadoCuentaFuturoExecute(Sender: TObject);
   private
     { Private declarations }
     function GetActual: string;
     property Actual: string read GetActual;
+  protected
+    procedure SetFilter; override;
   public
     { Public declarations }
   end;
@@ -52,35 +58,17 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses rptAntiguedadSaldosForm, PDFAntiguedadSaldosDM, _ConectionDmod,
-  ProcesosType;
+uses _ConectionDmod, ProcesosType, rptAntiguedadSaldosForm,
+  PDFAntiguedadSaldosDM, RptEstadoCuentaDM;
 
 {$R *.dfm}
 
 procedure TdmRptAntiguedadSaldos.ActPDFCtasActualClienteExecute(Sender: TObject);
-var
-  dmAntiguedadSaldosPDF: TdmAntiguedadSaldosPDF;
-  ArchivoPDF: TFileName;
-begin
-  inherited;
-  ArchivoPDF:='EstadoCuentaCliente'+'_'+Actual+_ExtensionPDF;
-  dmAntiguedadSaldosPDF:= TdmAntiguedadSaldosPDF.Create(Self);
-  try
-    dmAntiguedadSaldosPDF.Title := 'ESTADO DE CUENTA EN MONEDA NACIONAL "PESOS"';
-    dmAntiguedadSaldosPDF.PDFFileName := ArchivoPDF;
-    dmAntiguedadSaldosPDF.ExecuteEstadoCuenta(adodsMasterIdPersona.Value);
-  finally
-    dmAntiguedadSaldosPDF.Free;
-  end;
-  if FileExists(ArchivoPDF) then
-    ShellExecute(application.Handle, 'open', PChar(ArchivoPDF), nil, nil, SW_SHOWNORMAL);
-end;
-//procedure TdmRptAntiguedadSaldos.ActPDFCtasActualClienteExecute(Sender: TObject);
 //var
 //  dmAntiguedadSaldosPDF: TdmAntiguedadSaldosPDF;
 //  ArchiPDF: TFileName;
 //  Texto: String;
-//begin
+begin
 //  inherited;
 //  ArchiPDF:='EstadoCuentaCliente'+'_'+Actual+_ExtensionPDF;
 //  dmAntiguedadSaldosPDF:= TdmAntiguedadSaldosPDF.Create(Self);
@@ -102,7 +90,7 @@ end;
 //  end;
 //  if FileExists(ArchiPDF) then
 //    ShellExecute(application.Handle, 'open', PChar(ArchiPDF), nil, nil, SW_SHOWNORMAL);
-//end;
+end;
 
 procedure TdmRptAntiguedadSaldos.ActPDFXContratosVencidosExecute(
   Sender: TObject);
@@ -129,6 +117,49 @@ begin
     ShellExecute(application.Handle, 'open', PChar(ArchiPDF), nil, nil, SW_SHOWNORMAL);
 end;
 
+procedure TdmRptAntiguedadSaldos.actEstadoCuentaExecute(Sender: TObject);
+var
+  dmRptEstadoCuenta: TdmRptEstadoCuenta;
+  ArchivoPDF: TFileName;
+begin
+  inherited;
+  ArchivoPDF:='EstadoCuentaCliente'+'_'+Actual+_ExtensionPDF;
+  dmRptEstadoCuenta:= TdmRptEstadoCuenta.Create(Self);
+  try
+    dmRptEstadoCuenta.Title := 'ESTADO DE CUENTA EN MONEDA NACIONAL "PESOS"';
+    dmRptEstadoCuenta.PDFFileName := ArchivoPDF;
+    dmRptEstadoCuenta.Temporal := False;
+    dmRptEstadoCuenta.IdPersona := adodsMasterIdPersona.Value;
+    dmRptEstadoCuenta.Execute;
+  finally
+    dmRptEstadoCuenta.Free;
+  end;
+  if FileExists(ArchivoPDF) then
+    ShellExecute(application.Handle, 'open', PChar(ArchivoPDF), nil, nil, SW_SHOWNORMAL);
+end;
+
+procedure TdmRptAntiguedadSaldos.actEstadoCuentaFuturoExecute(Sender: TObject);
+var
+  dmRptEstadoCuenta: TdmRptEstadoCuenta;
+  ArchivoPDF: TFileName;
+begin
+  inherited;
+  ArchivoPDF:='EstadoCuentaFuturo'+'_'+Actual+_ExtensionPDF;
+  dmRptEstadoCuenta:= TdmRptEstadoCuenta.Create(Self);
+  try
+    dmRptEstadoCuenta.Title := 'ESTADO DE CUENTA EN MONEDA NACIONAL "PESOS" FUTURO';
+    dmRptEstadoCuenta.PDFFileName := ArchivoPDF;
+    dmRptEstadoCuenta.Temporal := True;
+    dmRptEstadoCuenta.IdPersona := adodsMasterIdPersona.Value;
+    dmRptEstadoCuenta.Fecha := TfrmrptantiguedadSaldos(gGridForm).Fecha;
+    dmRptEstadoCuenta.Execute;
+  finally
+    dmRptEstadoCuenta.Free;
+  end;
+  if FileExists(ArchivoPDF) then
+    ShellExecute(application.Handle, 'open', PChar(ArchivoPDF), nil, nil, SW_SHOWNORMAL);
+end;
+
 procedure TdmRptAntiguedadSaldos.ActGenPDFAntigSaldosExecute(Sender: TObject);
 var
   dmAntiguedadSaldosPDF: TdmAntiguedadSaldosPDF;
@@ -139,8 +170,8 @@ begin
   inherited;
   ArchiPDF:='AntiguedadSaldos'+'_'+Actual+_ExtensionPDF;
   TxtSQL:= adodsMaster.CommandText;
-  FechaIni:=  TfrmrptantiguedadSaldos(gGridForm).AFecIni;
-  FechaFin:=  TfrmrptantiguedadSaldos(gGridForm).AFecFin;
+  FechaIni:=  TfrmrptantiguedadSaldos(gGridForm).Desde;
+  FechaFin:=  TfrmrptantiguedadSaldos(gGridForm).Hasta;
   dmAntiguedadSaldosPDF:= TdmAntiguedadSaldosPDF.Create(Self);
   try
     dmAntiguedadSaldosPDF.dsReport.DataSet.Close;
@@ -181,8 +212,8 @@ begin
           +' SUM ("Vencidos a mas de 120 días") as TotalMas120Dias  from Vw_AntiguedadSaldosCXC ';
   Fecha:= ' where fecha>=:FIni and fecha<=:FFin ';
   GrupoSQL:=' Group BY Cliente order by Totalvencido desc, SaldoTotal desc'; //adodsMaster.CommandText; ver si se le coloca Fecha
-  FechaIni:=  TfrmrptantiguedadSaldos(gGridForm).AFecIni;
-  FechaFin:=  TfrmrptantiguedadSaldos(gGridForm).AFecFin;
+  FechaIni:=  TfrmrptantiguedadSaldos(gGridForm).Desde;
+  FechaFin:=  TfrmrptantiguedadSaldos(gGridForm).Hasta;
   Texto:= adodsMaster.CommandText;
   if pos(':FIni',Texto)>0 then   //REvisa si hizo consulta por fecha Mar 2/17
      TxtSQL:=TxtSQL+Fecha;
@@ -224,13 +255,45 @@ begin
   gGridForm.ReadOnlyGrid:= True;
   TfrmrptantiguedadSaldos(gGridForm).ActPDFAntSaldos:=ActGenPDFAntigSaldos;
   TfrmrptantiguedadSaldos(gGridForm).ActPDFAntXCliente:=ActPDFAntiguedadXCliente;
-  TfrmrptantiguedadSaldos(gGridForm).ActPDFAdeudoActualCliente:=ActPDFCtasActualCliente;
+  TfrmrptantiguedadSaldos(gGridForm).actEstadoCuenta := actEstadoCuenta;
+  TfrmrptantiguedadSaldos(gGridForm).actEstadoCuentaFuturo := actEstadoCuentaFuturo;
+//  TfrmrptantiguedadSaldos(gGridForm).ActPDFAdeudoActualCliente:=ActPDFCtasActualCliente;
 //DEshabilitado Oct12/17  TfrmrptantiguedadSaldos(gGridForm).ActPDFxContratosVenc:=ActPDFXContratosVencidos;
+  // Busqueda
+  gGridForm.actSearch := actSearch;
+  SQLSelect:=
+' SELECT   Cc.IdCuentaXCobrar, cc.IDAnexo,a.Identificador as Anexo, A.IdContrato, Con.IdContratoTipo,Con.Identificador as Contrato,' +
+'  CASE WHEN CC.Esmoratorio=1 then ''Moratorio'' else ''Amortización'' end as CobroX ,' +
+' CT.Identificador as TC, ct.Descripcion as TipoContrato,Cc.Fecha,cc.FechaVencimiento, Cc.IdPersona, cc.IdCuentaXCobrarEstatus, Cc.Total, CC.Saldo,' +
+' PR.RazonSocial AS Cliente, CASE WHEN ([dbo].getdateaux() - Cc.FechaVencimiento < 0) THEN Cc.Saldo ELSE 0 END AS ''Vigentes'',' +
+' CASE WHEN ([dbo].getdateaux() -  cc.FechaVencimiento<= 30) AND ( [dbo].getdateAux() -  cc.FechaVencimiento>0 )  THEN Cc.Saldo END AS ''Vencidos0a30'',' +
+' CASE WHEN [dbo].getdateAux() - Cc.FechaVencimiento >= 0 THEN Cc.Saldo END as ''Saldo Total Vencido'',' +
+' CASE WHEN ([dbo].getdateAux() - Cc.FechaVencimiento <= 60 ) AND ([dbo].getdateAux() - Cc.FechaVencimiento > 30 )' +
+' THEN Cc.Saldo END AS ''Vencidos a 30 días'', CASE WHEN ([dbo].getdateAux() - Cc.FechaVencimiento <= 90 ) AND ([dbo].getdateAux()' +
+'  - Cc.FechaVencimiento > 60 ) THEN Cc.Saldo END AS ''Vencidos a 60 días'', CASE WHEN ([dbo].getdateAux() - Cc.FechaVencimiento > 90 ) AND' +
+'   ([dbo].getdateAux() - Cc.FechaVencimiento <=120 ) THEN Cc.Saldo END AS ''Vencidos a 90 días'', CASE WHEN [dbo].getdateAux()' +
+'  - Cc.FechaVencimiento > 120 THEN Cc.Saldo END AS ''Vencidos más de 120 días''' +
+' FROM         CuentasXCobrar AS Cc INNER JOIN  Personas AS PR ON Cc.IdPersona = PR.IdPersona ' +
+'             left join  Anexos As A ON Cc.IdAnexo=A.IdAnexo      ' +
+'             inner join Contratos as Con ON A.IdContrato=Con.IdContrato' +
+'             inner join ContratosTipos as CT On Con.IdContratoTipo =CT.IdContratoTipo ';
+  SQLOrderBy:= 'ORDER BY Cliente ';
+  actSearch.Execute;
 end;
 
 function TdmRptAntiguedadSaldos.GetActual: string;
 begin
   Result:= FormatDateTime('ddmmmyyyyhhnnss', Now);
+end;
+
+procedure TdmRptAntiguedadSaldos.SetFilter;
+begin
+  inherited;
+  SQLWhere := 'WHERE   (Cc.Saldo > 0) ';
+  if TfrmrptantiguedadSaldos(gGridForm).Cliente <> EmptyStr then
+    SQLWhere := SQLWhere + 'AND PR.Razonsocial LIKE ''%' + TfrmrptantiguedadSaldos(gGridForm).Cliente + '%'' ';
+  if TfrmrptantiguedadSaldos(gGridForm).UsarFecha then
+    SQLWhere := SQLWhere + Format('AND Cc.FechaVencimiento BETWEEN CONVERT(datetime, ''%s'' , 103) AND CONVERT(datetime, ''%s'' , 103) ', [DateToStr(TfrmrptantiguedadSaldos(gGridForm).Desde), DateToStr(TfrmrptantiguedadSaldos(gGridForm).Hasta+1)]);
 end;
 
 end.

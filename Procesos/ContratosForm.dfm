@@ -2,42 +2,42 @@ inherited frmContratos: TfrmContratos
   BorderStyle = bsToolWindow
   Caption = 'Contratos'
   ClientHeight = 676
-  ClientWidth = 658
-  ExplicitWidth = 664
+  ClientWidth = 1103
+  ExplicitWidth = 1109
   ExplicitHeight = 705
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
     Top = 432
-    Width = 658
+    Width = 1103
     Align = alTop
     ExplicitTop = 571
     ExplicitWidth = 645
   end
   inherited splDetail1: TSplitter
     Top = 126
-    Width = 658
+    Width = 1103
     Align = alTop
     ExplicitTop = 293
     ExplicitWidth = 645
   end
   inherited splDetail2: TSplitter
     Top = 279
-    Width = 658
+    Width = 1103
     Align = alTop
     ExplicitTop = 487
     ExplicitWidth = 645
   end
   inherited pnlMaster: TPanel
-    Width = 658
+    Width = 1103
     Height = 100
     Align = alTop
-    ExplicitWidth = 645
+    ExplicitWidth = 658
     ExplicitHeight = 100
     inherited cxGrid: TcxGrid
-      Width = 658
+      Width = 1103
       Height = 100
-      ExplicitWidth = 645
+      ExplicitWidth = 658
       ExplicitHeight = 100
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdContrato: TcxGridDBColumn
@@ -90,39 +90,39 @@ inherited frmContratos: TfrmContratos
   end
   inherited pnlDetail3: TPanel
     Top = 435
-    Width = 658
+    Width = 1103
     Height = 200
     Align = alClient
     ExplicitTop = 435
-    ExplicitWidth = 645
+    ExplicitWidth = 658
     ExplicitHeight = 200
   end
   inherited pnlDetail2: TPanel
     Top = 282
-    Width = 658
+    Width = 1103
     Height = 150
     Align = alTop
     ExplicitTop = 282
-    ExplicitWidth = 645
+    ExplicitWidth = 658
     ExplicitHeight = 150
   end
   inherited pnlDetail1: TPanel
     Top = 129
-    Width = 658
+    Width = 1103
     Height = 150
     Align = alTop
     ExplicitTop = 129
-    ExplicitWidth = 645
+    ExplicitWidth = 658
     ExplicitHeight = 150
   end
   inherited pnlClose: TPanel
     Top = 635
-    Width = 658
+    Width = 1103
     ExplicitTop = 635
-    ExplicitWidth = 645
+    ExplicitWidth = 658
     inherited btnClose: TButton
-      Left = 573
-      ExplicitLeft = 560
+      Left = 1018
+      ExplicitLeft = 573
     end
   end
   inherited dxBarManager: TdxBarManager
@@ -228,6 +228,7 @@ inherited frmContratos: TfrmContratos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42683.590026041670000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

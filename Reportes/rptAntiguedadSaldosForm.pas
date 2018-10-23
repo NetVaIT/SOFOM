@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, _GridForm, cxGraphics, cxControls,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, _GridForm, cxGraphics, cxControls, System.DateUtils,
   cxLookAndFeels, cxLookAndFeelPainters, cxStyles, dxSkinsCore, dxSkinBlack,
   dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom,
   dxSkinDarkSide, dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
@@ -29,7 +29,7 @@ uses
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
   Vcl.ExtCtrls, cxContainer, Vcl.ComCtrls, dxCore, cxDateUtils, cxTextEdit,
   cxMaskEdit, cxDropDownEdit, cxCalendar, Vcl.Buttons,Data.Win.ADODB,
-  Vcl.CheckLst;
+  Vcl.CheckLst, cxCheckBox, cxBarEditItem;
 
 type
   TfrmRptAntiguedadSaldos = class(T_frmGrid)
@@ -39,19 +39,6 @@ type
     tvMasterVencidosa30das: TcxGridDBColumn;
     tvMasterVencidosa60das: TcxGridDBColumn;
     tvMasterVencidosa90das: TcxGridDBColumn;
-    PnlFiltros: TPanel;
-    PnlBusqueda: TPanel;
-    Label3: TLabel;
-    EdtNombre: TEdit;
-    PnlFechas: TPanel;
-    Label4: TLabel;
-    Label5: TLabel;
-    SpdBtnConsulta: TSpeedButton;
-    cxDtEdtInicio: TcxDateEdit;
-    cxDtEdtFin: TcxDateEdit;
-    ChckBxXFecha: TCheckBox;
-    PnlTipoDoc: TPanel;
-    ChckLstBxTipoDoc: TCheckListBox;
     tvMasterIdCuentaXCobrar: TcxGridDBColumn;
     tvMasterIdPersona: TcxGridDBColumn;
     tvMasterIdCuentaXCobrarEstatus: TcxGridDBColumn;
@@ -73,40 +60,54 @@ type
     dxBrBtnAdeudoActual: TdxBarButton;
     dxBrBtnRepXContAtrasa: TdxBarButton;
     tvMasterVencidos0a30: TcxGridDBColumn;
-    procedure SpdBtnConsultaClick(Sender: TObject);
-    procedure EdtNombreKeyDown(Sender: TObject; var Key: Word;
-      Shift: TShiftState);
+    edtCliente: TcxBarEditItem;
+    edtDesde: TcxBarEditItem;
+    edtHasta: TcxBarEditItem;
+    edtUsarFecha: TcxBarEditItem;
+    dxbEstadoCuenta: TdxBar;
+    btnEstadoCuenta: TdxBarButton;
+    btnEstadoCuentaFuturo: TdxBarButton;
+    edtFecha: TcxBarEditItem;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
-    FAFecIni: TDateTime;
-    FAFecFin: TDateTime;
+       { Private declarations }
     FPDFAntigSaldos: TBasicAction;
     FPDFAntiXcliente: TBasicAction;
     FPDFAdeudoActualCliente: TBasicAction;
     FPDFXContratoVenc: TBasicAction;
-    function GetFAFecIni: TDateTime;
-    function GetFAFecFin: TDateTime;
+    FactEstadoCuentaFuturo: TBasicAction;
+    FactEstadoCuenta: TBasicAction;
     procedure SetPDFAntigSaldos(const Value: TBasicAction);
     procedure SetPDFAntXCliente(const Value: TBasicAction);
     procedure SetPDFAdeudoActualCliente(const Value: TBasicAction);
     procedure SetPDFXContratoVenc(const Value: TBasicAction);
-       { Private declarations }
+    function GetCliente: string;
+    function GetDesde: TDateTime;
+    function GetHasta: TDateTime;
+    function GetUsarFecha: Boolean;
+    procedure SetCliente(const Value: string);
+    procedure SetDesde(const Value: TDateTime);
+    procedure SetHasta(const Value: TDateTime);
+    procedure SetUsarFecha(const Value: Boolean);
+    procedure SetactEstadoCuenta(const Value: TBasicAction);
+    procedure SetactEstadoCuentaFuturo(const Value: TBasicAction);
+    function GetFecha: TDateTime;
+    procedure SetFecha(const Value: TDateTime);
   public
     { Public declarations }
-     property AFecIni :TDateTime read GetFAFecIni write FAFecIni;
-     property AFecFin :TDateTime read GetFAFecFin write FAFecFin;
-     Property ActPDFAntSaldos: TBasicAction read FPDFAntigSaldos write SetPDFAntigSaldos;
-     Property ActPDFAntXCliente: TBasicAction read FPDFAntiXcliente write SetPDFAntXCliente;
-     Property ActPDFAdeudoActualCliente: TBasicAction read FPDFAdeudoActualCliente write SetPDFAdeudoActualCliente;
-     Property ActPDFxContratosVenc: TBasicAction read FPDFXContratoVenc write SetPDFXContratoVenc;
-
+    property Cliente: string read GetCliente write SetCliente;
+    property Desde: TDateTime read GetDesde write SetDesde;
+    property Hasta: TDateTime read GetHasta write SetHasta;
+    property UsarFecha: Boolean read GetUsarFecha write SetUsarFecha;
+    property Fecha: TDateTime read GetFecha write SetFecha;
+    property ActPDFAntSaldos: TBasicAction read FPDFAntigSaldos write SetPDFAntigSaldos;
+    property ActPDFAntXCliente: TBasicAction read FPDFAntiXcliente write SetPDFAntXCliente;
+    property ActPDFAdeudoActualCliente: TBasicAction read FPDFAdeudoActualCliente write SetPDFAdeudoActualCliente;
+    property ActPDFxContratosVenc: TBasicAction read FPDFXContratoVenc write SetPDFXContratoVenc;
+    property actEstadoCuenta: TBasicAction read FactEstadoCuenta write SetactEstadoCuenta;
+    property actEstadoCuentaFuturo: TBasicAction read FactEstadoCuentaFuturo write SetactEstadoCuentaFuturo;
   end;
-
-
-
-var
-  frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos;
 
 implementation
 
@@ -114,38 +115,16 @@ implementation
 
 uses rptAntiguedadSaldosDM, _ConectionDmod;
 
-
-procedure TfrmRptAntiguedadSaldos.EdtNombreKeyDown(Sender: TObject;
-  var Key: Word; Shift: TShiftState);
-begin
-  inherited;
-  if key=13 then
-  begin
-    key:=0;
-    SpdBtnConsulta.Click;
-  end;
-end;
-
 procedure TfrmRptAntiguedadSaldos.FormCreate(Sender: TObject);
 var
-  a,m,d:Word;
-  FechaAux:TDAteTime;
+  Year, Month, Day: Word;
 begin
   inherited;
-            //May 26/17  Date
-  DEcodeDate(_DmConection.LafechaActual,a,m,d);
-
-  cxDtEdtInicio.Date:=EncodeDate(a,m,1);
-  m:=m+1;
-  if m=13 then  //Aban Abr 19/16
-  begin
-    m:=1;
-    a:=a+1;
-  end;
-  FechaAux:=EncodeDate(a,m,1);
-  FechaAux:=FechaAux-1;  //Día anterior
-  cxDtEdtFin.Date:=FechaAux;
-
+  DecodeDate(Date, year, month, day);
+  Desde := EncodeDate(Year, Month, 1);
+  Hasta := EncodeDate(Year, Month, DaysInMonth(Date));
+  Fecha := Hasta;
+  Cliente := EmptyStr;
 end;
 
 procedure TfrmRptAntiguedadSaldos.FormShow(Sender: TObject);
@@ -154,18 +133,63 @@ begin
   actFullColapseGroup.Execute; //Feb 22/17
 end;
 
-function TfrmRptAntiguedadSaldos.GetFAFecFin: TDateTime;
-begin                         //Mar1/17
-  FAFecFin:= cxDtEdtFin.Date+1;
-  Result := FAFecFin;
+function TfrmRptAntiguedadSaldos.GetCliente: string;
+begin
+  Result:= edtCliente.EditValue;
 end;
 
-function TfrmRptAntiguedadSaldos.GetFAFecIni: TDateTime;
-begin                           //Mar1/17
-  FAFecIni:=cxDtEdtInicio.Date;
-  Result := FAFecIni;
+function TfrmRptAntiguedadSaldos.GetDesde: TDateTime;
+begin
+  Result := edtDesde.EditValue;
 end;
 
+function TfrmRptAntiguedadSaldos.GetFecha: TDateTime;
+begin
+  Result := edtFecha.EditValue;
+end;
+
+function TfrmRptAntiguedadSaldos.GetHasta: TDateTime;
+begin
+  Result := edtHasta.EditValue;
+end;
+
+function TfrmRptAntiguedadSaldos.GetUsarFecha: Boolean;
+begin
+  Result := edtUsarFecha.EditValue;
+end;
+
+procedure TfrmRptAntiguedadSaldos.SetactEstadoCuenta(const Value: TBasicAction);
+begin
+  FactEstadoCuenta := Value;
+  btnEstadoCuenta.Action := Value;
+end;
+
+procedure TfrmRptAntiguedadSaldos.SetactEstadoCuentaFuturo(
+  const Value: TBasicAction);
+begin
+  FactEstadoCuentaFuturo := Value;
+  btnEstadoCuentaFuturo.Action := Value;
+end;
+
+procedure TfrmRptAntiguedadSaldos.SetCliente(const Value: string);
+begin
+  edtCliente.EditValue:= Value;
+end;
+
+procedure TfrmRptAntiguedadSaldos.SetDesde(const Value: TDateTime);
+begin
+  edtDesde.EditValue := Value;
+end;
+
+procedure TfrmRptAntiguedadSaldos.SetFecha(const Value: TDateTime);
+begin
+  edtFecha.EditValue := Value;
+end;
+
+procedure TfrmRptAntiguedadSaldos.SetHasta(const Value: TDateTime);
+begin
+  edtHasta.EditValue := Value;
+end;
 
 procedure TfrmRptAntiguedadSaldos.SetPDFAdeudoActualCliente(
   const Value: TBasicAction);
@@ -200,77 +224,9 @@ begin
   dxBrBtnRepXContAtrasa.Hint:='Antigüedad de Saldos Por Contratos Atrasados';
 end;
 
-procedure TfrmRptAntiguedadSaldos.SpdBtnConsultaClick(Sender: TObject);
-const                                                                        //Agrego cc.FechaVencimiento, jun 16/17 y se va a cambiar
-   TxtSQL=' SELECT   Cc.IdCuentaXCobrar, cc.IDAnexo,a.Identificador as Anexo, A.IdContrato, Con.IdContratoTipo,Con.Identificador as Contrato,'
-         +'  CASE WHEN CC.Esmoratorio=1 then ''Moratorio'' else ''Amortización'' end as CobroX ,'   //Jun 30/17
-         +' CT.Identificador as TC, ct.Descripcion as TipoContrato,Cc.Fecha,cc.FechaVencimiento, Cc.IdPersona, cc.IdCuentaXCobrarEstatus, Cc.Total, CC.Saldo,'
-         +' PR.RazonSocial AS Cliente, CASE WHEN ([dbo].getdateaux() - Cc.FechaVencimiento < 0) THEN Cc.Saldo ELSE 0 END AS ''Vigentes'','// oct 5/17? --  en ago 21/17     // era ' CASE WHEN [dbo].getdateAux() - Cc.FechaVencimiento <= 30 THEN Cc.Saldo END AS ''Vigentes'','
-         +' CASE WHEN ([dbo].getdateaux() -  cc.FechaVencimiento<= 30) AND ( [dbo].getdateAux() -  cc.FechaVencimiento>0 )  THEN Cc.Saldo END AS ''Vencidos0a30'',' // -- ago 21/17 ajuste
-
-         +' CASE WHEN [dbo].getdateAux() - Cc.FechaVencimiento >= 0 THEN Cc.Saldo END as ''Saldo Total Vencido'','      //Ajustado para que los del dia aparezcan jun 19/17
-         +' CASE WHEN ([dbo].getdateAux() - Cc.FechaVencimiento <= 60 ) AND ([dbo].getdateAux() - Cc.FechaVencimiento > 30 )'
-         +' THEN Cc.Saldo END AS ''Vencidos a 30 días'', CASE WHEN ([dbo].getdateAux() - Cc.FechaVencimiento <= 90 ) AND ([dbo].getdateAux()'
-         +'  - Cc.FechaVencimiento > 60 ) THEN Cc.Saldo END AS ''Vencidos a 60 días'', CASE WHEN ([dbo].getdateAux() - Cc.FechaVencimiento > 90 ) AND'
-         +'   ([dbo].getdateAux() - Cc.FechaVencimiento <=120 ) THEN Cc.Saldo END AS ''Vencidos a 90 días'', CASE WHEN [dbo].getdateAux()'
-         +'  - Cc.FechaVencimiento > 120 THEN Cc.Saldo END AS ''Vencidos más de 120 días'''
-
-         +' FROM         CuentasXCobrar AS Cc INNER JOIN  Personas AS PR ON Cc.IdPersona = PR.IdPersona '
-         +'             left join  Anexos As A ON Cc.IdAnexo=A.IdAnexo      '
-         +'             inner join Contratos as Con ON A.IdContrato=Con.IdContrato'
-         +'             inner join ContratosTipos as CT On Con.IdContratoTipo =CT.IdContratoTipo '
-         +' WHERE   (Cc.Saldo > 0)  '; //deshabilitado mientras dic 28/16    AND
-
-
-  TxtOrder=' ORDER BY Cliente';
-
-var
-   FiltroCliente, FiltroFecha, FiltroTipo:String;
-  // i, aux:Integer;
+procedure TfrmRptAntiguedadSaldos.SetUsarFecha(const Value: Boolean);
 begin
-
-  inherited;
-  Filtrotipo:='';
-  if EdtNombre.Text<>'' then
-    FiltroCliente:=' and PR.Razonsocial like ''%'+EdtNombre.Text+'%'''
-  else
-    FiltroCliente:='';
-
-  if ChckBxXFecha.checked then    //May 30/16  //CAmbiado por FEcha vencimiento  jun 16/17
-     filtroFecha:='  and(Cc.FechaVencimiento >:FIni and Cc.FechaVencimiento <:FFin)'
-  else
-     filtroFecha:='';
-
-(*  for I := 0 to ChckLstBxTipoDoc.Count-1 do
-  begin
-    if ChckLstBxTipoDoc.Checked[i] then
-    begin
-      aux:=i+2;
-      if i=0 then
-        FiltroTipo:=' CI.IdCFDITipoDocumento=1'
-      else
-       if FiltroTipo<>'' then
-         FiltroTipo:=FiltroTipo+' or CI.IdCFDITipoDocumento=' +intTostr(Aux)
-       else
-         FiltroTipo:=' CI.IdCFDITipoDocumento=' +intTostr(Aux);
-    end;
-  end;
- *)
-  if FiltroTipo<>'' then
-     FiltroTipo:=' and ('+FiltroTipo+')';
- // Showmessage('Consulta '+TxtSQL+FiltroCliente+filtroFecha+FiltroTipo+ TxtOrder);
-  Tadodataset(datasource.DataSet).Close;
-  Tadodataset(datasource.DataSet).CommandText:=TxtSQL+FiltroCliente+filtroFecha+FiltroTipo+ TxtOrder;
-  if filtroFecha <>''then
-  begin
-    Tadodataset(datasource.DataSet).Parameters.ParamByName('FIni').Value:=cxDtEdtInicio.Date;
-    Tadodataset(datasource.DataSet).Parameters.ParamByName('FFin').Value:=cxDtEdtFin.Date+1;
-
-  end;
-
-
-  Tadodataset(datasource.DataSet).open;
-
+  edtUsarFecha.EditValue := Value;
 end;
 
 end.

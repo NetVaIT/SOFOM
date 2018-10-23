@@ -172,5 +172,15 @@
       Caption = 'ActPDFXContratosVencidos'
       OnExecute = ActPDFXContratosVencidosExecute
     end
+    object actEstadoCuenta: TAction
+      Caption = 'Estado de cuenta'
+      ImageIndex = 19
+      OnExecute = actEstadoCuentaExecute
+    end
+    object actEstadoCuentaFuturo: TAction
+      Caption = 'Estado de cuenta futuro'
+      ImageIndex = 19
+      OnExecute = actEstadoCuentaFuturoExecute
+    end
   end
 end
