@@ -129,6 +129,8 @@ inherited frmMain: TfrmMain
         end>
     end
     inherited dxbArchivo: TdxBar
+      DockedDockControl = nil
+      DockedDockingStyle = dsNone
       FloatLeft = 545
       FloatClientWidth = 51
       FloatClientHeight = 76
@@ -384,44 +386,49 @@ inherited frmMain: TfrmMain
       DockedTop = 0
       FloatLeft = 1054
       FloatTop = 8
-      FloatClientWidth = 155
-      FloatClientHeight = 486
+      FloatClientWidth = 154
+      FloatClientHeight = 160
       ItemLinks = <
         item
           Visible = True
-          ItemName = 'dxBrLrgBtnAntiguedad'
+          ItemName = 'dxBarLargeButton28'
         end
         item
           Visible = True
-          ItemName = 'dxBrLrgBtnEstadoCuenta'
+          ItemName = 'dxBarButton21'
         end
         item
           Visible = True
-          ItemName = 'dxBarLargeButton31'
+          ItemName = 'dxBarButton22'
         end
         item
           Visible = True
-          ItemName = 'dxBrLrgBtnInformacionContratos'
+          ItemName = 'dxBarButton23'
+        end
+        item
+          BeginGroup = True
+          Visible = True
+          ItemName = 'dxBarLargeButton30'
         end
         item
           Visible = True
-          ItemName = 'dxBarLargeButton32'
+          ItemName = 'dxBarButton24'
         end
         item
           Visible = True
-          ItemName = 'dxBarLargeButton33'
+          ItemName = 'dxBarButton25'
         end
         item
           Visible = True
-          ItemName = 'dxBarLargeButton26'
+          ItemName = 'dxBarButton26'
         end
         item
           Visible = True
-          ItemName = 'dxBrLrgBtnReporteCartera'
+          ItemName = 'dxBarButton27'
         end
         item
           Visible = True
-          ItemName = 'dxBarLargeButton42'
+          ItemName = 'dxBarButton28'
         end>
       OneOnRow = False
       Row = 0
@@ -432,7 +439,7 @@ inherited frmMain: TfrmMain
     object dxBarManagerBar2: TdxBar [9]
       Caption = 'Exportar'
       CaptionButtons = <>
-      DockedLeft = 703
+      DockedLeft = 616
       DockedTop = 0
       FloatLeft = 1054
       FloatTop = 8
@@ -617,7 +624,7 @@ inherited frmMain: TfrmMain
       Category = 0
     end
     object dxBrLrgBtnMatrizRiesgo: TdxBarLargeButton
-      Action = ActMatrizRiesgo
+      Action = actMatrizRiesgo
       Caption = 'Matriz de riesgo'
       Category = 0
     end
@@ -636,6 +643,74 @@ inherited frmMain: TfrmMain
       Action = actPagosPorCliente
       Category = 0
       Visible = ivNever
+    end
+    object dxBarButton12: TdxBarButton
+      Action = actRptExpecientes
+      Category = 0
+    end
+    object dxBarButton14: TdxBarButton
+      Caption = 'New Button'
+      Category = 0
+      Hint = 'New Button'
+      Visible = ivAlways
+    end
+    object dxBarButton18: TdxBarButton
+      Caption = 'New Button'
+      Category = 0
+      Hint = 'New Button'
+      Visible = ivAlways
+    end
+    object dxBarButton19: TdxBarButton
+      Caption = 'New Button'
+      Category = 0
+      Hint = 'New Button'
+      Visible = ivAlways
+    end
+    object dxBarButton20: TdxBarButton
+      Caption = 'New Button'
+      Category = 0
+      Hint = 'New Button'
+      Visible = ivAlways
+    end
+    object dxBarLargeButton28: TdxBarLargeButton
+      Action = actRptExpecientes
+      Category = 0
+    end
+    object dxBarButton21: TdxBarButton
+      Action = actInformacionContratos
+      Category = 0
+    end
+    object dxBarButton22: TdxBarButton
+      Action = actRptColocacion
+      Category = 0
+    end
+    object dxBarButton23: TdxBarButton
+      Action = actColocacionAcumulado
+      Category = 0
+    end
+    object dxBarLargeButton30: TdxBarLargeButton
+      Action = actRptAntiguedadSaldos
+      Category = 0
+    end
+    object dxBarButton24: TdxBarButton
+      Action = actRptCobertura
+      Category = 0
+    end
+    object dxBarButton25: TdxBarButton
+      Action = actEstadoCuenta
+      Category = 0
+    end
+    object dxBarButton26: TdxBarButton
+      Action = actReporteCartera
+      Category = 0
+    end
+    object dxBarButton27: TdxBarButton
+      Action = actRptPagoAplicacionesMensual
+      Category = 0
+    end
+    object dxBarButton28: TdxBarButton
+      Action = actRptCFDIContabilidad
+      Category = 0
     end
     object dxBarButton13: TdxBarButton
       Action = actRptPlaza
@@ -673,14 +748,6 @@ inherited frmMain: TfrmMain
     end
     object dxBarLargeButton26: TdxBarLargeButton
       Action = actRptCobertura
-      Category = 1
-    end
-    object dxBrLrgBtnReporteCartera: TdxBarLargeButton
-      Action = actReporteCartera
-      Category = 1
-    end
-    object dxBarLargeButton42: TdxBarLargeButton
-      Action = actRptPagoAplicacionesMensual
       Category = 1
     end
     object dxBarLargeButton36: TdxBarLargeButton
@@ -11872,59 +11939,17 @@ inherited frmMain: TfrmMain
       ImageIndex = 49
       OnExecute = actCatalogoExecute
     end
-    object actRptAntiguedadSaldos: TAction
-      Tag = 50
+    object actRptExpecientes: TAction
+      Tag = 55
       Category = 'Reportes'
-      Caption = 'Antiguedad de Saldos'
-      ImageIndex = 50
-      OnExecute = actCatalogoExecute
-    end
-    object actEstadoCuenta: TAction
-      Tag = 51
-      Category = 'Reportes'
-      Caption = 'Estados de Cuenta'
-      ImageIndex = 51
-      OnExecute = actCatalogoExecute
-    end
-    object actListasRestringidas: TAction
-      Tag = 5
-      Category = 'Catalogos'
-      Caption = 'Listas restringidas'
-      ImageIndex = 7
-      OnExecute = actCatalogoExecute
-    end
-    object actSeguimiento: TAction
-      Tag = 37
-      Category = 'Procesos'
-      Caption = 'Seguimiento de cobros'
-      ImageIndex = 52
+      Caption = 'Expedientes recibidos'
+      ImageIndex = 53
       OnExecute = actCatalogoExecute
     end
     object actInformacionContratos: TAction
       Tag = 52
       Category = 'Reportes'
       Caption = 'Informaci'#243'n Contratos'
-      ImageIndex = 53
-      OnExecute = actCatalogoExecute
-    end
-    object actReporteCartera: TAction
-      Tag = 53
-      Category = 'Reportes'
-      Caption = 'Reporte de Cartera'
-      ImageIndex = 54
-      OnExecute = actCatalogoExecute
-    end
-    object actRptCobertura: TAction
-      Tag = 54
-      Category = 'Reportes'
-      Caption = 'Cobertura'
-      ImageIndex = 33
-      OnExecute = actCatalogoExecute
-    end
-    object actRptExpecientes: TAction
-      Tag = 55
-      Category = 'Reportes'
-      Caption = 'Expedientes recibidos'
       ImageIndex = 53
       OnExecute = actCatalogoExecute
     end
@@ -11942,6 +11967,49 @@ inherited frmMain: TfrmMain
       ImageIndex = 16
       OnExecute = actCatalogoExecute
     end
+    object actRptAntiguedadSaldos: TAction
+      Tag = 50
+      Category = 'Reportes'
+      Caption = 'Antiguedad de Saldos'
+      ImageIndex = 50
+      OnExecute = actCatalogoExecute
+    end
+    object actRptCobertura: TAction
+      Tag = 54
+      Category = 'Reportes'
+      Caption = 'Cobertura'
+      ImageIndex = 33
+      OnExecute = actCatalogoExecute
+    end
+    object actEstadoCuenta: TAction
+      Tag = 51
+      Category = 'Reportes'
+      Caption = 'Estados de Cuenta'
+      ImageIndex = 51
+      Visible = False
+      OnExecute = actCatalogoExecute
+    end
+    object actListasRestringidas: TAction
+      Tag = 5
+      Category = 'Catalogos'
+      Caption = 'Listas restringidas'
+      ImageIndex = 7
+      OnExecute = actCatalogoExecute
+    end
+    object actSeguimiento: TAction
+      Tag = 37
+      Category = 'Procesos'
+      Caption = 'Seguimiento de cobros'
+      ImageIndex = 52
+      OnExecute = actCatalogoExecute
+    end
+    object actReporteCartera: TAction
+      Tag = 53
+      Category = 'Reportes'
+      Caption = 'Reporte de Cartera'
+      ImageIndex = 54
+      OnExecute = actCatalogoExecute
+    end
     object actPoneFechaActual: TAction
       Category = 'Catalogos'
       Caption = 'Establecer Fecha Actual'
@@ -11953,6 +12021,13 @@ inherited frmMain: TfrmMain
       Category = 'Reportes'
       Caption = 'Aplicaciones mensuales'
       ImageIndex = 49
+      OnExecute = actCatalogoExecute
+    end
+    object actRptCFDIContabilidad: TAction
+      Tag = 64
+      Category = 'Reportes'
+      Caption = 'CFDI Contabilidad'
+      ImageIndex = 35
       OnExecute = actCatalogoExecute
     end
     object actBuroCredito: TAction
@@ -11983,7 +12058,7 @@ inherited frmMain: TfrmMain
       ImageIndex = 19
       OnExecute = actCatalogoExecute
     end
-    object ActMatrizRiesgo: TAction
+    object actMatrizRiesgo: TAction
       Tag = 61
       Category = 'Catalogos'
       Caption = 'Matriz Riesgo'

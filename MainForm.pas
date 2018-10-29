@@ -124,7 +124,6 @@ type
     dxBarLargeButton26: TdxBarLargeButton;
     actRptExpecientes: TAction;
     dxBarLargeButton31: TdxBarLargeButton;
-    dxBrLrgBtnReporteCartera: TdxBarLargeButton;
     actReporteCartera: TAction;
     actRptColocacion: TAction;
     dxBarLargeButton32: TdxBarLargeButton;
@@ -139,7 +138,6 @@ type
     actAlertasPLD: TAction;
     dxBarLargeButton41: TdxBarLargeButton;
     actRptPagoAplicacionesMensual: TAction;
-    dxBarLargeButton42: TdxBarLargeButton;
     actAgregarAlerta: TAction;
     dxBarButton11: TdxBarButton;
     actPLDAlertasConfiguracion: TAction;
@@ -150,12 +148,28 @@ type
     dxBarButton10: TdxBarButton;
     actCFDIPagos: TAction;
     dxBrLrgBtnMatrizRiesgo: TdxBarLargeButton;
-    ActMatrizRiesgo: TAction;
+    actMatrizRiesgo: TAction;
     dxBarLargeButton13: TdxBarLargeButton;
     dxBrLrgBtnEvaluacionRiesgo: TdxBarLargeButton;
     actEvaluacionRiesgo: TAction;
     dxBrLrgBtnPagoReal: TdxBarLargeButton;
     actPagosPorCliente: TAction;
+    actRptCFDIContabilidad: TAction;
+    dxBarButton12: TdxBarButton;
+    dxBarButton14: TdxBarButton;
+    dxBarButton18: TdxBarButton;
+    dxBarButton19: TdxBarButton;
+    dxBarButton20: TdxBarButton;
+    dxBarLargeButton28: TdxBarLargeButton;
+    dxBarButton21: TdxBarButton;
+    dxBarButton22: TdxBarButton;
+    dxBarButton23: TdxBarButton;
+    dxBarLargeButton30: TdxBarLargeButton;
+    dxBarButton24: TdxBarButton;
+    dxBarButton25: TdxBarButton;
+    dxBarButton26: TdxBarButton;
+    dxBarButton27: TdxBarButton;
+    dxBarButton28: TdxBarButton;
     procedure actCatalogoExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -194,7 +208,7 @@ uses ConfiguracionDM, UbicacionesDM, BancosDM, MonedasDM, PuestosDM, PlazasTurno
   RptAnexosProductosDM, RptColocacionAcumuladoDM, PonerFechaActualForm,
   BuroCreditoDM, PLDAlertasDM, RptPagoAplicacionesMensualDM, _ConectionDmod,
   PLDAlertasConfiguracionDM, MatrizRiesgoDM, EvaluacionesRiesgoDM,
-  PagosRealesDM;
+  PagosRealesDM, RptCFDIContabilidadDM;
 
 procedure TfrmMain.actAgregarAlertaExecute(Sender: TObject);
 var
@@ -294,6 +308,7 @@ begin
    62: gModulo := TdmEvaluacionRiesgo.Create(Self); //Matriz Riesgo
 
    63: gModulo := TdmPagosReales.Create(Self);  //Pagos por Cliente
+   64: gModulo := TdmRptCFDIContabilidad.Create(Self);
   end;
   if Assigned(gModulo) then
   begin
@@ -367,6 +382,9 @@ begin
   actAlertasPLD.Enabled         := Conected and _dmConection.OficialCumplimiento;
   actPLDAlertasConfiguracion.Enabled := Conected and _dmConection.OficialCumplimiento;
   actAgregarAlerta.Enabled      := Conected;
+  actMatrizRiesgo.Enabled       := Conected;
+  actEvaluacionRiesgo.Enabled   := Conected;
+  actRptCFDIContabilidad.Enabled  := Conected;
 end;
 
 procedure TfrmMain.DestroyModule;
@@ -409,8 +427,6 @@ begin
   begin
      dxRibbonStatusBar1.Panels[2].Text:= 'PRODUCCION';
   end;
-
-
 end;
 
 

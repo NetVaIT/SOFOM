@@ -294,7 +294,9 @@ uses
   PagosRealesEdit in 'Procesos\PagosRealesEdit.pas' {FrmEdPagosReales},
   PagosFragmentosForm in 'Procesos\PagosFragmentosForm.pas' {frmFragmentosPagos},
   PagosFragmentadosEdit in 'PagosFragmentadosEdit.pas' {FrmEdtPagosFragmentados},
-  RptEstadoCuentaDM in 'Reportes\RptEstadoCuentaDM.pas' {dmRptEstadoCuenta: TDataModule};
+  RptEstadoCuentaDM in 'Reportes\RptEstadoCuentaDM.pas' {dmRptEstadoCuenta: TDataModule},
+  RptCFDIContabilidadDM in 'Reportes\RptCFDIContabilidadDM.pas' {dmRptCFDIContabilidad: TDataModule},
+  RptCFDIContabilidadForm in 'Reportes\RptCFDIContabilidadForm.pas' {frmRptCFDIContabilidad};
 
 {$R *.res}
 
