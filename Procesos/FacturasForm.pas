@@ -113,6 +113,7 @@ type
     tvMasterTipoCambioP: TcxGridDBColumn;
     tvMasterMonto: TcxGridDBColumn;
     tvMasterNumOperacion: TcxGridDBColumn;
+    dxBrBtnConsultaEstatus: TdxBarButton;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure edtUsarFechaChange(Sender: TObject);
@@ -127,6 +128,7 @@ type
     FactTimbrarCFDI: TBasicAction;
     FactRelacionarCFDI: TBasicAction;
     FactEliminar: TBasicAction;
+    FactConsultaEstado: TBasicAction;
     function GetFFiltroNombre: String;
     procedure SetactCancelarCFDI(const Value: TBasicAction);
     procedure SetactImprimirCFDI(const Value: TBasicAction);
@@ -142,6 +144,7 @@ type
     procedure SetHasta(const Value: TDateTime);
     procedure SetUsarFecha(const Value: Boolean);
     procedure SetactEliminar(const Value: TBasicAction);
+    procedure SetactConsultaEstado(const Value: TBasicAction);
   public
     { Public declarations }
     property actTimbrarCFDI: TBasicAction read FactTimbrarCFDI write SetactTimbrarCFDI;
@@ -156,6 +159,7 @@ type
     property Hasta: TDateTime read GetHasta write SetHasta;
     property UsarFecha: Boolean read GetUsarFecha write SetUsarFecha;
     property ConSaldo: Boolean read GetConSaldo write SetConSaldo;
+    property actConsultaEstadoCFDI: TBasicAction read FactConsultaEstado write SetactConsultaEstado;
   end;
 
 implementation
@@ -236,6 +240,14 @@ procedure TfrmFacturasGrid.SetactCancelarCFDI(const Value: TBasicAction);
 begin
   FactCancelarCFDI := Value;
   dxbbCancelarCFDI.Action := Value;
+end;
+
+procedure TfrmFacturasGrid.SetactConsultaEstado(const Value: TBasicAction);
+begin    //Nov 6/18
+  FactConsultaEstado := Value;
+  dxBrBtnConsultaEstatus.Action:=value;
+  dxBrBtnConsultaEstatus.ImageIndex:=20;
+
 end;
 
 procedure TfrmFacturasGrid.SetactEliminar(const Value: TBasicAction);

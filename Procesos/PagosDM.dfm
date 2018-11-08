@@ -2057,17 +2057,20 @@ inherited dmPagos: TdmPagos
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@IdAnexoAmortizacion'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end
       item
         Name = '@Temporal'
         Attributes = [paNullable]
         DataType = ftBoolean
+        Value = Null
       end
       item
         Name = '@IdCuentaXCobrar'
@@ -2075,6 +2078,7 @@ inherited dmPagos: TdmPagos
         DataType = ftInteger
         Direction = pdInputOutput
         Precision = 10
+        Value = Null
       end>
     Left = 536
     Top = 512

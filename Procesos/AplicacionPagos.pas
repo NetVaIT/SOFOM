@@ -399,8 +399,8 @@ begin
       // 20
       desctXRep:= DSAnexoMoraAcumula.dataset.fieldbyname('Descuento').asFloat;
       //   139.2
-      //   116
-      valXREpartir:= DSAnexoMoraAcumula.dataset.fieldbyname('Importe').asfloat;// //corresponde menos descuento mas impuestos  139.2
+      //   116                                                                   //Ajustado oct 18/18
+      valXREpartir:= DSAnexoMoraAcumula.dataset.fieldbyname('Importe').asfloat+DSAnexoMoraAcumula.dataset.fieldbyname('Impuesto').asfloat;//<--- no esta incluyendo el IVA //corresponde menos descuento mas impuestos  139.2
       //  100    =     2000      -1900  //supuestos
       //  100
       ValMoraParte1:=  ValorAplica-AcumAnt; // Seria el nuevo valor del amexomoraexistente

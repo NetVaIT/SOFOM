@@ -644,118 +644,6 @@ object dmRptCFDI33: TdmRptCFDI33
     Left = 320
     Top = 88
     MasterDataPipelineName = 'dbpCFDI'
-    object dbpCFDIConceptosppField1: TppField
-      FieldAlias = 'IdCFDIConcepto'
-      FieldName = 'IdCFDIConcepto'
-      FieldLength = 0
-      DataType = dtLargeInt
-      DisplayWidth = 0
-      Position = 0
-    end
-    object dbpCFDIConceptosppField2: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdUnidadMedida'
-      FieldName = 'IdUnidadMedida'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 1
-    end
-    object dbpCFDIConceptosppField3: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdCuentaXCobrarDetalle'
-      FieldName = 'IdCuentaXCobrarDetalle'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 2
-    end
-    object dbpCFDIConceptosppField4: TppField
-      FieldAlias = 'SATClaveProdServ'
-      FieldName = 'SATClaveProdServ'
-      FieldLength = 10
-      DisplayWidth = 10
-      Position = 3
-    end
-    object dbpCFDIConceptosppField5: TppField
-      FieldAlias = 'NoIdentifica'
-      FieldName = 'NoIdentifica'
-      FieldLength = 50
-      DisplayWidth = 50
-      Position = 4
-    end
-    object dbpCFDIConceptosppField6: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'Cantidad'
-      FieldName = 'Cantidad'
-      FieldLength = 0
-      DataType = dtDouble
-      DisplayWidth = 10
-      Position = 5
-    end
-    object dbpCFDIConceptosppField7: TppField
-      FieldAlias = 'SATClaveUnidad'
-      FieldName = 'SATClaveUnidad'
-      FieldLength = 5
-      DisplayWidth = 5
-      Position = 6
-    end
-    object dbpCFDIConceptosppField8: TppField
-      FieldAlias = 'Unidad'
-      FieldName = 'Unidad'
-      FieldLength = 30
-      DisplayWidth = 30
-      Position = 7
-    end
-    object dbpCFDIConceptosppField9: TppField
-      FieldAlias = 'Descripcion'
-      FieldName = 'Descripcion'
-      FieldLength = 400
-      DisplayWidth = 400
-      Position = 8
-    end
-    object dbpCFDIConceptosppField10: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'ValorUnitario'
-      FieldName = 'ValorUnitario'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 19
-      Position = 9
-    end
-    object dbpCFDIConceptosppField11: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'Importe'
-      FieldName = 'Importe'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 19
-      Position = 10
-    end
-    object dbpCFDIConceptosppField12: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'Descuento'
-      FieldName = 'Descuento'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 19
-      Position = 11
-    end
-    object dbpCFDIConceptosppField13: TppField
-      FieldAlias = 'ImpuestoTxt'
-      FieldName = 'ImpuestoTxt'
-      FieldLength = 10
-      DisplayWidth = 10
-      Position = 12
-    end
-    object dbpCFDIConceptosppField14: TppField
-      FieldAlias = 'Impuesto'
-      FieldName = 'Impuesto'
-      FieldLength = 0
-      DataType = dtCurrency
-      DisplayWidth = 10
-      Position = 13
-    end
   end
   object ppRptCFDI: TppReport
     OnFileDeviceCreate = ppRptCFDIFileDeviceCreate
@@ -813,7 +701,7 @@ object dmRptCFDI33: TdmRptCFDI33
     XLSSettings.Subject = 'Report'
     XLSSettings.Title = 'Report'
     Left = 320
-    Top = 160
+    Top = 152
     Version = '15.0'
     mmColumnWidth = 0
     DataPipelineName = 'dbpCFDIConceptos'
@@ -4942,7 +4830,7 @@ object dmRptCFDI33: TdmRptCFDI33
         Position = lpLeft
         Weight = 0.750000000000000000
         mmHeight = 6615
-        mmLeft = 188920
+        mmLeft = 188390
         mmTop = 89429
         mmWidth = 1054
         BandType = 0
@@ -5262,16 +5150,16 @@ object dmRptCFDI33: TdmRptCFDI33
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 7
+        Font.Size = 6
         Font.Style = []
         ParentDataPipeline = False
         TextAlignment = taRightJustified
         Transparent = True
         DataPipelineName = 'dbpCFDIConceptos'
         mmHeight = 3175
-        mmLeft = 189776
+        mmLeft = 189177
         mmTop = 265
-        mmWidth = 10584
+        mmWidth = 13759
         BandType = 4
         LayerName = Foreground
       end

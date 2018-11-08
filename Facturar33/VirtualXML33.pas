@@ -4,7 +4,7 @@ interface
 
 uses Winapi.Windows, System.SysUtils,
   Xml.XMLIntf,
-  Facturacion.ComprobanteV33;
+  Facturacion.ComprobanteV33, FacturaTipos,System.IniFiles;  //Oct 26/18
 
 const
   CFDIVersion = '3.3';
@@ -42,8 +42,21 @@ type
   function GenerarCFDI33(Tipo: TFETipoComprobante; Comprobante: IComprobanteFiscalV33;
   RutaCertificado, RutaLlavePrivada: TFileName; ClaveLlavePrivada: String;
   Ruta: String; var TimbradoCFDI: TTimbreCFDI; Produccion: Boolean = False): Boolean;
-//  function CancelarCFDI(UUID: string; ArchivoOUT: string; Certificado: TFECertificado;
-//  var Respuesta: string; Produccion: Boolean = False): Boolean;
+
+   //Nuevo Esquema Cancelaciones Nov 1/18
+  function CancelarCFDI_ConSolicitud(UUID, RFCReceptor, TotalTxt: string; ArchivoOUT, LogCancela : string; Certificado: TFECertificado;       //Oct 26/18
+      var Respuesta: string; Produccion: Boolean = False): Boolean;
+
+  procedure LeerArchivoINI(Archivo: TFileName; var  UUID,RFCEMI, RFCREC, CodRes, error, EstadoCFDI,
+      EsCancelable, EstadoCancela: String);   //Oct 27/18
+
+
+  procedure LlenaArchiBita(ARchivo:TFileName;UUID,RFCEMI, RFCREC, CodRes, error, EstadoCFDI,
+      EsCancelable, EstadoCancela: String);    //Oct 27/18
+
+  function ConsultaEstatusCFDI33(UUID:String;RFCEmi,RFCReceptor:String; Total:String;
+      var Resultado:String; ArchiINI, ArchiLog:String;EsProduccion:Boolean=False):integer;   //Oct 27/18 Es Consulta nueva de estatus de 3.3  con nuevo esquema
+
 
 var
   hXml: LongInt;
@@ -470,8 +483,7 @@ begin
     TimbradoCFDI.RevisionLibreria:= VirtualXML_GetValue(hXML, 19);
     TimbradoCFDI.RFCPAC:=VirtualXML_GetValue(hXml, 20);      //Sep 6/17
     TimbradoCFDI.LeyendaSAT:=VirtualXML_GetValue(hXml, 21) ; //Sep 6/17
-//VirtualXML_GetValue(hXml, 20) -> Recupera el RFC el PAC que certifico el documento
-//VirtualXML_GetValue(hXml, 21) -> Recupera la "leyenda" del timbre fiscal digital (cuando exista)
+
     TimbradoCFDI.NombreArchivo:= ArchivoXML;
     Result:= (TimbradoCFDI.Resultado = cVirtualPAC_OK);
   finally
@@ -479,5 +491,233 @@ begin
     FreeLibrary(Hbar);
   end;
 end;
+
+//Nuevo Esquema Cancelaciones //Nov 1/18
+function CancelarCFDI_ConSolicitud(UUID, RFCReceptor, TotalTxt: string; ArchivoOUT, LogCancela : string; Certificado: TFECertificado;       //Oct 26/18
+      var Respuesta: string; Produccion: Boolean = False): Boolean;  //Oct 26/18
+var
+  hXML: LongInt;
+  hBar: THandle;
+  VirtualXML_New : function( szVersion:PChar ): LongInt; cdecl;
+  VirtualXML_ProcesaDocumento : function( p:LongInt; csd:PChar; key:PChar; keypwd:PChar; outfile:PChar ): LongInt; cdecl;
+  VirtualXML_GetValue : function( p:LongInt; value:LongInt ): PChar; cdecl;
+  VirtualXML_Free : procedure( p:LongInt ); cdecl;
+  VirtualXML_SetVirtualPACInfo : procedure( p:LongInt; szUser:PChar; servidor:PChar ); cdecl;
+  VirtualXML_CancelaCFDI : function( szUser:PChar; szEmisor:PChar; szREceptor:Pchar; szTotal: PChar; szUuid:PChar;szCert:PChar; szKey:PChar; szPwd:PChar;  szOut:PChar; szArchiLog:PChar ): LongInt; cdecl;
+
+  Valor:integer;
+//  F:TextFile;
+
+  function CargarLibreria: Boolean;
+  begin
+    Result:= False;
+    Hbar := LoadLibrary('VirtualXML.dll');
+    if Hbar = 0 then exit;
+    VirtualXML_New := GetProcAddress( Hbar, 'VirtualXML_NewW' );
+    VirtualXML_ProcesaDocumento := GetProcAddress( Hbar, 'VirtualXML_ProcesaDocumentoW' );
+    VirtualXML_GetValue := GetProcAddress( Hbar, 'VirtualXML_GetValueW' );
+    VirtualXML_Free := GetProcAddress( Hbar, 'VirtualXML_FreeW' );
+    VirtualXML_SetVirtualPACInfo := GetProcAddress( Hbar, 'VirtualXML_SetVirtualPACInfoW' );
+    VirtualXML_CancelaCFDI := GetProcAddress( Hbar, 'VirtualXML_CancelaCFDIW' );        /// CancelarCFDIW  //verificar???
+    Result:= True;
+  end;
+
+begin
+  Result:= False;
+  if not CargarLibreria then Exit;
+//  ArchivoOUT:= strDir + PathDelim + UUID + '.TXT';
+  hXML := VirtualXML_New(PChar(CFDIVersion));
+  try
+    if Produccion then
+    begin
+      VirtualXML_SetVirtualPACInfo(hXML, 'RMunguia', 'vpac-sef');
+      Valor:= VirtualXML_CancelaCFDI('RMunguia',
+      PWideChar(Certificado.RFCAlQuePertenece),
+      PWideChar(RFCReceptor),     // agregado oct 26/18
+      PWideChar(TotalTxt),        //agregado oct 26/18
+      PWideChar(UUID),   //Movido aca
+      PWideChar(Certificado.Ruta),
+      PWideChar(Certificado.LlavePrivada.Ruta),
+      PWideChar(Certificado.LlavePrivada.Clave),
+      PWideChar(ArchivoOUT),      //INI
+      PWideChar(LogCancela));
+    end
+    else
+    begin
+      VirtualXML_SetVirtualPACInfo(hXML,'demo_RMunguia' , 'virtual');  // 'DEMO_52079295'     nov 24/17
+      Valor:= VirtualXML_CancelaCFDI('demo_RMunguia',
+      PWideChar(Certificado.RFCAlQuePertenece),
+      PWideChar(RFCReceptor),     // agregado oct 26/18
+      PWideChar(TotalTxt),        //agregado oct 26/18
+      PWideChar(UUID),   //Movido aca
+      PWideChar(Certificado.Ruta),
+      PWideChar(Certificado.LlavePrivada.Ruta),
+      PWideChar(Certificado.LlavePrivada.Clave),
+      PWideChar(ArchivoOUT), //INI
+      PWideChar(LogCancela));
+    end;
+
+
+    Case Valor of    //Oct 19/18 Volvio a usarse..
+    0:begin //Cancelado con exito ;
+        Result:=true;
+        Respuesta:='Cancelado directo';// este msg mandarlo en otro lado #13+'Documento cancelado en SAT. Recuerde que debe descargar del SAT, los acuses de cancelación. Cancelación directa.';
+      end;
+    1:begin //Requiere Solicitud al Receptor, Se envia Peticion.. Y posteriormente se puede intentar cancelar o si se marca estatus nuevo Procesoando
+        Respuesta:='OPERANDO';
+        Result:=true;
+      end;
+
+   -1:begin   //No se puede Cancelar
+        Respuesta:='No se puede Cancelar.  Revisar INI'; //Se debe adjuntar razon
+        Result:=False;
+      end;
+   -2:begin
+        Respuesta:='No Existe en SAT. Intente más tarde '; //Se debe adjuntar razon
+        Result:=False;
+      end;
+   -3:begin
+        Respuesta:='Servicio SAT, no disponible. Intente más tarde '; //Se debe adjuntar razon
+        Result:=False;
+      end;
+   end;
+
+    //Result:= FileExists(ArchivoOUT);//(Valor=0); Mar 27/17
+    //Respuesta:=intToStr(valor);
+  finally
+    VirtualXML_Free(hXML);
+    FreeLibrary(Hbar);
+  end;
+
+
+
+end;
+
+
+procedure LeerArchivoINI(Archivo: TFileName; var  UUID,RFCEMI, RFCREC, CodRes, error, EstadoCFDI,
+      EsCancelable, EstadoCancela: String);   //Oct 27/18
+Var         //Leer archivo Oct 23/18
+  MiFichero : TIniFile;
+begin
+  MiFichero := TiniFile.Create(Archivo);         //Se completo desde afuera  ...extractFilePath(application.exename)+
+                           //No estaba leyendo nada, requiere el path completo
+ (* if MiFichero.SectionExists ('VirtualXML') then
+     Showmessage('Existe seccion')
+  else
+    ShowMessage('No existe Seccion');*)
+  CodRes:= MiFichero.ReadString ('VirtualXML','EXITCODE','');
+  error :=MiFichero.ReadString ('VirtualXML ','COMMINFO','');
+  UUID:= MiFichero.ReadString ('VirtualXML','UUID','');
+  RFCEMI:= MiFichero.ReadString ('VirtualXML','RFCEMISOR','');
+  RFCREC:= MiFichero.ReadString ('VirtualXML','RFCRECEPTOR','');
+  EstadoCFDI := MiFichero.ReadString ('VirtualXML','ESTADO','');
+  EsCancelable :=MiFichero.ReadString ('VirtualXML','ESCANCELABLE','');
+  EstadoCancela :=MiFichero.ReadString ('VirtualXML','ESTATUSCANCELACION','');
+
+  MiFichero.Free;
+
+end;
+
+procedure LlenaArchiBita(ARchivo:TFileName;UUID,RFCEMI, RFCREC, CodRes, error, EstadoCFDI,
+      EsCancelable, EstadoCancela: String);    //Oct 27/18
+var    F:TextFile;
+linea :String;
+begin
+     //VEriificar si el nombre es gen4erio o por mes ..
+  Linea:= DAteTimeTostr(now) + '|'+ UUID + '|'+  RFCEMI + '|'+  RFCREC + '|'+
+  CodRes + '|'+ error + '|'+  EstadoCFDI + '|'+ EsCancelable + '|'+  EstadoCancela;
+
+  AssignFile(F, Archivo);
+  if fileExists(Archivo) then
+    Append(F)
+  else
+    Rewrite(F);
+  Writeln(F, Linea);
+  CloseFile(F);
+
+end;
+
+
+function ConsultaEstatusCFDI33(UUID:String;RFCEmi,RFCReceptor:String; Total:String; var Resultado:String;
+ ArchiINI, ArchiLog:String;EsProduccion:Boolean=False):integer;   //Es Consulta nueva de estatus de 3.3  con nuevo esquema
+var              //Consultatr estatus , en pincipio sólo se debera habilitar para los procCancela.. poqr q cobrada de timbres
+  hBar: Thandle;
+  hXml: LongInt;
+
+  VirtualXML_New : function( szVersion:PChar ): LongInt; cdecl;
+  VirtualXML_Free : procedure( p:LongInt ); cdecl;
+  VirtualXML_SetVirtualPACInfo : procedure( p:LongInt; szUser:PChar; servidor:PChar ); cdecl;
+
+//  VirtualXML_CancelaCFDI:function(UsuarioCS: PChar;RFCEmisor:Pchar ;RFCReceptor:Pchar; Total: PChar;CFDI_Uuid:Pchar;ArchCertCSD:PChar;ArchKey:PChar;CSDPwd:Pchar;ArchOut:Pchar; ArchiLog:PChar): LongInt;cdecl;
+  VirtualXML_GetStatusCFDI:function(UsuarioCS: PChar;RFCEmisor:Pchar ;RFCReceptor:Pchar; Total: PChar;CFDI_Uuid:Pchar;ArchOut:Pchar; ArchiLog:PChar): LongInt;cdecl;
+
+
+  DatosAdi,verCFDI:String;
+  Valor:integer;
+  F:TextFile;
+begin
+  Result:=-10;  //Uno fuera del rango
+
+
+  //UUID:=dsConsulta.DataSet.FieldByName('cdsUUID_TB').AsString;
+  //Ya trae valor
+  //DatosAdi:='FOLIO: '+dsConsulta.DataSet.FieldByName('cdsFolio').AsString+' '+dsConsulta.DataSet.FieldByName('cdsserie').AsString+ '     UUID: '+ UUID;
+  Hbar := LoadLibrary( 'VirtualXML.dll' );
+
+  VirtualXML_New := GetProcAddress( Hbar, 'VirtualXML_New' );
+  VirtualXML_SetVirtualPACInfo := GetProcAddress( Hbar, 'VirtualXML_SetVirtualPACInfo' );
+  VirtualXML_Free := GetProcAddress( Hbar, 'VirtualXML_Free' );
+  VirtualXML_GetStatusCFDI:= GetProcAddress(HBar,'VirtualXML_GetStatusCFDI');  //Modificado oct 24/18
+
+
+  // hXML := VirtualXML_New(PChar(CFDIVersion));
+  hXml := VirtualXML_New (pChar(VerCFDI));//('3.2');
+//Se cambio para que solo sirva con las claves si es Produccion el tipo
+  if EsProduccion then  //Ajustado dic4/13
+     VirtualXML_SetVirtualPACInfo(hXml, 'RMunguia', 'vpac-sef')
+  else                                     //Ajustado Nov 2/17
+      VirtualXML_SetVirtualPACInfo(hXml,'demo_RMunguia', 'virtual');// 'DEMO_52079295', 'virtual'); //Cambio mod oct 29/14 era oskar78
+  //###########################################################
+
+  if EsProduccion then                                                                                                                   //   'ConsultaEstado.INI','LogConsultaBita.Txt'
+    Valor:=VirtualXML_GetStatusCFDI('RMunguia',PChar(RFCEmi),PChar(RFCReceptor),Pchar(Total),pChar(UUID),pChar(ArchiINI), pChar(ArchiLog))
+  else //Por aca el de prueba     //Cambio Oct 29/14
+    Valor:=VirtualXML_GetStatusCFDI('demo_RMunguia',PChar(RFCEmi),PChar(RFCReceptor),Pchar(Total),pChar(UUID),pChar(ArchiINI), pChar(ArchiLog));
+//Ajustado
+
+
+  Case Valor of    //Oct 19/18 Volvio a usarse..
+  2: begin //Cancelado con exito ;
+
+       Resultado:='CFDI Vigente y Cancelable';
+
+     end;
+  1: begin
+        Resultado:='CFDI NO Cancelable'; //Verificar si se checa el INI
+
+     end;
+  0: begin
+        Resultado:='CFDI Vigente, cancelación EN PROCESO'; //Verificar si se checa el INI
+     end;
+  -1:begin
+         Resultado:='CFDI Cancelado';
+     end;
+  -2:begin
+        Resultado:='UUID No encontrado en los registos del SAT, intente más tarde';
+     end;
+  -3:begin
+         Resultado:='Servicio SAT, no disponible. Intente más tarde '; //Se debe adjuntar razon
+     end;
+  end;
+  Result:=VAlor; //Verificar si hay que ponerle un valor inicial... deberia ser diferente de -3 a 2
+
+  VirtualXML_Free(hXml);
+  FreeLibrary(Hbar);
+
+end;
+
+
+
+
 
 end.

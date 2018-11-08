@@ -219,7 +219,8 @@ begin
   inherited;
   if  edtNombre.Text<>'' then
   begin
-    FfiltroNombre:=' inner join Personas P On P.IdPersona=CXC.IdPersona and P.RazonSocial Like ''%'+edtNombre.Text+'%''';
+   // no se modifico  FfiltroNombre:=' CXC.IdPersona IN (SELECT IdPersona FROM Personas P WHERE P.RazonSocial LIKE ''%' +edtNombre.Text+'%'') '; // oct 17/18
+     FfiltroNombre:=' inner join Personas P On P.IdPersona=CXC.IdPersona and P.RazonSocial Like ''%'+edtNombre.Text+'%''';
   end
   else
     FfiltroNombre:='';

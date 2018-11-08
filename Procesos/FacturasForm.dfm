@@ -2,39 +2,39 @@ inherited frmFacturasGrid: TfrmFacturasGrid
   BorderStyle = bsToolWindow
   Caption = 'Facturas '
   ClientHeight = 586
-  ClientWidth = 969
-  ExplicitWidth = 975
+  ClientWidth = 1109
+  ExplicitWidth = 1115
   ExplicitHeight = 615
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
     Top = 501
-    Width = 969
+    Width = 1109
     ExplicitTop = 343
     ExplicitWidth = 815
   end
   inherited splDetail1: TSplitter
     Top = 254
-    Width = 969
+    Width = 1109
     ExplicitTop = 255
     ExplicitWidth = 815
   end
   inherited splDetail2: TSplitter
     Top = 457
-    Width = 969
+    Width = 1109
     ExplicitTop = 299
     ExplicitWidth = 815
   end
   inherited pnlMaster: TPanel
-    Width = 969
-    Height = 228
-    ExplicitWidth = 969
-    ExplicitHeight = 228
+    Width = 1109
+    Height = 226
+    ExplicitWidth = 1109
+    ExplicitHeight = 226
     inherited cxGrid: TcxGrid
-      Width = 969
-      Height = 228
-      ExplicitWidth = 969
-      ExplicitHeight = 228
+      Width = 1109
+      Height = 226
+      ExplicitWidth = 1109
+      ExplicitHeight = 226
       inherited tvMaster: TcxGridDBTableView
         DataController.KeyFieldNames = 'IdCFDI'
         object tvMasterIdCFDI: TcxGridDBColumn
@@ -321,35 +321,35 @@ inherited frmFacturasGrid: TfrmFacturasGrid
   end
   inherited pnlDetail3: TPanel
     Top = 504
-    Width = 969
+    Width = 1109
     ExplicitTop = 504
-    ExplicitWidth = 969
+    ExplicitWidth = 1109
   end
   inherited pnlDetail2: TPanel
     Top = 460
-    Width = 969
+    Width = 1109
     ExplicitTop = 460
-    ExplicitWidth = 969
+    ExplicitWidth = 1109
   end
   inherited pnlDetail1: TPanel
     Top = 257
-    Width = 969
+    Width = 1109
     Height = 200
     ExplicitTop = 257
-    ExplicitWidth = 969
+    ExplicitWidth = 1109
     ExplicitHeight = 200
   end
   inherited pnlClose: TPanel
     Top = 545
-    Width = 969
+    Width = 1109
     ExplicitTop = 545
-    ExplicitWidth = 969
+    ExplicitWidth = 1109
     DesignSize = (
-      969
+      1109
       41)
     inherited btnClose: TButton
-      Left = 884
-      ExplicitLeft = 884
+      Left = 1024
+      ExplicitLeft = 1024
     end
   end
   inherited DataSource: TDataSource
@@ -359,13 +359,9 @@ inherited frmFacturasGrid: TfrmFacturasGrid
     DockControlHeights = (
       0
       0
-      26
+      28
       0)
-    inherited dxbNavigator: TdxBar
-      DockedLeft = 104
-    end
     inherited dxbTools: TdxBar
-      DockedLeft = 231
       ItemLinks = <
         item
           Visible = True
@@ -386,10 +382,14 @@ inherited frmFacturasGrid: TfrmFacturasGrid
         item
           Visible = True
           ItemName = 'dxbbCancelarCFDI'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBrBtnConsultaEstatus'
         end>
     end
     inherited dxbFilter: TdxBar
-      DockedLeft = 358
+      DockedLeft = 393
       ItemLinks = <
         item
           Visible = True
@@ -487,6 +487,13 @@ inherited frmFacturasGrid: TfrmFacturasGrid
       PropertiesClassName = 'TcxCheckBoxProperties'
       Properties.ImmediatePost = True
       InternalEditValue = False
+    end
+    object dxBrBtnConsultaEstatus: TdxBarButton
+      Caption = 'Consulta'
+      Category = 0
+      Hint = 'Consulta Estado CFDI'
+      Visible = ivAlways
+      ImageIndex = 20
     end
   end
   inherited cxStyleRepository: TcxStyleRepository
@@ -1337,6 +1344,44 @@ inherited frmFacturasGrid: TfrmFacturasGrid
           8000000000000000FF000000FF000000FF000000FF000000FF000000FF000000
           FF000000FF000000FF0000000000008080000080800000808000008080000080
           80000080800000808000008080000000FF000000FF000000FF000000FF000000
+          FF00008080000080800000808000008080000080800000808000}
+        MaskColor = clOlive
+      end
+      item
+        Image.Data = {
+          36040000424D3604000000000000360000002800000010000000100000000100
+          2000000000000004000000000000000000000000000000000000008080000080
+          8000008080000080800000808000008080000080800000808000008080000080
+          8000008080000080800000808000008080000080800000808000008080000080
+          8000008080000080800000808000FFFFFF007F7F7F000000FF007F7F7F00FFFF
+          FF00008080000080800000808000008080000080800000808000008080000080
+          80000080800000FFFF00FFFFFF0000FFFF000000FF000000FF000000FF0000FF
+          FF00FFFFFF0000FFFF0000808000008080000080800000808000008080000080
+          800000FFFF00FFFFFF0000FFFF00FFFFFF007F7F7F000000FF007F7F7F00FFFF
+          FF0000FFFF00FFFFFF0000FFFF000080800000808000008080000080800000FF
+          FF00FFFFFF0000FFFF00FFFFFF0000FFFF00FFFFFF0000FFFF00FFFFFF0000FF
+          FF00FFFFFF0000FFFF00FFFFFF0000FFFF00008080000080800000808000FFFF
+          FF0000FFFF00FFFFFF0000FFFF00FFFFFF0000FFFF000000FF0000FFFF00FFFF
+          FF0000FFFF00FFFFFF0000FFFF00FFFFFF000080800000808000FFFFFF0000FF
+          FF00FFFFFF0000FFFF00FFFFFF0000FFFF00FFFFFF000000FF007F7F7F0000FF
+          FF00FFFFFF0000FFFF00FFFFFF0000FFFF00FFFFFF000080800000FFFF00FFFF
+          FF0000FFFF00FFFFFF0000FFFF00FFFFFF0000FFFF000000FF000000FF00FFFF
+          FF0000FFFF00FFFFFF0000FFFF00FFFFFF0000FFFF0000808000FFFFFF0000FF
+          FF00FFFFFF0000FFFF00FFFFFF0000FFFF00FFFFFF0000FFFF000000FF000000
+          FF00FFFFFF0000FFFF00FFFFFF0000FFFF00FFFFFF000080800000FFFF00FFFF
+          FF0000FFFF00FFFFFF007F7F7F007F7F7F0000FFFF00FFFFFF007F7F7F000000
+          FF000000FF00FFFFFF0000FFFF00FFFFFF0000FFFF0000808000FFFFFF0000FF
+          FF00FFFFFF0000FFFF000000FF000000FF00FFFFFF0000FFFF007F7F7F000000
+          FF000000FF0000FFFF00FFFFFF0000FFFF00FFFFFF000080800000808000FFFF
+          FF0000FFFF00FFFFFF000000FF000000FF007F7F7F00FFFFFF007F7F7F000000
+          FF000000FF00FFFFFF0000FFFF00FFFFFF0000808000008080000080800000FF
+          FF00FFFFFF0000FFFF00FFFFFF000000FF000000FF000000FF000000FF000000
+          FF00FFFFFF0000FFFF00FFFFFF0000FFFF000080800000808000008080000080
+          800000FFFF00FFFFFF0000FFFF00FFFFFF000000FF000000FF000000FF00FFFF
+          FF0000FFFF00FFFFFF0000FFFF00008080000080800000808000008080000080
+          80000080800000FFFF00FFFFFF0000FFFF00FFFFFF0000FFFF00FFFFFF0000FF
+          FF00FFFFFF0000FFFF0000808000008080000080800000808000008080000080
+          8000008080000080800000808000FFFFFF0000FFFF00FFFFFF0000FFFF00FFFF
           FF00008080000080800000808000008080000080800000808000}
         MaskColor = clOlive
       end>

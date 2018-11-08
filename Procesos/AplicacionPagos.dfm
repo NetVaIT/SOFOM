@@ -874,8 +874,8 @@ object FrmAplicacionPago: TFrmAplicacionPago
       item
         Name = '@ListaAneMoraAparte'
         Attributes = [paNullable]
-        DataType = ftString
-        Size = 2000
+        DataType = ftWideString
+        Size = 1073741823
       end
       item
         Name = '@IdAnexoMoratorio'
