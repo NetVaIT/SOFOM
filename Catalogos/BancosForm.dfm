@@ -120,8 +120,108 @@ inherited frmBancos: TfrmBancos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 43335.499403449080000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
+  end
+  inherited cxpsGrid: TcxPropertiesStore
+    Components = <
+      item
+        Component = tvMaster
+        Properties.Strings = (
+          'OptionsView.Footer'
+          'OptionsView.GroupByBox'
+          'OptionsView.GroupFooters')
+      end
+      item
+        Component = tvMasterDescripcion
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdBanco
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdentificador
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdPaisBanco
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterNombre
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterPais
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterRFC
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterSiglas
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterUsoComun
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end>
   end
 end

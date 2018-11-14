@@ -27,14 +27,14 @@ inherited FrmConEstadosCuenta: TFrmConEstadosCuenta
   end
   inherited pnlMaster: TPanel
     Width = 766
-    Height = 169
-    ExplicitWidth = 772
-    ExplicitHeight = 198
+    Height = 174
+    ExplicitWidth = 766
+    ExplicitHeight = 174
     inherited cxGrid: TcxGrid
       Width = 766
-      Height = 169
-      ExplicitWidth = 772
-      ExplicitHeight = 198
+      Height = 174
+      ExplicitWidth = 766
+      ExplicitHeight = 174
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdEstadoCuenta: TcxGridDBColumn
           DataBinding.FieldName = 'IdEstadoCuenta'
@@ -81,36 +81,36 @@ inherited FrmConEstadosCuenta: TFrmConEstadosCuenta
     Top = 459
     Width = 766
     Height = 22
-    ExplicitTop = 488
-    ExplicitWidth = 772
+    ExplicitTop = 459
+    ExplicitWidth = 766
     ExplicitHeight = 22
   end
   inherited pnlDetail2: TPanel
     Top = 443
     Width = 766
     Height = 13
-    ExplicitTop = 472
-    ExplicitWidth = 772
+    ExplicitTop = 443
+    ExplicitWidth = 766
     ExplicitHeight = 13
   end
   inherited pnlDetail1: TPanel
     Top = 203
     Width = 766
     Height = 237
-    ExplicitTop = 232
-    ExplicitWidth = 772
+    ExplicitTop = 203
+    ExplicitWidth = 766
     ExplicitHeight = 237
   end
   inherited pnlClose: TPanel
     Top = 481
     Width = 766
     Height = 35
-    ExplicitTop = 510
-    ExplicitWidth = 772
+    ExplicitTop = 481
+    ExplicitWidth = 766
     ExplicitHeight = 35
     inherited btnClose: TButton
       Left = 681
-      ExplicitLeft = 687
+      ExplicitLeft = 681
     end
   end
   inherited DataSource: TDataSource
@@ -120,7 +120,7 @@ inherited FrmConEstadosCuenta: TFrmConEstadosCuenta
     DockControlHeights = (
       0
       0
-      31
+      26
       0)
     inherited dxbNavigator: TdxBar
       DockedLeft = 107
@@ -1002,5 +1002,115 @@ inherited FrmConEstadosCuenta: TFrmConEstadosCuenta
       AssignedFormatValues = []
       BuiltInReportLink = True
     end
+  end
+  inherited cxpsGrid: TcxPropertiesStore
+    Components = <
+      item
+        Component = tvMaster
+        Properties.Strings = (
+          'OptionsView.Footer'
+          'OptionsView.GroupByBox'
+          'OptionsView.GroupFooters')
+      end
+      item
+        Component = tvMasterCliente
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterFechaCorte
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterFechaVencimiento
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdContrato
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdEstadoCuenta
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdPersona
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterSaldoAnterior
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterSaldoAPagar
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterSaldoInsoluto
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterSaldoVencido
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end>
   end
 end

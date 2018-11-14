@@ -90,7 +90,68 @@ inherited frmCFDIRelacionados: TfrmCFDIRelacionados
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 43165.499007245380000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
+  end
+  inherited cxpsGrid: TcxPropertiesStore
+    Components = <
+      item
+        Component = tvMaster
+        Properties.Strings = (
+          'OptionsView.Footer'
+          'OptionsView.GroupByBox'
+          'OptionsView.GroupFooters')
+      end
+      item
+        Component = tvMasterCFDIAsociado
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIDCFDI
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIDCFDIAsociado
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdCFDIRelacionado
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterUUID
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end>
   end
 end

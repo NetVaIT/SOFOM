@@ -28,7 +28,8 @@ uses
   Vcl.ExtCtrls, dxPSCore, dxPScxCommon, dxBar, Vcl.ImgList,
   cxGridCustomPopupMenu, cxGridPopupMenu, cxClasses, Vcl.StdActns, Vcl.DBActns,
   System.Actions, Vcl.ActnList, cxGridLevel, cxGridCustomView,
-  cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,Data.Win.ADODB ;
+  cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,Data.Win.ADODB,
+  cxPropertiesStore ;
 
 type
   TfrmConaplicaciones = class(T_frmGrid)

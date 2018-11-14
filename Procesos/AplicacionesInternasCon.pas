@@ -27,7 +27,7 @@ uses
   cxGridCustomPopupMenu, cxGridPopupMenu, cxClasses, Vcl.StdActns, Vcl.DBActns,
   System.Actions, Vcl.ActnList, Vcl.StdCtrls, cxGridLevel, cxGridCustomView,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
-  Vcl.ExtCtrls;
+  Vcl.ExtCtrls, cxPropertiesStore;
 
 type
   TfrmConAplicacionesInternas = class(T_frmGrid)
@@ -41,7 +41,6 @@ type
     tvMastersaldoCXC: TcxGridDBColumn;
     tvMasterImportePagado: TcxGridDBColumn;
     dxBrBtnPAgosXDepo: TdxBarButton;
-    procedure FormCreate(Sender: TObject);
   private
     FActCreaPagoDeposito: TBasicAction;
     procedure SetFCreaPagoDeposito(const Value: TBasicAction);
@@ -59,12 +58,6 @@ implementation
 {$R *.dfm}
 
 uses AplicacionesConsultaDM;
-
-procedure TfrmConAplicacionesInternas.FormCreate(Sender: TObject);
-begin
-  inherited;
-  applybestfit:=False;
-end;
 
 procedure TfrmConAplicacionesInternas.SetFCreaPagoDeposito(
   const Value: TBasicAction);                   //Jun 21/17     //ESta invisible desde el action y no se esta usando

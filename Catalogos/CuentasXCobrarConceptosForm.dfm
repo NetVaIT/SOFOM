@@ -3,6 +3,7 @@ inherited frmCuentasXCobrarConceptos: TfrmCuentasXCobrarConceptos
   Caption = 'Conceptos de Cuentas X Cobrar'
   ClientHeight = 433
   ClientWidth = 645
+  ExplicitWidth = 651
   ExplicitHeight = 462
   PixelsPerInch = 96
   TextHeight = 13
@@ -28,12 +29,12 @@ inherited frmCuentasXCobrarConceptos: TfrmCuentasXCobrarConceptos
     Width = 645
     Height = 234
     ExplicitWidth = 645
-    ExplicitHeight = 229
+    ExplicitHeight = 234
     inherited cxGrid: TcxGrid
       Width = 645
-      Height = 229
+      Height = 234
       ExplicitWidth = 645
-      ExplicitHeight = 229
+      ExplicitHeight = 234
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdCuentaXCobrarConcepto: TcxGridDBColumn
           DataBinding.FieldName = 'IdCuentaXCobrarConcepto'
@@ -101,5 +102,45 @@ inherited frmCuentasXCobrarConceptos: TfrmCuentasXCobrarConceptos
       AssignedFormatValues = []
       BuiltInReportLink = True
     end
+  end
+  inherited cxpsGrid: TcxPropertiesStore
+    Components = <
+      item
+        Component = tvMaster
+        Properties.Strings = (
+          'OptionsView.Footer'
+          'OptionsView.GroupByBox'
+          'OptionsView.GroupFooters')
+      end
+      item
+        Component = tvMasterDescripcion
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdCuentaXCobrarConcepto
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdentificador
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end>
   end
 end

@@ -1,6 +1,5 @@
 inherited frmPuestosCapacitacion: TfrmPuestosCapacitacion
   Caption = 'frmPuestosCapacitacion'
-  OnCreate = FormCreate
   ExplicitWidth = 651
   ExplicitHeight = 457
   PixelsPerInch = 96
@@ -30,7 +29,7 @@ inherited frmPuestosCapacitacion: TfrmPuestosCapacitacion
     DockControlHeights = (
       0
       0
-      31
+      26
       0)
   end
   inherited cxStyleRepository: TcxStyleRepository
@@ -38,5 +37,62 @@ inherited frmPuestosCapacitacion: TfrmPuestosCapacitacion
   end
   inherited cxImageList: TcxImageList
     FormatVersion = 1
+  end
+  inherited dxComponentPrinter: TdxComponentPrinter
+    inherited dxcplGrid: TdxGridReportLink
+      ReportDocument.CreationDate = 43417.465591967590000000
+      AssignedFormatValues = []
+      BuiltInReportLink = True
+    end
+  end
+  inherited cxpsGrid: TcxPropertiesStore
+    Components = <
+      item
+        Component = tvMaster
+        Properties.Strings = (
+          'OptionsView.Footer'
+          'OptionsView.GroupByBox'
+          'OptionsView.GroupFooters')
+      end
+      item
+        Component = tvMasterBateriaCapacitacion
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdBateriaCapacitacion
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdPuesto
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdPuestoCapacitacion
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end>
   end
 end

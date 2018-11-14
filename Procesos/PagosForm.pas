@@ -29,7 +29,7 @@ uses
   System.Actions, Vcl.ActnList, Vcl.StdCtrls, cxGridLevel, cxGridCustomView,
   cxGrid, Vcl.ExtCtrls,Data.Win.ADODB, cxContainer, Vcl.ComCtrls, dxCore,
   cxDateUtils, cxTextEdit, cxMaskEdit, cxDropDownEdit, cxCalendar, Vcl.Buttons,
-  Math, AplicacionPagos;
+  Math, AplicacionPagos, cxPropertiesStore;
 
 type
   TFrmConPagos = class(T_frmGrid)
@@ -581,7 +581,6 @@ begin
   FechaAux:=FechaAux-1;  //Día anterior
   cxDtEdtHasta.Date:=FechaAux;
   SpdBtnBuscarClick(SpdBtnBuscar); //mar 10/17
-  ApplyBestFit:=False;
 end;
 
 procedure TFrmConPagos.FormShow(Sender: TObject);

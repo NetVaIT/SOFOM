@@ -27,7 +27,7 @@ uses
   cxGridCustomPopupMenu, cxGridPopupMenu, cxClasses, Vcl.StdActns, Vcl.DBActns,
   System.Actions, Vcl.ActnList, Vcl.StdCtrls, cxGridLevel, cxGridCustomView,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
-  Vcl.ExtCtrls,Data.Win.ADODB;
+  Vcl.ExtCtrls,Data.Win.ADODB, cxPropertiesStore;
 
 type
   TfrmFragmentosPagos = class(T_frmGrid)

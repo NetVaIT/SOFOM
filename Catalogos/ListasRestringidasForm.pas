@@ -27,7 +27,8 @@ uses
   cxGridCustomPopupMenu, cxGridPopupMenu, cxClasses, Vcl.StdActns, Vcl.DBActns,
   System.Actions, Vcl.ActnList, Vcl.StdCtrls, cxGridLevel, cxGridCustomView,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
-  Vcl.ExtCtrls, cxTextEdit, cxBarEditItem, cxCurrencyEdit, cxDropDownEdit;
+  Vcl.ExtCtrls, cxTextEdit, cxBarEditItem, cxCurrencyEdit, cxDropDownEdit,
+  cxPropertiesStore;
 
 type
   TfrmListasRestringidas = class(T_frmGrid)
@@ -78,10 +79,6 @@ procedure TfrmListasRestringidas.FormCreate(Sender: TObject);
 begin
   inherited;
   gEditForm := TfrmListasRestringidasEdit.Create(Self);
-  ApplyBestFit:= False;
-//  Select IdOrganismo, Descripcion from Organismos O where Exists( Select distinct (IdOrganismo) from ListasRestringidas LR where Lr.Idorganismo=O.IdOrganismo )
-
-
 end;
 
 procedure TfrmListasRestringidas.FormShow(Sender: TObject);

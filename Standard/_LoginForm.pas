@@ -33,6 +33,7 @@ type
     procedure actKeyboardExecute(Sender: TObject);
     procedure edtUserEnter(Sender: TObject);
     procedure edtPasswordEnter(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
     function GetPassword: String;
@@ -46,6 +47,8 @@ type
 implementation
 
 {$R *.dfm}
+
+uses _Utils;
 
 { T_frmLogin }
 
@@ -66,6 +69,13 @@ begin
 {$IFDEF TOUCHSCREEN}
   actKeyboard.Execute;
 {$ENDIF}
+end;
+
+procedure T_frmLogin.FormCreate(Sender: TObject);
+begin
+  cxPropertiesStore.StorageName := strRegistryKeyGrids + PathDelim + Name;
+  cxPropertiesStore.Active:= True;
+  cxPropertiesStore.RestoreFrom;
 end;
 
 procedure T_frmLogin.FormShow(Sender: TObject);

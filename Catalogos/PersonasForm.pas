@@ -27,7 +27,7 @@ uses
   dxPSPDFExport, cxDrawTextUtils, dxPSPrVwStd, dxPSPrVwAdv, dxPSPrVwRibbon,
   dxPScxPageControlProducer, dxPScxGridLnk, dxPScxGridLayoutViewLnk,
   dxPScxEditorProducers, dxPScxExtEditorProducers, dxSkinsdxRibbonPainter,
-  dxPSCore, dxPScxCommon, cxCheckBox;
+  dxPSCore, dxPScxCommon, cxCheckBox, cxPropertiesStore;
 
 type
   TfrmPersonas = class(T_frmGrid)

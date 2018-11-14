@@ -27,7 +27,7 @@ uses
   cxGridCustomPopupMenu, cxGridPopupMenu, cxClasses, Vcl.StdActns, Vcl.DBActns,
   System.Actions, Vcl.ActnList, Vcl.StdCtrls, cxGridLevel, cxGridCustomView,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
-  Vcl.ExtCtrls, cxLabel, dxColorEdit, cxBarEditItem;
+  Vcl.ExtCtrls, cxLabel, dxColorEdit, cxBarEditItem, cxPropertiesStore;
 
 type
   TfrmEvaluacionesRiesgo = class(T_frmGrid)

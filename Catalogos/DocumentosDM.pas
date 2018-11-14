@@ -65,11 +65,11 @@ type
     procedure SetFileAllowed(const Value: TFileAllowed);
     procedure SetLoadFileAllowed(const Value: Boolean);
     procedure SetIdDocumentoTipo(const Value: Integer);
-    function GetFileName(IdDocumento: Integer): TFileName;
   public
     { Public declarations }
     function GetFile(IdDocumento: Integer): TFileName; overload;
     procedure GetFile(IdDocumento: Integer; FileName: TFileName); overload;
+    function GetFileName(IdDocumento: Integer): TFileName;
     function SetFile: Integer; overload;
     function SetFile(FileName: TFileName): Integer; overload;
     property FileAllowed: TFileAllowed read FFileAllowed write SetFileAllowed default faXLSx;

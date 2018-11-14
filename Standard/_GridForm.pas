@@ -36,7 +36,7 @@ uses
   dxPScxGridLnk, dxPScxGridLayoutViewLnk, dxPScxEditorProducers,
   dxPScxExtEditorProducers, dxSkinsdxRibbonPainter, dxPSCore, dxPScxCommon,
   dxPrnDlg,
-  Winapi.ShellAPI;
+  Winapi.ShellAPI, cxPropertiesStore;
 
 type
   T_frmGrid = class(TForm)
@@ -98,6 +98,7 @@ type
     dxbtnSearch: TdxBarButton;
     actFullExpandGroup: TAction;
     actFullColapseGroup: TAction;
+    cxpsGrid: TcxPropertiesStore;
     procedure FormShow(Sender: TObject);
     procedure FileSaveAs1Accept(Sender: TObject);
     procedure DatasetInsertExecute(Sender: TObject);
@@ -124,6 +125,7 @@ type
     FPrintTitle: string;
     FApplyBestFit: Boolean;
     FCanEdit: Boolean;
+    FStoreProportiesGrid: Boolean;
     procedure SetReadOnlyGrid(const Value: Boolean);
     procedure SetDataSet(const Value: TDataSet);
     procedure SetView(const Value: Boolean);
@@ -131,6 +133,7 @@ type
     procedure InsertMenuItem;
     procedure SetPrintTitle(const Value: string);
     procedure SetCanEdit(const Value: Boolean);
+    procedure SetStoreProportiesGrid(const Value: Boolean);
   protected
     tvStatus: TcxGridDBColumn;
     property gEditForm: T_frmEdit read FgEditForm write FgEditForm;
@@ -140,7 +143,8 @@ type
     property CanEdit: Boolean read FCanEdit write SetCanEdit default True;
     property ReadOnlyGrid: Boolean read FReadOnlyGrid write SetReadOnlyGrid default False;
     property View: Boolean read FView write SetView default False;
-    property ApplyBestFit: Boolean read FApplyBestFit write FApplyBestFit default True;
+    property ApplyBestFit: Boolean read FApplyBestFit write FApplyBestFit default False;
+    property StoreProportiesGrid: Boolean read FStoreProportiesGrid write SetStoreProportiesGrid default True;
     property actSearch: TBasicAction read FactSearch write SetactSearch;
     property PrintTitle: string read FPrintTitle write SetPrintTitle;
   end;
@@ -237,7 +241,9 @@ end;
 procedure T_frmGrid.FormCreate(Sender: TObject);
 begin
   InsertMenuItem;
-  ApplyBestFit:= True;
+  cxpsGrid.StorageName := strRegistryKeyGrids + PathDelim + Name;
+  StoreProportiesGrid:= True;
+  ApplyBestFit := False;
   CanEdit:= True;
 end;
 
@@ -247,9 +253,8 @@ begin
     gEditForm.DataSet:= DataSet;
   cxGrid.SetFocus;
   tvMaster.DataController.Groups.FullExpand;
-  if ApplyBestFit then
-    tvMaster.ApplyBestFit();
-//  tvMaster.ViewData.Expand(True);
+  if ApplyBestFit then tvMaster.ApplyBestFit;
+  if StoreProportiesGrid then cxpsGrid.RestoreFrom;
   dxbNavigator.DockedLeft:= 82;
   dxbTools.DockedLeft:= 210;
 end;
@@ -311,6 +316,12 @@ begin
 //    dxbNavigator.DockedLeft:= 82;
 //    dxbTools.DockedLeft:= 210;
 //  end;
+end;
+
+procedure T_frmGrid.SetStoreProportiesGrid(const Value: Boolean);
+begin
+  FStoreProportiesGrid := Value;
+  cxpsGrid.Active := Value;
 end;
 
 procedure T_frmGrid.SetView(const Value: Boolean);

@@ -3,6 +3,8 @@ inherited FrmSeguimientoCobranza: TFrmSeguimientoCobranza
   Caption = 'Seguimiento Cobranza'
   ClientHeight = 428
   ClientWidth = 645
+  ExplicitWidth = 651
+  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -25,14 +27,14 @@ inherited FrmSeguimientoCobranza: TFrmSeguimientoCobranza
   end
   inherited pnlMaster: TPanel
     Width = 645
-    Height = 224
+    Height = 229
     ExplicitWidth = 645
-    ExplicitHeight = 224
+    ExplicitHeight = 229
     inherited cxGrid: TcxGrid
       Width = 645
-      Height = 224
+      Height = 229
       ExplicitWidth = 645
-      ExplicitHeight = 224
+      ExplicitHeight = 229
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdPersona: TcxGridDBColumn
           DataBinding.FieldName = 'IdPersona'
@@ -89,7 +91,7 @@ inherited FrmSeguimientoCobranza: TFrmSeguimientoCobranza
     DockControlHeights = (
       0
       0
-      31
+      26
       0)
     inherited dxbNavigator: TdxBar
       DockedLeft = 102
@@ -903,6 +905,56 @@ inherited FrmSeguimientoCobranza: TFrmSeguimientoCobranza
       AssignedFormatValues = []
       BuiltInReportLink = True
     end
+  end
+  inherited cxpsGrid: TcxPropertiesStore
+    Components = <
+      item
+        Component = tvMaster
+        Properties.Strings = (
+          'OptionsView.Footer'
+          'OptionsView.GroupByBox'
+          'OptionsView.GroupFooters')
+      end
+      item
+        Component = tvMasterIdPersona
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterinteres
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterRazonSocial
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterSaldo
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end>
   end
   object DSIncidencias: TDataSource
     AutoEdit = False

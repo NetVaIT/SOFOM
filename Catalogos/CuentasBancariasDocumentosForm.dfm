@@ -17,11 +17,7 @@ inherited frmCuentasBancariasDocumentos: TfrmCuentasBancariasDocumentos
     ExplicitWidth = 645
   end
   inherited pnlMaster: TPanel
-    ExplicitWidth = 645
-    ExplicitHeight = 229
     inherited cxGrid: TcxGrid
-      ExplicitWidth = 645
-      ExplicitHeight = 229
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdCuentaBancariaDocumento: TcxGridDBColumn
           DataBinding.FieldName = 'IdCuentaBancariaDocumento'
@@ -42,30 +38,11 @@ inherited frmCuentasBancariasDocumentos: TfrmCuentasBancariasDocumentos
       end
     end
   end
-  inherited pnlDetail3: TPanel
-    ExplicitTop = 351
-    ExplicitWidth = 645
-  end
-  inherited pnlDetail2: TPanel
-    ExplicitTop = 307
-    ExplicitWidth = 645
-  end
-  inherited pnlDetail1: TPanel
-    ExplicitTop = 263
-    ExplicitWidth = 645
-  end
-  inherited pnlClose: TPanel
-    ExplicitTop = 392
-    ExplicitWidth = 645
-    inherited btnClose: TButton
-      ExplicitLeft = 560
-    end
-  end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
       0
       0
-      31
+      26
       0)
   end
   inherited cxStyleRepository: TcxStyleRepository
@@ -76,8 +53,59 @@ inherited frmCuentasBancariasDocumentos: TfrmCuentasBancariasDocumentos
   end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
+      ReportDocument.CreationDate = 43412.478297546300000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
+  end
+  inherited cxpsGrid: TcxPropertiesStore
+    Components = <
+      item
+        Component = tvMaster
+        Properties.Strings = (
+          'OptionsView.Footer'
+          'OptionsView.GroupByBox'
+          'OptionsView.GroupFooters')
+      end
+      item
+        Component = tvMasterDocumento
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdCuentaBancaria
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdCuentaBancariaDocumento
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdDocumento
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end>
   end
 end

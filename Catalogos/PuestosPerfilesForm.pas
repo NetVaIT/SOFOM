@@ -27,7 +27,7 @@ uses
   dxPSPDFExport, cxDrawTextUtils, dxPSPrVwStd, dxPSPrVwAdv, dxPSPrVwRibbon,
   dxPScxPageControlProducer, dxPScxGridLnk, dxPScxGridLayoutViewLnk,
   dxPScxEditorProducers, dxPScxExtEditorProducers, dxSkinsdxRibbonPainter,
-  dxPSCore, dxPScxCommon, Vcl.StdCtrls;
+  dxPSCore, dxPScxCommon, Vcl.StdCtrls, cxPropertiesStore;
 
 type
   TfrmPuestosPerfiles = class(T_frmGrid)

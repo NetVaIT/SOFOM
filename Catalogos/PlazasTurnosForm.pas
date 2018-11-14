@@ -27,7 +27,7 @@ uses
   cxDrawTextUtils, dxPSPrVwStd, dxPSPrVwAdv, dxPSPrVwRibbon,
   dxPScxPageControlProducer, dxPScxGridLnk, dxPScxGridLayoutViewLnk,
   dxPScxEditorProducers, dxPScxExtEditorProducers, dxSkinsdxRibbonPainter,
-  dxPSCore, dxPScxCommon, Vcl.StdCtrls, cxTimeEdit;
+  dxPSCore, dxPScxCommon, Vcl.StdCtrls, cxTimeEdit, cxPropertiesStore;
 
 type
   TfrmPlazasTurnos = class(T_frmGrid)

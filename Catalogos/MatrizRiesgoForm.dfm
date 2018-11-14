@@ -8,21 +8,21 @@ inherited frmMatrizRiesgo: TfrmMatrizRiesgo
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Top = 525
+    Top = 523
     Width = 810
     Align = alTop
     ExplicitTop = 576
     ExplicitWidth = 645
   end
   inherited splDetail1: TSplitter
-    Top = 267
+    Top = 265
     Width = 810
     Align = alTop
     ExplicitTop = 333
     ExplicitWidth = 810
   end
   inherited splDetail2: TSplitter
-    Top = 515
+    Top = 513
     Width = 810
     Align = alTop
     ExplicitLeft = -10
@@ -70,29 +70,29 @@ inherited frmMatrizRiesgo: TfrmMatrizRiesgo
     end
   end
   inherited pnlDetail3: TPanel
-    Top = 528
+    Top = 526
     Width = 810
-    Height = 148
+    Height = 150
     Align = alClient
-    ExplicitTop = 528
+    ExplicitTop = 526
     ExplicitWidth = 810
-    ExplicitHeight = 148
+    ExplicitHeight = 150
   end
   inherited pnlDetail2: TPanel
-    Top = 518
+    Top = 516
     Width = 810
     Height = 7
     Align = alTop
-    ExplicitTop = 518
+    ExplicitTop = 516
     ExplicitWidth = 810
     ExplicitHeight = 7
   end
   inherited pnlDetail1: TPanel
-    Top = 270
+    Top = 268
     Width = 810
     Height = 245
     Align = alTop
-    ExplicitTop = 270
+    ExplicitTop = 268
     ExplicitWidth = 810
     ExplicitHeight = 245
   end
@@ -115,7 +115,7 @@ inherited frmMatrizRiesgo: TfrmMatrizRiesgo
     DockControlHeights = (
       0
       0
-      28
+      26
       0)
   end
   inherited cxStyleRepository: TcxStyleRepository
@@ -127,8 +127,88 @@ inherited frmMatrizRiesgo: TfrmMatrizRiesgo
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 43311.541016712960000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
+  end
+  inherited cxpsGrid: TcxPropertiesStore
+    Components = <
+      item
+        Component = tvMaster
+        Properties.Strings = (
+          'OptionsView.Footer'
+          'OptionsView.GroupByBox'
+          'OptionsView.GroupFooters')
+      end
+      item
+        Component = tvMasterEstatus
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterFechaCreacion
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdMRCuestionario
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdMRCuestionarioEstatus
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdUsuario
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterMesesVigenciaAplicacion
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterVersion
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end>
   end
 end

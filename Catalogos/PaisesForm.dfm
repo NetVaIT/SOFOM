@@ -1,10 +1,10 @@
 inherited frmPaises: TfrmPaises
   BorderStyle = bsToolWindow
   Caption = 'Pa'#237'ses'
-  ClientHeight = 465
+  ClientHeight = 555
   ClientWidth = 645
   ExplicitWidth = 651
-  ExplicitHeight = 494
+  ExplicitHeight = 584
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -33,7 +33,6 @@ inherited frmPaises: TfrmPaises
     Width = 645
     Height = 100
     Align = alTop
-    ExplicitTop = 26
     ExplicitWidth = 645
     ExplicitHeight = 100
     inherited cxGrid: TcxGrid
@@ -71,11 +70,11 @@ inherited frmPaises: TfrmPaises
   inherited pnlDetail3: TPanel
     Top = 435
     Width = 645
-    Height = 15
+    Height = 79
     Align = alClient
     ExplicitTop = 435
     ExplicitWidth = 645
-    ExplicitHeight = 15
+    ExplicitHeight = 79
   end
   inherited pnlDetail2: TPanel
     Top = 282
@@ -96,9 +95,9 @@ inherited frmPaises: TfrmPaises
     ExplicitHeight = 150
   end
   inherited pnlClose: TPanel
-    Top = 424
+    Top = 514
     Width = 645
-    ExplicitTop = 424
+    ExplicitTop = 514
     ExplicitWidth = 645
   end
   inherited dxBarManager: TdxBarManager
@@ -117,8 +116,77 @@ inherited frmPaises: TfrmPaises
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42593.687323726850000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
+  end
+  inherited cxpsGrid: TcxPropertiesStore
+    Components = <
+      item
+        Component = tvMaster
+        Properties.Strings = (
+          'OptionsView.Footer'
+          'OptionsView.GroupByBox'
+          'OptionsView.GroupFooters')
+      end
+      item
+        Component = tvMasterBCCodigo
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterDescripcion
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdentificador
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdPais
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterListaGAFI
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterRegimenFiscalPreferente
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end>
   end
 end

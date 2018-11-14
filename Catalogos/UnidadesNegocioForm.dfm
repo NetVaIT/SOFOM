@@ -3,19 +3,19 @@ inherited frmUnidadesNegocio: TfrmUnidadesNegocio
   Caption = 'Unidades de Negocio'
   ClientHeight = 380
   ClientWidth = 645
-  OnCreate = FormCreate
+  ExplicitWidth = 651
   ExplicitHeight = 409
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Top = 437
+    Top = 432
     Width = 645
     Align = alTop
     ExplicitTop = 431
     ExplicitWidth = 645
   end
   inherited splDetail1: TSplitter
-    Top = 131
+    Top = 126
     Width = 645
     Align = alTop
     ExplicitLeft = -8
@@ -23,7 +23,7 @@ inherited frmUnidadesNegocio: TfrmUnidadesNegocio
     ExplicitWidth = 645
   end
   inherited splDetail2: TSplitter
-    Top = 284
+    Top = 279
     Width = 645
     Align = alTop
     ExplicitTop = 278
@@ -33,10 +33,12 @@ inherited frmUnidadesNegocio: TfrmUnidadesNegocio
     Width = 645
     Height = 100
     Align = alTop
+    ExplicitWidth = 645
     ExplicitHeight = 100
     inherited cxGrid: TcxGrid
       Width = 645
       Height = 100
+      ExplicitWidth = 645
       ExplicitHeight = 100
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdUnidadNegocio: TcxGridDBColumn
@@ -62,34 +64,40 @@ inherited frmUnidadesNegocio: TfrmUnidadesNegocio
     end
   end
   inherited pnlDetail3: TPanel
-    Top = 440
+    Top = 435
     Width = 645
     Height = 31
     Align = alClient
-    ExplicitTop = 440
+    ExplicitTop = 435
+    ExplicitWidth = 645
     ExplicitHeight = 31
   end
   inherited pnlDetail2: TPanel
-    Top = 287
+    Top = 282
     Width = 645
     Height = 150
     Align = alTop
-    ExplicitTop = 287
+    ExplicitTop = 282
+    ExplicitWidth = 645
     ExplicitHeight = 150
   end
   inherited pnlDetail1: TPanel
-    Top = 134
+    Top = 129
     Width = 645
     Height = 150
     Align = alTop
-    ExplicitTop = 134
+    ExplicitTop = 129
+    ExplicitWidth = 645
     ExplicitHeight = 150
   end
   inherited pnlClose: TPanel
     Top = 339
     Width = 645
+    ExplicitTop = 339
+    ExplicitWidth = 645
     inherited btnClose: TButton
       Left = 560
+      ExplicitLeft = 560
     end
   end
   inherited DataSource: TDataSource
@@ -99,7 +107,7 @@ inherited frmUnidadesNegocio: TfrmUnidadesNegocio
     DockControlHeights = (
       0
       0
-      31
+      26
       0)
   end
   inherited cxStyleRepository: TcxStyleRepository
@@ -110,8 +118,69 @@ inherited frmUnidadesNegocio: TfrmUnidadesNegocio
   end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
+      ReportDocument.CreationDate = 43412.516884247690000000
       AssignedFormatValues = []
       BuiltInReportLink = True
     end
+  end
+  inherited cxpsGrid: TcxPropertiesStore
+    Components = <
+      item
+        Component = tvMaster
+        Properties.Strings = (
+          'OptionsView.Footer'
+          'OptionsView.GroupByBox'
+          'OptionsView.GroupFooters')
+      end
+      item
+        Component = tvMasterDescripcion
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdentificador
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdPersona
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdUnidadNegocio
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterPersona
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end>
   end
 end

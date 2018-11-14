@@ -4,6 +4,7 @@ inherited frmEvaluacionesRiesgo: TfrmEvaluacionesRiesgo
   ClientHeight = 428
   ClientWidth = 713
   ExplicitWidth = 719
+  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -26,15 +27,14 @@ inherited frmEvaluacionesRiesgo: TfrmEvaluacionesRiesgo
   end
   inherited pnlMaster: TPanel
     Width = 713
-    Height = 227
-    ExplicitTop = 28
+    Height = 229
     ExplicitWidth = 713
-    ExplicitHeight = 227
+    ExplicitHeight = 229
     inherited cxGrid: TcxGrid
       Width = 713
-      Height = 227
+      Height = 229
       ExplicitWidth = 713
-      ExplicitHeight = 227
+      ExplicitHeight = 229
       inherited tvMaster: TcxGridDBTableView
         OnCustomDrawCell = tvMasterCustomDrawCell
         object tvMasterIdMRCuestionarioAplicado: TcxGridDBColumn
@@ -111,7 +111,7 @@ inherited frmEvaluacionesRiesgo: TfrmEvaluacionesRiesgo
     DockControlHeights = (
       0
       0
-      28
+      26
       0)
     inherited dxbTools: TdxBar
       ItemLinks = <
@@ -1020,9 +1020,109 @@ inherited frmEvaluacionesRiesgo: TfrmEvaluacionesRiesgo
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 43318.568796585650000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
+  end
+  inherited cxpsGrid: TcxPropertiesStore
+    Components = <
+      item
+        Component = tvMaster
+        Properties.Strings = (
+          'OptionsView.Footer'
+          'OptionsView.GroupByBox'
+          'OptionsView.GroupFooters')
+      end
+      item
+        Component = tvMasterCliente
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterFecha
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterFechaVencimiento
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdMRCuestionario
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdMRCuestionarioAplicado
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIDPersona
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdUsuario
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterPonderacionTotal
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterVersionCuestionario
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end>
   end
   object cxStyleRepository1: TcxStyleRepository
     Left = 65528

@@ -29,7 +29,7 @@ uses
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
   Vcl.ExtCtrls, cxContainer, Vcl.ComCtrls, dxCore, cxDateUtils, cxTextEdit,
   cxMaskEdit, cxDropDownEdit, cxCalendar, Vcl.Buttons,Data.Win.ADODB,
-  Vcl.CheckLst, cxCheckBox, cxBarEditItem;
+  Vcl.CheckLst, cxCheckBox, cxBarEditItem, cxPropertiesStore;
 
 type
   TfrmRptAntiguedadSaldos = class(T_frmGrid)

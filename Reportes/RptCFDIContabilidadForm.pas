@@ -27,7 +27,8 @@ uses
   cxGridCustomPopupMenu, cxGridPopupMenu, cxClasses, Vcl.StdActns, Vcl.DBActns,
   System.Actions, Vcl.ActnList, Vcl.StdCtrls, cxGridLevel, cxGridCustomView,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
-  Vcl.ExtCtrls, cxTextEdit, cxCalendar, cxCheckBox, cxBarEditItem;
+  Vcl.ExtCtrls, cxTextEdit, cxCalendar, cxCheckBox, cxBarEditItem,
+  cxPropertiesStore;
 
 type
   TfrmRptCFDIContabilidad = class(T_frmGrid)

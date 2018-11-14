@@ -30,7 +30,7 @@ uses
   dxPScxExtEditorProducers, dxSkinsdxRibbonPainter, dxPSCore, dxPScxCommon,
   dxBar, Vcl.StdCtrls, cxContainer, dxCore, cxDateUtils, cxTextEdit, cxMaskEdit,
   cxDropDownEdit, cxCalendar, Vcl.Buttons,Data.Win.ADODB, cxCheckBox,
-  cxBarEditItem;
+  cxBarEditItem, cxPropertiesStore;
 
 type
   TfrmFacturasGrid = class(T_frmGrid)

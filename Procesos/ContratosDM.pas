@@ -862,11 +862,9 @@ begin
   PaymentTime := ptEndOfPeriod;
   gGridForm:= TfrmContratos.Create(Self);
   gGridForm.DataSet:= adodsMaster;
-  gGridForm.ApplyBestFit := False;
   TfrmContratos(gGridForm).actCrearAnexo := actCrearAnexo;
   if adodsAnexos.CommandText <> EmptyStr then adodsAnexos.Open;
   gFormDeatil1:= TfrmAnexos.Create(Self);
-//  gFormDeatil1.ApplyBestFit := False;
   gFormDeatil1.DataSet:= adodsAnexos;
   TfrmAnexos(gFormDeatil1).actGenerar := actGenerar;
   TfrmAnexos(gFormDeatil1).actImportarAmortizaciones := actImportarAmortizaciones;
@@ -880,7 +878,6 @@ begin
   TfrmAnexos(gFormDeatil1).actGetTipoCambio := actGetTipoCambio;
   if adodsCreditos.CommandText <> EmptyStr then adodsCreditos.Open;
   gFormDeatil2:= TfrmAnexosCreditos.Create(Self);
- // gFormDeatil2.ApplyBestFit := False;
   gFormDeatil2.ReadOnlyGrid := True;
   gFormDeatil2.DataSet:= adodsCreditos;
   TfrmAnexosCreditos(gFormDeatil2).actPreAmortizaciones := actPreAmortizaciones;
@@ -888,7 +885,6 @@ begin
   TfrmAnexosCreditos(gFormDeatil2).actEliminar := actEliminarCredito;
   if adodsAmortizaciones.CommandText <> EmptyStr then adodsAmortizaciones.Open;
   gFormDeatil3:= TfrmAnexosAmortizaciones.Create(Self);
-//  gFormDeatil3.ApplyBestFit := False;
   gFormDeatil3.ReadOnlyGrid := True;
   gFormDeatil3.DataSet:= adodsAmortizaciones;
   TfrmAnexosAmortizaciones(gFormDeatil3).actMoratorios := actMoratorios;

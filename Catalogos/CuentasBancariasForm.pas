@@ -27,7 +27,7 @@ uses
   cxDrawTextUtils, dxPSPrVwStd, dxPSPrVwAdv, dxPSPrVwRibbon,
   dxPScxPageControlProducer, dxPScxGridLnk, dxPScxGridLayoutViewLnk,
   dxPScxEditorProducers, dxPScxExtEditorProducers, dxSkinsdxRibbonPainter,
-  dxPSCore, dxPScxCommon, Vcl.StdCtrls, PersonasDM;
+  dxPSCore, dxPScxCommon, Vcl.StdCtrls, PersonasDM, cxPropertiesStore;
 
 type
   TfrmCuentasBancarias = class(T_frmGrid)

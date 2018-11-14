@@ -27,7 +27,8 @@ uses
   dxPSPDFExportCore, dxPSPDFExport, cxDrawTextUtils, dxPSPrVwStd, dxPSPrVwAdv,
   dxPSPrVwRibbon, dxPScxPageControlProducer, dxPScxGridLnk,
   dxPScxGridLayoutViewLnk, dxPScxEditorProducers, dxPScxExtEditorProducers,
-  dxSkinsdxRibbonPainter, dxPSCore, dxPScxCommon, Vcl.StdCtrls;
+  dxSkinsdxRibbonPainter, dxPSCore, dxPScxCommon, Vcl.StdCtrls,
+  cxPropertiesStore;
 
 type
   TfrmEsquemaPagos = class(T_frmGrid)

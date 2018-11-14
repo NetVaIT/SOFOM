@@ -29,7 +29,7 @@ uses
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
   Vcl.ExtCtrls, cxContainer, Vcl.ComCtrls, dxCore, cxDateUtils, cxTextEdit,
   cxMaskEdit, cxDropDownEdit, cxCalendar, Vcl.Buttons,Data.Win.ADODB, cxImage,
-  cxLabel, cxBarEditItem;
+  cxLabel, cxBarEditItem, cxPropertiesStore;
 
 type
   TFrmConCuentasXCobrar = class(T_frmGrid)
@@ -385,7 +385,6 @@ begin
     Tadodataset(datasource.DataSet).Parameters.ParamByName('FFin').Value:=cxDtEdtHasta.Date+1;
   end;
   Tadodataset(datasource.DataSet).open;
-  tvmaster.ApplyBestFit(); //Ab 11/17
 end;
 
 end.

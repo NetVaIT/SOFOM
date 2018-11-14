@@ -27,7 +27,8 @@ uses
   cxGridCustomPopupMenu, cxGridPopupMenu, cxClasses, Vcl.StdActns, Vcl.DBActns,
   System.Actions, Vcl.ActnList, Vcl.StdCtrls, cxGridLevel, cxGridCustomView,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
-  Vcl.ExtCtrls, cxCurrencyEdit, cxCalendar, cxBarEditItem, cxSpinEdit;
+  Vcl.ExtCtrls, cxCurrencyEdit, cxCalendar, cxBarEditItem, cxSpinEdit,
+  cxPropertiesStore;
 
 type
   TfrmSegmentos = class(T_frmGrid)

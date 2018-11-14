@@ -26,14 +26,14 @@ inherited frmConAplicacionesInternas: TfrmConAplicacionesInternas
   end
   inherited pnlMaster: TPanel
     Width = 862
-    Height = 227
+    Height = 229
     ExplicitWidth = 862
-    ExplicitHeight = 227
+    ExplicitHeight = 229
     inherited cxGrid: TcxGrid
       Width = 862
-      Height = 227
+      Height = 229
       ExplicitWidth = 862
-      ExplicitHeight = 227
+      ExplicitHeight = 229
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIDPagoAplicacionInterna: TcxGridDBColumn
           DataBinding.FieldName = 'IDPagoAplicacionInterna'
@@ -107,7 +107,7 @@ inherited frmConAplicacionesInternas: TfrmConAplicacionesInternas
     DockControlHeights = (
       0
       0
-      28
+      26
       0)
     inherited dxbTools: TdxBar
       ItemLinks = <
@@ -913,5 +913,105 @@ inherited frmConAplicacionesInternas: TfrmConAplicacionesInternas
       AssignedFormatValues = []
       BuiltInReportLink = True
     end
+  end
+  inherited cxpsGrid: TcxPropertiesStore
+    Components = <
+      item
+        Component = tvMaster
+        Properties.Strings = (
+          'OptionsView.Footer'
+          'OptionsView.GroupByBox'
+          'OptionsView.GroupFooters')
+      end
+      item
+        Component = tvMasterfechaCXC
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIDCFDI
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIDCFDIConcepto
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdCuentaXCobrarDetalle
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIDPagoAplicacion
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIDPagoAplicacionInterna
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterImportePagado
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterItemCXC
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMastersaldoCXC
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end>
   end
 end

@@ -11,7 +11,7 @@ inherited frmPaquetePreguntas: TfrmPaquetePreguntas
     ExplicitWidth = 743
   end
   inherited splDetail1: TSplitter
-    Top = 233
+    Top = 231
     Width = 743
     Align = alTop
     ExplicitTop = 233
@@ -27,7 +27,6 @@ inherited frmPaquetePreguntas: TfrmPaquetePreguntas
     Width = 743
     Height = 205
     Align = alTop
-    ExplicitTop = 28
     ExplicitWidth = 743
     ExplicitHeight = 205
     inherited cxGrid: TcxGrid
@@ -72,13 +71,13 @@ inherited frmPaquetePreguntas: TfrmPaquetePreguntas
     ExplicitHeight = 10
   end
   inherited pnlDetail1: TPanel
-    Top = 236
+    Top = 234
     Width = 743
-    Height = 148
+    Height = 150
     Align = alClient
-    ExplicitTop = 236
+    ExplicitTop = 234
     ExplicitWidth = 743
-    ExplicitHeight = 148
+    ExplicitHeight = 150
   end
   inherited pnlClose: TPanel
     Width = 743
@@ -92,7 +91,7 @@ inherited frmPaquetePreguntas: TfrmPaquetePreguntas
     DockControlHeights = (
       0
       0
-      28
+      26
       0)
   end
   inherited cxStyleRepository: TcxStyleRepository
@@ -104,7 +103,58 @@ inherited frmPaquetePreguntas: TfrmPaquetePreguntas
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 43314.759753159720000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
+  end
+  inherited cxpsGrid: TcxPropertiesStore
+    Components = <
+      item
+        Component = tvMaster
+        Properties.Strings = (
+          'OptionsView.Footer'
+          'OptionsView.GroupByBox'
+          'OptionsView.GroupFooters')
+      end
+      item
+        Component = tvMasterDescripcionPaquete
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdMRCuestionario
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdMRPaquetePregunta
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterPonderacion_Extra
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end>
   end
 end

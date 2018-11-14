@@ -27,7 +27,7 @@ uses
   cxDrawTextUtils, dxPSPrVwStd, dxPSPrVwAdv, dxPSPrVwRibbon,
   dxPScxPageControlProducer, dxPScxGridLnk, dxPScxGridLayoutViewLnk,
   dxPScxEditorProducers, dxPScxExtEditorProducers, dxSkinsdxRibbonPainter,
-  dxPSCore, dxPScxCommon, Vcl.StdCtrls;
+  dxPSCore, dxPScxCommon, Vcl.StdCtrls, cxPropertiesStore;
 
 type
   TfrmUnidadesNegocio = class(T_frmGrid)

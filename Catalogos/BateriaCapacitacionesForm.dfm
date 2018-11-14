@@ -3,20 +3,19 @@ inherited frmBateriasCapacitacion: TfrmBateriasCapacitacion
   Caption = 'Bateria de Capacitaciones'
   ClientHeight = 433
   ClientWidth = 645
-  OnCreate = FormCreate
   ExplicitWidth = 651
-  ExplicitHeight = 457
+  ExplicitHeight = 462
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Top = 387
+    Top = 382
     Width = 645
     Align = alTop
     ExplicitTop = 431
     ExplicitWidth = 645
   end
   inherited splDetail1: TSplitter
-    Top = 131
+    Top = 126
     Width = 645
     Align = alTop
     ExplicitLeft = -8
@@ -24,7 +23,7 @@ inherited frmBateriasCapacitacion: TfrmBateriasCapacitacion
     ExplicitWidth = 645
   end
   inherited splDetail2: TSplitter
-    Top = 384
+    Top = 379
     Width = 645
     Align = alTop
     ExplicitTop = 278
@@ -66,37 +65,43 @@ inherited frmBateriasCapacitacion: TfrmBateriasCapacitacion
     end
   end
   inherited pnlDetail3: TPanel
-    Top = 390
+    Top = 385
     Width = 645
-    Height = 43
+    Height = 7
     Align = alClient
-    ExplicitTop = 440
+    ExplicitTop = 385
     ExplicitWidth = 645
-    ExplicitHeight = 24
+    ExplicitHeight = 7
   end
   inherited pnlDetail2: TPanel
-    Top = 390
+    Top = 385
     Width = 645
-    Height = 43
+    Height = 7
     Align = alClient
-    ExplicitTop = 387
+    ExplicitTop = 385
     ExplicitWidth = 645
-    ExplicitHeight = 250
+    ExplicitHeight = 7
   end
   inherited pnlDetail1: TPanel
-    Top = 134
+    Top = 129
     Width = 645
     Height = 250
     Align = alTop
-    ExplicitTop = 134
+    ExplicitTop = 129
     ExplicitWidth = 645
     ExplicitHeight = 250
+  end
+  inherited pnlClose: TPanel
+    Top = 392
+    Width = 645
+    ExplicitTop = 392
+    ExplicitWidth = 645
   end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
       0
       0
-      31
+      26
       0)
   end
   inherited cxStyleRepository: TcxStyleRepository
@@ -104,5 +109,82 @@ inherited frmBateriasCapacitacion: TfrmBateriasCapacitacion
   end
   inherited cxImageList: TcxImageList
     FormatVersion = 1
+  end
+  inherited dxComponentPrinter: TdxComponentPrinter
+    inherited dxcplGrid: TdxGridReportLink
+      ReportDocument.CreationDate = 43412.477819942120000000
+      AssignedFormatValues = []
+      BuiltInReportLink = True
+    end
+  end
+  inherited cxpsGrid: TcxPropertiesStore
+    Components = <
+      item
+        Component = tvMaster
+        Properties.Strings = (
+          'OptionsView.Footer'
+          'OptionsView.GroupByBox'
+          'OptionsView.GroupFooters')
+      end
+      item
+        Component = tvMasterDescripcion
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdBateriaCapacitacion
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdentificador
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdPuesto
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterPonderacion
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterPuesto
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end>
   end
 end

@@ -31,6 +31,7 @@ const
   strFileDescription = 'Control de recursos';
   strSeparador       = ' - ';
   strRegistryKey     = 'Software\SOFOM';
+  strRegistryKeyGrids= strRegistryKey + PathDelim + 'Grids';
   InfoNum = 10;
   InfoStr : array [1..InfoNum] of String = ('CompanyName', 'FileDescription',
   'FileVersion', 'InternalName', 'LegalCopyright', 'LegalTradeMarks',

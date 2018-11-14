@@ -27,7 +27,7 @@ uses
   cxGridDBTableView, dxPSCore, dxPScxCommon, dxBar, Vcl.ImgList,
   cxGridCustomPopupMenu, cxGridPopupMenu, cxClasses, Vcl.StdActns, Vcl.DBActns,
   System.Actions, Vcl.ActnList, Vcl.StdCtrls, cxGridLevel, cxGridCustomView,
-  cxGrid, Vcl.ExtCtrls;
+  cxGrid, Vcl.ExtCtrls, cxPropertiesStore;
 
 type
   TfrmPersonasAdministradores = class(T_frmGrid)

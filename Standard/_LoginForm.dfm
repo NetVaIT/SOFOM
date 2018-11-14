@@ -13,6 +13,7 @@ object _frmLogin: T_frmLogin
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
+  OnCreate = FormCreate
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -475,13 +476,14 @@ object _frmLogin: T_frmLogin
     TabOrder = 3
   end
   object cxPropertiesStore: TcxPropertiesStore
+    Active = False
     Components = <
       item
         Component = edtUser
         Properties.Strings = (
           'Text')
       end>
-    StorageName = '\Software\RH\_frmLogin'
+    StorageName = 'cxPropertiesStore'
     StorageType = stRegistry
     Left = 8
     Top = 128
@@ -499,7 +501,7 @@ object _frmLogin: T_frmLogin
     Left = 88
     Top = 128
     Bitmap = {
-      494C010101000400140010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010101000400180010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

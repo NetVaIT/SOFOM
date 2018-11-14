@@ -412,7 +412,28 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
       Visible = ivNever
       ImageIndex = 20
     end
-    object edtCliente: TcxBarEditItem [21]
+    object btnEstadoCuenta: TdxBarButton [21]
+      Caption = 'Estado de cuenta'
+      Category = 0
+      Hint = 'Estado de cuenta'
+      Visible = ivAlways
+      ImageIndex = 19
+    end
+    object btnEstadoCuentaFuturo: TdxBarButton [22]
+      Caption = 'Estado de cuenta futuro'
+      Category = 0
+      Visible = ivAlways
+      ImageIndex = 19
+    end
+    object edtFecha: TcxBarEditItem [23]
+      Caption = 'Fecha'
+      Category = 0
+      Hint = 'Fecha hasta donde generara a futuro'
+      Visible = ivAlways
+      ShowCaption = True
+      PropertiesClassName = 'TcxDateEditProperties'
+    end
+    object edtCliente: TcxBarEditItem [24]
       Caption = 'Cliente'
       Category = 1
       Hint = 'Cliente'
@@ -421,7 +442,7 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
       Width = 200
       PropertiesClassName = 'TcxTextEditProperties'
     end
-    object edtDesde: TcxBarEditItem [22]
+    object edtDesde: TcxBarEditItem [25]
       Caption = 'Desde'
       Category = 1
       Hint = 'Desde'
@@ -429,7 +450,7 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
       ShowCaption = True
       PropertiesClassName = 'TcxDateEditProperties'
     end
-    object edtHasta: TcxBarEditItem [23]
+    object edtHasta: TcxBarEditItem [26]
       Caption = 'Hasta'
       Category = 1
       Hint = 'Hasta'
@@ -437,7 +458,7 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
       ShowCaption = True
       PropertiesClassName = 'TcxDateEditProperties'
     end
-    object edtUsarFecha: TcxBarEditItem [24]
+    object edtUsarFecha: TcxBarEditItem [27]
       Caption = 'Usar fecha'
       Category = 1
       Hint = 'Usar fecha'
@@ -450,27 +471,6 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
     end
     inherited dxbtnSearch: TdxBarButton
       Category = 1
-    end
-    object btnEstadoCuenta: TdxBarButton
-      Caption = 'Estado de cuenta'
-      Category = 0
-      Hint = 'Estado de cuenta'
-      Visible = ivAlways
-      ImageIndex = 19
-    end
-    object btnEstadoCuentaFuturo: TdxBarButton
-      Caption = 'Estado de cuenta futuro'
-      Category = 0
-      Visible = ivAlways
-      ImageIndex = 19
-    end
-    object edtFecha: TcxBarEditItem
-      Caption = 'Fecha'
-      Category = 0
-      Hint = 'Fecha hasta donde generara a futuro'
-      Visible = ivAlways
-      ShowCaption = True
-      PropertiesClassName = 'TcxDateEditProperties'
     end
   end
   inherited cxStyleRepository: TcxStyleRepository
@@ -1367,8 +1367,248 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42585.483476608800000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
+  end
+  inherited cxpsGrid: TcxPropertiesStore
+    Components = <
+      item
+        Component = tvMaster
+        Properties.Strings = (
+          'OptionsView.Footer'
+          'OptionsView.GroupByBox'
+          'OptionsView.GroupFooters')
+      end
+      item
+        Component = tvMasterAnexo
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterCliente
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterCobroX
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterContrato
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterFecha
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterFechaVencimiento
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIDAnexo
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIDContrato
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdContratoTipo
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdCuentaXCobrar
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdCuentaXCobrarEstatus
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdPersona
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterSaldo
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterSaldoTotalVencido
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterTC
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterTipoContrato
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterTotal
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterVencidos0a30
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterVencidosa30das
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterVencidosa60das
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterVencidosa90das
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterVencidosmsde120das
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterVigentes
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end>
   end
 end

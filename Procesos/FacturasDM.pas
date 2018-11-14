@@ -440,7 +440,7 @@ type
 //    Function ActualizaSaldoCliente(IdCFDI, IDCliente, IDDomicilioCliente:Integer;Importe :Double; operacion:String):Boolean;
     function SacaTipoComp(tipoD: Integer): String;
     function InformacionContrato(IdCXC: Integer): String;
-    procedure ReadFile(FileName: TFileName);
+//    procedure ReadFile(FileName: TFileName);
 //    function CrearArchivos_TimbrePrueba(var Ruta: String;
 //      var TimbradoCFDI: TTimbreCFDI; Adicional: String): Boolean;
     procedure DesAsociarCFDIdeCXC(Idcfdi: Integer);
@@ -929,9 +929,10 @@ end;
 
 procedure TdmFacturas.actImprimirCFDIExecute(Sender: TObject);
 var
+  dmDocumentos: TdmDocumentos;
   IdCFDI: Integer;
-  IdDoc:Integer;
-  nombreArchi, nomImagen,ArchivoPDF:TfileName;
+  IdDocumento: Integer;
+  NombreArchivo, NombreImagen, ArchivoPDF:TfileName;
   XMLpdf: TdmodXMLtoPDF;
   Contrato: string;
   TipoDoc: string;
@@ -944,27 +945,43 @@ begin
   CFDIVersion := adodsMasterVersion.AsString;
   ShowProgress(5,100.1,'Buscando Archivos...' + IntToStr(5) + '%');
   try
-    //Obtiene archivo XML
-    idDoc:=adodsMasterIdDocumentoXML.asInteger;
-    adoDSDocumento.filter:='IdDocumento='+intToSTR(IDDoc);
-    adoDSDocumento.filtered:=True;
-    adoDSDocumento.open;
-    nombreArchi:=ExtractFileName(AdoDSDocumentoNombreArchivo.asstring);
-    readFile( nombreArchi);
-    //Obtiene archivo CBB
-    idDoc:=adodsMasterIdDocumentoCBB.asInteger;
-    if idDoc>0 then
-    begin
-      adoDSDocumento.filter:='IdDocumento='+intToSTR(IDDoc);
-      adoDSDocumento.filtered:=True;
-      adoDSDocumento.open;
-      nomImagen:=ExtractFileName(AdoDSDocumentoNombreArchivo.asstring);
-      readFile(nomImagen);
+    dmDocumentos := TdmDocumentos.Create(Self);
+    try
+      //Obtiene archivo XML
+      IdDocumento := adodsMasterIdDocumentoXML.Value;
+      NombreArchivo := ExtractFileName(dmDocumentos.GetFileName(IdDocumento));
+      dmDocumentos.GetFile(IdDocumento, NombreArchivo);
+      //Obtiene archivo CBB
+      IdDocumento := adodsMasterIdDocumentoCBB.Value;
+      if IdDocumento > 0 then
+      begin
+        NombreImagen := ExtractFileName(dmDocumentos.GetFileName(IdDocumento));
+        dmDocumentos.GetFile(IdDocumento, NombreImagen);
+      end;
+    finally
+      dmDocumentos.Free;
     end;
+//    //Obtiene archivo XML
+//    idDoc:=adodsMasterIdDocumentoXML.asInteger;
+//    adoDSDocumento.filter:='IdDocumento='+intToSTR(IDDoc);
+//    adoDSDocumento.filtered:=True;
+//    adoDSDocumento.open;
+//    NombreArchivo:=ExtractFileName(AdoDSDocumentoNombreArchivo.asstring);
+//    readFile( NombreArchivo);
+//    //Obtiene archivo CBB
+//    idDoc:=adodsMasterIdDocumentoCBB.asInteger;
+//    if idDoc>0 then
+//    begin
+//      adoDSDocumento.filter:='IdDocumento='+intToSTR(IDDoc);
+//      adoDSDocumento.filtered:=True;
+//      adoDSDocumento.open;
+//      NombreImagen:=ExtractFileName(AdoDSDocumentoNombreArchivo.asstring);
+//      readFile(NombreImagen);
+//    end;
     if CFDIVersion = '3.3' then
     begin
-      ArchivoPDF := _dmConection.ExePath + ChangeFileExt(nombreArchi, fePDF);
-      GenerarPDF(IdCFDI, ArchivoPDF, nomImagen);
+      ArchivoPDF := _dmConection.ExePath + ChangeFileExt(NombreArchivo, fePDF);
+      GenerarPDF(IdCFDI, ArchivoPDF, NombreImagen);
     end
     else
     begin
@@ -973,7 +990,7 @@ begin
       XMLpdf.FileXTR:= ExtractFilePath(Application.ExeName) + 'Transfor32.xtr';   //dic28/15
       XMLpdf.CadenaOriginalTimbre:= adodsMasterCadenaOriginal.AsString; //dic 28/15 verificar
       try
-         XMLpdf.FileIMG := nomImagen;//nombreArchi + fePNG; //Ajustado ene6/16
+         XMLpdf.FileIMG := NombreImagen;//NombreArchivo + fePNG; //Ajustado ene6/16
          if fileExists(XMLpdf.FileIMG) then//dic 28/15
          begin
            ShowProgress(20,100.1,'Generando para imprimir...' + IntToStr(20) + '%');
@@ -981,12 +998,12 @@ begin
               Contrato:='Contrato: '+Informacioncontrato(adodsMasterIDCuentaXCobrar.Value) //Dic 7/16 //verificar  que pasa si la FActura no tiene CXC??
           else
              Contrato:='';
-          ArchivoPDF:=XMLpdf.GeneratePDFFile(nombreArchi,TipoDoc,Contrato,'');
+          ArchivoPDF:=XMLpdf.GeneratePDFFile(NombreArchivo,TipoDoc,Contrato,'');
           XMLpdf.PrintPDFFile(ArchivoPDF);
          end
          else
          begin
-           nombreArchi:='';
+           NombreArchivo:='';
          end;
       finally
         XMLpdf.Free;
@@ -1033,25 +1050,25 @@ begin
   actRelacionarCFDI.Enabled := (not adodsMasterIDCFDITipoRelacion.IsNull);
 end;
 
-procedure TDMFacturas.ReadFile(FileName: TFileName); //Dic 15/16
-var
-  Blob : TStream;
-  Fs: TFileStream;
-begin
-  if FileName = EmptyStr then Exit;
-  Blob := adodsDocumento.CreateBlobStream(adodsDocumentoArchivo, bmRead);
-  try
-    Blob.Seek(0, soFromBeginning);
-    Fs := TFileStream.Create(FileName, fmCreate);
-    try
-      Fs.CopyFrom(Blob, Blob.Size);
-    finally
-      Fs.Free;
-    end;
-  finally
-    Blob.Free
-  end;
-end;
+//procedure TDMFacturas.ReadFile(FileName: TFileName); //Dic 15/16
+//var
+//  Blob : TStream;
+//  Fs: TFileStream;
+//begin
+//  if FileName = EmptyStr then Exit;
+//  Blob := adodsDocumento.CreateBlobStream(adodsDocumentoArchivo, bmRead);
+//  try
+//    Blob.Seek(0, soFromBeginning);
+//    Fs := TFileStream.Create(FileName, fmCreate);
+//    try
+//      Fs.CopyFrom(Blob, Blob.Size);
+//    finally
+//      Fs.Free;
+//    end;
+//  finally
+//    Blob.Free
+//  end;
+//end;
 
 procedure TdmFacturas.actTimbrarCFDIExecute(Sender: TObject);
 var

@@ -3,9 +3,8 @@ inherited frmPoblaciones: TfrmPoblaciones
   Caption = 'Poblaciones'
   ClientHeight = 428
   ClientWidth = 645
-  OnCreate = FormCreate
   ExplicitWidth = 651
-  ExplicitHeight = 452
+  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -28,10 +27,14 @@ inherited frmPoblaciones: TfrmPoblaciones
   end
   inherited pnlMaster: TPanel
     Width = 645
-    Height = 224
+    Height = 229
+    ExplicitWidth = 645
+    ExplicitHeight = 229
     inherited cxGrid: TcxGrid
       Width = 645
-      Height = 224
+      Height = 229
+      ExplicitWidth = 645
+      ExplicitHeight = 229
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdPoblacion: TcxGridDBColumn
           DataBinding.FieldName = 'IdPoblacion'
@@ -53,24 +56,32 @@ inherited frmPoblaciones: TfrmPoblaciones
   inherited pnlDetail3: TPanel
     Top = 346
     Width = 645
+    ExplicitTop = 346
+    ExplicitWidth = 645
   end
   inherited pnlDetail2: TPanel
     Top = 302
     Width = 645
+    ExplicitTop = 302
+    ExplicitWidth = 645
   end
   inherited pnlDetail1: TPanel
     Top = 258
     Width = 645
+    ExplicitTop = 258
+    ExplicitWidth = 645
   end
   inherited pnlClose: TPanel
     Top = 387
     Width = 645
+    ExplicitTop = 387
+    ExplicitWidth = 645
   end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
       0
       0
-      31
+      26
       0)
   end
   inherited cxStyleRepository: TcxStyleRepository
@@ -81,8 +92,59 @@ inherited frmPoblaciones: TfrmPoblaciones
   end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
+      ReportDocument.CreationDate = 43412.514306666660000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
+  end
+  inherited cxpsGrid: TcxPropertiesStore
+    Components = <
+      item
+        Component = tvMaster
+        Properties.Strings = (
+          'OptionsView.Footer'
+          'OptionsView.GroupByBox'
+          'OptionsView.GroupFooters')
+      end
+      item
+        Component = tvMasterDescripcion
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdentificador
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdMunicipio
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdPoblacion
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end>
   end
 end

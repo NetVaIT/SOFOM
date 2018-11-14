@@ -32,12 +32,12 @@ inherited frmContratos: TfrmContratos
     Width = 1103
     Height = 100
     Align = alTop
-    ExplicitWidth = 658
+    ExplicitWidth = 1103
     ExplicitHeight = 100
     inherited cxGrid: TcxGrid
       Width = 1103
       Height = 100
-      ExplicitWidth = 658
+      ExplicitWidth = 1103
       ExplicitHeight = 100
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdContrato: TcxGridDBColumn
@@ -94,7 +94,7 @@ inherited frmContratos: TfrmContratos
     Height = 200
     Align = alClient
     ExplicitTop = 435
-    ExplicitWidth = 658
+    ExplicitWidth = 1103
     ExplicitHeight = 200
   end
   inherited pnlDetail2: TPanel
@@ -103,7 +103,7 @@ inherited frmContratos: TfrmContratos
     Height = 150
     Align = alTop
     ExplicitTop = 282
-    ExplicitWidth = 658
+    ExplicitWidth = 1103
     ExplicitHeight = 150
   end
   inherited pnlDetail1: TPanel
@@ -112,17 +112,17 @@ inherited frmContratos: TfrmContratos
     Height = 150
     Align = alTop
     ExplicitTop = 129
-    ExplicitWidth = 658
+    ExplicitWidth = 1103
     ExplicitHeight = 150
   end
   inherited pnlClose: TPanel
     Top = 635
     Width = 1103
     ExplicitTop = 635
-    ExplicitWidth = 658
+    ExplicitWidth = 1103
     inherited btnClose: TButton
       Left = 1018
-      ExplicitLeft = 573
+      ExplicitLeft = 1018
     end
   end
   inherited dxBarManager: TdxBarManager
@@ -228,8 +228,138 @@ inherited frmContratos: TfrmContratos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42683.590026041670000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
+  end
+  inherited cxpsGrid: TcxPropertiesStore
+    Components = <
+      item
+        Component = tvMaster
+        Properties.Strings = (
+          'OptionsView.Footer'
+          'OptionsView.GroupByBox'
+          'OptionsView.GroupFooters')
+      end
+      item
+        Component = tvMasterCliente
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterDiaCorte
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterDiaVencimiento
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterEstatus
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterFecha
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdContrato
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdContratoEstatus
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdContratoTipo
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdentificador
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdPersona
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterMontoAutorizado
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterTipo
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end>
   end
 end

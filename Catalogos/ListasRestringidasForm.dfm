@@ -27,16 +27,14 @@ inherited frmListasRestringidas: TfrmListasRestringidas
   end
   inherited pnlMaster: TPanel
     Width = 1189
-    Height = 214
-    ExplicitTop = 28
+    Height = 216
     ExplicitWidth = 1189
-    ExplicitHeight = 214
+    ExplicitHeight = 216
     inherited cxGrid: TcxGrid
       Width = 1189
-      Height = 214
-      ExplicitTop = 41
+      Height = 216
       ExplicitWidth = 1189
-      ExplicitHeight = 173
+      ExplicitHeight = 216
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdListaRestringida: TcxGridDBColumn
           DataBinding.FieldName = 'IdListaRestringida'
@@ -143,9 +141,13 @@ inherited frmListasRestringidas: TfrmListasRestringidas
     DockControlHeights = (
       0
       0
-      28
+      26
       0)
+    inherited dxbNavigator: TdxBar
+      DockedLeft = 104
+    end
     inherited dxbTools: TdxBar
+      DockedLeft = 231
       ItemLinks = <
         item
           Visible = True
@@ -165,7 +167,7 @@ inherited frmListasRestringidas: TfrmListasRestringidas
         end>
     end
     inherited dxbFilter: TdxBar
-      DockedLeft = 463
+      DockedLeft = 453
       ItemLinks = <
         item
           Visible = True
@@ -201,33 +203,7 @@ inherited frmListasRestringidas: TfrmListasRestringidas
     object dxBrBtnLPB: TdxBarButton
       Action = dmListasRestringidas.ActCargaLPB
       Category = 0
-      Glyph.Data = {
-        36030000424D3603000000000000360000002800000010000000100000000100
-        18000000000000030000C30E0000C30E00000000000000000000FFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        0000000000000000000000000000000000000000000000000000000000000000
-        00FFFFFFFFFFFFFFFFFFFFFFFF00000000F2FF00F2FF00F2FF00F2FF00F2FF00
-        F2FF00F2FF00F2FF00F2FF00F2FF00F2FF000000FFFFFFFFFFFFFFFFFF000000
-        00F2FF00F2FF00F2FF00F2FF00F2FF00F2FF00F2FF00F2FF00F2FF00F2FF00F2
-        FF000000FFFFFFFFFFFFFFFFFF00000000F2FF00F2FF00F2FF00000000000000
-        000000000000000000F2FF00F2FF00F2FF000000FFFFFFFFFFFFFFFFFF000000
-        00F2FF00F2FF00F2FF000000E8A200E8A200E8A20000000000F2FF00F2FF00F2
-        FF000000FFFFFFFFFFFFFFFFFF00000000F2FF00F2FF00F2FF000000E8A200E8
-        A200E8A20000000000F2FF00F2FF00F2FF000000FFFFFFFFFFFFFFFFFF000000
-        00F2FF00F2FF00F2FF000000E8A200E8A200E8A20000000000F2FF00F2FF00F2
-        FF000000FFFFFFFFFFFFFFFFFF00000000F2FF00F2FF00F2FF000000E8A200E8
-        A200E8A20000000000F2FF00F2FF00F2FF000000FFFFFFFFFFFFFFFFFF000000
-        00F2FF000000000000000000E8A200E8A200E8A20000000000000000000000F2
-        FF000000FFFFFFFFFFFFFFFFFF00000000F2FF00F2FF000000E8A200E8A200E8
-        A200E8A200E8A20000000000F2FF00F2FF000000FFFFFFFFFFFFFFFFFF000000
-        00F2FF00F2FF00F2FF000000E8A200E8A200E8A2000000000000000000000000
-        00FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000000000000000FFFFFF000000E8
-        A200000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000FFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
+      ImageIndex = 17
       PaintStyle = psCaptionGlyph
     end
     object cxBrEdtItmOrganismo: TcxBarEditItem
@@ -1019,8 +995,178 @@ inherited frmListasRestringidas: TfrmListasRestringidas
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42776.465400173610000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
+  end
+  inherited cxpsGrid: TcxPropertiesStore
+    Components = <
+      item
+        Component = tvMaster
+        Properties.Strings = (
+          'OptionsView.Footer'
+          'OptionsView.GroupByBox'
+          'OptionsView.GroupFooters')
+      end
+      item
+        Component = tvMasterAlias
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterComentarios
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterDependencia
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterFechaNacimiento
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdentificador
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdEstatus
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdListaRestringida
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdOrganismo
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdPais
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterNacionalidad
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterNoIdentificacion
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterNombre
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterOrganismo
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterPais
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterPuesto
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterRFC
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end>
   end
 end

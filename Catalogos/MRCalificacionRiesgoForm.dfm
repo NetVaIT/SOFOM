@@ -26,15 +26,14 @@ inherited frmMRCalificacionesRiesgos: TfrmMRCalificacionesRiesgos
   end
   inherited pnlMaster: TPanel
     Width = 645
-    Height = 391
-    ExplicitTop = 28
+    Height = 393
     ExplicitWidth = 645
-    ExplicitHeight = 391
+    ExplicitHeight = 393
     inherited cxGrid: TcxGrid
       Width = 645
-      Height = 391
+      Height = 393
       ExplicitWidth = 645
-      ExplicitHeight = 391
+      ExplicitHeight = 393
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdMRCalificacionRiesgo: TcxGridDBColumn
           DataBinding.FieldName = 'IdMRCalificacionRiesgo'
@@ -111,7 +110,7 @@ inherited frmMRCalificacionesRiesgos: TfrmMRCalificacionesRiesgos
     DockControlHeights = (
       0
       0
-      28
+      26
       0)
   end
   inherited cxStyleRepository: TcxStyleRepository
@@ -123,7 +122,88 @@ inherited frmMRCalificacionesRiesgos: TfrmMRCalificacionesRiesgos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 43311.602271053240000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
+  end
+  inherited cxpsGrid: TcxPropertiesStore
+    Components = <
+      item
+        Component = tvMaster
+        Properties.Strings = (
+          'OptionsView.Footer'
+          'OptionsView.GroupByBox'
+          'OptionsView.GroupFooters')
+      end
+      item
+        Component = tvMasterIdMRCalificacionRiesgo
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdMRCuestionario
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdPersonaTipo
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterNivelRiesgo
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterPersonaTipo
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterValorMaximo
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterValorMinimo
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end>
   end
 end

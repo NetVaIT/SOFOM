@@ -28,7 +28,7 @@ uses
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, dxPSCore,
   dxPScxCommon, Vcl.ImgList, cxGridCustomPopupMenu, cxGridPopupMenu, cxClasses,
   Vcl.StdActns, Vcl.DBActns, System.Actions, Vcl.ActnList, Vcl.StdCtrls,
-  cxGridLevel, cxGridCustomView, cxGrid, Vcl.ExtCtrls;
+  cxGridLevel, cxGridCustomView, cxGrid, Vcl.ExtCtrls, cxPropertiesStore;
 
 type
   TfrmContratos = class(T_frmGrid)
