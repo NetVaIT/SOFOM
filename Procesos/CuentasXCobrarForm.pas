@@ -339,6 +339,7 @@ const  //Mar 9/17
           'Total, CXC.Saldo, SaldoFactoraje, IdCFDI, IDAnexo, CXC.IdCuentaXCobrarBase, '
                                          //oct 1/18                           //  ''Interés Moratorio'' as Descripcion,
           +' EsMoratorio, CXC.Descripcion ,Descuento from CuentasXCobrar CXC ';   //Agregada Descripcion de CXC   Jul 17/17
+   whereSinReest= ' IdCuentaXCobrarRestructura is null '; //Dic 3/18
    whereNoMora=' EsMoratorio=0';
    whereMora=' EsMoratorio=1';
 
@@ -365,6 +366,10 @@ begin
       FFiltro:=' where '+WhereNoMora;
   end;
      //Mar 30/17 hasta
+
+  //Aca siempre ffiltro tendra algo
+   Ffiltro:=Ffiltro +' and '+ whereSinReest;    //Dic 3/18
+
 
   //Jun 28/17
   if ChckBxOpcionCompra.Checked then    // deben ser exclusivos opcioncompra y moratorios

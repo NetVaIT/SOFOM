@@ -626,7 +626,6 @@ inherited dmFacturas: TdmFacturas
     end
   end
   object ADODtStPersonaEmisor: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -724,7 +723,6 @@ inherited dmFacturas: TdmFacturas
     end
   end
   object ADODtStPersonaReceptor: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -851,7 +849,6 @@ inherited dmFacturas: TdmFacturas
     end
   end
   object ADODtStCFDIEstatus: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -862,7 +859,6 @@ inherited dmFacturas: TdmFacturas
     Top = 368
   end
   object ADODtStMetodoPago: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -892,7 +888,6 @@ inherited dmFacturas: TdmFacturas
     end
   end
   object ADODtStMonedas: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdMoneda, IdPais, Identificador, Descripcion from Monedas'
@@ -901,7 +896,6 @@ inherited dmFacturas: TdmFacturas
     Top = 192
   end
   object ADODtStTiposDocumentos: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -1054,7 +1048,6 @@ inherited dmFacturas: TdmFacturas
     Top = 496
   end
   object ADODtStDireccionesCliente: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     OnCalcFields = ADODtStDireccionesClienteCalcFields
@@ -2149,7 +2142,6 @@ inherited dmFacturas: TdmFacturas
     Top = 512
   end
   object adoqFormasPago33: TADOQuery
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     Parameters = <>
@@ -2161,7 +2153,6 @@ inherited dmFacturas: TdmFacturas
     Top = 200
   end
   object adoqMetodosPago33: TADOQuery
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     Parameters = <>
@@ -2173,7 +2164,6 @@ inherited dmFacturas: TdmFacturas
     Top = 264
   end
   object adoqTiposRelaciones: TADOQuery
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     Parameters = <>
@@ -2185,7 +2175,6 @@ inherited dmFacturas: TdmFacturas
     Top = 328
   end
   object adoqUsosCFDI: TADOQuery
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     Parameters = <>

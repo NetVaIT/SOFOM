@@ -482,8 +482,9 @@ inherited dmPagos: TdmPagos
       'XCD where CXCD.descripcion like'#39'%Abono Capital%'#39' and CXC.IdCuent' +
       'aXCobrar=CXCD.idcuentaXCobrar )'#13#10'and CXC.IdCFDI is null) )-- IdC' +
       'uentaXCobrarEstatus=-1 and puede que esten facturadas'#13#10' and CXC.' +
-      'IDAnexo=:IdAnexo'#13#10'order by CXC.idanexosamortizaciones,EsMoratori' +
-      'o DEsc, CXC.FechaVencimiento'
+      'IDAnexo=:IdAnexo '#13#10'and  idCuentaXCobrarReestructura is null-- de' +
+      'beria la reestructura estar null'#13#10'order by CXC.idanexosamortizac' +
+      'iones,EsMoratorio DEsc, CXC.FechaVencimiento'
     Parameters = <
       item
         Name = 'IdPersonaCliente'
@@ -1056,8 +1057,8 @@ inherited dmPagos: TdmPagos
         DataType = ftDateTime
         Value = Null
       end>
-    Left = 264
-    Top = 496
+    Left = 200
+    Top = 512
   end
   object ADODtStPrefacturasCFDI: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -1933,8 +1934,8 @@ inherited dmPagos: TdmPagos
         DataType = ftBoolean
         Value = Null
       end>
-    Left = 416
-    Top = 496
+    Left = 352
+    Top = 512
   end
   object adoqAnexosSel: TADOQuery
     Connection = _dmConection.ADOConnection
@@ -1966,8 +1967,8 @@ inherited dmPagos: TdmPagos
         'WHERE        (Anexos.MontoVencido = 0) AND (Anexos.SaldoInsoluto' +
         ' >= 0)'
       'and Anexos.idanexo=:IdAnexo --Abr 17/17')
-    Left = 264
-    Top = 552
+    Left = 200
+    Top = 568
     object adoqAnexosSelIdContrato: TAutoIncField
       FieldName = 'IdContrato'
       ReadOnly = True
@@ -2045,8 +2046,8 @@ inherited dmPagos: TdmPagos
         Precision = 10
         Value = Null
       end>
-    Left = 408
-    Top = 552
+    Left = 344
+    Top = 568
   end
   object ADOStrdPrcGenCXCXAmortiza: TADOStoredProc
     Connection = _dmConection.ADOConnection
@@ -2080,8 +2081,8 @@ inherited dmPagos: TdmPagos
         Precision = 10
         Value = Null
       end>
-    Left = 536
-    Top = 512
+    Left = 472
+    Top = 528
   end
   object ADOQryVerificaSaldoFinal: TADOQuery
     Connection = _dmConection.ADOConnection
@@ -2111,8 +2112,8 @@ inherited dmPagos: TdmPagos
         'zaciones=aa.idanexoamortizacion and cc.Saldo>0) )'
       ''
       'Group by c.IdAnexo, aa.IdAnexoCredito')
-    Left = 540
-    Top = 563
+    Left = 476
+    Top = 579
   end
   object ADODtStCFDINotaCredito: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -2129,8 +2130,8 @@ inherited dmPagos: TdmPagos
         Size = 4
         Value = Null
       end>
-    Left = 671
-    Top = 561
+    Left = 615
+    Top = 577
     object ADODtStCFDINotaCreditoIdCFDI: TLargeintField
       FieldName = 'IdCFDI'
       ReadOnly = True
@@ -2534,8 +2535,8 @@ inherited dmPagos: TdmPagos
         Precision = 10
         Value = Null
       end>
-    Left = 944
-    Top = 352
+    Left = 920
+    Top = 264
   end
   object AdoQryAnexoMoraAcumula: TADOQuery
     Connection = _dmConection.ADOConnection
@@ -2571,8 +2572,8 @@ inherited dmPagos: TdmPagos
       ' order by IdCuentaXCobrar,idanexomoratorio,fecha'
       ''
       '')
-    Left = 844
-    Top = 547
+    Left = 788
+    Top = 563
     object AdoQryAnexoMoraAcumulaIdCuentaXCobrar: TIntegerField
       FieldName = 'IdCuentaXCobrar'
     end
@@ -2604,5 +2605,428 @@ inherited dmPagos: TdmPagos
       Precision = 18
       Size = 6
     end
+  end
+  object ADODtStAplicaPagoReest: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    AfterPost = ADODtStAplicaPagoReestAfterPost
+    OnNewRecord = ADODtStAplicaPagoReestNewRecord
+    CommandText = 
+      'select IdPagoAplicacion, IdPago, IdCFDI, IdPersonaCliente,'#13#10' IdC' +
+      'uentaXCobrar, FechaAplicacion, Importe, ImporteFactoraje, IdCXCR' +
+      'elacionRE'#13#10' from PagosAplicaciones'#13#10'where IdPersonaCliente=:IdPe' +
+      'rsonaCliente'
+    DataSource = dsMaster
+    IndexFieldNames = 'IdPersonaCliente'
+    MasterFields = 'IdPersonaCliente'
+    Parameters = <
+      item
+        Name = 'IdPersonaCliente'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 684
+    Top = 336
+    object ADODtStAplicaPagoReestIdPagoAplicacion: TAutoIncField
+      FieldName = 'IdPagoAplicacion'
+      ReadOnly = True
+    end
+    object ADODtStAplicaPagoReestIdPago: TIntegerField
+      FieldName = 'IdPago'
+    end
+    object ADODtStAplicaPagoReestIdCFDI: TLargeintField
+      FieldName = 'IdCFDI'
+    end
+    object ADODtStAplicaPagoReestIdPersonaCliente: TIntegerField
+      FieldName = 'IdPersonaCliente'
+    end
+    object ADODtStAplicaPagoReestIdCuentaXCobrar: TIntegerField
+      FieldName = 'IdCuentaXCobrar'
+    end
+    object ADODtStAplicaPagoReestFechaAplicacion: TDateTimeField
+      FieldName = 'FechaAplicacion'
+    end
+    object ADODtStAplicaPagoReestImporte: TFMTBCDField
+      FieldName = 'Importe'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStAplicaPagoReestImporteFactoraje: TFMTBCDField
+      FieldName = 'ImporteFactoraje'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStAplicaPagoReestIdCXCRelacionRE: TIntegerField
+      FieldName = 'IdCXCRelacionRE'
+    end
+  end
+  object ADODtStCxCPendReest: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'Select CXC.Descripcion, CXC.IdCuentaXCobrar, CXC.IdCuentaXCobrar' +
+      'Base, CXC.IdCuentaXCobrarEstatus, CXC.IdPersona, CXC.IdAnexosAmo' +
+      'rtizaciones AS IdAnexoAmortizacion, CXC.IdAnexo, CXC.IdEstadoCue' +
+      'nta, CXC.IdCFDI, '#13#10'CXC.Fecha, CXC.FechaVencimiento, CXC.Importe,' +
+      'CXC.Descuento, CXC.Impuesto, CXC.Interes, CXC.Total, CXC.Saldo, ' +
+      'CXC.SaldoFactoraje, CXC.EsMoratorio, CI.SaldoDocumento, Ci.Saldo' +
+      'Factoraje as SaldoFactorajeCFDI, '#13#10'ci.serie, Ci.folio           ' +
+      '                                             --oct 4/18'#13#10' from C' +
+      'uentasXCobrar CXC  '#13#10'--left debe tener FActura'#13#10'inner Join CFDI ' +
+      'CI on CI.IdCFDI= CXC.IdCFDI where '#13#10' Saldo >0 and IDPersona=:IdP' +
+      'ersonaCliente '#13#10'and (((IdCuentaXCobrarEstatus=0 or (IdCuentaXCob' +
+      'rarEstatus=1))  and  ESMoratorio=0)'#13#10'or( Esmoratorio=1))'#13#10#13#10' and' +
+      ' CXC.IDAnexo=:IdAnexo -- es el mismo.. '#13#10#13#10' and IdCuentaXCobrarR' +
+      'estructura =:IDCXCRees -- valor enviado este es el que va a dar ' +
+      'la pauta..'#13#10#13#10'order by CXC.idanexosamortizaciones,EsMoratorio DE' +
+      'sc, CXC.FechaVencimiento'
+    Parameters = <
+      item
+        Name = 'IdPersonaCliente'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end
+      item
+        Name = 'IdAnexo'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end
+      item
+        Name = 'IDCXCRees'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 684
+    Top = 395
+    object ADODtStCxCPendReestDescripcion: TStringField
+      FieldName = 'Descripcion'
+      Size = 100
+    end
+    object ADODtStCxCPendReestIdCuentaXCobrar: TAutoIncField
+      FieldName = 'IdCuentaXCobrar'
+      ReadOnly = True
+    end
+    object ADODtStCxCPendReestIdCuentaXCobrarBase: TIntegerField
+      FieldName = 'IdCuentaXCobrarBase'
+    end
+    object ADODtStCxCPendReestIdCuentaXCobrarEstatus: TIntegerField
+      FieldName = 'IdCuentaXCobrarEstatus'
+    end
+    object ADODtStCxCPendReestIdPersona: TIntegerField
+      FieldName = 'IdPersona'
+    end
+    object ADODtStCxCPendReestIdAnexoAmortizacion: TIntegerField
+      FieldName = 'IdAnexoAmortizacion'
+    end
+    object ADODtStCxCPendReestIdAnexo: TIntegerField
+      FieldName = 'IdAnexo'
+    end
+    object ADODtStCxCPendReestIdEstadoCuenta: TIntegerField
+      FieldName = 'IdEstadoCuenta'
+    end
+    object ADODtStCxCPendReestIdCFDI: TLargeintField
+      FieldName = 'IdCFDI'
+    end
+    object ADODtStCxCPendReestFecha: TDateTimeField
+      FieldName = 'Fecha'
+    end
+    object ADODtStCxCPendReestFechaVencimiento: TDateTimeField
+      FieldName = 'FechaVencimiento'
+    end
+    object ADODtStCxCPendReestImporte: TFMTBCDField
+      FieldName = 'Importe'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStCxCPendReestDescuento: TFMTBCDField
+      FieldName = 'Descuento'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStCxCPendReestImpuesto: TFMTBCDField
+      FieldName = 'Impuesto'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStCxCPendReestInteres: TFMTBCDField
+      FieldName = 'Interes'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStCxCPendReestTotal: TFMTBCDField
+      FieldName = 'Total'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStCxCPendReestSaldo: TFMTBCDField
+      FieldName = 'Saldo'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStCxCPendReestSaldoFactoraje: TFMTBCDField
+      FieldName = 'SaldoFactoraje'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStCxCPendReestEsMoratorio: TBooleanField
+      FieldName = 'EsMoratorio'
+    end
+    object ADODtStCxCPendReestSaldoDocumento: TFMTBCDField
+      FieldName = 'SaldoDocumento'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStCxCPendReestSaldoFactorajeCFDI: TFMTBCDField
+      FieldName = 'SaldoFactorajeCFDI'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStCxCPendReestserie: TStringField
+      FieldName = 'serie'
+    end
+    object ADODtStCxCPendReestfolio: TLargeintField
+      FieldName = 'folio'
+    end
+  end
+  object ADODtStCXCDetallePendReest: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    AfterPost = adodsMasterAfterCancel
+    CommandText = 
+      'Select * From vw_CXCParaAplicar'#13#10'where Saldo >0  '#13#10'and (SaldoDoc' +
+      'umento is null or SaldoDocumento>0.00001)'#13#10' and (SaldoDoc1 is nu' +
+      'll or SaldoDoc1>0.00001)'#13#10'and IdCuentaXCobrar=:IdCuentaXCobrar'#13#10 +
+      'and  (EstatusCFDI1 <>3 or  EstatusCFDI2 <>3  or (EstatusCFDI1 is' +
+      ' NULL and EstatusCFDI2 is NULL))'#13#10' order by fase desc, ordenApli' +
+      'ca  '
+    DataSource = dsCXCPendReest
+    IndexFieldNames = 'IdCuentaXCobrar'
+    MasterFields = 'IdCuentaXCobrar'
+    Parameters = <
+      item
+        Name = 'IdCuentaXCobrar'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = 8
+      end>
+    Left = 684
+    Top = 451
+    object ADODtStCXCDetallePendReestacumulaACXC: TIntegerField
+      FieldName = 'acumulaACXC'
+    end
+    object ADODtStCXCDetallePendReestIVAde: TIntegerField
+      FieldName = 'IVAde'
+    end
+    object ADODtStCXCDetallePendReestIdCFDI: TLargeintField
+      FieldName = 'IdCFDI'
+    end
+    object ADODtStCXCDetallePendReestsaldoDoc1: TFMTBCDField
+      FieldName = 'saldoDoc1'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStCXCDetallePendReestIDCFDIIVA: TLargeintField
+      FieldName = 'IDCFDIIVA'
+    end
+    object ADODtStCXCDetallePendReestivaCFDI2: TFloatField
+      FieldName = 'ivaCFDI2'
+    end
+    object ADODtStCXCDetallePendReestSaldoDocumento: TFMTBCDField
+      FieldName = 'SaldoDocumento'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStCXCDetallePendReestIdCFDIConcepto: TLargeintField
+      FieldName = 'IdCFDIConcepto'
+    end
+    object ADODtStCXCDetallePendReestimpconc: TFMTBCDField
+      FieldName = 'impconc'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStCXCDetallePendReestCFDIdescto: TFMTBCDField
+      FieldName = 'CFDIdescto'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStCXCDetallePendReestIdCuentaXCobrar: TIntegerField
+      FieldName = 'IdCuentaXCobrar'
+    end
+    object ADODtStCXCDetallePendReestIdCuentaXCobrarDetalle: TIntegerField
+      FieldName = 'IdCuentaXCobrarDetalle'
+    end
+    object ADODtStCXCDetallePendReestDescripCXC: TStringField
+      FieldName = 'DescripCXC'
+      Size = 100
+    end
+    object ADODtStCXCDetallePendReestImporte: TFMTBCDField
+      FieldName = 'Importe'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStCXCDetallePendReestDescuento: TFMTBCDField
+      FieldName = 'Descuento'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStCXCDetallePendReestSaldo: TFMTBCDField
+      FieldName = 'Saldo'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStCXCDetallePendReestIdCuentaXCobrarTipo: TIntegerField
+      FieldName = 'IdCuentaXCobrarTipo'
+    end
+    object ADODtStCXCDetallePendReestAcumula: TBooleanField
+      FieldName = 'Acumula'
+    end
+    object ADODtStCXCDetallePendReestAcumulaAQuien: TIntegerField
+      FieldName = 'AcumulaAQuien'
+    end
+    object ADODtStCXCDetallePendReestBaseIVA: TIntegerField
+      FieldName = 'BaseIVA'
+    end
+    object ADODtStCXCDetallePendReestEsIVA: TBooleanField
+      FieldName = 'EsIVA'
+    end
+    object ADODtStCXCDetallePendReestDescripTC: TStringField
+      FieldName = 'DescripTC'
+      Size = 50
+    end
+    object ADODtStCXCDetallePendReestIdTipoContrato: TIntegerField
+      FieldName = 'IdTipoContrato'
+    end
+    object ADODtStCXCDetallePendReestTemporalidad: TStringField
+      FieldName = 'Temporalidad'
+      Size = 15
+    end
+    object ADODtStCXCDetallePendReestEstadoCuenta: TBooleanField
+      FieldName = 'EstadoCuenta'
+    end
+    object ADODtStCXCDetallePendReestFacturar: TBooleanField
+      FieldName = 'Facturar'
+    end
+    object ADODtStCXCDetallePendReestIdentificador: TStringField
+      FieldName = 'Identificador'
+      Size = 15
+    end
+    object ADODtStCXCDetallePendReestOrdenAplica: TIntegerField
+      FieldName = 'OrdenAplica'
+    end
+    object ADODtStCXCDetallePendReestFase: TIntegerField
+      FieldName = 'Fase'
+    end
+    object ADODtStCXCDetallePendReestBaseMoratorios: TBooleanField
+      FieldName = 'BaseMoratorios'
+    end
+    object ADODtStCXCDetallePendReestEsMoratorios: TBooleanField
+      FieldName = 'EsMoratorios'
+    end
+    object ADODtStCXCDetallePendReestPagosAplicados: TFMTBCDField
+      FieldName = 'PagosAplicados'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStCXCDetallePendReestPagosAplicadosFactoraje: TFMTBCDField
+      FieldName = 'PagosAplicadosFactoraje'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStCXCDetallePendReestSaldoFactoraje: TFMTBCDField
+      FieldName = 'SaldoFactoraje'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStCXCDetallePendReestEsCapital: TBooleanField
+      FieldName = 'EsCapital'
+    end
+    object ADODtStCXCDetallePendReestEsInteres: TBooleanField
+      FieldName = 'EsInteres'
+    end
+    object ADODtStCXCDetallePendReestEstatusCFDI1: TIntegerField
+      FieldName = 'EstatusCFDI1'
+    end
+    object ADODtStCXCDetallePendReestEstatusCFDI2: TIntegerField
+      FieldName = 'EstatusCFDI2'
+    end
+  end
+  object dsCXCPendReest: TDataSource
+    DataSet = ADODtStCxCPendReest
+    Left = 804
+    Top = 400
+  end
+  object ADODtStAplicaPagoInternaReest: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    AfterPost = ADODtStAplicaPagoInternaReestAfterPost
+    CommandText = 
+      'select IDPagoAplicacionInterna, IDPagoAplicacion,'#13#10' IdCuentaXCob' +
+      'rarDetalle, IDCFDI, IDCFDIConcepto,'#13#10' Importe, ImporteFactoraje ' +
+      'from PagosAplicacionesInternas'#13#10' where IDPagoAplicacion=:IDPagoA' +
+      'plicacion'
+    DataSource = dsAplicaPagoReest
+    IndexFieldNames = 'IDPagoAplicacion'
+    MasterFields = 'IDPagoAplicacion'
+    Parameters = <
+      item
+        Name = 'IDPagoAplicacion'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 923
+    Top = 339
+    object ADODtStAplicaPagoInternaReestIDPagoAplicacionInterna: TAutoIncField
+      FieldName = 'IDPagoAplicacionInterna'
+      ReadOnly = True
+    end
+    object ADODtStAplicaPagoInternaReestIDPagoAplicacion: TIntegerField
+      FieldName = 'IDPagoAplicacion'
+    end
+    object ADODtStAplicaPagoInternaReestIdCuentaXCobrarDetalle: TIntegerField
+      FieldName = 'IdCuentaXCobrarDetalle'
+    end
+    object ADODtStAplicaPagoInternaReestIDCFDI: TLargeintField
+      FieldName = 'IDCFDI'
+    end
+    object ADODtStAplicaPagoInternaReestIDCFDIConcepto: TLargeintField
+      FieldName = 'IDCFDIConcepto'
+    end
+    object ADODtStAplicaPagoInternaReestImporte: TFMTBCDField
+      FieldName = 'Importe'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStAplicaPagoInternaReestImporteFactoraje: TFMTBCDField
+      FieldName = 'ImporteFactoraje'
+      Precision = 18
+      Size = 6
+    end
+  end
+  object dsAplicaPagoReest: TDataSource
+    DataSet = ADODtStAplicaPagoReest
+    Left = 804
+    Top = 336
+  end
+  object DSCxCDEtalleReest: TDataSource
+    DataSet = ADODtStCXCDetallePendReest
+    Left = 804
+    Top = 456
   end
 end

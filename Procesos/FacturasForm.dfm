@@ -33,6 +33,7 @@ inherited frmFacturasGrid: TfrmFacturasGrid
     inherited cxGrid: TcxGrid
       Width = 1109
       Height = 228
+      ExplicitTop = -3
       ExplicitWidth = 1109
       ExplicitHeight = 228
       inherited tvMaster: TcxGridDBTableView
@@ -130,6 +131,12 @@ inherited frmFacturasGrid: TfrmFacturasGrid
         end
         object tvMasterEstatus: TcxGridDBColumn
           DataBinding.FieldName = 'Estatus'
+        end
+        object tvMasterCancelacionEnProc: TcxGridDBColumn
+          Caption = 'Solicit'#243' Cancelar'
+          DataBinding.FieldName = 'CancelacionEnProc'
+          Visible = False
+          Width = 85
         end
         object tvMasterTipoComp: TcxGridDBColumn
           DataBinding.FieldName = 'TipoComp'
@@ -315,6 +322,17 @@ inherited frmFacturasGrid: TfrmFacturasGrid
         end
         object tvMasterNumOperacion: TcxGridDBColumn
           DataBinding.FieldName = 'NumOperacion'
+          Width = 451
+        end
+        object tvMasterRFCEmisor: TcxGridDBColumn
+          DataBinding.FieldName = 'RFCEmisor'
+          Visible = False
+          VisibleForCustomization = False
+        end
+        object tvMasterRFCReceptor: TcxGridDBColumn
+          DataBinding.FieldName = 'RFCReceptor'
+          Visible = False
+          VisibleForCustomization = False
         end
       end
     end
@@ -353,6 +371,7 @@ inherited frmFacturasGrid: TfrmFacturasGrid
     end
   end
   inherited DataSource: TDataSource
+    DataSet = dmFacturas.adodsMaster
     OnDataChange = DataSourceDataChange
   end
   inherited dxBarManager: TdxBarManager

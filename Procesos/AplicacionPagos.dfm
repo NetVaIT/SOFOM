@@ -650,6 +650,7 @@ object FrmAplicacionPago: TFrmAplicacionPago
         'ara colocar el valor a pagar.'
       Caption = 'S'#243'lo cuentas por cobrar asociadas al anexo'
       TabOrder = 0
+      OnClick = cxChckBxCambioconsultaClick
       Width = 305
     end
   end
@@ -775,7 +776,6 @@ object FrmAplicacionPago: TFrmAplicacionPago
     Top = 528
   end
   object DSP_ActTotalCXC: TDataSource
-    DataSet = dmPagos.ADOPActualizaTotalesCXC
     Left = 796
     Top = 352
   end
@@ -816,66 +816,76 @@ object FrmAplicacionPago: TFrmAplicacionPago
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@IdCXCMoraBase'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end
       item
         Name = '@IdAnexoMoraBase'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end
       item
         Name = '@ValImporte1'
         Attributes = [paNullable]
-        DataType = ftFMTBcd
+        DataType = ftBCD
         NumericScale = 6
         Precision = 18
+        Value = Null
       end
       item
         Name = '@ValImporte2'
         Attributes = [paNullable]
-        DataType = ftFMTBcd
+        DataType = ftBCD
         NumericScale = 6
         Precision = 18
+        Value = Null
       end
       item
         Name = '@valDescto1'
         Attributes = [paNullable]
-        DataType = ftFMTBcd
+        DataType = ftBCD
         NumericScale = 6
         Precision = 18
+        Value = Null
       end
       item
         Name = '@valDescto2'
         Attributes = [paNullable]
-        DataType = ftFMTBcd
+        DataType = ftBCD
         NumericScale = 6
         Precision = 18
+        Value = Null
       end
       item
         Name = '@valIVA1'
         Attributes = [paNullable]
-        DataType = ftFMTBcd
+        DataType = ftBCD
         NumericScale = 6
         Precision = 18
+        Value = Null
       end
       item
         Name = '@valIVA2'
         Attributes = [paNullable]
-        DataType = ftFMTBcd
+        DataType = ftBCD
         NumericScale = 6
         Precision = 18
+        Value = Null
       end
       item
         Name = '@ListaAneMoraAparte'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1073741823
+        Value = Null
       end
       item
         Name = '@IdAnexoMoratorio'
@@ -883,8 +893,27 @@ object FrmAplicacionPago: TFrmAplicacionPago
         DataType = ftInteger
         Direction = pdInputOutput
         Precision = 10
+        Value = Null
       end>
     Left = 592
     Top = 64
+  end
+  object DSCXCPendienteReestructura: TDataSource
+    DataSet = dmPagos.ADODtStCxCPendReest
+    OnDataChange = dsConCXCPendientesDataChange
+    OnUpdateData = dsConCXCPendientesUpdateData
+    Left = 76
+    Top = 352
+  end
+  object DSAplicacionReestructura: TDataSource
+    DataSet = dmPagos.ADODtStAplicaPagoReest
+    OnStateChange = DSAplicacionStateChange
+    Left = 60
+    Top = 504
+  end
+  object dsDetalleCXCPendReest: TDataSource
+    DataSet = dmPagos.ADODtStCXCDetallePendReest
+    Left = 244
+    Top = 360
   end
 end

@@ -534,6 +534,7 @@ begin
                          ' inner join Anexos A on A.IdAnexo=CXC.IdAnexo '+
                          ' where IdContrato= '+intToStr(idcontrato)+
                          ' and CXC.Saldo>0.01 and CXC.FechaVencimiento <=:Fecha '+  //Para que incluya el día de corte   // 0.001 jun23/17
+                         ' and CxC.IDCuentaXCobrarRestructura is null '+ //<-- Para serparar de las nuevas Nov 28/18
                          ' group by idcontrato ');     //Abr 11/17 FV
 
   ADOQryAuxiliar.Parameters.ParamByName('Fecha').Value:=  UltFecCorte;

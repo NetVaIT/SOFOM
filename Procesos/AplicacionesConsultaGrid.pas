@@ -176,7 +176,7 @@ const
   'INNER JOIN CFDI AS Ci ON Ci.IdCFDI = CC.IdCFDI ' +
   'INNER JOIN Personas AS P ON P.IdPersona = CC.IdPersona ' +
   'LEFT OUTER JOIN Anexos AS A ON A.IdAnexo = CC.IdAnexo ' +
-  'WHERE 0=0 ';
+  'WHERE IdCXCRelacionRE is null   ';  // era 0=0
 
 //   TxtSQL='select PA.FechaAplicacion ,pa.importe, PR.FechaPago as FechaPago,'+
 //          ' PR.FolioPago, Pr.SeriePago,Cc.IdCuentaXCobrar NoCuentaXCobrar, '+

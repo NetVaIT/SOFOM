@@ -14,7 +14,8 @@ inherited dmAplicacionesConsulta: TdmAplicacionesConsulta
       'R JOIN CuentasXCobrar AS CC ON PA.IdCuentaXCobrar = CC.IdCuentaX' +
       'Cobrar '#13#10'INNER JOIN CFDI AS Ci ON Ci.IdCFDI = CC.IdCFDI '#13#10'INNER ' +
       'JOIN Personas AS P ON P.IdPersona = CC.IdPersona'#13#10'LEFT OUTER JOI' +
-      'N Anexos AS A ON A.IdAnexo = CC.IdAnexo '#13#10
+      'N Anexos AS A ON A.IdAnexo = CC.IdAnexo '#13#10' where IdCXCRelacionRE' +
+      ' is null'#13#10
     object adodsMasterCliente: TStringField
       FieldName = 'Cliente'
       Size = 300

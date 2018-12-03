@@ -820,16 +820,19 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
           item
             Expanded = False
             FieldName = 'Proxcontacto'
+            Width = 64
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'RegContacto'
+            Width = 64
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'Acuerdo'
+            Width = 64
             Visible = True
           end
           item
@@ -840,16 +843,19 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
           item
             Expanded = False
             FieldName = 'PromesaPago'
+            Width = 64
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'EstadoIncidencia'
+            Width = 64
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'UsuarioReg'
+            Width = 64
             Visible = True
           end>
       end
@@ -1023,6 +1029,7 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
         item
           Expanded = False
           FieldName = 'Saldo'
+          Width = 64
           Visible = True
         end
         item
@@ -1039,6 +1046,7 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
         item
           Expanded = False
           FieldName = 'Folio'
+          Width = 64
           Visible = True
         end
         item
@@ -1066,11 +1074,13 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
         item
           Expanded = False
           FieldName = 'CapitalCobrado'
+          Width = 64
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'SaldoInsoluto'
+          Width = 64
           Visible = True
         end>
     end

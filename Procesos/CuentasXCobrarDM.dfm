@@ -12,8 +12,9 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       'tus, IdPersona, IdAnexosAmortizaciones, IdAnexo, IdCFDI, Fecha, ' +
       'FechaVencimiento, '#13#10'Descripcion, (Importe-descuento) as Importe,' +
       ' Descuento,  Impuesto, Interes, Total, Saldo, SaldoFactoraje, Es' +
-      'Moratorio'#13#10'FROM CuentasXCobrar AS CXC'#13#10'WHERE EsMoratorio = 0'#13#10'OR' +
-      'DER BY IdAnexo, IdAnexosAmortizaciones'#13#10
+      'Moratorio'#13#10'FROM CuentasXCobrar AS CXC'#13#10'WHERE EsMoratorio = 0'#13#10'an' +
+      'd IdCuentaXCobrarRestructura is null -- dic 3 /18'#13#10'ORDER BY IdAn' +
+      'exo, IdAnexosAmortizaciones'#13#10
     Left = 56
     Top = 24
     object adodsMasterIdCuentaXCobrar: TAutoIncField
@@ -1023,17 +1024,20 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@IdCuentaXCobrar'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end
       item
         Name = '@Temporal'
         Attributes = [paNullable]
         DataType = ftBoolean
+        Value = Null
       end>
     Left = 232
     Top = 392

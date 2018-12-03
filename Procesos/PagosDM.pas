@@ -439,6 +439,90 @@ type
     AdoQryAnexoMoraAcumulaacumulado: TFMTBCDField;
     AdoQryAnexoMoraAcumuladescuento: TFMTBCDField;
     AdoQryAnexoMoraAcumulaimpuesto: TFMTBCDField;
+    ADODtStAplicaPagoReest: TADODataSet;
+    ADODtStCxCPendReest: TADODataSet;
+    ADODtStCXCDetallePendReest: TADODataSet;
+    dsCXCPendReest: TDataSource;
+    ADODtStAplicaPagoInternaReest: TADODataSet;
+    dsAplicaPagoReest: TDataSource;
+    DSCxCDEtalleReest: TDataSource;
+    ADODtStCxCPendReestDescripcion: TStringField;
+    ADODtStCxCPendReestIdCuentaXCobrar: TAutoIncField;
+    ADODtStCxCPendReestIdCuentaXCobrarBase: TIntegerField;
+    ADODtStCxCPendReestIdCuentaXCobrarEstatus: TIntegerField;
+    ADODtStCxCPendReestIdPersona: TIntegerField;
+    ADODtStCxCPendReestIdAnexoAmortizacion: TIntegerField;
+    ADODtStCxCPendReestIdAnexo: TIntegerField;
+    ADODtStCxCPendReestIdEstadoCuenta: TIntegerField;
+    ADODtStCxCPendReestIdCFDI: TLargeintField;
+    ADODtStCxCPendReestFecha: TDateTimeField;
+    ADODtStCxCPendReestFechaVencimiento: TDateTimeField;
+    ADODtStCxCPendReestImporte: TFMTBCDField;
+    ADODtStCxCPendReestDescuento: TFMTBCDField;
+    ADODtStCxCPendReestImpuesto: TFMTBCDField;
+    ADODtStCxCPendReestInteres: TFMTBCDField;
+    ADODtStCxCPendReestTotal: TFMTBCDField;
+    ADODtStCxCPendReestSaldo: TFMTBCDField;
+    ADODtStCxCPendReestSaldoFactoraje: TFMTBCDField;
+    ADODtStCxCPendReestEsMoratorio: TBooleanField;
+    ADODtStCxCPendReestSaldoDocumento: TFMTBCDField;
+    ADODtStCxCPendReestSaldoFactorajeCFDI: TFMTBCDField;
+    ADODtStCxCPendReestserie: TStringField;
+    ADODtStCxCPendReestfolio: TLargeintField;
+    ADODtStCXCDetallePendReestacumulaACXC: TIntegerField;
+    ADODtStCXCDetallePendReestIVAde: TIntegerField;
+    ADODtStCXCDetallePendReestIdCFDI: TLargeintField;
+    ADODtStCXCDetallePendReestsaldoDoc1: TFMTBCDField;
+    ADODtStCXCDetallePendReestIDCFDIIVA: TLargeintField;
+    ADODtStCXCDetallePendReestivaCFDI2: TFloatField;
+    ADODtStCXCDetallePendReestSaldoDocumento: TFMTBCDField;
+    ADODtStCXCDetallePendReestIdCFDIConcepto: TLargeintField;
+    ADODtStCXCDetallePendReestimpconc: TFMTBCDField;
+    ADODtStCXCDetallePendReestCFDIdescto: TFMTBCDField;
+    ADODtStCXCDetallePendReestIdCuentaXCobrar: TIntegerField;
+    ADODtStCXCDetallePendReestIdCuentaXCobrarDetalle: TIntegerField;
+    ADODtStCXCDetallePendReestDescripCXC: TStringField;
+    ADODtStCXCDetallePendReestImporte: TFMTBCDField;
+    ADODtStCXCDetallePendReestDescuento: TFMTBCDField;
+    ADODtStCXCDetallePendReestSaldo: TFMTBCDField;
+    ADODtStCXCDetallePendReestIdCuentaXCobrarTipo: TIntegerField;
+    ADODtStCXCDetallePendReestAcumula: TBooleanField;
+    ADODtStCXCDetallePendReestAcumulaAQuien: TIntegerField;
+    ADODtStCXCDetallePendReestBaseIVA: TIntegerField;
+    ADODtStCXCDetallePendReestEsIVA: TBooleanField;
+    ADODtStCXCDetallePendReestDescripTC: TStringField;
+    ADODtStCXCDetallePendReestIdTipoContrato: TIntegerField;
+    ADODtStCXCDetallePendReestTemporalidad: TStringField;
+    ADODtStCXCDetallePendReestEstadoCuenta: TBooleanField;
+    ADODtStCXCDetallePendReestFacturar: TBooleanField;
+    ADODtStCXCDetallePendReestIdentificador: TStringField;
+    ADODtStCXCDetallePendReestOrdenAplica: TIntegerField;
+    ADODtStCXCDetallePendReestFase: TIntegerField;
+    ADODtStCXCDetallePendReestBaseMoratorios: TBooleanField;
+    ADODtStCXCDetallePendReestEsMoratorios: TBooleanField;
+    ADODtStCXCDetallePendReestPagosAplicados: TFMTBCDField;
+    ADODtStCXCDetallePendReestPagosAplicadosFactoraje: TFMTBCDField;
+    ADODtStCXCDetallePendReestSaldoFactoraje: TFMTBCDField;
+    ADODtStCXCDetallePendReestEsCapital: TBooleanField;
+    ADODtStCXCDetallePendReestEsInteres: TBooleanField;
+    ADODtStCXCDetallePendReestEstatusCFDI1: TIntegerField;
+    ADODtStCXCDetallePendReestEstatusCFDI2: TIntegerField;
+    ADODtStAplicaPagoInternaReestIDPagoAplicacionInterna: TAutoIncField;
+    ADODtStAplicaPagoInternaReestIDPagoAplicacion: TIntegerField;
+    ADODtStAplicaPagoInternaReestIdCuentaXCobrarDetalle: TIntegerField;
+    ADODtStAplicaPagoInternaReestIDCFDI: TLargeintField;
+    ADODtStAplicaPagoInternaReestIDCFDIConcepto: TLargeintField;
+    ADODtStAplicaPagoInternaReestImporte: TFMTBCDField;
+    ADODtStAplicaPagoInternaReestImporteFactoraje: TFMTBCDField;
+    ADODtStAplicaPagoReestIdPagoAplicacion: TAutoIncField;
+    ADODtStAplicaPagoReestIdPago: TIntegerField;
+    ADODtStAplicaPagoReestIdCFDI: TLargeintField;
+    ADODtStAplicaPagoReestIdPersonaCliente: TIntegerField;
+    ADODtStAplicaPagoReestIdCuentaXCobrar: TIntegerField;
+    ADODtStAplicaPagoReestFechaAplicacion: TDateTimeField;
+    ADODtStAplicaPagoReestImporte: TFMTBCDField;
+    ADODtStAplicaPagoReestImporteFactoraje: TFMTBCDField;
+    ADODtStAplicaPagoReestIdCXCRelacionRE: TIntegerField;
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsMasterAfterPost(DataSet: TDataSet);
     procedure adodsMasterBeforePost(DataSet: TDataSet);
@@ -466,6 +550,9 @@ type
     procedure adodsMasterIdPersonaClienteChange(Sender: TField);
     procedure adodsMasterIdMetodoPagoChange(Sender: TField);
     procedure actSoloCXCDelAnexoExecute(Sender: TObject);
+    procedure ADODtStAplicaPagoReestAfterPost(DataSet: TDataSet);
+    procedure ADODtStAplicaPagoReestNewRecord(DataSet: TDataSet);
+    procedure ADODtStAplicaPagoInternaReestAfterPost(DataSet: TDataSet);
   private
     { Private declarations }
     Inserto:Boolean;
@@ -679,8 +766,657 @@ begin  //Pagos
   adodsMasterIdMonedaOrigen.Value:= _MONEDAS_ID_PESO_MXN;
 end;
 
+procedure TdmPagos.ADODtStAplicaPagoReestAfterPost(DataSet: TDataSet);
+var   //Nov 23 /18 ver que se deja
+  valor,valbaseCXC, porcentaje,ValReg, ValAux, INTMasIVA, porc2, SaldoAcum, valorMasIva: Double;
+  TipoCon, FAct, Fant, IDCFDIAux, OAnt, OAct, IdAcum, ord, idcxcDet, idcxcdetIVA:Integer;
+//  CampoPagoAplicado
+  Camposaldo,campoimporte:String;
+  EsInicial, EsFactoraje:Boolean;
+begin                       //Puede quedar amarrado a master pero no poner los saldos verificar..
+  inherited;
+  Ord:=1; //Dic 15/16
+  TipoCon := -1;
+  EsFactoraje:= adodsMaster.FieldByName('origenPAgo').AsInteger=1 ; //FEb 10/17
+  if EsFactoraje then      //Ene 13/17
+  begin
+    camposaldo:='SaldoFactoraje';
+    campoimporte:='ImporteFactoraje';
+  end
+  else
+  begin  //Normal
+    camposaldo:='Saldo';
+    campoimporte:='Importe';
+  end;
+
+  ADODtStCxCPendReest.filter:='IdCuentaXCobrar = '+ADODtStAplicaPagoReestIdCuentaXCobrar.AsString; //Por si es la ultima y creo varias para que se ubique Oct 3/17
+  ADODtStCxCPendReest.filtered:=True;
+  Valor:=dataset.FieldByName(campoimporte).AsFloat;      //Aplicaciones Reest
+
+  if not EsFactoraje then
+    valbaseCXC:= ADODtStCxCPendReest.fieldbyname (camposaldo).AsFloat  //VAlor antes de actualizar el saldo
+  else
+    valbaseCXC:=  ADODtStCxCPendReest.fieldbyname ('SaldoFactorajeCFDI').AsFloat; //Se supone total de Factura feb 10/17
+
+   //Sacar el importe original del CXC para ver el porcentaje..
+  porcentaje:= (valor/ValbaseCxC);//SimpleRoundTo(,-4); para ajustar calculo se quito    //*100Verificar si no se multiplica por 100 y se usa directo Dic 11/16   //Pones roundto
+  Porc2:=0;
+  //Segun el tipo de contrato hacer  separacion
+  ValAux:=Valor;  //Para repertirlo en las dos fases //Dic 12/16
+  //Armar proceso para  desglosar los pagos  de los detalles  de cxc
+  if esfactoraje  then
+  begin
+    ADODtStCXCDetallePendReest.Close;
+    ADODtStCXCDetallePendReest.CommandText:='Select * From vw_CXCParaAplicar where Saldo >0  and IdCuentaXCobrar=:IdCuentaXCobrar '
+                                      +' and EsMoratorios=0 and (idCFDI is not null or idCFDIIVA is not null)'
+                                      +' and (SaldoDocumento is null or SaldoDocumento>0.01)'     //  jun23/17 0.00001)FEb 14/17   (verificar) Para que solo traiga el vigente
+                                      +' and (SaldoDoc1 is null or SaldoDoc1>0.01)'       // 0.00001      FEb 14/17  (Verificar)
+                                      +' and  (EstatusCFDI1 <>3 or  EstatusCFDI2 <>3 or (EstatusCFDI1 is NULL and EstatusCFDI2 is NULL))'  //Ajuste oct 20/17
+                                      +' order by fase desc, ordenAplica ' ;             //Oct 2517 PAra que pueda aplicar lo no facturable
+  end
+  else //Esta en otra
+  begin
+    ADODtStCXCDetallePendReest.Close;
+    ADODtStCXCDetallePendReest.CommandText:='Select * From vw_CXCParaAplicar where Saldo >0  and IdCuentaXCobrar=:IdCuentaXCobrar '
+                                       +' and (SaldoDocumento is null or SaldoDocumento>0.01)'     //FEb 14/17    Para que solo traiga el vigente
+                                       +' and (SaldoDoc1 is null or SaldoDoc1>0.01)'       //FEb 14/17    //  jun23/17 0.00001
+                                       +' and  (EstatusCFDI1 <>3 or  EstatusCFDI2 <>3 or (EstatusCFDI1 is NULL and EstatusCFDI2 is NULL))'  //Ajuste oct 20/17
+                                      +' order by fase desc, ordenAplica ' ;           //Oct 2517 PAra que pueda aplicar lo no facturable
+
+  end;
+  ADODtStCXCDetallePendReest.Open;      //estan ordenados por orden de aplicacion //Asociado con Cuenta por cobrar de  ADODtStCxCPendReest
+
+   ADODtStAplicaPagoReest.open;
+  //Verificar si son todas orden 0 o únicas y repartir parejo
+  EsInicial:=VerificaDetalle(ADODtStCXCDetallePendReest,0); //No deberia ser inicial pero??? NOv 26/18
+  if Not EsInicial then
+  //DEsde
+    begin
+    if not ADODtStCXCDetallePendReest.Eof then
+    begin
+      TipoCon :=  ADODtStCXCDetallePendReestIdTipoContrato.AsInteger;
+      Fant:= ADODtStCXCDetallePendReestFase.AsInteger;
+      OAnt:= ADODtStCXCDetallePendReestOrdenAplica.AsInteger;
+      ord:=ADODtStCXCDetallePendReestOrdenAplica.AsInteger;   //Se movio aca para usar orden de items
+      if VerificarConceptoIVA(DataSet.FieldByName('IdCuentaXCobrar').AsInteger,ord, valorMasIva, idcxcDet, idcxcdetIVA ) then  //VRtificar FDataset
+        INTMasIVA:=valorMasIva
+      else
+        IntMasIVA:=0;
+      if Porcentaje<1 then
+      begin
+        if (intMASIVA<>0) then
+        begin
+          if (valor<=intMASIVA) then   //No alcanza para pagar INTERES MASIVA
+            Porc2:=(valor/INTMasIVA) //Para ajustar calculo se quito SimpleRoundTo(,-4) Dic 14/16
+          else
+            Porc2:=0;
+        end;
+      end;
+    end;
+    IdAcum:=0;                           //  feb 12/17 sin esto coloca ceros en aplicacion para lo que falta  VErificar..  como ajustar
+    while (not ADODtStCXCDetallePendReest.Eof)  {and (Valor > 0.0001)} do
+    begin
+      Fact:= ADODtStCXCDetallePendReestFase.AsInteger;
+      OAct:=ADODtStCXCDetallePendReestOrdenAplica.AsInteger;    // ver si es IVA ???
+      if (ADODtStCXCDetallePendReestOrdenAplica.asinteger=-1) and (ADODtStCXCDetallePendReestIVAde.IsNull) then
+      begin
+        IdAcum:=SacaIDSiAcumula(ADODtStCXCDetallePendReestIdCuentaXCobrarDetalle.AsInteger, saldoAcum);
+        if idAcum<>0 then
+          SaldoAcum:=SimpleRoundTo((Saldoacum*Porcentaje),-6);
+      end;
+      Case TipoCon of    //Esquema financiero
+      1:begin  //CS Simple
+                            //Es posible que aca se requiera orden y no fase
+          if (Porc2>0) and (OAct=Oant) then                       //Saldo  //Ene 13/17
+            ValReg:=SimpleRoundTo(ADODtStCXCDetallePendReest.Fieldbyname(Camposaldo).AsFloat*Porc2,-6) ///feb 12/17cambio de -4     //No alcanza ni para pagar el interes y el iva
+          else
+            ValReg:= ADODtStCXCDetallePendReest.Fieldbyname(Camposaldo).AsFloat;// ene 13/17 ADODtStCxCDetallePendSaldo.AsFloat; //Lo que esta pendiente de pago
+          //Posiblemente si cambia de orden hay que sumar los del siguente orden y sacar nuevo porcentaje //Dic 13 /16 verificar
+          if (porcentaje <1) and (valReg>valor) then  //Ajustar para aplicar lo que queda.. aca  debe ser sólo capital..
+             ValReg:=Valor;
+          if ((valreg<=valor)or (abs(valreg-valor)<0.0001) ) and (valreg<>0)then  //Dic 13/16 para que no aplique 0
+          begin
+             //Aplicar interno el valor dferegistro y restar
+            ADODtStAplicaPagoInternaReest.Insert;
+            ADODtStAplicaPagoInternaReest.FieldByName('IDCuentaXCobrarDetalle').AsInteger:=ADODtStCXCDetallePendReestIdCuentaXCobrarDetalle.AsInteger;
+            ADODtStAplicaPagoInternaReest.FieldByName(campoImporte).AsFloat:=valreg;
+            //Verificar si esta asociado a concepto o se facturo==>Aplicar a Factura
+            if (not ADODtStCXCDetallePendReestIdCFDI.isnull) or ( ADODtStCXCDetallePendReestEsIVA.AsBoolean) then//(not ADODtStCxCDetallePendIDCFDIIVA.isnull)  then
+            begin
+              if (not ADODtStCXCDetallePendReestIdCFDI.isnull)  then     //Ajuste para el iva de facturas      //DEberia siempre ir por aca
+                IDCFDIAux:= ADODtStCXCDetallePendReestIDCFDI.AsInteger
+              else
+                IDCFDIAux:= ADODtStCXCDetallePendReestIDCFDIIVA.AsInteger;
+              ADODtStAplicaPagoInternaReest.FieldByName('IDCFDI').AsInteger:=IDCFDIAux;
+              if not ADODtStCXCDetallePendReestIdCFDIConcepto.isnull then
+                ADODtStAplicaPagoInternaReest.FieldByName('IDCFDIConcepto').AsInteger:=ADODtStCXCDetallePendReestIDCFDIConcepto.AsInteger;
+            end;
+            ADODtStAplicaPagoInternaReest.Post;
+            Valor:=VAlor-VAlReg ; //  oct 25/17
+          end;
+          //REsta movida de aca    oct 25/17
+
+           if OAct<>Oant then   //VErificar
+          begin
+            Oant:=Oact;
+           end;
+        end;
+      2:begin//AFinanciero
+          if OAct<>Oant then   //VErificar
+          begin
+            Oant:=Oact;
+            Ord:=Oact;
+            if VerificarConceptoIVA(DataSet.FieldByName('IdCuentaXCobrar').AsInteger,ord, valorMasIva, idcxcDet, idcxcdetIVA ) then   //Dic 16/16
+              INTMasIVA:=valorMasIva
+            else
+              IntMasIVA:=0;
+            Porc2:=0;
+            if Porcentaje<1 then
+            begin
+              if (intMASIVA<>0) then
+              begin
+                if (valor<=intMASIVA) then   //No alcanza para pagar valor MASIVA
+                  Porc2:=(valor/INTMasIVA) //Para ajustar calculo se quito SimpleRoundTo(,-4) Dic 14/16
+                else
+                  Porc2:=0;
+              end;
+            end;
+          end;
+          if (Porc2>0) and (OAct=Oant) then  //desde 1 //Dic 13/16
+            ValReg:=SimpleRoundTo(ADODtStCXCDetallePendReest.FieldByName(CampoSaldo).AsFloat*Porc2,-6) ///feb 12/17cambio de -4     //No alcanza ni para pagar el interes y el iva
+          else                                        // Saldo ene 13/17
+          begin
+            ValReg:= ADODtStCXCDetallePendReest.FieldByName(CampoSaldo).AsFloat; //Lo que esta pendiente de pago
+          end;
+           if (porcentaje <1) and (valReg>valor) then  //Ajustar para aplicar lo que queda.. aca  debe ser sólo capital..
+             ValReg:=Valor;
+          if (valreg<=valor) or (abs(valreg-valor)<0.0001) { and (ValReg >0)}then
+          begin                     //abr 19/17
+             //Aplicar interno el valor dferegistro y restar
+            ADODtStAplicaPagoInternaReest.Insert;
+            ADODtStAplicaPagoInternaReest.FieldByName('IDCuentaXCobrarDetalle').AsInteger:=ADODtStCXCDetallePendReestIdCuentaXCobrarDetalle.AsInteger;
+            ADODtStAplicaPagoInternaReest.FieldByName(campoimporte).value:=valreg;  //Value Feb 19/17
+            //Verificar si esta asociado a concepto o se facturo==>Aplicar a Factura
+            if (not ADODtStCXCDetallePendReestIdCFDI.isnull) or (not ADODtStCXCDetallePendReestIDCFDIIVA.isnull)  then
+            begin
+              if (not ADODtStCXCDetallePendReestIdCFDI.isnull)  then     //Ajuste para el iva de facturas     //Dic 12/16
+                IDCFDIAux:= ADODtStCXCDetallePendReestIDCFDI.AsInteger
+              else
+                IDCFDIAux:= ADODtStCXCDetallePendReestIDCFDIIVA.AsInteger;
+              ADODtStAplicaPagoInternaReest.FieldByName('IDCFDI').AsInteger:=IDCFDIAux;
+              if not ADODtStCXCDetallePendReestIdCFDIConcepto.isnull then
+                ADODtStAplicaPagoInternaReest.FieldByName('IDCFDIConcepto').AsInteger:=ADODtStCXCDetallePendReestIDCFDIConcepto.AsInteger;
+            end;
+            ADODtStAplicaPagoInternaReest.Post;
+            Valor:=VAlor-VAlReg ;  // oct 25/17
+          end;
+        end;
+      3:begin //APuro
+          if FAct<>Fant then
+          begin
+            Fant:=Fact;
+            if IdAcum<>0 then   //Solo cuando cambia de  orden
+              Valor:=SaldoAcum  //Ya trae el porcentaje en caso que sea menos
+            else
+              Valor:=ValAux;  //Para retomar el valor por fase  DIC 13/16
+          end;
+          ValReg:= SimpleRoundTo(ADODtStCXCDetallePendReest.FieldByName(CampoSaldo).AsFloat*porcentaje,-6); ///feb 12/17cambio de -4  //Lo que esta pendiente de pago
+          if (valreg<=valor) or (abs(valreg-valor)<0.0001)  then //O diferencias minimas   //abr 19/17
+          begin
+             //Aplicar interno el valor de registro y restar
+            ADODtStAplicaPagoInternaReest.Insert;
+            ADODtStAplicaPagoInternaReest.FieldByName('IDCuentaXCobrarDetalle').AsInteger:=ADODtStCXCDetallePendReestIdCuentaXCobrarDetalle.AsInteger;
+            ADODtStAplicaPagoInternaReest.FieldByName('Importe').value:=valreg;         //Falta actualizar saldos de cxcdetalle
+            //Verificar si esta asociado a concepto o se facturo==>Aplicar a Factura
+            if (not ADODtStCXCDetallePendReestIdCFDI.isnull) or (not ADODtStCXCDetallePendReestIDCFDIIVA.isnull) then
+            begin
+              if (not ADODtStCXCDetallePendReestIdCFDI.isnull)  then     //Ajuste para el iva de facturas     //Dic 12/16
+                IDCFDIAux:= ADODtStCXCDetallePendReestIDCFDI.AsInteger
+              else
+                IDCFDIAux:= ADODtStCXCDetallePendReestIDCFDIIVA.AsInteger;
+              ADODtStAplicaPagoInternaReest.FieldByName('IDCFDI').AsInteger:=IDCFDIAux;
+              if (not ADODtStCXCDetallePendReestIdCFDIConcepto.isnull) then
+                ADODtstAplicacionesInternas.FieldByName('IDCFDIConcepto').AsInteger:=ADODtStCXCDetallePendReestIDCFDIConcepto.AsInteger;
+            end;
+            ADODtStAplicaPagoInternaReest.Post;
+            Valor:=SimpleRoundTo(VAlor-VAlReg, -6); ///feb 12/17cambio de -4   //Para evitar que reste si no alcanza oct 25/17
+          end;
+        end;
+      end;
+      ADODtStCXCDetallePendReest.Next;
+    end;
+  end // del si no es inicial ene 31/17
+
+  else //PAGOS INICIALES    y  probablementee los finales jun 21/17 ??   // verificar, porq ue pueden ser finales tambien... Ojo con los que se FActuran al momento nov 26/18
+  begin  //Par aaplicar iniciales Todos deben aplicar igual   (Moratorios tambien  ccnov 28/18)
+    while not ADODtStCXCDetallePendReest.Eof do
+    begin
+      ValReg:= SimpleRoundTo(ADODtStCXCDetallePendReest.FieldByName(CampoSaldo).AsFloat*porcentaje,-6); ///feb 12/17cambio de -4  //Lo que esta pendiente de pago
+      if (valreg<=valor) or  (abs(valreg-valor)<0.0001) then //O diferencias minimas
+      begin                    //Ajuste Oct 17/17
+        //Aplicar interno el valor de registro y restar
+        ADODtStAplicaPagoInternaReest.open; //Nov 28/18
+        ADODtStAplicaPagoInternaReest.Insert;
+        ADODtStAplicaPagoInternaReest.FieldByName('IDCuentaXCobrarDetalle').AsInteger:=ADODtStCXCDetallePendReestIdCuentaXCobrarDetalle.AsInteger;
+        ADODtStAplicaPagoInternaReest.FieldByName('Importe').value:=valreg;         //Falta actualizar saldos de cxcdetalle
+            //Verificar si esta asociado a concepto o se facturo==>Aplicar a Factura
+        if (not ADODtStCXCDetallePendReestIdCFDI.isnull) or (not ADODtStCXCDetallePendReestIDCFDIIVA.isnull) then
+        begin
+          if (not ADODtStCXCDetallePendReestIdCFDI.isnull)  then     //Ajuste para el iva de facturas     //Dic 12/16
+            IDCFDIAux:= ADODtStCXCDetallePendReestIDCFDI.AsInteger
+          else
+            IDCFDIAux:= ADODtStCXCDetallePendReestIDCFDIIVA.AsInteger;
+          ADODtStAplicaPagoInternaReest.FieldByName('IDCFDI').AsInteger:=IDCFDIAux;
+          if (not ADODtStCXCDetallePendReestIdCFDIConcepto.isnull) then
+             ADODtStAplicaPagoInternaReest.FieldByName('IDCFDIConcepto').AsInteger:=ADODtStCXCDetallePendReestIDCFDIConcepto.AsInteger;
+        end;
+        ADODtStAplicaPagoInternaReest.Post;
+        Valor:=SimpleRoundTo(VAlor-VAlReg, -6); ///feb 12/17cambio de -4   //oct 25/17 se  movio aca
+      end;
+      //Aca estaba la resta   oct 25/17
+      ADODtStCXCDetallePendReest.Next;
+    end;
+  end;
+      //Actualiza saldos Pago, CXC y Cliente?? //Dic 12/16
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.SQL.Clear;
+  if CampoSaldo= 'Saldo' then //Normal se deberia aplicar en los dos
+  begin
+    ADOQryAuxiliar.SQL.Add('UPDATE CuentasXCobrar SET SALDOFactoraje=SALDOFActoraje - '+DataSet.FieldByName('Importe').AsString
+                    +' where SALDOFactoraje = Saldo and IDCuentaXCobrar='+DAtaSEt.FieldByName('IDCuentaXCobrar').ASString);
+    ADOQryAuxiliar.ExecSQL;     //Solo aplica si son iguales Ene16/17
+    ADOQryAuxiliar.SQL.Clear;
+    ADOQryAuxiliar.SQL.Add('UPDATE CuentasXCobrar SET SALDO=SALDO - '+DataSet.FieldByName('Importe').AsString   // Si la CXC esta a 2 decimales aca aplica correcto
+                          +' where IDCuentaXCobrar='+DAtaSEt.FieldByName('IDCuentaXCobrar').ASString);
+    ADOQryAuxiliar.ExecSQL;
+    ADOQryAuxiliar.Close;
+  //Posiblemente esto no se requiera aca Nov 26/18
+  (*
+    if Not EsInicial then //Para que no reste todo lo asociado con Pagos iniciales//hay que ver cuando se le resta el deposito en Garantia?
+    begin//**********Para poner pagos en Anexos y SaldoTotal************** //Jul 4/17
+      ADOQryAuxiliar.SQL.Clear;
+      ADOQryAuxiliar.SQL.Add('UPDATE ANEXOS SET SALDOTOTAL=SALDOTOTAL - '+DataSet.FieldByName('Importe').AsString   //Anexos actualizacion saldos nuevos
+                              +', PagadoTotal = PagadoTotal+ '+DataSet.FieldByName('Importe').AsString
+                            +' where IDAnexo ='+adodsMasterIdAnexo.ASString); //debe tener valor.
+      ADOQryAuxiliar.ExecSQL;   //Verificar porue par el deposito en Garantia  del inicio tiene más cosas que no deben descontarse
+      ADOQryAuxiliar.Close;
+    end;
+    *)
+    ADOQryAuxiliar.SQL.Clear;     //Abr 19/17
+    ADOQryAuxiliar.SQL.Add('UPDATE CuentasXCobrar SET IdCuentaXCobrarEstatus = 3 ' +
+                           ' where IDCuentaXCobrar='+DataSEt.FieldByName('IDCuentaXCobrar').ASString+
+                           ' and (Saldo < 0.01)' ); // era 0.0001 Jun 19/17
+    ADOQryAuxiliar.ExecSQL;
+    ADOQryAuxiliar.Close;
+    if ADODtStCXCPendientes.fieldbyname ('EsMoratorio').AsBoolean then
+      AplicarMoratorioInterno(DAtaSEt.FieldByName('IDCuentaXCobrar').asinteger,DataSet.FieldByName('Importe').AsExtended); //Abr 17/17
+  end
+  else
+  begin       //Soloaplica en Facturaje Ene16/17
+    ADOQryAuxiliar.SQL.Add('UPDATE CuentasXCobrar SET '+CampoSaldo+' = '+CampoSaldo +' - '+DataSet.FieldByName('Importe').AsString
+                          +' where IDCuentaXCobrar='+DAtaSEt.FieldByName('IDCuentaXCobrar').ASString);
+    ADOQryAuxiliar.ExecSQL;
+  end;
+
+   //Posiblemente esto no se requiera aca Nov 26/18    //Ya que ya fueron aplicados antes en la CXCnueva
+  (*
+  ADOQryAuxiliar.SQL.Clear;
+  ADOQryAuxiliar.SQL.Add('UPDATE Pagos SET SALDO=SALDO - '+DataSet.FieldByName('Importe').AsString
+                        +' where IDPago='+DAtaSEt.FieldByName('IDPago').ASString);
+  ADOQryAuxiliar.ExecSQL;
+
+  if not AdodsMaster.FieldByName('IDPagoREal').Isnull then //Actualizar Saldo de Pago Real.
+  begin
+  ADOQryAuxiliar.SQL.Clear;    //sep 14/18
+  ADOQryAuxiliar.SQL.Add('UPDATE PagosReales SET SALDO=SALDO - '+DataSet.FieldByName('Importe').AsString
+                        +' where IDPagoREal='+AdodsMaster.FieldByName('IDPagoREal').ASString);
+  ADOQryAuxiliar.ExecSQL;
+  end;
+  *)
+  //Abr 17/17 Actualiza Totales de CXC para que actualice mnto vencido en anexo
+  adospUpdCuentasXCobrarTotales.Parameters.ParamByName('@IdCuentaXCobrar').Value:= DataSet.FieldByName('IDCuentaXCobrar').AsInteger;
+  adospUpdCuentasXCobrarTotales.Parameters.ParamByName('@Temporal').Value:= 0;
+  adospUpdCuentasXCobrarTotales.ExecProc;
+  //VErificación de  Existencia Pago de Deposito en GArantia y Saldo Final, preguntar si se generan moratotrios al día o ver ??
+ //Quitar de aca.. o al menos evitar si se estan pagando anticipos.. para evitar mala aplicacion... Mover para   el punto donde se llama el pos y verificar si es antcipo o pago a Capital
+ // quitado Oct 2/17  VerificaYCreaCXCFinales(adodsMasterIdAnexo.AsInteger); //DEl que se acaba de aplicar
+  ADODtStCxCPendReest.filter:=''; //Por si es la ultima y creo varias para que se ubique Oct 3/17
+  ADODtStCxCPendReest.filtered:=False;
+
+//verificar ,aca no se muestra Nov 26/18  ADODtStDetalleCXCMostrar.close;
+//  ADODtStDetalleCXCMostrar.open;
+
+  if Valor >=0.01 then //???
+     ShowMessage('Verificar los detalles de la cuenta por Cobrar para identificar que estén saldadas. ('+FloatToStr(Valor)+') ');
+
+  //
+
+
+
+  //HAsta
+
+  //Nov23/18
+(*
+
+begin        //FEb 10/17                 //No requerido aca
+  inherited;   //Posiblemente requiera parametro de orden para filtro..
+  Ord:=1; //Dic 15/16
+  TipoCon := -1;
+  EsFactoraje:= adodsMaster.FieldByName('origenPAgo').AsInteger=1 ; //FEb 10/17
+  if adodsMaster.FieldByName('origenPAgo').AsInteger=1 then      //Ene 13/17
+  begin
+    camposaldo:='SaldoFactoraje';
+    campoimporte:='ImporteFactoraje';
+  end
+  else
+  begin  //Normal
+    camposaldo:='Saldo';
+    campoimporte:='Importe';
+  end;
+  ADODtStCXCPendientes.filter:='IdCuentaXCobrar = '+ADODtStAplicacionesPagosIdCuentaXCobrar.AsString; //Por si es la ultima y creo varias para que se ubique Oct 3/17
+  ADODtStCXCPendientes.filtered:=True;
+  Valor:=dataset.FieldByName(campoimporte).AsFloat;      //Aplicaciones
+  if not EsFactoraje then
+    valbaseCXC:= ADODtStCXCPendientes.fieldbyname (camposaldo).AsFloat  //VAlor antes de actualizar el saldo
+  else
+    valbaseCXC:=  ADODtStCXCPendientes.fieldbyname ('SaldoFactorajeCFDI').AsFloat; //Se supone total de Factura feb 10/17
+  //Sacar el importe original del CXC para ver el porcentaje..
+  porcentaje:= (valor/ValbaseCxC);//SimpleRoundTo(,-4); para ajustar calculo se quito    //*100Verificar si no se multiplica por 100 y se usa directo Dic 11/16   //Pones roundto
+  Porc2:=0;
+  //Segun el tipo de contrato hacer  separacion
+  ValAux:=Valor;  //Para repertirlo en las dos fases //Dic 12/16
+  //Armar proceso para  desglosar los pagos  de los detalles  de cxc
+  if esfactoraje  then
+  begin
+    ADODtStCxCDetallePend.Close;
+    ADODtStCxCDetallePend.CommandText:='Select * From vw_CXCParaAplicar where Saldo >0  and IdCuentaXCobrar=:IdCuentaXCobrar '
+                                      +' and EsMoratorios=0 and (idCFDI is not null or idCFDIIVA is not null)'
+                                      +' and (SaldoDocumento is null or SaldoDocumento>0.01)'     //  jun23/17 0.00001)FEb 14/17   (verificar) Para que solo traiga el vigente
+                                      +' and (SaldoDoc1 is null or SaldoDoc1>0.01)'       // 0.00001      FEb 14/17  (Verificar)
+                                      +' and  (EstatusCFDI1 <>3 or  EstatusCFDI2 <>3 or (EstatusCFDI1 is NULL and EstatusCFDI2 is NULL))'  //Ajuste oct 20/17
+                                      +' order by fase desc, ordenAplica ' ;             //Oct 2517 PAra que pueda aplicar lo no facturable
+  end
+  else //Esta en otra
+  begin
+    ADODtStCxCDetallePend.Close;
+    ADODtStCxCDetallePend.CommandText:='Select * From vw_CXCParaAplicar where Saldo >0  and IdCuentaXCobrar=:IdCuentaXCobrar '
+                                       +' and (SaldoDocumento is null or SaldoDocumento>0.01)'     //FEb 14/17    Para que solo traiga el vigente
+                                       +' and (SaldoDoc1 is null or SaldoDoc1>0.01)'       //FEb 14/17    //  jun23/17 0.00001
+                                       +' and  (EstatusCFDI1 <>3 or  EstatusCFDI2 <>3 or (EstatusCFDI1 is NULL and EstatusCFDI2 is NULL))'  //Ajuste oct 20/17
+                                      +' order by fase desc, ordenAplica ' ;           //Oct 2517 PAra que pueda aplicar lo no facturable
+
+  end;
+  ADODtStCxCDetallePend.Open;      //estan ordenados por orden de aplicacion
+  ADODtstAplicacionesInternas.open;
+  //Verificar si son todas orden 0 o únicas y repartir parejo //Ene 31/17
+  EsInicial:=VerificaDetalle(ADODtStCxCDetallePend,0); //Ene 31/17     //No deberia aplicar en FActoraje
+  if Not EsInicial then
+  begin
+    if not ADODtStCxCDetallePend.Eof then
+    begin
+      TipoCon :=  ADODtStCxCDetallePendIdTipoContrato.AsInteger;
+      Fant:= ADODtStCxCDetallePendFase.AsInteger;
+      OAnt:= ADODtStCxCDetallePendOrdenAplica.AsInteger;
+      ord:=ADODtStCxCDetallePendOrdenAplica.AsInteger;   //Se movio aca para usar orden de items
+      if VerificarConceptoIVA(DataSet.FieldByName('IdCuentaXCobrar').AsInteger,ord, valorMasIva, idcxcDet, idcxcdetIVA ) then
+        INTMasIVA:=valorMasIva
+      else
+        IntMasIVA:=0;
+      if Porcentaje<1 then
+      begin
+        if (intMASIVA<>0) then
+        begin
+          if (valor<=intMASIVA) then   //No alcanza para pagar INTERES MASIVA
+            Porc2:=(valor/INTMasIVA) //Para ajustar calculo se quito SimpleRoundTo(,-4) Dic 14/16
+          else
+            Porc2:=0;
+        end;
+      end;
+    end;
+    IdAcum:=0;                           //  feb 12/17 sin esto coloca ceros en aplicacion para lo que falta  VErificar..  como ajustar
+    while (not ADODtStCxCDetallePend.Eof)  {and (Valor > 0.0001)} do
+    begin
+      Fact:= ADODtStCxCDetallePendFase.AsInteger;
+      OAct:=ADODtStCxCDetallePendOrdenAplica.AsInteger;    // ver si es IVA ???  Ene 31/17
+      if (ADODtStCxCDetallePendOrdenAplica.asinteger=-1) and (ADODtStCxCDetallePendIVAde.IsNull) then
+      begin
+        IdAcum:=SacaIDSiAcumula(ADODtStCxCDetallePendIdCuentaXCobrarDetalle.asinteger, saldoAcum);   //Dic 14/16
+        if idAcum<>0 then
+          SaldoAcum:=SimpleRoundTo((Saldoacum*Porcentaje),-6); ///feb 12/17cambio de -4 . es el mismo porcentaje original
+      end;
+      Case TipoCon of    //Esquema financiero
+      1:begin  //CS Simple
+                            //Es posible que aca se requiera orden y no fase
+          if (Porc2>0) and (OAct=Oant) then                       //Saldo  //Ene 13/17
+            ValReg:=SimpleRoundTo(ADODtStCxCDetallePend.Fieldbyname(Camposaldo).AsFloat*Porc2,-6) ///feb 12/17cambio de -4     //No alcanza ni para pagar el interes y el iva
+          else
+            ValReg:= ADODtStCxCDetallePend.Fieldbyname(Camposaldo).AsFloat;// ene 13/17 ADODtStCxCDetallePendSaldo.AsFloat; //Lo que esta pendiente de pago
+          //Posiblemente si cambia de orden hay que sumar los del siguente orden y sacar nuevo porcentaje //Dic 13 /16 verificar
+          if (porcentaje <1) and (valReg>valor) then  //Ajustar para aplicar lo que queda.. aca  debe ser sólo capital..
+             ValReg:=Valor;
+          if ((valreg<=valor)or (abs(valreg-valor)<0.0001) ) and (valreg<>0)then  //Dic 13/16 para que no aplique 0
+          begin
+             //Aplicar interno el valor dferegistro y restar
+            ADODtstAplicacionesInternas.Insert;
+            ADODtstAplicacionesInternas.FieldByName('IDCuentaXCobrarDetalle').AsInteger:=ADODtStCxCDetallePendIdCuentaXCobrarDetalle.AsInteger;
+            ADODtstAplicacionesInternas.FieldByName(campoImporte).AsFloat:=valreg;
+            //Verificar si esta asociado a concepto o se facturo==>Aplicar a Factura
+            if (not ADODtStCxCDetallePendIdCFDI.isnull) or ( ADODtStCxCDetallePendEsIVA.AsBoolean) then//(not ADODtStCxCDetallePendIDCFDIIVA.isnull)  then
+            begin
+              if (not ADODtStCxCDetallePendIdCFDI.isnull)  then     //Ajuste para el iva de facturas
+                IDCFDIAux:= ADODtStCxCDetallePendIDCFDI.AsInteger
+              else
+                IDCFDIAux:= ADODtStCxCDetallePendIDCFDIIVA.AsInteger;
+              ADODtstAplicacionesInternas.FieldByName('IDCFDI').AsInteger:=IDCFDIAux;
+              if not ADODtStCxCDetallePendIdCFDIConcepto.isnull then
+                ADODtstAplicacionesInternas.FieldByName('IDCFDIConcepto').AsInteger:=ADODtStCxCDetallePendIDCFDIConcepto.AsInteger;
+            end;
+            ADODtstAplicacionesInternas.Post;
+            Valor:=VAlor-VAlReg ; //  oct 25/17
+          end;
+          //REsta movida de aca    oct 25/17
+
+           if OAct<>Oant then   //VErificar
+          begin
+            Oant:=Oact;
+           end;
+        end;
+      2:begin//AFinanciero
+          if OAct<>Oant then   //VErificar
+          begin
+            Oant:=Oact;
+            Ord:=Oact;
+            if VerificarConceptoIVA(DataSet.FieldByName('IdCuentaXCobrar').AsInteger,ord, valorMasIva, idcxcDet, idcxcdetIVA ) then   //Dic 16/16
+              INTMasIVA:=valorMasIva
+            else
+              IntMasIVA:=0;
+            Porc2:=0;
+            if Porcentaje<1 then
+            begin
+              if (intMASIVA<>0) then
+              begin
+                if (valor<=intMASIVA) then   //No alcanza para pagar valor MASIVA
+                  Porc2:=(valor/INTMasIVA) //Para ajustar calculo se quito SimpleRoundTo(,-4) Dic 14/16
+                else
+                  Porc2:=0;
+              end;
+            end;
+          end;
+          if (Porc2>0) and (OAct=Oant) then  //desde 1 //Dic 13/16
+            ValReg:=SimpleRoundTo(ADODtStCxCDetallePend.FieldByName(CampoSaldo).AsFloat*Porc2,-6) ///feb 12/17cambio de -4     //No alcanza ni para pagar el interes y el iva
+          else                                        // Saldo ene 13/17
+          begin
+            ValReg:= ADODtStCxCDetallePend.FieldByName(CampoSaldo).AsFloat; //Lo que esta pendiente de pago
+          end;
+           if (porcentaje <1) and (valReg>valor) then  //Ajustar para aplicar lo que queda.. aca  debe ser sólo capital..
+             ValReg:=Valor;
+          if (valreg<=valor) or (abs(valreg-valor)<0.0001) { and (ValReg >0)}then
+          begin                     //abr 19/17
+             //Aplicar interno el valor dferegistro y restar
+            ADODtstAplicacionesInternas.Insert;
+            ADODtstAplicacionesInternas.FieldByName('IDCuentaXCobrarDetalle').AsInteger:=ADODtStCxCDetallePendIdCuentaXCobrarDetalle.AsInteger;
+            ADODtstAplicacionesInternas.FieldByName(campoimporte).value:=valreg;  //Value Feb 19/17
+            //Verificar si esta asociado a concepto o se facturo==>Aplicar a Factura
+            if (not ADODtStCxCDetallePendIdCFDI.isnull) or (not ADODtStCxCDetallePendIDCFDIIVA.isnull)  then
+            begin
+              if (not ADODtStCxCDetallePendIdCFDI.isnull)  then     //Ajuste para el iva de facturas     //Dic 12/16
+                IDCFDIAux:= ADODtStCxCDetallePendIDCFDI.AsInteger
+              else
+                IDCFDIAux:= ADODtStCxCDetallePendIDCFDIIVA.AsInteger;
+              ADODtstAplicacionesInternas.FieldByName('IDCFDI').AsInteger:=IDCFDIAux;
+              if not ADODtStCxCDetallePendIdCFDIConcepto.isnull then
+                ADODtstAplicacionesInternas.FieldByName('IDCFDIConcepto').AsInteger:=ADODtStCxCDetallePendIDCFDIConcepto.AsInteger;
+            end;
+            ADODtstAplicacionesInternas.Post;
+            Valor:=VAlor-VAlReg ;  // oct 25/17
+          end;
+        end;
+      3:begin //APuro
+          if FAct<>Fant then
+          begin
+            Fant:=Fact;
+            if IdAcum<>0 then   //Solo cuando cambia de  orden
+              Valor:=SaldoAcum  //Ya trae el porcentaje en caso que sea menos
+            else
+              Valor:=ValAux;  //Para retomar el valor por fase  DIC 13/16
+          end;
+          ValReg:= SimpleRoundTo(ADODtStCxCDetallePend.FieldByName(CampoSaldo).AsFloat*porcentaje,-6); ///feb 12/17cambio de -4  //Lo que esta pendiente de pago
+          if (valreg<=valor) or (abs(valreg-valor)<0.0001)  then //O diferencias minimas   //abr 19/17
+          begin
+             //Aplicar interno el valor de registro y restar
+            ADODtstAplicacionesInternas.Insert;
+            ADODtstAplicacionesInternas.FieldByName('IDCuentaXCobrarDetalle').AsInteger:=ADODtStCxCDetallePendIdCuentaXCobrarDetalle.AsInteger;
+            ADODtstAplicacionesInternas.FieldByName('Importe').value:=valreg;         //Falta actualizar saldos de cxcdetalle
+            //Verificar si esta asociado a concepto o se facturo==>Aplicar a Factura
+            if (not ADODtStCxCDetallePendIdCFDI.isnull) or (not ADODtStCxCDetallePendIDCFDIIVA.isnull) then
+            begin
+              if (not ADODtStCxCDetallePendIdCFDI.isnull)  then     //Ajuste para el iva de facturas     //Dic 12/16
+                IDCFDIAux:= ADODtStCxCDetallePendIDCFDI.AsInteger
+              else
+                IDCFDIAux:= ADODtStCxCDetallePendIDCFDIIVA.AsInteger;
+              ADODtstAplicacionesInternas.FieldByName('IDCFDI').AsInteger:=IDCFDIAux;
+              if (not ADODtStCxCDetallePendIdCFDIConcepto.isnull) then
+                ADODtstAplicacionesInternas.FieldByName('IDCFDIConcepto').AsInteger:=ADODtStCxCDetallePendIDCFDIConcepto.AsInteger;
+            end;
+            ADODtstAplicacionesInternas.Post;
+            Valor:=SimpleRoundTo(VAlor-VAlReg, -6); ///feb 12/17cambio de -4   //Para evitar que reste si no alcanza oct 25/17
+          end;
+        end;
+      end;
+      ADODtStCxCDetallePend.Next;
+    end;
+  end // del si no es inicial ene 31/17
+  else //PAGOS INICIALES    y  probablementee los finales jun 21/17 ??
+  begin  //Par aaplicar iniciales Todos deben aplicar igual
+    while not ADODtStCxCDetallePend.Eof do
+    begin
+      ValReg:= SimpleRoundTo(ADODtStCxCDetallePend.FieldByName(CampoSaldo).AsFloat*porcentaje,-6); ///feb 12/17cambio de -4  //Lo que esta pendiente de pago
+      if (valreg<=valor) or  (abs(valreg-valor)<0.0001) then //O diferencias minimas
+      begin                    //Ajuste Oct 17/17
+        //Aplicar interno el valor de registro y restar
+        ADODtstAplicacionesInternas.Insert;
+        ADODtstAplicacionesInternas.FieldByName('IDCuentaXCobrarDetalle').AsInteger:=ADODtStCxCDetallePendIdCuentaXCobrarDetalle.AsInteger;
+        ADODtstAplicacionesInternas.FieldByName('Importe').value:=valreg;         //Falta actualizar saldos de cxcdetalle
+            //Verificar si esta asociado a concepto o se facturo==>Aplicar a Factura
+        if (not ADODtStCxCDetallePendIdCFDI.isnull) or (not ADODtStCxCDetallePendIDCFDIIVA.isnull) then
+        begin
+          if (not ADODtStCxCDetallePendIdCFDI.isnull)  then     //Ajuste para el iva de facturas     //Dic 12/16
+            IDCFDIAux:= ADODtStCxCDetallePendIDCFDI.AsInteger
+          else
+            IDCFDIAux:= ADODtStCxCDetallePendIDCFDIIVA.AsInteger;
+          ADODtstAplicacionesInternas.FieldByName('IDCFDI').AsInteger:=IDCFDIAux;
+          if (not ADODtStCxCDetallePendIdCFDIConcepto.isnull) then
+             ADODtstAplicacionesInternas.FieldByName('IDCFDIConcepto').AsInteger:=ADODtStCxCDetallePendIDCFDIConcepto.AsInteger;
+        end;
+        ADODtstAplicacionesInternas.Post;
+        Valor:=SimpleRoundTo(VAlor-VAlReg, -6); ///feb 12/17cambio de -4   //oct 25/17 se  movio aca
+      end;
+      //Aca estaba la resta   oct 25/17
+      ADODtStCxCDetallePend.Next;
+    end;
+  end;
+    //Actualiza saldos Pago, CXC y Cliente?? //Dic 12/16
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.SQL.Clear;
+  if CampoSaldo= 'Saldo' then //Normal se deberia aplicar en los dos
+  begin
+    ADOQryAuxiliar.SQL.Add('UPDATE CuentasXCobrar SET SALDOFactoraje=SALDOFActoraje - '+DataSet.FieldByName('Importe').AsString
+                    +' where SALDOFactoraje = Saldo and IDCuentaXCobrar='+DAtaSEt.FieldByName('IDCuentaXCobrar').ASString);
+    ADOQryAuxiliar.ExecSQL;     //Solo aplica si son iguales Ene16/17
+    ADOQryAuxiliar.SQL.Clear;
+    ADOQryAuxiliar.SQL.Add('UPDATE CuentasXCobrar SET SALDO=SALDO - '+DataSet.FieldByName('Importe').AsString   // Si la CXC esta a 2 decimales aca aplica correcto
+                          +' where IDCuentaXCobrar='+DAtaSEt.FieldByName('IDCuentaXCobrar').ASString);
+    ADOQryAuxiliar.ExecSQL;
+    ADOQryAuxiliar.Close;
+    if Not EsInicial then //Para que no reste todo lo asociado con Pagos iniciales//hay que ver cuando se le resta el deposito en Garantia?
+    begin//**********Para poner pagos en Anexos y SaldoTotal************** //Jul 4/17
+      ADOQryAuxiliar.SQL.Clear;
+      ADOQryAuxiliar.SQL.Add('UPDATE ANEXOS SET SALDOTOTAL=SALDOTOTAL - '+DataSet.FieldByName('Importe').AsString   //Anexos actualizacion saldos nuevos
+                              +', PagadoTotal = PagadoTotal+ '+DataSet.FieldByName('Importe').AsString
+                            +' where IDAnexo ='+adodsMasterIdAnexo.ASString); //debe tener valor.
+      ADOQryAuxiliar.ExecSQL;   //Verificar porue par el deposito en Garantia  del inicio tiene más cosas que no deben descontarse
+      ADOQryAuxiliar.Close;
+    end;
+    ADOQryAuxiliar.SQL.Clear;     //Abr 19/17
+    ADOQryAuxiliar.SQL.Add('UPDATE CuentasXCobrar SET IdCuentaXCobrarEstatus = 3 ' +
+                           ' where IDCuentaXCobrar='+DataSEt.FieldByName('IDCuentaXCobrar').ASString+
+                           ' and (Saldo < 0.01)' ); // era 0.0001 Jun 19/17
+    ADOQryAuxiliar.ExecSQL;
+    ADOQryAuxiliar.Close;
+    if ADODtStCXCPendientes.fieldbyname ('EsMoratorio').AsBoolean then
+      AplicarMoratorioInterno(DAtaSEt.FieldByName('IDCuentaXCobrar').asinteger,DataSet.FieldByName('Importe').AsExtended); //Abr 17/17
+  end
+  else
+  begin       //Soloaplica en Facturaje Ene16/17
+    ADOQryAuxiliar.SQL.Add('UPDATE CuentasXCobrar SET '+CampoSaldo+' = '+CampoSaldo +' - '+DataSet.FieldByName('Importe').AsString
+                          +' where IDCuentaXCobrar='+DAtaSEt.FieldByName('IDCuentaXCobrar').ASString);
+    ADOQryAuxiliar.ExecSQL;
+  end;
+  ADOQryAuxiliar.SQL.Clear;
+  ADOQryAuxiliar.SQL.Add('UPDATE Pagos SET SALDO=SALDO - '+DataSet.FieldByName('Importe').AsString
+                        +' where IDPago='+DAtaSEt.FieldByName('IDPago').ASString);
+  ADOQryAuxiliar.ExecSQL;
+
+  if not AdodsMaster.FieldByName('IDPagoREal').Isnull then //Actualizar Saldo de Pago Real.
+  begin
+  ADOQryAuxiliar.SQL.Clear;    //sep 14/18
+  ADOQryAuxiliar.SQL.Add('UPDATE PagosReales SET SALDO=SALDO - '+DataSet.FieldByName('Importe').AsString
+                        +' where IDPagoREal='+AdodsMaster.FieldByName('IDPagoREal').ASString);
+  ADOQryAuxiliar.ExecSQL;
+  end;
+  //Abr 17/17 Actualiza Totales de CXC para que actualice mnto vencido en anexo
+  adospUpdCuentasXCobrarTotales.Parameters.ParamByName('@IdCuentaXCobrar').Value:= DataSet.FieldByName('IDCuentaXCobrar').AsInteger;
+  adospUpdCuentasXCobrarTotales.Parameters.ParamByName('@Temporal').Value:= 0;
+  adospUpdCuentasXCobrarTotales.ExecProc;
+  //VErificación de  Existencia Pago de Deposito en GArantia y Saldo Final, preguntar si se generan moratotrios al día o ver ??
+ //Quitar de aca.. o al menos evitar si se estan pagando anticipos.. para evitar mala aplicacion... Mover para   el punto donde se llama el pos y verificar si es antcipo o pago a Capital
+ // quitado Oct 2/17  VerificaYCreaCXCFinales(adodsMasterIdAnexo.AsInteger); //DEl que se acaba de aplicar
+  ADODtStCXCPendientes.filter:=''; //Por si es la ultima y creo varias para que se ubique Oct 3/17
+  ADODtStCXCPendientes.filtered:=False;
+  ADODtStDetalleCXCMostrar.close;
+  ADODtStDetalleCXCMostrar.open;
+  if Valor >=0.01 then
+     ShowMessage('Verificar los detalles de la cuenta por Cobrar para identificar que estén saldadas. ('+FloatToStr(Valor)+') ');
+
+
+
+
+*)
+end;
+
+procedure TdmPagos.ADODtStAplicaPagoReestNewRecord(DataSet: TDataSet);
+begin
+  inherited;
+  //Nov 23/18
+  DataSet.FieldByName('FechaAplicacion').asDAteTime:=_DmConection.LaFechaActual;//Debe cambiar según la aplicación Origen
+  DataSet.FieldByName('IDPago').asInteger:=adodsMaster.Fieldbyname('IDPago').AsInteger;  //VA amarrado al pago actual
+(*  //El saldo debe cambiar no es el del pago sino el valor correspondiente a la parte
+ Ya lo demás esta despues del insert.
+*)
+end;
+
 procedure TdmPagos.ADODtstAplicacionesInternasAfterPost(DataSet: TDataSet);
-var
+var                 //aplicaicon interna original
   CampoSaldo,CampoImporte, CampoSaldoCFDi,CampoPagoAplicado:String;//Ene 13/17
 begin
   inherited;
@@ -986,6 +1722,7 @@ const
   'WHERE (((IdCuentaXCobrarEstatus=0 or (IdCuentaXCobrarEstatus=1))  and  ESMoratorio=0)or( Esmoratorio=1) or( (CXC.Fecha<=dbo.GetDateAux() and IdCuentaXCobrarEstatus=-1) and 1=:EsAnti) ' +
   'or (exists (select * from CuentasXCobrarDetalle CXCD where CXCD.descripcion like ''%Abono Capital%'' and CXC.IdCuentaXCobrar=CXCD.idcuentaXCobrar )and CXC.IdCFDI is null)) ' +
   'AND CXC.Saldo > 0 ' +
+  ' and CXC.IDCuentaXCobrarRestructura is null '+ //<-- Para serparar de las nuevas Nov 23/18
   'AND CXC.IdPersona = :IdPersona ';
 var
   vSQL: string;
@@ -1898,8 +2635,117 @@ begin                   //Dic 9/16
     if ADODtStCXCPendientes.FieldByName('Saldo').AsExtended<=AdoDSMaster.FieldByName('Saldo').AsExtended  then
       ADODtStAplicacionesPagos.FieldByName('Importe').Value:=ADODtStCXCPendientes.FieldByName('Saldo').AsExtended
     else
-      ADODtStAplicacionesPagos.FieldByName('Importe').Value:= AdoDSMaster.FieldByName('Saldo').AsExtended;
+      ADODtStAplicacionesPagos.FieldByName('Importe').Value:= AdoDSMaster.FieldByName('Saldo').AsExtended;   //Pago
   end;
+end;
+
+procedure TdmPagos.ADODtStAplicaPagoInternaReestAfterPost(DataSet: TDataSet);
+var                 // reestructura nov 23/18
+  CampoSaldo,CampoImporte, CampoSaldoCFDi,CampoPagoAplicado:String;//Ene 13/17
+begin
+  inherited;
+ if adodsMaster.FieldByName('origenPAgo').AsInteger=1 then      //Pago Nov 26/18
+  begin
+    camposaldo:='SaldoFactoraje';
+    campoimporte:='ImporteFactoraje';
+    CampoSaldoCFDi:='SaldoFactoraje';
+    CampoPagoAplicado:='PagosAplicadosFactoraje'; //Ene 16/17 Para Saldos en CXCdetalle
+  end
+  else
+  begin  //Normal
+    camposaldo:='Saldo';
+    campoimporte:='Importe';
+    CampoSaldoCFDi:='SaldoDocumento';
+    CampoPagoAplicado:='PagosAplicados'; //Ene 16/17 Para Saldos en CXCdetalle
+  end;
+   //Si tiene IDCFDI debe actualizar Saldo Factura..    y tambien actualizar el sldo del detalle    //Dic 12/16
+  if not DAtaSEt.FieldByName('IDCFDI').isnull then
+  begin
+    //Actualiza CFDI
+     if adodsMaster.FieldByName('origenPAgo').AsInteger=0 then  //Es normal  //FEb 10/17  antes porque sino el saldo es diferente al factoraje
+    begin //Aplicar en FActoraje
+      ADOQryAuxiliar.Close;
+      ADOQryAuxiliar.SQL.Clear;
+      ADOQryAuxiliar.SQL.Add('UPDATE CFDI SET SaldoFactoraje = SaldoFactoraje - '+DataSet.FieldByName(campoimporte).AsString
+      +' where SaldoFactoraje = SaldoDocumento and IDCFDI='+DAtaSEt.FieldByName('IDCFDI').ASString  );   //AplicacionesinternasReestructura
+      ADOQryAuxiliar.ExecSQL;
+    end;
+    ADOQryAuxiliar.Close;
+    ADOQryAuxiliar.SQL.Clear;         //Verificar que cambia && ene 13 /17
+  //  ADOQryAuxiliar.SQL.Add('UPDATE CFDI SET SALDODocumento=SALDODocumento - '+DataSet.FieldByName('Importe').AsString
+    ADOQryAuxiliar.SQL.Add('UPDATE CFDI SET '+CampoSaldoCFDi+'='+CampoSaldoCFDi+' - '+DataSet.FieldByName(campoimporte).AsString
+    +' where IDCFDI='+DAtaSEt.FieldByName('IDCFDI').ASString);
+    ADOQryAuxiliar.ExecSQL;
+  end;
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.SQL.Clear;
+  if camposaldo='Saldo' then //Normal modifica ambos Ene 16 /17   si los saldos factoraje y saldo son iguales , sino no.
+  begin
+    ADOQryAuxiliar.SQL.Add('UPDATE CuentasXCobrarDetalle SET SaldoFactoraje=SaldoFactoraje - '+DataSet.FieldByName(campoimporte).AsString
+    +' , PagosAplicadosFactoraje= PagosAplicadosFactoraje + '+DataSet.FieldByName(campoimporte).AsString    ///Para guardar lo que se lleva pagado Ene 16/17
+    +' where SaldoFactoraje=Saldo and IDCuentaXCobrarDetalle='+DAtaSEt.FieldByName('IDCuentaXCobrarDetalle').ASString); //Mod. dic 15/16
+    ADOQryAuxiliar.ExecSQL;
+    ADOQryAuxiliar.SQL.Clear;
+    ADOQryAuxiliar.SQL.Add('UPDATE CuentasXCobrarDetalle SET '+camposaldo+'='+Camposaldo+' - '+DataSet.FieldByName(campoimporte).AsString
+                          +' , ' +CampoPagoAplicado+'='+CampoPagoAplicado+' + '+DataSet.FieldByName(campoimporte).AsString    ///Para guardar lo que se lleva pagado Ene 16/17
+                          +' where IDCuentaXCobrarDetalle='+DAtaSEt.FieldByName('IDCuentaXCobrarDetalle').ASString); //Mod. dic 15/16
+    ADOQryAuxiliar.ExecSQL;
+    //Actualizar PagosAplicacionInternaXProducto.    Abr 19/17
+    //Posiblemente no se use aca porque ya estarioa aplicado  en la poriginal de la nueva CXC
+(*    ADOQryAuxiliar.SQL.Clear;
+                             //Sòlo se insertan aplicaciones internas, no se pueden modificar.          //VErificar si los productos seguiran asociados a las viejosanexos
+   ADOQryAuxiliar.SQL.Add(' Insert Into PagosAplicacionesInternasXProducto (idpagoAplicacionInterna, IdProducto, Importe) (  ' +
+                          ' Select PAI.IDPagoAplicacionInterna,P.idProducto,(Pai.Importe *PorcentajeAnexo/100) as valorpagado ' +
+                          ' from PagosAplicacionesInternas PAI inner join CuentasXCobrarDetalle CXCD on' +
+                          ' PAI.IdCuentaXCobrarDetalle= CXCD.IdCuentaXCobrarDetalle' +
+                          ' inner join CuentasXCobrar CXC on CXC.IdCuentaXCobrar =CXCD.IdCuentaXCobrar ' +
+                          ' inner join Productos P on P.IdAnexo=CXC.IdAnexo' +
+                          ' where PAI.IDPagoAplicacionInterna='+DataSet.fieldbyname('IDPagoAplicacionInterna').asstring+')');
+    ADOQryAuxiliar.ExecSQL;    *)
+  end
+  else  //Aca solo lo hace con factoraje, el de saldo queda igual.
+  begin
+    ADOQryAuxiliar.SQL.Add('UPDATE CuentasXCobrarDetalle SET '+camposaldo+'='+Camposaldo+' - '+DataSet.FieldByName(campoimporte).AsString
+    +' , ' +CampoPagoAplicado+'='+CampoPagoAplicado+' + '+DataSet.FieldByName(campoimporte).AsString    ///Para guardar lo que se lleva pagado Ene 16/17
+    +' where IDCuentaXCobrarDetalle='+DAtaSEt.FieldByName('IDCuentaXCobrarDetalle').ASString); //Mod. dic 15/16
+    ADOQryAuxiliar.ExecSQL;
+  end;  // DEbe estar en el correspondiente
+  //Verificar si es un Deposito en garantia   y crear un pago correspondiente Jun 8/17      //verificar por que no lo hizo....????jul 4/17
+    //Parece qu eno aplicaz activa nov23/18
+(*  if (Pos('Deposito en garantia',ADODtStCxCDetallePendDescripCXC.AsString)>0)  //Jun 21/17
+ // deshabilitado por que puede no estar en Cero  and (ADODtStCxCDetallePendSaldo.AsFloat=0)  //Si estuviese actualizado no se veria
+//No debe existir por que no habia la alicacion interna   and NoExistePagoXDeposito(ADODtstAplicacionesInternasIDPagoAplicacionInterna.asinteger,adodsMasterIDAnexo.AsInteger )
+  then // verificar si asi o con sus id(56,66,76)
+  begin
+    //verificar saldo 0 o menor que 0.01
+    //Solo para aplicar lo del depósito cuando se pago todo el depósito Jul 4/17  Lo de mas se aplica a nivel CXC
+    ADOQryAuxiliar.SQL.Clear;
+    ADOQryAuxiliar.SQL.Add('UPDATE ANEXOS SET SALDOTOTAL=SALDOTOTAL - '+DataSet.FieldByName('Importe').AsString   //Anexos actualizacion saldos nuevos
+    +', PagadoTotal = PagadoTotal+ '+DataSet.FieldByName('Importe').AsString
+    +' where IDAnexo ='+adodsMasterIdAnexo.ASString); //debe tener valor.
+    ADOQryAuxiliar.ExecSQL;   //Verificar porue par el deposito en Garantia  del inicio tiene más cosas que no deben descontarse
+    ADOQryAuxiliar.Close;
+    ADOQryAuxiliar.Close;
+    ADOQryAuxiliar.SQl.Clear;
+    ADOQryAuxiliar.SQL.Add('Select * from CuentasXCobrarDetalle  where idcuentaXCobrarDetalle='+  ADODtStCxCDetallePendIdCuentaXCobrarDetalle.AsString);
+    ADOQryAuxiliar.open;   //Es deposito
+    if ADOQryAuxiliar.FieldByName('Saldo').AsExtended<0.01 then //Ya se pago todo el enganche //jul 5/17
+    begin                     //Era es te per o es el de la aplicacion actual y no es la que va  DataSet.FieldByName('IMPORTE').AsFloat
+      if CrearPagoXDeposito( ADOQryAuxiliar.FieldByName('Importe').AsFloat,AdoDsMaster ) then //ES la que tiene de origen con el total   //Oct 17/17
+        ShowMessage('Se creó pago correspondiente al Depósito en Garantía');
+    end;
+  end;
+  if ADODtStCxCDetallePendEsCapital.value then     //Verificar si este se debe actualizar Nov 23/18
+  begin   //Feb 16/17
+    //Identificar campo respectivo y actualizar...en anexo..
+    AdoQryAuxiliar.Close;
+    AdoQryAuxiliar.sql.Clear;                                       // que pasa si es factoraje .. ?????
+    AdoQryAuxiliar.sql.Add('Update ANEXOS SET SaldoInsoluto = SaldoInsoluto- '+DataSet.FieldByName('IMPORTE').asstring
+    +', CapitalCobrado = CapitalCobrado + '+DataSet.FieldByName('IMPORTE').asstring
+    +' Where idAnexo='+ADODtStCXCPendientesIdAnexo.AsString ); //DEbe estat en ele correspondiente
+    AdoQryAuxiliar.ExecSQL;
+  end;*)
+
 end;
 
 procedure TdmPagos.DataModuleCreate(Sender: TObject);

@@ -110,6 +110,9 @@ type
     cxGridDBTableView1Descuento: TcxGridDBColumn;
     DSAnexoMoraAcumula: TDataSource;
     ADOStrdPrcSeparaAnexoMora: TADOStoredProc;
+    DSCXCPendienteReestructura: TDataSource;
+    DSAplicacionReestructura: TDataSource;
+    dsDetalleCXCPendReest: TDataSource;
     procedure BtBtnAplicarClick(Sender: TObject);
     procedure DSAplicacionStateChange(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -124,6 +127,7 @@ type
     procedure SpdBtnActMoraFechaPagoClick(Sender: TObject);
     procedure dsConCXCPendientesUpdateData(Sender: TObject);
     procedure SpdBtnSaldoAFavorClick(Sender: TObject);
+    procedure cxChckBxCambioconsultaClick(Sender: TObject);
 //    procedure cxChckBxCambioconsultaClick(Sender: TObject);
   private
     { Private declarations }
@@ -153,6 +157,8 @@ type
     function ActualizaTodo(IdCXCMora, IdAnexoMora: Integer; ListaAM: String;
       ValImporte1, ValImporte2,ValIVA1, ValIVA2, ValDescto1,ValDescto2:Double) :Boolean;
     function ManejoMoratorios(IdCXCMora: Integer; valorAplica: Double): Boolean;
+    function AplicaXReestructura(IDpagoAct, IDCXCActual,
+      IDAplicacion: integer): boolean;
   public
     { Public declarations }
     EsFactoraje:Boolean;
@@ -294,6 +300,8 @@ begin
             // Proceso de Actualizaciones internas puede ser en el after post de la tabla deAplicaciones
             // VerificaYCreaCXCFinales(adodsMasterIdAnexo.AsInteger); //Oct 2/17 ver si se coloca aca
             ActualizaParcialidadCFDI(dsConCXCPendientes.DataSet.FieldByName('IdCFDI').AsInteger);
+            AplicaXReestructura(DSPago.DataSet.FieldByName('IDPago').AsInteger,  DSAplicacion.DataSet.fieldbyName('IdCuentaXCobrar').AsInteger,  DSAplicacion.DataSet.fieldbyName('IdPagoAplicacion').AsInteger)  ;
+            //Probablemente aca hay que hcer la verificacion y el nuevo proceso.... Nov 21/18
             _dmConection.ADOConnection.CommitTrans;  //Feb 14/17
             ShowMessage('Operacion completa');
           except
@@ -337,6 +345,133 @@ begin
     ShowMessage('Verifique el monto a Aplicar!!... ') ;
   end;
 end;
+
+
+function TFrmAplicacionPago.AplicaXReestructura(IDpagoAct, IDCXCActual,IDAplicacion:integer):boolean;  //VErificar   Nov 22/18
+var
+  IDCXCPaquete:Integer;
+  valPagado,ValPaqueteSaldo:Double;
+
+  function TieneReestructura(IdCXCActual:Integer;var IdCXCPaquete:Integer ):Boolean;
+  begin
+    Result:=False;
+    dsAuxiliar.DataSet.Close;
+    TADOQuery(dsAuxiliar.dataset).SQL.clear;
+    TADOQuery(dsAuxiliar.dataset).SQL.Add('Select * from CuentasXCobrarDetalle where idCuentaXCobrar = ' + intTostr(IDCXCActual)
+                                    +' and IdCuentaXCobrarRestructura is not null');
+    dsAuxiliar.dataset.Open;
+    if not dsAuxiliar.dataset.eof  then
+    begin
+      IDCXCPaquete:= dsAuxiliar.dataset.fieldbyname('IdCuentaXCobrarRestructura').AsInteger; //Aunque sean varios registros todos deberian tener el moismo valor
+      Result:=True;
+    end;
+  end;
+
+  function AplicadoXReestructura(IDAplicacion,idCXCPaquete,IDCXCActual:integer):Double;   //Total que se pago y se debe repartit
+  begin //Llega aca si existe
+    Result:=0;
+    dsAuxiliar.DataSet.Close;
+    TADOQuery(dsAuxiliar.dataset).SQL.clear;
+    TADOQuery(dsAuxiliar.dataset).SQL.Add('Select sum(importe)as Total from PagosAplicacionesInternas PAI where'+
+        ' idPagoAplicacion= '+inttoStr(IDAplicacion)+
+        ' and exists (SElect * from CuentasXCobrarDEtalle CXCD where Cxcd.IdCuentaXCobrarDEtalle = PAI.IdCuentaXCobrarDetalle'+
+                    ' and CXCD.IdCuentaXCobrar = ' + intTostr(IDCXCActual)+
+                    ' and CXCD.IdCuentaXCobrarRestructura = '+intTostr(idCXCPaquete)+')');
+    dsAuxiliar.dataset.Open;
+    if not dsAuxiliar.dataset.eof  then
+      Result:= dsAuxiliar.dataset.fieldbyname('Total').AsExtended;
+
+  end;
+  procedure ActualizaParcialidadCFDIReest(IdCFDI: Integer);
+  begin
+    adospUpdPagosAplicacionesCFDI.Parameters.ParamByName('@IdCFDI').Value := IdCFDI;
+    adospUpdPagosAplicacionesCFDI.ExecProc
+  end;
+
+  function ActualizaSaldoPaqueteReest( IdCXCPaquete:Integer; VAlorAplicado:Double):Boolean;
+  var
+      i:Integer;
+  begin
+    Result:=False;
+    dsAuxiliar.DataSet.Close;
+    TADOQuery(dsAuxiliar.dataset).SQL.clear;
+    TADOQuery(dsAuxiliar.dataset).SQL.Add('Update CuentasXCobrarRestructura SET ImporteAplicado=ImporteAplicado + '+ floatToStr(ValorAplicado)+' , '
+                                         +' Saldo=Saldo - '+FloatToStr(VAlorAplicado)
+                                         +' Where IdCuentaXCobrarRestructura='+ intToStr(IdCXCPaquete));
+    i:= TADOQuery(dsAuxiliar.dataset).ExecSQl;
+    Result:= i>0 ; //DEbe ria ser uno
+
+  end;
+
+
+begin
+//  1. verificar si la IDCXC es de reestructura
+  if TieneReestructura(IDCXCActual,IDCXCPaquete) then
+  begin
+    valPagado:=AplicadoXReestructura(IDAplicacion,idCXCPaquete,IDCXCActual); //DEbe traer valor
+
+
+    DSCXCPendienteReestructura.DataSet.Close;
+    TadoDataset(DSCXCPendienteReestructura.DataSet).Parameters.ParamByName('IDPersonaCliente').Value:= TadoDataset(dsPago.DataSet).FieldByName('IdPersonaCliente').Value;
+    TadoDataset(DSCXCPendienteReestructura.DataSet).Parameters.ParamByName('IDAnexo').Value:=  TadoDataset(dsPago.DataSet).FieldByName('IDAnexo').Value;
+    TadoDataset(DSCXCPendienteReestructura.DataSet).Parameters.ParamByName('IDCXCRees').Value:=  IDCXCPaquete;
+
+    DSCXCPendienteReestructura.DataSet.Open;  //Verificar parametros
+    DSAplicacionReestructura.DataSet.Open; //Por si estuviese cerrada //ver que no tenga mucha información
+    //DEberia ser >0                                                                                       //verificar si 0.01
+    while (VAlPAgado>0) and (not DSCXCPendienteReestructura.DataSet.eof and  (DSCXCPendienteReestructura.DataSet.FieldByName('Saldo').AsExtended>0))  do //Este es el monto a reaplicar
+    begin
+      //Crear AplicacionReestructura
+      DSAplicacionReestructura.DataSet.insert;
+      DSAplicacionReestructura.DataSet.fieldbyname('FechaAplicacion').asdatetime:=DSAplicacion.DataSet.FieldByName('FEchaAplicacion').AsDateTime; //para que coincida con la fecha de aplicaiocn
+      DSAplicacionReestructura.DataSet.fieldbyname('IdCuentaXCobrar').ASinteger:= DSCXCPendienteReestructura.dataset.fieldbyName('IdCuentaXcobrar').asinteger;
+
+       DSAplicacionReestructura.DataSet.fieldbyname('IdCXCRelacionRE').ASinteger:= IDCXCActual; //Nov 28/18 Es la cuenta por cobrar previa, no la del paquete
+    //CAmbiar segun loque se va a aplicar
+  //Traer proximo a pagar... Hay que hacer esto despues del insert  para colocar el saldo
+
+  //    DSCXCPendienteReestructura.DataSet.First; //debe estar actualizada???
+
+
+
+      if dspago.DataSet.FieldByName('OrigenPago').AsInteger=1 then //Se dejo igual aunque no  deberia ir aca por factoraje  ??
+        DSAplicacionReestructura.DataSet.FieldByName('ImporteFactoraje').Value:=valPagado
+      else
+        DSAplicacionReestructura.DataSet.FieldByName('Importe').Value:=valPagado;  //Verificar cuando se cambia
+
+      if  dspago.DataSet.FieldByName('OrigenPago').AsInteger<>1 then   //Solo si no es factoraje  //nov 26/18
+      begin  //DEbe estar actualizada
+        if DSCXCPendienteReestructura.DataSet.FieldByName('Saldo').AsExtended<=valPagado  then
+          DSAplicacionReestructura.DataSet.FieldByName('Importe').Value:= DSCXCPendienteReestructura.DataSet.FieldByName('Saldo').AsExtended
+        else
+          DSAplicacionReestructura.DataSet.FieldByName('Importe').Value:= valPagado;   //Pago   aplicado
+      end;
+
+//      DSAplicacionReestructura.DataSet.fieldbyname('').AsInteger:= ;
+      DSAplicacionReestructura.DataSet.post;
+
+       ActualizaParcialidadCFDIReest(DSCXCPendienteReestructura.DataSet.FieldByName('IdCFDI').AsInteger);
+
+      ///Cuando acabe
+      valPagado:=valPagado-DSAplicacionReestructura.DataSet.FieldByName('Importe').Value;  //una vez aplicado
+
+      if ActualizaSaldoPaqueteReest(idCXCPaquete,DSAplicacionReestructura.DataSet.FieldByName('Importe').Value)then //Por cada parte pagada
+         ShowMessage('Actualiza reestructura - '+ FloatToStr(DSAplicacionReestructura.DataSet.FieldByName('Importe').Value))//Quitar estos mensajes luego
+      else
+        ShowMessage('No actualizo CXCReestructura') ;
+      //Para refrescar Nov 26/18
+      DSCXCPendienteReestructura.DataSet.Close;
+      TadoDataset(DSCXCPendienteReestructura.DataSet).Parameters.ParamByName('IDPersonaCliente').Value:= TadoDataset(dsPago.DataSet).FieldByName('IdPersonaCliente').Value;
+      TadoDataset(DSCXCPendienteReestructura.DataSet).Parameters.ParamByName('IDAnexo').Value:=  TadoDataset(dsPago.DataSet).FieldByName('IDAnexo').Value;
+      TadoDataset(DSCXCPendienteReestructura.DataSet).Parameters.ParamByName('IDCXCRees').Value:=  IDCXCPaquete;
+
+      DSCXCPendienteReestructura.DataSet.Open;
+
+    end;
+  end;
+
+end;
+
 
 
 function TFrmAplicacionPago.ManejoMoratorios(IdCXCMora:Integer; valorAplica:Double):Boolean;
@@ -541,8 +676,8 @@ begin                                                  //Feb 16/17
 end;
 
 
-function TFrmAplicacionPago.EsCuentaXCobrarAntigua(IdCxCAct, IDPersona, IDAnexo:integer):Boolean;     //FEb 7/16    //Mar 9/17 Ajuste Anexo
-begin       //Sin uso abr /17
+function TFrmAplicacionPago.EsCuentaXCobrarAntigua(IdCxCAct, IDPersona, IDAnexo:integer):Boolean;     //FEb 7/16    //Mar 9/17 Ajuste Anexo   //Sin uso abr /17
+begin
   Result:=FAlse;
   dsAuxiliar.dataset.close;
   TADOQuery(dsAuxiliar.dataset).SQL.clear;
@@ -623,6 +758,11 @@ begin
 
   dsAuxiliar.dataset.Open;
   Result:=not dsAuxiliar.dataset.Eof;  //Existe y está al menos prefacturada..  //feb 10/17
+end;
+
+procedure TFrmAplicacionPago.cxChckBxCambioconsultaClick(Sender: TObject);
+begin
+
 end;
 
 //procedure TFrmAplicacionPago.cxChckBxCambioconsultaClick(Sender: TObject);
@@ -854,6 +994,7 @@ const
   cSQL = 'SELECT IdCuentaXCobrar FROM CuentasXCobrar ' +
   'WHERE (((IdCuentaXCobrarEstatus=0 or (IdCuentaXCobrarEstatus=1)) and  ESMoratorio=0) or (Esmoratorio=1)) ' +
   'AND Saldo > 0 ' +
+  'and IDCuentaXCobrarRestructura is null '+ //<-- Para serparar de las nuevas Nov 28/18
   'AND IdPersona = :IdPersona ';
 var
    vSQL: string;

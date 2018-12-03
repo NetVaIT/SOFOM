@@ -438,8 +438,8 @@ begin
   XAtiende:='';
 
   Base1:= 'select CxC.IdPersona,P.RazonSocial,Sum(CXC.Saldo) as Saldo , sum(CXC.Interes) as interes from CuentasXCobrar CXC, Personas P'
-           +' where p.idpersona=Cxc.IdPersona  and Saldo>0.01' ;       //jun 23/17 0.00001
-
+           +' where p.idpersona=Cxc.IdPersona  and Saldo>0.01'        //jun 23/17 0.00001
+           +' and CXC.IDCuentaXCobrarRestructura is null '; //<-- Para separar  las nuevas Nov 28/18
 
   if DBLkupCmbBxClientes.Text<>'' then
     XCliente:=' and CxC.IdPersona ='+intToSTR(DBLkupCmbBxClientes.KeyValue);

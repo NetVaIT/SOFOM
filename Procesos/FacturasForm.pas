@@ -114,6 +114,9 @@ type
     tvMasterMonto: TcxGridDBColumn;
     tvMasterNumOperacion: TcxGridDBColumn;
     dxBrBtnConsultaEstatus: TdxBarButton;
+    tvMasterRFCEmisor: TcxGridDBColumn;
+    tvMasterRFCReceptor: TcxGridDBColumn;
+    tvMasterCancelacionEnProc: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure edtUsarFechaChange(Sender: TObject);
