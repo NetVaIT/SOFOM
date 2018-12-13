@@ -663,11 +663,11 @@ begin
   //Ya trae valor
   //DatosAdi:='FOLIO: '+dsConsulta.DataSet.FieldByName('cdsFolio').AsString+' '+dsConsulta.DataSet.FieldByName('cdsserie').AsString+ '     UUID: '+ UUID;
   Hbar := LoadLibrary( 'VirtualXML.dll' );
-
-  VirtualXML_New := GetProcAddress( Hbar, 'VirtualXML_New' );
-  VirtualXML_SetVirtualPACInfo := GetProcAddress( Hbar, 'VirtualXML_SetVirtualPACInfo' );
-  VirtualXML_Free := GetProcAddress( Hbar, 'VirtualXML_Free' );
-  VirtualXML_GetStatusCFDI:= GetProcAddress(HBar,'VirtualXML_GetStatusCFDI');  //Modificado oct 24/18
+                                                                  //Dic 12/18 Se agrego la W para que funcione.
+  VirtualXML_New := GetProcAddress( Hbar, 'VirtualXML_NewW' );
+  VirtualXML_SetVirtualPACInfo := GetProcAddress( Hbar, 'VirtualXML_SetVirtualPACInfoW' );
+  VirtualXML_Free := GetProcAddress( Hbar, 'VirtualXML_FreeW' );
+  VirtualXML_GetStatusCFDI:= GetProcAddress(HBar,'VirtualXML_GetStatusCFDIW');  //Modificado oct 24/18
 
 
   // hXML := VirtualXML_New(PChar(CFDIVersion));

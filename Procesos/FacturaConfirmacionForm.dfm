@@ -159,10 +159,10 @@ object FrmDatosFacturaPrev: TFrmDatosFacturaPrev
     TabOrder = 2
     Properties.ActivePage = tsGeneral
     Properties.CustomButtons.Buttons = <>
-    ClientRectBottom = 263
-    ClientRectLeft = 2
-    ClientRectRight = 803
-    ClientRectTop = 26
+    ClientRectBottom = 261
+    ClientRectLeft = 4
+    ClientRectRight = 801
+    ClientRectTop = 24
     object tsGeneral: TcxTabSheet
       Caption = 'General'
       ImageIndex = 0

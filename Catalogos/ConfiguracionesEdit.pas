@@ -19,7 +19,7 @@ uses
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, Vcl.ImgList,
   System.Actions, Vcl.ActnList, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls, cxPC,
   Vcl.DBCtrls, cxContainer, cxEdit, cxTextEdit, cxDBEdit, cxMaskEdit, cxSpinEdit,
-  cxCurrencyEdit, Vcl.Menus, cxButtons;
+  cxCurrencyEdit, Vcl.Menus, cxButtons, Vcl.ComCtrls, Vcl.Mask, Vcl.Buttons;
 
 type
   TfrmConfiguracionesEdit = class(T_frmEdit)
@@ -62,6 +62,28 @@ type
     Label18: TLabel;
     cxDBTextEdit13: TcxDBTextEdit;
     btnGetPlantillaAmortizacion: TcxButton;
+    cxTbShtCorreoSalida: TcxTabSheet;
+    Label26: TLabel;
+    Label27: TLabel;
+    Label28: TLabel;
+    Label29: TLabel;
+    Label30: TLabel;
+    Label31: TLabel;
+    Label32: TLabel;
+    SpdBtnVerPass: TSpeedButton;
+    SpdBtnPruebaEnv: TSpeedButton;
+    cxDBTxtEdtCorreo: TcxDBTextEdit;
+    cxDBTxtEdtHost: TcxDBTextEdit;
+    cxDBTxtEdtPuerto: TcxDBTextEdit;
+    cxDBTextEdit21: TcxDBTextEdit;
+    cxDBTxtEdtTipoSeg: TcxDBTextEdit;
+    cxDBTextEdit23: TcxDBTextEdit;
+    DBTxtEdtPass: TDBEdit;
+    PrgrsBrEnvioP: TProgressBar;
+    CBXTipoSEg: TComboBox;
+    procedure SpdBtnVerPassClick(Sender: TObject);
+    procedure SpdBtnPruebaEnvClick(Sender: TObject);
+    procedure CBXTipoSEgClick(Sender: TObject);
   private
     { Private declarations }
     FactGetPlantillaAmortizacion: TBasicAction;
@@ -75,15 +97,74 @@ implementation
 
 {$R *.dfm}
 
-uses ConfiguracionDM;
+uses ConfiguracionDM, UDMEnvioMail;
 
 { TfrmConfiguracionesEdit }
+
+procedure TfrmConfiguracionesEdit.CBXTipoSEgClick(Sender: TObject);
+begin
+  inherited;
+  cxDBTxtEdtTipoSeg.Text:=intToStr(CBXTipoSEg.ItemIndex);
+end;
 
 procedure TfrmConfiguracionesEdit.SetactGetPlantillaAmortizacion(
   const Value: TBasicAction);
 begin
   FactGetPlantillaAmortizacion := Value;
   btnGetPlantillaAmortizacion.Action := Value;
+end;
+
+procedure TfrmConfiguracionesEdit.SpdBtnPruebaEnvClick(Sender: TObject);
+var EnviarA:String;       //Copiado TP dic 13/18
+ ArchivosLista:TStringList;
+begin
+   ArchivosLista:=TStringList.Create;
+  PrgrsBrEnvioP.Position:=0;
+  if (cxDBTxtEdtCorreo.Text<>'') and (DBTxtEdtPass.Text<>'') and (cxDBTxtEdtHost.text<>'') and (cxDBTxtEdtPuerto.text<>'') then
+  begin
+    PrgrsBrEnvioP.visible:=true;
+    if inputquery('Correo receptor','Indique el correo al que se enviará la prueba ', EnviarA)then
+    begin
+      PrgrsBrEnvioP.Position:=PrgrsBrEnvioP.Position+5;
+      Application.ProcessMessages;
+      DMEnvioMails:=TDMEnvioMails.Create(Self);
+      PrgrsBrEnvioP.Position:=PrgrsBrEnvioP.Position+5;
+      Application.ProcessMessages;
+      if DMEnvioMails.SendEmail(EnviarA,'Prueba de Envio  ', 'Esta es una prueba de envio desde el correo base ', '','','', ArchivosLista,
+          cxDBTxtEdtHost.text, cxDBTxtEdtCorreo.text, DBTxtEdtPass.text,'Probando Mañarina', strToInt(cxDBTxtEdtPuerto.text),
+          CBXTipoSEg.itemindex,0)then    // cxDBLkpCmbBxSegSalida.ItemIndex, cxDBkpCmbBxAutSal.ItemIndex //No se usan adentro
+      begin
+        PrgrsBrEnvioP.Position:=20;
+        Application.ProcessMessages;
+        ShowMessage('Correo enviado');
+      end
+      else
+      begin
+        ShowMessage('Problemas en el envio del Correo. Revise Configuración');
+      end;
+
+      DMEnvioMails.free;
+    end;
+  end
+  else
+  begin
+    ShowMessage('Faltan parámetros de envío');
+  end;
+
+  PrgrsBrEnvioP.visible:=False;
+
+end;
+
+
+
+procedure TfrmConfiguracionesEdit.SpdBtnVerPassClick(Sender: TObject);
+begin           //Dic 13/18
+  inherited;
+  if SpdBtnVerPass.Down then
+    DBTxtEdtPass.passwordchar :=#0
+  else
+     DBTxtEdtPass.passwordchar :='*';
+
 end;
 
 end.

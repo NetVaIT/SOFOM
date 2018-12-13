@@ -44,6 +44,13 @@ type
     adoqGetDateAux: TADOQuery;
     adoqGetDateAuxValor: TDateTimeField;
     actGetPlantillaAmortizacion: TAction;
+    adodsMasterCECorreoSalida: TStringField;
+    adodsMasterCEHostSalida: TStringField;
+    adodsMasterCEPuetoSalida: TStringField;
+    adodsMasterCEUsuarioSalida: TStringField;
+    adodsMasterCEPasswordSalida: TStringField;
+    adodsMasterCETipoSeguridadSal: TStringField;
+    adodsMasterCETipoAutenticaSal: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actGetPlantillaAmortizacionExecute(Sender: TObject);
   private

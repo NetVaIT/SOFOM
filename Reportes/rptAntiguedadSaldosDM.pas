@@ -289,7 +289,7 @@ end;
 procedure TdmRptAntiguedadSaldos.SetFilter;
 begin
   inherited;
-  SQLWhere := 'WHERE   (Cc.Saldo > 0) ';
+  SQLWhere := 'WHERE   (Cc.Saldo > 0)  and  (cc.IdCuentaXCobrarRestructura is null ) ';   //Dic 6/18  discriminar reestructura
   if TfrmrptantiguedadSaldos(gGridForm).Cliente <> EmptyStr then
     SQLWhere := SQLWhere + 'AND PR.Razonsocial LIKE ''%' + TfrmrptantiguedadSaldos(gGridForm).Cliente + '%'' ';
   if TfrmrptantiguedadSaldos(gGridForm).UsarFecha then

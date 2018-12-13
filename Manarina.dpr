@@ -296,7 +296,9 @@ uses
   PagosFragmentadosEdit in 'PagosFragmentadosEdit.pas' {FrmEdtPagosFragmentados},
   RptEstadoCuentaDM in 'Reportes\RptEstadoCuentaDM.pas' {dmRptEstadoCuenta: TDataModule},
   RptCFDIContabilidadDM in 'Reportes\RptCFDIContabilidadDM.pas' {dmRptCFDIContabilidad: TDataModule},
-  RptCFDIContabilidadForm in 'Reportes\RptCFDIContabilidadForm.pas' {frmRptCFDIContabilidad};
+  RptCFDIContabilidadForm in 'Reportes\RptCFDIContabilidadForm.pas' {frmRptCFDIContabilidad},
+  UDMEnvioMail in 'Procesos\UDMEnvioMail.pas' {DMEnvioMails: TDataModule},
+  EnvioMailEdit in 'Procesos\EnvioMailEdit.pas' {StdFrmEnvioMail};
 
 {$R *.res}
 

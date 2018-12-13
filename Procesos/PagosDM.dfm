@@ -286,6 +286,9 @@ inherited dmPagos: TdmPagos
       Caption = 'S'#243'lo cuentas por cobrar asociadas al anexo'
       OnExecute = actSoloCXCDelAnexoExecute
     end
+    object ActEnvioMail: TAction
+      Caption = 'ActEnvioMail'
+    end
   end
   object adodsPersonas: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -2187,8 +2190,8 @@ inherited dmPagos: TdmPagos
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     Parameters = <>
-    Left = 400
-    Top = 400
+    Left = 488
+    Top = 336
   end
   object ADODtStSelMetPago: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -3028,5 +3031,141 @@ inherited dmPagos: TdmPagos
     DataSet = ADODtStCXCDetallePendReest
     Left = 804
     Top = 456
+  end
+  object adodsDocumento: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'SELECT IdDocumento, IdDocumentoTipo, IdDocumentoClase, Descripci' +
+      'on, NombreArchivo, IdArchivo, Archivo FROM Documentos'
+    Parameters = <>
+    Left = 264
+    Top = 424
+    object adodsDocumentoIdDocumento: TAutoIncField
+      FieldName = 'IdDocumento'
+      ReadOnly = True
+    end
+    object adodsDocumentoIdDocumentoTipo: TIntegerField
+      FieldName = 'IdDocumentoTipo'
+    end
+    object adodsDocumentoIdDocumentoClase: TIntegerField
+      FieldName = 'IdDocumentoClase'
+    end
+    object adodsDocumentoDescripcion: TStringField
+      FieldName = 'Descripcion'
+      Size = 200
+    end
+    object adodsDocumentoNombreArchivo: TStringField
+      FieldName = 'NombreArchivo'
+      Size = 200
+    end
+    object adodsDocumentoIdArchivo: TGuidField
+      FieldName = 'IdArchivo'
+      FixedChar = True
+      Size = 38
+    end
+    object adodsDocumentoArchivo: TBlobField
+      FieldName = 'Archivo'
+    end
+  end
+  object ADODtStCFDIPagos: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdCFDI, IdCFDITipoDocumento, IdPersonaEmisor, IdPersonaRe' +
+      'ceptor, IdDocumentoCBB, IdDocumentoXML, IdDocumentoPDF,'#13#10' IdCFDI' +
+      'Estatus, TipoComp, Serie, Folio, Fecha, Total, SaldoDocumento, F' +
+      'echaCancelacion,'#13#10'EmailCliente, UUID_TB,  IdCFDIFormaPago33,'#13#10' I' +
+      'dCFDIMetodoPago33,IdPago, NumPagosAplicados, '#13#10'CancelacionEnProc' +
+      ' from CFDI where'#13#10' IdCFDITipoDocumento=4 -- PAGOS'#13#10'and IdPago=:I' +
+      'dPago'#13#10
+    DataSource = dsMaster
+    IndexFieldNames = 'IdPago'
+    MasterFields = 'IdPago'
+    Parameters = <
+      item
+        Name = 'IdPago'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 396
+    Top = 427
+    object ADODtStCFDIPagosIdCFDI: TLargeintField
+      FieldName = 'IdCFDI'
+      ReadOnly = True
+    end
+    object ADODtStCFDIPagosIdCFDITipoDocumento: TIntegerField
+      FieldName = 'IdCFDITipoDocumento'
+    end
+    object ADODtStCFDIPagosIdPersonaEmisor: TIntegerField
+      FieldName = 'IdPersonaEmisor'
+    end
+    object ADODtStCFDIPagosIdPersonaReceptor: TIntegerField
+      FieldName = 'IdPersonaReceptor'
+    end
+    object ADODtStCFDIPagosIdDocumentoCBB: TIntegerField
+      FieldName = 'IdDocumentoCBB'
+    end
+    object ADODtStCFDIPagosIdDocumentoXML: TIntegerField
+      FieldName = 'IdDocumentoXML'
+    end
+    object ADODtStCFDIPagosIdDocumentoPDF: TIntegerField
+      FieldName = 'IdDocumentoPDF'
+    end
+    object ADODtStCFDIPagosIdCFDIEstatus: TIntegerField
+      FieldName = 'IdCFDIEstatus'
+    end
+    object ADODtStCFDIPagosTipoComp: TStringField
+      FieldName = 'TipoComp'
+      Size = 10
+    end
+    object ADODtStCFDIPagosSerie: TStringField
+      FieldName = 'Serie'
+    end
+    object ADODtStCFDIPagosFolio: TLargeintField
+      FieldName = 'Folio'
+    end
+    object ADODtStCFDIPagosFecha: TDateTimeField
+      FieldName = 'Fecha'
+    end
+    object ADODtStCFDIPagosTotal: TFMTBCDField
+      FieldName = 'Total'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStCFDIPagosSaldoDocumento: TFMTBCDField
+      FieldName = 'SaldoDocumento'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStCFDIPagosFechaCancelacion: TDateTimeField
+      FieldName = 'FechaCancelacion'
+    end
+    object ADODtStCFDIPagosEmailCliente: TStringField
+      FieldName = 'EmailCliente'
+      Size = 100
+    end
+    object ADODtStCFDIPagosUUID_TB: TStringField
+      FieldName = 'UUID_TB'
+      Size = 40
+    end
+    object ADODtStCFDIPagosIdCFDIFormaPago33: TIntegerField
+      FieldName = 'IdCFDIFormaPago33'
+    end
+    object ADODtStCFDIPagosIdCFDIMetodoPago33: TIntegerField
+      FieldName = 'IdCFDIMetodoPago33'
+    end
+    object ADODtStCFDIPagosIdPago: TIntegerField
+      FieldName = 'IdPago'
+    end
+    object ADODtStCFDIPagosNumPagosAplicados: TIntegerField
+      FieldName = 'NumPagosAplicados'
+    end
+    object ADODtStCFDIPagosCancelacionEnProc: TBooleanField
+      FieldName = 'CancelacionEnProc'
+    end
   end
 end

@@ -6,8 +6,8 @@ uses
   winapi.windows,System.SysUtils, System.Classes, _StandarDMod, System.Actions, Vcl.ActnList,
   Data.DB, Data.Win.ADODB,dateutils,dialogs,forms, shellAPI,
   Vcl.Controls,
-  VirtualXML,
-  XMLIntf, Activex,VirtualXML33, DocumentosDM, ProcesosType;
+  VirtualXML,                                                 //Dic 12/18
+  XMLIntf, Activex,VirtualXML33, DocumentosDM, ProcesosType,  System.IOUtils;
 
 resourcestring
   strAllowDelCFDI = '¿Deseas eliminar el CFDI seleccionado?';
@@ -405,6 +405,7 @@ type
     adodsMasterRFCREceptor: TStringField;
     adodsMasterCancelacionEnProc: TBooleanField;
     ActConsultaEstado: TAction;
+    ActEnvioMail: TAction;
     procedure DataModuleCreate(Sender: TObject);
     procedure actTimbrarCFDIExecute(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
@@ -428,6 +429,10 @@ type
     procedure actEliminarExecute(Sender: TObject);
     procedure actEliminarUpdate(Sender: TObject);
     procedure ActConsultaEstadoExecute(Sender: TObject);
+    procedure ActEnvioMailExecute(Sender: TObject);
+    procedure ActEnvioMailUpdate(Sender: TObject);
+    procedure ActConsultaEstadoUpdate(Sender: TObject);
+    procedure actImprimirCFDIUpdate(Sender: TObject);
   private
     { Private declarations }
     FIdCFDITipoDocumento: TCFDITipoDocumento;
@@ -450,6 +455,11 @@ type
     procedure GenerarPDF(IdCFDI:Integer; ArchivoPDF, ArchivoImagen: TFileName);
     function AgregarDocumento(FileName: TFileName): Integer;
     procedure SetCanEdit(const Value: Boolean);
+    function GetFileName(IdDocumento: Integer): TFileName;
+    procedure ReadFile(FileName: TFileName);
+    function SacaCorreoEmisor(ADatosCorreo: TStringList): Boolean;
+    function SacaCorreoReceptor(IdCliente: Integer;
+      var CorreoCliente: String): Boolean;
     property IdCFDITipoDocumento: TCFDITipoDocumento read FIdCFDITipoDocumento write FIdCFDITipoDocumento default tdFactura;
     property IdCFDI: Integer read FIdCFDI write FIdCFDI default 0;
 //    property Muestra:Boolean read FMuestra write SetMuestra;
@@ -477,7 +487,8 @@ uses FacturasForm, ConceptosFacturaForm,
   _Utils, _ConectionDmod, ConfiguracionDM, FacturaConfirmacionForm,
   FacturaReglamentacion, Facturacion.ComprobanteV33,
   Facturacion.ComplementoPagoV1, Facturacion.ImpuestosLocalesV1,
-  Facturacion.Helper, RptCFDI33DM, CFDIRelacionadosDM, CFDICPRelacionadosForm;
+  Facturacion.Helper, RptCFDI33DM, CFDIRelacionadosDM, CFDICPRelacionadosForm,
+  EnvioMailEdit, UDMEnvioMail;
 
 {$R *.dfm}
 
@@ -562,7 +573,7 @@ begin
     begin
       // Esquema nuevo nov 1/18      //Juega para ambos
       RFCRec:= adodsMasterRFCREceptor.asstring ; //No esistia se agrego a consulta
-      TotalTXT:= adodsmasterTotal.asstring;
+      TotalTXT:=  TFacturacionHelper.ComoMoneda(adodsmasterTotal.asextended);  //Dic 13/18
       ArchivoSal:='Cancelacion.INI'; // Aca se va a usar unoa generico
       ShowProgress(50,100.1,'Solicitando Cancelación  al SAT ' + IntToStr(50) + '%');
       if CancelarCFDI_ConSolicitud(adodsmasterUUID_TB.Value,RFCRec, TotalTXT, carpeta+ArchivoSal,carpeta+'LogCancela.Txt',Certificado,Respuesta,Esproduccion )then
@@ -790,7 +801,7 @@ begin
 
   RFCEmi:= adodsMasterRFCEmisor.AsString;
   RFCReceptor:= adodsMasterRFCREceptor.AsString;
-  totalTexto:= adodsMasterTotal.AsString;
+  totalTexto:= TFacturacionHelper.ComoMoneda(adodsMasterTotal.asextended);  //PAra evitar los problemas de los decimales //Dic 13/18
   ArchiIni:=ExtractFilePath(application.exename) +'ConsultaEstado.INI';
   ArchiLog :=ExtractFilePath(application.exename) +'LogConsulta.Txt';
 
@@ -799,7 +810,8 @@ begin
   if FileExists(ArchiIni) then
     Deletefile(ArchiIni);
 
-
+  if not Esproduccion then
+    RFCEmi:='AAA010101AAA';
   if (not EsProduccion) or (Esproduccion and (date>StrToDAte('31/10/2018'))) then
   begin
     if adodsMasterCancelacionEnProc.value or    //Nov 6/18
@@ -859,8 +871,8 @@ begin
           //-1 'UUID No encontrado en los registos del SAT, intente más tarde';   -3 'Servicio SAT, no disponible. Intente más tarde ';
          end;
       -1:begin//    'CFDI Cancelado';
-           //Actualizar,...                 //Por Probar
-           if  adodsMasterIdCFDIEstatus.AsInteger=2 then   //Verificar si es vigente???
+           //Actualizar,...                 //Por Probar        //Dic 12/18
+           if  (adodsMasterIdCFDIEstatus.AsInteger=2)  and(application.messagebox('CFDI cancelado en SAT. ¿Esta seguro de actualizar datos?','Confirmación',MB_YESNO)=IdYES) then   //Verificar si es vigente???
            begin
               ShowProgress(70,100.1,'Actualizando Datos Cancelación CFDI' + IntToStr(70) + '%');
              if adodsMasterCancelacionEnProc.value then
@@ -907,11 +919,20 @@ begin
       end;
     end //de la pregunta si se continua o si es en proceso se sigue
     else
-      ShowMessage('Proceso cancelado por el usuario');
+      if adodsMasterIdCFDIEstatus.AsInteger=3 then
+         ShowMessage('CFDI Cancelado previamente')
+      else
+        ShowMessage('Proceso cancelado por el usuario');
     ShowProgress(100,100);  //Nov 6/18
 
   end; //En otro casono debe estar habilitado
 
+end;
+
+procedure TdmFacturas.ActConsultaEstadoUpdate(Sender: TObject);
+begin
+  inherited;
+  ActConsultaEstado.Enabled:= adodsMasterIdCFDIEstatus.Value=2; // vigente? //Dic 13/18
 end;
 
 procedure TdmFacturas.actEliminarExecute(Sender: TObject);
@@ -926,6 +947,175 @@ begin
   inherited;
   TAction(Sender).Enabled := (adodsMasterIdCFDIEstatus.Value = 1) and (adodsMasterTotal.Value = adodsMasterSaldoDocumento.Value);
 end;
+
+function TDMFacturas.SacaCorreoEmisor(ADatosCorreo: TStringList): Boolean;
+begin             //Dic 13/18 copiado de TP
+  Result:=False;
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.Sql.Clear;
+  ADOQryAuxiliar.sql.add('Select * from Configuraciones');
+  ADOQryAuxiliar.Open;
+
+   if not (ADOQryAuxiliar.eof) and (ADOQryAuxiliar.FieldByName('CEHostSalida').ASString<>'') and (ADOQryAuxiliar.FieldByName('CEPuetoSalida').ASString<>'') and
+      (ADOQryAuxiliar.FieldByName('CEPasswordSalida').ASString<>'') and (ADOQryAuxiliar.FieldByName('CECorreoSalida').ASString<>'') then
+  begin
+    ADatosCorreo.Values['emailNoti']    := ADOQryAuxiliar.FieldByName('CECorreoSalida').ASString;
+    ADatosCorreo.Values['host']    := ADOQryAuxiliar.FieldByName('CEHostSalida').ASString;
+    ADatosCorreo.Values['usuario'] :=ADOQryAuxiliar.FieldByName('CEUsuarioSalida').ASString ;
+    ADatosCorreo.Values['contrasenia'] :=ADOQryAuxiliar.FieldByName('CEPasswordSalida').ASString ;
+    ADatosCorreo.Values['puerto']   :=ADOQryAuxiliar.FieldByName('CEPuetoSalida').ASString ;
+  //  ADatosCorreo.Values['QEnvia']   :='Notificador'; //ADOQryAuxiliar.FieldByName('').ASString ;
+    if not ADOQryAuxiliar.FieldByName('CETipoSeguridadSal').IsNull then
+       ADatosCorreo.Values['MetSSL']   :=ADOQryAuxiliar.FieldByName('CETipoSeguridadSal').ASString
+    else
+      ADatosCorreo.Values['MetSSL']   :='3'; //sslvTLSv1
+    if not ADOQryAuxiliar.FieldByName('CETipoAutenticaSal').IsNull then
+      ADatosCorreo.Values['ModSSL']   :=ADOQryAuxiliar.FieldByName('CETipoAutenticaSal').ASString
+    else
+      ADatosCorreo.Values['ModSSL']   :='0';//sslmUnassigned
+
+    Result:=True;
+  end;
+  ADOQryAuxiliar.Close;
+end;
+
+function TDMFacturas.SacaCorreoReceptor(IdCliente: Integer;
+  var CorreoCliente: String): Boolean;  //Copiado TP dic 13/18
+begin
+  Result:=False;
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.Sql.Clear;                                                                            //Notificador o preguntar cual???  o ver si el predeterminado
+  ADOQryAuxiliar.sql.add('Select * from Emails where idPersona='+IntToStr(IdCliente)+' and ((IdEmailTipo=3) or(Predeterminado=1))');
+  ADOQryAuxiliar.Open;
+  if not (ADOQryAuxiliar.eof) and (ADOQryAuxiliar.FieldByName('email').ASString<>'') then
+  begin
+    CorreoCliente:=ADOQryAuxiliar.FieldByName('email').ASString;
+    REsult:=True;
+  end;
+
+end;
+
+
+procedure TdmFacturas.ActEnvioMailExecute(Sender: TObject);
+var
+   ADatosEmisor, ArchivosLista: TStringList;
+   TExtoCorreo, ArcXML,ArcPDF, CorreoRec, Asunto:String;
+   IdDoc:Integer;
+   Seguir:Boolean;
+begin
+  inherited;
+  //Tomar datos, llamar formulario, y desde el formulario enviar  dic 12/18
+  ADatosEmisor:=TStringList.Create;
+  ArchivosLista:=TStringList.Create;
+
+  TextoCorreo:='Envio CFDI correspondiente a '+  adodsMasterTipoDocumento.AsString  +' No.'
+                + adodsMasterSerie.AsString+' - '+ adodsMasterFolio.AsString;
+  ShowProgress(10,100.1,'Obteniendo información de documentos ' + IntToStr(10) + '%');
+  IdDoc:=adodsMasterIdDocumentoXML.AsInteger;
+  ArcXml:=GetFileName(IdDoc);
+  ArchivosLista.Add(ArcXml);
+
+  ShowProgress(20,100.1,'Obteniendo información de documentos ' + IntToStr(20) + '%');
+  IdDoc:=adodsMasterIdDocumentoPDF.AsInteger;     //En pagos no se esta guardando el PDF , verificar.. y guardar al regenerar
+  ArcPDF:=GetFileName(IdDoc);                //VErificar por que truena
+  ArchivosLista.Add(ArcPDF);
+  if fileExists(ArcPDF) and FileExists(ArcXml)then
+  begin
+
+    ShowProgress(30,100.1,'Obteniendo Datos de Receptor ' + IntToStr(30) + '%');
+    if SacaCorreoEmisor(ADatosEmisor) and SacaCorreoReceptor(adodsMasterIdPersonaReceptor.AsInteger,CorreoRec) then
+    begin
+      StdFrmEnvioMail:=TStdFrmEnvioMail.Create(Self);
+      StdFrmEnvioMail.cxTxtEdtDestinatario.Text:= CorreoRec;
+      StdFrmEnvioMail.cxTxtEdtAsunto.Text:='CFDI '+adodsMasterTipoDocumento.AsString  +' No.'
+                  + adodsMasterSerie.AsString+' - '+ adodsMasterFolio.AsString;;
+
+      StdFrmEnvioMail.cxMmContenido.Lines.Add(TextoCorreo);
+      StdFrmEnvioMail.ShowModal;
+      CorreoRec:=   StdFrmEnvioMail.cxTxtEdtDestinatario.Text;
+      Asunto:=StdFrmEnvioMail.cxTxtEdtAsunto.Text;
+      TextoCorreo:= StdFrmEnvioMail.cxMmContenido.Text;  //Verificar
+
+      Seguir:=StdFrmEnvioMail.ModalResult=mrOk;
+      StdFrmEnvioMail.Free;
+
+      if Seguir then
+      begin
+        DMEnvioMails:=TDMEnvioMails.Create(self);
+        ShowProgress(50,100.1,'Enviando Correo... ' + IntToStr(50) + '%');
+
+        if  DMEnvioMails.SendEmail(CorreoRec+';'+ADatosEmisor.Values['emailNoti'],Asunto ,TextoCorreo,
+                 ArcXml,ArcPDF,'', ArchivosLista, ADatosEmisor.Values['host'], ADatosEmisor.Values['usuario'], ADatosEmisor.Values['contrasenia'],
+                 'Mañarina SAPI de CV ', StrToInt(ADatosEmisor.Values['puerto']),StrToInt(ADatosEmisor.Values['MetSSL']),
+                 StrToInt(ADatosEmisor.Values['ModSSL'])) then
+         begin
+           ShowProgress(90,100.1,'Finalizando envio de Correo... ' + IntToStr(90) + '%');
+           ShowProgress(100,100.1,'Proceso de envio de Correo Terminado... ' + IntToStr(100) + '%');
+           ShowMessage('Datos enviados al Cliente');
+         end
+         else
+         begin
+           ShowProgress(100,100.1,'Error en Proceso de envio de Correo ... ' + IntToStr(100) + '%');
+           ShowMessage('Error en envio del Correo. Verifique conexión a internet');
+         end;
+        DMEnvioMails.Free;
+
+      end
+      else
+        ShowMessage('Envío cancelado');
+
+
+
+
+    end
+    else
+    begin
+      ShowProgress(100,100.1,'Error en Proceso de envio de Correo ... ' + IntToStr(100) + '%');
+      ShowMessage('No se pudo enviar el Correo. Falta Información para el envio. '+#13 +'Asegurese de tener definida la información del servidor de salida y el correo del Cliente.');
+    end;
+  end
+  else
+    ShowMessage('Verifique los archivos, no es posible  enviarlos.');
+
+
+
+  ShowProgress(100,100);
+  ADatosEmisor.Free;
+  ArchivosLista.Free;
+
+end;
+
+procedure TdmFacturas.ActEnvioMailUpdate(Sender: TObject);
+begin
+  inherited;
+  ActEnvioMail.Enabled:= (adodsMasterIdCFDIEstatus.Value=2);        //Dic 13/18
+end;
+
+function TDMFacturas.GetFileName(IdDocumento: Integer): TFileName;
+var             //Copiado de TP Dic 12/18
+  FileName: TFileName;
+  ConsultaBase, Adicional:String;  //Abr 25/17 agilizar consulta
+begin
+  ConsultaBase:=' SELECT IdDocumento, IdDocumentoTipo, IdDocumentoClase,Descripcion,'
+               +' NombreArchivo, IdArchivo, Archivo FROM Documentos ';  //Abr 25/17 Agilizar consulta
+
+  adoDSDocumento.Close;
+ // adoDSDocumento.filter:='IdDocumento='+intToSTR(IdDocumento);
+ // adoDSDocumento.filtered:=True;
+
+    //Cambio consulta para que no se tarde Abr 25/17
+  Adicional :=' where IdDocumento='+intToSTR(IdDocumento);   //Abr 25/17 agilizar consulta
+
+  adoDSDocumento.CommandText:= ConsultaBase+Adicional;    //Abr 25/17 agilizar consulta
+
+  adoDSDocumento.open;
+  FileName:=ExtractFileName(AdoDSDocumentoNombreArchivo.asstring);
+
+  FileName:= TPath.GetTempPath + FileName;     //VErificar donde??
+  ReadFile(FileName);
+  Result:= FileName;
+end;
+
 
 procedure TdmFacturas.actImprimirCFDIExecute(Sender: TObject);
 var
@@ -1022,6 +1212,12 @@ begin
   //Filtrar con ID enDocumento
   //Sacar Documento
   //Aun no guarda de nuevo.. (Verificar)
+end;
+
+procedure TdmFacturas.actImprimirCFDIUpdate(Sender: TObject);
+begin
+  inherited;
+  actImprimirCFDI.Enabled:= (adodsMasterIdCFDIEstatus.AsInteger>1) ;   //Dic 13/18
 end;
 
 procedure TdmFacturas.actRelacionarCFDIExecute(Sender: TObject);
@@ -1344,6 +1540,8 @@ begin
   TfrmFacturasGrid(gGridForm).actRelacionarCFDI := actRelacionarCFDI;
   TfrmFacturasGrid(gGridForm).actEliminar := actEliminar;
   TfrmFacturasGrid(gGridForm).actConsultaEstadoCFDI := ActConsultaEstado;  //Nov 6/18
+  TfrmFacturasGrid(gGridForm).actEnvioCorreo := ActEnvioMail;   //Dic 13/18
+
   if IdCFDITipoDocumento = tdCFDIPago then
   begin
     adodsCFDICPRelacionados.Open;
@@ -2164,6 +2362,29 @@ begin
   else
     Showmessage('CFDI generado con anterioridad');
 end;
+
+procedure TDMFacturas.ReadFile(FileName: TFileName); //Dic 13/18 copiado de TP
+var
+  Blob : TStream;
+  Fs: TFileStream;
+begin
+  Blob := adodsDocumento.CreateBlobStream(adodsDocumentoArchivo, bmRead);
+  try
+    Blob.Seek(0, soFromBeginning);
+    Fs := TFileStream.Create(FileName, fmCreate);
+    try
+      Fs.CopyFrom(Blob, Blob.Size);
+    finally
+      Fs.Free;
+    end;
+  finally
+    Blob.Free
+  end;
+end;
+
+
+
+
 
 end.
 

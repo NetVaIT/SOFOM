@@ -4,7 +4,6 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
   ClientHeight = 428
   ClientWidth = 1363
   ExplicitWidth = 1369
-  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -27,14 +26,14 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
   end
   inherited pnlMaster: TPanel
     Width = 1363
-    Height = 229
+    Height = 227
     ExplicitWidth = 1363
-    ExplicitHeight = 229
+    ExplicitHeight = 227
     inherited cxGrid: TcxGrid
       Width = 1363
-      Height = 229
+      Height = 227
       ExplicitWidth = 1363
-      ExplicitHeight = 229
+      ExplicitHeight = 227
       inherited tvMaster: TcxGridDBTableView
         DataController.Options = [dcoAssignGroupingValues, dcoAssignMasterDetailKeys]
         DataController.Summary.DefaultGroupSummaryItems = <
@@ -293,7 +292,7 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
     DockControlHeights = (
       0
       0
-      26
+      28
       0)
     inherited dxbNavigator: TdxBar
       DockedLeft = 35
@@ -306,7 +305,7 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
         end>
     end
     inherited dxbTools: TdxBar
-      DockedLeft = 162
+      DockedLeft = 166
       ItemLinks = <
         item
           Visible = True
@@ -330,7 +329,7 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
         end>
     end
     inherited dxbFilter: TdxBar
-      DockedLeft = 463
+      DockedLeft = 474
       ItemLinks = <
         item
           Visible = True
@@ -362,7 +361,7 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
       Caption = 'Estado de cuenta'
       CaptionButtons = <>
       DockedDockingStyle = dsTop
-      DockedLeft = 289
+      DockedLeft = 297
       DockedTop = 0
       DockingStyle = dsTop
       FloatLeft = 1387

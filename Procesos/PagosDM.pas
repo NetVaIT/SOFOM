@@ -4,8 +4,8 @@ interface
 
 uses
    Winapi.windows,System.SysUtils, System.Classes, _StandarDMod, Data.DB, System.Actions,
-  Vcl.ActnList,Data.Win.ADODB, math, dialogs,ProcesosType, Controls, forms;
-
+  Vcl.ActnList,Data.Win.ADODB, math, dialogs,ProcesosType, Controls, forms, System.IOUtils;
+                                                                            //Dic 13/18
 resourcestring
   strAllowGenCFDIPago = 'No fue posible generar el CFDI falta asignarle alguna forma de pago.';
 
@@ -523,6 +523,38 @@ type
     ADODtStAplicaPagoReestImporte: TFMTBCDField;
     ADODtStAplicaPagoReestImporteFactoraje: TFMTBCDField;
     ADODtStAplicaPagoReestIdCXCRelacionRE: TIntegerField;
+    adodsDocumento: TADODataSet;
+    adodsDocumentoIdDocumento: TAutoIncField;
+    adodsDocumentoIdDocumentoTipo: TIntegerField;
+    adodsDocumentoIdDocumentoClase: TIntegerField;
+    adodsDocumentoDescripcion: TStringField;
+    adodsDocumentoNombreArchivo: TStringField;
+    adodsDocumentoIdArchivo: TGuidField;
+    adodsDocumentoArchivo: TBlobField;
+    ActEnvioMail: TAction;
+    ADODtStCFDIPagos: TADODataSet;
+    ADODtStCFDIPagosIdCFDI: TLargeintField;
+    ADODtStCFDIPagosIdCFDITipoDocumento: TIntegerField;
+    ADODtStCFDIPagosIdPersonaEmisor: TIntegerField;
+    ADODtStCFDIPagosIdPersonaReceptor: TIntegerField;
+    ADODtStCFDIPagosIdDocumentoCBB: TIntegerField;
+    ADODtStCFDIPagosIdDocumentoXML: TIntegerField;
+    ADODtStCFDIPagosIdDocumentoPDF: TIntegerField;
+    ADODtStCFDIPagosIdCFDIEstatus: TIntegerField;
+    ADODtStCFDIPagosTipoComp: TStringField;
+    ADODtStCFDIPagosSerie: TStringField;
+    ADODtStCFDIPagosFolio: TLargeintField;
+    ADODtStCFDIPagosFecha: TDateTimeField;
+    ADODtStCFDIPagosTotal: TFMTBCDField;
+    ADODtStCFDIPagosSaldoDocumento: TFMTBCDField;
+    ADODtStCFDIPagosFechaCancelacion: TDateTimeField;
+    ADODtStCFDIPagosEmailCliente: TStringField;
+    ADODtStCFDIPagosUUID_TB: TStringField;
+    ADODtStCFDIPagosIdCFDIFormaPago33: TIntegerField;
+    ADODtStCFDIPagosIdCFDIMetodoPago33: TIntegerField;
+    ADODtStCFDIPagosIdPago: TIntegerField;
+    ADODtStCFDIPagosNumPagosAplicados: TIntegerField;
+    ADODtStCFDIPagosCancelacionEnProc: TBooleanField;
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsMasterAfterPost(DataSet: TDataSet);
     procedure adodsMasterBeforePost(DataSet: TDataSet);
@@ -601,6 +633,8 @@ type
     procedure AbrirCXCPendientes(EsAnticipado: Integer;
       SoloCXCdelAnexo: Boolean);
     property PaymentTime: TPaymentTime read FPaymentTime write SetPaymentTime;
+
+
   public
     { Public declarations }
     property idAnexoAct: integer read  FIdAnexo write  SetFIdAnexo; //Abr 17/17
@@ -609,6 +643,9 @@ type
     property TipoContrato: integer read  FTipocontrato write  SetFTipocontrato; //Abr 18/17
     property TipoAbono: TAbonoCapital  read  FTipoAbono write  SetFTipoAbono; //Abr 18/17
     property IDCFDIActual: Integer  read  FIdCFDIActual write  SetFIdCFDIActual; //Abr 18/17
+
+
+
   end;
 
 implementation
@@ -618,7 +655,7 @@ implementation
 uses PagosForm, _ConectionDmod, AbonarCapitalDM, AbonarCapitalEdit,
   FacturasDM, MetodoPagoFacturaEdt, FacturaConfirmacionForm,
   AmortizacionesDM, CuentasXCobrarDM, _Utils, PagosAplicacionesForm,
-  CuentasBancariasDM;
+  CuentasBancariasDM, EnvioMailEdit, UDMEnvioMail;
 
 {$R *.dfm}
 
@@ -636,6 +673,8 @@ begin
   ADODtStCxCDetallePend.Open;
   ADODtStConfiguraciones.Open;
 //  ADoSPersonas.Open;
+
+  ADODtStCFDIPagos.open; //Dic 13/18 sólo para control envio...
 end;
 
 procedure TdmPagos.adodsMasterAfterPost(DataSet: TDataSet);
@@ -1886,6 +1925,8 @@ begin
   Result:=EncodeDAte(a,m,d);
 end;
 
+
+
 function TdmPagos.AjustarAmortizaciones (IdAnexo, IdTipoContrato: Integer;
   Importe: Extended; Tipo: TAbonoCapital;Fecha:TDateTime):Boolean;   //Abr 18/17
 var
@@ -1997,6 +2038,8 @@ begin
   AbrirCXCPendientes(0, Solo);
 end;
 
+
+
 procedure TdmPagos.RefreshAplicaPago;  //Ago 2/17
 var
   IdPagoAp: Integer;
@@ -2073,6 +2116,7 @@ procedure TdmPagos.SetPaymentTime(const Value: TPaymentTime);
 begin
   FPaymentTime := Value;
 end;
+
 
 function TdmPagos.SacaDireccion (IDCliente:Integer) :Integer;
 begin    //Verificar que pasa en caso que no tenga          //Dic 6/16

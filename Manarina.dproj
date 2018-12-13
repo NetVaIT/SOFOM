@@ -1179,6 +1179,15 @@
             <Form>frmRptCFDIContabilidad</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Procesos\UDMEnvioMail.pas">
+            <Form>DMEnvioMails</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Procesos\EnvioMailEdit.pas">
+            <Form>StdFrmEnvioMail</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

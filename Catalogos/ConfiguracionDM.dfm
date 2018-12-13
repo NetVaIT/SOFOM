@@ -10,8 +10,11 @@ inherited dmConfiguracion: TdmConfiguracion
       'eInstitucion, BCInstitucion, BCTipo, PLDPerfilTransaccional, PLD' +
       'InicioOperaciones, PLDCodigoCASFIM, '#13#10'                         P' +
       'LDSupervisorCNBV, PLDArchivoRuta, PLDArchivoExtension, PLDMontoR' +
-      'elevante, PLDLocalidad, PLDCodigoPostal'#13#10'FROM            Configu' +
-      'raciones'
+      'elevante, PLDLocalidad, PLDCodigoPostal,'#13#10' CECorreoSalida, CEHos' +
+      'tSalida, CEPuetoSalida, CEUsuarioSalida, CEPasswordSalida, CETip' +
+      'oSeguridadSal, CETipoAutenticaSal'#13#10#13#10'FROM            Configuraci' +
+      'ones'
+    Left = 32
     object adodsMasterIdPais: TIntegerField
       FieldName = 'IdPais'
       Visible = False
@@ -124,6 +127,37 @@ inherited dmConfiguracion: TdmConfiguracion
       DisplayLabel = 'PLD C'#243'digo postal'
       FieldName = 'PLDCodigoPostal'
       Size = 5
+    end
+    object adodsMasterCECorreoSalida: TStringField
+      DisplayLabel = 'Correo Salida'
+      FieldName = 'CECorreoSalida'
+      Size = 150
+    end
+    object adodsMasterCEHostSalida: TStringField
+      DisplayLabel = 'Host Salida'
+      FieldName = 'CEHostSalida'
+      Size = 50
+    end
+    object adodsMasterCEPuetoSalida: TStringField
+      DisplayLabel = 'Pueto Salida'
+      FieldName = 'CEPuetoSalida'
+    end
+    object adodsMasterCEUsuarioSalida: TStringField
+      DisplayLabel = 'Usuario'
+      FieldName = 'CEUsuarioSalida'
+      Size = 100
+    end
+    object adodsMasterCEPasswordSalida: TStringField
+      DisplayLabel = 'Password Salida'
+      FieldName = 'CEPasswordSalida'
+    end
+    object adodsMasterCETipoSeguridadSal: TStringField
+      DisplayLabel = 'Tipo Seguridad'
+      FieldName = 'CETipoSeguridadSal'
+    end
+    object adodsMasterCETipoAutenticaSal: TStringField
+      DisplayLabel = 'Tipo Autentica'
+      FieldName = 'CETipoAutenticaSal'
     end
   end
   inherited ActionList: TActionList

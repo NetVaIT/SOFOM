@@ -117,6 +117,7 @@ type
     tvMasterRFCEmisor: TcxGridDBColumn;
     tvMasterRFCReceptor: TcxGridDBColumn;
     tvMasterCancelacionEnProc: TcxGridDBColumn;
+    dxBrBtnEnvio: TdxBarButton;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure edtUsarFechaChange(Sender: TObject);
@@ -132,6 +133,7 @@ type
     FactRelacionarCFDI: TBasicAction;
     FactEliminar: TBasicAction;
     FactConsultaEstado: TBasicAction;
+    FactEnvioCorreo: TBasicAction;
     function GetFFiltroNombre: String;
     procedure SetactCancelarCFDI(const Value: TBasicAction);
     procedure SetactImprimirCFDI(const Value: TBasicAction);
@@ -148,6 +150,7 @@ type
     procedure SetUsarFecha(const Value: Boolean);
     procedure SetactEliminar(const Value: TBasicAction);
     procedure SetactConsultaEstado(const Value: TBasicAction);
+    procedure SetactEnvioCorreo(const Value: TBasicAction);
   public
     { Public declarations }
     property actTimbrarCFDI: TBasicAction read FactTimbrarCFDI write SetactTimbrarCFDI;
@@ -163,6 +166,9 @@ type
     property UsarFecha: Boolean read GetUsarFecha write SetUsarFecha;
     property ConSaldo: Boolean read GetConSaldo write SetConSaldo;
     property actConsultaEstadoCFDI: TBasicAction read FactConsultaEstado write SetactConsultaEstado;
+
+    property actEnvioCorreo: TBasicAction read FactEnvioCorreo  write SetactEnvioCorreo;
+
   end;
 
 implementation
@@ -170,7 +176,7 @@ implementation
 {$R *.dfm}
 
 uses FacturasDM, FacturasEdit, _ConectionDmod, FacturaConfirmacionForm,
-  MetodoPagoFacturaEdt;
+  MetodoPagoFacturaEdt, _Utils;
 
 procedure TfrmFacturasGrid.DataSourceDataChange(Sender: TObject; Field: TField);
 begin
@@ -257,6 +263,14 @@ procedure TfrmFacturasGrid.SetactEliminar(const Value: TBasicAction);
 begin
   FactEliminar := Value;
   Delete1.Action := Value;
+end;
+
+procedure TfrmFacturasGrid.SetactEnvioCorreo(const Value: TBasicAction);
+begin
+  FactEnvioCorreo := Value;
+  dxBrBtnEnvio.Action:=Value;
+  dxBrBtnEnvio.ImageIndex:=21;
+  dxBrBtnEnvio.Hint:='Envio CFDI por correo';
 end;
 
 procedure TfrmFacturasGrid.SetactImprimirCFDI(const Value: TBasicAction);

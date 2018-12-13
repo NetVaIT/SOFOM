@@ -468,6 +468,7 @@ inherited dmFacturas: TdmFacturas
       Hint = 'Imprimir'
       ImageIndex = 18
       OnExecute = actImprimirCFDIExecute
+      OnUpdate = actImprimirCFDIUpdate
     end
     object actCancelarCFDI: TAction
       Caption = 'Cancelar'
@@ -492,6 +493,12 @@ inherited dmFacturas: TdmFacturas
       Caption = 'ActConsultaEstado'
       Hint = 'Consulta Estado en SAT'
       OnExecute = ActConsultaEstadoExecute
+      OnUpdate = ActConsultaEstadoUpdate
+    end
+    object ActEnvioMail: TAction
+      Caption = 'ActEnvioMail'
+      OnExecute = ActEnvioMailExecute
+      OnUpdate = ActEnvioMailUpdate
     end
   end
   object adodsCFDIConceptos: TADODataSet

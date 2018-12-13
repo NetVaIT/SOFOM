@@ -32,8 +32,10 @@
       'er'#237'a'#13#10'             inner join Contratos as Con ON A.IdContrato=C' +
       'on.IdContrato'#13#10'             inner join ContratosTipos as CT On C' +
       'on.IdContratoTipo =CT.IdContratoTipo'#13#10' WHERE    (Cc.Saldo > 0) -' +
-      '-  AND  -- mientras para que muestre todo'#13#10#13#10'    '#13#10'ORDER BY Clie' +
-      'nte'
+      '-  AND  -- mientras para que muestre todo'#13#10'                and  ' +
+      'cc.IdCuentaXCobrarRestructura is null -- dic6/18 verificar porqu' +
+      'e no se usa vw_CuentasXCobrarCreditosVivo'#13#10'    '#13#10'ORDER BY Client' +
+      'e'
     Left = 40
     object adodsReportIdCuentaXCobrar: TAutoIncField
       FieldName = 'IdCuentaXCobrar'

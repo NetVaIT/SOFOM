@@ -96,6 +96,7 @@ type
     tvMasterSello: TcxGridDBColumn;
     dxBrBtnPagoReal: TdxBarButton;
     DSAnexoMoraAcumula: TDataSource;
+    dxBrBtnEnvioMail: TdxBarButton;
     procedure FormCreate(Sender: TObject);
     procedure dxBrBtnAplicaiconesClick(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
