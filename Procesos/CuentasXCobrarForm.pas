@@ -65,7 +65,6 @@ type
     tvMasterIdAnexosAmortizaciones: TcxGridDBColumn;
     tvMasterIdCFDI: TcxGridDBColumn;
     tvMasterCliente: TcxGridDBColumn;
-    tvMasterContrato: TcxGridDBColumn;
     tvMasterAnexo: TcxGridDBColumn;
     tvMasterFecha: TcxGridDBColumn;
     tvMasterFechaVencimiento: TcxGridDBColumn;
@@ -78,6 +77,8 @@ type
     tvMasterSaldo: TcxGridDBColumn;
     tvMasterSaldoFactoraje: TcxGridDBColumn;
     tvMasterEsMoratorio: TcxGridDBColumn;
+    tvMasterDescuento: TcxGridDBColumn;
+    tvMasterManual: TcxGridDBColumn;
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
     procedure FormCreate(Sender: TObject);
     procedure SpdBtnBuscarClick(Sender: TObject);
@@ -100,6 +101,7 @@ type
     FActCXCPendFact: TBasicAction;
     FactEliminar: TBasicAction;
     FactAgregarCXCDetalle: TBasicAction;
+    FDataSetAnexos: TDataSet;
     procedure SetActGeneraPrefactura(const Value: TBasicAction);
     procedure SetActActualizaMoratorios(const Value: TBasicAction);
     procedure SetActGeneraCXC(const Value: TBasicAction);
@@ -117,9 +119,10 @@ type
     property FiltroFecha: String read ffiltroFecha write ffiltroFecha; //Mar 9/17
     property FiltroNombre:String read GetFFiltroNombre write ffiltroNombre;
     property FiltroCon:String read ffiltro write ffiltro;
-    property TotalConMora  :Double read GetFTotalConMora write FTotalConMora ;  //Jul 10/17
     property ActListaCXCPendFact : TBasicAction read FActCXCPendFact write SetActCXCPendFact;  //Feb 14/17
     property actEliminar: TBasicAction read FactEliminar write SetactEliminar;
+    property DataSetAnexos: TDataSet read FDataSetAnexos write FDataSetAnexos;
+    property TotalConMora  :Double read GetFTotalConMora write FTotalConMora ;  //Jul 10/17
     property actAgregarCXCDetalle: TBasicAction read FactAgregarCXCDetalle write FactAgregarCXCDetalle;
   end;
 
@@ -254,6 +257,7 @@ procedure TFrmConCuentasXCobrar.FormShow(Sender: TObject);
 begin
   inherited;
   SpdBtnBuscarClick(SpdBtnBuscar); //Mar 10/17
+  TfrmEdCuentasXCobrar(gEditForm).DataSetAnexos := DataSetAnexos;
   TfrmEdCuentasXCobrar(gEditForm).TotalConMora:= TotalConMora;
   TfrmEdCuentasXCobrar(gEditForm).actAgregarCXCDetalle:= actAgregarCXCDetalle;
 end;
@@ -338,7 +342,7 @@ const  //Mar 9/17
           'IdAnexosAmortizaciones, Fecha, FechaVencimiento, (Importe-Descuento) as Importe, Impuesto, Interes,' +  //FV ab 11/17
           'Total, CXC.Saldo, SaldoFactoraje, IdCFDI, IDAnexo, CXC.IdCuentaXCobrarBase, '
                                          //oct 1/18                           //  ''Interés Moratorio'' as Descripcion,
-          +' EsMoratorio, CXC.Descripcion ,Descuento from CuentasXCobrar CXC ';   //Agregada Descripcion de CXC   Jul 17/17
+          +' EsMoratorio, CXC.Descripcion, Descuento, Manual from CuentasXCobrar CXC ';   //Agregada Descripcion de CXC   Jul 17/17
    whereSinReest= ' IdCuentaXCobrarRestructura is null '; //Dic 3/18
    whereNoMora=' EsMoratorio=0';
    whereMora=' EsMoratorio=1';

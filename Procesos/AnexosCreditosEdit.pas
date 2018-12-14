@@ -19,7 +19,7 @@ uses
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, Vcl.ImgList,
   System.Actions, Vcl.ActnList, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls, cxPC,
   cxContainer, cxEdit, cxSpinEdit, cxDBEdit, cxCurrencyEdit, cxTextEdit,
-  cxMaskEdit, cxDropDownEdit, cxCalendar, Vcl.DBCtrls;
+  cxMaskEdit, cxDropDownEdit, cxCalendar, Vcl.DBCtrls, Vcl.Menus, cxButtons;
 
 type
   TfrmAnexosCreditosEdit = class(T_frmEdit)
@@ -47,10 +47,14 @@ type
     cxDBTextEdit4: TcxDBTextEdit;
     Label12: TLabel;
     cxDBDateEdit4: TcxDBDateEdit;
+    btnMostrasCXCSaldo: TcxButton;
   private
+    FactMostrasCXCSaldo: TBasicAction;
+    procedure SetactMostrasCXCSaldo(const Value: TBasicAction);
     { Private declarations }
   public
     { Public declarations }
+    property actMostrasCXCSaldo: TBasicAction read FactMostrasCXCSaldo write SetactMostrasCXCSaldo;
   end;
 
 implementation
@@ -58,5 +62,14 @@ implementation
 {$R *.dfm}
 
 uses ContratosDM;
+
+{ TfrmAnexosCreditosEdit }
+
+procedure TfrmAnexosCreditosEdit.SetactMostrasCXCSaldo(
+  const Value: TBasicAction);
+begin
+  FactMostrasCXCSaldo := Value;
+  btnMostrasCXCSaldo.Action := Value;
+end;
 
 end.

@@ -298,7 +298,8 @@ uses
   RptCFDIContabilidadDM in 'Reportes\RptCFDIContabilidadDM.pas' {dmRptCFDIContabilidad: TDataModule},
   RptCFDIContabilidadForm in 'Reportes\RptCFDIContabilidadForm.pas' {frmRptCFDIContabilidad},
   UDMEnvioMail in 'Procesos\UDMEnvioMail.pas' {DMEnvioMails: TDataModule},
-  EnvioMailEdit in 'Procesos\EnvioMailEdit.pas' {StdFrmEnvioMail};
+  EnvioMailEdit in 'Procesos\EnvioMailEdit.pas' {StdFrmEnvioMail},
+  ReestructurarForm in 'Procesos\ReestructurarForm.pas' {frmReestructurar};
 
 {$R *.res}
 

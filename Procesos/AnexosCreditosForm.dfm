@@ -48,6 +48,14 @@ inherited frmAnexosCreditos: TfrmAnexosCreditos
           DataBinding.FieldName = 'IdAnexoCreditoEstatus'
           Visible = False
         end
+        object tvMasterIdContratoTipo: TcxGridDBColumn
+          DataBinding.FieldName = 'IdContratoTipo'
+          Visible = False
+        end
+        object tvMasterIdCuentaXCobrarRestructura: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCuentaXCobrarRestructura'
+          Visible = False
+        end
         object tvMasterIdUsuario: TcxGridDBColumn
           DataBinding.FieldName = 'IdUsuario'
           Visible = False
@@ -306,6 +314,26 @@ inherited frmAnexosCreditos: TfrmAnexosCreditos
       end
       item
         Component = tvMasterIdAnexoCreditoEstatus
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdContratoTipo
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterIdCuentaXCobrarRestructura
         Properties.Strings = (
           'GroupIndex'
           'SortIndex'

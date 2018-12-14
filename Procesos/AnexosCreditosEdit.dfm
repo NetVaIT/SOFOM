@@ -11,9 +11,9 @@ inherited frmAnexosCreditosEdit: TfrmAnexosCreditosEdit
     ClientRectBottom = 418
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 2
-      ExplicitTop = 28
+      ExplicitTop = 26
       ExplicitWidth = 434
-      ExplicitHeight = 390
+      ExplicitHeight = 392
       object Label1: TLabel
         Left = 48
         Top = 24
@@ -48,15 +48,15 @@ inherited frmAnexosCreditosEdit: TfrmAnexosCreditosEdit
       end
       object Label5: TLabel
         Left = 48
-        Top = 184
+        Top = 221
         Width = 52
         Height = 13
         Caption = 'Tasa anual'
         FocusControl = cxDBCurrencyEdit1
       end
       object Label6: TLabel
-        Left = 48
-        Top = 224
+        Left = 216
+        Top = 221
         Width = 25
         Height = 13
         Caption = 'Plazo'
@@ -87,8 +87,8 @@ inherited frmAnexosCreditosEdit: TfrmAnexosCreditosEdit
         FocusControl = DBLookupComboBox2
       end
       object Label10: TLabel
-        Left = 216
-        Top = 144
+        Left = 48
+        Top = 183
         Width = 32
         Height = 13
         Caption = 'Futuro'
@@ -146,15 +146,15 @@ inherited frmAnexosCreditosEdit: TfrmAnexosCreditosEdit
       end
       object cxDBCurrencyEdit1: TcxDBCurrencyEdit
         Left = 48
-        Top = 200
+        Top = 237
         DataBinding.DataField = 'TasaAnual'
         DataBinding.DataSource = DataSource
         TabOrder = 4
         Width = 121
       end
       object cxDBSpinEdit1: TcxDBSpinEdit
-        Left = 48
-        Top = 240
+        Left = 216
+        Top = 237
         DataBinding.DataField = 'Plazo'
         DataBinding.DataSource = DataSource
         TabOrder = 5
@@ -189,8 +189,8 @@ inherited frmAnexosCreditosEdit: TfrmAnexosCreditosEdit
         TabOrder = 8
       end
       object cxDBTextEdit3: TcxDBTextEdit
-        Left = 216
-        Top = 160
+        Left = 48
+        Top = 199
         DataBinding.DataField = 'ValorResidual'
         DataBinding.DataSource = DataSource
         TabOrder = 9
@@ -212,6 +212,14 @@ inherited frmAnexosCreditosEdit: TfrmAnexosCreditosEdit
         Enabled = False
         TabOrder = 11
         Width = 121
+      end
+      object btnMostrasCXCSaldo: TcxButton
+        Left = 175
+        Top = 158
+        Width = 82
+        Height = 25
+        Caption = 'btnMostrasCXCSaldo'
+        TabOrder = 12
       end
     end
   end

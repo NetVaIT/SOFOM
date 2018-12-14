@@ -191,6 +191,28 @@ type
     odAmortizaciones: TOpenDialog;
     adodsAnexosAgregarCredito: TBooleanField;
     adodsCreditosManual: TBooleanField;
+    adodsCreditosIdContratoTipo: TIntegerField;
+    adodsCreditosIdCuentaXCobrarRestructura: TIntegerField;
+    adoqCXCSaldo: TADOQuery;
+    adoqCXCSaldoIdCuentaXCobrar: TAutoIncField;
+    adoqCXCSaldoIdCFDI: TLargeintField;
+    adoqCXCSaldoFechaVencimiento: TDateTimeField;
+    adoqCXCSaldoDescripcion: TStringField;
+    adoqCXCSaldoSaldo: TFMTBCDField;
+    adoqCXCSaldoFecha: TDateTimeField;
+    adoqCXCSaldoUUID: TStringField;
+    adoqCXCSaldoSaldoDocumento: TFMTBCDField;
+    adoqCXCSaldoCFDIFormaPago: TStringField;
+    adoqCXCSaldoCFDIMetodoPago: TStringField;
+    actMostrarCXCSaldos: TAction;
+    adoqCXCSaldoIdCFDIEstatus: TIntegerField;
+    actCrearFactura: TAction;
+    adoqCFDISaldo: TADOQuery;
+    adoqCFDISaldoSaldoInsoluto: TFMTBCDField;
+    adospGenCXCRestructura: TADOStoredProc;
+    adocUpdAnexoCredito: TADOCommand;
+    actGenCxCTermino: TAction;
+    adospSetCXCPorTermino: TADOStoredProc;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsAnexosPrecioMonedaChange(Sender: TField);
     procedure adodsAnexosNewRecord(DataSet: TDataSet);
@@ -234,6 +256,11 @@ type
     procedure actAjustarMensualidad1Update(Sender: TObject);
     procedure actImportarAmortizacionesExecute(Sender: TObject);
     procedure actImportarAmortizacionesUpdate(Sender: TObject);
+    procedure actMostrarCXCSaldosExecute(Sender: TObject);
+    procedure actMostrarCXCSaldosUpdate(Sender: TObject);
+    procedure actCrearFacturaExecute(Sender: TObject);
+    procedure actCrearFacturaUpdate(Sender: TObject);
+    procedure actGenCxCTerminoExecute(Sender: TObject);
   private
     { Private declarations }
     FPaymentTime: TPaymentTime;
@@ -254,11 +281,13 @@ type
     function CrearOpcionCompra: Boolean;
     function CrearMoratorios: Boolean;
     function GetFechaDia(Fecha: TDateTime; Dia: Integer): TDateTime;
-    procedure Restructurar;
+    procedure Reestructurar;
     function ProductosValido(IdAnexo: Integer): Boolean;
     procedure SetAnexoSaldo(IdAnexo: Integer);
     function EliminarCredito(IdAnexoCredito: Integer): Boolean;
     function PuedeModificarAmortizacion1(IdAnexo: Integer): Boolean;
+    function CrearCFDI(IdCuentaXCobrar: Integer): Boolean;
+    function GetCFDISaldo(IdAnexo: Integer): Extended;
   protected
     procedure SetFilter; override;
   public
@@ -275,7 +304,8 @@ implementation
 
 uses ContratosForm, AnexosForm, AnexosAmortizacionesForm,
   AnexosCreditosForm, _ConectionDmod, CotizacionesSeleccionarForm, _Utils,
-  AbonarCapitalDM, ConfiguracionDM, AnexosMoratoriosDM;
+  AbonarCapitalDM, ConfiguracionDM, AnexosMoratoriosDM, ReestructurarForm,
+  CuentasXCobrarDM;
 
 {$R *.dfm}
 
@@ -332,6 +362,15 @@ begin
   end;
 end;
 
+procedure TdmContratos.actGenCxCTerminoExecute(Sender: TObject);
+begin
+  inherited;
+  adospSetCXCPorTermino.Parameters.ParamByName('@IdAnexo').Value := IdAnexo;
+  adospSetCXCPorTermino.Parameters.ParamByName('@Fecha').Value := _DmConection.LaFechaActual;
+  adospSetCXCPorTermino.Parameters.ParamByName('@ConInteresesOrinarios').Value := False;
+  adospSetCXCPorTermino.ExecProc;
+end;
+
 procedure TdmContratos.actGenerarExecute(Sender: TObject);
 begin
   inherited;
@@ -381,7 +420,7 @@ procedure TdmContratos.actGenMoratoriosUpdate(Sender: TObject);
 begin
   inherited;
   TAction(Sender).Enabled := (not adodsAnexosIdAnexo.IsNull)
-  and (adodsAnexosIdAnexoEstatus.Value <> 5);
+  and ((adodsAnexosIdAnexoEstatus.Value <> 4) and (adodsAnexosIdAnexoEstatus.Value <> 5));
 end;
 
 procedure TdmContratos.actGetTipoCambioExecute(Sender: TObject);
@@ -446,6 +485,37 @@ begin
   finally
     dmAnexosMoratorios.Free;
   end;
+end;
+
+procedure TdmContratos.actMostrarCXCSaldosExecute(Sender: TObject);
+var
+  frmReestructurar: TfrmReestructurar;
+begin
+  inherited;
+  frmReestructurar := TfrmReestructurar.Create(Self);
+  try
+    frmReestructurar.DataSet := adoqCXCSaldo;
+    frmReestructurar.actCrearFactura := actCrearFactura;
+//    frmReestructurar.actTimbrar := actTimbrar;
+    frmReestructurar.actGenCxCTermino := actGenCxCTermino;
+    frmReestructurar.ReadOnlyGrid := True;
+    frmReestructurar.View := True;
+    adoqCXCSaldo.Close;
+    adoqCXCSaldo.Parameters.ParamByName('IdAnexo').Value:= IdAnexo;
+    adoqCXCSaldo.Open;
+    frmReestructurar.ShowModal;
+    if adodsCreditos.State in [dsInsert, dsEdit] then
+      adodsCreditosMontoFiananciar.AsExtended := GetCFDISaldo(IdAnexo);
+  finally
+    adoqCXCSaldo.Close;
+    frmReestructurar.Free;
+  end;
+end;
+
+procedure TdmContratos.actMostrarCXCSaldosUpdate(Sender: TObject);
+begin
+  inherited;
+  TAction(Sender).Enabled := (TipoContrato = tcArrendamientoFinanciero);
 end;
 
 procedure TdmContratos.actOpcionCompraExecute(Sender: TObject);
@@ -547,6 +617,19 @@ begin
   TAction(Sender).Enabled := (not adodsMasterIdContrato.IsNull);
 end;
 
+procedure TdmContratos.actCrearFacturaExecute(Sender: TObject);
+begin
+  inherited;
+  if CrearCFDI(adoqCXCSaldoIdCuentaXCobrar.Value) then
+    RefreshADODS(adoqCXCSaldo, adoqCXCSaldoIdCuentaXCobrar);
+end;
+
+procedure TdmContratos.actCrearFacturaUpdate(Sender: TObject);
+begin
+  inherited;
+  TAction(Sender).Enabled := (adoqCXCSaldoIdCFDI.IsNull);
+end;
+
 procedure TdmContratos.actPreAmortizacionesExecute(Sender: TObject);
 var
   Amortizaciones: TdmAmortizaciones;
@@ -570,14 +653,14 @@ end;
 procedure TdmContratos.actRestructurarExecute(Sender: TObject);
 begin
   inherited;
-  Restructurar;
+  Reestructurar;
 end;
 
 procedure TdmContratos.actRestructurarUpdate(Sender: TObject);
 begin
   inherited;
   TAction(Sender).Enabled := (not adodsAnexosIdAnexo.IsNull)
-  and (adodsAnexosIdAnexoEstatus.Value <> 5);
+  and ((adodsAnexosIdAnexoEstatus.Value <> 4) and (adodsAnexosIdAnexoEstatus.Value <> 5));
 end;
 
 procedure TdmContratos.adodsAnexosComisionChange(Sender: TField);
@@ -746,6 +829,13 @@ procedure TdmContratos.adodsCreditosNewRecord(DataSet: TDataSet);
 begin
   inherited;
   adodsCreditosIdAnexoCreditoEstatus.Value:= 1;
+  // Al restructurar si el tipo de contrato es tcArrendamientoFinanciero
+  // la reestructura solo se facturar el interes ordinario, por es el cambio a tcCreditoSimple.
+  if TipoContrato = tcArrendamientoFinanciero then
+    adodsCreditosIdContratoTipo.Value := Ord(tcCreditoSimple)
+  else
+    adodsCreditosIdContratoTipo.Value := Ord(TipoContrato);
+//  adodsCreditosIdCuentaXCobrarRestructura.Value :=
   adodsCreditosIdUsuario.Value := _dmConection.IdUsuario;
   adodsCreditosFecha.Value := FCreditosFecha;
   adodsCreditosMontoFiananciar.Value := FCreditosMontoFiananciar;
@@ -796,6 +886,21 @@ begin
     adodsCreditosPlazo.Value, adodsCreditosMontoFiananciar.AsExtended,
     adodsCreditosValorResidual.AsExtended) + adodsCreditosImpactoISR.AsExtended;
   end;
+end;
+
+function TdmContratos.CrearCFDI(IdCuentaXCobrar: Integer): Boolean;
+var
+  dmCuentasXCobrar: TdmCuentasXCobrar;
+  IdCFDI: Integer;
+begin
+  Result := False;
+  dmCuentasXCobrar := TdmCuentasXCobrar.Create(Self);
+  try
+    IdCFDI := dmCuentasXCobrar.CrearCFDI(IdCuentaXCobrar);
+  finally
+    dmCuentasXCobrar.Free;
+  end;
+  Result := (IdCFDI <> 0);
 end;
 
 function TdmContratos.CrearMoratorios: Boolean;
@@ -883,6 +988,7 @@ begin
   TfrmAnexosCreditos(gFormDeatil2).actPreAmortizaciones := actPreAmortizaciones;
   TfrmAnexosCreditos(gFormDeatil2).actgenAmortizaciones := actGenAmortizaciones;
   TfrmAnexosCreditos(gFormDeatil2).actEliminar := actEliminarCredito;
+  TfrmAnexosCreditos(gFormDeatil2).actMostrasCXCSaldo := actMostrarCXCSaldos;
   if adodsAmortizaciones.CommandText <> EmptyStr then adodsAmortizaciones.Open;
   gFormDeatil3:= TfrmAnexosAmortizaciones.Create(Self);
   gFormDeatil3.ReadOnlyGrid := True;
@@ -937,6 +1043,15 @@ begin
       Result:= True;
     end;
   end;
+end;
+
+function TdmContratos.GetCFDISaldo(IdAnexo: Integer): Extended;
+begin
+  adoqCFDISaldo.Close;
+  adoqCFDISaldo.Parameters.ParamByName('IdAnexo').Value := IdAnexo;
+  adoqCFDISaldo.Open;
+  Result := adoqCFDISaldoSaldoInsoluto.AsExtended;
+  adoqCFDISaldo.Close;
 end;
 
 function TdmContratos.GetFechaDia(Fecha: TDateTime; Dia: Integer): TDateTime;
@@ -1006,9 +1121,12 @@ begin
   adoqAmortizacion1.Close;
 end;
 
-procedure TdmContratos.Restructurar;
+procedure TdmContratos.Reestructurar;
 var
   IdAnexoCreditoAnterior: Integer;
+  IdCXCRestructura: Integer;
+  SaldoInsoluto: Extended;
+  IdCuentaXCobrarRestructura: Integer;
 
   function GetIdAnexoCreditoValido(IdAnexo: Integer): Integer;
   begin
@@ -1033,9 +1151,16 @@ var
 
   function GetMonto(IdAnexo: Integer): Extended;
   begin
-    adocGetSaldoActual.Parameters.ParamByName('IdAnexo').Value := IdAnexo;
-    adocGetSaldoActual.Execute;
-    Result:= adocGetSaldoActual.Parameters.ParamByName('SaldoActual').Value;
+    if TipoContrato = tcArrendamientoFinanciero then
+    begin
+      Result:= GetCFDISaldo(IdAnexo);
+    end
+    else
+    begin
+      adocGetSaldoActual.Parameters.ParamByName('IdAnexo').Value := IdAnexo;
+      adocGetSaldoActual.Execute;
+      Result:= adocGetSaldoActual.Parameters.ParamByName('SaldoActual').Value;
+    end;
   end;
 
 begin
@@ -1052,6 +1177,16 @@ begin
       FCreditosManual := False;
       if TfrmAnexosCreditos(gFormDeatil2).AddCredito then
       begin
+        // p_GenCuentasXCobrarRestructura solo para arrendamiento financiero
+        if TipoContrato = tcArrendamientoFinanciero then
+        begin
+          adospGenCXCRestructura.Parameters.ParamByName('@IdAnexo').Value := IdAnexo;
+          adospGenCXCRestructura.ExecProc;
+          IdCuentaXCobrarRestructura := adospGenCXCRestructura.Parameters.ParamByName('@IdCuentaXCobrarRestructura').Value;
+          adocUpdAnexoCredito.Parameters.ParamByName('IdCuentaXCobrarRestructura').Value := IdCuentaXCobrarRestructura;
+          adocUpdAnexoCredito.Parameters.ParamByName('IdAnexoCredito').Value := adodsCreditosIdAnexoCredito.Value;
+          adocUpdAnexoCredito.Execute;
+        end;
         // Generar Amortizaciones
         dmAmortizaciones.TipoContrato := TipoContrato;
         if dmAmortizaciones.GenAnexosAmortizaciones(adodsCreditosIdAnexoCredito.Value,

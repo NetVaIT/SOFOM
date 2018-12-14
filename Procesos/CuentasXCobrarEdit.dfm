@@ -14,8 +14,6 @@ inherited FrmEdCuentasXCobrar: TFrmEdCuentasXCobrar
     ClientRectBottom = 653
     ClientRectRight = 666
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 2
-      ExplicitTop = 26
       ExplicitWidth = 664
       ExplicitHeight = 627
       object Label2: TLabel
@@ -29,18 +27,10 @@ inherited FrmEdCuentasXCobrar: TFrmEdCuentasXCobrar
       object Label3: TLabel
         Left = 16
         Top = 88
-        Width = 43
-        Height = 13
-        Caption = 'Contrato'
-        FocusControl = DBLookupComboBox2
-      end
-      object Label4: TLabel
-        Left = 270
-        Top = 88
         Width = 31
         Height = 13
         Caption = 'Anexo'
-        FocusControl = DBLookupComboBox3
+        FocusControl = dblkpAnexo
       end
       object Label6: TLabel
         Left = 397
@@ -130,6 +120,8 @@ inherited FrmEdCuentasXCobrar: TFrmEdCuentasXCobrar
         Align = alBottom
         TabOrder = 13
         OnEnter = PnlDetalleFactEnter
+        ExplicitLeft = -3
+        ExplicitTop = 221
       end
       object pnlMoratorios: TPanel
         Left = 0
@@ -148,27 +140,17 @@ inherited FrmEdCuentasXCobrar: TFrmEdCuentasXCobrar
         DataSource = DataSource
         TabOrder = 2
       end
-      object DBLookupComboBox2: TDBLookupComboBox
+      object dblkpAnexo: TDBLookupComboBox
         Left = 16
         Top = 104
         Width = 250
         Height = 21
-        DataField = 'Contrato'
+        DataField = 'IdAnexo'
         DataSource = DataSource
-        Enabled = False
-        ReadOnly = True
+        KeyField = 'IdAnexo'
+        ListField = 'Anexo'
+        ListSource = dsAnexos
         TabOrder = 3
-      end
-      object DBLookupComboBox3: TDBLookupComboBox
-        Left = 270
-        Top = 104
-        Width = 121
-        Height = 21
-        DataField = 'Anexo'
-        DataSource = DataSource
-        Enabled = False
-        ReadOnly = True
-        TabOrder = 4
       end
       object cxDBDateEdit1: TcxDBDateEdit
         Left = 397
@@ -266,6 +248,14 @@ inherited FrmEdCuentasXCobrar: TFrmEdCuentasXCobrar
         TabOrder = 0
         Width = 121
       end
+      object dblblAnexo: TcxDBLabel
+        Left = 16
+        Top = 105
+        DataBinding.DataField = 'Anexo'
+        DataBinding.DataSource = DataSource
+        Height = 21
+        Width = 300
+      end
     end
   end
   inherited pmlMain: TPanel
@@ -310,5 +300,9 @@ inherited FrmEdCuentasXCobrar: TFrmEdCuentasXCobrar
   inherited cxImageList: TcxImageList
     FormatVersion = 1
     DesignInfo = 65776
+  end
+  object dsAnexos: TDataSource
+    Left = 344
+    Top = 8
   end
 end

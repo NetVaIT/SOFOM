@@ -238,8 +238,8 @@ inherited dmPLDAlertas: TdmPLDAlertas
       'SELECT * FROM v_ReportePLDAlertas'
       'WHERE IdPLDAlertaEstatus = 4'
       
-        'AND IdPLDAlertaTipo = :IdPLDAlertaTipo AND PeriodoFactor = :Peri' +
-        'odoFactor AND PeriodoAnio = :PeriodoAnio')
+        'AND IdPLDAlertaTipo = :IdPLDAlertaTipo AND PeriodoMes = :Periodo' +
+        'Factor AND PeriodoAnio = :PeriodoAnio')
     Left = 152
     Top = 160
     object adoqPLDAlertasIdPLDAlerta: TIntegerField

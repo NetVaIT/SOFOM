@@ -147,7 +147,7 @@ begin
   ArchivoPDF:='EstadoCuentaFuturo'+'_'+Actual+_ExtensionPDF;
   dmRptEstadoCuenta:= TdmRptEstadoCuenta.Create(Self);
   try
-    dmRptEstadoCuenta.Title := 'ESTADO DE CUENTA EN MONEDA NACIONAL "PESOS" FUTURO';
+    dmRptEstadoCuenta.Title := 'ESTADO DE CUENTA EN MONEDA NACIONAL "PESOS" AL';
     dmRptEstadoCuenta.PDFFileName := ArchivoPDF;
     dmRptEstadoCuenta.Temporal := True;
     dmRptEstadoCuenta.IdPersona := adodsMasterIdPersona.Value;

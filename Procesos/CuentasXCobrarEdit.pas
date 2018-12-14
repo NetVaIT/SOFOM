@@ -31,9 +31,7 @@ type
     Label2: TLabel;
     lcbCliente: TDBLookupComboBox;
     Label3: TLabel;
-    DBLookupComboBox2: TDBLookupComboBox;
-    Label4: TLabel;
-    DBLookupComboBox3: TDBLookupComboBox;
+    dblkpAnexo: TDBLookupComboBox;
     Label6: TLabel;
     cxDBDateEdit1: TcxDBDateEdit;
     Label7: TLabel;
@@ -54,6 +52,8 @@ type
     cxDBTextEdit6: TcxDBTextEdit;
     Label1: TLabel;
     cxDBTextEdit7: TcxDBTextEdit;
+    dblblAnexo: TcxDBLabel;
+    dsAnexos: TDataSource;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure PnlDetalleFactEnter(Sender: TObject);
@@ -63,9 +63,12 @@ type
     frmCuentasXCobrarMoratorios: TfrmCuentasXCobrarMoratorios;
     FTotalConMora: Double;
     FactAgregarCXCDetalle: TBasicAction;
+    FDataSetAnexos: TDataSet;
     function GetFTotalConMora: Double;
+    procedure SetDataSetAnexos(const Value: TDataSet);
   public
     { Public declarations }
+    property DataSetAnexos: TDataSet read FDataSetAnexos write SetDataSetAnexos;
     property TotalConMora: Double read GetFTotalConMora write FTotalConMora;
     property actAgregarCXCDetalle: TBasicAction read FactAgregarCXCDetalle write FactAgregarCXCDetalle;
   end;
@@ -87,25 +90,24 @@ end;
 
 procedure TFrmEdCuentasXCobrar.FormShow(Sender: TObject);
 var
-  IdAnexoIsNull: Boolean;
+  Manual: Boolean;
 begin
   inherited;
-  // Permitirar editar sino es creado automaticamente, IdAnexo es nulo
-  IdAnexoIsNull := DataSource.DataSet.FieldByName('IdAnexo').IsNull;
-  if IdAnexoIsNull then
+  // Permitirar editar si es creado MANUAL, Manual es verdadero
+  Manual := DataSource.DataSet.FieldByName('Manual').Value;
+  if Manual then
     Self.View:= (DataSource.DataSet.FieldByName('IdCuentaXCobrarEstatus').AsInteger <> -1)
   else
     Self.View:= True;
-  frmCuentasXCobrarDetalle.Parent:= PnlDetalleFact;
-  frmCuentasXCobrarDetalle.Align:= alClient;
-  if Self.View then
-    frmCuentasXCobrarDetalle.ReadOnlyGrid :=  True
-  else
-    frmCuentasXCobrarDetalle.ReadOnlyGrid := not DataSource.DataSet.FieldByName('IdAnexo').IsNull;
-  frmCuentasXCobrarDetalle.actAgregarCXCDetalle:= actAgregarCXCDetalle;
+  dblkpAnexo.Visible := not Self.View;
+  dblblAnexo.Visible := Self.View;
+  frmCuentasXCobrarDetalle.Parent := PnlDetalleFact;
+  frmCuentasXCobrarDetalle.Align := alClient;
+  frmCuentasXCobrarDetalle.ReadOnlyGrid :=  Self.View;
+  frmCuentasXCobrarDetalle.actAgregarCXCDetalle := actAgregarCXCDetalle;
   frmCuentasXCobrarDetalle.Show;
-  frmCuentasXCobrarMoratorios.Parent:= PnlMoratorios;
-  frmCuentasXCobrarMoratorios.Align:=alClient;
+  frmCuentasXCobrarMoratorios.Parent := PnlMoratorios;
+  frmCuentasXCobrarMoratorios.Align := alClient;
   frmCuentasXCobrarMoratorios.ReadOnlyGrid := True;
   frmCuentasXCobrarMoratorios.Show;
   cxLblTotalConMora.Caption:=FormatFloat('$#,##0.00', TotalConMora);
@@ -126,6 +128,12 @@ begin
     except
       raise;
     end;
+end;
+
+procedure TFrmEdCuentasXCobrar.SetDataSetAnexos(const Value: TDataSet);
+begin
+  FDataSetAnexos := Value;
+  dsAnexos.DataSet := Value;
 end;
 
 end.

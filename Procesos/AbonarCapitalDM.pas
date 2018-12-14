@@ -29,7 +29,7 @@ type
     procedure DataModuleDestroy(Sender: TObject);
   private
     { Private declarations }
-    frmAbonarCapitalEdit: TfrmAbonarCapitalEdit;
+//    frmAbonarCapitalEdit: TfrmAbonarCapitalEdit;
     FPaymentTime: TPaymentTime;
     FIdAnexo: integer;
     FImporteAct: integer;
@@ -88,13 +88,13 @@ procedure TdmAbonarCapital.DataModuleCreate(Sender: TObject);
 begin
   inherited;
   PaymentTime := ptEndOfPeriod;
-  frmAbonarCapitalEdit := TfrmAbonarCapitalEdit.Create(Self);
+//  frmAbonarCapitalEdit := TfrmAbonarCapitalEdit.Create(Self);
 end;
 
 procedure TdmAbonarCapital.DataModuleDestroy(Sender: TObject);
 begin
   inherited;
-  FreeAndNil(frmAbonarCapitalEdit);
+//  FreeAndNil(frmAbonarCapitalEdit);
 end;
 
 function TdmAbonarCapital.Execute: Boolean;

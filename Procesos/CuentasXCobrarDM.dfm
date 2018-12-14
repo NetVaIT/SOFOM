@@ -5,16 +5,15 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     AfterOpen = adodsMasterAfterOpen
-    BeforeInsert = adodsMasterBeforeInsert
     OnNewRecord = adodsMasterNewRecord
     CommandText = 
       'SELECT IdCuentaXCobrar, IdCuentaXCobrarBase, IdCuentaXCobrarEsta' +
       'tus, IdPersona, IdAnexosAmortizaciones, IdAnexo, IdCFDI, Fecha, ' +
       'FechaVencimiento, '#13#10'Descripcion, (Importe-descuento) as Importe,' +
       ' Descuento,  Impuesto, Interes, Total, Saldo, SaldoFactoraje, Es' +
-      'Moratorio'#13#10'FROM CuentasXCobrar AS CXC'#13#10'WHERE EsMoratorio = 0'#13#10'an' +
-      'd IdCuentaXCobrarRestructura is null -- dic 3 /18'#13#10'ORDER BY IdAn' +
-      'exo, IdAnexosAmortizaciones'#13#10
+      'Moratorio, Manual'#13#10'FROM CuentasXCobrar AS CXC'#13#10'WHERE EsMoratorio' +
+      ' = 0'#13#10'and IdCuentaXCobrarRestructura is null -- dic 3 /18'#13#10'ORDER' +
+      ' BY IdAnexo, IdAnexosAmortizaciones'#13#10
     Left = 56
     Top = 24
     object adodsMasterIdCuentaXCobrar: TAutoIncField
@@ -35,6 +34,7 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       FieldName = 'IdPersona'
       Required = True
       Visible = False
+      OnChange = adodsMasterIdPersonaChange
     end
     object adodsMasterIdAnexo: TIntegerField
       FieldName = 'IdAnexo'
@@ -58,20 +58,10 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       Size = 150
       Lookup = True
     end
-    object adodsMasterContrato: TStringField
-      FieldKind = fkLookup
-      FieldName = 'Contrato'
-      LookupDataSet = ADODtStAdicionalesContratoAnexo
-      LookupKeyFields = 'IdAnexo'
-      LookupResultField = 'Contrato'
-      KeyFields = 'IdAnexo'
-      Size = 100
-      Lookup = True
-    end
     object adodsMasterAnexo: TStringField
       FieldKind = fkLookup
       FieldName = 'Anexo'
-      LookupDataSet = ADODtStAdicionalesContratoAnexo
+      LookupDataSet = adodsAnexos
       LookupKeyFields = 'IdAnexo'
       LookupResultField = 'Anexo'
       KeyFields = 'IdAnexo'
@@ -150,6 +140,9 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       DisplayLabel = 'Es moratorio'
       FieldName = 'EsMoratorio'
       Visible = False
+    end
+    object adodsMasterManual: TBooleanField
+      FieldName = 'Manual'
     end
   end
   inherited adodsUpdate: TADODataSet
@@ -282,6 +275,7 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     Top = 136
   end
   object ADODSCXCEstatus: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -292,6 +286,7 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     Top = 80
   end
   object ADOSPersonas: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -922,7 +917,6 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     AfterOpen = adodsMasterAfterOpen
-    BeforeInsert = adodsMasterBeforeInsert
     CommandText = 
       'select IdCuentaXCobrar, IdCuentaXCobrarEstatus, IdPersona,'#13#10' IdA' +
       'nexosAmortizaciones, CXC.Fecha,CXC.FechaVencimiento,'#13#10' Importe, ' +
@@ -1042,33 +1036,16 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     Left = 232
     Top = 392
   end
-  object ADODtStAdicionalesContratoAnexo: TADODataSet
+  object adodsAnexos: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
-    AfterOpen = adodsMasterAfterOpen
-    BeforeInsert = adodsMasterBeforeInsert
     CommandText = 
-      'select A.IdAnexo, C.IdContrato, A.Identificador as Anexo, C.Iden' +
-      'tificador As Contrato'#13#10' from Anexos A, Contratos C '#13#10'where A.idC' +
-      'ontrato=C.IdContrato '
+      'SELECT IdAnexo, dbo.GetAnexoIdentificador(IdAnexo) AS Anexo FROM' +
+      ' Anexos'
     Parameters = <>
-    Left = 104
+    Left = 56
     Top = 192
-    object ADODtStAdicionalesContratoAnexoIdAnexo: TAutoIncField
-      FieldName = 'IdAnexo'
-      ReadOnly = True
-    end
-    object ADODtStAdicionalesContratoAnexoIdContrato: TAutoIncField
-      FieldName = 'IdContrato'
-      ReadOnly = True
-    end
-    object ADODtStAdicionalesContratoAnexoAnexo: TStringField
-      FieldName = 'Anexo'
-      Size = 5
-    end
-    object ADODtStAdicionalesContratoAnexoContrato: TStringField
-      FieldName = 'Contrato'
-    end
   end
   object ADOQryAux2: TADOQuery
     Connection = _dmConection.ADOConnection
@@ -1207,5 +1184,25 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
       end>
     Left = 384
     Top = 392
+  end
+  object adodsAnexosLkp: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'SELECT Anexos.IdAnexo, dbo.GetAnexoIdentificador(Anexos.IdAnexo)' +
+      ' AS Anexo'#13#10'FROM Anexos '#13#10'INNER JOIN Contratos ON Anexos.IdContra' +
+      'to = Contratos.IdContrato'#13#10'WHERE Contratos.IdPersona = :IdPerson' +
+      'a'
+    Parameters = <
+      item
+        Name = 'IdPersona'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 160
+    Top = 192
   end
 end

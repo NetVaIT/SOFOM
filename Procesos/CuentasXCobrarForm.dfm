@@ -4,6 +4,7 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
   ClientHeight = 428
   ClientWidth = 1072
   ExplicitWidth = 1078
+  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -65,10 +66,6 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
           DataBinding.FieldName = 'Cliente'
           Width = 300
         end
-        object tvMasterContrato: TcxGridDBColumn
-          DataBinding.FieldName = 'Contrato'
-          Width = 150
-        end
         object tvMasterAnexo: TcxGridDBColumn
           DataBinding.FieldName = 'Anexo'
           Width = 60
@@ -95,6 +92,10 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
         object tvMasterImporte: TcxGridDBColumn
           DataBinding.FieldName = 'Importe'
         end
+        object tvMasterDescuento: TcxGridDBColumn
+          DataBinding.FieldName = 'Descuento'
+          Visible = False
+        end
         object tvMasterImpuesto: TcxGridDBColumn
           DataBinding.FieldName = 'Impuesto'
         end
@@ -113,6 +114,10 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
         end
         object tvMasterEsMoratorio: TcxGridDBColumn
           DataBinding.FieldName = 'EsMoratorio'
+          Visible = False
+        end
+        object tvMasterManual: TcxGridDBColumn
+          DataBinding.FieldName = 'Manual'
           Visible = False
         end
       end
@@ -1479,7 +1484,7 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
           'Width')
       end
       item
-        Component = tvMasterContrato
+        Component = tvMasterDescripcion
         Properties.Strings = (
           'GroupIndex'
           'SortIndex'
@@ -1489,7 +1494,7 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
           'Width')
       end
       item
-        Component = tvMasterDescripcion
+        Component = tvMasterDescuento
         Properties.Strings = (
           'GroupIndex'
           'SortIndex'
@@ -1630,6 +1635,16 @@ inherited FrmConCuentasXCobrar: TFrmConCuentasXCobrar
       end
       item
         Component = tvMasterInteres
+        Properties.Strings = (
+          'GroupIndex'
+          'SortIndex'
+          'SortOrder'
+          'Summary'
+          'Visible'
+          'Width')
+      end
+      item
+        Component = tvMasterManual
         Properties.Strings = (
           'GroupIndex'
           'SortIndex'

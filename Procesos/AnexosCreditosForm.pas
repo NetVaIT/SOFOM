@@ -52,12 +52,16 @@ type
     tvMasterEliminarCredito: TcxGridDBColumn;
     btnEliminar: TdxBarButton;
     tvMasterManual: TcxGridDBColumn;
+    tvMasterIdContratoTipo: TcxGridDBColumn;
+    tvMasterIdCuentaXCobrarRestructura: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
     FactPreAmortizaciones: TBasicAction;
     FactGenAmortizaciones: TBasicAction;
     FactEliminar: TBasicAction;
+    FactMostrasCXCSaldo: TBasicAction;
     procedure SetactPreAmortizaciones(const Value: TBasicAction);
     procedure SetactGenAmortizaciones(const Value: TBasicAction);
     procedure SetactEliminar(const Value: TBasicAction);
@@ -67,6 +71,7 @@ type
     property actPreAmortizaciones: TBasicAction read FactPreAmortizaciones write SetactPreAmortizaciones;
     property actGenAmortizaciones: TBasicAction read FactGenAmortizaciones write SetactGenAmortizaciones;
     property actEliminar: TBasicAction read FactEliminar write SetactEliminar;
+    property actMostrasCXCSaldo: TBasicAction read FactMostrasCXCSaldo write FactMostrasCXCSaldo;
   end;
 
 implementation
@@ -90,6 +95,12 @@ procedure TfrmAnexosCreditos.FormCreate(Sender: TObject);
 begin
   inherited;
   gEditForm:= TfrmAnexosCreditosEdit.Create(Self);
+end;
+
+procedure TfrmAnexosCreditos.FormShow(Sender: TObject);
+begin
+  inherited;
+  TfrmAnexosCreditosEdit(gEditForm).actMostrasCXCSaldo := actMostrasCXCSaldo;
 end;
 
 procedure TfrmAnexosCreditos.SetactEliminar(const Value: TBasicAction);

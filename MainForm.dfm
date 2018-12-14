@@ -1,15 +1,15 @@
 inherited frmMain: TfrmMain
   Caption = 'frmMain'
-  ClientWidth = 1082
+  ClientWidth = 604
   OnDestroy = FormDestroy
-  ExplicitWidth = 1098
+  ExplicitWidth = 620
   ExplicitHeight = 519
   PixelsPerInch = 96
   TextHeight = 13
   inherited dxRibbon1: TdxRibbon
-    Width = 1082
+    Width = 604
     OnApplicationMenuClick = dxRibbon1ApplicationMenuClick
-    ExplicitWidth = 1082
+    ExplicitWidth = 604
     inherited dxRibbon1Tab1: TdxRibbonTab
       Index = 0
     end
@@ -75,13 +75,13 @@ inherited frmMain: TfrmMain
     end
   end
   inherited dxRibbonStatusBar1: TdxRibbonStatusBar
-    Width = 1082
-    ExplicitWidth = 1082
+    Width = 604
+    ExplicitWidth = 604
   end
   inherited pnlMain: TPanel
-    Width = 1082
+    Width = 604
     ExplicitTop = 159
-    ExplicitWidth = 1082
+    ExplicitWidth = 604
     ExplicitHeight = 298
   end
   inherited dxBarManager: TdxBarManager
@@ -129,8 +129,6 @@ inherited frmMain: TfrmMain
         end>
     end
     inherited dxbArchivo: TdxBar
-      DockedDockControl = nil
-      DockedDockingStyle = dsNone
       FloatLeft = 545
       FloatClientWidth = 51
       FloatClientHeight = 76
@@ -186,7 +184,7 @@ inherited frmMain: TfrmMain
     object dxbOrganizacion: TdxBar [3]
       Caption = 'Organizacion'
       CaptionButtons = <>
-      DockedLeft = 521
+      DockedLeft = 274
       DockedTop = 0
       FloatLeft = 759
       FloatTop = 8
@@ -218,7 +216,7 @@ inherited frmMain: TfrmMain
     object dxbPresonas: TdxBar [4]
       Caption = 'Personas'
       CaptionButtons = <>
-      DockedLeft = 791
+      DockedLeft = 425
       DockedTop = 0
       FloatLeft = 764
       FloatTop = 8
@@ -287,7 +285,7 @@ inherited frmMain: TfrmMain
     object dxbProductos: TdxBar [6]
       Caption = 'Productos'
       CaptionButtons = <>
-      DockedLeft = 702
+      DockedLeft = 363
       DockedTop = 0
       FloatLeft = 1133
       FloatTop = 8
@@ -439,7 +437,7 @@ inherited frmMain: TfrmMain
     object dxBarManagerBar2: TdxBar [9]
       Caption = 'Exportar'
       CaptionButtons = <>
-      DockedLeft = 616
+      DockedLeft = 426
       DockedTop = 0
       FloatLeft = 1054
       FloatTop = 8

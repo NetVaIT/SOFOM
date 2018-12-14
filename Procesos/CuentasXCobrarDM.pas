@@ -185,13 +185,8 @@ type
     adodsMasterEsMoratorio: TBooleanField;
     adospUpdCuentasXCobrarTotales: TADOStoredProc;
     ActTotalesCXC: TAction;
-    ADODtStAdicionalesContratoAnexo: TADODataSet;
-    ADODtStAdicionalesContratoAnexoIdAnexo: TAutoIncField;
-    ADODtStAdicionalesContratoAnexoIdContrato: TAutoIncField;
-    ADODtStAdicionalesContratoAnexoAnexo: TStringField;
-    ADODtStAdicionalesContratoAnexoContrato: TStringField;
+    adodsAnexos: TADODataSet;
     adodsMasterAnexo: TStringField;
-    adodsMasterContrato: TStringField;
     ADOQryAux2: TADOQuery;
     ADODtStSelMetPago: TADODataSet;
     ADODtStSelMetPagoIdMetodoPago: TIntegerField;
@@ -208,6 +203,8 @@ type
     adocUpdEstatusCXC: TADOCommand;
     adodsMasterDescuento: TFMTBCDField;
     ADOdsCXCDetalleDescuento: TFMTBCDField;
+    adodsMasterManual: TBooleanField;
+    adodsAnexosLkp: TADODataSet;
     procedure DataModuleCreate(Sender: TObject);
     procedure actGeneraPreFacturasExecute(Sender: TObject);
     procedure ADODtStPrefacturasCFDINewRecord(DataSet: TDataSet);
@@ -217,7 +214,6 @@ type
     procedure adodsMasterAfterOpen(DataSet: TDataSet);
     procedure ActActualizaMoratoriosExecute(Sender: TObject);
     procedure ActGeneraCuentasXCobrarExecute(Sender: TObject);
-    procedure adodsMasterBeforeInsert(DataSet: TDataSet);
     procedure DSMasterDataChange(Sender: TObject; Field: TField);
     procedure ActRepCxCEstatusFactPendienteExecute(Sender: TObject);
     procedure actEliminarExecute(Sender: TObject);
@@ -226,6 +222,7 @@ type
     procedure ADOdsCXCDetalleAfterPost(DataSet: TDataSet);
     procedure ADOdsCXCDetalleAfterDelete(DataSet: TDataSet);
     procedure actAgregarCXCDetalleExecute(Sender: TObject);
+    procedure adodsMasterIdPersonaChange(Sender: TField);
   private
     { Private declarations }
 //    function SacaTipoComp(TipoDoc: Integer): String;
@@ -239,7 +236,7 @@ type
     function ActualizarTotales(IdCuentaxCobrar: Integer): Boolean;
     function AgregarDetalle(IdCuentaXCobrar, IdCuentaXCobrarTipo: Integer;
       Descripcion: string; Importe: Currency): Integer;
-
+    procedure AbrirAnexosLkp;
   public
     { Public declarations }
     function CrearCFDI(IdCuentaXCobrar: Integer): Integer;
@@ -282,6 +279,13 @@ begin
   end;
   if FileExists(ArchiPDF) then
     ShellExecute(Application.Handle, 'open', PChar(ArchiPDF), nil, nil, SW_SHOWNORMAL);
+end;
+
+procedure TdmCuentasXCobrar.AbrirAnexosLkp;
+begin
+  adodsAnexosLkp.Close;
+  adodsAnexosLkp.Parameters.ParamByName('IdPersona').Value := adodsMasterIdPersona.Value;
+  adodsAnexosLkp.Open;
 end;
 
 procedure TdmCuentasXCobrar.ActActualizaMoratoriosExecute(Sender: TObject);
@@ -591,25 +595,13 @@ begin
   inherited;
   adodsCxcDetalle.Open;
   ADODTSTCXCMoratorios.Open;
-  ADODtStAdicionalesContratoAnexo.Open; //Abr 20/17
 end;
 
-procedure TdmCuentasXCobrar.adodsMasterBeforeInsert(DataSet: TDataSet);
-//const //Ajustado por si hay que dar de alta CXC manual mar 10/17
-//   TxtSQL=' select IdCuentaXCobrar, IdCuentaXCobrarEstatus, IdPersona, '+
-//   'IdAnexosAmortizaciones, Fecha, Importe, Impuesto, Interes,'+
-//   'Total, Saldo, SaldoFactoraje, IdCFDI, IDAnexo from CuentasXCobrar';  // Normal era mar 30/17
-//   orden=' order by  IdAnexo, IDAnexosAmortizaciones'; //Mar 27/17
-//var Txt:String;
+procedure TdmCuentasXCobrar.adodsMasterIdPersonaChange(Sender: TField);
 begin
-//  Txt:=   Tadodataset(adodsMaster).CommandText;
-//  if pos('inner ',Txt)>0 then
-//  begin
-//    Tadodataset(adodsMaster).Close;
-//    Tadodataset(adodsMaster).CommandText:=TxtSQL + Orden;   //Mar 27/17
-//    Tadodataset(adodsMaster).open;
-//  end;
   inherited;
+  adodsMasterIdAnexo.Clear;
+  AbrirAnexosLkp;
 end;
 
 procedure TdmCuentasXCobrar.adodsMasterNewRecord(DataSet: TDataSet);
@@ -626,6 +618,7 @@ begin
   adodsMasterSaldo.Value := 0;
   adodsMasterSaldoFactoraje.Value := 0;
   adodsMasterEsMoratorio.Value := False;
+  adodsMasterManual.Value := True;
 end;
 
 procedure TdmCuentasXCobrar.ADODtStCFDIConceptosPrefAfterPost(
@@ -849,19 +842,22 @@ begin
   inherited;
   gGridForm:= TfrmConCuentasXCobrar.Create(Self);     //Dic 5/16
   gGridForm.DataSet:= adodsMaster;
-  TFrmConCuentasXCobrar(gGridForm).TotalConMora:=totalconMora;//
   TFrmConCuentasXCobrar(gGridForm).ActGenerarPrefactura := actGeneraPreFacturas; //Dic 7/16
   TFrmConCuentasXCobrar(gGridForm).ActActualizaMoratorios:= ActActualizaMoratorios;//Feb 8/17
   TFrmConCuentasXCobrar(gGridForm).ActGenerarCXCs:=ActGeneraCuentasXCobrar;//Feb 15/17
   TFrmConCuentasXCobrar(gGridForm).DSAuxiliar.DataSet:=ADOQryAuxiliar; //Abr 11/17
   TFrmConCuentasXCobrar(gGridForm).ActListaCXCPendFact:=ActRepCxCEstatusFactPendiente; //Ago 3/17
   TFrmConCuentasXCobrar(gGridForm).actEliminar := actEliminar;
+  TFrmConCuentasXCobrar(gGridForm).DataSetAnexos := adodsAnexosLkp;
+  TFrmConCuentasXCobrar(gGridForm).TotalConMora:=totalconMora;
   TFrmConCuentasXCobrar(gGridForm).actAgregarCXCDetalle := actAgregarCXCDetalle;
 end;
 
 procedure TdmCuentasXCobrar.DSMasterDataChange(Sender: TObject; Field: TField);
 begin
-  inherited;          //Verificar que no interfiera
+  inherited;
+  if adodsMaster.State in [dsInsert, dsEdit] then
+    AbrirAnexosLkp;
   if not ( gGridForm=nil)  then
     TFrmConCuentasXCobrar(gGridForm).TotalConMora:=totalconMora;
 end;
