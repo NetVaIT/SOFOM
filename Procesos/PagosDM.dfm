@@ -821,7 +821,7 @@ inherited dmPagos: TdmPagos
         Value = Null
       end>
     Left = 499
-    Top = 67
+    Top = 59
     object ADODtstAplicacionesInternasIDPagoAplicacionInterna: TIntegerField
       FieldName = 'IDPagoAplicacionInterna'
     end
@@ -2612,6 +2612,7 @@ inherited dmPagos: TdmPagos
   object ADODtStAplicaPagoReest: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
+    AfterOpen = ADODtStAplicaPagoReestAfterOpen
     AfterPost = ADODtStAplicaPagoReestAfterPost
     OnNewRecord = ADODtStAplicaPagoReestNewRecord
     CommandText = 
@@ -3167,5 +3168,32 @@ inherited dmPagos: TdmPagos
     object ADODtStCFDIPagosCancelacionEnProc: TBooleanField
       FieldName = 'CancelacionEnProc'
     end
+  end
+  object ADOQryConCXCNuevas: TADOQuery
+    Connection = _dmConection.ADOConnection
+    Parameters = <
+      item
+        Name = 'IdPersonaCliente'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end
+      item
+        Name = 'IdAnexo'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    SQL.Strings = (
+      'Select * from CuentasXCobrar where '
+      'idpersona=:IdPersonaCliente  and idanexo =:IdAnexo '
+      'and Saldo >0 and  idCuentaXCobrarRestructura is null '
+      'and IdCuentaXCobrarEstatus =-1')
+    Left = 932
+    Top = 419
   end
 end

@@ -113,6 +113,7 @@ type
     DSCXCPendienteReestructura: TDataSource;
     DSAplicacionReestructura: TDataSource;
     dsDetalleCXCPendReest: TDataSource;
+    DSCXCNuevasPendientes: TDataSource;
     procedure BtBtnAplicarClick(Sender: TObject);
     procedure DSAplicacionStateChange(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -159,6 +160,7 @@ type
     function ManejoMoratorios(IdCXCMora: Integer; valorAplica: Double): Boolean;
     function AplicaXReestructura(IDpagoAct, IDCXCActual,
       IDAplicacion: integer): boolean;
+    function TieneCuentasPendientes: boolean;
   public
     { Public declarations }
     EsFactoraje:Boolean;
@@ -890,7 +892,12 @@ begin
   TipoAP:=  FrmSeleccionAplicacion.TipoAplica; //Poner valor inicial
   FrmSeleccionAplicacion.Free;
   case tipoAp  of
-  1: ActAbonoCapital.Execute;  // deberia ser sólo para los que tienen null en anexoamortizacion  y que no sea opcion de compra()
+  1: begin
+       if TieneCuentasPendientes then   //Ene 10/19
+          ShowMessage('Tiene cuentas por Cobrar pendientes, los abonos a capital no podrán ser aplicados con estas cuentas generadas')
+       Else
+         ActAbonoCapital.Execute;  // deberia ser sólo para los que tienen null en anexoamortizacion  y que no sea opcion de compra()
+     end;
   2: ActPagoAnticipado.Execute; //Verificar monto  e ir creandoCXC
   end;
   if DSPago.DataSet.FieldByName('saldo').AsFloat<=0.01  then   //Ago 2/17
@@ -899,6 +906,18 @@ begin
     Close;
   end;
 end;
+
+function TFrmAplicacionPago.TieneCuentasPendientes:boolean; //Ene 10/19
+begin             //En estado pendiente. Si entra aca es por que ya detecto que no hay vencidas
+  Tadoquery(DSCXCNuevasPendientes.DataSet).Close;
+  Tadoquery(DSCXCNuevasPendientes.DataSet).Parameters.ParamByName('IdPersonaCliente').value:=DSPago.dataset.FieldByName('IdPersonaCliente').asinteger;
+  Tadoquery(DSCXCNuevasPendientes.DataSet).Parameters.ParamByName('IdAnexo').value:=DSPago.dataset.FieldByName('IdAnexo').asinteger;
+  Tadoquery(DSCXCNuevasPendientes.DataSet).Open;
+
+  Result:= not DSCXCNuevasPendientes.DataSet.eof ;
+
+end;
+
 
 procedure TFrmAplicacionPago.SpdBtnActMoraFechaPagoClick(Sender: TObject);
 var

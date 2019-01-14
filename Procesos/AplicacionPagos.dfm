@@ -916,4 +916,9 @@ object FrmAplicacionPago: TFrmAplicacionPago
     Left = 244
     Top = 360
   end
+  object DSCXCNuevasPendientes: TDataSource
+    DataSet = dmPagos.ADOQryConCXCNuevas
+    Left = 1004
+    Top = 16
+  end
 end

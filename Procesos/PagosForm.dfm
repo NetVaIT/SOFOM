@@ -1756,4 +1756,9 @@ inherited FrmConPagos: TFrmConPagos
     Left = 1028
     Top = 376
   end
+  object DSCXCNuevasPendientes: TDataSource
+    DataSet = dmPagos.ADOQryConCXCNuevas
+    Left = 820
+    Top = 104
+  end
 end

@@ -5,10 +5,10 @@ inherited dmSeguimientoCobranza: TdmSeguimientoCobranza
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     CommandText = 
-      'select CxC.IdPersona,P.RazonSocial,Sum(CXC.Saldo) as Saldo , sum' +
-      '(CXC.Interes) as interes from CuentasXCobrar CXC, Personas P'#13#10'wh' +
-      'ere p.idpersona=Cxc.IdPersona'#13#10'and cxc.Saldo>0.01'#13#10'Group by cxC.' +
-      'IdPersona, P.RazonSocial'
+      'select CxC.IdPersona,P.RazonSocial,Sum(CXC.Saldo) as Saldo ,'#13#10' s' +
+      'um(CXC.Interes) as interes from CuentasXCobrar CXC, '#13#10'Personas P' +
+      #13#10'where p.idpersona=Cxc.IdPersona'#13#10'and cxc.Saldo>0.01'#13#10'Group by ' +
+      'cxC.IdPersona, P.RazonSocial'
     Left = 56
     Top = 24
     object adodsMasterIdPersona: TIntegerField
@@ -40,7 +40,7 @@ inherited dmSeguimientoCobranza: TdmSeguimientoCobranza
       'select IdIncidenciaEstado, Identificador, Descripcion'#13#10' from Inc' +
       'idenciasEstados'
     Parameters = <>
-    Left = 56
+    Left = 64
     Top = 96
   end
   object ADODtStPersonas: TADODataSet
@@ -66,7 +66,7 @@ inherited dmSeguimientoCobranza: TdmSeguimientoCobranza
       'ona'#13#10'order by FechaReg desc'
     DataSource = dsSaldoCliente
     IndexFieldNames = 'IDPersonaCliente'
-    MasterFields = 'IdPersona'
+    MasterFields = 'IDPersona'
     Parameters = <
       item
         Name = 'IDPersona'
@@ -183,7 +183,8 @@ inherited dmSeguimientoCobranza: TdmSeguimientoCobranza
       'SaldoDocumento, '#13#10'CXC.IdAnexo, A.Descripcion, A.CapitalCobrado, ' +
       'A.SaldoInsoluto'#13#10'from CuentasXCobrar CXC '#13#10'inner join Anexos A o' +
       'n A.IdAnexo=CXC.IdAnexo'#13#10'Left Join CFDI CI on CI.IdCFDI= CXC.IdC' +
-      'FDI'#13#10'where Cxc.IdPersona=:IDPersona   and CXC.Saldo >0.00001'#13#10
+      'FDI'#13#10'where '#13#10'Cxc.IdPersona=:IDPersona and CXC.IDCuentaXCobrarRes' +
+      'tructura is null   and CXC.Saldo >0.01'
     DataSource = dsSaldoCliente
     IndexFieldNames = 'IdPersona'
     MasterFields = 'IDPersona'
@@ -202,6 +203,7 @@ inherited dmSeguimientoCobranza: TdmSeguimientoCobranza
       FieldName = 'IdPersona'
     end
     object ADODtSTCXCPendIdCuentaXCobrar: TAutoIncField
+      DisplayLabel = 'No.Cuenta x cobrar'
       FieldName = 'IdCuentaXCobrar'
       ReadOnly = True
     end
@@ -209,6 +211,7 @@ inherited dmSeguimientoCobranza: TdmSeguimientoCobranza
       FieldName = 'Fecha'
     end
     object ADODtSTCXCPendFechaVencimiento: TDateTimeField
+      DisplayLabel = 'Fecha Vencimiento'
       FieldName = 'FechaVencimiento'
     end
     object ADODtSTCXCPendSaldo: TFMTBCDField
@@ -228,6 +231,7 @@ inherited dmSeguimientoCobranza: TdmSeguimientoCobranza
       Size = 6
     end
     object ADODtSTCXCPendSaldoDocumento: TFMTBCDField
+      DisplayLabel = 'Saldo Documento'
       FieldName = 'SaldoDocumento'
       Precision = 18
       Size = 6
@@ -247,6 +251,7 @@ inherited dmSeguimientoCobranza: TdmSeguimientoCobranza
       Size = 6
     end
     object ADODtSTCXCPendSaldoInsoluto: TFMTBCDField
+      DisplayLabel = 'Saldo Insoluto'
       FieldName = 'SaldoInsoluto'
       Precision = 18
       Size = 6
@@ -267,8 +272,8 @@ inherited dmSeguimientoCobranza: TdmSeguimientoCobranza
       'select IDIncidenciaCobranza, IDUsuario, IDPersonaCliente, '#13#10'IdIn' +
       'cidenciaEstado, IdAnexo, FechaReg, FoliosAsoc, RegContacto, '#13#10'Ac' +
       'uerdo, Proxcontacto, Condiciones, PromesaPago'#13#10' from Incidencias' +
-      'Cobranza'#13#10'where Proxcontacto>=:FecIni  and ProxContacto<=:FecFin' +
-      #13#10'order by FechaReg desc'
+      'Cobranza'#13#10' where Proxcontacto>=:FecIni  and ProxContacto<=:FecFi' +
+      'n'#13#10'order by FechaReg desc'
     Parameters = <
       item
         Name = 'FecIni'
@@ -406,5 +411,107 @@ inherited dmSeguimientoCobranza: TdmSeguimientoCobranza
       end>
     Left = 400
     Top = 304
+    object ADODtStTelContactoidpersona: TIntegerField
+      FieldName = 'idpersona'
+    end
+    object ADODtStTelContactoContacto: TStringField
+      FieldName = 'Contacto'
+      Size = 300
+    end
+    object ADODtStTelContactotelContacto: TStringField
+      FieldName = 'telContacto'
+    end
+  end
+  object ADOQryConCalificacion: TADOQuery
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select distinct(calificacionactual)from Personas ')
+    Left = 72
+    Top = 368
+    object ADOQryConCalificacioncalificacionactual: TStringField
+      FieldName = 'calificacionactual'
+      Size = 2
+    end
+  end
+  object DSConIncidenciaXFecha: TDataSource
+    DataSet = ADODtStIncidenciaXFecha
+    Left = 192
+    Top = 224
+  end
+  object ADODtStCXCPendientes: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select CxC.IdPersona,CXC.Fecha,cxc.FechaVencimiento,CXC.IdCuenta' +
+      'XCobrar,CXC.Saldo  ,CXC.IdCFDI,Ci.Serie,CI.Folio,  Ci.Total, Ci.' +
+      'SaldoDocumento, '#13#10'CXC.IdAnexo, A.Descripcion, A.CapitalCobrado, ' +
+      'A.SaldoInsoluto'#13#10'from CuentasXCobrar CXC '#13#10'inner join Anexos A o' +
+      'n A.IdAnexo=CXC.IdAnexo'#13#10'Left Join CFDI CI on CI.IdCFDI= CXC.IdC' +
+      'FDI'#13#10'where CXC.Saldo >0.01 and CXC.IDCuentaXCobrarRestructura is' +
+      ' null '
+    DataSource = DSConIncidenciaXFecha
+    IndexFieldNames = 'IdPersona'
+    MasterFields = 'IDPersonaCliente'
+    Parameters = <>
+    Left = 472
+    Top = 240
+    object ADODtStCXCPendientesIdPersona: TIntegerField
+      FieldName = 'IdPersona'
+    end
+    object ADODtStCXCPendientesFecha: TDateTimeField
+      FieldName = 'Fecha'
+    end
+    object ADODtStCXCPendientesFechaVencimiento: TDateTimeField
+      FieldName = 'FechaVencimiento'
+    end
+    object ADODtStCXCPendientesIdCuentaXCobrar: TAutoIncField
+      DisplayLabel = 'No.CuentaXCobrar'
+      FieldName = 'IdCuentaXCobrar'
+      ReadOnly = True
+    end
+    object ADODtStCXCPendientesSaldo: TFMTBCDField
+      FieldName = 'Saldo'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStCXCPendientesIdCFDI: TLargeintField
+      FieldName = 'IdCFDI'
+    end
+    object ADODtStCXCPendientesSerie: TStringField
+      FieldName = 'Serie'
+    end
+    object ADODtStCXCPendientesFolio: TLargeintField
+      FieldName = 'Folio'
+    end
+    object ADODtStCXCPendientesTotal: TFMTBCDField
+      FieldName = 'Total'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStCXCPendientesSaldoDocumento: TFMTBCDField
+      FieldName = 'SaldoDocumento'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStCXCPendientesIdAnexo: TIntegerField
+      FieldName = 'IdAnexo'
+    end
+    object ADODtStCXCPendientesDescripcion: TStringField
+      DisplayLabel = 'Descripci'#243'n'
+      FieldName = 'Descripcion'
+      Size = 100
+    end
+    object ADODtStCXCPendientesCapitalCobrado: TFMTBCDField
+      FieldName = 'CapitalCobrado'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStCXCPendientesSaldoInsoluto: TFMTBCDField
+      FieldName = 'SaldoInsoluto'
+      Precision = 18
+      Size = 6
+    end
   end
 end

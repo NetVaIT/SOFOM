@@ -343,7 +343,7 @@ end;
 
 procedure TdmCuentasXCobrar.ActGeneraCuentasXCobrarExecute(Sender: TObject);
 var
-  res:integer;     //Feb 15/17
+  res, paso, Total:integer;     //Feb 15/17
   FechaAux:TDateTime;
 begin
   inherited;
@@ -361,14 +361,22 @@ begin
                          ' order by FechaCorte');
   ADOQryAuxiliar.Parameters.ParamByName('FechaCorte').value:= FFechaActual;// may 26/17 date;      //Se buscan a al dìa de hoy  (Fecha Tabla)
   ADOQryAuxiliar.Open;
+  ShowProgress(1,100,'Preparando Amortizaciones para generar Cuentas por Cobrar  ' + IntToStr(1) + '%');
+  Total:= ADOQryAuxiliar.REcordCount ;
+  Paso:=1;
   while not ADOQryAuxiliar.eof do
   begin
+    ShowProgress(Paso,Total,'Verificando Amortizacion '+intTostr(paso)+' de '+intTostr(Total)+'.    ' + IntToStr(trunc(Paso/Total*100)) + '%');
+
     FechaAux:= ADOQryAuxiliar.FieldByName('FechaCorte').AsDateTime;
     ADOStrdPrcGeneraCXC.Parameters.ParamByName('@FechaCorte').Value:=FechaAux;   //FFechaActual
     ADOStrdPrcGeneraCXC.ExecProc;
     Res:=Res+1;
     ADOQryAuxiliar.Next;
+    inc(paso);
   end;
+  ShowProgress(Paso,Total,'Generación de Cuentas por Cobrar finalizada ... 100 %' );
+  ShowProgress(Total,Total);
   ADOQryAuxiliar.Close;
   adoDSMaster.Close;
   adoDSMaster.Open;

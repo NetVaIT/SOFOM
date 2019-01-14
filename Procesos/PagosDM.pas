@@ -555,6 +555,7 @@ type
     ADODtStCFDIPagosIdPago: TIntegerField;
     ADODtStCFDIPagosNumPagosAplicados: TIntegerField;
     ADODtStCFDIPagosCancelacionEnProc: TBooleanField;
+    ADOQryConCXCNuevas: TADOQuery;
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsMasterAfterPost(DataSet: TDataSet);
     procedure adodsMasterBeforePost(DataSet: TDataSet);
@@ -585,6 +586,7 @@ type
     procedure ADODtStAplicaPagoReestAfterPost(DataSet: TDataSet);
     procedure ADODtStAplicaPagoReestNewRecord(DataSet: TDataSet);
     procedure ADODtStAplicaPagoInternaReestAfterPost(DataSet: TDataSet);
+    procedure ADODtStAplicaPagoReestAfterOpen(DataSet: TDataSet);
   private
     { Private declarations }
     Inserto:Boolean;
@@ -805,6 +807,12 @@ begin  //Pagos
   adodsMasterIdMonedaOrigen.Value:= _MONEDAS_ID_PESO_MXN;
 end;
 
+procedure TdmPagos.ADODtStAplicaPagoReestAfterOpen(DataSet: TDataSet);
+begin
+  inherited;
+  ADODtStAplicaPagoInternaReest.open;     //Ene 3/19
+end;
+
 procedure TdmPagos.ADODtStAplicaPagoReestAfterPost(DataSet: TDataSet);
 var   //Nov 23 /18 ver que se deja
   valor,valbaseCXC, porcentaje,ValReg, ValAux, INTMasIVA, porc2, SaldoAcum, valorMasIva: Double;
@@ -865,7 +873,8 @@ begin                       //Puede quedar amarrado a master pero no poner los s
   end;
   ADODtStCXCDetallePendReest.Open;      //estan ordenados por orden de aplicacion //Asociado con Cuenta por cobrar de  ADODtStCxCPendReest
 
-   ADODtStAplicaPagoReest.open;
+  ADODtStAplicaPagoReest.open;
+  ADODtStAplicaPagoInternaReest.open;
   //Verificar si son todas orden 0 o únicas y repartir parejo
   EsInicial:=VerificaDetalle(ADODtStCXCDetallePendReest,0); //No deberia ser inicial pero??? NOv 26/18
   if Not EsInicial then
@@ -972,6 +981,7 @@ begin                       //Puede quedar amarrado a master pero no poner los s
           if (valreg<=valor) or (abs(valreg-valor)<0.0001) { and (ValReg >0)}then
           begin                     //abr 19/17
              //Aplicar interno el valor dferegistro y restar
+
             ADODtStAplicaPagoInternaReest.Insert;
             ADODtStAplicaPagoInternaReest.FieldByName('IDCuentaXCobrarDetalle').AsInteger:=ADODtStCXCDetallePendReestIdCuentaXCobrarDetalle.AsInteger;
             ADODtStAplicaPagoInternaReest.FieldByName(campoimporte).value:=valreg;  //Value Feb 19/17
@@ -1927,7 +1937,7 @@ end;
 
 
 
-function TdmPagos.AjustarAmortizaciones (IdAnexo, IdTipoContrato: Integer;
+function TdmPagos. AjustarAmortizaciones (IdAnexo, IdTipoContrato: Integer;
   Importe: Extended; Tipo: TAbonoCapital;Fecha:TDateTime):Boolean;   //Abr 18/17
 var
    dmAmortizaciones: TdmAmortizaciones;
@@ -2818,6 +2828,7 @@ begin
   TFrmConPagos(gGridForm).actGenCFDIPago := actGenCFDIPago;
   TFrmConPagos(gGridForm).actAddCuentaOrdenante := actAddCuentaOrdenante;
   TFrmConPagos(gGridForm).actSoloCXCDelAnexo := actSoloCXCDelAnexo;
+  TFrmConPagos(gGridForm).DSCXCNuevasPendientes.dataset:=ADOQryConCXCnuevas; //Ene 10/18
   if adodsPagosAplicaciones.CommandText <> EmptyStr then adodsPagosAplicaciones.Open;
   gFormDeatil1:= TfrmPagosAplicaciones.Create(Self);
   gFormDeatil1.ReadOnlyGrid := True;

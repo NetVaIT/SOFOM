@@ -27,7 +27,8 @@ uses
   cxGridCustomPopupMenu, cxGridPopupMenu, cxClasses, Vcl.StdActns, Vcl.DBActns,
   System.Actions, Vcl.ActnList, Vcl.StdCtrls, cxGridLevel, cxGridCustomView,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
-  Vcl.ExtCtrls, cxPropertiesStore;
+  Vcl.ExtCtrls, cxPropertiesStore, cxCheckGroup, cxBarEditItem, cxContainer,
+  cxGroupBox, Vcl.Menus, cxButtons;
 
 type
   TFrmSeguimientoCobranza = class(T_frmGrid)
@@ -41,12 +42,31 @@ type
     tvMasterRazonSocial: TcxGridDBColumn;
     tvMasterSaldo: TcxGridDBColumn;
     tvMasterinteres: TcxGridDBColumn;
+    dxBrBtnPorProximoCont: TdxBarButton;
+    cxchckGrpCalificacion: TcxBarEditItem;
+    DSCalificaciones: TDataSource;
+    dxBarButton8: TdxBarButton;
+    Panel1: TPanel;
+    cxChckGrpCalifica: TcxCheckGroup;
+    cxBtnBuscar: TcxButton;
+    DSCXCPendXincidencia: TDataSource;
     procedure dxBrBtnSeguimientoClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure cxChckGrpCalificaPropertiesChange(Sender: TObject);
+    procedure cxBtnBuscarClick(Sender: TObject);
+    procedure dxBrBtnPorProximoContClick(Sender: TObject);
   private
+    fFiltroCalifica: String;
+    FactConsultar: TBasicAction;
+    procedure SetFActConsultar(const Value: TBasicAction);
     { Private declarations }
+
   public
     { Public declarations }
+    property FiltroCalifica:String read fFiltroCalifica write FFiltroCalifica; //Ene 4/19
+
+    Property actConsultar:  TBasicAction read FactConsultar write SetFActConsultar;
   end;
 
 var
@@ -56,12 +76,65 @@ implementation
 
 {$R *.dfm}
 
-uses SeguimientoRegistroEd, SeguimientoCobranzaDM;
+uses SeguimientoRegistroEd, SeguimientoCobranzaDM, SeguimientoNvoEdit,
+  SegIncidenciasProximasEdit;
+
+procedure TFrmSeguimientoCobranza.cxBtnBuscarClick(Sender: TObject);
+begin
+  inherited;
+  actConsultar.Execute;
+
+end;
+
+procedure TFrmSeguimientoCobranza.cxChckGrpCalificaPropertiesChange(
+  Sender: TObject);
+var Total,i, val:integer;
+begin
+  fFiltroCalifica:='';
+  for i:=0 to  cxChckGrpCalifica.properties.Items.Count -1  do    //???
+  begin
+    if (cxChckGrpCalifica.States[0]=cbsChecked)  and (i >0) then
+    begin
+      cxChckGrpCalifica.States[i]:=cbsUnChecked;
+      fFiltroCalifica:='';
+    end
+    else  // El cero no esta marcado
+    begin
+      if (cxChckGrpCalifica.States[i]=cbsChecked)  then         // ChckLstBxCondiciones.Checked[i]
+      begin
+        if (i=1) then
+          fFiltroCalifica:=' CalificacionActual is NULL '
+        else
+        if fFiltroCalifica='' then
+          fFiltroCalifica:=' CalificacionActual='''+cxChckGrpCalifica.properties.Items[i].Caption+''' '
+        else
+          fFiltroCalifica:=fFiltroCalifica +' or  CalificacionActual='''+cxChckGrpCalifica.properties.Items[i].Caption+''' ';
+
+      end;
+    end;
+  end;
+
+
+  //Showmessage(' filtro: '+ fFiltroCalifica);
+end;
+
+procedure TFrmSeguimientoCobranza.dxBrBtnPorProximoContClick(Sender: TObject);
+begin
+  inherited;
+  FrmSegProximosContactos:=TFrmSegProximosContactos.create(self);
+//  FrmSegProximosContactos.dsConsulta:=dsConsulta;
+  FrmSegProximosContactos.DSIncidencias:=dsincidencias;
+  FrmSegProximosContactos.DSCXCPendientes:=DSCXCPendXincidencia;
+//  FrmSegProximosContactos.DSClientes:=dsclientes;
+  FrmSegProximosContactos.DSCalificaciones.DataSet:=DSCalificaciones.DataSet;//Ene 8/19
+  FrmSegProximosContactos.ShowModal;
+  FrmSegProximosContactos.Free;
+end;
 
 procedure TFrmSeguimientoCobranza.dxBrBtnSeguimientoClick(Sender: TObject);
 begin
   inherited;
-  FrmSeguimientoRegistro:=TFrmSeguimientoRegistro.create(self);
+ (*  FrmSeguimientoRegistro:=TFrmSeguimientoRegistro.create(self);
   FrmSeguimientoRegistro.dsConsulta:=dsConsulta;
   FrmSeguimientoRegistro.DSIncidencias:=dsincidencias;
   FrmSeguimientoRegistro.DSCXCPendientes:=DSCXCPendientes;
@@ -69,7 +142,20 @@ begin
   FrmSeguimientoRegistro.DSConIncidencias:=DSConIncidencias;
 
   FrmSeguimientoRegistro.ShowModal;
-  FrmSeguimientoRegistro.Free;
+  FrmSeguimientoRegistro.Free;      *)
+
+  FrmSeguimientoNvoEdt:=TFrmSeguimientoNvoEdt.create(self);
+  FrmSeguimientoNvoEdt.dsConsulta:=dsConsulta;
+  FrmSeguimientoNvoEdt.DSIncidencias:=dsincidencias;
+  FrmSeguimientoNvoEdt.DSCXCPendientes:=DSCXCPendientes;
+  FrmSeguimientoNvoEdt.DSClientes:=dsclientes;
+  FrmSeguimientoNvoEdt.DSConIncidencias:=DSConIncidencias;
+  FrmSeguimientoNvoEdt.DSCalificaciones.DataSet:=DSCalificaciones.DataSet;//Ene 8/19 //En teoria no lo van a requerir
+
+  FrmSeguimientoNvoEdt.ShowModal;
+  FrmSeguimientoNvoEdt.Free;
+
+
 
 end;
 
@@ -83,6 +169,62 @@ begin
   //dsclientes.DataSet.open;
   DSConIncidencias.DataSet.open;
 //  ApplyBestFit:=False;
+
+end;
+
+procedure TFrmSeguimientoCobranza.FormShow(Sender: TObject);
+var
+  i :integer;
+begin
+  i:=0;
+ (* while TcxCheckGroupProperties(cxchckGrpCalificacion.properties).Items.Count > 0 do
+  begin
+  TcxCheckGroupProperties(cxchckGrpCalificacion.properties).items.delete(0);
+
+  end;
+ TcxCheckGroupProperties(cxchckGrpCalificacion.properties).items.add;
+  TcxCheckGroupProperties(cxchckGrpCalificacion.properties).items[i].Caption:='Todos';
+  DSCalificaciones.dataset.close;
+  DSCalificaciones.dataset.open;
+  while  not DSCalificaciones.dataset.eof do
+  begin
+    i:=  i+1;
+    TcxCheckGroupProperties(cxchckGrpCalificacion.properties).items.add;
+    if DSCalificaciones.dataset.fieldbyname('calificacionactual').isnull then
+        TcxCheckGroupProperties(cxchckGrpCalificacion.properties).items[i].Caption:='Vacios'
+    else
+      TcxCheckGroupProperties(cxchckGrpCalificacion.properties).items[i].Caption:=DSCalificaciones.dataset.fieldbyname('calificacionactual').asstring ;
+    DSCalificaciones.dataset.next;
+  end;  *)
+
+
+  while cxChckGrpCalifica.properties.items.count > 0 do
+  begin
+   cxChckGrpCalifica.properties.items.delete(0);
+
+  end;
+  cxChckGrpCalifica.properties.items.add;
+  cxChckGrpCalifica.properties.items[i].Caption:='Todos';
+  DSCalificaciones.dataset.close;
+  DSCalificaciones.dataset.open;
+  while  not DSCalificaciones.dataset.eof do
+  begin
+    i:=  i+1;
+    cxChckGrpCalifica.properties.items.add;
+    if DSCalificaciones.dataset.fieldbyname('calificacionactual').isnull then
+        cxChckGrpCalifica.properties.items[i].Caption:='Vacios'
+    else
+      cxChckGrpCalifica.properties.items[i].Caption:=DSCalificaciones.dataset.fieldbyname('calificacionactual').asstring ;
+    DSCalificaciones.dataset.next;
+  end;
+
+
+end;
+
+
+procedure TFrmSeguimientoCobranza.SetFActConsultar(const Value: TBasicAction);
+begin
+  FactConsultar := Value;
 
 end;
 

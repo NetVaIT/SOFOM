@@ -433,6 +433,7 @@ type
     procedure ActEnvioMailUpdate(Sender: TObject);
     procedure ActConsultaEstadoUpdate(Sender: TObject);
     procedure actImprimirCFDIUpdate(Sender: TObject);
+    procedure actSearchExecute(Sender: TObject);
   private
     { Private declarations }
     FIdCFDITipoDocumento: TCFDITipoDocumento;
@@ -1244,6 +1245,12 @@ begin
   inherited;
   //Podra agregar UUID relacionadas si especifica el tipo de relacion del CFDI
   actRelacionarCFDI.Enabled := (not adodsMasterIDCFDITipoRelacion.IsNull);
+end;
+
+procedure TdmFacturas.actSearchExecute(Sender: TObject);
+begin
+  inherited;
+
 end;
 
 //procedure TDMFacturas.ReadFile(FileName: TFileName); //Dic 15/16

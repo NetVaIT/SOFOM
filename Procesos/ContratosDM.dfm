@@ -1,7 +1,7 @@
 inherited dmContratos: TdmContratos
   OldCreateOrder = True
-  Height = 633
-  Width = 785
+  Height = 712
+  Width = 922
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     CommandText = 
@@ -206,7 +206,7 @@ inherited dmContratos: TdmContratos
   object dsMaster: TDataSource
     AutoEdit = False
     DataSet = adodsMaster
-    Left = 136
+    Left = 144
     Top = 16
   end
   object adodsPersonas: TADODataSet
@@ -1038,7 +1038,6 @@ inherited dmContratos: TdmContratos
     Top = 144
   end
   object adodsCreditoEstatus: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -1049,7 +1048,6 @@ inherited dmContratos: TdmContratos
     Top = 200
   end
   object adodsUsuario: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdUsuario, Login from Usuarios'
@@ -1565,12 +1563,14 @@ inherited dmContratos: TdmContratos
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@IdAnexo'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end
       item
         Name = '@IdCuentaXCobrarRestructura'
@@ -1578,6 +1578,7 @@ inherited dmContratos: TdmContratos
         DataType = ftInteger
         Direction = pdInputOutput
         Precision = 10
+        Value = Null
       end>
     Left = 384
     Top = 424
@@ -1616,22 +1617,26 @@ inherited dmContratos: TdmContratos
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@IdAnexo'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end
       item
         Name = '@Fecha'
         Attributes = [paNullable]
         DataType = ftDateTime
+        Value = Null
       end
       item
         Name = '@ConInteresesOrinarios'
         Attributes = [paNullable]
         DataType = ftBoolean
+        Value = Null
       end
       item
         Name = '@IdCuentaXCobrar'
@@ -1639,6 +1644,7 @@ inherited dmContratos: TdmContratos
         DataType = ftInteger
         Direction = pdInputOutput
         Precision = 10
+        Value = Null
       end>
     Left = 384
     Top = 528

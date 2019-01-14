@@ -10,7 +10,6 @@ inherited FrmEdPagosReales: TFrmEdPagosReales
   inherited pcMain: TcxPageControl
     Width = 590
     Height = 517
-    Properties.ActivePage = cxTbShtDatosComplemento
     ExplicitWidth = 590
     ExplicitHeight = 517
     ClientRectBottom = 513
@@ -189,7 +188,6 @@ inherited FrmEdPagosReales: TFrmEdPagosReales
         Align = alTop
         Caption = 'Pago bancarizado'
         TabOrder = 0
-        ExplicitTop = -6
         Height = 169
         Width = 582
         object Label15: TLabel

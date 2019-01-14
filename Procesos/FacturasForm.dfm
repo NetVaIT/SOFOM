@@ -28,7 +28,6 @@ inherited frmFacturasGrid: TfrmFacturasGrid
   inherited pnlMaster: TPanel
     Width = 1109
     Height = 226
-    ExplicitTop = 28
     ExplicitWidth = 1109
     ExplicitHeight = 226
     inherited cxGrid: TcxGrid
@@ -1456,6 +1455,7 @@ inherited frmFacturasGrid: TfrmFacturasGrid
   end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
+      PrinterPage.Header = 200
       ReportDocument.CreationDate = 42699.643536909720000000
       AssignedFormatValues = []
       BuiltInReportLink = True

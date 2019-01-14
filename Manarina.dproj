@@ -5,7 +5,7 @@
         <FrameworkType>VCL</FrameworkType>
         <MainSource>Manarina.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Release</Config>
+        <Config Condition="'$(Config)'==''">Debug</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Application</AppType>
@@ -1181,10 +1181,20 @@
         </DCCReference>
         <DCCReference Include="Procesos\UDMEnvioMail.pas">
             <Form>DMEnvioMails</Form>
+            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Procesos\EnvioMailEdit.pas">
             <Form>StdFrmEnvioMail</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Procesos\SeguimientoNvoEdit.pas">
+            <Form>FrmSeguimientoNvoEdt</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Procesos\SegIncidenciasProximasEdit.pas">
+            <Form>FrmSegProximosContactos</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\ReestructurarForm.pas">
             <Form>frmReestructurar</Form>

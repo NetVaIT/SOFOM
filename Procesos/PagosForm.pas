@@ -97,6 +97,7 @@ type
     dxBrBtnPagoReal: TdxBarButton;
     DSAnexoMoraAcumula: TDataSource;
     dxBrBtnEnvioMail: TdxBarButton;
+    DSCXCNuevasPendientes: TDataSource;
     procedure FormCreate(Sender: TObject);
     procedure dxBrBtnAplicaiconesClick(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
@@ -126,6 +127,7 @@ type
     procedure SetFCreaFinales(const Value: TBasicAction);
     function VerificaFinales(idanexo:integer):boolean;
     procedure SetactGenCFDIPago(const Value: TBasicAction);
+    function TieneCuentasPendientes: boolean;
   public
     { Public declarations }
     FrmAplicacionPago: TFrmAplicacionPago;
@@ -467,7 +469,10 @@ begin
         actSoloCXCDelAnexo.Execute;
         if dsConCXCPendientes.DataSet.Eof then
         begin
-          ShowMessage('No existen Cuentas Por Cobrar pendientes de Pago para ese Cliente. Puede actualizar moratorios a la fecha del Pago o Abonar a Capital');
+          if TieneCuentasPendientes then   //Ene 10/19
+            ShowMessage('Tiene cuentas por Cobrar vigentes, puede usar pagos anticipados. Los abonos a capital no podrán ser aplicados con estas cuentas generadas')
+          else
+            ShowMessage('No existen Cuentas Por Cobrar pendientes de Pago para ese Cliente. Puede actualizar moratorios a la fecha del Pago o Abonar a Capital');
           //Colocado aca Abr 17/17
           FrmAplicacionPago:=TFrmAplicacionPago.create(self);
           FrmAplicacionPago.actSoloCXCDelAnexo := actSoloCXCDelAnexo;
@@ -490,6 +495,8 @@ begin
           FrmAplicacionPago.DSAuxiliar.Dataset:= DSAuxiliar.DataSet; //Abr 3/17
           FrmAplicacionPago.DSP_CalcMoratorioNueva.DataSet:= DSP_CalcMoratorioNueva.DataSet; //Abr 6/17
           FrmAplicacionPago.DSP_ActTotalCXC.DataSet:=DSP_ActTotalCXC.DataSet; //May 22/17
+          FrmAplicacionPago.DSCXCNuevasPendientes:=DSCXCNuevasPendientes; //Ene 10/18
+         // FrmAplicacionPago.DSCXCNuevasPendientes.DataSet.Open;
 //          TadoDataset( FrmAplicacionPago.dsConCXCPendientes.DataSet).Parameters.ParamByName('EsAnti').Value:=0; //Oct 9/17
 //          FrmAplicacionPago.dsConCXCPendientes.DataSet.Open;
           FrmAplicacionPago.DSDetalleMostrar.dataset.Open;   //Agregado Feb 16/17
@@ -547,6 +554,18 @@ begin
   end
   else
     ShowMessage('Proceso cancelado');
+end;
+
+
+function TFrmConPagos.TieneCuentasPendientes:boolean; //Ene 10/19
+begin             //En estado pendiente. Si entra aca es por que ya detecto que no hay vencidas
+  Tadoquery(DSCXCNuevasPendientes.DataSet).Close;
+  Tadoquery(DSCXCNuevasPendientes.DataSet).Parameters.ParamByName('IdPersonaCliente').value:=Datasource.dataset.FieldByName('IdPersonaCliente').asinteger;
+  Tadoquery(DSCXCNuevasPendientes.DataSet).Parameters.ParamByName('IdAnexo').value:=Datasource.dataset.FieldByName('IdAnexo').asinteger;
+  Tadoquery(DSCXCNuevasPendientes.DataSet).Open;
+
+  Result:= not DSCXCNuevasPendientes.DataSet.eof ;
+
 end;
 
 procedure TFrmConPagos.EdtNombreChange(Sender: TObject);

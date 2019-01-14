@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, _StandarDMod, Data.DB, System.Actions,
-  Vcl.ActnList, Data.Win.ADODB;
+  Vcl.ActnList, Data.Win.ADODB,dialogs;
 
 type
   TdmSeguimientoCobranza = class(T_dmStandar)
@@ -69,10 +69,33 @@ type
     ADODtStTelContacto: TADODataSet;
     ADODtSTCXCPendIdCFDI: TLargeintField;
     ADODtSTCXCPendFechaVencimiento: TDateTimeField;
+    ADODtStTelContactoidpersona: TIntegerField;
+    ADODtStTelContactoContacto: TStringField;
+    ADODtStTelContactotelContacto: TStringField;
+    ADOQryConCalificacion: TADOQuery;
+    ADOQryConCalificacioncalificacionactual: TStringField;
+    DSConIncidenciaXFecha: TDataSource;
+    ADODtStCXCPendientes: TADODataSet;
+    ADODtStCXCPendientesIdPersona: TIntegerField;
+    ADODtStCXCPendientesFecha: TDateTimeField;
+    ADODtStCXCPendientesFechaVencimiento: TDateTimeField;
+    ADODtStCXCPendientesIdCuentaXCobrar: TAutoIncField;
+    ADODtStCXCPendientesSaldo: TFMTBCDField;
+    ADODtStCXCPendientesIdCFDI: TLargeintField;
+    ADODtStCXCPendientesSerie: TStringField;
+    ADODtStCXCPendientesFolio: TLargeintField;
+    ADODtStCXCPendientesTotal: TFMTBCDField;
+    ADODtStCXCPendientesSaldoDocumento: TFMTBCDField;
+    ADODtStCXCPendientesIdAnexo: TIntegerField;
+    ADODtStCXCPendientesDescripcion: TStringField;
+    ADODtStCXCPendientesCapitalCobrado: TFMTBCDField;
+    ADODtStCXCPendientesSaldoInsoluto: TFMTBCDField;
     procedure DataModuleCreate(Sender: TObject);
     procedure ADODtStIncidenciasNewRecord(DataSet: TDataSet);
   private
     { Private declarations }
+  protected
+    procedure SetFilter; override;    // ene 7/18
   public
     { Public declarations }
   end;
@@ -100,14 +123,34 @@ end;
 procedure TdmSeguimientoCobranza.DataModuleCreate(Sender: TObject);
 begin
   inherited;
+  SQLSELECT:= 'select CxC.IdPersona,P.RazonSocial,Sum(CXC.Saldo) as Saldo , sum(CXC.Interes) as interes from CuentasXCobrar CXC, Personas P'
+           +' where p.idpersona=Cxc.IdPersona  and Saldo>0.01'
+           +' and CXC.IDCuentaXCobrarRestructura is null ';  // Ene 7/19 para consulta desde Grid
+
+  SQLGROUPBY:=' Group by cxC.IdPersona, P.RazonSocial';
+
   gGridForm:= TFrmSeguimientoCobranza.Create(Self);     //Dic 5/16
 
   gGridForm.DataSet:= adodsMaster;
   TFrmSeguimientoCobranza(gGridForm).DSConIncidencias.DataSet:=ADODtStIncidenciaXFecha;
   TFrmSeguimientoCobranza(gGridForm).DSIncidencias.DataSet:=ADODtStIncidencias; //Va a cambiar nombre
   TFrmSeguimientoCobranza(gGridForm).DSCXCPendientes.DataSet:=ADODtSTCXCPend;
+  TFrmSeguimientoCobranza(gGridForm).DSCXCPendXincidencia.DataSet:=ADODtSTCXCPendientes;
   TFrmSeguimientoCobranza(gGridForm).DSClientes.DataSet:=ADODtStPersonas;
   TFrmSeguimientoCobranza(gGridForm).dsConsulta.DataSet:=adodsMaster; //Este era saldo cliente
+  TFrmSeguimientoCobranza(gGridForm).DSCalificaciones.DataSet:=ADOQryConCalificacion;//Ene 8/19
+  TFrmSeguimientoCobranza(gGridForm).actConsultar:=actSearch;
+
+end;
+
+procedure TdmSeguimientoCobranza.SetFilter;
+begin  //Ene 7/19
+  inherited;
+  if  TFrmSeguimientoCobranza(gGridForm).FiltroCalifica<>'' then
+     SQLWHERE:= ' and ('+TFrmSeguimientoCobranza(gGridForm).FiltroCalifica+')'
+  else
+     SQLWHERE:= ' ';
+  //verificar si se ponen demás filtros aca
 
 end;
 

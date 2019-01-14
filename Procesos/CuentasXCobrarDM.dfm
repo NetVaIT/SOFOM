@@ -146,7 +146,7 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     end
   end
   inherited adodsUpdate: TADODataSet
-    Left = 328
+    Left = 336
   end
   inherited ActionList: TActionList
     Left = 328
@@ -275,7 +275,6 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     Top = 136
   end
   object ADODSCXCEstatus: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -286,7 +285,6 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     Top = 80
   end
   object ADOSPersonas: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -1037,7 +1035,6 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     Top = 392
   end
   object adodsAnexos: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 

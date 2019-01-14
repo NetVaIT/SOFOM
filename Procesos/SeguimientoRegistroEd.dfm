@@ -1,7 +1,7 @@
 object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
   Left = 0
   Top = 0
-  Caption = 'Registro Seguimiento '
+  Caption = 'Registro Seguimiento X Cliente'
   ClientHeight = 699
   ClientWidth = 1277
   Color = clBtnFace
@@ -524,9 +524,9 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
           Visible = False
         end
         object DBEdtContacto: TDBEdit
-          Left = 95
+          Left = 97
           Top = 0
-          Width = 329
+          Width = 327
           Height = 21
           DataField = 'Contacto'
           DataSource = DSFuncXCli
@@ -820,19 +820,16 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
           item
             Expanded = False
             FieldName = 'Proxcontacto'
-            Width = 64
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'RegContacto'
-            Width = 64
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'Acuerdo'
-            Width = 64
             Visible = True
           end
           item
@@ -843,19 +840,16 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
           item
             Expanded = False
             FieldName = 'PromesaPago'
-            Width = 64
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'EstadoIncidencia'
-            Width = 64
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'UsuarioReg'
-            Width = 64
             Visible = True
           end>
       end
@@ -1023,13 +1017,11 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
         item
           Expanded = False
           FieldName = 'FechaVencimiento'
-          Title.Caption = 'Fecha Vencimiento'
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'Saldo'
-          Width = 64
           Visible = True
         end
         item
@@ -1046,7 +1038,6 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
         item
           Expanded = False
           FieldName = 'Folio'
-          Width = 64
           Visible = True
         end
         item
@@ -1074,13 +1065,11 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
         item
           Expanded = False
           FieldName = 'CapitalCobrado'
-          Width = 64
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'SaldoInsoluto'
-          Width = 64
           Visible = True
         end>
     end
@@ -1228,7 +1217,7 @@ object FrmSeguimientoRegistro: TFrmSeguimientoRegistro
       object DBTxtAcuerdo: TDBText
         Left = 65
         Top = 52
-        Width = 344
+        Width = 656
         Height = 36
         DataField = 'Acuerdo'
         DataSource = DSIncidencias

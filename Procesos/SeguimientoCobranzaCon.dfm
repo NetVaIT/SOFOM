@@ -2,39 +2,41 @@ inherited FrmSeguimientoCobranza: TFrmSeguimientoCobranza
   BorderStyle = bsToolWindow
   Caption = 'Seguimiento Cobranza'
   ClientHeight = 428
-  ClientWidth = 645
-  ExplicitWidth = 651
-  ExplicitHeight = 457
+  ClientWidth = 803
+  ExplicitWidth = 809
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
     Top = 343
-    Width = 645
+    Width = 803
     ExplicitTop = 343
     ExplicitWidth = 645
   end
   inherited splDetail1: TSplitter
     Top = 255
-    Width = 645
+    Width = 803
     ExplicitTop = 255
     ExplicitWidth = 645
   end
   inherited splDetail2: TSplitter
     Top = 299
-    Width = 645
+    Width = 803
     ExplicitTop = 299
     ExplicitWidth = 645
   end
   inherited pnlMaster: TPanel
-    Width = 645
-    Height = 229
-    ExplicitWidth = 645
-    ExplicitHeight = 229
+    Width = 803
+    Height = 227
+    ExplicitTop = 28
+    ExplicitWidth = 803
+    ExplicitHeight = 227
     inherited cxGrid: TcxGrid
-      Width = 645
-      Height = 229
-      ExplicitWidth = 645
-      ExplicitHeight = 229
+      Top = 57
+      Width = 803
+      Height = 170
+      ExplicitTop = 57
+      ExplicitWidth = 803
+      ExplicitHeight = 170
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdPersona: TcxGridDBColumn
           DataBinding.FieldName = 'IdPersona'
@@ -55,33 +57,67 @@ inherited FrmSeguimientoCobranza: TFrmSeguimientoCobranza
         end
       end
     end
+    object Panel1: TPanel
+      Left = 0
+      Top = 0
+      Width = 803
+      Height = 57
+      Align = alTop
+      TabOrder = 1
+      object cxChckGrpCalifica: TcxCheckGroup
+        Left = 8
+        Top = 0
+        Caption = 'Filtro por Calificaci'#243'n Actual'
+        Properties.Columns = 2
+        Properties.Items = <>
+        Properties.OnChange = cxChckGrpCalificaPropertiesChange
+        Style.LookAndFeel.Kind = lfStandard
+        StyleDisabled.BorderStyle = ebsNone
+        StyleDisabled.LookAndFeel.Kind = lfStandard
+        StyleFocused.LookAndFeel.Kind = lfStandard
+        StyleHot.LookAndFeel.Kind = lfStandard
+        TabOrder = 0
+        Height = 55
+        Width = 385
+      end
+      object cxBtnBuscar: TcxButton
+        Left = 408
+        Top = 16
+        Width = 22
+        Height = 22
+        OptionsImage.ImageIndex = 16
+        OptionsImage.Images = cxImageList
+        TabOrder = 1
+        OnClick = cxBtnBuscarClick
+      end
+    end
   end
   inherited pnlDetail3: TPanel
     Top = 346
-    Width = 645
+    Width = 803
     ExplicitTop = 346
-    ExplicitWidth = 645
+    ExplicitWidth = 803
   end
   inherited pnlDetail2: TPanel
     Top = 302
-    Width = 645
+    Width = 803
     ExplicitTop = 302
-    ExplicitWidth = 645
+    ExplicitWidth = 803
   end
   inherited pnlDetail1: TPanel
     Top = 258
-    Width = 645
+    Width = 803
     ExplicitTop = 258
-    ExplicitWidth = 645
+    ExplicitWidth = 803
   end
   inherited pnlClose: TPanel
     Top = 387
-    Width = 645
+    Width = 803
     ExplicitTop = 387
-    ExplicitWidth = 645
+    ExplicitWidth = 803
     inherited btnClose: TButton
-      Left = 560
-      ExplicitLeft = 560
+      Left = 718
+      ExplicitLeft = 718
     end
   end
   inherited DataSource: TDataSource
@@ -91,15 +127,16 @@ inherited FrmSeguimientoCobranza: TFrmSeguimientoCobranza
     DockControlHeights = (
       0
       0
-      26
+      28
       0)
     inherited dxbNavigator: TdxBar
-      DockedLeft = 102
+      DockedLeft = 3
     end
     inherited dxbEdit: TdxBar
       Visible = False
     end
     inherited dxbTools: TdxBar
+      DockedLeft = 141
       ItemLinks = <
         item
           Visible = True
@@ -112,19 +149,52 @@ inherited FrmSeguimientoCobranza: TFrmSeguimientoCobranza
         item
           Visible = True
           ItemName = 'dxBrBtnSeguimiento'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBrBtnPorProximoCont'
         end>
     end
     object dxBrBtnSeguimiento: TdxBarButton
-      Caption = 'Seguimiento'
+      Caption = 'Seguimiento por cliente'
       Category = 0
-      Hint = 'Seguimiento'
+      Hint = 'Seguimiento por cliente'
       Visible = ivAlways
       ImageIndex = 17
       PaintStyle = psCaptionGlyph
       OnClick = dxBrBtnSeguimientoClick
     end
+    object dxBrBtnPorProximoCont: TdxBarButton
+      Caption = 'Pr'#243'ximos contactos'
+      Category = 0
+      Hint = 'Seguimiento por Proximo Contacto'
+      Visible = ivAlways
+      ImageIndex = 18
+      PaintStyle = psCaptionGlyph
+      OnClick = dxBrBtnPorProximoContClick
+    end
+    object cxchckGrpCalificacion: TcxBarEditItem
+      Caption = 'Filtro X Calificaci'#243'n'
+      Category = 0
+      Hint = 'Filtro X Calificaci'#243'n'
+      Visible = ivAlways
+      ShowCaption = True
+      PropertiesClassName = 'TcxCheckGroupProperties'
+      Properties.Columns = 2
+      Properties.Items = <>
+      InternalEditValue = ';0'
+    end
+    object dxBarButton8: TdxBarButton
+      Caption = 'New Button'
+      Category = 0
+      Hint = 'New Button'
+      Visible = ivAlways
+      ImageIndex = 16
+    end
   end
   inherited cxStyleRepository: TcxStyleRepository
+    Left = 24
+    Top = 104
     PixelsPerInch = 96
   end
   inherited cxImageList: TcxImageList
@@ -897,10 +967,49 @@ inherited FrmSeguimientoCobranza: TFrmSeguimientoCobranza
           A5B20B587D880005070B00000001000000000000000000000000000000000000
           000000000000000000000000000000000000000304070C83AEB40C8FC0C6010C
           1116000000010000000000000000000000000000000000000000}
+      end
+      item
+        Image.Data = {
+          36040000424D3604000000000000360000002800000010000000100000000100
+          2000000000000004000000000000000000000000000000000000008080000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000080800000808000008080000000
+          0000FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00000000000080800000808000008080000000
+          0000FFFFFF00FFFFFF00FFFFFF00FFFFFF00000000000000000000000000FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00000000000080800000808000008080000000
+          0000FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0000000000FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00000000000080800000808000008080000000
+          0000FFFFFF00FFFFFF00FFFFFF00FFFFFF000000000000000000FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00000000000080800000808000008080000000
+          0000FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0000000000FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00000000000080800000808000008080000000
+          0000FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00000000000080800000808000008080000000
+          00000000000000000000FFFFFF0000000000FFFFFF0000000000FFFFFF000000
+          0000FFFFFF0000000000FFFFFF00000000000080800000808000008080000000
+          0000FFFFFF0000000000FFFFFF00000000000000000000000000FFFFFF000000
+          00007F7F7F0000000000FFFFFF00000000000080800000808000008080000000
+          0000FFFFFF0000000000FFFFFF0000000000FFFFFF0000000000FFFFFF000000
+          00007F7F7F0000000000FFFFFF00000000000080800000808000008080000000
+          0000FFFFFF0000000000FFFFFF00FFFFFF0000000000FFFFFF00FFFFFF000000
+          0000FFFFFF0000000000FFFFFF00000000000080800000808000008080000000
+          0000FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00000000000000000000000000000000000080800000808000008080000000
+          0000FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF0000000000FFFFFF00FFFFFF00000000000080800000808000008080000000
+          00000000FF000000FF000000FF000000FF000000FF000000FF000000FF000000
+          FF0000000000FFFFFF0000000000008080000080800000808000008080000000
+          0000FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00000000000000000000808000008080000080800000808000008080000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000080800000808000008080000080800000808000}
+        MaskColor = clOlive
       end>
   end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
+      PrinterPage.Header = 200
       ReportDocument.CreationDate = 42775.416768854160000000
       AssignedFormatValues = []
       BuiltInReportLink = True
@@ -985,5 +1094,17 @@ inherited FrmSeguimientoCobranza: TFrmSeguimientoCobranza
     DataSet = dmSeguimientoCobranza.adodsMaster
     Left = 403
     Top = 69
+  end
+  object DSCalificaciones: TDataSource
+    AutoEdit = False
+    DataSet = dmSeguimientoCobranza.ADOQryConCalificacion
+    Left = 699
+    Top = 45
+  end
+  object DSCXCPendXincidencia: TDataSource
+    AutoEdit = False
+    DataSet = dmSeguimientoCobranza.ADODtStCXCPendientes
+    Left = 704
+    Top = 109
   end
 end
