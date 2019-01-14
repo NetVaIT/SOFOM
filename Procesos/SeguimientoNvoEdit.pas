@@ -162,9 +162,6 @@ type
     { Public declarations }
   end;
 
-var
-  FrmSeguimientoNvoEdt: TFrmSeguimientoNvoEdt;
-
 implementation
 
 {$R *.dfm}

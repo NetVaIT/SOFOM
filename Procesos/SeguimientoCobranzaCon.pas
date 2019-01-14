@@ -57,16 +57,14 @@ type
     procedure cxBtnBuscarClick(Sender: TObject);
     procedure dxBrBtnPorProximoContClick(Sender: TObject);
   private
+    { Private declarations }
     fFiltroCalifica: String;
     FactConsultar: TBasicAction;
     procedure SetFActConsultar(const Value: TBasicAction);
-    { Private declarations }
-
   public
     { Public declarations }
     property FiltroCalifica:String read fFiltroCalifica write FFiltroCalifica; //Ene 4/19
-
-    Property actConsultar:  TBasicAction read FactConsultar write SetFActConsultar;
+    property actConsultar:  TBasicAction read FactConsultar write SetFActConsultar;
   end;
 
 var
@@ -83,7 +81,6 @@ procedure TFrmSeguimientoCobranza.cxBtnBuscarClick(Sender: TObject);
 begin
   inherited;
   actConsultar.Execute;
-
 end;
 
 procedure TFrmSeguimientoCobranza.cxChckGrpCalificaPropertiesChange(
@@ -113,37 +110,26 @@ begin
       end;
     end;
   end;
-
-
-  //Showmessage(' filtro: '+ fFiltroCalifica);
 end;
 
 procedure TFrmSeguimientoCobranza.dxBrBtnPorProximoContClick(Sender: TObject);
+var
+  FrmSegProximosContactos: TFrmSegProximosContactos;
 begin
   inherited;
   FrmSegProximosContactos:=TFrmSegProximosContactos.create(self);
-//  FrmSegProximosContactos.dsConsulta:=dsConsulta;
   FrmSegProximosContactos.DSIncidencias:=dsincidencias;
   FrmSegProximosContactos.DSCXCPendientes:=DSCXCPendXincidencia;
-//  FrmSegProximosContactos.DSClientes:=dsclientes;
   FrmSegProximosContactos.DSCalificaciones.DataSet:=DSCalificaciones.DataSet;//Ene 8/19
   FrmSegProximosContactos.ShowModal;
   FrmSegProximosContactos.Free;
 end;
 
 procedure TFrmSeguimientoCobranza.dxBrBtnSeguimientoClick(Sender: TObject);
+var
+  FrmSeguimientoNvoEdt:TFrmSeguimientoNvoEdt;
 begin
   inherited;
- (*  FrmSeguimientoRegistro:=TFrmSeguimientoRegistro.create(self);
-  FrmSeguimientoRegistro.dsConsulta:=dsConsulta;
-  FrmSeguimientoRegistro.DSIncidencias:=dsincidencias;
-  FrmSeguimientoRegistro.DSCXCPendientes:=DSCXCPendientes;
-  FrmSeguimientoRegistro.DSClientes:=dsclientes;
-  FrmSeguimientoRegistro.DSConIncidencias:=DSConIncidencias;
-
-  FrmSeguimientoRegistro.ShowModal;
-  FrmSeguimientoRegistro.Free;      *)
-
   FrmSeguimientoNvoEdt:=TFrmSeguimientoNvoEdt.create(self);
   FrmSeguimientoNvoEdt.dsConsulta:=dsConsulta;
   FrmSeguimientoNvoEdt.DSIncidencias:=dsincidencias;
@@ -151,12 +137,8 @@ begin
   FrmSeguimientoNvoEdt.DSClientes:=dsclientes;
   FrmSeguimientoNvoEdt.DSConIncidencias:=DSConIncidencias;
   FrmSeguimientoNvoEdt.DSCalificaciones.DataSet:=DSCalificaciones.DataSet;//Ene 8/19 //En teoria no lo van a requerir
-
   FrmSeguimientoNvoEdt.ShowModal;
   FrmSeguimientoNvoEdt.Free;
-
-
-
 end;
 
 procedure TFrmSeguimientoCobranza.FormCreate(Sender: TObject);
@@ -169,7 +151,6 @@ begin
   //dsclientes.DataSet.open;
   DSConIncidencias.DataSet.open;
 //  ApplyBestFit:=False;
-
 end;
 
 procedure TFrmSeguimientoCobranza.FormShow(Sender: TObject);
@@ -177,31 +158,9 @@ var
   i :integer;
 begin
   i:=0;
- (* while TcxCheckGroupProperties(cxchckGrpCalificacion.properties).Items.Count > 0 do
-  begin
-  TcxCheckGroupProperties(cxchckGrpCalificacion.properties).items.delete(0);
-
-  end;
- TcxCheckGroupProperties(cxchckGrpCalificacion.properties).items.add;
-  TcxCheckGroupProperties(cxchckGrpCalificacion.properties).items[i].Caption:='Todos';
-  DSCalificaciones.dataset.close;
-  DSCalificaciones.dataset.open;
-  while  not DSCalificaciones.dataset.eof do
-  begin
-    i:=  i+1;
-    TcxCheckGroupProperties(cxchckGrpCalificacion.properties).items.add;
-    if DSCalificaciones.dataset.fieldbyname('calificacionactual').isnull then
-        TcxCheckGroupProperties(cxchckGrpCalificacion.properties).items[i].Caption:='Vacios'
-    else
-      TcxCheckGroupProperties(cxchckGrpCalificacion.properties).items[i].Caption:=DSCalificaciones.dataset.fieldbyname('calificacionactual').asstring ;
-    DSCalificaciones.dataset.next;
-  end;  *)
-
-
   while cxChckGrpCalifica.properties.items.count > 0 do
   begin
    cxChckGrpCalifica.properties.items.delete(0);
-
   end;
   cxChckGrpCalifica.properties.items.add;
   cxChckGrpCalifica.properties.items[i].Caption:='Todos';
@@ -217,15 +176,12 @@ begin
       cxChckGrpCalifica.properties.items[i].Caption:=DSCalificaciones.dataset.fieldbyname('calificacionactual').asstring ;
     DSCalificaciones.dataset.next;
   end;
-
-
 end;
 
 
 procedure TFrmSeguimientoCobranza.SetFActConsultar(const Value: TBasicAction);
 begin
   FactConsultar := Value;
-
 end;
 
 end.

@@ -377,8 +377,6 @@ object FrmSegProximosContactos: TFrmSegProximosContactos
       ParentColor = False
       TabOrder = 0
       RowCount = 4
-      ExplicitLeft = 781
-      ExplicitTop = 41
       object Label9: TLabel
         Left = 10
         Top = 3

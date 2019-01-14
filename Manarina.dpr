@@ -299,7 +299,9 @@ uses
   RptCFDIContabilidadForm in 'Reportes\RptCFDIContabilidadForm.pas' {frmRptCFDIContabilidad},
   UDMEnvioMail in 'Procesos\UDMEnvioMail.pas' {DMEnvioMails: TDataModule},
   EnvioMailEdit in 'Procesos\EnvioMailEdit.pas' {StdFrmEnvioMail},
-  ReestructurarForm in 'Procesos\ReestructurarForm.pas' {frmReestructurar};
+  ReestructurarForm in 'Procesos\ReestructurarForm.pas' {frmReestructurar},
+  SegIncidenciasProximasEdit in 'Procesos\SegIncidenciasProximasEdit.pas' {FrmSegProximosContactos},
+  SeguimientoNvoEdit in 'Procesos\SeguimientoNvoEdit.pas' {FrmSeguimientoNvoEdt};
 
 {$R *.res}
 

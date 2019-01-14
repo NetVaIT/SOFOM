@@ -26,14 +26,13 @@ inherited FrmSeguimientoCobranza: TFrmSeguimientoCobranza
   end
   inherited pnlMaster: TPanel
     Width = 803
-    Height = 227
-    ExplicitTop = 28
+    Height = 229
     ExplicitWidth = 803
-    ExplicitHeight = 227
+    ExplicitHeight = 229
     inherited cxGrid: TcxGrid
       Top = 57
       Width = 803
-      Height = 170
+      Height = 172
       ExplicitTop = 57
       ExplicitWidth = 803
       ExplicitHeight = 170
@@ -127,7 +126,7 @@ inherited FrmSeguimientoCobranza: TFrmSeguimientoCobranza
     DockControlHeights = (
       0
       0
-      28
+      26
       0)
     inherited dxbNavigator: TdxBar
       DockedLeft = 3

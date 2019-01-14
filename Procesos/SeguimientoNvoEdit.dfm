@@ -854,7 +854,6 @@ object FrmSeguimientoNvoEdt: TFrmSeguimientoNvoEdt
       TabOrder = 0
       RowCount = 4
       OnPaintPanel = DBCtrlGrdDatosPaintPanel
-      ExplicitHeight = 348
       object Label9: TLabel
         Left = 10
         Top = 3

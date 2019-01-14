@@ -1188,16 +1188,16 @@
             <Form>StdFrmEnvioMail</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="Procesos\SeguimientoNvoEdit.pas">
-            <Form>FrmSeguimientoNvoEdt</Form>
+        <DCCReference Include="Procesos\ReestructurarForm.pas">
+            <Form>frmReestructurar</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\SegIncidenciasProximasEdit.pas">
             <Form>FrmSegProximosContactos</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="Procesos\ReestructurarForm.pas">
-            <Form>frmReestructurar</Form>
+        <DCCReference Include="Procesos\SeguimientoNvoEdit.pas">
+            <Form>FrmSeguimientoNvoEdt</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Release">

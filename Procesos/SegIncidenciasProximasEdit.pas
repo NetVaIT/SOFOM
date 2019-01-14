@@ -152,9 +152,6 @@ type
     property FiltroCalifica:String read fFiltroCalifica write FFiltroCalifica; //Ene 8/19
   end;
 
-var
-  FrmSegProximosContactos: TFrmSegProximosContactos;
-
 implementation
 
 {$R *.dfm}
