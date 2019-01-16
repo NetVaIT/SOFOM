@@ -4,8 +4,9 @@ interface
 
 uses
    Winapi.windows,System.SysUtils, System.Classes, _StandarDMod, Data.DB, System.Actions,
-  Vcl.ActnList,Data.Win.ADODB, math, dialogs,ProcesosType, Controls, forms, System.IOUtils;
-                                                                            //Dic 13/18
+  Vcl.ActnList,Data.Win.ADODB, math, ProcesosType, Controls, forms, System.IOUtils,
+  Vcl.Dialogs, System.UITypes, System.DateUtils;
+
 resourcestring
   strAllowGenCFDIPago = 'No fue posible generar el CFDI falta asignarle alguna forma de pago.';
 
@@ -574,7 +575,6 @@ type
     procedure actAbonarCapitalExecute(Sender: TObject);
     procedure adodsMasterBeforeInsert(DataSet: TDataSet);
     procedure actCrearCXCAbonoCapitalExecute(Sender: TObject);
-//    procedure ActAjusteAmortizaExecute(Sender: TObject);
     procedure ActPagosAnticipadosExecute(Sender: TObject);
     procedure ActVerYCreaCXCFinalesExecute(Sender: TObject);
     procedure actGenCFDIPagoExecute(Sender: TObject);
@@ -590,13 +590,9 @@ type
   private
     { Private declarations }
     Inserto:Boolean;
-    FIdAnexo: integer;
-    FImporteAct: Extended;
-    FFechaAct: TDateTime;
-    FTipocontrato: integer;
-    FTipoAbono: TAbonoCapital;
+//    FTipocontrato: integer;
+//    FTipoAbono: TAbonoCapital;
     FIdCFDIActual: Integer;
-    FPaymentTime: TPaymentTime;
 //    function ActualizaSaldoCliente(IDCFDI, IDPagoRegistro: Integer;
 //      Importe: Double; operacion: String): Boolean;
     function SacaIDSiAcumula(IdCXCD: integer; var saldoAcum: Double): Integer;
@@ -607,24 +603,15 @@ type
     function SacaTipoComp(TipoDoc: Integer): String;       //Ago 31/17
     function AplicarMoratorioInterno(idCXC: integer;
       ImporteAplicado: Double): Double;
-    procedure SetFFechaAct(const Value: TDateTime);
-    procedure SetFIdAnexo(const Value: integer);
-    procedure SetFImporteAct(const Value: Extended);
-    function CrearCXCAbono(IdAnexo: Integer; Fecha: TDateTime;
-      Importe: Double): Integer;
-    procedure SetFTipoAbono(const Value: TAbonoCapital);
-    procedure SetFTipocontrato(const Value: integer);
+//    procedure SetFTipoAbono(const Value: TAbonoCapital);
+//    procedure SetFTipocontrato(const Value: integer);
     function CrearFacturaCXC(IdCXC: Integer): Integer;
     procedure SetFIdCFDIActual(const Value: Integer);
     function AplicaPago(idPago,IdCxc, IDCFDI:Integer;Monto:Double):Boolean;
-    function AjustarAmortizaciones(IdAnexo, IdTipoContrato: Integer;
-      Importe: Extended; Tipo: TAbonoCapital; Fecha:TDateTime): Boolean;
-    procedure SetPaymentTime(const Value: TPaymentTime);
-    function FechaSinHora(FechaHora: TDAteTime): TDAteTime;
     procedure RegistraBitacora(tipoRegistro: Integer;Observacion:String);   //Abr 19/17
     function CrearPagoXDeposito(Importe: Double; ADatosPago: TADODataSet): Boolean;
-    procedure VerificaYCreaCXCFinales(idAnexo:Integer);
-    function CreaMoratoriosAFechaActual: Boolean;
+    procedure VerificaYCreaCXCFinales(IdAnexo: Integer);
+    function CreaMoratoriosAFechaActual(IdAnexo: Integer): Boolean;
     function CrearCuentasFinales: Boolean;
     procedure ActualizaSaldoNC(idCFDIAct: Integer);
     function NotaCreditoenUso(idCFDI,IdPago: Integer): Boolean;
@@ -634,20 +621,11 @@ type
     function CrearCFDIPago(IdPago: Integer): Integer;
     procedure AbrirCXCPendientes(EsAnticipado: Integer;
       SoloCXCdelAnexo: Boolean);
-    property PaymentTime: TPaymentTime read FPaymentTime write SetPaymentTime;
-
-
+    property IDCFDIActual: Integer  read  FIdCFDIActual write  SetFIdCFDIActual; //Abr 18/17
+//    property TipoContrato: integer read  FTipocontrato write  SetFTipocontrato; //Abr 18/17
+//    property TipoAbono: TAbonoCapital  read  FTipoAbono write  SetFTipoAbono; //Abr 18/17
   public
     { Public declarations }
-    property idAnexoAct: integer read  FIdAnexo write  SetFIdAnexo; //Abr 17/17
-    property FechaAct: TDateTime read  FFechaAct write  SetFFechaAct; //Abr 17/17
-    property ImporteAct: Extended read  FImporteAct write  SetFImporteAct; //Abr 17/17
-    property TipoContrato: integer read  FTipocontrato write  SetFTipocontrato; //Abr 18/17
-    property TipoAbono: TAbonoCapital  read  FTipoAbono write  SetFTipoAbono; //Abr 18/17
-    property IDCFDIActual: Integer  read  FIdCFDIActual write  SetFIdCFDIActual; //Abr 18/17
-
-
-
   end;
 
 implementation
@@ -674,8 +652,6 @@ begin
   AbrirCXCPendientes(0,False);
   ADODtStCxCDetallePend.Open;
   ADODtStConfiguraciones.Open;
-//  ADoSPersonas.Open;
-
   ADODtStCFDIPagos.open; //Dic 13/18 sólo para control envio...
 end;
 
@@ -1131,19 +1107,11 @@ begin                       //Puede quedar amarrado a master pero no poner los s
  // quitado Oct 2/17  VerificaYCreaCXCFinales(adodsMasterIdAnexo.AsInteger); //DEl que se acaba de aplicar
   ADODtStCxCPendReest.filter:=''; //Por si es la ultima y creo varias para que se ubique Oct 3/17
   ADODtStCxCPendReest.filtered:=False;
-
 //verificar ,aca no se muestra Nov 26/18  ADODtStDetalleCXCMostrar.close;
 //  ADODtStDetalleCXCMostrar.open;
-
   if Valor >=0.01 then //???
      ShowMessage('Verificar los detalles de la cuenta por Cobrar para identificar que estén saldadas. ('+FloatToStr(Valor)+') ');
-
-  //
-
-
-
   //HAsta
-
   //Nov23/18
 (*
 
@@ -1446,10 +1414,6 @@ begin        //FEb 10/17                 //No requerido aca
   ADODtStDetalleCXCMostrar.open;
   if Valor >=0.01 then
      ShowMessage('Verificar los detalles de la cuenta por Cobrar para identificar que estén saldadas. ('+FloatToStr(Valor)+') ');
-
-
-
-
 *)
 end;
 
@@ -1792,14 +1756,48 @@ begin
   ADODtStCXCPendientes.Open;
 end;
 
-procedure TdmPagos.actAbonarCapitalExecute(Sender: TObject);    //No usada
+procedure TdmPagos.actAbonarCapitalExecute(Sender: TObject);
 var
   dmAbonarCapital: TdmAbonarCapital;
+  IdCuentaXCobrar: Integer;
+  Saldo: Extended;
+  ObsBitacora:String;
 begin
   inherited;
+  IdCFDIActual:=0;
+  Saldo := adodsMasterSaldo.AsExtended; //Saldo del pago
   dmAbonarCapital := TdmAbonarCapital.Create(Self);
   try
+    dmAbonarCapital.IdAnexo := adodsMasterIdAnexo.Value;
+    dmAbonarCapital.Fecha := Dateof(adodsMasterFechaPago.AsDateTime);
+    dmAbonarCapital.Importe := Saldo;
     dmAbonarCapital.Execute;
+    IdCuentaXCobrar := dmAbonarCapital.IdCuentaXCobrar;
+    if Saldo < dmAbonarCapital.Importe then
+      ShowMessage('El importe no puede ser mayor al saldo del pago actual. Se genero la cuenta por cobrar, aplicación de pago cancelada')
+    else
+    begin
+      if IdCuentaXCobrar <> 0 then
+      begin
+        IdCFDIActual:= CrearFacturaCXC(IdCuentaXCobrar);
+        if IdCFDIActual<>0 then
+        begin
+          if AplicaPago(adodsMasterIdPago.Value, IdCuentaXCobrar, IdCFDIActual, dmAbonarCapital.Importe) then
+          begin
+            AbrirCXCPendientes(1,False);
+            ADODtStCXCPendientes.Locate('IdCuentaXCobrar', IdCuentaXCobrar,[]);
+            adodsMaster.Refresh; //Pago
+            //REgistrar en bitacora el abono a CApital
+            ObsBitacora:='Fecha:'+datetoSTr(dmAbonarCapital.Fecha)+' IdAnexo: '+intToSTR(dmAbonarCapital.IdAnexo)+' IdCXC:'+ intToStr(IdCuentaXCobrar)
+                        +' Importe:'+floatToStr(dmAbonarCapital.Importe)+'. Abonar capital ';
+            RegistraBitacora(2,ObsBitacora);
+            ShowMessage('Proceso completo de Abono a capital');
+          end;
+        end
+        else
+           ShowMessage('Proceso no relizado Factura no generada.');
+      end;
+    end;
   finally
     dmAbonarCapital.Free;
   end;
@@ -1828,60 +1826,97 @@ begin
 end;
 
 procedure TdmPagos.actCrearCXCAbonoCapitalExecute(Sender: TObject);
-var
-  frmAbonarCapitalEdit: TfrmAbonarCapitalEdit;
-  IDCXC:Integer;
-  ObsBitacora:String;
+//var
+//  frmAbonarCapitalEdit: TfrmAbonarCapitalEdit;
+//  IDCXC:Integer;
+//  ObsBitacora:String;
+//  idAnexoAct: integer;
+//  FechaAct: TDateTime;
+//  ImporteAct: Extended;
+//
+//function FechaSinHora( FechaHora:TDAteTime):TDAteTime;
+//var
+//  d,m,a:Word;
+//begin
+//  Decodedate(FechaHora, a,m, d);
+//  Result:=EncodeDAte(a,m,d);
+//end;
+//
+//function AjustarAmortizaciones (IdAnexo, IdTipoContrato: Integer;
+//  Importe: Extended; Tipo: TAbonoCapital;Fecha:TDateTime):Boolean;   //Abr 18/17
+//var
+//   dmAmortizaciones: TdmAmortizaciones;
+//begin
+//  dmAmortizaciones := TdmAmortizaciones.Create(Self);
+//    try
+//      dmAmortizaciones.PaymentTime := ptEndOfPeriod;
+//      dmAmortizaciones.TipoContrato:= TCTipoContrato(IdTipoContrato);
+//      Result := dmAmortizaciones.SetAmortizaciones(IdAnexo, Importe, Tipo);
+//    finally
+//      dmAmortizaciones.Free;
+//    end;
+//end;
+//
+//function CrearCXCAbono(IdAnexo: Integer;Fecha:TDateTime; Importe: Double ):Integer;  //abr 18/17
+//begin
+//  adopCXCAbonarCapital.Parameters.ParamByName('@IdAnexo').Value := IdAnexo;
+//  adopCXCAbonarCapital.Parameters.ParamByName('@Fecha').Value := Fecha;
+//  adopCXCAbonarCapital.Parameters.ParamByName('@ImporteCapital').Value := Importe;
+//  adopCXCAbonarCapital.ExecProc;
+//  Result := adopCXCAbonarCapital.Parameters.ParamByName('@IdCuentaXCobrar').Value;
+//end;
+
 begin
   inherited;
-  IdAnexoAct:=adodsMasterIdAnexo.AsInteger;
-  FechaAct:= FechaSinHora(adodsMasterFechaPago.AsDateTime);
-  ImporteAct := adodsMasterSaldo.AsExtended; //Saldo del pago
-  IdCFDIActual:=0; //Para inicializarla
-  adoqAnexosSel.Close;
-  adoqAnexosSel.Parameters.ParamByName('IdAnexo').Value:= IdanexoAct;    //Abr 17/17
-  adoqAnexosSel.Open;
-  frmAbonarCapitalEdit := TfrmAbonarCapitalEdit.Create(Self);
-  try
-    frmAbonarCapitalEdit.DataSet:= adoqAnexosSel;
-    frmAbonarCapitalEdit.Fecha := FechaAct; //Date;  //Abr 17/17   Usa la de pago
-    frmAbonarCapitalEdit.Importe := Importeact; //0;  //Abr 17/17
-    frmAbonarCapitalEdit.Tipo:= Ord(acReducirCuota);
-    if frmAbonarCapitalEdit.Execute then
-    begin
-      IdAnexoAct := adoqAnexosSelIdAnexo.Value;
-      TipoContrato := adoqAnexosSelIdContratoTipo.Value;
-      TipoAbono:=TAbonoCapital(frmAbonarCapitalEdit.Tipo);
-      if Importeact<frmAbonarCapitalEdit.Importe then
-        ShowMessage('El importe no puede ser mayor al saldo del Pago Actual. Proceso Cancelado') //nov 15/17
-      else
-      begin
-        IdCXC:= CrearCXCAbono(IdAnexoAct,frmAbonarCapitalEdit.Fecha,frmAbonarCapitalEdit.Importe);
-        if IDCXC<>0 then
-          IdCFDIActual:= CrearFacturaCXC(IDCXC); //Aunque ya lo trae
-        if IdCFDIActual<>0 then
-        begin
-          if AplicaPago(adodsMasterIdPago.AsInteger,idcxc,idcfdiactual,frmAbonarCapitalEdit.Importe) then
-            if  AjustarAmortizaciones(IdAnexoAct,TipoContrato,frmAbonarCapitalEdit.Importe,TipoAbono,frmAbonarCapitalEdit.Fecha ) then //Ajustar Amortizacion
-            begin
-              AbrirCXCPendientes(1,False);
-              ADODtStCXCPendientes.Locate('IdCuentaXCobrar', IDCXC,[]);
-              adodsMaster.Refresh; //Pago
-              //REgistrar en bitacora el abono a CApital
-              ObsBitacora:='Fecha:'+datetoSTr(frmAbonarCapitalEdit.Fecha)+' IdAnexo: '+intToSTR(IdAnexoAct)+' IdCXC:'+ intToStr(idcxc)
-                          +' Importe:'+floatToStr(frmAbonarCapitalEdit.Importe)+' TipoAbono:'+ intToStr(frmAbonarCapitalEdit.Tipo);
-              RegistraBitacora(2,ObsBitacora);
-              ShowMessage('Proceso completo de Abono a Capital');
-            end;
-        end
-        else
-           ShowMessage('Proceso no relizado Factura no generada.'); //Ago 1/17
-      end ;
-    end;
-  finally
-    frmAbonarCapitalEdit.Free;
-    adoqAnexosSel.Close;
-  end;
+//  IdAnexoAct:=adodsMasterIdAnexo.AsInteger;
+//  FechaAct:= FechaSinHora(adodsMasterFechaPago.AsDateTime);
+//  ImporteAct := adodsMasterSaldo.AsExtended; //Saldo del pago
+//  IdCFDIActual:=0; //Para inicializarla
+//  adoqAnexosSel.Close;
+//  adoqAnexosSel.Parameters.ParamByName('IdAnexo').Value:= IdanexoAct;    //Abr 17/17
+//  adoqAnexosSel.Open;
+//  frmAbonarCapitalEdit := TfrmAbonarCapitalEdit.Create(Self);
+//  try
+//    frmAbonarCapitalEdit.DataSet:= adoqAnexosSel;
+//    frmAbonarCapitalEdit.Fecha := FechaAct; //Date;  //Abr 17/17   Usa la de pago
+//    frmAbonarCapitalEdit.Importe := Importeact; //0;  //Abr 17/17
+//    frmAbonarCapitalEdit.Tipo:= Ord(acReducirCuota);
+//    if frmAbonarCapitalEdit.Execute then
+//    begin
+//      IdAnexoAct := adoqAnexosSelIdAnexo.Value;
+//      TipoContrato := adoqAnexosSelIdContratoTipo.Value;
+//      TipoAbono:=TAbonoCapital(frmAbonarCapitalEdit.Tipo);
+//      if Importeact<frmAbonarCapitalEdit.Importe then
+//        ShowMessage('El importe no puede ser mayor al saldo del Pago Actual. Proceso Cancelado') //nov 15/17
+//      else
+//      begin
+//        IdCXC:= CrearCXCAbono(IdAnexoAct,frmAbonarCapitalEdit.Fecha,frmAbonarCapitalEdit.Importe);
+//        if IDCXC<>0 then
+//          IdCFDIActual:= CrearFacturaCXC
+//          (IDCXC); //Aunque ya lo trae
+//        if IdCFDIActual<>0 then
+//        begin
+//          if AplicaPago(adodsMasterIdPago.AsInteger,idcxc,idcfdiactual,frmAbonarCapitalEdit.Importe) then
+//            if  AjustarAmortizaciones(IdAnexoAct,TipoContrato,frmAbonarCapitalEdit.Importe,TipoAbono,frmAbonarCapitalEdit.Fecha ) then //Ajustar Amortizacion
+//            begin
+//              AbrirCXCPendientes(1,False);
+//              ADODtStCXCPendientes.Locate('IdCuentaXCobrar', IDCXC,[]);
+//              adodsMaster.Refresh; //Pago
+//              //REgistrar en bitacora el abono a CApital
+//              ObsBitacora:='Fecha:'+datetoSTr(frmAbonarCapitalEdit.Fecha)+' IdAnexo: '+intToSTR(IdAnexoAct)+' IdCXC:'+ intToStr(idcxc)
+//                          +' Importe:'+floatToStr(frmAbonarCapitalEdit.Importe)+' TipoAbono:'+ intToStr(frmAbonarCapitalEdit.Tipo);
+//              RegistraBitacora(2,ObsBitacora);
+//              ShowMessage('Proceso completo de Abono a Capital');
+//            end;
+//        end
+//        else
+//           ShowMessage('Proceso no relizado Factura no generada.'); //Ago 1/17
+//      end ;
+//    end;
+//  finally
+//    frmAbonarCapitalEdit.Free;
+//    adoqAnexosSel.Close;
+//  end;
 end;
 
 procedure TdmPagos.actGenCFDIPagoExecute(Sender: TObject);
@@ -1925,40 +1960,6 @@ begin
   ADOQryAuxiliar.Parameters.ParamByName('IdFechaHoy1').Value:=_DmConection.LaFechaActual;//date; May 26/17
   ADOQryAuxiliar.ExecSQL;
   AdodsMaster.Refresh;
-end;
-
-function TdmPagos.FechaSinHora( FechaHora:TDAteTime):TDAteTime;
-var
-  d,m,a:Word;
-begin
-  Decodedate(FechaHora, a,m, d);
-  Result:=EncodeDAte(a,m,d);
-end;
-
-
-
-function TdmPagos. AjustarAmortizaciones (IdAnexo, IdTipoContrato: Integer;
-  Importe: Extended; Tipo: TAbonoCapital;Fecha:TDateTime):Boolean;   //Abr 18/17
-var
-   dmAmortizaciones: TdmAmortizaciones;
-begin
-  dmAmortizaciones := TdmAmortizaciones.Create(Self);
-    try
-      dmAmortizaciones.PaymentTime := PaymentTime;
-      dmAmortizaciones.TipoContrato:= TCTipoContrato(IdTipoContrato);
-      Result := dmAmortizaciones.SetAmortizaciones(IdAnexo, Importe, Tipo);
-    finally
-      dmAmortizaciones.Free;
-    end;
-end;
-
-function TdmPagos.CrearCXCAbono(IdAnexo: Integer;Fecha:TDateTime; Importe: Double ):Integer;  //abr 18/17
-begin
-  adopCXCAbonarCapital.Parameters.ParamByName('@IdAnexo').Value := IdAnexo;
-  adopCXCAbonarCapital.Parameters.ParamByName('@Fecha').Value := Fecha;
-  adopCXCAbonarCapital.Parameters.ParamByName('@ImporteCapital').Value := Importe;
-  adopCXCAbonarCapital.ExecProc;
-  Result := adopCXCAbonarCapital.Parameters.ParamByName('@IdCuentaXCobrar').Value;
 end;
 
 Function TdmPagos.CrearFacturaCXC(IdCXC:Integer):Integer; //Abr 18/17 Regresa IDCFDI
@@ -2009,16 +2010,15 @@ begin
       begin
         ImportePago:=SacaSaldoApagar(adodsMasterSaldo.AsFloat,IDCXC);
         if AplicaPago(adodsMasterIdPago.AsInteger,idcxc,idcfdiactual,ImportePago) then
-        //no hace ajuste porque no es abono a capital  if  AjustarAmortizaciones(IdAnexoAct,TipoContrato,ImportePago,TipoAbono,frmAbonarCapitalEdit.Fecha ) then //Ajustar Amortizacion
-          begin
-          //CAmbiar consulta   //Oct 9/17
-            AbrirCXCPendientes(1,False);
-            ADODtStCXCPendientes.Locate('IdCuentaXCobrar', IDCXC,[]);
-            adodsMaster.Refresh; //Pago
-            ObsBitacora:='IDPago:'+ intToSTr(adodsMasterIdPago.AsInteger)+' IdAnexo: '+intToSTR(adodsMasterIdAnexo.AsInteger)
-                         +' IdCXC:'+ intToStr(idcxc)+' Importe:'+floatToStr(ImportePago)+'. Pago Anticipado ';
-            RegistraBitacora(3,ObsBitacora);
-         end;
+        begin
+        //CAmbiar consulta   //Oct 9/17
+          AbrirCXCPendientes(1,False);
+          ADODtStCXCPendientes.Locate('IdCuentaXCobrar', IDCXC,[]);
+          adodsMaster.Refresh; //Pago
+          ObsBitacora:='IDPago:'+ intToSTr(adodsMasterIdPago.AsInteger)+' IdAnexo: '+intToSTR(adodsMasterIdAnexo.AsInteger)
+                       +' IdCXC:'+ intToStr(idcxc)+' Importe:'+floatToStr(ImportePago)+'. Pago Anticipado ';
+          RegistraBitacora(3,ObsBitacora);
+       end;
       end
       else  //ago 1/17
       begin
@@ -2047,8 +2047,6 @@ begin
     Solo:= False;
   AbrirCXCPendientes(0, Solo);
 end;
-
-
 
 procedure TdmPagos.RefreshAplicaPago;  //Ago 2/17
 var
@@ -2092,41 +2090,20 @@ begin
     Result:=ADOQryAuxiliar.FieldByName('TipoComprobante').AsString;
 end;
 
-procedure TdmPagos.SetFFechaAct(const Value: TDateTime);  //Abr 18/17
-begin
-  FFechaAct := Value;
-end;
-
-procedure TdmPagos.SetFIdAnexo(const Value: integer);
-begin
-  FIdAnexo := Value;
-end;
-
 procedure TdmPagos.SetFIdCFDIActual(const Value: Integer);
 begin
   FIdCFDIActual := Value;
 end;
 
-procedure TdmPagos.SetFImporteAct(const Value: Extended);
-begin
-  FImporteAct := Value;
-end;
-
-procedure TdmPagos.SetFTipoAbono(const Value: TAbonoCapital);
-begin
-  FTipoAbono := Value;
-end;
-
-procedure TdmPagos.SetFTipocontrato(const Value: integer);
-begin
-  FTipocontrato := Value;
-end;
-
-procedure TdmPagos.SetPaymentTime(const Value: TPaymentTime);
-begin
-  FPaymentTime := Value;
-end;
-
+//procedure TdmPagos.SetFTipoAbono(const Value: TAbonoCapital);
+//begin
+//  FTipoAbono := Value;
+//end;
+//
+//procedure TdmPagos.SetFTipocontrato(const Value: integer);
+//begin
+//  FTipocontrato := Value;
+//end;
 
 function TdmPagos.SacaDireccion (IDCliente:Integer) :Integer;
 begin    //Verificar que pasa en caso que no tenga          //Dic 6/16
@@ -2448,7 +2425,7 @@ begin        //FEb 10/17                 //No requerido aca
      ShowMessage('Verificar los detalles de la cuenta por Cobrar para identificar que estén saldadas. ('+FloatToStr(Valor)+') ');
 end;
 
-procedure TdmPagos.VerificaYCreaCXCFinales(idAnexo:Integer); //Jun 21/17
+procedure TdmPagos.VerificaYCreaCXCFinales(IdAnexo: Integer); //Jun 21/17
 var Saldo, SaldoDeposito:Double;
 begin
   Saldo:=0;
@@ -2471,7 +2448,7 @@ begin
               ,'Confirmación',MB_YESNO)=IDYES then
       begin
         //Crear moratorios
-        if (not CreaMoratoriosAFechaActual)  then
+        if (not CreaMoratoriosAFechaActual(IdAnexo))  then
         begin
           if CrearCuentasFinales then   //Avisar de  la creación de las CXC finales...
             showMessage('Se crearon Cuentas de Cobrar de las últimas amortizaciones quedarán disponibles para Facturar y aplicar al pago correspondiente al Depósito en Garantía')
@@ -2509,7 +2486,7 @@ begin
   Result := IdCFDI;
 end;
 
-function  TdmPagos.CrearCuentasFinales  :Boolean;
+function  TdmPagos.CrearCuentasFinales: Boolean;
 var REs:integer;
 begin
   Res:=0;
@@ -2533,12 +2510,12 @@ begin
   end;
 end;
 
-function  TdmPagos.CreaMoratoriosAFechaActual: Boolean; //Jun 22/17
+function TdmPagos.CreaMoratoriosAFechaActual(IdAnexo: Integer): Boolean;
 var
   idActual:integer;
 begin
   Result:=False;
-  adopSetCXCUPMoratorio.Parameters.ParamByName('@IdAnexo').value:=  IdAnexoAct;
+  adopSetCXCUPMoratorio.Parameters.ParamByName('@IdAnexo').value:=  IdAnexo;
   adopSetCXCUPMoratorio.Parameters.ParamByName('@Fecha').value:= _DmConection.LaFechaActual ;          //CAmbiar solo fecha
   adopSetCXCUPMoratorio.ExecProc;
   adopSetCXCUPMoratorio.Parameters.ParamByName('@IdCuentaXCobrar').Value:=  ADODtStCXCPendientes.FieldByName('IDCuentaXCobrar').asinteger;        //May 22/17
@@ -2816,12 +2793,10 @@ begin
   TFrmConPagos(gGridForm).dsConCXCPendientes.DataSet:=ADODtStCXCPendientes;
   TFrmConPagos(gGridForm).DSDetalleMostrar.DataSet:=ADODtStDetalleCXCMostrar;
   TFrmConPagos(gGridForm).DSAplicacion.DataSet :=ADODtStAplicacionesPagos;
-
   TFrmConPagos(gGridForm).DSAnexoMoraAcumula.DataSet:= AdoQryAnexoMoraAcumula; //Oct 9/18
-
   TFrmConPagos(gGridForm).DSauxiliar.DataSet :=ADOQryAuxiliar; //Abr 3/17
   TFrmConPagos(gGridForm).DSP_CalcMoratorioNueva.DataSet:=adopSetCXCUPMoratorio; //Abr 6/17
-  TFrmConPagos(gGridForm).actAbonarCapital:=actCrearCXCAbonoCapital; //Abr 18/17
+  TFrmConPagos(gGridForm).actAbonarCapital:= actAbonarCapital;
   TFrmConPagos(gGridForm).ActPagoAnticipado :=ActPagosAnticipados;//Jun 29/17
   TFrmConPagos(gGridForm).ActVerificayCreaFinal:=ActVerYCreaCXCFinales; //Oct 3/17
   TFrmConPagos(gGridForm).DSVerificaSaldoFinal.dataset :=adoQryVerificaSaldoFinal; //Oct 3/17
@@ -2833,8 +2808,6 @@ begin
   gFormDeatil1:= TfrmPagosAplicaciones.Create(Self);
   gFormDeatil1.ReadOnlyGrid := True;
   gFormDeatil1.DataSet:= adodsPagosAplicaciones;
-  //Para ajuste amortizaciones abr 18/17
-  PaymentTime := ptEndOfPeriod;
 end;
 
 function TdmPagos.VerificarConceptoIVA(idCXC, orden:Integer; var SaldoAcum:Double; var IdCXCDet, IDCXCIVADET:Integer):boolean;

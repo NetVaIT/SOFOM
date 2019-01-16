@@ -77,6 +77,7 @@ inherited frmReestructurar: TfrmReestructurar
             end
             item
               Kind = bkEllipsis
+              Visible = False
             end>
           Width = 100
         end

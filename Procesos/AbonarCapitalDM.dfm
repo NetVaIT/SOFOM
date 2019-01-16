@@ -76,33 +76,18 @@ inherited dmAbonarCapital: TdmAbonarCapital
   object adoqAnexosSel: TADOQuery
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
-    Parameters = <
-      item
-        Name = 'IdAnexo'
-        Attributes = [paSigned]
-        DataType = ftInteger
-        Precision = 10
-        Size = 4
-        Value = Null
-      end>
+    Parameters = <>
     SQL.Strings = (
       
-        'SELECT        Contratos.IdContrato, Contratos.IdPersona, Contrat' +
-        'os.IdContratoTipo, Anexos.IdAnexo,'
+        'SELECT Contratos.IdContrato, Contratos.IdPersona, Contratos.IdCo' +
+        'ntratoTipo, Anexos.IdAnexo,'
       
         'Contratos.Identificador AS Contrato, Anexos.Identificador AS Ane' +
         'xo, Personas.RazonSocial AS Cliente, Anexos.SaldoInsoluto'
-      'FROM            Anexos INNER JOIN'
-      
-        '                         Contratos ON Anexos.IdContrato = Contra' +
-        'tos.IdContrato INNER JOIN'
-      
-        '                         Personas ON Contratos.IdPersona = Perso' +
-        'nas.IdPersona'
-      
-        'WHERE        (Anexos.MontoVencido = 0) AND (Anexos.SaldoInsoluto' +
-        ' >= 0)'
-      'and Anexos.idanexo=:IdAnexo --Abr 17/17')
+      'FROM Anexos '
+      'INNER JOIN Contratos ON Anexos.IdContrato = Contratos.IdContrato'
+      'INNER JOIN Personas ON Contratos.IdPersona = Personas.IdPersona'
+      'WHERE (Anexos.MontoVencido = 0) AND (Anexos.SaldoInsoluto > 0)')
     Left = 120
     Top = 80
     object adoqAnexosSelIdContrato: TAutoIncField

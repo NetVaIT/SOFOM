@@ -295,7 +295,6 @@ type
     property PaymentTime: TPaymentTime read FPaymentTime write SetPaymentTime;
     property TipoContrato: TCTipoContrato read GetTipoContrato;
     property IdAnexo: Integer read GetIdAnexo;
-//    function AbonarCapital(IdAnexo: Integer): Boolean;
   end;
 
 implementation
@@ -533,16 +532,17 @@ begin
 end;
 
 procedure TdmContratos.actAbonarCapitalExecute(Sender: TObject);
-//var
-//  dmAbonarCapital: TdmAbonarCapital;
+var
+  dmAbonarCapital: TdmAbonarCapital;
 begin
   inherited;
-//  dmAbonarCapital := TdmAbonarCapital.Create(Self);
-//  try
-//    dmAbonarCapital.Execute;
-//  finally
-//    dmAbonarCapital.Free;
-//  end;
+  dmAbonarCapital := TdmAbonarCapital.Create(Self);
+  try
+    dmAbonarCapital.IdAnexo := IdAnexo;
+    dmAbonarCapital.Execute;
+  finally
+    dmAbonarCapital.Free;
+  end;
 end;
 
 procedure TdmContratos.actReducirCuotaExecute(Sender: TObject);

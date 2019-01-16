@@ -4,8 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, _StandarDMod, System.Actions, Vcl.ActnList,
-  Data.DB, Data.Win.ADODB, ProcesosType, Vcl.Dialogs, System.UITypes, System.Math,
-  AbonarCapitalEdit, AmortizacionesDM;
+  Data.DB, Data.Win.ADODB, ProcesosType, Vcl.Dialogs, System.UITypes, System.Math;
 
 resourcestring
   strMontoVencido = 'El anexo tiene un monto vencido, favor de liquidarlo antes de realizar esta operación.';
@@ -26,32 +25,35 @@ type
     adoqAnexosSelCliente: TStringField;
     adoqAnexosSelSaldoInsoluto: TFMTBCDField;
     procedure DataModuleCreate(Sender: TObject);
-    procedure DataModuleDestroy(Sender: TObject);
   private
     { Private declarations }
-//    frmAbonarCapitalEdit: TfrmAbonarCapitalEdit;
     FPaymentTime: TPaymentTime;
-    FIdAnexo: integer;
-    FImporteAct: integer;
-    FFechaAct: TDateTime;
+    FFecha: TDateTime;
+    FIdAnexo: Integer;
+    FIdCuentaXCobrar: Integer;
+    FImporte: Extended;
     procedure SetPaymentTime(const Value: TPaymentTime);
     function AbonarCapital(IdAnexo, IdTipoContrato: Integer; Fecha: TDateTime; Importe: Extended;
     Tipo: TAbonoCapital): Boolean;
-    procedure SetFFechaAct(const Value: TDateTime);
-    procedure SetFIdAnexo(const Value: integer);
-    procedure SetFImporteAct(const Value: integer);
+    procedure SetFecha(const Value: TDateTime);
+    procedure SetIdAnexo(const Value: Integer);
+    procedure SetIdCuentaXCobrar(const Value: Integer);
+    procedure SetImporte(const Value: Extended);
     property PaymentTime: TPaymentTime read FPaymentTime write SetPaymentTime;
   public
     { Public declarations }
     function Execute: Boolean;
-    property idAnexoAct: integer read  FIdAnexo write  SetFIdAnexo; //Abr 17/17
-    property FechaAct: TDateTime read  FFechaAct write  SetFFechaAct; //Abr 17/17
-    property ImporteAct: integer read  FImporteAct write  SetFImporteAct; //Abr 17/17
+    property IdAnexo: Integer read FIdAnexo write SetIdAnexo;
+    property IdCuentaXCobrar: Integer read FIdCuentaXCobrar write SetIdCuentaXCobrar;
+    property Fecha: TDateTime read FFecha write SetFecha;
+    property Importe: Extended read FImporte write SetImporte;
   end;
 
 implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
+
+uses AbonarCapitalEdit, AmortizacionesDM;
 
 {$R *.dfm}
 
@@ -61,7 +63,6 @@ function TdmAbonarCapital.AbonarCapital(IdAnexo, IdTipoContrato: Integer; Fecha:
   Importe: Extended; Tipo: TAbonoCapital): Boolean;
 var
   dmAmortizaciones: TdmAmortizaciones;
-  IdCuentaXCobrar: Integer;
 begin
   Result := False;
   // Crear CXC
@@ -88,29 +89,36 @@ procedure TdmAbonarCapital.DataModuleCreate(Sender: TObject);
 begin
   inherited;
   PaymentTime := ptEndOfPeriod;
-//  frmAbonarCapitalEdit := TfrmAbonarCapitalEdit.Create(Self);
-end;
-
-procedure TdmAbonarCapital.DataModuleDestroy(Sender: TObject);
-begin
-  inherited;
-//  FreeAndNil(frmAbonarCapitalEdit);
+  IdAnexo := 0;
+  IdCuentaXCobrar := 0;
+  Fecha:= Date;
+  Importe:= 0;
 end;
 
 function TdmAbonarCapital.Execute: Boolean;
+const
+  _SQL = 'SELECT Contratos.IdContrato, Contratos.IdPersona, Contratos.IdContratoTipo, Anexos.IdAnexo, ' +
+'Contratos.Identificador AS Contrato, Anexos.Identificador AS Anexo, Personas.RazonSocial AS Cliente, Anexos.SaldoInsoluto ' +
+'FROM Anexos ' +
+'INNER JOIN Contratos ON Anexos.IdContrato = Contratos.IdContrato ' +
+'INNER JOIN Personas ON Contratos.IdPersona = Personas.IdPersona ' +
+'WHERE (Anexos.MontoVencido = 0) AND (Anexos.SaldoInsoluto > 0) ';
+
 var
   frmAbonarCapitalEdit: TfrmAbonarCapitalEdit;
-  IdAnexo: Integer;
   IdTipoContrato: Integer;
 begin
   Result:= False;
-  adoqAnexosSel.Parameters.ParamByName('IdAnexo').Value:= IdanexoAct;    //Abr 17/17
+  adoqAnexosSel.Close;
+  adoqAnexosSel.SQL.Text := _SQL;
+  if IdAnexo <> 0 then
+    adoqAnexosSel.SQL.Text := _SQL + Format('AND Anexos.IdAnexo= %d', [IdAnexo]);
   adoqAnexosSel.Open;
   frmAbonarCapitalEdit := TfrmAbonarCapitalEdit.Create(Self);
   try
     frmAbonarCapitalEdit.DataSet:= adoqAnexosSel;
-    frmAbonarCapitalEdit.Fecha := FechaAct; //Date;  //Abr 17/17
-    frmAbonarCapitalEdit.Importe := Importeact; //0;  //Abr 17/17
+    frmAbonarCapitalEdit.Fecha := Fecha;
+    frmAbonarCapitalEdit.Importe := Importe;
     frmAbonarCapitalEdit.Tipo:= Ord(acReducirCuota);
     if frmAbonarCapitalEdit.Execute then
     begin
@@ -125,19 +133,24 @@ begin
   end;
 end;
 
-procedure TdmAbonarCapital.SetFFechaAct(const Value: TDateTime);
+procedure TdmAbonarCapital.SetFecha(const Value: TDateTime);
 begin
-  FFechaAct := Value;
+  FFecha := Value;
 end;
 
-procedure TdmAbonarCapital.SetFIdAnexo(const Value: integer);
+procedure TdmAbonarCapital.SetIdAnexo(const Value: Integer);
 begin
   FIdAnexo := Value;
 end;
 
-procedure TdmAbonarCapital.SetFImporteAct(const Value: integer);
+procedure TdmAbonarCapital.SetIdCuentaXCobrar(const Value: Integer);
 begin
-  FImporteAct := Value;
+  FIdCuentaXCobrar := Value;
+end;
+
+procedure TdmAbonarCapital.SetImporte(const Value: Extended);
+begin
+  FImporte := Value;
 end;
 
 procedure TdmAbonarCapital.SetPaymentTime(const Value: TPaymentTime);

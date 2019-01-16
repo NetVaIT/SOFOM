@@ -1322,11 +1322,18 @@ inherited dmContratos: TdmContratos
     CommandText = 
       'DECLARE @IdAnexo int'#13#10'DECLARE @PagoTotal decimal(18,6)'#13#10'DECLARE ' +
       '@MontoVencido decimal(18,6)'#13#10'DECLARE @SaldoActual decimal(18,6)'#13 +
-      #10'SET @IdAnexo = :IdAnexo'#13#10'SELECT @PagoTotal = dbo.GetPagoTotal(@' +
-      'IdAnexo) '#13#10'UPDATE Anexos'#13#10'SET MontoTermino = @PagoTotal,'#13#10'FechaT' +
-      'ermino = DATEADD(MONTH, Plazo, FechaVencimiento),'#13#10'ContratadoTot' +
-      'al = @PagoTotal + ValorResidual,'#13#10'SaldoTotal = (@PagoTotal + Val' +
-      'orResidual) - PagadoTotal'#13#10'WHERE IdAnexo = @IdAnexo'#13#10
+      #10'DECLARE @FechaVencimiento datetime'#13#10'DECLARE @Plazo int'#13#10'DECLARE' +
+      ' @MontoFinanciar decimal(18,6)'#13#10'DECLARE @ValorResidual decimal(1' +
+      '8,6)'#13#10'SET @IdAnexo = :IdAnexo'#13#10'SELECT @FechaVencimiento = FechaV' +
+      'encimiento, @Plazo = Plazo, @MontoFinanciar = MontoFiananciar, @' +
+      'ValorResidual = ValorResidual'#13#10'FROM AnexosCreditos '#13#10'WHERE IdAne' +
+      'xoCreditoEstatus = 1 AND IdAnexo = @IdAnexo'#13#10'SELECT @PagoTotal =' +
+      ' dbo.GetPagoTotal(@IdAnexo) '#13#10'UPDATE Anexos SET '#13#10'CapitalCobrado' +
+      ' = 0,'#13#10'SaldoInsoluto = @MontoFinanciar,'#13#10'MontoVencido = 0,'#13#10'Fech' +
+      'aTermino = DATEADD(MONTH, @Plazo, @FechaVencimiento),'#13#10'MontoTerm' +
+      'ino = @PagoTotal,'#13#10'PagadoTotal = 0,'#13#10'ContratadoTotal = @PagoTota' +
+      'l + @ValorResidual,'#13#10'SaldoTotal = @PagoTotal + @ValorResidual'#13#10'W' +
+      'HERE IdAnexo = @IdAnexo'#13#10
     Connection = _dmConection.ADOConnection
     Parameters = <
       item
