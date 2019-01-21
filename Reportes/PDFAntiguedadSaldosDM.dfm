@@ -142,20 +142,16 @@
       mmHeight = 0
     end
     inherited ppHeaderBand1: TppHeaderBand
-      mmHeight = 33867
-      inherited pplblFilters: TppLabel
+      mmHeight = 40217
+      inherited pplblTitle: TppLabel [0]
         SaveOrder = -1
+        mmWidth = 219075
         LayerName = Foreground
       end
-      inherited pplblTitle: TppLabel
+      inherited pplblFilters: TppLabel [1]
         SaveOrder = -1
-        Caption = 'Antiguedad de Saldos '
-        WordWrap = True
-        VerticalAlignment = avCenter
-        mmHeight = 11906
-        mmLeft = 43921
-        mmTop = 4498
-        mmWidth = 198702
+        mmTop = 11377
+        mmWidth = 219075
         LayerName = Foreground
       end
       inherited ppImage1: TppImage
@@ -181,7 +177,7 @@
         Transparent = True
         mmHeight = 5027
         mmLeft = 105040
-        mmTop = 21960
+        mmTop = 26465
         mmWidth = 150019
         BandType = 0
         LayerName = Foreground
@@ -198,7 +194,7 @@
         Transparent = True
         mmHeight = 4763
         mmLeft = 5821
-        mmTop = 21993
+        mmTop = 26498
         mmWidth = 14023
         BandType = 0
         LayerName = Foreground
@@ -216,7 +212,7 @@
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
         mmLeft = 20902
-        mmTop = 21993
+        mmTop = 26498
         mmWidth = 98161
         BandType = 0
         LayerName = Foreground
@@ -234,7 +230,7 @@
         Transparent = True
         mmHeight = 4763
         mmLeft = 4763
-        mmTop = 28608
+        mmTop = 33113
         mmWidth = 15081
         BandType = 0
         LayerName = Foreground
@@ -252,7 +248,7 @@
         Transparent = True
         mmHeight = 4763
         mmLeft = 24871
-        mmTop = 28608
+        mmTop = 33113
         mmWidth = 10054
         BandType = 0
         LayerName = Foreground
@@ -270,7 +266,7 @@
         Transparent = True
         mmHeight = 4763
         mmLeft = 36248
-        mmTop = 28608
+        mmTop = 33113
         mmWidth = 11906
         BandType = 0
         LayerName = Foreground
@@ -288,7 +284,7 @@
         Transparent = True
         mmHeight = 4763
         mmLeft = 53975
-        mmTop = 28608
+        mmTop = 33113
         mmWidth = 16404
         BandType = 0
         LayerName = Foreground
@@ -306,7 +302,7 @@
         Transparent = True
         mmHeight = 4763
         mmLeft = 74613
-        mmTop = 28575
+        mmTop = 33080
         mmWidth = 26723
         BandType = 0
         LayerName = Foreground
@@ -324,7 +320,7 @@
         Transparent = True
         mmHeight = 4763
         mmLeft = 131749
-        mmTop = 28575
+        mmTop = 33080
         mmWidth = 28310
         BandType = 0
         LayerName = Foreground
@@ -342,7 +338,7 @@
         Transparent = True
         mmHeight = 4763
         mmLeft = 162706
-        mmTop = 28575
+        mmTop = 33080
         mmWidth = 28310
         BandType = 0
         LayerName = Foreground
@@ -360,7 +356,7 @@
         Transparent = True
         mmHeight = 4763
         mmLeft = 194456
-        mmTop = 28575
+        mmTop = 33080
         mmWidth = 28310
         BandType = 0
         LayerName = Foreground
@@ -378,33 +374,31 @@
         Transparent = True
         mmHeight = 4498
         mmLeft = 225941
-        mmTop = 28575
+        mmTop = 33080
         mmWidth = 28046
         BandType = 0
         LayerName = Foreground
       end
       object ppLine3: TppLine
         UserName = 'Line3'
-        Anchors = [atLeft, atTop, atRight, atBottom]
         Pen.Color = clGray
         Pen.Width = 2
         Weight = 1.500000000000000000
-        mmHeight = 4498
+        mmHeight = 2646
         mmLeft = 1323
-        mmTop = 20902
-        mmWidth = 264055
+        mmTop = 25407
+        mmWidth = 262732
         BandType = 0
         LayerName = Foreground
       end
       object ppLine1: TppLine
         UserName = 'LineFooter1'
-        Anchors = [atLeft, atTop, atRight, atBottom]
         Pen.Color = clGray
         Pen.Width = 2
         Weight = 1.500000000000000000
-        mmHeight = 3969
+        mmHeight = 2646
         mmLeft = 0
-        mmTop = 33073
+        mmTop = 37571
         mmWidth = 264055
         BandType = 0
         LayerName = Foreground
@@ -422,8 +416,25 @@
         Transparent = True
         mmHeight = 4763
         mmLeft = 105026
-        mmTop = 28575
+        mmTop = 33080
         mmWidth = 25400
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppSystemVariable5: TppSystemVariable
+        UserName = 'lblPrintDate1'
+        DisplayFormat = #39'Fecha:'#39' dd/mm/yyyy'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 10
+        Font.Style = [fsBold]
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 4233
+        mmLeft = 234689
+        mmTop = 18521
+        mmWidth = 29369
         BandType = 0
         LayerName = Foreground
       end
@@ -640,9 +651,9 @@
       end
       inherited pplblPageNo: TppSystemVariable
         SaveOrder = -1
-        mmLeft = 254794
+        mmLeft = 243946
         mmTop = 2646
-        mmWidth = 10583
+        mmWidth = 20109
         LayerName = Foreground
       end
     end
@@ -757,10 +768,10 @@
         Pen.Color = clGray
         Pen.Width = 2
         Weight = 1.500000000000000000
-        mmHeight = 3174
+        mmHeight = 3175
         mmLeft = 1323
-        mmTop = 1851
-        mmWidth = 264055
+        mmTop = 1852
+        mmWidth = 262732
         BandType = 7
         LayerName = Foreground
       end
@@ -1211,7 +1222,7 @@
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.Duplex = dpVertical
     PrinterSetup.Orientation = poLandscape
-    PrinterSetup.PaperName = 'Legal (8,5" x 14")'
+    PrinterSetup.PaperName = 'Letter (8,5" x 11")'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350
@@ -1219,10 +1230,10 @@
     PrinterSetup.mmMarginRight = 6350
     PrinterSetup.mmMarginTop = 6350
     PrinterSetup.mmPaperHeight = 215900
-    PrinterSetup.mmPaperWidth = 355600
-    PrinterSetup.PaperSize = 5
+    PrinterSetup.mmPaperWidth = 279400
+    PrinterSetup.PaperSize = 1
     Template.FileName = 'C:\Desarrollo\SOFOM\Reportes\rptAntiguedadSaldosXCliente.rtm'
-    Units = utMillimeters
+    Units = utScreenPixels
     ArchiveFileName = '($MyDocuments)\ReportArchive.raf'
     DeviceType = 'Screen'
     DefaultFileDeviceType = 'PDF'
@@ -1266,29 +1277,8 @@
     object ppTitleBand2: TppTitleBand
       Background.Brush.Style = bsClear
       mmBottomOffset = 0
-      mmHeight = 21431
+      mmHeight = 19579
       mmPrintPosition = 0
-      object ppLblTitulo2: TppLabel
-        UserName = 'Titulo'
-        Anchors = [atLeft, atTop, atRight, atBottom]
-        AutoSize = False
-        Caption = 'Antig'#252'edad de Saldos por Cliente'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Name = 'TIMES NEW ROMAN'
-        Font.Size = 20
-        Font.Style = [fsBold, fsItalic]
-        TextAlignment = taCentered
-        Transparent = True
-        WordWrap = True
-        VerticalAlignment = avCenter
-        mmHeight = 17727
-        mmLeft = 39952
-        mmTop = 1852
-        mmWidth = 300567
-        BandType = 1
-        LayerName = Foreground1
-      end
       object ppImage2: TppImage
         UserName = 'Image1'
         AlignHorizontal = ahCenter
@@ -4667,11 +4657,46 @@
         BandType = 1
         LayerName = Foreground1
       end
+      object ppLblTitulo2: TppLabel
+        UserName = 'Titulo1'
+        AutoSize = False
+        Caption = 'dbpReport'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clNavy
+        Font.Name = 'Arial'
+        Font.Size = 20
+        Font.Style = [fsBold]
+        TextAlignment = taCentered
+        Transparent = True
+        mmHeight = 10583
+        mmLeft = 44186
+        mmTop = 529
+        mmWidth = 220398
+        BandType = 1
+        LayerName = Foreground1
+      end
+      object ppSystemVariable8: TppSystemVariable
+        UserName = 'SystemVariable8'
+        DisplayFormat = #39'Fecha:'#39' dd/mm/yyyy'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 10
+        Font.Style = [fsBold]
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 4233
+        mmLeft = 235215
+        mmTop = 13229
+        mmWidth = 29369
+        BandType = 1
+        LayerName = Foreground1
+      end
     end
     object ppHeaderBand2: TppHeaderBand
       Background.Brush.Style = bsClear
       mmBottomOffset = 0
-      mmHeight = 12700
+      mmHeight = 11642
       mmPrintPosition = 0
       object ppLabel14: TppLabel
         UserName = 'Label1'
@@ -4680,13 +4705,13 @@
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 9
+        Font.Size = 8
         Font.Style = [fsBold]
         Transparent = True
-        mmHeight = 4763
-        mmLeft = 5293
-        mmTop = 7938
-        mmWidth = 14023
+        mmHeight = 3704
+        mmLeft = 1323
+        mmTop = 4233
+        mmWidth = 62177
         BandType = 0
         LayerName = Foreground1
       end
@@ -4697,14 +4722,14 @@
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 9
+        Font.Size = 8
         Font.Style = [fsBold]
         TextAlignment = taRightJustified
         Transparent = True
-        mmHeight = 4763
-        mmLeft = 230453
-        mmTop = 7938
-        mmWidth = 26194
+        mmHeight = 3704
+        mmLeft = 193088
+        mmTop = 4233
+        mmWidth = 23813
         BandType = 0
         LayerName = Foreground1
       end
@@ -4715,40 +4740,38 @@
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 9
+        Font.Size = 8
         Font.Style = [fsBold]
         TextAlignment = taRightJustified
         Transparent = True
-        mmHeight = 4763
-        mmLeft = 259028
-        mmTop = 7900
-        mmWidth = 32015
+        mmHeight = 3704
+        mmLeft = 216893
+        mmTop = 4233
+        mmWidth = 23813
         BandType = 0
         LayerName = Foreground1
       end
       object ppLine5: TppLine
         UserName = 'LineFooter1'
-        Anchors = [atLeft, atTop, atRight, atBottom]
         Pen.Color = clGray
         Pen.Width = 2
         Weight = 1.500000000000000000
-        mmHeight = 3175
-        mmLeft = 6052
-        mmTop = 12170
-        mmWidth = 321705
+        mmHeight = 2646
+        mmLeft = 1323
+        mmTop = 8996
+        mmWidth = 263255
         BandType = 0
         LayerName = Foreground1
       end
       object ppLine6: TppLine
         UserName = 'Line3'
-        Anchors = [atLeft, atTop, atRight, atBottom]
         Pen.Color = clGray
         Pen.Width = 2
         Weight = 1.500000000000000000
-        mmHeight = 3175
-        mmLeft = 1323
-        mmTop = 3175
-        mmWidth = 340255
+        mmHeight = 2646
+        mmLeft = 0
+        mmTop = 0
+        mmWidth = 264584
         BandType = 0
         LayerName = Foreground1
       end
@@ -4759,14 +4782,14 @@
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 9
+        Font.Size = 8
         Font.Style = [fsBold]
         TextAlignment = taRightJustified
         Transparent = True
-        mmHeight = 4763
-        mmLeft = 291571
-        mmTop = 7900
-        mmWidth = 34131
+        mmHeight = 3704
+        mmLeft = 240691
+        mmTop = 4233
+        mmWidth = 23813
         BandType = 0
         LayerName = Foreground1
       end
@@ -4777,14 +4800,14 @@
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 9
+        Font.Size = 8
         Font.Style = [fsBold]
         TextAlignment = taRightJustified
         Transparent = True
-        mmHeight = 4763
-        mmLeft = 147373
-        mmTop = 7938
-        mmWidth = 24077
+        mmHeight = 3704
+        mmLeft = 121668
+        mmTop = 4233
+        mmWidth = 23813
         BandType = 0
         LayerName = Foreground1
       end
@@ -4795,14 +4818,14 @@
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 9
+        Font.Size = 8
         Font.Style = [fsBold]
         TextAlignment = taRightJustified
         Transparent = True
-        mmHeight = 4763
-        mmLeft = 174096
-        mmTop = 8202
-        mmWidth = 24077
+        mmHeight = 3704
+        mmLeft = 145476
+        mmTop = 4233
+        mmWidth = 23813
         BandType = 0
         LayerName = Foreground1
       end
@@ -4813,14 +4836,14 @@
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 9
+        Font.Size = 8
         Font.Style = [fsBold]
         TextAlignment = taRightJustified
         Transparent = True
-        mmHeight = 4763
-        mmLeft = 201084
-        mmTop = 7938
-        mmWidth = 25665
+        mmHeight = 3704
+        mmLeft = 169284
+        mmTop = 4233
+        mmWidth = 23813
         BandType = 0
         LayerName = Foreground1
       end
@@ -4831,14 +4854,14 @@
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 9
+        Font.Size = 8
         Font.Style = [fsBold]
         TextAlignment = taRightJustified
         Transparent = True
-        mmHeight = 4763
-        mmLeft = 81492
-        mmTop = 7938
-        mmWidth = 34925
+        mmHeight = 3704
+        mmLeft = 63500
+        mmTop = 4233
+        mmWidth = 34396
         BandType = 0
         LayerName = Foreground1
       end
@@ -4849,14 +4872,14 @@
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 9
+        Font.Size = 8
         Font.Style = [fsBold]
         TextAlignment = taRightJustified
         Transparent = True
-        mmHeight = 4763
-        mmLeft = 121709
-        mmTop = 7938
-        mmWidth = 24077
+        mmHeight = 3704
+        mmLeft = 97890
+        mmTop = 4233
+        mmWidth = 23813
         BandType = 0
         LayerName = Foreground1
       end
@@ -4865,7 +4888,7 @@
       Background1.Brush.Style = bsClear
       Background2.Brush.Style = bsClear
       mmBottomOffset = 0
-      mmHeight = 6085
+      mmHeight = 4233
       mmPrintPosition = 0
       object ppDBText17: TppDBText
         UserName = 'DBText7'
@@ -4875,16 +4898,16 @@
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 9
+        Font.Size = 8
         Font.Style = []
         ParentDataPipeline = False
         TextAlignment = taRightJustified
         Transparent = True
         DataPipelineName = 'ppDBAntXClienteX'
-        mmHeight = 4763
-        mmLeft = 174096
-        mmTop = 800
-        mmWidth = 24077
+        mmHeight = 3704
+        mmLeft = 145521
+        mmTop = 0
+        mmWidth = 23813
         BandType = 4
         LayerName = Foreground1
       end
@@ -4896,16 +4919,16 @@
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 9
+        Font.Size = 8
         Font.Style = []
         ParentDataPipeline = False
         TextAlignment = taRightJustified
         Transparent = True
         DataPipelineName = 'ppDBAntXClienteX'
-        mmHeight = 4763
-        mmLeft = 201084
-        mmTop = 800
-        mmWidth = 25665
+        mmHeight = 3704
+        mmLeft = 169333
+        mmTop = 0
+        mmWidth = 23813
         BandType = 4
         LayerName = Foreground1
       end
@@ -4917,16 +4940,16 @@
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 9
+        Font.Size = 8
         Font.Style = []
         ParentDataPipeline = False
         TextAlignment = taRightJustified
         Transparent = True
         DataPipelineName = 'ppDBAntXClienteX'
-        mmHeight = 4763
-        mmLeft = 230453
-        mmTop = 800
-        mmWidth = 26194
+        mmHeight = 3704
+        mmLeft = 193146
+        mmTop = 0
+        mmWidth = 23813
         BandType = 4
         LayerName = Foreground1
       end
@@ -4938,16 +4961,16 @@
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 9
+        Font.Size = 8
         Font.Style = []
         ParentDataPipeline = False
         TextAlignment = taRightJustified
         Transparent = True
         DataPipelineName = 'ppDBAntXClienteX'
-        mmHeight = 4763
-        mmLeft = 259028
-        mmTop = 800
-        mmWidth = 31750
+        mmHeight = 3704
+        mmLeft = 216958
+        mmTop = 0
+        mmWidth = 23813
         BandType = 4
         LayerName = Foreground1
       end
@@ -4958,15 +4981,15 @@
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 9
+        Font.Size = 8
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         DataPipelineName = 'ppDBAntXClienteX'
-        mmHeight = 4763
-        mmLeft = 5295
-        mmTop = 529
-        mmWidth = 75949
+        mmHeight = 3704
+        mmLeft = 1323
+        mmTop = 0
+        mmWidth = 62177
         BandType = 4
         LayerName = Foreground1
       end
@@ -4978,16 +5001,16 @@
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 9
+        Font.Size = 8
         Font.Style = []
         ParentDataPipeline = False
         TextAlignment = taRightJustified
         Transparent = True
         DataPipelineName = 'ppDBAntXClienteX'
-        mmHeight = 4763
-        mmLeft = 93134
-        mmTop = 800
-        mmWidth = 23283
+        mmHeight = 3704
+        mmLeft = 63500
+        mmTop = 0
+        mmWidth = 34396
         BandType = 4
         LayerName = Foreground1
       end
@@ -4999,16 +5022,16 @@
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 9
+        Font.Size = 8
         Font.Style = []
         ParentDataPipeline = False
         TextAlignment = taRightJustified
         Transparent = True
         DataPipelineName = 'ppDBAntXClienteX'
-        mmHeight = 4763
-        mmLeft = 294217
-        mmTop = 800
-        mmWidth = 31485
+        mmHeight = 3704
+        mmLeft = 240771
+        mmTop = 0
+        mmWidth = 23813
         BandType = 4
         LayerName = Foreground1
       end
@@ -5020,16 +5043,16 @@
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 9
+        Font.Size = 8
         Font.Style = []
         ParentDataPipeline = False
         TextAlignment = taRightJustified
         Transparent = True
         DataPipelineName = 'ppDBAntXClienteX'
-        mmHeight = 4763
-        mmLeft = 147373
-        mmTop = 800
-        mmWidth = 24077
+        mmHeight = 3704
+        mmLeft = 121708
+        mmTop = 0
+        mmWidth = 23813
         BandType = 4
         LayerName = Foreground1
       end
@@ -5041,16 +5064,16 @@
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 9
+        Font.Size = 8
         Font.Style = []
         ParentDataPipeline = False
         TextAlignment = taRightJustified
         Transparent = True
         DataPipelineName = 'ppDBAntXClienteX'
-        mmHeight = 4763
-        mmLeft = 121709
-        mmTop = 800
-        mmWidth = 24077
+        mmHeight = 3704
+        mmLeft = 97896
+        mmTop = 0
+        mmWidth = 23813
         BandType = 4
         LayerName = Foreground1
       end
@@ -5062,14 +5085,14 @@
       mmPrintPosition = 0
       object ppLine7: TppLine
         UserName = 'LineFooter'
-        Anchors = [atLeft, atTop, atRight, atBottom]
+        Anchors = [atRight, atBottom]
         Pen.Color = clGray
         Pen.Width = 2
         Weight = 1.500000000000000000
         mmHeight = 3969
         mmLeft = 1323
         mmTop = 0
-        mmWidth = 339197
+        mmWidth = 263261
         BandType = 8
         LayerName = Foreground1
       end
@@ -5091,7 +5114,6 @@
       end
       object ppSystemVariable2: TppSystemVariable
         UserName = 'lblPageNo'
-        Anchors = [atRight, atBottom]
         VarType = vtPageSetDesc
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clNavy
@@ -5101,7 +5123,7 @@
         TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 3969
-        mmLeft = 324909
+        mmLeft = 247915
         mmTop = 2646
         mmWidth = 16669
         BandType = 8
@@ -5111,7 +5133,7 @@
     object ppSummaryBand2: TppSummaryBand
       Background.Brush.Style = bsClear
       mmBottomOffset = 0
-      mmHeight = 13229
+      mmHeight = 6085
       mmPrintPosition = 0
       object ppDBCalc11: TppDBCalc
         UserName = 'DBCalc6'
@@ -5121,16 +5143,16 @@
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 9
+        Font.Size = 8
         Font.Style = []
         ParentDataPipeline = False
         TextAlignment = taRightJustified
         Transparent = True
         DataPipelineName = 'ppDBAntXClienteX'
-        mmHeight = 4498
-        mmLeft = 174096
-        mmTop = 2378
-        mmWidth = 24077
+        mmHeight = 3704
+        mmLeft = 145521
+        mmTop = 1323
+        mmWidth = 23813
         BandType = 7
         LayerName = Foreground1
       end
@@ -5142,15 +5164,15 @@
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 9
+        Font.Size = 8
         Font.Style = []
         TextAlignment = taRightJustified
         Transparent = True
         DataPipelineName = 'ppDBAntXCliente'
-        mmHeight = 4498
-        mmLeft = 201084
-        mmTop = 2378
-        mmWidth = 25665
+        mmHeight = 3704
+        mmLeft = 169333
+        mmTop = 1323
+        mmWidth = 23813
         BandType = 7
         LayerName = Foreground1
       end
@@ -5162,15 +5184,15 @@
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 9
+        Font.Size = 8
         Font.Style = []
         TextAlignment = taRightJustified
         Transparent = True
         DataPipelineName = 'ppDBAntXCliente'
-        mmHeight = 4498
-        mmLeft = 230453
-        mmTop = 2378
-        mmWidth = 26194
+        mmHeight = 3704
+        mmLeft = 193146
+        mmTop = 1323
+        mmWidth = 23813
         BandType = 7
         LayerName = Foreground1
       end
@@ -5182,29 +5204,28 @@
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 9
+        Font.Size = 8
         Font.Style = []
         ParentDataPipeline = False
         TextAlignment = taRightJustified
         Transparent = True
         DataPipelineName = 'ppDBAntXClienteX'
-        mmHeight = 4498
-        mmLeft = 260880
-        mmTop = 2315
-        mmWidth = 30163
+        mmHeight = 3704
+        mmLeft = 216958
+        mmTop = 1323
+        mmWidth = 23813
         BandType = 7
         LayerName = Foreground1
       end
       object ppLine8: TppLine
         UserName = 'LineFooter2'
-        Anchors = [atLeft, atTop, atRight, atBottom]
         Pen.Color = clGray
         Pen.Width = 2
         Weight = 1.500000000000000000
-        mmHeight = 2117
+        mmHeight = 1323
         mmLeft = 34660
         mmTop = 265
-        mmWidth = 293159
+        mmWidth = 229919
         BandType = 7
         LayerName = Foreground1
       end
@@ -5217,11 +5238,11 @@
         Font.Name = 'Arial'
         Font.Size = 9
         Font.Style = [fsBold]
-        TextAlignment = taCentered
+        TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 4763
-        mmLeft = 52917
-        mmTop = 1852
+        mmLeft = 35190
+        mmTop = 1323
         mmWidth = 28310
         BandType = 7
         LayerName = Foreground1
@@ -5234,16 +5255,16 @@
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 9
+        Font.Size = 8
         Font.Style = []
         ParentDataPipeline = False
         TextAlignment = taRightJustified
         Transparent = True
         DataPipelineName = 'ppDBAntXClienteX'
-        mmHeight = 4498
-        mmLeft = 147373
-        mmTop = 2378
-        mmWidth = 24077
+        mmHeight = 3704
+        mmLeft = 121708
+        mmTop = 1323
+        mmWidth = 23813
         BandType = 7
         LayerName = Foreground1
       end
@@ -5255,16 +5276,16 @@
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 9
+        Font.Size = 8
         Font.Style = []
         ParentDataPipeline = False
         TextAlignment = taRightJustified
         Transparent = True
         DataPipelineName = 'ppDBAntXClienteX'
-        mmHeight = 4498
-        mmLeft = 93134
-        mmTop = 1848
-        mmWidth = 23283
+        mmHeight = 3704
+        mmLeft = 63500
+        mmTop = 1323
+        mmWidth = 34396
         BandType = 7
         LayerName = Foreground1
       end
@@ -5276,16 +5297,16 @@
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 9
+        Font.Size = 8
         Font.Style = []
         ParentDataPipeline = False
         TextAlignment = taRightJustified
         Transparent = True
         DataPipelineName = 'ppDBAntXClienteX'
-        mmHeight = 4498
-        mmLeft = 294217
-        mmTop = 2378
-        mmWidth = 31485
+        mmHeight = 3704
+        mmLeft = 240771
+        mmTop = 1323
+        mmWidth = 23813
         BandType = 7
         LayerName = Foreground1
       end
@@ -5297,16 +5318,16 @@
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 9
+        Font.Size = 8
         Font.Style = []
         ParentDataPipeline = False
         TextAlignment = taRightJustified
         Transparent = True
         DataPipelineName = 'ppDBAntXClienteX'
-        mmHeight = 4498
-        mmLeft = 121709
-        mmTop = 2378
-        mmWidth = 24077
+        mmHeight = 3704
+        mmLeft = 97896
+        mmTop = 1323
+        mmWidth = 23813
         BandType = 7
         LayerName = Foreground1
       end

@@ -71,9 +71,6 @@ type
     DSHojaControlCte: TDataSource;
     ppRprtHojaControlCte: TppReport;
     ppTitleBand2: TppTitleBand;
-    ppLabel17: TppLabel;
-    ppImage2: TppImage;
-    ppSystemVariable2: TppSystemVariable;
     ppHeaderBand2: TppHeaderBand;
     ppLabel18: TppLabel;
     ppLabel19: TppLabel;
@@ -576,9 +573,6 @@ type
     ppDBText116: TppDBText;
     ppDBText117: TppDBText;
     ppDBText118: TppDBText;
-    ppLabel116: TppLabel;
-    ppSystemVariable7: TppSystemVariable;
-    ppImage5: TppImage;
     ppLabel129: TppLabel;
     ppSubReport8: TppSubReport;
     ppChildReport8: TppChildReport;
@@ -874,6 +868,13 @@ type
     ppLabel159: TppLabel;
     ADODtStSumasAdicionalesTotalSuma: TIntegerField;
     ppDBPpSumasAdicionales: TppDBPipeline;
+    ppSystemVariable10: TppSystemVariable;
+    ppImage2: TppImage;
+    ppLabel160: TppLabel;
+    ppSystemVariable2: TppSystemVariable;
+    ppImage5: TppImage;
+    ppLabel17: TppLabel;
+    ppSystemVariable7: TppSystemVariable;
     procedure CuotasReportCalcFields(DataSet: TDataSet);
   private
     { Private declarations }

@@ -170,7 +170,7 @@ inherited dmRptCobertura: TdmRptCobertura
         AutoSize = False
         Caption = 'Fecha'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
+        Font.Color = clBlack
         Font.Name = 'Arial'
         Font.Size = 8
         Font.Style = [fsBold, fsItalic]
@@ -187,7 +187,7 @@ inherited dmRptCobertura: TdmRptCobertura
         AutoSize = False
         Caption = 'Cliente'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
+        Font.Color = clBlack
         Font.Name = 'Arial'
         Font.Size = 8
         Font.Style = [fsBold, fsItalic]
@@ -205,7 +205,7 @@ inherited dmRptCobertura: TdmRptCobertura
         AutoSize = False
         Caption = 'Por vencer'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
+        Font.Color = clBlack
         Font.Name = 'Arial'
         Font.Size = 8
         Font.Style = [fsBold, fsItalic]
@@ -223,7 +223,7 @@ inherited dmRptCobertura: TdmRptCobertura
         AutoSize = False
         Caption = 'Vencido'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
+        Font.Color = clBlack
         Font.Name = 'Arial'
         Font.Size = 8
         Font.Style = [fsBold, fsItalic]
@@ -241,7 +241,7 @@ inherited dmRptCobertura: TdmRptCobertura
         AutoSize = False
         Caption = 'Deposito'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
+        Font.Color = clBlack
         Font.Name = 'Arial'
         Font.Size = 8
         Font.Style = [fsBold, fsItalic]
@@ -259,7 +259,7 @@ inherited dmRptCobertura: TdmRptCobertura
         AutoSize = False
         Caption = 'Saldo'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
+        Font.Color = clBlack
         Font.Name = 'Arial'
         Font.Size = 8
         Font.Style = [fsBold, fsItalic]
@@ -277,7 +277,7 @@ inherited dmRptCobertura: TdmRptCobertura
         AutoSize = False
         Caption = 'Valor'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
+        Font.Color = clBlack
         Font.Name = 'Arial'
         Font.Size = 8
         Font.Style = [fsBold, fsItalic]
@@ -295,7 +295,7 @@ inherited dmRptCobertura: TdmRptCobertura
         AutoSize = False
         Caption = 'Cobertura'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
+        Font.Color = clBlack
         Font.Name = 'Arial'
         Font.Size = 8
         Font.Style = [fsBold, fsItalic]
@@ -325,7 +325,7 @@ inherited dmRptCobertura: TdmRptCobertura
         AutoSize = False
         Caption = 'Paridad'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
+        Font.Color = clBlack
         Font.Name = 'Arial'
         Font.Size = 8
         Font.Style = [fsBold, fsItalic]
@@ -343,7 +343,7 @@ inherited dmRptCobertura: TdmRptCobertura
         AutoSize = False
         Caption = 'Valor'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
+        Font.Color = clBlack
         Font.Name = 'Arial'
         Font.Size = 8
         Font.Style = [fsBold]
@@ -364,7 +364,7 @@ inherited dmRptCobertura: TdmRptCobertura
         Border.Weight = 0.748799979686737000
         Caption = 'Contrato'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
+        Font.Color = clBlack
         Font.Name = 'Arial'
         Font.Size = 8
         Font.Style = [fsBold, fsItalic]
@@ -382,7 +382,7 @@ inherited dmRptCobertura: TdmRptCobertura
         AutoSize = False
         Caption = 'Factor'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
+        Font.Color = clBlack
         Font.Name = 'Arial'
         Font.Size = 8
         Font.Style = [fsBold, fsItalic]
@@ -400,7 +400,7 @@ inherited dmRptCobertura: TdmRptCobertura
         AutoSize = False
         Caption = 'comercial'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
+        Font.Color = clBlack
         Font.Name = 'Arial'
         Font.Size = 8
         Font.Style = [fsBold, fsItalic]
@@ -418,7 +418,7 @@ inherited dmRptCobertura: TdmRptCobertura
         AutoSize = False
         Caption = 'actual'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
+        Font.Color = clBlack
         Font.Name = 'Arial'
         Font.Size = 8
         Font.Style = [fsBold, fsItalic]
@@ -436,7 +436,7 @@ inherited dmRptCobertura: TdmRptCobertura
         AutoSize = False
         Caption = 'original'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
+        Font.Color = clBlack
         Font.Name = 'Arial'
         Font.Size = 8
         Font.Style = [fsBold, fsItalic]
@@ -454,7 +454,7 @@ inherited dmRptCobertura: TdmRptCobertura
         AutoSize = False
         Caption = 'comercial'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
+        Font.Color = clBlack
         Font.Name = 'Arial'
         Font.Size = 8
         Font.Style = [fsBold]
@@ -472,7 +472,7 @@ inherited dmRptCobertura: TdmRptCobertura
         AutoSize = False
         Caption = 'garantia'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
+        Font.Color = clBlack
         Font.Name = 'Arial'
         Font.Size = 8
         Font.Style = [fsBold, fsItalic]
@@ -490,7 +490,7 @@ inherited dmRptCobertura: TdmRptCobertura
         AutoSize = False
         Caption = 'Opci'#243'n de'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
+        Font.Color = clBlack
         Font.Name = 'Arial'
         Font.Size = 8
         Font.Style = [fsBold, fsItalic]
@@ -508,7 +508,7 @@ inherited dmRptCobertura: TdmRptCobertura
         AutoSize = False
         Caption = 'compra'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
+        Font.Color = clBlack
         Font.Name = 'Arial'
         Font.Size = 8
         Font.Style = [fsBold, fsItalic]
@@ -526,7 +526,7 @@ inherited dmRptCobertura: TdmRptCobertura
         AutoSize = False
         Caption = 'Valor'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
+        Font.Color = clBlack
         Font.Name = 'Arial'
         Font.Size = 8
         Font.Style = [fsBold, fsItalic]
@@ -544,7 +544,7 @@ inherited dmRptCobertura: TdmRptCobertura
         AutoSize = False
         Caption = 'residual'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
+        Font.Color = clBlack
         Font.Name = 'Arial'
         Font.Size = 8
         Font.Style = [fsBold, fsItalic]
@@ -562,7 +562,7 @@ inherited dmRptCobertura: TdmRptCobertura
         AutoSize = False
         Caption = 'total'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
+        Font.Color = clBlack
         Font.Name = 'Arial'
         Font.Size = 8
         Font.Style = [fsBold, fsItalic]
@@ -617,44 +617,46 @@ inherited dmRptCobertura: TdmRptCobertura
             Background1.Brush.Style = bsClear
             Background2.Brush.Style = bsClear
             mmBottomOffset = 0
-            mmHeight = 8202
+            mmHeight = 8467
             mmPrintPosition = 0
             object ppDBText16: TppDBText
               UserName = 'DBText16'
-              DataField = 'Texto'
+              AutoSize = True
+              DataField = 'Fecha'
               DataPipeline = dbpParidad
+              DisplayFormat = #39'Fecha:'#39' dd/mm/yyyy'
               Font.Charset = DEFAULT_CHARSET
-              Font.Color = clNavy
+              Font.Color = clBlack
               Font.Name = 'Arial'
-              Font.Size = 8
-              Font.Style = [fsBold, fsItalic]
+              Font.Size = 10
+              Font.Style = [fsBold]
               TextAlignment = taRightJustified
               Transparent = True
               DataPipelineName = 'dbpParidad'
-              mmHeight = 3969
-              mmLeft = 221192
+              mmHeight = 4233
+              mmLeft = 233363
               mmTop = 0
-              mmWidth = 40746
+              mmWidth = 29369
               BandType = 4
               LayerName = Foreground1
             end
             object ppDBText17: TppDBText
               UserName = 'DBText17'
-              DataField = 'Importe'
+              AutoSize = True
+              DataField = 'Texto'
               DataPipeline = dbpParidad
-              DisplayFormat = '#,0.0000;-#,0.0000'
               Font.Charset = DEFAULT_CHARSET
-              Font.Color = clNavy
+              Font.Color = clBlack
               Font.Name = 'Arial'
               Font.Size = 10
-              Font.Style = [fsBold, fsItalic]
+              Font.Style = [fsBold]
               TextAlignment = taRightJustified
               Transparent = True
               DataPipelineName = 'dbpParidad'
-              mmHeight = 4233
-              mmLeft = 246063
-              mmTop = 3962
-              mmWidth = 15875
+              mmHeight = 4234
+              mmLeft = 238655
+              mmTop = 4233
+              mmWidth = 24077
               BandType = 4
               LayerName = Foreground1
             end
@@ -673,7 +675,7 @@ inherited dmRptCobertura: TdmRptCobertura
         AutoSize = False
         Caption = 'Moratorio'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
+        Font.Color = clBlack
         Font.Name = 'Arial'
         Font.Size = 8
         Font.Style = [fsBold, fsItalic]
@@ -996,7 +998,7 @@ inherited dmRptCobertura: TdmRptCobertura
       end
       inherited pplblPageNo: TppSystemVariable
         SaveOrder = -1
-        mmLeft = 247374
+        mmLeft = 243947
         LayerName = Foreground
       end
     end
@@ -1290,12 +1292,12 @@ inherited dmRptCobertura: TdmRptCobertura
     CursorType = ctStatic
     CommandText = 
       'SELECT        MonedasCotizaciones.Fecha, MonedasCotizaciones.Imp' +
-      'orte, Monedas.Identificador AS Moneda, Monedas.Identificador + '#39 +
-      ' al '#39' + CONVERT(nvarchar(12), MonedasCotizaciones.Fecha, 103) AS' +
-      ' Texto'#13#10'FROM            MonedasCotizaciones INNER JOIN'#13#10'        ' +
-      '                 Monedas ON MonedasCotizaciones.IdMoneda = Moned' +
-      'as.IdMoneda'#13#10'WHERE        (MonedasCotizaciones.IdMonedaCotizacio' +
-      'n = dbo.GetIdCotizacionMoneda(51, dbo.GetDateAux()))'
+      'orte, Monedas.Identificador AS Moneda, '#13#10'Monedas.Identificador +' +
+      ' '#39' '#39' + CONVERT(nvarchar(12), MonedasCotizaciones.Importe) AS Tex' +
+      'to'#13#10'FROM            MonedasCotizaciones INNER JOIN'#13#10'            ' +
+      '             Monedas ON MonedasCotizaciones.IdMoneda = Monedas.I' +
+      'dMoneda'#13#10'WHERE        (MonedasCotizaciones.IdMonedaCotizacion = ' +
+      'dbo.GetIdCotizacionMoneda(51, dbo.GetDateAux()))'
     Parameters = <>
     Left = 40
     Top = 160

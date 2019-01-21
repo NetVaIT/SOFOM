@@ -10,6 +10,8 @@ inherited _dmReportSOFOM: T_dmReportSOFOM
       mmHeight = 18521
       inherited pplblFilters: TppLabel [0]
         SaveOrder = -1
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
         mmHeight = 5292
         mmLeft = 44979
         mmTop = 11374
@@ -19,6 +21,8 @@ inherited _dmReportSOFOM: T_dmReportSOFOM
       inherited pplblTitle: TppLabel [1]
         SaveOrder = -1
         Anchors = [atLeft, atTop]
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
         mmHeight = 10583
         mmLeft = 44979
         mmTop = 0
@@ -3410,13 +3414,16 @@ inherited _dmReportSOFOM: T_dmReportSOFOM
       end
       inherited pplblPrintDate: TppSystemVariable
         SaveOrder = -1
+        Font.Name = 'Arial'
+        mmWidth = 37835
         LayerName = Foreground
       end
       inherited pplblPageNo: TppSystemVariable
         SaveOrder = -1
         VarType = vtPageSetDesc
-        mmLeft = 185209
-        mmWidth = 16668
+        Font.Name = 'Arial'
+        mmLeft = 181769
+        mmWidth = 20108
         LayerName = Foreground
       end
     end

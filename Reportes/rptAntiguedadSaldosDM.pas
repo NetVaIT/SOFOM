@@ -147,7 +147,7 @@ begin
   ArchivoPDF:='EstadoCuentaFuturo'+'_'+Actual+_ExtensionPDF;
   dmRptEstadoCuenta:= TdmRptEstadoCuenta.Create(Self);
   try
-    dmRptEstadoCuenta.Title := 'ESTADO DE CUENTA EN MONEDA NACIONAL "PESOS" AL';
+    dmRptEstadoCuenta.Title := 'ESTADO DE CUENTA EN MONEDA NACIONAL "PESOS"';
     dmRptEstadoCuenta.PDFFileName := ArchivoPDF;
     dmRptEstadoCuenta.Temporal := True;
     dmRptEstadoCuenta.IdPersona := adodsMasterIdPersona.Value;
@@ -182,9 +182,9 @@ begin
       TADoDAtaset(dmAntiguedadSaldosPDF.dsReport.DataSet).Parameters.ParamByName('Fini').Value:= FechaIni;
       TADoDAtaset(dmAntiguedadSaldosPDF.dsReport.DataSet).Parameters.ParamByName('FFin').Value:= FechaFin;
       Texto:= Texto + ' DEL ' + DateToStr(FEchaIni) + ' AL '+ DateToStr(FEchaFin);
-    end
-    else
-      Texto:= Texto + 'AL '+upperCASE(FormatDateTime('dd ''de'' mmmm ''del'' yyyy',_DmConection.LaFechaActual));
+    end;
+//    else
+//      Texto:= Texto + 'AL '+upperCASE(FormatDateTime('dd ''de'' mmmm ''del'' yyyy',_DmConection.LaFechaActual));
     dmAntiguedadSaldosPDF.dsReport.DataSet.Open;
     dmAntiguedadSaldosPDF.Title:= Texto;
     dmAntiguedadSaldosPDF.PDFFileName:= ArchiPDF;
@@ -228,9 +228,9 @@ begin
       TADoDAtaset(dmAntiguedadSaldosPDF.DSAntXCliente.DataSet).Parameters.ParamByName('FIni').Value:= FechaIni;
       TADoDAtaset(dmAntiguedadSaldosPDF.DSAntXCliente.DataSet).Parameters.ParamByName('FFin').Value:= FechaFin;
       Texto:= Texto + 'DEL ' + DateToStr(FEchaIni) + ' AL '+ DateToStr(FEchaFin);
-    end
-    else
-      Texto:= Texto + 'AL ' + UpperCase(FormatDateTime('dd ''de'' mmmm ''del'' yyyy',_DmConection.LaFechaActual));
+    end;
+//    else
+//      Texto:= Texto + 'AL ' + UpperCase(FormatDateTime('dd ''de'' mmmm ''del'' yyyy',_DmConection.LaFechaActual));
     dmAntiguedadSaldosPDF.DSAntXCliente.DataSet.Open;
     dmAntiguedadSaldosPDF.ppRprtAntXCliente.ShowPrintDialog:= False;
     dmAntiguedadSaldosPDF.ppRprtAntXCliente.ShowCancelDialog:= False;

@@ -70,7 +70,6 @@ type
     DSAntXCliente: TDataSource;
     ppRprtAntXCliente: TppReport;
     ppTitleBand2: TppTitleBand;
-    ppLblTitulo2: TppLabel;
     ppImage2: TppImage;
     ppHeaderBand2: TppHeaderBand;
     ppLabel14: TppLabel;
@@ -287,6 +286,9 @@ type
     ppLabel70: TppLabel;
     ppLabel71: TppLabel;
     ppMemo1: TppMemo;
+    ppSystemVariable5: TppSystemVariable;
+    ppLblTitulo2: TppLabel;
+    ppSystemVariable8: TppSystemVariable;
     procedure ppHeaderBand3BeforePrint(Sender: TObject);
   private
     { Private declarations }

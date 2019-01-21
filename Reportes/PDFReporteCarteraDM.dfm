@@ -193,7 +193,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
     Left = 280
     DataPipelineName = 'dbpReport'
     inherited ppHeaderBand1: TppHeaderBand
-      mmHeight = 28310
+      mmHeight = 26458
       inherited pplblFilters: TppLabel
         SaveOrder = -1
         LayerName = Foreground
@@ -201,13 +201,10 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       inherited pplblTitle: TppLabel
         SaveOrder = -1
         Caption = 'CARTERA - ANTIG'#220'EDAD DE SALDOS (000 PESOS)'
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        mmWidth = 198967
+        mmWidth = 216959
         LayerName = Foreground
       end
       inherited ppImage1: TppImage
-        mmLeft = 9790
         LayerName = Foreground
       end
       object ppLabel3: TppLabel
@@ -215,7 +212,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         AutoSize = False
         Border.BorderPositions = [bpBottom]
         Border.Visible = True
-        Border.Weight = 0.748799979686737100
+        Border.Weight = 0.748799979686737000
         Caption = 'Cliente'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -226,7 +223,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         mmHeight = 4763
         mmLeft = 5292
-        mmTop = 23019
+        mmTop = 21688
         mmWidth = 48683
         BandType = 0
         LayerName = Foreground
@@ -236,7 +233,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         AutoSize = False
         Border.BorderPositions = [bpBottom]
         Border.Visible = True
-        Border.Weight = 0.748799979686737100
+        Border.Weight = 0.748799979686737000
         Caption = 'T.C.'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -248,7 +245,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         mmHeight = 4763
         mmLeft = 67471
-        mmTop = 23019
+        mmTop = 21688
         mmWidth = 4763
         BandType = 0
         LayerName = Foreground
@@ -258,7 +255,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         AutoSize = False
         Border.BorderPositions = [bpBottom]
         Border.Visible = True
-        Border.Weight = 0.748799979686737100
+        Border.Weight = 0.748799979686737000
         Caption = 'Total'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -270,7 +267,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         mmHeight = 4763
         mmLeft = 92340
-        mmTop = 23018
+        mmTop = 21688
         mmWidth = 14023
         BandType = 0
         LayerName = Foreground
@@ -280,7 +277,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         AutoSize = False
         Border.BorderPositions = [bpBottom]
         Border.Visible = True
-        Border.Weight = 0.748799979686737100
+        Border.Weight = 0.748799979686737000
         Caption = 'Por Vencer'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -292,7 +289,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         mmHeight = 4763
         mmLeft = 108479
-        mmTop = 23018
+        mmTop = 21688
         mmWidth = 13229
         BandType = 0
         LayerName = Foreground
@@ -302,7 +299,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         AutoSize = False
         Border.BorderPositions = [bpBottom]
         Border.Visible = True
-        Border.Weight = 0.748799979686737100
+        Border.Weight = 0.748799979686737000
         Caption = 'Vencido'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -314,7 +311,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         mmHeight = 4763
         mmLeft = 133879
-        mmTop = 23019
+        mmTop = 21688
         mmWidth = 10054
         BandType = 0
         LayerName = Foreground
@@ -324,7 +321,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         AutoSize = False
         Border.BorderPositions = [bpBottom]
         Border.Visible = True
-        Border.Weight = 0.748799979686737100
+        Border.Weight = 0.748799979686737000
         Caption = '0-30'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -336,7 +333,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         mmHeight = 4763
         mmLeft = 146597
-        mmTop = 23018
+        mmTop = 21688
         mmWidth = 10054
         BandType = 0
         LayerName = Foreground
@@ -346,7 +343,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         AutoSize = False
         Border.BorderPositions = [bpBottom]
         Border.Visible = True
-        Border.Weight = 0.748799979686737100
+        Border.Weight = 0.748799979686737000
         Caption = '31-60'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -358,7 +355,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         mmHeight = 4763
         mmLeft = 158503
-        mmTop = 23018
+        mmTop = 21688
         mmWidth = 10054
         BandType = 0
         LayerName = Foreground
@@ -368,7 +365,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         AutoSize = False
         Border.BorderPositions = [bpBottom]
         Border.Visible = True
-        Border.Weight = 0.748799979686737100
+        Border.Weight = 0.748799979686737000
         Caption = '91-120'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -380,7 +377,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         mmHeight = 4763
         mmLeft = 182315
-        mmTop = 23018
+        mmTop = 21688
         mmWidth = 10054
         BandType = 0
         LayerName = Foreground
@@ -390,7 +387,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         AutoSize = False
         Border.BorderPositions = [bpBottom]
         Border.Visible = True
-        Border.Weight = 0.748799979686737100
+        Border.Weight = 0.748799979686737000
         Caption = '61-90'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -402,7 +399,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         mmHeight = 4763
         mmLeft = 170409
-        mmTop = 23018
+        mmTop = 21688
         mmWidth = 10054
         BandType = 0
         LayerName = Foreground
@@ -412,7 +409,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         AutoSize = False
         Border.BorderPositions = [bpBottom]
         Border.Visible = True
-        Border.Weight = 0.748799979686737100
+        Border.Weight = 0.748799979686737000
         Caption = '>120'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -424,7 +421,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         mmHeight = 4763
         mmLeft = 194486
-        mmTop = 23018
+        mmTop = 21688
         mmWidth = 10054
         BandType = 0
         LayerName = Foreground
@@ -434,7 +431,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         AutoSize = False
         Border.BorderPositions = [bpBottom]
         Border.Visible = True
-        Border.Weight = 0.748799979686737100
+        Border.Weight = 0.748799979686737000
         Caption = '% A Tiempo'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -446,7 +443,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         mmHeight = 6879
         mmLeft = 207186
-        mmTop = 20902
+        mmTop = 19572
         mmWidth = 8467
         BandType = 0
         LayerName = Foreground
@@ -456,7 +453,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         AutoSize = False
         Border.BorderPositions = [bpBottom]
         Border.Visible = True
-        Border.Weight = 0.748799979686737100
+        Border.Weight = 0.748799979686737000
         Caption = 'D'#237'as/Pago con retraso'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -468,7 +465,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         mmHeight = 6879
         mmLeft = 216711
-        mmTop = 20902
+        mmTop = 19572
         mmWidth = 13229
         BandType = 0
         LayerName = Foreground
@@ -478,7 +475,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         AutoSize = False
         Border.BorderPositions = [bpBottom]
         Border.Visible = True
-        Border.Weight = 0.748799979686737100
+        Border.Weight = 0.748799979686737000
         Caption = 'R'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -490,7 +487,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         mmHeight = 4763
         mmLeft = 245286
-        mmTop = 23018
+        mmTop = 21688
         mmWidth = 9525
         BandType = 0
         LayerName = Foreground
@@ -500,7 +497,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         AutoSize = False
         Border.BorderPositions = [bpBottom]
         Border.Visible = True
-        Border.Weight = 0.748799979686737100
+        Border.Weight = 0.748799979686737000
         Caption = 'D'#237'as/Pago Total'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -512,7 +509,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         mmHeight = 6879
         mmLeft = 230999
-        mmTop = 20902
+        mmTop = 19572
         mmWidth = 11642
         BandType = 0
         LayerName = Foreground
@@ -522,7 +519,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         AutoSize = False
         Border.BorderPositions = [bpBottom]
         Border.Visible = True
-        Border.Weight = 0.748799979686737100
+        Border.Weight = 0.748799979686737000
         Caption = 'Mensualidades'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -534,7 +531,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         mmHeight = 4763
         mmLeft = 73294
-        mmTop = 23019
+        mmTop = 21688
         mmWidth = 16933
         BandType = 0
         LayerName = Foreground
@@ -544,7 +541,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         AutoSize = False
         Border.BorderPositions = [bpBottom]
         Border.Visible = True
-        Border.Weight = 0.748799979686737100
+        Border.Weight = 0.748799979686737000
         Caption = 'Alias'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -555,7 +552,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         mmHeight = 4763
         mmLeft = 60062
-        mmTop = 23019
+        mmTop = 21688
         mmWidth = 6085
         BandType = 0
         LayerName = Foreground
@@ -565,7 +562,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         AutoSize = False
         Border.BorderPositions = [bpBottom]
         Border.Visible = True
-        Border.Weight = 0.748799979686737100
+        Border.Weight = 0.748799979686737000
         Caption = 'Vigente'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -577,8 +574,25 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         mmHeight = 4763
         mmLeft = 122502
-        mmTop = 23019
+        mmTop = 21688
         mmWidth = 10054
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppSystemVariable10: TppSystemVariable
+        UserName = 'SystemVariable10'
+        DisplayFormat = #39'Fecha:'#39' dd/mm/yyyy'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 10
+        Font.Style = [fsBold]
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 4233
+        mmLeft = 232569
+        mmTop = 14288
+        mmWidth = 29369
         BandType = 0
         LayerName = Foreground
       end
@@ -943,24 +957,19 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       end
     end
     inherited ppFooterBand1: TppFooterBand
-      mmHeight = 5292
       inherited ppLineFooter: TppLine
-        mmHeight = 2646
-        mmWidth = 264055
+        mmHeight = 3440
+        mmTop = 5821
+        mmWidth = 260615
         LayerName = Foreground
       end
       inherited pplblPrintDate: TppSystemVariable
         SaveOrder = -1
-        Font.Name = 'arial'
-        mmWidth = 37835
         LayerName = Foreground
       end
       inherited pplblPageNo: TppSystemVariable
         SaveOrder = -1
-        Font.Name = 'arial'
-        mmLeft = 255059
-        mmTop = 0
-        mmWidth = 10319
+        mmLeft = 241830
         LayerName = Foreground
       end
     end
@@ -1147,7 +1156,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         UserName = 'Label34'
         AutoSize = False
         Border.BorderPositions = [bpBottom]
-        Border.Weight = 0.748799979686737100
+        Border.Weight = 0.748799979686737000
         Caption = 'Totales:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -1211,7 +1220,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         UserName = 'Label35'
         AutoSize = False
         Border.BorderPositions = [bpBottom]
-        Border.Weight = 0.748799979686737100
+        Border.Weight = 0.748799979686737000
         Caption = '100 %'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -1298,7 +1307,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         UserName = 'Label2'
         AutoSize = False
         Border.BorderPositions = [bpBottom]
-        Border.Weight = 0.748799979686737100
+        Border.Weight = 0.748799979686737000
         Caption = '100 %'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -1383,7 +1392,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
           PrinterSetup.DocumentName = 'Report'
           PrinterSetup.Duplex = dpVertical
           PrinterSetup.Orientation = poLandscape
-          PrinterSetup.PaperName = 'Carta'
+          PrinterSetup.PaperName = 'Letter (8,5" x 11")'
           PrinterSetup.PrinterName = 'Default'
           PrinterSetup.SaveDeviceSettings = False
           PrinterSetup.mmMarginBottom = 6350
@@ -1407,7 +1416,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               AutoSize = False
               Border.BorderPositions = [bpBottom]
               Border.Visible = True
-              Border.Weight = 0.748799979686737100
+              Border.Weight = 0.748799979686737000
               Caption = 'Q'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
@@ -1428,7 +1437,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               AutoSize = False
               Border.BorderPositions = [bpBottom]
               Border.Visible = True
-              Border.Weight = 0.748799979686737100
+              Border.Weight = 0.748799979686737000
               Caption = 'Total'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
@@ -1449,7 +1458,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               AutoSize = False
               Border.BorderPositions = [bpBottom]
               Border.Visible = True
-              Border.Weight = 0.748799979686737100
+              Border.Weight = 0.748799979686737000
               Caption = 'Por Vencer'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
@@ -1470,7 +1479,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               AutoSize = False
               Border.BorderPositions = [bpBottom]
               Border.Visible = True
-              Border.Weight = 0.748799979686737100
+              Border.Weight = 0.748799979686737000
               Caption = 'Vencido'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
@@ -1491,7 +1500,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               AutoSize = False
               Border.BorderPositions = [bpBottom]
               Border.Visible = True
-              Border.Weight = 0.748799979686737100
+              Border.Weight = 0.748799979686737000
               Caption = '0-30'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
@@ -1512,7 +1521,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               AutoSize = False
               Border.BorderPositions = [bpBottom]
               Border.Visible = True
-              Border.Weight = 0.748799979686737100
+              Border.Weight = 0.748799979686737000
               Caption = '31-60'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
@@ -1533,7 +1542,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               AutoSize = False
               Border.BorderPositions = [bpBottom]
               Border.Visible = True
-              Border.Weight = 0.748799979686737100
+              Border.Weight = 0.748799979686737000
               Caption = '61-90'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
@@ -1554,7 +1563,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               AutoSize = False
               Border.BorderPositions = [bpBottom]
               Border.Visible = True
-              Border.Weight = 0.748799979686737100
+              Border.Weight = 0.748799979686737000
               Caption = '91-120'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
@@ -1575,7 +1584,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               AutoSize = False
               Border.BorderPositions = [bpBottom]
               Border.Visible = True
-              Border.Weight = 0.748799979686737100
+              Border.Weight = 0.748799979686737000
               Caption = '>120'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
@@ -1596,7 +1605,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               AutoSize = False
               Border.BorderPositions = [bpBottom]
               Border.Visible = True
-              Border.Weight = 0.748799979686737100
+              Border.Weight = 0.748799979686737000
               Caption = 'Vigente'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
@@ -2112,7 +2121,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                 PrinterSetup.DocumentName = 'Report'
                 PrinterSetup.Duplex = dpVertical
                 PrinterSetup.Orientation = poLandscape
-                PrinterSetup.PaperName = 'Carta'
+                PrinterSetup.PaperName = 'Letter (8,5" x 11")'
                 PrinterSetup.PrinterName = 'Default'
                 PrinterSetup.SaveDeviceSettings = False
                 PrinterSetup.mmMarginBottom = 6350
@@ -2143,7 +2152,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                     UserName = 'Label55'
                     AutoSize = False
                     Border.BorderPositions = [bpBottom]
-                    Border.Weight = 0.748799979686737100
+                    Border.Weight = 0.748799979686737000
                     Caption = 'Mediana:'
                     Font.Charset = DEFAULT_CHARSET
                     Font.Color = clBlack
@@ -2186,7 +2195,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                     UserName = 'Label56'
                     AutoSize = False
                     Border.BorderPositions = [bpBottom]
-                    Border.Weight = 0.748799979686737100
+                    Border.Weight = 0.748799979686737000
                     Caption = '80%:'
                     Font.Charset = DEFAULT_CHARSET
                     Font.Color = clBlack
@@ -2207,7 +2216,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                     UserName = 'Label57'
                     AutoSize = False
                     Border.BorderPositions = [bpBottom]
-                    Border.Weight = 0.748799979686737100
+                    Border.Weight = 0.748799979686737000
                     Caption = '20%:'
                     Font.Charset = DEFAULT_CHARSET
                     Font.Color = clBlack
@@ -2228,7 +2237,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                     UserName = 'Label58'
                     AutoSize = False
                     Border.BorderPositions = [bpBottom]
-                    Border.Weight = 0.748799979686737100
+                    Border.Weight = 0.748799979686737000
                     Caption = 'N'#250'mero de Cr'#233'ditos:'
                     Font.Charset = DEFAULT_CHARSET
                     Font.Color = clBlack
@@ -2249,7 +2258,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                     UserName = 'Label59'
                     AutoSize = False
                     Border.BorderPositions = [bpBottom]
-                    Border.Weight = 0.748799979686737100
+                    Border.Weight = 0.748799979686737000
                     Caption = 'Monto Total:'
                     Font.Charset = DEFAULT_CHARSET
                     Font.Color = clBlack
@@ -2270,7 +2279,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                     UserName = 'Label60'
                     AutoSize = False
                     Border.BorderPositions = [bpBottom]
-                    Border.Weight = 0.748799979686737100
+                    Border.Weight = 0.748799979686737000
                     Caption = 'Monto Cr'#233'dito Promedio:'
                     Font.Charset = DEFAULT_CHARSET
                     Font.Color = clBlack
@@ -2291,7 +2300,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                     UserName = 'Label61'
                     AutoSize = False
                     Border.BorderPositions = [bpBottom]
-                    Border.Weight = 0.748799979686737100
+                    Border.Weight = 0.748799979686737000
                     Caption = 'Desde:'
                     Font.Charset = DEFAULT_CHARSET
                     Font.Color = clBlack
@@ -2312,7 +2321,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                     UserName = 'Label62'
                     AutoSize = False
                     Border.BorderPositions = [bpBottom]
-                    Border.Weight = 0.748799979686737100
+                    Border.Weight = 0.748799979686737000
                     Caption = 'Hasta:'
                     Font.Charset = DEFAULT_CHARSET
                     Font.Color = clBlack
@@ -2334,7 +2343,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                     AutoSize = False
                     Border.BorderPositions = [bpBottom]
                     Border.Visible = True
-                    Border.Weight = 0.748799979686737100
+                    Border.Weight = 0.748799979686737000
                     Caption = 'Q'
                     Font.Charset = DEFAULT_CHARSET
                     Font.Color = clBlack
@@ -2356,7 +2365,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                     AutoSize = False
                     Border.BorderPositions = [bpBottom]
                     Border.Visible = True
-                    Border.Weight = 0.748799979686737100
+                    Border.Weight = 0.748799979686737000
                     Caption = 'Monto'
                     Font.Charset = DEFAULT_CHARSET
                     Font.Color = clBlack
@@ -2378,7 +2387,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                     AutoSize = False
                     Border.BorderPositions = [bpBottom]
                     Border.Visible = True
-                    Border.Weight = 0.748799979686737100
+                    Border.Weight = 0.748799979686737000
                     Caption = 'Promedio'
                     Font.Charset = DEFAULT_CHARSET
                     Font.Color = clBlack
@@ -2399,7 +2408,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                     UserName = 'LblCantidad80'
                     AutoSize = False
                     Border.BorderPositions = [bpBottom]
-                    Border.Weight = 0.748799979686737100
+                    Border.Weight = 0.748799979686737000
                     Caption = '0'
                     Font.Charset = DEFAULT_CHARSET
                     Font.Color = clBlack
@@ -2420,7 +2429,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                     UserName = 'LblCantidad20'
                     AutoSize = False
                     Border.BorderPositions = [bpBottom]
-                    Border.Weight = 0.748799979686737100
+                    Border.Weight = 0.748799979686737000
                     Caption = '0'
                     Font.Charset = DEFAULT_CHARSET
                     Font.Color = clBlack
@@ -2441,7 +2450,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                     UserName = 'LbMonto80'
                     AutoSize = False
                     Border.BorderPositions = [bpBottom]
-                    Border.Weight = 0.748799979686737100
+                    Border.Weight = 0.748799979686737000
                     Caption = '0'
                     Font.Charset = DEFAULT_CHARSET
                     Font.Color = clBlack
@@ -2462,7 +2471,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                     UserName = 'LbMonto20'
                     AutoSize = False
                     Border.BorderPositions = [bpBottom]
-                    Border.Weight = 0.748799979686737100
+                    Border.Weight = 0.748799979686737000
                     Caption = '0'
                     Font.Charset = DEFAULT_CHARSET
                     Font.Color = clBlack
@@ -2483,7 +2492,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                     UserName = 'LblProm80'
                     AutoSize = False
                     Border.BorderPositions = [bpBottom]
-                    Border.Weight = 0.748799979686737100
+                    Border.Weight = 0.748799979686737000
                     Caption = '0'
                     Font.Charset = DEFAULT_CHARSET
                     Font.Color = clBlack
@@ -2504,7 +2513,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                     UserName = 'LblProm20'
                     AutoSize = False
                     Border.BorderPositions = [bpBottom]
-                    Border.Weight = 0.748799979686737100
+                    Border.Weight = 0.748799979686737000
                     Caption = '0'
                     Font.Charset = DEFAULT_CHARSET
                     Font.Color = clBlack
@@ -2525,7 +2534,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                     UserName = 'LblNumCreditos'
                     AutoSize = False
                     Border.BorderPositions = [bpBottom]
-                    Border.Weight = 0.748799979686737100
+                    Border.Weight = 0.748799979686737000
                     Caption = '0'
                     Font.Charset = DEFAULT_CHARSET
                     Font.Color = clBlack
@@ -2546,7 +2555,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                     UserName = 'LblMontoTotal'
                     AutoSize = False
                     Border.BorderPositions = [bpBottom]
-                    Border.Weight = 0.748799979686737100
+                    Border.Weight = 0.748799979686737000
                     Caption = '0'
                     Font.Charset = DEFAULT_CHARSET
                     Font.Color = clBlack
@@ -2567,7 +2576,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                     UserName = 'LblMontoPromedioCred'
                     AutoSize = False
                     Border.BorderPositions = [bpBottom]
-                    Border.Weight = 0.748799979686737100
+                    Border.Weight = 0.748799979686737000
                     Caption = '0'
                     Font.Charset = DEFAULT_CHARSET
                     Font.Color = clBlack
@@ -2588,7 +2597,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                     UserName = 'LblValorMinCred'
                     AutoSize = False
                     Border.BorderPositions = [bpBottom]
-                    Border.Weight = 0.748799979686737100
+                    Border.Weight = 0.748799979686737000
                     Caption = '0'
                     Font.Charset = DEFAULT_CHARSET
                     Font.Color = clBlack
@@ -2608,7 +2617,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                     UserName = 'LblValorMaxCred'
                     AutoSize = False
                     Border.BorderPositions = [bpBottom]
-                    Border.Weight = 0.748799979686737100
+                    Border.Weight = 0.748799979686737000
                     Caption = '0'
                     Font.Charset = DEFAULT_CHARSET
                     Font.Color = clBlack
@@ -2879,7 +2888,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.Duplex = dpVertical
     PrinterSetup.Orientation = poLandscape
-    PrinterSetup.PaperName = 'Carta'
+    PrinterSetup.PaperName = 'Letter (8,5" x 11")'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350
@@ -2890,7 +2899,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
     PrinterSetup.mmPaperWidth = 279400
     PrinterSetup.PaperSize = 1
     Template.FileName = 'C:\Desarrollo\SOFOM\Reportes\rptHojaControl.rtm'
-    Units = utMillimeters
+    Units = utScreenPixels
     ArchiveFileName = '($MyDocuments)\ReportArchive.raf'
     DeviceType = 'Screen'
     DefaultFileDeviceType = 'PDF'
@@ -2940,13 +2949,13 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
     object ppHeaderBand2: TppHeaderBand
       Background.Brush.Style = bsClear
       mmBottomOffset = 0
-      mmHeight = 43392
+      mmHeight = 31221
       mmPrintPosition = 0
       object ppLabel18: TppLabel
         UserName = 'Label1'
         AutoSize = False
         Border.BorderPositions = [bpBottom]
-        Border.Weight = 0.748799979686737100
+        Border.Weight = 0.748799979686737000
         Caption = 'Contrato'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -2957,7 +2966,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         mmHeight = 4763
         mmLeft = 4763
-        mmTop = 38000
+        mmTop = 26340
         mmWidth = 10848
         BandType = 0
         LayerName = Foreground1
@@ -2966,7 +2975,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         UserName = 'Label2'
         AutoSize = False
         Border.BorderPositions = [bpBottom]
-        Border.Weight = 0.748799979686737100
+        Border.Weight = 0.748799979686737000
         Caption = 'Anexo'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -2977,7 +2986,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         mmHeight = 4763
         mmLeft = 43656
-        mmTop = 38000
+        mmTop = 26340
         mmWidth = 11642
         BandType = 0
         LayerName = Foreground1
@@ -2986,7 +2995,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         UserName = 'Label4'
         AutoSize = False
         Border.BorderPositions = [bpBottom]
-        Border.Weight = 0.748799979686737100
+        Border.Weight = 0.748799979686737000
         Caption = 'Tipo Cr'#233'dito'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -2998,7 +3007,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         mmHeight = 4720
         mmLeft = 87313
-        mmTop = 30000
+        mmTop = 20725
         mmWidth = 24871
         BandType = 0
         LayerName = Foreground1
@@ -3007,7 +3016,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         UserName = 'Label3'
         AutoSize = False
         Border.BorderPositions = [bpBottom]
-        Border.Weight = 0.748799979686737100
+        Border.Weight = 0.748799979686737000
         Caption = 'Cliente'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -3018,7 +3027,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         mmHeight = 4763
         mmLeft = 4763
-        mmTop = 30000
+        mmTop = 20725
         mmWidth = 10848
         BandType = 0
         LayerName = Foreground1
@@ -3037,7 +3046,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         DataPipelineName = 'ppDBHojaControlCte'
         mmHeight = 4763
         mmLeft = 18521
-        mmTop = 30000
+        mmTop = 20725
         mmWidth = 65088
         BandType = 0
         LayerName = Foreground1
@@ -3056,7 +3065,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         DataPipelineName = 'ppDBHojaControlCte'
         mmHeight = 4763
         mmLeft = 18521
-        mmTop = 38000
+        mmTop = 26340
         mmWidth = 23548
         BandType = 0
         LayerName = Foreground1
@@ -3075,7 +3084,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         DataPipelineName = 'ppDBHojaControlCte'
         mmHeight = 4763
         mmLeft = 57415
-        mmTop = 38000
+        mmTop = 26340
         mmWidth = 26194
         BandType = 0
         LayerName = Foreground1
@@ -3094,7 +3103,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         DataPipelineName = 'ppDBHojaControlCte'
         mmHeight = 4720
         mmLeft = 113771
-        mmTop = 30000
+        mmTop = 20725
         mmWidth = 5027
         BandType = 0
         LayerName = Foreground1
@@ -3112,7 +3121,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         mmHeight = 4720
         mmLeft = 127529
-        mmTop = 30000
+        mmTop = 20725
         mmWidth = 24077
         BandType = 0
         LayerName = Foreground1
@@ -3131,49 +3140,13 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         DataPipelineName = 'ppDBHojaControlCte'
         mmHeight = 4720
         mmLeft = 152665
-        mmTop = 30000
+        mmTop = 20725
         mmWidth = 13229
         BandType = 0
         LayerName = Foreground1
       end
-      object ppLabel17: TppLabel
-        UserName = 'Titulo'
-        Anchors = [atLeft, atTop, atRight, atBottom]
-        AutoSize = False
-        Caption = 'HOJA CONTROL'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Name = 'arial'
-        Font.Size = 18
-        Font.Style = [fsBold, fsItalic]
-        TextAlignment = taCentered
-        Transparent = True
-        mmHeight = 14023
-        mmLeft = 57415
-        mmTop = 5556
-        mmWidth = 158750
-        BandType = 0
-        LayerName = Foreground1
-      end
-      object ppSystemVariable2: TppSystemVariable
-        UserName = 'lblPrintDate1'
-        VarType = vtPrintDateTime
-        DisplayFormat = #39'Fecha: '#39'dd/mmm/yyyy '
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Name = 'Arial'
-        Font.Size = 11
-        Font.Style = [fsBold]
-        Transparent = True
-        mmHeight = 4763
-        mmLeft = 220928
-        mmTop = 5556
-        mmWidth = 37571
-        BandType = 0
-        LayerName = Foreground1
-      end
       object ppImage2: TppImage
-        UserName = 'Image1'
+        UserName = 'Image2'
         AlignHorizontal = ahCenter
         AlignVertical = avCenter
         MaintainAspectRatio = False
@@ -6543,10 +6516,45 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
           FA83085DC1E1075269AD9754D2DF47253096F46FD1DF29B4FF7F06460362098A
           25FD552AC7D2BF4F2530965452492595545246253096545249259554529752FA
           7F9BDF589A23AA3D690000000049454E44AE426082}
-        mmHeight = 26723
-        mmLeft = 4763
+        mmHeight = 18521
+        mmLeft = 7938
         mmTop = 0
-        mmWidth = 50536
+        mmWidth = 34396
+        BandType = 0
+        LayerName = Foreground1
+      end
+      object ppLabel160: TppLabel
+        UserName = 'Titulo1'
+        AutoSize = False
+        Caption = 'HOJA CONTROL'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clNavy
+        Font.Name = 'Arial'
+        Font.Size = 20
+        Font.Style = [fsBold]
+        TextAlignment = taCentered
+        Transparent = True
+        mmHeight = 10583
+        mmLeft = 44979
+        mmTop = 0
+        mmWidth = 216959
+        BandType = 0
+        LayerName = Foreground1
+      end
+      object ppSystemVariable2: TppSystemVariable
+        UserName = 'SystemVariable101'
+        DisplayFormat = #39'Fecha:'#39' dd/mm/yyyy'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 10
+        Font.Style = [fsBold]
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 4233
+        mmLeft = 232569
+        mmTop = 14288
+        mmWidth = 29369
         BandType = 0
         LayerName = Foreground1
       end
@@ -6582,7 +6590,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
           PrinterSetup.DocumentName = 'Report'
           PrinterSetup.Duplex = dpVertical
           PrinterSetup.Orientation = poLandscape
-          PrinterSetup.PaperName = 'Carta'
+          PrinterSetup.PaperName = 'Letter (8,5" x 11")'
           PrinterSetup.PrinterName = 'Default'
           PrinterSetup.SaveDeviceSettings = False
           PrinterSetup.mmMarginBottom = 6350
@@ -6605,7 +6613,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               UserName = 'Label43'
               AutoSize = False
               Border.BorderPositions = [bpBottom]
-              Border.Weight = 0.748799979686737100
+              Border.Weight = 0.748799979686737000
               Caption = 'Equipo Financiado:'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
@@ -6959,10 +6967,10 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         Pen.Color = clGray
         Pen.Width = 2
         Weight = 1.500000000000000000
-        mmHeight = 3969
+        mmHeight = 3704
         mmLeft = 1323
-        mmTop = 5292
-        mmWidth = 264055
+        mmTop = 5556
+        mmWidth = 260615
         BandType = 8
         LayerName = Foreground1
       end
@@ -6994,7 +7002,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 3969
-        mmLeft = 245269
+        mmLeft = 241829
         mmTop = 1323
         mmWidth = 20109
         BandType = 8
@@ -7030,7 +7038,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
           UserName = 'Label31'
           AutoSize = False
           Border.BorderPositions = [bpBottom]
-          Border.Weight = 0.748799979686737100
+          Border.Weight = 0.748799979686737000
           Caption = 'Saldo a la Fecha:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -7074,7 +7082,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
           UserName = 'Label32'
           AutoSize = False
           Border.BorderPositions = [bpBottom]
-          Border.Weight = 0.748799979686737100
+          Border.Weight = 0.748799979686737000
           Caption = 'PagosTotales en el contrato:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -7118,7 +7126,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
           UserName = 'Label33'
           AutoSize = False
           Border.BorderPositions = [bpBottom]
-          Border.Weight = 0.748799979686737100
+          Border.Weight = 0.748799979686737000
           Caption = 'Cobrados a la Fecha:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -7162,7 +7170,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
           UserName = 'Label36'
           AutoSize = False
           Border.BorderPositions = [bpBottom]
-          Border.Weight = 0.748799979686737100
+          Border.Weight = 0.748799979686737000
           Caption = 'Pagados Con Retraso o Sin Pago:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -7206,7 +7214,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
           UserName = 'Label37'
           AutoSize = False
           Border.BorderPositions = [bpBottom]
-          Border.Weight = 0.748799979686737100
+          Border.Weight = 0.748799979686737000
           Caption = 'Pagados a tiempo:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -7250,7 +7258,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
           UserName = 'Label38'
           AutoSize = False
           Border.BorderPositions = [bpBottom]
-          Border.Weight = 0.748799979686737100
+          Border.Weight = 0.748799979686737000
           Caption = 'D'#237'as Pago con Retraso'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -7294,7 +7302,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
           UserName = 'Label39'
           AutoSize = False
           Border.BorderPositions = [bpBottom]
-          Border.Weight = 0.748799979686737100
+          Border.Weight = 0.748799979686737000
           Caption = 'D'#237'as/Pago Total'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -7404,7 +7412,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
           UserName = 'Label40'
           AutoSize = False
           Border.BorderPositions = [bpBottom]
-          Border.Weight = 0.748799979686737100
+          Border.Weight = 0.748799979686737000
           Caption = 'Cobrados Recientes sin Pago:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -7426,7 +7434,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
           UserName = 'Label41'
           AutoSize = False
           Border.BorderPositions = [bpBottom]
-          Border.Weight = 0.748799979686737100
+          Border.Weight = 0.748799979686737000
           Caption = 'D'#237'as de Mayor Atraso'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -7470,7 +7478,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
           UserName = 'Label42'
           AutoSize = False
           Border.BorderPositions = [bpBottom]
-          Border.Weight = 0.748799979686737100
+          Border.Weight = 0.748799979686737000
           Caption = 'D'#237'as de Mayor Prepago'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -7812,316 +7820,6 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
     UserName = 'DBHojaControlCte'
     Left = 216
     Top = 240
-    object ppDBHojaControlCteppField1: TppField
-      FieldAlias = 'IdAnexo'
-      FieldName = 'IdAnexo'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
-      Position = 0
-      Searchable = False
-      Sortable = False
-    end
-    object ppDBHojaControlCteppField2: TppField
-      FieldAlias = 'Anexo'
-      FieldName = 'Anexo'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
-      Position = 1
-      Searchable = False
-      Sortable = False
-    end
-    object ppDBHojaControlCteppField3: TppField
-      FieldAlias = 'Plazo'
-      FieldName = 'Plazo'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
-      Position = 2
-      Searchable = False
-      Sortable = False
-    end
-    object ppDBHojaControlCteppField4: TppField
-      FieldAlias = 'Contrato'
-      FieldName = 'Contrato'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
-      Position = 3
-      Searchable = False
-      Sortable = False
-    end
-    object ppDBHojaControlCteppField5: TppField
-      FieldAlias = 'CalificacionInicial'
-      FieldName = 'CalificacionInicial'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
-      Position = 4
-      Searchable = False
-      Sortable = False
-    end
-    object ppDBHojaControlCteppField6: TppField
-      FieldAlias = 'cliente'
-      FieldName = 'cliente'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
-      Position = 5
-      Searchable = False
-      Sortable = False
-    end
-    object ppDBHojaControlCteppField7: TppField
-      FieldAlias = 'TC'
-      FieldName = 'TC'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
-      Position = 6
-      Searchable = False
-      Sortable = False
-    end
-    object ppDBHojaControlCteppField8: TppField
-      FieldAlias = 'IdAnexoCreditoEstatus'
-      FieldName = 'IdAnexoCreditoEstatus'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
-      Position = 7
-      Searchable = False
-      Sortable = False
-    end
-    object ppDBHojaControlCteppField9: TppField
-      FieldAlias = 'PrecioMoneda'
-      FieldName = 'PrecioMoneda'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
-      Position = 8
-      Searchable = False
-      Sortable = False
-    end
-    object ppDBHojaControlCteppField10: TppField
-      FieldAlias = 'TipoCambio'
-      FieldName = 'TipoCambio'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
-      Position = 9
-      Searchable = False
-      Sortable = False
-    end
-    object ppDBHojaControlCteppField11: TppField
-      FieldAlias = 'PrecioTotal'
-      FieldName = 'PrecioTotal'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
-      Position = 10
-      Searchable = False
-      Sortable = False
-    end
-    object ppDBHojaControlCteppField12: TppField
-      FieldAlias = 'DiasRetrasoXAnexo'
-      FieldName = 'DiasRetrasoXAnexo'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
-      Position = 11
-      Searchable = False
-      Sortable = False
-    end
-    object ppDBHojaControlCteppField13: TppField
-      FieldAlias = 'Cantidad'
-      FieldName = 'Cantidad'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
-      Position = 12
-      Searchable = False
-      Sortable = False
-    end
-    object ppDBHojaControlCteppField14: TppField
-      FieldAlias = 'DiasSoloretraso'
-      FieldName = 'DiasSoloretraso'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
-      Position = 13
-      Searchable = False
-      Sortable = False
-    end
-    object ppDBHojaControlCteppField15: TppField
-      FieldAlias = 'MayorAtraso'
-      FieldName = 'MayorAtraso'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
-      Position = 14
-      Searchable = False
-      Sortable = False
-    end
-    object ppDBHojaControlCteppField16: TppField
-      FieldAlias = 'MayorPrepago'
-      FieldName = 'MayorPrepago'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
-      Position = 15
-      Searchable = False
-      Sortable = False
-    end
-    object ppDBHojaControlCteppField17: TppField
-      FieldAlias = 'Atrasados'
-      FieldName = 'Atrasados'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
-      Position = 16
-      Searchable = False
-      Sortable = False
-    end
-    object ppDBHojaControlCteppField18: TppField
-      FieldAlias = 'ATiempo'
-      FieldName = 'ATiempo'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
-      Position = 17
-      Searchable = False
-      Sortable = False
-    end
-    object ppDBHojaControlCteppField19: TppField
-      FieldAlias = 'TotalPagados'
-      FieldName = 'TotalPagados'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
-      Position = 18
-      Searchable = False
-      Sortable = False
-    end
-    object ppDBHojaControlCteppField20: TppField
-      FieldAlias = 'PorcentajeAtrasados'
-      FieldName = 'PorcentajeAtrasados'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
-      Position = 19
-      Searchable = False
-      Sortable = False
-    end
-    object ppDBHojaControlCteppField21: TppField
-      FieldAlias = 'PorcentajeATiempo'
-      FieldName = 'PorcentajeATiempo'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
-      Position = 20
-      Searchable = False
-      Sortable = False
-    end
-    object ppDBHojaControlCteppField22: TppField
-      FieldAlias = 'DiasPagoTotal'
-      FieldName = 'DiasPagoTotal'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
-      Position = 21
-      Searchable = False
-      Sortable = False
-    end
-    object ppDBHojaControlCteppField23: TppField
-      FieldAlias = 'DiasPagoRetraso'
-      FieldName = 'DiasPagoRetraso'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
-      Position = 22
-      Searchable = False
-      Sortable = False
-    end
-    object ppDBHojaControlCteppField24: TppField
-      FieldAlias = 'cantCobRecNP'
-      FieldName = 'cantCobRecNP'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
-      Position = 23
-      Searchable = False
-      Sortable = False
-    end
-    object ppDBHojaControlCteppField25: TppField
-      FieldAlias = 'AtrasadoORec'
-      FieldName = 'AtrasadoORec'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
-      Position = 24
-      Searchable = False
-      Sortable = False
-    end
-    object ppDBHojaControlCteppField26: TppField
-      FieldAlias = 'SaldoInsoluto'
-      FieldName = 'SaldoInsoluto'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
-      Position = 25
-      Searchable = False
-      Sortable = False
-    end
-    object ppDBHojaControlCteppField27: TppField
-      FieldAlias = 'SaldoTotal'
-      FieldName = 'SaldoTotal'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
-      Position = 26
-      Searchable = False
-      Sortable = False
-    end
-    object ppDBHojaControlCteppField28: TppField
-      FieldAlias = 'PocAtraORec'
-      FieldName = 'PocAtraORec'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
-      Position = 27
-      Searchable = False
-      Sortable = False
-    end
-    object ppDBHojaControlCteppField29: TppField
-      FieldAlias = 'TotalSinPago'
-      FieldName = 'TotalSinPago'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
-      Position = 28
-      Searchable = False
-      Sortable = False
-    end
-    object ppDBHojaControlCteppField30: TppField
-      FieldAlias = 'PorSinPago'
-      FieldName = 'PorSinPago'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
-      Position = 29
-      Searchable = False
-      Sortable = False
-    end
-    object ppDBHojaControlCteppField31: TppField
-      FieldAlias = 'Suma'
-      FieldName = 'Suma'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
-      Position = 30
-      Searchable = False
-      Sortable = False
-    end
   end
   object ADODtStSumasXCalificacion: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -8476,7 +8174,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.Duplex = dpVertical
     PrinterSetup.Orientation = poLandscape
-    PrinterSetup.PaperName = 'Carta'
+    PrinterSetup.PaperName = 'Letter (8,5" x 11")'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 5000
@@ -8544,7 +8242,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         UserName = 'Label1'
         AutoSize = False
         Border.BorderPositions = [bpBottom]
-        Border.Weight = 0.748799979686737100
+        Border.Weight = 0.748799979686737000
         Caption = 'Contrato'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -8564,7 +8262,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         UserName = 'Label2'
         AutoSize = False
         Border.BorderPositions = [bpBottom]
-        Border.Weight = 0.748799979686737100
+        Border.Weight = 0.748799979686737000
         Caption = 'Anexo'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -8584,7 +8282,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         UserName = 'Label4'
         AutoSize = False
         Border.BorderPositions = [bpBottom]
-        Border.Weight = 0.748799979686737100
+        Border.Weight = 0.748799979686737000
         Caption = 'Tipo Cr'#233'dito'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -8605,7 +8303,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         UserName = 'Label3'
         AutoSize = False
         Border.BorderPositions = [bpBottom]
-        Border.Weight = 0.748799979686737100
+        Border.Weight = 0.748799979686737000
         Caption = 'Cliente'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clNavy
@@ -12766,7 +12464,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
           PrinterSetup.DocumentName = 'Report'
           PrinterSetup.Duplex = dpVertical
           PrinterSetup.Orientation = poLandscape
-          PrinterSetup.PaperName = 'Carta'
+          PrinterSetup.PaperName = 'Letter (8,5" x 11")'
           PrinterSetup.PrinterName = 'Default'
           PrinterSetup.SaveDeviceSettings = False
           PrinterSetup.mmMarginBottom = 5000
@@ -13154,7 +12852,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
             PrinterSetup.DocumentName = 'Report'
             PrinterSetup.Duplex = dpVertical
             PrinterSetup.Orientation = poLandscape
-            PrinterSetup.PaperName = 'Carta'
+            PrinterSetup.PaperName = 'Letter (8,5" x 11")'
             PrinterSetup.PrinterName = 'Default'
             PrinterSetup.SaveDeviceSettings = False
             PrinterSetup.mmMarginBottom = 5000
@@ -13205,7 +12903,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                   PrinterSetup.DocumentName = 'Report'
                   PrinterSetup.Duplex = dpVertical
                   PrinterSetup.Orientation = poLandscape
-                  PrinterSetup.PaperName = 'Carta'
+                  PrinterSetup.PaperName = 'Letter (8,5" x 11")'
                   PrinterSetup.PrinterName = 'Default'
                   PrinterSetup.SaveDeviceSettings = False
                   PrinterSetup.mmMarginBottom = 5000
@@ -13228,7 +12926,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                       UserName = 'Label43'
                       AutoSize = False
                       Border.BorderPositions = [bpBottom]
-                      Border.Weight = 0.748799979686737100
+                      Border.Weight = 0.748799979686737000
                       Caption = 'Equipo Financiado:'
                       Font.Charset = DEFAULT_CHARSET
                       Font.Color = clBlack
@@ -13580,7 +13278,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                 UserName = 'Label89'
                 AutoSize = False
                 Border.BorderPositions = [bpBottom]
-                Border.Weight = 0.748799979686737100
+                Border.Weight = 0.748799979686737000
                 Caption = 'Saldo a la Fecha:'
                 Font.Charset = DEFAULT_CHARSET
                 Font.Color = clBlack
@@ -13622,7 +13320,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                 UserName = 'Label96'
                 AutoSize = False
                 Border.BorderPositions = [bpBottom]
-                Border.Weight = 0.748799979686737100
+                Border.Weight = 0.748799979686737000
                 Caption = 'PagosTotales en el contrato:'
                 Font.Charset = DEFAULT_CHARSET
                 Font.Color = clBlack
@@ -13664,7 +13362,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                 UserName = 'Label97'
                 AutoSize = False
                 Border.BorderPositions = [bpBottom]
-                Border.Weight = 0.748799979686737100
+                Border.Weight = 0.748799979686737000
                 Caption = 'Cobrados a la Fecha:'
                 Font.Charset = DEFAULT_CHARSET
                 Font.Color = clBlack
@@ -13706,7 +13404,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                 UserName = 'Label98'
                 AutoSize = False
                 Border.BorderPositions = [bpBottom]
-                Border.Weight = 0.748799979686737100
+                Border.Weight = 0.748799979686737000
                 Caption = 'Pagados Con Retraso o Sin Pago:'
                 Font.Charset = DEFAULT_CHARSET
                 Font.Color = clBlack
@@ -13748,7 +13446,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                 UserName = 'Label99'
                 AutoSize = False
                 Border.BorderPositions = [bpBottom]
-                Border.Weight = 0.748799979686737100
+                Border.Weight = 0.748799979686737000
                 Caption = 'Pagados a tiempo:'
                 Font.Charset = DEFAULT_CHARSET
                 Font.Color = clBlack
@@ -13790,7 +13488,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                 UserName = 'Label100'
                 AutoSize = False
                 Border.BorderPositions = [bpBottom]
-                Border.Weight = 0.748799979686737100
+                Border.Weight = 0.748799979686737000
                 Caption = 'D'#237'as Pago con Retraso'
                 Font.Charset = DEFAULT_CHARSET
                 Font.Color = clBlack
@@ -13832,7 +13530,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                 UserName = 'Label101'
                 AutoSize = False
                 Border.BorderPositions = [bpBottom]
-                Border.Weight = 0.748799979686737100
+                Border.Weight = 0.748799979686737000
                 Caption = 'D'#237'as/Pago Total'
                 Font.Charset = DEFAULT_CHARSET
                 Font.Color = clBlack
@@ -13937,7 +13635,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                 UserName = 'Label401'
                 AutoSize = False
                 Border.BorderPositions = [bpBottom]
-                Border.Weight = 0.748799979686737100
+                Border.Weight = 0.748799979686737000
                 Caption = 'Cobrados Recientes sin Pago:'
                 Font.Charset = DEFAULT_CHARSET
                 Font.Color = clBlack
@@ -13958,7 +13656,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                 UserName = 'Label103'
                 AutoSize = False
                 Border.BorderPositions = [bpBottom]
-                Border.Weight = 0.748799979686737100
+                Border.Weight = 0.748799979686737000
                 Caption = 'D'#237'as de Mayor Atraso'
                 Font.Charset = DEFAULT_CHARSET
                 Font.Color = clBlack
@@ -14000,7 +13698,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                 UserName = 'Label104'
                 AutoSize = False
                 Border.BorderPositions = [bpBottom]
-                Border.Weight = 0.748799979686737100
+                Border.Weight = 0.748799979686737000
                 Caption = 'D'#237'as de Mayor Prepago'
                 Font.Charset = DEFAULT_CHARSET
                 Font.Color = clBlack
@@ -14251,7 +13949,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.Duplex = dpVertical
     PrinterSetup.Orientation = poLandscape
-    PrinterSetup.PaperName = 'Carta'
+    PrinterSetup.PaperName = 'Letter (8,5" x 11")'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 5000
@@ -14262,7 +13960,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
     PrinterSetup.mmPaperWidth = 279400
     PrinterSetup.PaperSize = 1
     Template.FileName = 'C:\Desarrollo\SOFOM\Reportes\rptResAmorYPagoVAgo16_17AC.rtm'
-    Units = utMillimeters
+    Units = utScreenPixels
     ArchiveFileName = '($MyDocuments)\ReportArchive.raf'
     DeviceType = 'Screen'
     DefaultFileDeviceType = 'PDF'
@@ -14313,13 +14011,13 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
       Background.Brush.Style = bsClear
       PrintHeight = phDynamic
       mmBottomOffset = 0
-      mmHeight = 44186
+      mmHeight = 57150
       mmPrintPosition = 0
       object ppLabel110: TppLabel
         UserName = 'Label1'
         AutoSize = False
         Border.BorderPositions = [bpBottom]
-        Border.Weight = 0.748799979686737100
+        Border.Weight = 0.748799979686737000
         Caption = 'Contrato'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -14330,7 +14028,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         mmHeight = 4763
         mmLeft = 186002
-        mmTop = 13758
+        mmTop = 31248
         mmWidth = 12435
         BandType = 0
         LayerName = BandLayer19
@@ -14339,7 +14037,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         UserName = 'Label2'
         AutoSize = False
         Border.BorderPositions = [bpBottom]
-        Border.Weight = 0.748799979686737100
+        Border.Weight = 0.748799979686737000
         Caption = 'Anexo'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -14350,7 +14048,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         mmHeight = 4763
         mmLeft = 224896
-        mmTop = 13758
+        mmTop = 31248
         mmWidth = 11642
         BandType = 0
         LayerName = BandLayer19
@@ -14359,7 +14057,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         UserName = 'Label4'
         AutoSize = False
         Border.BorderPositions = [bpBottom]
-        Border.Weight = 0.748799979686737100
+        Border.Weight = 0.748799979686737000
         Caption = 'Tipo Cr'#233'dito'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -14371,7 +14069,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         VerticalAlignment = avCenter
         mmHeight = 4763
         mmLeft = 186002
-        mmTop = 20108
+        mmTop = 37598
         mmWidth = 15875
         BandType = 0
         LayerName = BandLayer19
@@ -14391,7 +14089,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         DataPipelineName = 'ppDBPpAnexoCliente'
         mmHeight = 11906
         mmLeft = 186002
-        mmTop = 2117
+        mmTop = 19607
         mmWidth = 78846
         BandType = 0
         LayerName = BandLayer19
@@ -14410,7 +14108,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         DataPipelineName = 'ppDBPpAnexoCliente'
         mmHeight = 4763
         mmLeft = 199761
-        mmTop = 13758
+        mmTop = 31248
         mmWidth = 23548
         BandType = 0
         LayerName = BandLayer19
@@ -14429,7 +14127,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         DataPipelineName = 'ppDBPpAnexoCliente'
         mmHeight = 4763
         mmLeft = 238655
-        mmTop = 13758
+        mmTop = 31248
         mmWidth = 26194
         BandType = 0
         LayerName = BandLayer19
@@ -14448,47 +14146,503 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
         DataPipelineName = 'ppDBPpAnexoCliente'
         mmHeight = 4763
         mmLeft = 204523
-        mmTop = 20108
+        mmTop = 37598
         mmWidth = 18785
         BandType = 0
         LayerName = BandLayer19
       end
-      object ppLabel116: TppLabel
-        UserName = 'Titulo'
+      object ppLabel129: TppLabel
+        UserName = 'Label94'
         AutoSize = False
-        Caption = 'RESUMEN FACTURACI'#211'N Y PAGOS'
+        Caption = 'Fact. Mora'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Name = 'times new Roman'
-        Font.Size = 12
-        Font.Style = [fsBold, fsItalic]
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
         Transparent = True
-        mmHeight = 5821
-        mmLeft = 4763
-        mmTop = 27781
-        mmWidth = 120121
+        WordWrap = True
+        mmHeight = 8202
+        mmLeft = 251355
+        mmTop = 47911
+        mmWidth = 11642
         BandType = 0
         LayerName = BandLayer19
       end
-      object ppSystemVariable7: TppSystemVariable
-        UserName = 'lblPrintDate1'
-        VarType = vtPrintDateTime
-        DisplayFormat = #39'Fecha: '#39'dd/mmm/yyyy '
+      object ppSubReport8: TppSubReport
+        UserName = 'SubReport6'
+        ExpandAll = False
+        NewPrintJob = False
+        OutlineSettings.CreateNode = True
+        ParentWidth = False
+        TraverseAllData = False
+        DataPipelineName = 'ppDBProductos'
+        mmHeight = 25665
+        mmLeft = 44979
+        mmTop = 19579
+        mmWidth = 136790
+        BandType = 0
+        LayerName = BandLayer19
+        mmBottomOffset = 0
+        mmOverFlowOffset = 0
+        mmStopPosition = 0
+        mmMinHeight = 0
+        object ppChildReport8: TppChildReport
+          AutoStop = False
+          DataPipeline = ppDBProductos
+          PrinterSetup.BinName = 'Default'
+          PrinterSetup.DocumentName = 'Report'
+          PrinterSetup.Duplex = dpVertical
+          PrinterSetup.Orientation = poLandscape
+          PrinterSetup.PaperName = 'Letter (8,5" x 11")'
+          PrinterSetup.PrinterName = 'Default'
+          PrinterSetup.SaveDeviceSettings = False
+          PrinterSetup.mmMarginBottom = 5000
+          PrinterSetup.mmMarginLeft = 5000
+          PrinterSetup.mmMarginRight = 5000
+          PrinterSetup.mmMarginTop = 6350
+          PrinterSetup.mmPaperHeight = 215900
+          PrinterSetup.mmPaperWidth = 279400
+          PrinterSetup.PaperSize = 1
+          Units = utMillimeters
+          Version = '15.0'
+          mmColumnWidth = 0
+          DataPipelineName = 'ppDBProductos'
+          object ppTitleBand12: TppTitleBand
+            Background.Brush.Style = bsClear
+            mmBottomOffset = 0
+            mmHeight = 7144
+            mmPrintPosition = 0
+            object ppLabel132: TppLabel
+              UserName = 'Label105'
+              AutoSize = False
+              Border.BorderPositions = [bpBottom]
+              Border.Weight = 0.748799979686737000
+              Caption = 'Equipo Financiado'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 8
+              Font.Style = [fsBold]
+              Transparent = True
+              VerticalAlignment = avCenter
+              mmHeight = 3968
+              mmLeft = 2910
+              mmTop = 2384
+              mmWidth = 43392
+              BandType = 1
+              LayerName = BandLayer15
+            end
+            object ppLabel133: TppLabel
+              UserName = 'Label111'
+              AutoSize = False
+              Caption = ' Valor  Factura      IVA Incluido'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 8
+              Font.Style = [fsBold]
+              Transparent = True
+              WordWrap = True
+              mmHeight = 6879
+              mmLeft = 83873
+              mmTop = 265
+              mmWidth = 21431
+              BandType = 1
+              LayerName = BandLayer15
+            end
+            object ppLabel134: TppLabel
+              UserName = 'Label501'
+              AutoSize = False
+              Caption = '% Anexo'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 8
+              Font.Style = [fsBold]
+              TextAlignment = taRightJustified
+              Transparent = True
+              VerticalAlignment = avCenter
+              mmHeight = 3969
+              mmLeft = 105834
+              mmTop = 2385
+              mmWidth = 12965
+              BandType = 1
+              LayerName = BandLayer15
+            end
+          end
+          object ppDetailBand11: TppDetailBand
+            Background1.Brush.Style = bsClear
+            Background2.Brush.Style = bsClear
+            mmBottomOffset = 0
+            mmHeight = 8731
+            mmPrintPosition = 0
+            object ppDBText119: TppDBText
+              UserName = 'DBText108'
+              DataField = 'Descripcion'
+              DataPipeline = ppDBProductos
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 8
+              Font.Style = []
+              ParentDataPipeline = False
+              Transparent = True
+              WordWrap = True
+              DataPipelineName = 'ppDBProductos'
+              mmHeight = 7673
+              mmLeft = 2910
+              mmTop = 265
+              mmWidth = 79904
+              BandType = 4
+              LayerName = BandLayer15
+            end
+            object ppDBText120: TppDBText
+              UserName = 'DBText114'
+              DataField = 'PrecioTotal'
+              DataPipeline = ppDBProductos
+              DisplayFormat = '#,0;-#,0'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 8
+              Font.Style = []
+              ParentDataPipeline = False
+              TextAlignment = taRightJustified
+              Transparent = True
+              VerticalAlignment = avCenter
+              DataPipelineName = 'ppDBProductos'
+              mmHeight = 4763
+              mmLeft = 83873
+              mmTop = 265
+              mmWidth = 20373
+              BandType = 4
+              LayerName = BandLayer15
+            end
+            object ppDBText121: TppDBText
+              UserName = 'DBText115'
+              DataField = 'PorcentajeAnexo'
+              DataPipeline = ppDBProductos
+              DisplayFormat = '0 %'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Arial'
+              Font.Size = 8
+              Font.Style = []
+              ParentDataPipeline = False
+              ResetGroup = ppGroup1
+              TextAlignment = taRightJustified
+              Transparent = True
+              VerticalAlignment = avCenter
+              DataPipelineName = 'ppDBProductos'
+              mmHeight = 4763
+              mmLeft = 105834
+              mmTop = 265
+              mmWidth = 12965
+              BandType = 4
+              LayerName = BandLayer15
+            end
+          end
+          object ppSummaryBand9: TppSummaryBand
+            Background.Brush.Style = bsClear
+            mmBottomOffset = 0
+            mmHeight = 0
+            mmPrintPosition = 0
+          end
+          object ppDesignLayers11: TppDesignLayers
+            object ppDesignLayer11: TppDesignLayer
+              UserName = 'BandLayer15'
+              LayerType = ltBanded
+              Index = 0
+            end
+          end
+        end
+      end
+      object ppLabel117: TppLabel
+        UserName = 'Label117'
+        AutoSize = False
+        Caption = 'Periodo'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Name = 'Times New Roman'
-        Font.Size = 11
-        Font.Style = [fsBold, fsItalic]
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
         Transparent = True
+        mmHeight = 3968
+        mmLeft = 2113
+        mmTop = 52146
+        mmWidth = 11113
+        BandType = 0
+        LayerName = BandLayer19
+      end
+      object ppLabel118: TppLabel
+        UserName = 'Label118'
+        AutoSize = False
+        Caption = 'Fecha Venc.'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        Transparent = True
+        mmHeight = 3968
+        mmLeft = 14019
+        mmTop = 52146
+        mmWidth = 16933
+        BandType = 0
+        LayerName = BandLayer19
+      end
+      object ppLabel119: TppLabel
+        UserName = 'Label119'
+        AutoSize = False
+        Caption = 'Subtotal'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 3968
+        mmLeft = 70640
+        mmTop = 52146
+        mmWidth = 17992
+        BandType = 0
+        LayerName = BandLayer19
+      end
+      object ppLabel121: TppLabel
+        UserName = 'Label121'
+        AutoSize = False
+        Caption = 'IVA'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 3968
+        mmLeft = 93373
+        mmTop = 52146
+        mmWidth = 16404
+        BandType = 0
+        LayerName = BandLayer19
+      end
+      object ppLabel122: TppLabel
+        UserName = 'Label122'
+        AutoSize = False
+        Caption = 'Total'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 3968
+        mmLeft = 111365
+        mmTop = 52146
+        mmWidth = 20108
+        BandType = 0
+        LayerName = BandLayer19
+      end
+      object ppLabel123: TppLabel
+        UserName = 'Label902'
+        AutoSize = False
+        Caption = 'Moratorios'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 3969
+        mmLeft = 207430
+        mmTop = 51615
+        mmWidth = 21700
+        BandType = 0
+        LayerName = BandLayer19
+      end
+      object ppLabel125: TppLabel
+        UserName = 'Label125'
+        AutoSize = False
+        Caption = 'Fecha Fact.'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        Transparent = True
+        mmHeight = 3968
+        mmLeft = 33069
+        mmTop = 52146
+        mmWidth = 18521
+        BandType = 0
+        LayerName = BandLayer19
+      end
+      object ppLabel126: TppLabel
+        UserName = 'Label126'
+        AutoSize = False
+        Caption = 'Folio Fact.'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        Transparent = True
+        mmHeight = 3968
+        mmLeft = 52913
+        mmTop = 52146
+        mmWidth = 15875
+        BandType = 0
+        LayerName = BandLayer19
+      end
+      object ppLabel127: TppLabel
+        UserName = 'Label127'
+        AutoSize = False
+        Caption = 'D'#237'as Mora'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        Transparent = True
+        WordWrap = True
+        VerticalAlignment = avCenter
+        mmHeight = 9525
+        mmLeft = 197909
+        mmTop = 46588
+        mmWidth = 9790
+        BandType = 0
+        LayerName = BandLayer19
+      end
+      object ppLabel128: TppLabel
+        UserName = 'Label128'
+        AutoSize = False
+        Caption = 'Fecha Pago Mora'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        Transparent = True
+        WordWrap = True
+        mmHeight = 7680
+        mmLeft = 232040
+        mmTop = 47911
+        mmWidth = 15081
+        BandType = 0
+        LayerName = BandLayer19
+      end
+      object ppLine10: TppLine
+        UserName = 'Line10'
+        Style = lsDouble
+        Weight = 0.750000000000000000
+        mmHeight = 1058
+        mmLeft = 1323
+        mmTop = 56092
+        mmWidth = 264848
+        BandType = 0
+        LayerName = BandLayer19
+      end
+      object ppLabel130: TppLabel
+        UserName = 'Label130'
+        AutoSize = False
+        Caption = 'Pagos'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 3969
+        mmLeft = 154517
+        mmTop = 51615
+        mmWidth = 20638
+        BandType = 0
+        LayerName = BandLayer19
+      end
+      object ppLabel131: TppLabel
+        UserName = 'Label701'
+        AutoSize = False
+        Caption = 'Saldo'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 3968
+        mmLeft = 136504
+        mmTop = 52146
+        mmWidth = 15875
+        BandType = 0
+        LayerName = BandLayer19
+      end
+      object ppLabel156: TppLabel
+        UserName = 'Label156'
+        AutoSize = False
+        Caption = 'FechaPago'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 3704
+        mmLeft = 177006
+        mmTop = 51615
+        mmWidth = 16400
+        BandType = 0
+        LayerName = BandLayer19
+      end
+      object ppLabel105: TppLabel
+        UserName = 'Label3'
+        AutoSize = False
+        Border.BorderPositions = [bpBottom]
+        Border.Weight = 0.748799979686737000
+        Caption = 'Valor:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        VerticalAlignment = avCenter
         mmHeight = 4763
-        mmLeft = 222780
-        mmTop = 27781
-        mmWidth = 35983
+        mmLeft = 224896
+        mmTop = 37598
+        mmWidth = 11642
+        BandType = 0
+        LayerName = BandLayer19
+      end
+      object ppDBText125: TppDBText
+        UserName = 'DBText125'
+        DataField = 'ContratadoTotal'
+        DataPipeline = ppDBPpAnexoCliente
+        DisplayFormat = '#,0.00;-#,0.00'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        Transparent = True
+        VerticalAlignment = avCenter
+        DataPipelineName = 'ppDBPpAnexoCliente'
+        mmHeight = 4763
+        mmLeft = 239978
+        mmTop = 37598
+        mmWidth = 18785
         BandType = 0
         LayerName = BandLayer19
       end
       object ppImage5: TppImage
-        UserName = 'Image1'
+        UserName = 'Image5'
         AlignHorizontal = ahCenter
         AlignVertical = avCenter
         MaintainAspectRatio = False
@@ -17858,500 +18012,45 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
           FA83085DC1E1075269AD9754D2DF47253096F46FD1DF29B4FF7F06460362098A
           25FD552AC7D2BF4F2530965452492595545246253096545249259554529752FA
           7F9BDF589A23AA3D690000000049454E44AE426082}
-        mmHeight = 21431
-        mmLeft = 4763
+        mmHeight = 18521
+        mmLeft = 7938
         mmTop = 0
-        mmWidth = 48419
+        mmWidth = 34396
         BandType = 0
         LayerName = BandLayer19
       end
-      object ppLabel129: TppLabel
-        UserName = 'Label94'
+      object ppLabel17: TppLabel
+        UserName = 'Titulo2'
         AutoSize = False
-        Caption = 'Fact. Mora'
+        Caption = 'RESUMEN FACTURACI'#211'N Y PAGOS'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
+        Font.Color = clNavy
         Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = []
+        Font.Size = 20
+        Font.Style = [fsBold]
+        TextAlignment = taCentered
         Transparent = True
-        WordWrap = True
-        mmHeight = 8202
-        mmLeft = 251355
-        mmTop = 34396
-        mmWidth = 11642
+        mmHeight = 10583
+        mmLeft = 44979
+        mmTop = 0
+        mmWidth = 219869
         BandType = 0
         LayerName = BandLayer19
       end
-      object ppSubReport8: TppSubReport
-        UserName = 'SubReport6'
-        ExpandAll = False
-        NewPrintJob = False
-        OutlineSettings.CreateNode = True
-        ParentWidth = False
-        TraverseAllData = False
-        DataPipelineName = 'ppDBProductos'
-        mmHeight = 25665
-        mmLeft = 55298
-        mmTop = 794
-        mmWidth = 126471
-        BandType = 0
-        LayerName = BandLayer19
-        mmBottomOffset = 0
-        mmOverFlowOffset = 0
-        mmStopPosition = 0
-        mmMinHeight = 0
-        object ppChildReport8: TppChildReport
-          AutoStop = False
-          DataPipeline = ppDBProductos
-          PrinterSetup.BinName = 'Default'
-          PrinterSetup.DocumentName = 'Report'
-          PrinterSetup.Duplex = dpVertical
-          PrinterSetup.Orientation = poLandscape
-          PrinterSetup.PaperName = 'Carta'
-          PrinterSetup.PrinterName = 'Default'
-          PrinterSetup.SaveDeviceSettings = False
-          PrinterSetup.mmMarginBottom = 5000
-          PrinterSetup.mmMarginLeft = 5000
-          PrinterSetup.mmMarginRight = 5000
-          PrinterSetup.mmMarginTop = 6350
-          PrinterSetup.mmPaperHeight = 215900
-          PrinterSetup.mmPaperWidth = 279400
-          PrinterSetup.PaperSize = 1
-          Units = utMillimeters
-          Version = '15.0'
-          mmColumnWidth = 0
-          DataPipelineName = 'ppDBProductos'
-          object ppTitleBand12: TppTitleBand
-            Background.Brush.Style = bsClear
-            mmBottomOffset = 0
-            mmHeight = 7144
-            mmPrintPosition = 0
-            object ppLabel132: TppLabel
-              UserName = 'Label105'
-              AutoSize = False
-              Border.BorderPositions = [bpBottom]
-              Border.Weight = 0.748799979686737100
-              Caption = 'Equipo Financiado'
-              Font.Charset = DEFAULT_CHARSET
-              Font.Color = clBlack
-              Font.Name = 'Arial'
-              Font.Size = 8
-              Font.Style = [fsBold]
-              Transparent = True
-              VerticalAlignment = avCenter
-              mmHeight = 3968
-              mmLeft = 2910
-              mmTop = 2384
-              mmWidth = 43392
-              BandType = 1
-              LayerName = BandLayer15
-            end
-            object ppLabel133: TppLabel
-              UserName = 'Label111'
-              AutoSize = False
-              Caption = ' Valor  Factura      IVA Incluido'
-              Font.Charset = DEFAULT_CHARSET
-              Font.Color = clBlack
-              Font.Name = 'Arial'
-              Font.Size = 8
-              Font.Style = [fsBold]
-              Transparent = True
-              WordWrap = True
-              mmHeight = 6879
-              mmLeft = 83873
-              mmTop = 265
-              mmWidth = 21431
-              BandType = 1
-              LayerName = BandLayer15
-            end
-            object ppLabel134: TppLabel
-              UserName = 'Label501'
-              AutoSize = False
-              Caption = '% Anexo'
-              Font.Charset = DEFAULT_CHARSET
-              Font.Color = clBlack
-              Font.Name = 'Arial'
-              Font.Size = 8
-              Font.Style = [fsBold]
-              TextAlignment = taRightJustified
-              Transparent = True
-              VerticalAlignment = avCenter
-              mmHeight = 3969
-              mmLeft = 105834
-              mmTop = 2385
-              mmWidth = 12965
-              BandType = 1
-              LayerName = BandLayer15
-            end
-          end
-          object ppDetailBand11: TppDetailBand
-            Background1.Brush.Style = bsClear
-            Background2.Brush.Style = bsClear
-            mmBottomOffset = 0
-            mmHeight = 8731
-            mmPrintPosition = 0
-            object ppDBText119: TppDBText
-              UserName = 'DBText108'
-              DataField = 'Descripcion'
-              DataPipeline = ppDBProductos
-              Font.Charset = DEFAULT_CHARSET
-              Font.Color = clBlack
-              Font.Name = 'Arial'
-              Font.Size = 8
-              Font.Style = []
-              ParentDataPipeline = False
-              Transparent = True
-              WordWrap = True
-              DataPipelineName = 'ppDBProductos'
-              mmHeight = 7673
-              mmLeft = 2910
-              mmTop = 265
-              mmWidth = 79904
-              BandType = 4
-              LayerName = BandLayer15
-            end
-            object ppDBText120: TppDBText
-              UserName = 'DBText114'
-              DataField = 'PrecioTotal'
-              DataPipeline = ppDBProductos
-              DisplayFormat = '#,0;-#,0'
-              Font.Charset = DEFAULT_CHARSET
-              Font.Color = clBlack
-              Font.Name = 'Arial'
-              Font.Size = 8
-              Font.Style = []
-              ParentDataPipeline = False
-              TextAlignment = taRightJustified
-              Transparent = True
-              VerticalAlignment = avCenter
-              DataPipelineName = 'ppDBProductos'
-              mmHeight = 4763
-              mmLeft = 83873
-              mmTop = 265
-              mmWidth = 20373
-              BandType = 4
-              LayerName = BandLayer15
-            end
-            object ppDBText121: TppDBText
-              UserName = 'DBText115'
-              DataField = 'PorcentajeAnexo'
-              DataPipeline = ppDBProductos
-              DisplayFormat = '0 %'
-              Font.Charset = DEFAULT_CHARSET
-              Font.Color = clBlack
-              Font.Name = 'Arial'
-              Font.Size = 8
-              Font.Style = []
-              ParentDataPipeline = False
-              ResetGroup = ppGroup1
-              TextAlignment = taRightJustified
-              Transparent = True
-              VerticalAlignment = avCenter
-              DataPipelineName = 'ppDBProductos'
-              mmHeight = 4763
-              mmLeft = 105834
-              mmTop = 265
-              mmWidth = 12965
-              BandType = 4
-              LayerName = BandLayer15
-            end
-          end
-          object ppSummaryBand9: TppSummaryBand
-            Background.Brush.Style = bsClear
-            mmBottomOffset = 0
-            mmHeight = 0
-            mmPrintPosition = 0
-          end
-          object ppDesignLayers11: TppDesignLayers
-            object ppDesignLayer11: TppDesignLayer
-              UserName = 'BandLayer15'
-              LayerType = ltBanded
-              Index = 0
-            end
-          end
-        end
-      end
-      object ppLabel117: TppLabel
-        UserName = 'Label117'
-        AutoSize = False
-        Caption = 'Periodo'
+      object ppSystemVariable7: TppSystemVariable
+        UserName = 'SystemVariable102'
+        DisplayFormat = #39'Fecha:'#39' dd/mm/yyyy'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = []
-        Transparent = True
-        mmHeight = 3968
-        mmLeft = 2113
-        mmTop = 38631
-        mmWidth = 11113
-        BandType = 0
-        LayerName = BandLayer19
-      end
-      object ppLabel118: TppLabel
-        UserName = 'Label118'
-        AutoSize = False
-        Caption = 'Fecha Venc.'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = []
-        Transparent = True
-        mmHeight = 3968
-        mmLeft = 14019
-        mmTop = 38631
-        mmWidth = 16933
-        BandType = 0
-        LayerName = BandLayer19
-      end
-      object ppLabel119: TppLabel
-        UserName = 'Label119'
-        AutoSize = False
-        Caption = 'Subtotal'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = []
+        Font.Size = 10
+        Font.Style = [fsBold]
         TextAlignment = taRightJustified
         Transparent = True
-        mmHeight = 3968
-        mmLeft = 70640
-        mmTop = 38631
-        mmWidth = 17992
-        BandType = 0
-        LayerName = BandLayer19
-      end
-      object ppLabel121: TppLabel
-        UserName = 'Label121'
-        AutoSize = False
-        Caption = 'IVA'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = []
-        TextAlignment = taRightJustified
-        Transparent = True
-        mmHeight = 3968
-        mmLeft = 93373
-        mmTop = 38631
-        mmWidth = 16404
-        BandType = 0
-        LayerName = BandLayer19
-      end
-      object ppLabel122: TppLabel
-        UserName = 'Label122'
-        AutoSize = False
-        Caption = 'Total'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = []
-        TextAlignment = taRightJustified
-        Transparent = True
-        mmHeight = 3968
-        mmLeft = 111365
-        mmTop = 38631
-        mmWidth = 20108
-        BandType = 0
-        LayerName = BandLayer19
-      end
-      object ppLabel123: TppLabel
-        UserName = 'Label902'
-        AutoSize = False
-        Caption = 'Moratorios'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = []
-        TextAlignment = taRightJustified
-        Transparent = True
-        mmHeight = 3969
-        mmLeft = 207430
-        mmTop = 38100
-        mmWidth = 21700
-        BandType = 0
-        LayerName = BandLayer19
-      end
-      object ppLabel125: TppLabel
-        UserName = 'Label125'
-        AutoSize = False
-        Caption = 'Fecha Fact.'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = []
-        Transparent = True
-        mmHeight = 3968
-        mmLeft = 33069
-        mmTop = 38631
-        mmWidth = 18521
-        BandType = 0
-        LayerName = BandLayer19
-      end
-      object ppLabel126: TppLabel
-        UserName = 'Label126'
-        AutoSize = False
-        Caption = 'Folio Fact.'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = []
-        Transparent = True
-        mmHeight = 3968
-        mmLeft = 52913
-        mmTop = 38631
-        mmWidth = 15875
-        BandType = 0
-        LayerName = BandLayer19
-      end
-      object ppLabel127: TppLabel
-        UserName = 'Label127'
-        AutoSize = False
-        Caption = 'D'#237'as Mora'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = []
-        Transparent = True
-        WordWrap = True
-        VerticalAlignment = avCenter
-        mmHeight = 9525
-        mmLeft = 197909
-        mmTop = 33073
-        mmWidth = 9790
-        BandType = 0
-        LayerName = BandLayer19
-      end
-      object ppLabel128: TppLabel
-        UserName = 'Label128'
-        AutoSize = False
-        Caption = 'Fecha Pago Mora'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = []
-        Transparent = True
-        WordWrap = True
-        mmHeight = 7680
-        mmLeft = 232040
-        mmTop = 34396
-        mmWidth = 15081
-        BandType = 0
-        LayerName = BandLayer19
-      end
-      object ppLine10: TppLine
-        UserName = 'Line10'
-        Style = lsDouble
-        Weight = 0.750000000000000000
-        mmHeight = 1058
-        mmLeft = 1323
-        mmTop = 42598
-        mmWidth = 264848
-        BandType = 0
-        LayerName = BandLayer19
-      end
-      object ppLabel130: TppLabel
-        UserName = 'Label130'
-        AutoSize = False
-        Caption = 'Pagos'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = []
-        TextAlignment = taRightJustified
-        Transparent = True
-        mmHeight = 3969
-        mmLeft = 154517
-        mmTop = 38100
-        mmWidth = 20638
-        BandType = 0
-        LayerName = BandLayer19
-      end
-      object ppLabel131: TppLabel
-        UserName = 'Label701'
-        AutoSize = False
-        Caption = 'Saldo'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = []
-        TextAlignment = taRightJustified
-        Transparent = True
-        mmHeight = 3968
-        mmLeft = 136504
-        mmTop = 38631
-        mmWidth = 15875
-        BandType = 0
-        LayerName = BandLayer19
-      end
-      object ppLabel156: TppLabel
-        UserName = 'Label156'
-        AutoSize = False
-        Caption = 'FechaPago'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = []
-        TextAlignment = taRightJustified
-        Transparent = True
-        mmHeight = 3704
-        mmLeft = 177006
-        mmTop = 38100
-        mmWidth = 16400
-        BandType = 0
-        LayerName = BandLayer19
-      end
-      object ppLabel105: TppLabel
-        UserName = 'Label3'
-        AutoSize = False
-        Border.BorderPositions = [bpBottom]
-        Border.Weight = 0.748799979686737100
-        Caption = 'Valor:'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = []
-        TextAlignment = taRightJustified
-        Transparent = True
-        VerticalAlignment = avCenter
-        mmHeight = 4763
-        mmLeft = 224896
-        mmTop = 20108
-        mmWidth = 11642
-        BandType = 0
-        LayerName = BandLayer19
-      end
-      object ppDBText125: TppDBText
-        UserName = 'DBText125'
-        DataField = 'ContratadoTotal'
-        DataPipeline = ppDBPpAnexoCliente
-        DisplayFormat = '#,0.00;-#,0.00'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 8
-        Font.Style = []
-        Transparent = True
-        VerticalAlignment = avCenter
-        DataPipelineName = 'ppDBPpAnexoCliente'
-        mmHeight = 4763
-        mmLeft = 239978
-        mmTop = 20108
-        mmWidth = 18785
+        mmHeight = 4233
+        mmLeft = 235479
+        mmTop = 14288
+        mmWidth = 29369
         BandType = 0
         LayerName = BandLayer19
       end
@@ -18388,7 +18087,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
           PrinterSetup.DocumentName = 'Report'
           PrinterSetup.Duplex = dpVertical
           PrinterSetup.Orientation = poLandscape
-          PrinterSetup.PaperName = 'Carta'
+          PrinterSetup.PaperName = 'Letter (8,5" x 11")'
           PrinterSetup.PrinterName = 'Default'
           PrinterSetup.SaveDeviceSettings = False
           PrinterSetup.mmMarginBottom = 5000
@@ -18626,7 +18325,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                 PrinterSetup.DocumentName = 'Report'
                 PrinterSetup.Duplex = dpVertical
                 PrinterSetup.Orientation = poLandscape
-                PrinterSetup.PaperName = 'Carta'
+                PrinterSetup.PaperName = 'Letter (8,5" x 11")'
                 PrinterSetup.PrinterName = 'Default'
                 PrinterSetup.SaveDeviceSettings = False
                 PrinterSetup.mmMarginBottom = 5000
@@ -18751,7 +18450,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                 PrinterSetup.DocumentName = 'Report'
                 PrinterSetup.Duplex = dpVertical
                 PrinterSetup.Orientation = poLandscape
-                PrinterSetup.PaperName = 'Carta'
+                PrinterSetup.PaperName = 'Letter (8,5" x 11")'
                 PrinterSetup.PrinterName = 'Default'
                 PrinterSetup.SaveDeviceSettings = False
                 PrinterSetup.mmMarginBottom = 5000
@@ -19088,7 +18787,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
           PrinterSetup.DocumentName = 'Report'
           PrinterSetup.Duplex = dpVertical
           PrinterSetup.Orientation = poLandscape
-          PrinterSetup.PaperName = 'Carta'
+          PrinterSetup.PaperName = 'Letter (8,5" x 11")'
           PrinterSetup.PrinterName = 'Default'
           PrinterSetup.SaveDeviceSettings = False
           PrinterSetup.mmMarginBottom = 5000
@@ -19672,7 +19371,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
           PrinterSetup.DocumentName = 'Report'
           PrinterSetup.Duplex = dpVertical
           PrinterSetup.Orientation = poLandscape
-          PrinterSetup.PaperName = 'Carta'
+          PrinterSetup.PaperName = 'Letter (8,5" x 11")'
           PrinterSetup.PrinterName = 'Default'
           PrinterSetup.SaveDeviceSettings = False
           PrinterSetup.mmMarginBottom = 5000
@@ -19723,7 +19422,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                 PrinterSetup.DocumentName = 'Report'
                 PrinterSetup.Duplex = dpVertical
                 PrinterSetup.Orientation = poLandscape
-                PrinterSetup.PaperName = 'Carta'
+                PrinterSetup.PaperName = 'Letter (8,5" x 11")'
                 PrinterSetup.PrinterName = 'Default'
                 PrinterSetup.SaveDeviceSettings = False
                 PrinterSetup.mmMarginBottom = 5000
@@ -19746,7 +19445,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
                     UserName = 'Label43'
                     AutoSize = False
                     Border.BorderPositions = [bpBottom]
-                    Border.Weight = 0.748799979686737100
+                    Border.Weight = 0.748799979686737000
                     Caption = 'Equipo Financiado:'
                     Font.Charset = DEFAULT_CHARSET
                     Font.Color = clBlack
@@ -20092,7 +19791,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               UserName = 'Label89'
               AutoSize = False
               Border.BorderPositions = [bpBottom]
-              Border.Weight = 0.748799979686737100
+              Border.Weight = 0.748799979686737000
               Caption = 'Saldo a la Fecha:'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
@@ -20134,7 +19833,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               UserName = 'Label96'
               AutoSize = False
               Border.BorderPositions = [bpBottom]
-              Border.Weight = 0.748799979686737100
+              Border.Weight = 0.748799979686737000
               Caption = 'PagosTotales en el contrato:'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
@@ -20176,7 +19875,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               UserName = 'Label97'
               AutoSize = False
               Border.BorderPositions = [bpBottom]
-              Border.Weight = 0.748799979686737100
+              Border.Weight = 0.748799979686737000
               Caption = 'Suma:'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
@@ -20197,7 +19896,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               UserName = 'DBText91'
               Border.BorderPositions = [bpTop]
               Border.Visible = True
-              Border.Weight = 0.748799979686737100
+              Border.Weight = 0.748799979686737000
               DataField = 'TotalSuma'
               DataPipeline = ppDBPpSumasAdicionales
               DisplayFormat = '#,0;-#,0'
@@ -20222,7 +19921,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               UserName = 'Label98'
               AutoSize = False
               Border.BorderPositions = [bpBottom]
-              Border.Weight = 0.748799979686737100
+              Border.Weight = 0.748799979686737000
               Caption = 'Pagados Con Retraso:'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
@@ -20264,7 +19963,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               UserName = 'Label99'
               AutoSize = False
               Border.BorderPositions = [bpBottom]
-              Border.Weight = 0.748799979686737100
+              Border.Weight = 0.748799979686737000
               Caption = 'Pagados a tiempo:'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
@@ -20306,7 +20005,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               UserName = 'Label100'
               AutoSize = False
               Border.BorderPositions = [bpBottom]
-              Border.Weight = 0.748799979686737100
+              Border.Weight = 0.748799979686737000
               Caption = 'Pagos con Retraso'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
@@ -20348,7 +20047,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               UserName = 'Label101'
               AutoSize = False
               Border.BorderPositions = [bpBottom]
-              Border.Weight = 0.748799979686737100
+              Border.Weight = 0.748799979686737000
               Caption = 'Pagos Totales'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
@@ -20454,7 +20153,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               UserName = 'Label401'
               AutoSize = False
               Border.BorderPositions = [bpBottom]
-              Border.Weight = 0.748799979686737100
+              Border.Weight = 0.748799979686737000
               Caption = 'Recientes sin Pago:'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
@@ -20476,7 +20175,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               UserName = 'Label103'
               AutoSize = False
               Border.BorderPositions = [bpBottom]
-              Border.Weight = 0.748799979686737100
+              Border.Weight = 0.748799979686737000
               Caption = 'Mayor Atraso'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
@@ -20518,7 +20217,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               UserName = 'Label104'
               AutoSize = False
               Border.BorderPositions = [bpBottom]
-              Border.Weight = 0.748799979686737100
+              Border.Weight = 0.748799979686737000
               Caption = 'Mayor Prepago'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
@@ -20594,7 +20293,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               AutoSize = False
               Border.BorderPositions = [bpBottom]
               Border.Visible = True
-              Border.Weight = 0.748799979686737100
+              Border.Weight = 0.748799979686737000
               Caption = 'D'#237'as '
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
@@ -20615,7 +20314,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               UserName = 'Label136'
               AutoSize = False
               Border.BorderPositions = [bpBottom]
-              Border.Weight = 0.748799979686737100
+              Border.Weight = 0.748799979686737000
               Caption = 'Facturadas:'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
@@ -20679,7 +20378,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               UserName = 'Label137'
               AutoSize = False
               Border.BorderPositions = [bpBottom]
-              Border.Weight = 0.748799979686737100
+              Border.Weight = 0.748799979686737000
               Caption = 'Pagadas:'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
@@ -20723,7 +20422,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               UserName = 'Label154'
               AutoSize = False
               Border.BorderPositions = [bpBottom]
-              Border.Weight = 0.748799979686737100
+              Border.Weight = 0.748799979686737000
               Caption = 'Por Facturar:'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
@@ -20744,7 +20443,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               UserName = 'Label158'
               AutoSize = False
               Border.BorderPositions = [bpBottom]
-              Border.Weight = 0.748799979686737100
+              Border.Weight = 0.748799979686737000
               Caption = 'Pendientes de Pagar:'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
@@ -20807,7 +20506,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               UserName = 'DBText184'
               Border.BorderPositions = [bpTop]
               Border.Visible = True
-              Border.Weight = 0.748799979686737100
+              Border.Weight = 0.748799979686737000
               DataField = 'Suma'
               DataPipeline = ppDBHojaControlCte
               DisplayFormat = '#,0;-#,0'
@@ -20832,7 +20531,7 @@ inherited DmReporteCarteraPDF: TDmReporteCarteraPDF
               UserName = 'Label159'
               AutoSize = False
               Border.BorderPositions = [bpBottom]
-              Border.Weight = 0.748799979686737100
+              Border.Weight = 0.748799979686737000
               Caption = 'Suma:'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack

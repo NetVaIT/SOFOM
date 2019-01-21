@@ -68,6 +68,7 @@ type
     ppDBCalc11: TppDBCalc;
     ppDBCalc12: TppDBCalc;
     ppLabel14: TppLabel;
+    ppSystemVariable1: TppSystemVariable;
     procedure DataModuleCreate(Sender: TObject);
     procedure mdParamsNewRecord(DataSet: TDataSet);
   private

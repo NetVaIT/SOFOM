@@ -113,7 +113,7 @@ inherited dmRptPagoAplicacionesMensual: TdmRptPagoAplicacionesMensual
     DataPipelineName = 'dbpReport'
     inherited ppHeaderBand1: TppHeaderBand
       PrintHeight = phDynamic
-      mmHeight = 29104
+      mmHeight = 33073
       inherited pplblFilters: TppLabel
         SaveOrder = -1
         mmTop = 11377
@@ -140,7 +140,7 @@ inherited dmRptPagoAplicacionesMensual: TdmRptPagoAplicacionesMensual
         Transparent = True
         mmHeight = 3704
         mmLeft = 0
-        mmTop = 21167
+        mmTop = 26467
         mmWidth = 39688
         BandType = 0
         LayerName = Foreground
@@ -158,7 +158,7 @@ inherited dmRptPagoAplicacionesMensual: TdmRptPagoAplicacionesMensual
         Transparent = True
         mmHeight = 3704
         mmLeft = 39667
-        mmTop = 21167
+        mmTop = 26467
         mmWidth = 18521
         BandType = 0
         LayerName = Foreground
@@ -176,7 +176,7 @@ inherited dmRptPagoAplicacionesMensual: TdmRptPagoAplicacionesMensual
         Transparent = True
         mmHeight = 3704
         mmLeft = 58183
-        mmTop = 21167
+        mmTop = 26467
         mmWidth = 18521
         BandType = 0
         LayerName = Foreground
@@ -194,7 +194,7 @@ inherited dmRptPagoAplicacionesMensual: TdmRptPagoAplicacionesMensual
         Transparent = True
         mmHeight = 3704
         mmLeft = 76700
-        mmTop = 21167
+        mmTop = 26467
         mmWidth = 18521
         BandType = 0
         LayerName = Foreground
@@ -212,7 +212,7 @@ inherited dmRptPagoAplicacionesMensual: TdmRptPagoAplicacionesMensual
         Transparent = True
         mmHeight = 3704
         mmLeft = 95217
-        mmTop = 21167
+        mmTop = 26467
         mmWidth = 18521
         BandType = 0
         LayerName = Foreground
@@ -230,7 +230,7 @@ inherited dmRptPagoAplicacionesMensual: TdmRptPagoAplicacionesMensual
         Transparent = True
         mmHeight = 3704
         mmLeft = 113734
-        mmTop = 21167
+        mmTop = 26467
         mmWidth = 18521
         BandType = 0
         LayerName = Foreground
@@ -248,7 +248,7 @@ inherited dmRptPagoAplicacionesMensual: TdmRptPagoAplicacionesMensual
         Transparent = True
         mmHeight = 3704
         mmLeft = 132228
-        mmTop = 21167
+        mmTop = 26467
         mmWidth = 18521
         BandType = 0
         LayerName = Foreground
@@ -266,7 +266,7 @@ inherited dmRptPagoAplicacionesMensual: TdmRptPagoAplicacionesMensual
         Transparent = True
         mmHeight = 3704
         mmLeft = 150767
-        mmTop = 21167
+        mmTop = 26467
         mmWidth = 18521
         BandType = 0
         LayerName = Foreground
@@ -284,7 +284,7 @@ inherited dmRptPagoAplicacionesMensual: TdmRptPagoAplicacionesMensual
         Transparent = True
         mmHeight = 3704
         mmLeft = 169284
-        mmTop = 21167
+        mmTop = 26467
         mmWidth = 18521
         BandType = 0
         LayerName = Foreground
@@ -302,7 +302,7 @@ inherited dmRptPagoAplicacionesMensual: TdmRptPagoAplicacionesMensual
         Transparent = True
         mmHeight = 3704
         mmLeft = 187800
-        mmTop = 21167
+        mmTop = 26467
         mmWidth = 18521
         BandType = 0
         LayerName = Foreground
@@ -320,7 +320,7 @@ inherited dmRptPagoAplicacionesMensual: TdmRptPagoAplicacionesMensual
         Transparent = True
         mmHeight = 3704
         mmLeft = 206375
-        mmTop = 21167
+        mmTop = 26467
         mmWidth = 18521
         BandType = 0
         LayerName = Foreground
@@ -338,7 +338,7 @@ inherited dmRptPagoAplicacionesMensual: TdmRptPagoAplicacionesMensual
         Transparent = True
         mmHeight = 3704
         mmLeft = 224893
-        mmTop = 21167
+        mmTop = 26467
         mmWidth = 18521
         BandType = 0
         LayerName = Foreground
@@ -356,7 +356,7 @@ inherited dmRptPagoAplicacionesMensual: TdmRptPagoAplicacionesMensual
         Transparent = True
         mmHeight = 3704
         mmLeft = 243415
-        mmTop = 20902
+        mmTop = 26202
         mmWidth = 18521
         BandType = 0
         LayerName = Foreground
@@ -366,8 +366,25 @@ inherited dmRptPagoAplicacionesMensual: TdmRptPagoAplicacionesMensual
         Weight = 0.750000000000000000
         mmHeight = 2646
         mmLeft = 0
-        mmTop = 25135
+        mmTop = 30427
         mmWidth = 261938
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppSystemVariable1: TppSystemVariable
+        UserName = 'lblPrintDate1'
+        DisplayFormat = #39'Fecha:'#39' dd/mm/yyyy'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 10
+        Font.Style = [fsBold]
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 4233
+        mmLeft = 232569
+        mmTop = 18521
+        mmWidth = 29369
         BandType = 0
         LayerName = Foreground
       end
@@ -644,7 +661,7 @@ inherited dmRptPagoAplicacionesMensual: TdmRptPagoAplicacionesMensual
       end
       inherited pplblPageNo: TppSystemVariable
         SaveOrder = -1
-        mmLeft = 248709
+        mmLeft = 241830
         LayerName = Foreground
       end
     end
