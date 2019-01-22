@@ -3,7 +3,7 @@ inherited frmUsuariosEdit: TfrmUsuariosEdit
   ClientHeight = 334
   ClientWidth = 480
   ExplicitWidth = 486
-  ExplicitHeight = 362
+  ExplicitHeight = 363
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
@@ -15,9 +15,9 @@ inherited frmUsuariosEdit: TfrmUsuariosEdit
     ClientRectRight = 478
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 2
-      ExplicitTop = 28
+      ExplicitTop = 26
       ExplicitWidth = 476
-      ExplicitHeight = 263
+      ExplicitHeight = 265
       object Label1: TLabel
         Left = 24
         Top = 8
@@ -63,6 +63,13 @@ inherited frmUsuariosEdit: TfrmUsuariosEdit
         Height = 13
         Caption = 'Password Servidor (Interva)'
         FocusControl = cxDBTextEdit4
+      end
+      object Label7: TLabel
+        Left = 224
+        Top = 50
+        Width = 80
+        Height = 13
+        Caption = 'Perfil del Usuario'
       end
       object cxDBTextEdit1: TcxDBTextEdit
         Left = 24
@@ -118,6 +125,15 @@ inherited frmUsuariosEdit: TfrmUsuariosEdit
         TabOrder = 5
         Width = 145
       end
+      object cxDBLookupComboBox3: TcxDBLookupComboBox
+        Left = 224
+        Top = 63
+        DataBinding.DataField = 'Perfil'
+        DataBinding.DataSource = DataSource
+        Properties.ListColumns = <>
+        TabOrder = 6
+        Width = 233
+      end
     end
   end
   inherited pmlMain: TPanel
@@ -125,14 +141,17 @@ inherited frmUsuariosEdit: TfrmUsuariosEdit
     Width = 480
     ExplicitTop = 293
     ExplicitWidth = 480
-    inherited btnOk: TButton
-      Left = 317
-      ExplicitLeft = 317
-    end
     inherited btnCancel: TButton
       Left = 398
       ExplicitLeft = 398
     end
+    inherited btnOk: TButton
+      Left = 317
+      ExplicitLeft = 317
+    end
+  end
+  inherited DataSource: TDataSource
+    DataSet = dmUsuarios.adodsMaster
   end
   inherited cxImageList: TcxImageList
     FormatVersion = 1

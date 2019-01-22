@@ -3,8 +3,9 @@ inherited dmUsuarios: TdmUsuarios
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     CommandText = 
-      'SELECT IdUsuario, IdPersona, IdUsuarioEstatus, Login, Password, ' +
-      'LoginServidor, PasswordServidor FROM Usuarios'
+      'SELECT IdUsuario, IdPersona, IdUsuarioEstatus,'#13#10' Login, Password' +
+      ', LoginServidor, PasswordServidor ,'#13#10'IdUsuarioPerfil, Permisos F' +
+      'ROM Usuarios'
     Left = 32
     Top = 24
     object adodsMasterIdUsuario: TAutoIncField
@@ -59,6 +60,22 @@ inherited dmUsuarios: TdmUsuarios
       FieldName = 'PasswordServidor'
       Size = 130
     end
+    object adodsMasterIdUsuarioPerfil2: TIntegerField
+      FieldName = 'IdUsuarioPerfil'
+    end
+    object adodsMasterPermisos: TStringField
+      FieldName = 'Permisos'
+      Size = 255
+    end
+    object adodsMasterPerfil: TStringField
+      FieldKind = fkLookup
+      FieldName = 'Perfil'
+      LookupDataSet = ADODtStPerfilesUsuario
+      LookupKeyFields = 'IdUsuarioPerfil'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IdUsuarioPerfil'
+      Lookup = True
+    end
   end
   object adodsPersona: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -77,5 +94,35 @@ inherited dmUsuarios: TdmUsuarios
     Parameters = <>
     Left = 104
     Top = 144
+  end
+  object ADODtStPerfilesUsuario: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdUsuarioPerfil, Descripcion,PermisoMenu, PermisoOpcion,'#13 +
+      #10' PermisosFuncion from UsuariosPerfiles'
+    Parameters = <>
+    Left = 320
+    Top = 168
+    object adodsMasterIdUsuarioPerfil: TAutoIncField
+      FieldName = 'IdUsuarioPerfil'
+      ReadOnly = True
+    end
+    object adodsMasterDescripcion: TStringField
+      FieldName = 'Descripcion'
+      Size = 25
+    end
+    object adodsMasterPermisoMenu: TStringField
+      FieldName = 'PermisoMenu'
+      Size = 300
+    end
+    object adodsMasterPermisoOpcion: TStringField
+      FieldName = 'PermisoOpcion'
+      Size = 500
+    end
+    object adodsMasterPermisosFuncion: TStringField
+      FieldName = 'PermisosFuncion'
+      Size = 300
+    end
   end
 end

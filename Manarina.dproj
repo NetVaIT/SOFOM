@@ -1200,6 +1200,19 @@
             <Form>FrmSeguimientoNvoEdt</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Catalogos\UsuariosPerfilesDM.pas">
+            <Form>dmUsuariosPerfiles</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Catalogos\UsuariosPerfilesForm.pas">
+            <Form>frmUsuariosPerfiles</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\UsuariosPerfilesEdit.pas">
+            <Form>FrmUsuariosPerfilesEdt</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

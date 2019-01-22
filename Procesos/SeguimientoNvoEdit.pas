@@ -85,7 +85,7 @@ type
     DBCtrlGrdDatos: TDBCtrlGrid;
     Label9: TLabel;
     Label10: TLabel;
-    Label11: TLabel;
+    LblEstado: TLabel;
     Label12: TLabel;
     Label13: TLabel;
     Label14: TLabel;
@@ -368,6 +368,7 @@ begin
   else if dsIncidencias.DataSet.FieldByName('EstadoIncidencia').asString='Cancelada' then  //No debe existir feb 15/17
      cxDBEstado.Style.Font.Color:=clRed;
 
+  LblEstado.Color:=  cxDBEstado.Style.Font.Color;
 end;
 
 procedure TFrmSeguimientoNvoEdt.DSIncidenciasDataChange(Sender: TObject;

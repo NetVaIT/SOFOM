@@ -170,6 +170,8 @@ type
     dxBarButton26: TdxBarButton;
     dxBarButton27: TdxBarButton;
     dxBarButton28: TdxBarButton;
+    actPerfiles: TAction;
+    dxBrLrgBtnPerfiles: TdxBarLargeButton;
     procedure actCatalogoExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -179,6 +181,7 @@ type
     procedure actPoneFechaActualExecute(Sender: TObject);
     procedure actAgregarAlertaExecute(Sender: TObject);
   private
+    procedure UsarPermisos;
     { Private declarations }
   protected
     gModulo: T_dmStandar;
@@ -208,7 +211,7 @@ uses ConfiguracionDM, UbicacionesDM, BancosDM, MonedasDM, PuestosDM, PlazasTurno
   RptAnexosProductosDM, RptColocacionAcumuladoDM, PonerFechaActualForm,
   BuroCreditoDM, PLDAlertasDM, RptPagoAplicacionesMensualDM, _ConectionDmod,
   PLDAlertasConfiguracionDM, MatrizRiesgoDM, EvaluacionesRiesgoDM,
-  PagosRealesDM, RptCFDIContabilidadDM;
+  PagosRealesDM, RptCFDIContabilidadDM, UsuariosPerfilesDM;
 
 procedure TfrmMain.actAgregarAlertaExecute(Sender: TObject);
 var
@@ -309,6 +312,9 @@ begin
 
    63: gModulo := TdmPagosReales.Create(Self);  //Pagos por Cliente
    64: gModulo := TdmRptCFDIContabilidad.Create(Self);
+
+   65: gModulo := TdmUsuariosPerfiles.Create(Self);  //Perfiles de usuario ene 18/19
+
   end;
   if Assigned(gModulo) then
   begin
@@ -385,6 +391,7 @@ begin
   actMatrizRiesgo.Enabled       := Conected;
   actEvaluacionRiesgo.Enabled   := Conected;
   actRptCFDIContabilidad.Enabled  := Conected;
+  UsarPermisos; // Ene 21/19
 end;
 
 procedure TfrmMain.DestroyModule;
@@ -429,5 +436,27 @@ begin
   end;
 end;
 
+procedure TfrmMain.UsarPermisos;
+var   //Copiado de TP Ene 21/19
+  i, tagAux:Integer;
+   MenuTxt, OpcionTxt :String;
+begin
+  MenuTxt:=_dmConection.PerMenu;
+  OpcionTxt:=_dmConection.PerOpcion;
+
+  for I := 0 to ComponentCount -1 do
+  begin
+    if (components[i] is TdxRibbonTab)  then
+    begin
+      tagAux:=(components[i] as TdxRibbonTab).Tag;                                           //Al inicio
+      (components[i] as TdxRibbonTab).visible:= (pos('|'+intToStr(tagAux)+'|', MenuTxt)>0) or(pos(intToStr(tagAux)+'|', MenuTxt)=1);
+    end;                                         //Para evitar lo que van fijos
+    if (components[i] is TdxBarLargeButton) and ((components[i] as TdxBarLargeButton).Tag<>-1) then
+    begin
+      tagAux:=(components[i] as TdxBarLargeButton).Tag;
+      (components[i] as TdxBarLargeButton).enabled:= (pos('|'+intToStr(tagAux)+'|', OpcionTxt)>0) or(pos(intToStr(tagAux)+'|', OpcionTxt)=1);
+    end;
+  end;
+end;
 
 end.

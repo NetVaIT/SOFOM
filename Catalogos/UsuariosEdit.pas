@@ -35,6 +35,8 @@ type
     cxDBTextEdit4: TcxDBTextEdit;
     cxDBLookupComboBox1: TcxDBLookupComboBox;
     cxDBLookupComboBox2: TcxDBLookupComboBox;
+    Label7: TLabel;
+    cxDBLookupComboBox3: TcxDBLookupComboBox;
   private
     { Private declarations }
   public

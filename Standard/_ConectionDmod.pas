@@ -28,6 +28,9 @@ type
     ADOQryEdFechaEsProduccion: TBooleanField;
     ADOQryEdFechaUsarFecha: TBooleanField;
     adoqUsuariosOficialCumplimiento: TBooleanField;
+    adoqUsuariosPermisoMenu: TStringField;
+    adoqUsuariosPermisoOpcion: TStringField;
+    adoqUsuariosPermisosFuncion: TStringField;
     procedure ADOConnectionConnectComplete(Connection: TADOConnection;
       const Error: Error; var EventStatus: TEventStatus);
     procedure ADOConnectionDisconnect(Connection: TADOConnection;
@@ -42,6 +45,9 @@ type
     FIdPersona: Integer;
     FUsuario: string;
     FOficialCumplimiento: Boolean;
+    FPerOpcion: String;
+    FPerMenu: String;
+    FPerFuncion: String;
     procedure SetExePath(const Value: string);
     function GetFFechaActual: TDAteTime;
   public
@@ -60,6 +66,10 @@ type
     property ADMIN_PROD: String read FADMIN_PROD;
 
     Property LaFechaActual:TDAteTime read GetFFechaActual;
+
+    property PerMenu:String read FPerMenu;     // Ene 21/19
+    property PerOpcion:String read FPerOpcion;   // Ene 21/19
+    property PerFuncion:String read FPerFuncion;  // Ene 21/19
   end;
 
 var
@@ -152,6 +162,10 @@ var
         FNombrePersona:= adoqUsuariosRazonSocial.AsString;
         FOficialCumplimiento:= adoqUsuariosOficialCumplimiento.Value;
 //        FADMIN_PROD:= adoqOperadoresADMIN_PROD.Value;
+        FPerMenu:=adoqUsuariosPermisoMenu.Value; //Ene 21/19
+        FPerOpcion:=adoqUsuariosPermisoOpcion.Value; //Ene 21/19
+        FPerFuncion:=adoqUsuariosPermisosFuncion.Value; //Ene 21/19
+
       end
       else
       begin

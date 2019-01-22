@@ -301,7 +301,10 @@ uses
   EnvioMailEdit in 'Procesos\EnvioMailEdit.pas' {StdFrmEnvioMail},
   ReestructurarForm in 'Procesos\ReestructurarForm.pas' {frmReestructurar},
   SegIncidenciasProximasEdit in 'Procesos\SegIncidenciasProximasEdit.pas' {FrmSegProximosContactos},
-  SeguimientoNvoEdit in 'Procesos\SeguimientoNvoEdit.pas' {FrmSeguimientoNvoEdt};
+  SeguimientoNvoEdit in 'Procesos\SeguimientoNvoEdit.pas' {FrmSeguimientoNvoEdt},
+  UsuariosPerfilesDM in 'Catalogos\UsuariosPerfilesDM.pas' {dmUsuariosPerfiles: TDataModule},
+  UsuariosPerfilesForm in 'Catalogos\UsuariosPerfilesForm.pas' {frmUsuariosPerfiles},
+  UsuariosPerfilesEdit in 'Catalogos\UsuariosPerfilesEdit.pas' {FrmUsuariosPerfilesEdt};
 
 {$R *.res}
 
@@ -315,5 +318,8 @@ begin
   Application.CreateForm(T_frmProgress, _frmProgress);
   Application.CreateForm(T_dmReportSOFOM, _dmReportSOFOM);
   Application.CreateForm(TdmConfiguracion, dmConfiguracion);
+  Application.CreateForm(TdmUsuariosPerfiles, dmUsuariosPerfiles);
+  Application.CreateForm(TfrmUsuariosPerfiles, frmUsuariosPerfiles);
+  Application.CreateForm(TFrmUsuariosPerfilesEdt, FrmUsuariosPerfilesEdt);
   Application.Run;
 end.

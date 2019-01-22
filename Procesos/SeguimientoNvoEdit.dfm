@@ -761,7 +761,6 @@ object FrmSeguimientoNvoEdt: TFrmSeguimientoNvoEdt
     Align = alTop
     TabOrder = 1
     LookAndFeel.Kind = lfStandard
-    ExplicitTop = 136
     object tvMaster: TcxGridDBTableView
       OnDblClick = tvMasterDblClick
       Navigator.Buttons.CustomButtons = <>
@@ -838,8 +837,6 @@ object FrmSeguimientoNvoEdt: TFrmSeguimientoNvoEdt
     Height = 356
     Align = alClient
     TabOrder = 2
-    ExplicitTop = 273
-    ExplicitHeight = 384
     object DBCtrlGrdDatos: TDBCtrlGrid
       Left = 529
       Top = 35
@@ -880,7 +877,7 @@ object FrmSeguimientoNvoEdt: TFrmSeguimientoNvoEdt
         Font.Style = [fsBold]
         ParentFont = False
       end
-      object Label11: TLabel
+      object LblEstado: TLabel
         Left = 241
         Top = 3
         Width = 44
@@ -1024,7 +1021,6 @@ object FrmSeguimientoNvoEdt: TFrmSeguimientoNvoEdt
       Font.Style = []
       ParentFont = False
       TabOrder = 1
-      ExplicitHeight = 348
       object Label16: TLabel
         Left = 26
         Top = 11

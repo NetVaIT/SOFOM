@@ -5,10 +5,10 @@ object _dmConection: T_dmConection
   object ADOConnection: TADOConnection
     ConnectionString = 
       'Provider=SQLOLEDB.1;Password=as47Pw3K;Persist Security Info=True' +
-      ';User ID=sa;Initial Catalog=SOFOM;Data Source=NAS4\NominasV12;Us' +
-      'e Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;W' +
-      'orkstation ID=DESARROLLO3;Use Encryption for Data=False;Tag with' +
-      ' column collation when possible=False'
+      ';User ID=sa;Initial Catalog=SofomPrueba;Data Source=NAS4\Nominas' +
+      'V12;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=' +
+      '4096;Workstation ID=DESARROLLO3;Use Encryption for Data=False;Ta' +
+      'g with column collation when possible=False'
     LoginPrompt = False
     Provider = 'SQLOLEDB.1'
     OnDisconnect = ADOConnectionDisconnect
@@ -23,10 +23,16 @@ object _dmConection: T_dmConection
     SQL.Strings = (
       
         'SELECT Usuarios.IdUsuario, Usuarios.IdPersona, Personas.RazonSoc' +
-        'ial, Usuarios.Login, Usuarios.Password, Usuarios.OficialCumplimi' +
-        'ento'
+        'ial, '
+      'Usuarios.Login, Usuarios.Password, Usuarios.OficialCumplimiento,'
+      'UP.PermisoMenu, UP.PermisoOpcion, UP.PermisosFuncion'
+      ''
       'FROM Usuarios'
       'INNER JOIN Personas ON Usuarios.IdPersona = Personas.IdPersona'
+      
+        'LEFT JOIN UsuariosPerfiles UP ON Usuarios.IdUsuarioPerfil=UP.IdU' +
+        'suarioPerfil'
+      ''
       'WHERE Usuarios.IdUsuarioEstatus = 1')
     Left = 40
     Top = 64
@@ -51,6 +57,18 @@ object _dmConection: T_dmConection
     end
     object adoqUsuariosOficialCumplimiento: TBooleanField
       FieldName = 'OficialCumplimiento'
+    end
+    object adoqUsuariosPermisoMenu: TStringField
+      FieldName = 'PermisoMenu'
+      Size = 300
+    end
+    object adoqUsuariosPermisoOpcion: TStringField
+      FieldName = 'PermisoOpcion'
+      Size = 500
+    end
+    object adoqUsuariosPermisosFuncion: TStringField
+      FieldName = 'PermisosFuncion'
+      Size = 300
     end
   end
   object ADOQryFechaActual: TADOQuery
