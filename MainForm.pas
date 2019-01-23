@@ -391,7 +391,12 @@ begin
   actMatrizRiesgo.Enabled       := Conected;
   actEvaluacionRiesgo.Enabled   := Conected;
   actRptCFDIContabilidad.Enabled  := Conected;
-  UsarPermisos; // Ene 21/19
+
+  actPoneFechaActual.Enabled:=Conected;
+  actPagosPorCliente.Enabled:=Conected;  //Ene 23/19
+  actPerfiles.Enabled:=Conected; //Ene 23/19
+  if conected then
+    UsarPermisos; // Ene 21/19
 end;
 
 procedure TfrmMain.DestroyModule;
