@@ -20,7 +20,7 @@ uses
   System.Actions, Vcl.ActnList, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls, cxPC,
   cxContainer, cxEdit, cxTextEdit, cxDBEdit, Vcl.DBCtrls, cxMaskEdit,
   cxDropDownEdit, cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox, cxLabel,
-  cxDBLabel;
+  cxDBLabel, Vcl.Mask;
 
 type
   TfrmRelacionPreguntasEdit = class(T_frmEdit)
@@ -30,12 +30,13 @@ type
     cxDBTextEdit1: TcxDBTextEdit;
     DSConPreguntas: TDataSource;
     DSConOpciones: TDataSource;
-    cxDBLookupComboBox1: TcxDBLookupComboBox;
     cxDBLookupComboBox2: TcxDBLookupComboBox;
     cxDBLookupComboBox3: TcxDBLookupComboBox;
     cxDBLblPaquete: TcxDBLabel;
     cxDBLabel1: TcxDBLabel;
     cxDBLabel2: TcxDBLabel;
+    cxDBLkpCmbBxPreg: TcxDBLookupComboBox;
+    procedure cxDBLookupComboBox1PropertiesChange(Sender: TObject);
   private
     FDataSetPreguntas: TDataSet;
     FDataSetOpciones: TDataSet;
@@ -62,6 +63,15 @@ uses MRPaquetesPreguntasDM;
 
 
 { TfrmRelacionPreguntasEdit }
+
+procedure TfrmRelacionPreguntasEdit.cxDBLookupComboBox1PropertiesChange(
+  Sender: TObject);
+begin
+  inherited;
+//  colocado y deshabilitado ene 24/19
+//  DSConOpciones.DataSet.filter:='IdMRPregunta='+dsconpreguntas.DataSet.FieldByName(cxDBLkpCmbBxPreg.Properties.KeyFieldNames).AsString;
+//  DSConOpciones.DataSet.filtered:=True;
+end;
 
 procedure TfrmRelacionPreguntasEdit.SetDataSetOpciones(const Value: TDataSet);
 begin

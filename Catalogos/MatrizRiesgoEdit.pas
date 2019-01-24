@@ -19,7 +19,7 @@ uses
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, Vcl.ImgList,
   System.Actions, Vcl.ActnList, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls, cxPC,
   cxContainer, cxEdit, Vcl.DBCtrls, cxSpinEdit, cxDBEdit, cxCalendar,
-  cxTextEdit, cxMaskEdit, cxDropDownEdit, cxCalc, Vcl.Menus, cxButtons;
+  cxTextEdit, cxMaskEdit, cxDropDownEdit, cxCalc, Vcl.Menus, cxButtons,MRPaquetesPreguntasDM;
 
 type
   TfrmMatrizRiesgoEdit = class(T_frmEdit)
@@ -41,6 +41,8 @@ type
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
   private
     { Private declarations }
+
+     dmMRPaquetesPreguntas:TdmMRPaquetesPreguntas;
   public
     { Public declarations }
   end;
@@ -52,8 +54,8 @@ implementation
 
 {$R *.dfm}
 
-uses MatrizRiesgoDM, MRCalificacionRiesgoForm, MRPaquetePreguntasForm,
-  MRPaquetesPreguntasDM;
+uses MatrizRiesgoDM, MRCalificacionRiesgoForm;
+// desabilitado  ene 24/19 MRPaquetePreguntasForm,  MRPaquetesPreguntasDM;
 
 procedure TfrmMatrizRiesgoEdit.cxBtnActivarCuestionarioClick(Sender: TObject);
 begin
@@ -76,13 +78,13 @@ end;
 procedure TfrmMatrizRiesgoEdit.FormCreate(Sender: TObject);
 begin
   inherited;
-  dmMRPaquetesPreguntas:=TdmMRPaquetesPreguntas.create(nil);
+
 
 
     //Crear forma
   frmMRCalificacionesRiesgos:=TfrmMRCalificacionesRiesgos.Create(Self);
-
- // frmPaquetePreguntas:=TfrmPaquetePreguntas.create(self);  //Ago 3/18
+   dmMRPaquetesPreguntas:=TdmMRPaquetesPreguntas.create(nil);
+//  frmPaquetePreguntas:=TfrmPaquetePreguntas.create(self);  //Ago 3/18
 
 
 
@@ -102,6 +104,8 @@ var
    idCuestAct:Integer ;
 begin
   inherited;
+
+
   view := (DataSource.DataSet.FieldByName('IDMRCuestionarioEstatus').AsInteger <> 0);
 
   //Mostrar en ts cxTbShtPreguntas
@@ -112,10 +116,10 @@ begin
   dmMRPaquetesPreguntas.MasterSource := DataSource;
   dmMRPaquetesPreguntas.MasterFields := 'IdMRCuestionario';
 
-
   idCuestAct := DataSource.DataSet.FieldByName('IdMRCuestionario').AsInteger;
   dmMRPaquetesPreguntas.Estatus:= DataSource.DataSet.FieldByName('IDMRCuestionarioEstatus').AsInteger; //ago 14/18
   dmMRPaquetesPreguntas.adodsMaster.Parameters.ParamByName('IdMRCuestionario').Value := idCuestAct;
+
   dmMRPaquetesPreguntas.ShowModule(cxTbShtPaquetes,'');
 
  // frmPaquetePreguntas.Parent:=  cxTbShtPaquetes;

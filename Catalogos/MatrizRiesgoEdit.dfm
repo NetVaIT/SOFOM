@@ -11,14 +11,12 @@ inherited frmMatrizRiesgoEdit: TfrmMatrizRiesgoEdit
     Width = 750
     Height = 418
     ExplicitWidth = 750
-    ExplicitHeight = 478
-    ClientRectBottom = 414
-    ClientRectRight = 746
+    ExplicitHeight = 418
+    ClientRectBottom = 416
+    ClientRectRight = 748
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
-      ExplicitWidth = 742
-      ExplicitHeight = 450
+      ExplicitWidth = 746
+      ExplicitHeight = 390
       object Label1: TLabel
         Left = 48
         Top = 40
@@ -100,18 +98,16 @@ inherited frmMatrizRiesgoEdit: TfrmMatrizRiesgoEdit
     object cxTbShtPreguntas: TcxTabSheet
       Caption = 'Calificaciones de riesgo'
       ImageIndex = 1
-      ExplicitHeight = 450
     end
     object cxTbShtPaquetes: TcxTabSheet
       Caption = 'Paquetes preguntas'
       ImageIndex = 2
-      ExplicitHeight = 450
     end
   end
   inherited pmlMain: TPanel
     Top = 418
     Width = 750
-    ExplicitTop = 478
+    ExplicitTop = 418
     ExplicitWidth = 750
     inherited btnCancel: TButton
       Left = 668

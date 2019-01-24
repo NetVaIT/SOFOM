@@ -318,8 +318,5 @@ begin
   Application.CreateForm(T_frmProgress, _frmProgress);
   Application.CreateForm(T_dmReportSOFOM, _dmReportSOFOM);
   Application.CreateForm(TdmConfiguracion, dmConfiguracion);
-  Application.CreateForm(TdmUsuariosPerfiles, dmUsuariosPerfiles);
-  Application.CreateForm(TfrmUsuariosPerfiles, frmUsuariosPerfiles);
-  Application.CreateForm(TFrmUsuariosPerfilesEdt, FrmUsuariosPerfilesEdt);
   Application.Run;
 end.

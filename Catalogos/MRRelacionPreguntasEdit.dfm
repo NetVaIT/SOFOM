@@ -1,22 +1,21 @@
 inherited frmRelacionPreguntasEdit: TfrmRelacionPreguntasEdit
   Caption = 'Relaci'#243'n preguntas'
-  ClientHeight = 305
-  ClientWidth = 569
-  ExplicitWidth = 575
-  ExplicitHeight = 334
+  ClientHeight = 361
+  ClientWidth = 613
+  ExplicitWidth = 619
+  ExplicitHeight = 390
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
-    Width = 569
-    Height = 264
-    ExplicitWidth = 578
-    ClientRectBottom = 262
-    ClientRectRight = 567
+    Width = 613
+    Height = 320
+    ExplicitWidth = 569
+    ExplicitHeight = 264
+    ClientRectBottom = 318
+    ClientRectRight = 611
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 2
-      ExplicitTop = 26
-      ExplicitWidth = 574
-      ExplicitHeight = 263
+      ExplicitWidth = 565
+      ExplicitHeight = 236
       object Label1: TLabel
         Left = 32
         Top = 61
@@ -47,20 +46,6 @@ inherited frmRelacionPreguntasEdit: TfrmRelacionPreguntasEdit
         TabOrder = 0
         Width = 321
       end
-      object cxDBLookupComboBox1: TcxDBLookupComboBox
-        Left = 32
-        Top = 80
-        DataBinding.DataField = 'Pregunta'
-        DataBinding.DataSource = DataSource
-        Properties.KeyFieldNames = 'IdMRPregunta'
-        Properties.ListColumns = <
-          item
-            FieldName = 'Pregunta'
-          end>
-        Properties.ListOptions.SyncMode = True
-        TabOrder = 1
-        Width = 500
-      end
       object cxDBLookupComboBox2: TcxDBLookupComboBox
         Left = 32
         Top = 134
@@ -71,8 +56,7 @@ inherited frmRelacionPreguntasEdit: TfrmRelacionPreguntasEdit
           item
             FieldName = 'Opcion'
           end>
-        Properties.ListOptions.SyncMode = True
-        TabOrder = 2
+        TabOrder = 1
         Width = 500
       end
       object cxDBLookupComboBox3: TcxDBLookupComboBox
@@ -85,9 +69,8 @@ inherited frmRelacionPreguntasEdit: TfrmRelacionPreguntasEdit
           item
             FieldName = 'Opcion'
           end>
-        Properties.ListOptions.SyncMode = True
         Properties.ListSource = DSConOpciones
-        TabOrder = 3
+        TabOrder = 2
         Width = 500
       end
       object cxDBLblPaquete: TcxDBLabel
@@ -117,21 +100,37 @@ inherited frmRelacionPreguntasEdit: TfrmRelacionPreguntasEdit
         Style.Font.Name = 'Tahoma'
         Style.Font.Style = [fsBold]
         Style.IsFontAssigned = True
-        Visible = False
+      end
+      object cxDBLkpCmbBxPreg: TcxDBLookupComboBox
+        Left = 32
+        Top = 82
+        DataBinding.DataField = 'IdMRPregunta'
+        DataBinding.DataSource = DataSource
+        Properties.KeyFieldNames = 'IdMRPregunta'
+        Properties.ListColumns = <
+          item
+            FieldName = 'Pregunta'
+          end>
+        Properties.ListOptions.SyncMode = True
+        Properties.ListSource = DSConPreguntas
+        Properties.OnChange = cxDBLookupComboBox1PropertiesChange
+        TabOrder = 5
+        Width = 500
       end
     end
   end
   inherited pmlMain: TPanel
-    Top = 264
-    Width = 569
-    ExplicitWidth = 578
+    Top = 320
+    Width = 613
+    ExplicitTop = 264
+    ExplicitWidth = 569
     inherited btnCancel: TButton
-      Left = 487
-      ExplicitLeft = 496
+      Left = 531
+      ExplicitLeft = 487
     end
     inherited btnOk: TButton
-      Left = 406
-      ExplicitLeft = 415
+      Left = 450
+      ExplicitLeft = 406
     end
   end
   object cxDBLabel2: TcxDBLabel [2]
@@ -147,10 +146,10 @@ inherited frmRelacionPreguntasEdit: TfrmRelacionPreguntasEdit
     Style.Font.Name = 'Tahoma'
     Style.Font.Style = [fsBold]
     Style.IsFontAssigned = True
-    Visible = False
   end
   inherited DataSource: TDataSource
-    DataSet = dmMRPaquetesPreguntas.AdoDSRElacionpreg
+    DataSet = dmMRPaquetesPreguntas.AdoDSRelacionPreg
+    Left = 176
   end
   inherited cxImageList: TcxImageList
     FormatVersion = 1

@@ -17,10 +17,6 @@ type
     adodsPreguntasOpciones: TADODataSet;
     dsPreguntas: TDataSource;
     dsPreguntaOpcion: TDataSource;
-    ADOdsConPregOpciones: TADODataSet;
-    ADOdsConPregOpcionesIdMRPreguntaOpcion: TAutoIncField;
-    ADOdsConPregOpcionesIdMRPregunta: TIntegerField;
-    ADOdsConPregOpcionesOpcion: TStringField;
     dsRElacionpreguntas: TDataSource;
     adodspreguntasconsulta: TADODataSet;
     AutoIncField1: TAutoIncField;
@@ -31,18 +27,22 @@ type
     IntegerField2: TIntegerField;
     BooleanField3: TBooleanField;
     BooleanField4: TBooleanField;
-    AdoDSRElacionpreg: TADODataSet;
-    dsPreguntas1: TDataSource;
-    AdoDSRElacionpregIdMRRelacionPregunta: TAutoIncField;
-    AdoDSRElacionpregIdMRPaquetePregunta: TIntegerField;
-    AdoDSRElacionpregIdMRPregunta: TIntegerField;
-    AdoDSRElacionpregIdMRPreguntaOpcion: TIntegerField;
-    AdoDSRElacionpregValorCondicionante: TStringField;
-    AdoDSRElacionpregPregunta: TStringField;
-    AdoDSRElacionpregOpcion: TStringField;
-    AdoDSRElacionpregPaquete: TStringField;
+    dsPreguntasCon: TDataSource;
+    ADOdsConPregOpciones: TADODataSet;
+    ADOdsConPregOpcionesIdMRPreguntaOpcion: TAutoIncField;
+    ADOdsConPregOpcionesIdMRPregunta: TIntegerField;
+    ADOdsConPregOpcionesOpcion: TStringField;
+    AdoDSRelacionPreg: TADODataSet;
+    AdoDSRelacionPregIdMRRelacionPregunta: TAutoIncField;
+    AdoDSRelacionPregIdMRPaquetePregunta: TIntegerField;
+    AdoDSRelacionPregIdMRPregunta: TIntegerField;
+    AdoDSRelacionPregIdMRPreguntaOpcion: TIntegerField;
+    AdoDSRelacionPregValorCondicionante: TStringField;
+    AdoDSRelacionPregPregunta: TStringField;
+    AdoDSRelacionPregOpcion: TStringField;
+    ADODSConPaquetes: TADODataSet;
+    AdoDSRelacionPregPaquete: TStringField;
     procedure DataModuleCreate(Sender: TObject);
-    procedure AdoDSRElacionpregIdMRPreguntaChange(Sender: TField);
   private
     FEstatus: integer;
     procedure SetFEstatus(const Value: integer);
@@ -63,20 +63,12 @@ uses MRPaquetePreguntasForm, MRRelacionPreguntasForm;
 
 {$R *.dfm}
 
-procedure TdmMRPaquetesPreguntas.AdoDSRElacionpregIdMRPreguntaChange(
-  Sender: TField);
-begin
-  inherited;
-  AdoDSRElacionpregIdMRPreguntaOpcion.Clear;
-
-end;
-
 procedure TdmMRPaquetesPreguntas.DataModuleCreate(Sender: TObject);
 begin
   inherited;
+
   gGridForm:= TfrmPaquetePreguntas.Create(Self);
   gGridForm.DataSet:= adodsMaster;
-
 
 
   if ADODsRelacionPreg.CommandText <> EmptyStr then
@@ -84,14 +76,19 @@ begin
 
   gFormDeatil1:= TfrmRelacionPreguntas.Create(Self);      ///Rsto no funciona
   gFormDeatil1.DataSet:=ADODsRelacionPreg; //ADODsRelacionPreguntas;
+ 
 
-  TfrmRelacionPreguntas(gFormDeatil1).DataSetPreguntas:=adodsPreguntas;
+  TfrmRelacionPreguntas(gFormDeatil1).DataSetPreguntas:=adodsPreguntas;//adodspreguntasconsulta adodsPreguntas;
 
   TfrmRelacionPreguntas(gFormDeatil1).DAtaSetOpciones:= ADOdsConPregOpciones;//adodsPreguntasOpciones;
 
-  adodsPreguntas.Open;
+   adodsPreguntas.Open;
+
   adodsPreguntasOpciones.Open;
+  adodspreguntasconsulta.Open;
   ADOdsConPregOpciones.Open;
+
+
 
 end;
 

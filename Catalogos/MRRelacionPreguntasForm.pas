@@ -67,9 +67,10 @@ end;
 
 procedure TfrmRelacionPreguntas.FormShow(Sender: TObject);
 begin
-  inherited;
   TfrmRelacionPreguntasEdit(gEditForm).DataSetPreguntas:= DataSetPreguntas;
   TfrmRelacionPreguntasEdit(gEditForm).DataSetOpciones:= DataSetOpciones;
+  inherited;    //Verificar..
+  //???
 end;
 
 end.

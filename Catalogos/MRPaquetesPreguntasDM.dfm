@@ -15,7 +15,7 @@ inherited dmMRPaquetesPreguntas: TdmMRPaquetesPreguntas
         DataType = ftInteger
         Precision = 10
         Size = 4
-        Value = Null
+        Value = 1
       end>
     Left = 48
     object adodsMasterIdMRPaquetePregunta: TAutoIncField
@@ -65,58 +65,21 @@ inherited dmMRPaquetesPreguntas: TdmMRPaquetesPreguntas
     CommandText = 
       'SELECT        IdMRPreguntaOpcion, Opcion'#13#10'FROM            MRPreg' +
       'untasOpciones'#13#10
-    MasterFields = 'IdMRPregunta'
     Parameters = <>
     Left = 56
     Top = 232
   end
   object dsPreguntas: TDataSource
     DataSet = adodsPreguntas
-    Left = 572
-    Top = 312
+    Left = 204
+    Top = 168
   end
   object dsPreguntaOpcion: TDataSource
-    DataSet = ADOdsConPregOpciones
-    Left = 556
-    Top = 224
-  end
-  object ADOdsConPregOpciones: TADODataSet
-    Connection = _dmConection.ADOConnection
-    CursorType = ctStatic
-    CommandText = 
-      'select IdMRPreguntaOpcion, IdMRPregunta, Opcion, Ponderacion,'#13#10' ' +
-      'ReqTextoAdi, TablaExterna, CampoADesplegar, '#13#10'CondicionTablaExt,' +
-      ' EvaluaCamposAdicionales '#13#10#13#10'from MRPreguntasOpciones '#13#10'where Id' +
-      'MRPregunta=:IdMRPregunta'
-    DataSource = dsPreguntas
-    IndexFieldNames = 'IdMRPregunta'
-    MasterFields = 'IdMRPregunta'
-    Parameters = <
-      item
-        Name = 'IdMRPregunta'
-        Attributes = [paSigned, paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Size = 4
-        Value = Null
-      end>
-    Left = 456
+    Left = 572
     Top = 392
-    object ADOdsConPregOpcionesIdMRPreguntaOpcion: TAutoIncField
-      FieldName = 'IdMRPreguntaOpcion'
-      ReadOnly = True
-    end
-    object ADOdsConPregOpcionesIdMRPregunta: TIntegerField
-      FieldName = 'IdMRPregunta'
-    end
-    object ADOdsConPregOpcionesOpcion: TStringField
-      DisplayLabel = 'Opci'#243'n'
-      FieldName = 'Opcion'
-      Size = 200
-    end
   end
   object dsRElacionpreguntas: TDataSource
-    Left = 188
+    Left = 204
     Top = 80
   end
   object adodspreguntasconsulta: TADODataSet
@@ -127,6 +90,9 @@ inherited dmMRPaquetesPreguntas: TdmMRPaquetesPreguntas
       'aFisica, AplicaaPersonaMoral, Orden, '#13#10'Condicionada, EvaluaARDir' +
       'ecto from MRPreguntas'#13#10#13#10'where IdMRCuestionario=:IdMRCuestionari' +
       'o'
+    DataSource = dsMaster
+    IndexFieldNames = 'IdMRCuestionario'
+    MasterFields = 'IdMRCuestionario'
     Parameters = <
       item
         Name = 'IdMRCuestionario'
@@ -136,8 +102,8 @@ inherited dmMRPaquetesPreguntas: TdmMRPaquetesPreguntas
         Size = 4
         Value = Null
       end>
-    Left = 552
-    Top = 160
+    Left = 560
+    Top = 216
     object AutoIncField1: TAutoIncField
       FieldName = 'IdMRPregunta'
       ReadOnly = True
@@ -168,14 +134,48 @@ inherited dmMRPaquetesPreguntas: TdmMRPaquetesPreguntas
       FieldName = 'EvaluaARDirecto'
     end
   end
-  object AdoDSRElacionpreg: TADODataSet
+  object dsPreguntasCon: TDataSource
+    DataSet = adodsPreguntas
+    Left = 556
+    Top = 280
+  end
+  object ADOdsConPregOpciones: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'SELECT        IdMRRelacionPregunta, IdMRPaquetePregunta, IdMRPre' +
-      'gunta, IdMRPreguntaOpcion, ValorCondicionante'#13#10'FROM            M' +
-      'RRelacionesPreguntas'#13#10'WHERE IdMRPaquetePregunta = :IdMRPaquetePr' +
+      'select *   from MRPreguntasOpciones where '#13#10'IdMRPregunta=:IdMRPr' +
       'egunta'
+    DataSource = dsPreguntasCon
+    MasterFields = 'IdMRPregunta'
+    Parameters = <
+      item
+        Name = 'IdMRPregunta'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 1
+      end>
+    Left = 344
+    Top = 384
+    object ADOdsConPregOpcionesIdMRPreguntaOpcion: TAutoIncField
+      FieldName = 'IdMRPreguntaOpcion'
+      ReadOnly = True
+    end
+    object ADOdsConPregOpcionesIdMRPregunta: TIntegerField
+      FieldName = 'IdMRPregunta'
+    end
+    object ADOdsConPregOpcionesOpcion: TStringField
+      FieldName = 'Opcion'
+      Size = 200
+    end
+  end
+  object AdoDSRelacionPreg: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdMRRelacionPregunta, IdMRPaquetePregunta, '#13#10'IdMRPregunta' +
+      ', IdMRPreguntaOpcion, ValorCondicionante '#13#10'from MRRelacionesPreg' +
+      'untas'#13#10#13#10'where IdMRPaquetePregunta=:IdMRPaquetePregunta'
     DataSource = dsMaster
     MasterFields = 'IdMRPaquetePregunta'
     Parameters = <
@@ -184,64 +184,67 @@ inherited dmMRPaquetesPreguntas: TdmMRPaquetesPreguntas
         Attributes = [paSigned, paNullable]
         DataType = ftInteger
         Precision = 10
-        Value = 4
+        Size = 4
+        Value = Null
       end>
     Left = 48
     Top = 80
-    object AdoDSRElacionpregIdMRRelacionPregunta: TAutoIncField
+    object AdoDSRelacionPregIdMRRelacionPregunta: TAutoIncField
       FieldName = 'IdMRRelacionPregunta'
       ReadOnly = True
     end
-    object AdoDSRElacionpregIdMRPaquetePregunta: TIntegerField
+    object AdoDSRelacionPregIdMRPaquetePregunta: TIntegerField
       FieldName = 'IdMRPaquetePregunta'
     end
-    object AdoDSRElacionpregIdMRPregunta: TIntegerField
+    object AdoDSRelacionPregIdMRPregunta: TIntegerField
       FieldName = 'IdMRPregunta'
-      OnChange = AdoDSRElacionpregIdMRPreguntaChange
     end
-    object AdoDSRElacionpregIdMRPreguntaOpcion: TIntegerField
+    object AdoDSRelacionPregIdMRPreguntaOpcion: TIntegerField
       FieldName = 'IdMRPreguntaOpcion'
     end
-    object AdoDSRElacionpregValorCondicionante: TStringField
-      DisplayLabel = 'Valor condicionante'
+    object AdoDSRelacionPregValorCondicionante: TStringField
       FieldName = 'ValorCondicionante'
       Size = 300
     end
-    object AdoDSRElacionpregPregunta: TStringField
+    object AdoDSRelacionPregPregunta: TStringField
       FieldKind = fkLookup
       FieldName = 'Pregunta'
       LookupDataSet = adodsPreguntas
       LookupKeyFields = 'IdMRPregunta'
       LookupResultField = 'Pregunta'
       KeyFields = 'IdMRPregunta'
-      Size = 300
+      Size = 150
       Lookup = True
     end
-    object AdoDSRElacionpregOpcion: TStringField
-      DisplayLabel = 'Opci'#243'n'
+    object AdoDSRelacionPregOpcion: TStringField
       FieldKind = fkLookup
       FieldName = 'Opcion'
       LookupDataSet = adodsPreguntasOpciones
       LookupKeyFields = 'IdMRPreguntaOpcion'
       LookupResultField = 'Opcion'
       KeyFields = 'IdMRPreguntaOpcion'
-      Size = 300
+      Size = 150
       Lookup = True
     end
-    object AdoDSRElacionpregPaquete: TStringField
+    object AdoDSRelacionPregPaquete: TStringField
       FieldKind = fkLookup
       FieldName = 'Paquete'
-      LookupDataSet = adodsMaster
+      LookupDataSet = ADODSConPaquetes
       LookupKeyFields = 'IdMRPaquetePregunta'
       LookupResultField = 'DescripcionPaquete'
       KeyFields = 'IdMRPaquetePregunta'
-      Size = 300
+      Size = 150
       Lookup = True
     end
   end
-  object dsPreguntas1: TDataSource
-    DataSet = adodsPreguntas
-    Left = 188
-    Top = 168
+  object ADODSConPaquetes: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdMRPaquetePregunta, IdMRCuestionario, '#13#10'DescripcionPaque' +
+      'te from MRPaquetesPreguntas'
+    Parameters = <>
+    Left = 264
+    Top = 248
   end
 end

@@ -2,6 +2,7 @@ inherited frmMain: TfrmMain
   Caption = 'frmMain'
   ClientWidth = 1186
   OnDestroy = FormDestroy
+  ExplicitLeft = -58
   ExplicitWidth = 1202
   PixelsPerInch = 96
   TextHeight = 13
@@ -10,7 +11,6 @@ inherited frmMain: TfrmMain
     OnApplicationMenuClick = dxRibbon1ApplicationMenuClick
     ExplicitWidth = 1186
     inherited dxRibbon1Tab1: TdxRibbonTab
-      Active = False
       Index = 0
     end
     object dxRibbon1Tab2: TdxRibbonTab
@@ -46,7 +46,6 @@ inherited frmMain: TfrmMain
     end
     object dxRibbon1Tab5: TdxRibbonTab
       Tag = 3
-      Active = True
       Caption = 'Reportes'
       Groups = <
         item
@@ -133,8 +132,6 @@ inherited frmMain: TfrmMain
         end>
     end
     inherited dxbArchivo: TdxBar
-      DockedDockControl = nil
-      DockedDockingStyle = dsNone
       FloatLeft = 545
       FloatClientWidth = 51
       FloatClientHeight = 76
