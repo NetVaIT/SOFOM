@@ -2,42 +2,42 @@ inherited frmContratos: TfrmContratos
   BorderStyle = bsToolWindow
   Caption = 'Contratos'
   ClientHeight = 676
-  ClientWidth = 1103
-  ExplicitWidth = 1109
+  ClientWidth = 840
+  ExplicitWidth = 846
   ExplicitHeight = 705
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
     Top = 432
-    Width = 1103
+    Width = 840
     Align = alTop
     ExplicitTop = 571
     ExplicitWidth = 645
   end
   inherited splDetail1: TSplitter
     Top = 126
-    Width = 1103
+    Width = 840
     Align = alTop
     ExplicitTop = 293
     ExplicitWidth = 645
   end
   inherited splDetail2: TSplitter
     Top = 279
-    Width = 1103
+    Width = 840
     Align = alTop
     ExplicitTop = 487
     ExplicitWidth = 645
   end
   inherited pnlMaster: TPanel
-    Width = 1103
+    Width = 840
     Height = 100
     Align = alTop
-    ExplicitWidth = 1103
+    ExplicitWidth = 1272
     ExplicitHeight = 100
     inherited cxGrid: TcxGrid
-      Width = 1103
+      Width = 840
       Height = 100
-      ExplicitWidth = 1103
+      ExplicitWidth = 1272
       ExplicitHeight = 100
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdContrato: TcxGridDBColumn
@@ -90,39 +90,39 @@ inherited frmContratos: TfrmContratos
   end
   inherited pnlDetail3: TPanel
     Top = 435
-    Width = 1103
+    Width = 840
     Height = 200
     Align = alClient
     ExplicitTop = 435
-    ExplicitWidth = 1103
+    ExplicitWidth = 1272
     ExplicitHeight = 200
   end
   inherited pnlDetail2: TPanel
     Top = 282
-    Width = 1103
+    Width = 840
     Height = 150
     Align = alTop
     ExplicitTop = 282
-    ExplicitWidth = 1103
+    ExplicitWidth = 1272
     ExplicitHeight = 150
   end
   inherited pnlDetail1: TPanel
     Top = 129
-    Width = 1103
+    Width = 840
     Height = 150
     Align = alTop
     ExplicitTop = 129
-    ExplicitWidth = 1103
+    ExplicitWidth = 1272
     ExplicitHeight = 150
   end
   inherited pnlClose: TPanel
     Top = 635
-    Width = 1103
+    Width = 840
     ExplicitTop = 635
-    ExplicitWidth = 1103
+    ExplicitWidth = 1272
     inherited btnClose: TButton
-      Left = 1018
-      ExplicitLeft = 1018
+      Left = 755
+      ExplicitLeft = 1187
     end
   end
   inherited dxBarManager: TdxBarManager
@@ -132,10 +132,25 @@ inherited frmContratos: TfrmContratos
       26
       0)
     inherited dxbNavigator: TdxBar
-      DockedLeft = 104
+      DockedLeft = 81
+    end
+    inherited dxbEdit: TdxBar
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'Insert1'
+        end
+        item
+          Visible = True
+          ItemName = 'Edit1'
+        end
+        item
+          Visible = True
+          ItemName = 'Delete1'
+        end>
     end
     inherited dxbTools: TdxBar
-      DockedLeft = 231
+      DockedLeft = 208
       ItemLinks = <
         item
           Visible = True
@@ -151,7 +166,7 @@ inherited frmContratos: TfrmContratos
         end>
     end
     inherited dxbFilter: TdxBar
-      DockedLeft = 378
+      DockedLeft = 541
       ItemLinks = <
         item
           Visible = True
@@ -175,11 +190,38 @@ inherited frmContratos: TfrmContratos
         end>
       Visible = True
     end
+    object dxbEstadoCuenta: TdxBar [4]
+      Caption = 'Estado de cuenta'
+      CaptionButtons = <>
+      DockedDockingStyle = dsTop
+      DockedLeft = 355
+      DockedTop = 0
+      DockingStyle = dsTop
+      FloatLeft = 1296
+      FloatTop = 8
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'edtFecha'
+        end
+        item
+          Visible = True
+          ItemName = 'btnEstadoCuentaFuturo'
+        end>
+      OneOnRow = False
+      Row = 0
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
     object dxbbCrearAnexo: TdxBarButton
       Caption = 'Crear anexo'
       Category = 0
-      Hint = 'Crea anexo de una cotizacion'
+      Hint = 'Crea un anexo de una cotizaci'#243'n'
       Visible = ivAlways
+      ImageIndex = 10
       PaintStyle = psCaptionGlyph
     end
     object edtCliente: TcxBarEditItem
@@ -217,6 +259,20 @@ inherited frmContratos: TfrmContratos
       PropertiesClassName = 'TcxCheckBoxProperties'
       Properties.ImmediatePost = True
       InternalEditValue = True
+    end
+    object edtFecha: TcxBarEditItem
+      Caption = 'Fecha'
+      Category = 0
+      Hint = 'Fecha hasta donde generara a futuro'
+      Visible = ivAlways
+      ShowCaption = True
+      PropertiesClassName = 'TcxDateEditProperties'
+    end
+    object btnEstadoCuentaFuturo: TdxBarButton
+      Caption = 'Estado de cuenta futuro'
+      Category = 0
+      Visible = ivAlways
+      ImageIndex = 11
     end
   end
   inherited cxStyleRepository: TcxStyleRepository

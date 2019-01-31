@@ -158,6 +158,9 @@ inherited dmRptEstadoCuenta: TdmRptEstadoCuenta
         'sona'
       #9'WHERE        (Personas.IdRolTipo = 9)) AS Emisor'
       'WHERE CXC.EsMoratorio = 0'
+      
+        'AND CXC.IdCuentaXCobrarRestructura IS NULL'#9'-- No muestra adeudos' +
+        ' anteriores a la reestructura'
       'AND CXC.Saldo > 0.01'#9'-- Tener saldo'
       
         'AND CXC.FechaVencimiento <= dbo.GetDateAux()'#9'-- Solo que esten e' +
@@ -5277,10 +5280,13 @@ inherited dmRptEstadoCuenta: TdmRptEstadoCuenta
         'sona'
       #9'WHERE        (Personas.IdRolTipo = 9)) AS Emisor'
       'WHERE CXC.EsMoratorio = 0'
+      
+        'AND CXC.IdCuentaXCobrarRestructura IS NULL'#9'-- No muestra adeudos' +
+        ' anteriores a la reestructura'
       'AND CXC.Saldo > 0.01'#9'-- Tener saldo'
+      'AND CXC.FechaVencimiento <= @Fecha'
       'AND CXC.IdPersona = :IdPersona'
-      'ORDER BY CXC.IdAnexo, CXC.FechaVencimiento'
-      '')
+      'ORDER BY CXC.IdAnexo, CXC.FechaVencimiento')
     Left = 240
     Top = 304
   end

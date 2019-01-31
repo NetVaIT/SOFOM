@@ -202,6 +202,11 @@ inherited dmContratos: TdmContratos
       Caption = 'CxC termino'
       OnExecute = actGenCxCTerminoExecute
     end
+    object actEstadoCuentaFuturo: TAction
+      Caption = 'Estado de cuenta futuro'
+      ImageIndex = 11
+      OnExecute = actEstadoCuentaFuturoExecute
+    end
   end
   object dsMaster: TDataSource
     AutoEdit = False

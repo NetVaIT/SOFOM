@@ -5,6 +5,7 @@ interface
 uses
   System.SysUtils, System.Classes, _StandarDMod, System.Actions, Vcl.ActnList,
   Data.DB, Data.Win.ADODB, System.Math, ProcesosType, Vcl.Dialogs, System.UITypes,
+  Vcl.Forms, Winapi.ShellAPI, Winapi.Windows,
   AmortizacionesDM, ProductosDM;
 
 resourcestring
@@ -213,6 +214,7 @@ type
     adocUpdAnexoCredito: TADOCommand;
     actGenCxCTermino: TAction;
     adospSetCXCPorTermino: TADOStoredProc;
+    actEstadoCuentaFuturo: TAction;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsAnexosPrecioMonedaChange(Sender: TField);
     procedure adodsAnexosNewRecord(DataSet: TDataSet);
@@ -261,6 +263,7 @@ type
     procedure actCrearFacturaExecute(Sender: TObject);
     procedure actCrearFacturaUpdate(Sender: TObject);
     procedure actGenCxCTerminoExecute(Sender: TObject);
+    procedure actEstadoCuentaFuturoExecute(Sender: TObject);
   private
     { Private declarations }
     FPaymentTime: TPaymentTime;
@@ -288,6 +291,8 @@ type
     function PuedeModificarAmortizacion1(IdAnexo: Integer): Boolean;
     function CrearCFDI(IdCuentaXCobrar: Integer): Boolean;
     function GetCFDISaldo(IdAnexo: Integer): Extended;
+    function GetActual: string;
+    property Actual: string read GetActual;
   protected
     procedure SetFilter; override;
   public
@@ -304,7 +309,7 @@ implementation
 uses ContratosForm, AnexosForm, AnexosAmortizacionesForm,
   AnexosCreditosForm, _ConectionDmod, CotizacionesSeleccionarForm, _Utils,
   AbonarCapitalDM, ConfiguracionDM, AnexosMoratoriosDM, ReestructurarForm,
-  CuentasXCobrarDM;
+  CuentasXCobrarDM, RptEstadoCuentaDM;
 
 {$R *.dfm}
 
@@ -335,6 +340,28 @@ procedure TdmContratos.actEliminarCreditoUpdate(Sender: TObject);
 begin
   inherited;
   TAction(Sender).Enabled := adodsCreditosEliminarCredito.Value;
+end;
+
+procedure TdmContratos.actEstadoCuentaFuturoExecute(Sender: TObject);
+var
+  dmRptEstadoCuenta: TdmRptEstadoCuenta;
+  ArchivoPDF: TFileName;
+begin
+  inherited;
+  ArchivoPDF:='EstadoCuentaFuturo'+'_'+Actual+_ExtensionPDF;
+  dmRptEstadoCuenta:= TdmRptEstadoCuenta.Create(Self);
+  try
+    dmRptEstadoCuenta.Title := 'ESTADO DE CUENTA EN MONEDA NACIONAL "PESOS"';
+    dmRptEstadoCuenta.PDFFileName := ArchivoPDF;
+    dmRptEstadoCuenta.Temporal := True;
+    dmRptEstadoCuenta.IdPersona := adodsMasterIdPersona.Value;
+    dmRptEstadoCuenta.Fecha := TfrmContratos(gGridForm).Fecha;
+    dmRptEstadoCuenta.Execute;
+  finally
+    dmRptEstadoCuenta.Free;
+  end;
+  if FileExists(ArchivoPDF) then
+    ShellExecute(Application.Handle, 'open', PChar(ArchivoPDF), nil, nil, SW_SHOWNORMAL);
 end;
 
 procedure TdmContratos.actGenAmortizacionesExecute(Sender: TObject);
@@ -968,6 +995,7 @@ begin
   gGridForm:= TfrmContratos.Create(Self);
   gGridForm.DataSet:= adodsMaster;
   TfrmContratos(gGridForm).actCrearAnexo := actCrearAnexo;
+  TfrmContratos(gGridForm).actEstadoCuentaFuturo := actEstadoCuentaFuturo;
   if adodsAnexos.CommandText <> EmptyStr then adodsAnexos.Open;
   gFormDeatil1:= TfrmAnexos.Create(Self);
   gFormDeatil1.DataSet:= adodsAnexos;
@@ -1043,6 +1071,11 @@ begin
       Result:= True;
     end;
   end;
+end;
+
+function TdmContratos.GetActual: string;
+begin
+  Result:= FormatDateTime('ddmmmyyyyhhnnss', Now);
 end;
 
 function TdmContratos.GetCFDISaldo(IdAnexo: Integer): Extended;
@@ -1124,8 +1157,6 @@ end;
 procedure TdmContratos.Reestructurar;
 var
   IdAnexoCreditoAnterior: Integer;
-  IdCXCRestructura: Integer;
-  SaldoInsoluto: Extended;
   IdCuentaXCobrarRestructura: Integer;
 
   function GetIdAnexoCreditoValido(IdAnexo: Integer): Integer;

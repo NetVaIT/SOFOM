@@ -49,9 +49,13 @@ type
     edtDesde: TcxBarEditItem;
     edtHasta: TcxBarEditItem;
     edtUsarFecha: TcxBarEditItem;
+    dxbEstadoCuenta: TdxBar;
+    edtFecha: TcxBarEditItem;
+    btnEstadoCuentaFuturo: TdxBarButton;
     procedure FormCreate(Sender: TObject);
   private
     FactCrearAnexo: TBasicAction;
+    FactEstadoCuentaFuturo: TBasicAction;
     procedure SetactCrearAnexo(const Value: TBasicAction);
     function GetCliente: string;
     procedure SetCliente(const Value: string);
@@ -61,14 +65,19 @@ type
     procedure SetDesde(const Value: TDateTime);
     procedure SetHasta(const Value: TDateTime);
     procedure SetUsarFecha(const Value: Boolean);
+    function GetFecha: TDateTime;
+    procedure SetactEstadoCuentaFuturo(const Value: TBasicAction);
+    procedure SetFecha(const Value: TDateTime);
     { Private declarations }
   public
     { Public declarations }
-    property actCrearAnexo: TBasicAction read FactCrearAnexo write SetactCrearAnexo;
     property Cliente: string read GetCliente write SetCliente;
     property Desde: TDateTime read GetDesde write SetDesde;
     property Hasta: TDateTime read GetHasta write SetHasta;
     property UsarFecha: Boolean read GetUsarFecha write SetUsarFecha;
+    property Fecha: TDateTime read GetFecha write SetFecha;
+    property actCrearAnexo: TBasicAction read FactCrearAnexo write SetactCrearAnexo;
+    property actEstadoCuentaFuturo: TBasicAction read FactEstadoCuentaFuturo write SetactEstadoCuentaFuturo;
   end;
 
 implementation
@@ -86,6 +95,7 @@ begin
   DecodeDate(Date, year, month, day);
   Desde := EncodeDate(Year, Month, 1);
   Hasta := EncodeDate(Year, Month, DaysInMonth(Date));
+  Fecha := Hasta;
   Cliente := EmptyStr;
 end;
 
@@ -97,6 +107,11 @@ end;
 function TfrmContratos.GetDesde: TDateTime;
 begin
   Result := edtDesde.EditValue;
+end;
+
+function TfrmContratos.GetFecha: TDateTime;
+begin
+  Result := edtFecha.EditValue;
 end;
 
 function TfrmContratos.GetHasta: TDateTime;
@@ -115,6 +130,12 @@ begin
   dxbbCrearAnexo.Action := Value;
 end;
 
+procedure TfrmContratos.SetactEstadoCuentaFuturo(const Value: TBasicAction);
+begin
+  FactEstadoCuentaFuturo := Value;
+  btnEstadoCuentaFuturo.Action := Value;
+end;
+
 procedure TfrmContratos.SetCliente(const Value: string);
 begin
   edtCliente.EditValue:= Value;
@@ -123,6 +144,11 @@ end;
 procedure TfrmContratos.SetDesde(const Value: TDateTime);
 begin
   edtDesde.EditValue := Value;
+end;
+
+procedure TfrmContratos.SetFecha(const Value: TDateTime);
+begin
+  edtFecha.EditValue := Value;
 end;
 
 procedure TfrmContratos.SetHasta(const Value: TDateTime);

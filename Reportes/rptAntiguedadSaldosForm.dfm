@@ -26,14 +26,14 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
   end
   inherited pnlMaster: TPanel
     Width = 1363
-    Height = 227
+    Height = 229
     ExplicitWidth = 1363
-    ExplicitHeight = 227
+    ExplicitHeight = 229
     inherited cxGrid: TcxGrid
       Width = 1363
-      Height = 227
+      Height = 229
       ExplicitWidth = 1363
-      ExplicitHeight = 227
+      ExplicitHeight = 229
       inherited tvMaster: TcxGridDBTableView
         DataController.Options = [dcoAssignGroupingValues, dcoAssignMasterDetailKeys]
         DataController.Summary.DefaultGroupSummaryItems = <
@@ -292,7 +292,7 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
     DockControlHeights = (
       0
       0
-      28
+      26
       0)
     inherited dxbNavigator: TdxBar
       DockedLeft = 35
@@ -305,7 +305,7 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
         end>
     end
     inherited dxbTools: TdxBar
-      DockedLeft = 166
+      DockedLeft = 162
       ItemLinks = <
         item
           Visible = True
@@ -329,7 +329,7 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
         end>
     end
     inherited dxbFilter: TdxBar
-      DockedLeft = 474
+      DockedLeft = 289
       ItemLinks = <
         item
           Visible = True
@@ -380,7 +380,7 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
       OneOnRow = False
       Row = 0
       UseOwnFont = False
-      Visible = True
+      Visible = False
       WholeRow = False
     end
     object dxBrBtnPDF: TdxBarButton [17]
