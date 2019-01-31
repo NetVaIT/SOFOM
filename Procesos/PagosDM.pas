@@ -1736,7 +1736,8 @@ const
   'or (exists (select * from CuentasXCobrarDetalle CXCD where CXCD.descripcion like ''%Abono Capital%'' and CXC.IdCuentaXCobrar=CXCD.idcuentaXCobrar )and CXC.IdCFDI is null)) ' +
   'AND CXC.Saldo > 0 ' +
   ' and CXC.IDCuentaXCobrarRestructura is null '+ //<-- Para serparar de las nuevas Nov 23/18
-  'AND CXC.IdPersona = :IdPersona ';
+  ' and cxc.IdCuentaXCobrarEstatus<>7 '+  //Ene 31/19
+  ' AND CXC.IdPersona = :IdPersona ';
 var
   vSQL: string;
 begin

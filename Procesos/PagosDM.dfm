@@ -477,17 +477,18 @@ inherited dmPagos: TdmPagos
       '                                             --oct 4/18'#13#10' from C' +
       'uentasXCobrar CXC  '#13#10'left Join CFDI CI on CI.IdCFDI= CXC.IdCFDI ' +
       'where '#13#10'-- CXC.idanexosamortizaciones is not null and -- jun 30/' +
-      '17 '#13#10' Saldo >0 and IDPersona=:IdPersonaCliente '#13#10'and (((IdCuenta' +
-      'XCobrarEstatus=0 or (IdCuentaXCobrarEstatus=1))  and  ESMoratori' +
-      'o=0)'#13#10'or( Esmoratorio=1)'#13#10' or( (CXC.Fecha<=dbo.GetDateAux() and ' +
-      'IdCuentaXCobrarEstatus=-1) and 1=:EsAnti) -- para poder facturar' +
-      ' addelantados'#13#10'or (exists (select * from CuentasXCobrarDetalle C' +
-      'XCD where CXCD.descripcion like'#39'%Abono Capital%'#39' and CXC.IdCuent' +
-      'aXCobrar=CXCD.idcuentaXCobrar )'#13#10'and CXC.IdCFDI is null) )-- IdC' +
-      'uentaXCobrarEstatus=-1 and puede que esten facturadas'#13#10' and CXC.' +
-      'IDAnexo=:IdAnexo '#13#10'and  idCuentaXCobrarReestructura is null-- de' +
-      'beria la reestructura estar null'#13#10'order by CXC.idanexosamortizac' +
-      'iones,EsMoratorio DEsc, CXC.FechaVencimiento'
+      '17 '#13#10' Saldo >0 and IDPersona=:IdPersonaCliente '#13#10'and cxc.IdCuent' +
+      'aXCobrarEstatus<>7 -- ene31/19'#13#10'and (((IdCuentaXCobrarEstatus=0 ' +
+      'or (IdCuentaXCobrarEstatus=1))  and  ESMoratorio=0)'#13#10'or( Esmorat' +
+      'orio=1)'#13#10' or( (CXC.Fecha<=dbo.GetDateAux() and IdCuentaXCobrarEs' +
+      'tatus=-1) and 1=:EsAnti) -- para poder facturar addelantados'#13#10'or' +
+      ' (exists (select * from CuentasXCobrarDetalle CXCD where CXCD.de' +
+      'scripcion like'#39'%Abono Capital%'#39' and CXC.IdCuentaXCobrar=CXCD.idc' +
+      'uentaXCobrar )'#13#10'and CXC.IdCFDI is null) )-- IdCuentaXCobrarEstat' +
+      'us=-1 and puede que esten facturadas'#13#10' and CXC.IDAnexo=:IdAnexo ' +
+      #13#10'and  idCuentaXCobrarRestructura is null-- deberia la reestruct' +
+      'ura estar null'#13#10'order by CXC.idanexosamortizaciones,EsMoratorio ' +
+      'DEsc, CXC.FechaVencimiento'
     Parameters = <
       item
         Name = 'IdPersonaCliente'

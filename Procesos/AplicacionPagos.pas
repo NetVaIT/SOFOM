@@ -1013,6 +1013,7 @@ const
   cSQL = 'SELECT IdCuentaXCobrar FROM CuentasXCobrar ' +
   'WHERE (((IdCuentaXCobrarEstatus=0 or (IdCuentaXCobrarEstatus=1)) and  ESMoratorio=0) or (Esmoratorio=1)) ' +
   'AND Saldo > 0 ' +
+  'and IdCuentaXCobrarEstatus<>7 '+  //Ene 31/19
   'and IDCuentaXCobrarRestructura is null '+ //<-- Para serparar de las nuevas Nov 28/18
   'AND IdPersona = :IdPersona ';
 var
