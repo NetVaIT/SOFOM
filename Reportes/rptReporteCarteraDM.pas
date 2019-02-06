@@ -47,12 +47,14 @@ type
     ADOQryBorrarTemporales: TADOQuery;
     ADOQryInsertaCartera: TADOQuery;
     ADOQryInsertaRetraso: TADOQuery;
+    ActAmorYPago3: TAction;
     procedure adodsMasterCalcFields(DataSet: TDataSet);
     procedure DataModuleCreate(Sender: TObject);
     procedure ActPDFCarteraExecute(Sender: TObject);
     procedure ActPDFHojaControlExecute(Sender: TObject);
     procedure ActPDFAmortizaYPagoExecute(Sender: TObject);
     procedure ActAmorYPago2Execute(Sender: TObject);
+    procedure ActAmorYPago3Execute(Sender: TObject);
   private
     function GetActual: string;
     { Private declarations }
@@ -117,6 +119,63 @@ begin
   end;
   if FileExists(ArchiPDF) then
     ShellExecute(application.Handle, 'open', PChar(ArchiPDF), nil, nil, SW_SHOWNORMAL);
+end;
+
+procedure TdmrptReporteCartera.ActAmorYPago3Execute(Sender: TObject);
+var
+  dmReporteCarteraPDF: TDmReporteCarteraPDF;
+  ArchiPDF: TFileName;
+  TxtSQL: string;
+begin
+  inherited;
+  ArchiPDF:='AmortizacionesYPagos3'+'_'+Actual+_ExtensionPDF;
+  dmReporteCarteraPDF:= TdmReporteCarteraPDF.Create(Self);
+  try
+  dmReporteCarteraPDF.ADODtStAnexoCliente.Close;
+  dmReporteCarteraPDF.ADODtStAnexoCliente.Parameters.ParamByName('IDAnexo').Value:= TFrmReporteCarteraGrid(gGridForm).AIdAnexoAct;
+  dmReporteCarteraPDF.ADODtStAnexoCliente.open;
+  dmReporteCarteraPDF.ADODtStRepHojaControlCte.Open;
+  TxtSQL:=' IdAnexo = ' + intTostr(TFrmReporteCarteraGrid(gGridForm).AIdAnexoAct);
+    if TxtSql<>'' then    //May 22/17
+    begin
+      dmReporteCarteraPDF.ADODtStRepHojaControlCte.Filter:= TxtSql;
+      dmReporteCarteraPDF.ADODtStRepHojaControlCte.Filtered:=True;
+    end
+    else
+      dmReporteCarteraPDF.ADODtStRepHojaControlCte.Filtered:=False;  // nunca va por aca en este reporte
+    dmReporteCarteraPDF.ADODtStAmortiza.Close;
+    dmReporteCarteraPDF.ADODtStAmortiza.Parameters.ParamByName('IDAnexo1').Value:=TFrmReporteCarteraGrid(gGridForm).AIdAnexoAct;
+    dmReporteCarteraPDF.ADODtStAmortiza.Open;
+    dmReporteCarteraPDF.ADODtStAmortiza2.Close;
+    dmReporteCarteraPDF.ADODtStAmortiza2.Parameters.ParamByName('IDAnexo1').Value:=TFrmReporteCarteraGrid(gGridForm).AIdAnexoAct;
+    dmReporteCarteraPDF.ADODtStAmortiza2.Parameters.ParamByName('IDAnexo2').Value:=TFrmReporteCarteraGrid(gGridForm).AIdAnexoAct;
+    dmReporteCarteraPDF.ADODtStAmortiza2.Open;
+    dmReporteCarteraPDF.ADODtStProd2.Close;
+    dmReporteCarteraPDF.adodtstProd2.Parameters.ParamByName('IdAnexo').Value:= TFrmReporteCarteraGrid(gGridForm).AIdAnexoAct;
+    dmReporteCarteraPDF.adodtstProd2.Open;
+    dmReporteCarteraPDF.ADODtStPago2.Open;
+    dmReporteCarteraPDF.ADODtStMoratoriosXCXC.Open;
+
+    //Feb 1/19
+    dmReporteCarteraPDF.ADtStCXCAdicionalSA.close;
+    dmReporteCarteraPDF.ADtStCXCAdicionalSA.Parameters.ParamByName('IdAnexo').Value:=  TFrmReporteCarteraGrid(gGridForm).AIdAnexoAct;
+    dmReporteCarteraPDF.ADtStCXCAdicionalSA.open;
+    dmReporteCarteraPDF.ADtStPagoCXCAdiSA.Close;
+    dmReporteCarteraPDF.ADtStPagoCXCAdiSA.Open;
+    //HAsta aca feb 1/19
+
+    dmReporteCarteraPDF.ppRprtAmoryPagos3.ShowPrintDialog:= False;
+    dmReporteCarteraPDF.ppRprtAmoryPagos3.ShowCancelDialog:= False;
+    dmReporteCarteraPDF.ppRprtAmoryPagos3.PrinterSetup.DocumentName:= ArchiPDF;
+    dmReporteCarteraPDF.ppRprtAmoryPagos3.DeviceType:= 'PDF';
+    dmReporteCarteraPDF.ppRprtAmoryPagos3.TextFileName:= ArchiPDF;
+    dmReporteCarteraPDF.ppRprtAmoryPagos3.print;
+  finally
+    dmReporteCarteraPDF.Free;
+  end;
+  if FileExists(ArchiPDF) then
+    ShellExecute(application.Handle, 'open', PChar(ArchiPDF), nil, nil, SW_SHOWNORMAL);
+
 end;
 
 procedure TdmrptReporteCartera.ActPDFAmortizaYPagoExecute(Sender: TObject);
@@ -274,7 +333,7 @@ begin
   TFrmReporteCarteraGrid(gGridForm).ActPDFReporteCartera:=ActPDFCartera;    //se re habilitó nov 21/17 DEshabilitado Oct12/17
   TFrmReporteCarteraGrid(gGridForm).ActPDFHojaControlGral:=ActPDFHojaControl;
   TFrmReporteCarteraGrid(gGridForm).ActPDFHojaAmorYpago:=ActPDFAmortizayPago;
-  TFrmReporteCarteraGrid(gGridForm).ActPDFNuevoAmoryPago2:=ActAmorYPago2;
+  TFrmReporteCarteraGrid(gGridForm).ActPDFNuevoAmoryPago2:=ActAmorYPago3;//ActAmorYPago2;
 end;
 
 function TdmrptReporteCartera.GetActual: string;

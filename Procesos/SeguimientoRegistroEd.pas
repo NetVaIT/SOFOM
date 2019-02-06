@@ -439,6 +439,7 @@ begin
 
   Base1:= 'select CxC.IdPersona,P.RazonSocial,Sum(CXC.Saldo) as Saldo , sum(CXC.Interes) as interes from CuentasXCobrar CXC, Personas P'
            +' where p.idpersona=Cxc.IdPersona  and Saldo>0.01'        //jun 23/17 0.00001
+           + ' and cxc.IdCuentaXCobrarEstatus<>7 '  //Ene 31/19
            +' and CXC.IDCuentaXCobrarRestructura is null '; //<-- Para separar  las nuevas Nov 28/18
 
   if DBLkupCmbBxClientes.Text<>'' then

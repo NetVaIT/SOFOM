@@ -2,7 +2,6 @@ inherited frmMain: TfrmMain
   Caption = 'frmMain'
   ClientWidth = 1186
   OnDestroy = FormDestroy
-  ExplicitLeft = -58
   ExplicitWidth = 1202
   PixelsPerInch = 96
   TextHeight = 13
@@ -83,7 +82,7 @@ inherited frmMain: TfrmMain
   end
   inherited pnlMain: TPanel
     Width = 1186
-    ExplicitTop = 153
+    ExplicitTop = 159
     ExplicitWidth = 1186
     ExplicitHeight = 298
   end
@@ -132,6 +131,8 @@ inherited frmMain: TfrmMain
         end>
     end
     inherited dxbArchivo: TdxBar
+      DockedDockControl = nil
+      DockedDockingStyle = dsNone
       FloatLeft = 545
       FloatClientWidth = 51
       FloatClientHeight = 76
@@ -224,7 +225,7 @@ inherited frmMain: TfrmMain
       FloatLeft = 764
       FloatTop = 8
       FloatClientWidth = 81
-      FloatClientHeight = 270
+      FloatClientHeight = 324
       ItemLinks = <
         item
           Visible = True
@@ -668,6 +669,7 @@ inherited frmMain: TfrmMain
       Tag = 63
       Action = actPagosPorCliente
       Category = 0
+      Visible = ivNever
     end
     object dxBarButton12: TdxBarButton
       Action = actRptExpecientes

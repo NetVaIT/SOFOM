@@ -28,17 +28,17 @@ inherited FrmConPagos: TFrmConPagos
     ExplicitWidth = 1101
   end
   inherited pnlMaster: TPanel
-    Top = 72
+    Top = 70
     Width = 1101
-    Height = 156
-    ExplicitTop = 72
+    Height = 158
+    ExplicitTop = 70
     ExplicitWidth = 1101
-    ExplicitHeight = 156
+    ExplicitHeight = 158
     inherited cxGrid: TcxGrid
       Width = 1101
-      Height = 156
+      Height = 158
       ExplicitWidth = 1101
-      ExplicitHeight = 156
+      ExplicitHeight = 158
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdPago: TcxGridDBColumn
           DataBinding.FieldName = 'IdPago'
@@ -216,7 +216,7 @@ inherited FrmConPagos: TFrmConPagos
   end
   object PnlBusqueda: TPanel [8]
     Left = 0
-    Top = 28
+    Top = 26
     Width = 1101
     Height = 44
     Align = alTop
@@ -363,7 +363,7 @@ inherited FrmConPagos: TFrmConPagos
     DockControlHeights = (
       0
       0
-      28
+      26
       0)
     inherited dxbNavigator: TdxBar
       DockedLeft = 131
@@ -1743,6 +1743,7 @@ inherited FrmConPagos: TFrmConPagos
     Top = 8
   end
   object DSP_ActTotalCXC: TDataSource
+    DataSet = dmPagos.adospUpdCuentasXCobrarTotales
     Left = 796
     Top = 352
   end

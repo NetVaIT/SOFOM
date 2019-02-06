@@ -125,6 +125,7 @@ begin
   inherited;
   SQLSELECT:= 'select CxC.IdPersona,P.RazonSocial,Sum(CXC.Saldo) as Saldo , sum(CXC.Interes) as interes from CuentasXCobrar CXC, Personas P'
            +' where p.idpersona=Cxc.IdPersona  and Saldo>0.01'
+           +' and cxc.IdCuentaXCobrarEstatus<>7 '  //Ene 31/19
            +' and CXC.IDCuentaXCobrarRestructura is null ';  // Ene 7/19 para consulta desde Grid
 
   SQLGROUPBY:=' Group by cxC.IdPersona, P.RazonSocial';

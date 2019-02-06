@@ -215,6 +215,11 @@ inherited dmrptReporteCartera: TdmrptReporteCartera
       Hint = 'Resumen Facturaci'#243'n y Pagos'
       OnExecute = ActAmorYPago2Execute
     end
+    object ActAmorYPago3: TAction
+      Caption = 'Facturas y Pagos'
+      Hint = 'Facturas y Pagos'
+      OnExecute = ActAmorYPago3Execute
+    end
   end
   object ADOQryBorrarTemporales: TADOQuery
     Connection = _dmConection.ADOConnection
