@@ -121,6 +121,8 @@ type
     cxDBTextEdit12: TcxDBTextEdit;
     Label37: TLabel;
     cxDBTextEdit13: TcxDBTextEdit;
+    Label38: TLabel;
+    cxDBLookupComboBox5: TcxDBLookupComboBox;
     procedure FormShow(Sender: TObject);
     procedure cxDBLookupComboBox1PropertiesChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);

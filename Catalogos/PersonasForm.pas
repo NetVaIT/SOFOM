@@ -96,6 +96,8 @@ type
     tvMasterBancoDeposito: TcxGridDBColumn;
     tvMasterCuentaDeposito: TcxGridDBColumn;
     tvMasterCLABEDeposito: TcxGridDBColumn;
+    tvMasterIdPaisNacimiento: TcxGridDBColumn;
+    tvMasterPaisNacimiento: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private

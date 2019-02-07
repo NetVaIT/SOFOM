@@ -150,17 +150,17 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
   end
   inherited ActionList: TActionList
     Left = 328
-    object actGeneraPreFacturas: TAction
-      Caption = 'Generar Factura'
-      OnExecute = actGeneraPreFacturasExecute
+    object ActGeneraCuentasXCobrar: TAction
+      Caption = 'Generar CXC'
+      OnExecute = ActGeneraCuentasXCobrarExecute
     end
     object ActActualizaMoratorios: TAction
       Caption = 'Actualiza Moratorios'
       OnExecute = ActActualizaMoratoriosExecute
     end
-    object ActGeneraCuentasXCobrar: TAction
-      Caption = 'Generar CXC'
-      OnExecute = ActGeneraCuentasXCobrarExecute
+    object actGeneraPreFacturas: TAction
+      Caption = 'Generar Factura'
+      OnExecute = actGeneraPreFacturasExecute
     end
     object ActTotalesCXC: TAction
       Caption = 'TotalesCXC'
@@ -871,7 +871,7 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     Left = 324
     Top = 145
   end
-  object ADOStrprcActGralMoratorios: TADOStoredProc
+  object adospGenMoratorios: TADOStoredProc
     Connection = _dmConection.ADOConnection
     ProcedureName = 'p_GenMoratorios;1'
     Parameters = <
@@ -891,7 +891,7 @@ inherited dmCuentasXCobrar: TdmCuentasXCobrar
     Left = 72
     Top = 392
   end
-  object ADOStrdPrcGeneraCXC: TADOStoredProc
+  object adospGenAmortizaciones: TADOStoredProc
     Connection = _dmConection.ADOConnection
     ProcedureName = 'p_GenAmortizaciones;1'
     Parameters = <

@@ -5,11 +5,12 @@ interface
 uses
   System.SysUtils, System.Classes, _StandarDMod, System.Actions, Vcl.ActnList,
   Data.DB, Data.Win.ADODB, Vcl.Dialogs, System.UITypes, Vcl.Forms,
-  Winapi.ShellAPI, Winapi.Windows, dxmdaset;
+  Winapi.ShellAPI, Winapi.Windows, System.DateUtils, dxmdaset;
 
 resourcestring
-  strAllowGenMoratorios = '¿Desea generar los moratorios de todos los contratos a la fecha: %s?';
+  strAllowCuentaxCobrar = '¿Desea generar los amortizaciones pendientes a la fecha: %s?';
   strAllowDelCuentaxCobrar = '¿Deseas eliminar la cuenta por cobrar %d?';
+  strAllowGenMoratorios = '¿Desea generar los moratorios de todos los contratos a la fecha: %s?';
 
 type
   TdmCuentasXCobrar = class(T_dmStandar)
@@ -154,13 +155,13 @@ type
     ADODtStPrefacturasCFDIIdCuentaXCobrar: TIntegerField;
     ADODtStPrefacturasCFDISaldoFactoraje: TFMTBCDField;
     DetallesCXCParaFacturarEsMoratorios: TBooleanField;
-    ADOStrprcActGralMoratorios: TADOStoredProc;
+    adospGenMoratorios: TADOStoredProc;
     ActActualizaMoratorios: TAction;
     adodsMasterSaldoFactoraje: TFMTBCDField;
     ADOdsCXCDetallePagosAplicados: TFMTBCDField;
     ADOdsCXCDetallePagosAplicadosFactoraje: TFMTBCDField;
     ActGeneraCuentasXCobrar: TAction;
-    ADOStrdPrcGeneraCXC: TADOStoredProc;
+    adospGenAmortizaciones: TADOStoredProc;
     adodsMasterIdAnexo: TIntegerField;
     ADODTSTCXCMoratorios: TADODataSet;
     ADODTSTCXCMoratoriosIdCuentaXCobrar: TAutoIncField;
@@ -225,22 +226,22 @@ type
     procedure adodsMasterIdPersonaChange(Sender: TField);
   private
     { Private declarations }
-//    function SacaTipoComp(TipoDoc: Integer): String;
-//    function SacaDireccion(IDCliente: Integer): Integer;
-//    function SacaMetodo(IDCliente: Integer; var CtaPago:String): Integer;
+    FFechaActual: TDateTime;
     procedure RegistraBitacora(tipoRegistro: Integer);
-    function GetFFechaActual: TDAteTime;
+//    function GetFFechaActual: TDAteTime;
     function GetFTotalConMora: Double;
-//    procedure verificaYCambiaEstatusCXC(IDCFDIACT, NvoEstatus, IdCXCAct:integer);
     function EliminarCuentaXCobrar(IdCuentaxCobrar: Integer): Boolean;
     function ActualizarTotales(IdCuentaxCobrar: Integer): Boolean;
     function AgregarDetalle(IdCuentaXCobrar, IdCuentaXCobrarTipo: Integer;
       Descripcion: string; Importe: Currency): Integer;
     procedure AbrirAnexosLkp;
+    procedure SetFechaActual(const Value: TDateTime);
+    function GetFechaActual: TDateTime;
   public
     { Public declarations }
     function CrearCFDI(IdCuentaXCobrar: Integer): Integer;
-    property FFechaActual:TDAteTime read GetFFechaActual;
+//    property FFechaActual:TDAteTime read GetFFechaActual;
+    property FechaActual: TDateTime read FFechaActual write SetFechaActual;
     property TotalConMora : Double read GetFTotalConMora;
   end;
 
@@ -289,21 +290,23 @@ begin
 end;
 
 procedure TdmCuentasXCobrar.ActActualizaMoratoriosExecute(Sender: TObject);
-var
-  Fecha: TDateTime;  //Se cambio la fecha para que no tenga que ir a consultar nuevamente a la Base de datos Oct 16/17
 begin
-  FEcha:= FFechaActual;
-  inherited;   //Confirmación Oct 4/17
-  if MessageDlg(Format(strAllowGenMoratorios, [DateToStr(Fecha)]), mtConfirmation, mbYesNo, 0) = mrYes then
+  inherited;
+  if MessageDlg(Format(strAllowGenMoratorios, [DateToStr(FechaActual)]), mtConfirmation, mbYesNo, 0) = mrYes then
   begin
-    ADOStrprcActGralMoratorios.Parameters.ParamByName('@Fecha').Value:=FEcha;// may 26/17 date;  //Sin hora
-    ADOStrprcActGralMoratorios.ExecProc;
-    ShowMessage('Se ejecutó proceso de Moratorios al día: '+ dateToStr(FEcha)) ; // may 26/17 era date
-    RegistraBitacora(1);//Moratorios Abr 12/17
-    adodsMaster.Refresh;
+    ScreenCursorProc(crSQLWait);
+    try
+      adospGenMoratorios.Parameters.ParamByName('@Fecha').Value:= FechaActual;
+      adospGenMoratorios.ExecProc;
+      RegistraBitacora(1);
+      RefreshADODS(adodsMaster, adodsMasterIdCuentaXCobrar);
+    finally
+      ScreenCursorProc(crDefault);
+    end;
+//    ShowMessage('Se ejecutó proceso de Moratorios al día: '+ dateToStr(FechaActual)) ; // may 26/17 era date
   end
   else
-    Showmessage('Proceso de generación de Moratorios Cancelado');
+    Showmessage('Proceso de generación de moratorios cancelado');
 end;
 
 procedure TdmCuentasXCobrar.actAgregarCXCDetalleExecute(Sender: TObject);
@@ -342,49 +345,59 @@ begin
 end;
 
 procedure TdmCuentasXCobrar.ActGeneraCuentasXCobrarExecute(Sender: TObject);
-var
-  res, paso, Total:integer;     //Feb 15/17
-  FechaAux:TDateTime;
+//var
+//  res, paso, Total:integer;     //Feb 15/17
+//  FechaAux:TDateTime;
 begin
   inherited;
-  REs:=0;                                                                                 // may 26/17 era date
-  ShowMessage('Calcula Cuentas X Cobrar pendientes de generar al dia de hoy '+dateTimeToSTR(FFechaActual));
-  ADOQryAuxiliar.Close;                      //Consulta para mandar crear CXC   probablememnte Verificar si PagoTotal es >1 Oct 24/17
-  ADOQryAuxiliar.SQL.Clear;
-  ADOQryAuxiliar.SQL.Add('SELECT    IdAnexoAmortizacion, IdAnexoCredito, IdAnexoSegmento, Periodo, FechaCorte, FechaVencimiento, '+
-                         ' TasaAnual, SaldoInicial, Pago, Capital, CapitalImpuesto, CapitalTotal, Interes, InteresImpuesto,'+
-                         ' InteresTotal, ImpactoISR, PagoTotal, SaldoFinal, FechaMoratorio, MoratorioBase, Moratorio,'+
-                         ' MoratorioImpuesto FROM  AnexosAmortizaciones AA where FechaCorte <=:FEchaCorte and '+
-                         ' not Exists(Select * from CuentasXCobrar CXC where CXC.IdAnexosAmortizaciones=AA.IdAnexoAmortizacion) '+
-//                         '       //     and CXC.Fecha=AA.FechaCorte)'+ no debe filtrar poresto
-                         ' and not Exists (Select * from AnexosCreditos Ac where Ac.IdAnexoCredito =AA.IdAnexoCredito and AC.IdAnexoCreditoEstatus =2)-- no Cancelado'+
-                         ' order by FechaCorte');
-  ADOQryAuxiliar.Parameters.ParamByName('FechaCorte').value:= FFechaActual;// may 26/17 date;      //Se buscan a al dìa de hoy  (Fecha Tabla)
-  ADOQryAuxiliar.Open;
-  ShowProgress(1,100,'Preparando Amortizaciones para generar Cuentas por Cobrar  ' + IntToStr(1) + '%');
-  Total:= ADOQryAuxiliar.REcordCount ;
-  Paso:=1;
-  while not ADOQryAuxiliar.eof do
+  if MessageDlg(Format(strAllowCuentaxCobrar, [DateToStr(FechaActual)]), mtConfirmation, mbYesNo, 0) = mrYes then
   begin
-    ShowProgress(Paso,Total,'Verificando Amortizacion '+intTostr(paso)+' de '+intTostr(Total)+'.    ' + IntToStr(trunc(Paso/Total*100)) + '%');
-
-    FechaAux:= ADOQryAuxiliar.FieldByName('FechaCorte').AsDateTime;
-    ADOStrdPrcGeneraCXC.Parameters.ParamByName('@FechaCorte').Value:=FechaAux;   //FFechaActual
-    ADOStrdPrcGeneraCXC.ExecProc;
-    Res:=Res+1;
-    ADOQryAuxiliar.Next;
-    inc(paso);
+    ScreenCursorProc(crSQLWait);
+    try
+      adospGenAmortizaciones.Parameters.ParamByName('@FechaCorte').Value:= FechaActual;
+      adospGenAmortizaciones.ExecProc;
+      RegistraBitacora(0);
+      RefreshADODS(adodsMaster, adodsMasterIdCuentaXCobrar);
+    finally
+      ScreenCursorProc(crDefault);
+    end;
   end;
-  ShowProgress(Paso,Total,'Generación de Cuentas por Cobrar finalizada ... 100 %' );
-  ShowProgress(Total,Total);
-  ADOQryAuxiliar.Close;
-  adoDSMaster.Close;
-  adoDSMaster.Open;
-  if res=0  then
-     Showmessage('No existen Amortizaciones en el rango de fechas para la creación de Cuentas X Cobrar pendientes')         //Ajustados los mensajes oct 4/17
-  else
-     Showmessage('Verificó '+intToStr(res)+' Amortizaciones con posibilidad de creación de Cuentas X Cobrar. Puede que se hayan generado nuevas cuentas');  //Puede que no de todas actualice
-  RegistraBitacora(0);
+//  REs:=0;                                                                                 // may 26/17 era date
+//  ShowMessage('Calcula Cuentas X Cobrar pendientes de generar al dia de hoy '+dateTimeToSTR(FFechaActual));
+//  ADOQryAuxiliar.Close;                      //Consulta para mandar crear CXC   probablememnte Verificar si PagoTotal es >1 Oct 24/17
+//  ADOQryAuxiliar.SQL.Clear;
+//  ADOQryAuxiliar.SQL.Add('SELECT    IdAnexoAmortizacion, IdAnexoCredito, IdAnexoSegmento, Periodo, FechaCorte, FechaVencimiento, '+
+//                         ' TasaAnual, SaldoInicial, Pago, Capital, CapitalImpuesto, CapitalTotal, Interes, InteresImpuesto,'+
+//                         ' InteresTotal, ImpactoISR, PagoTotal, SaldoFinal, FechaMoratorio, MoratorioBase, Moratorio,'+
+//                         ' MoratorioImpuesto FROM  AnexosAmortizaciones AA where FechaCorte <=:FEchaCorte and '+
+//                         ' not Exists(Select * from CuentasXCobrar CXC where CXC.IdAnexosAmortizaciones=AA.IdAnexoAmortizacion) '+
+////                         '       //     and CXC.Fecha=AA.FechaCorte)'+ no debe filtrar poresto
+//                         ' and not Exists (Select * from AnexosCreditos Ac where Ac.IdAnexoCredito =AA.IdAnexoCredito and AC.IdAnexoCreditoEstatus =2)-- no Cancelado'+
+//                         ' order by FechaCorte');
+//  ADOQryAuxiliar.Parameters.ParamByName('FechaCorte').value:= FFechaActual;// may 26/17 date;      //Se buscan a al dìa de hoy  (Fecha Tabla)
+//  ADOQryAuxiliar.Open;
+//  ShowProgress(1,100,'Preparando Amortizaciones para generar Cuentas por Cobrar  ' + IntToStr(1) + '%');
+//  Total:= ADOQryAuxiliar.REcordCount ;
+//  Paso:=1;
+//  while not ADOQryAuxiliar.eof do
+//  begin
+//    ShowProgress(Paso,Total,'Verificando Amortizacion '+intTostr(paso)+' de '+intTostr(Total)+'.    ' + IntToStr(trunc(Paso/Total*100)) + '%');
+//
+//    FechaAux:= ADOQryAuxiliar.FieldByName('FechaCorte').AsDateTime;
+//    Res:=Res+1;
+//    ADOQryAuxiliar.Next;
+//    inc(paso);
+//  end;
+//  ShowProgress(Paso,Total,'Generación de Cuentas por Cobrar finalizada ... 100 %' );
+//  ShowProgress(Total,Total);
+//  ADOQryAuxiliar.Close;
+//  adoDSMaster.Close;
+//  adoDSMaster.Open;
+//  if res=0  then
+//     Showmessage('No existen Amortizaciones en el rango de fechas para la creación de Cuentas X Cobrar pendientes')         //Ajustados los mensajes oct 4/17
+//  else
+//     Showmessage('Verificó '+intToStr(res)+' Amortizaciones con posibilidad de creación de Cuentas X Cobrar. Puede que se hayan generado nuevas cuentas');  //Puede que no de todas actualice
+//  RegistraBitacora(0);
 end;
 
 Procedure TdmCuentasXCobrar.RegistraBitacora(tipoRegistro:Integer); //Abr 11/17
@@ -401,10 +414,15 @@ begin
   ADOQryAuxiliar.sql.Add('IF not exists(Select * from BitacoraGeneracion where Tipo = '''+TipoTxt+''' and FechaGeneracion =:IdFechaHoy1 )'+
                          ' Insert into BitacoraGeneracion (Tipo, FechaGeneracion, IdUsuario) Values('''+tipotxt+''',:IdFechaHoy2, '  +
                          intToSTR(_DMConection.idUsuario)+' ) ' );
-  ADOQryAuxiliar.Parameters.ParamByName('IdFechaHoy1').Value:=FFechaActual;  //cambio May 28/17   date bitacora
-  ADOQryAuxiliar.Parameters.ParamByName('IdFechaHoy2').Value:=FFechaActual;  // cambio May 28/17   date bitacora
+  ADOQryAuxiliar.Parameters.ParamByName('IdFechaHoy1').Value:=FechaActual;  //cambio May 28/17   date bitacora
+  ADOQryAuxiliar.Parameters.ParamByName('IdFechaHoy2').Value:=FechaActual;  // cambio May 28/17   date bitacora
   ADOQryAuxiliar.ExecSQL;
   AdodsMaster.Refresh;
+end;
+
+procedure TdmCuentasXCobrar.SetFechaActual(const Value: TDateTime);
+begin
+  FFechaActual := Value;
 end;
 
 procedure TdmCuentasXCobrar.actGeneraPreFacturasExecute(Sender: TObject);
@@ -571,23 +589,20 @@ end;
 //   Result:= FrmDatosFacturaPrev.modalresult=mrok;
 //end;
 
-function TdmCuentasXCobrar.GetFFechaActual: TDAteTime;   //May 26/17   //Obtener fecha Pruebas sin Hora
-var d,m,a:word;
+function TdmCuentasXCobrar.GetFechaActual: TDateTime;   //May 26/17   //Obtener fecha Pruebas sin Hora
+//var d,m,a:word;
 begin
-
   ADOQryAux2.Close;
   ADOQryAux2.SQL.Clear;
-  ADOQryAux2.SQL.Add('SELECT [dbo].[GetDateAux] ()  as FechaAct ');
-  ADOQryAux2.open;
-  Result := ADOQryAux2.Fieldbyname('FechaAct').AsDateTime;
-  DEcodedate(Result,a,m,d);
-  result:=Encodedate(a,m,d);
+  ADOQryAux2.SQL.Add('SELECT [dbo].[GetDateAux] () as FechaAct');
+  ADOQryAux2.Open;
+  Result := Dateof(ADOQryAux2.Fieldbyname('FechaAct').AsDateTime);
+//  DEcodedate(Result,a,m,d);
+//  result:=Encodedate(a,m,d);
 end;
 
 function TdmCuentasXCobrar.GetFTotalConMora: Double;
-//var
-//  FTotalConMora: Double;
-begin //Jul 10/17 Calcular si tiene mora
+begin
   Result := 0;
   if adodsmaster.State in [dsInsert, dsEdit] then
   begin
@@ -848,6 +863,7 @@ end;
 procedure TdmCuentasXCobrar.DataModuleCreate(Sender: TObject);
 begin
   inherited;
+  FechaActual := GetFechaActual;
   gGridForm:= TfrmConCuentasXCobrar.Create(Self);     //Dic 5/16
   gGridForm.DataSet:= adodsMaster;
   TFrmConCuentasXCobrar(gGridForm).ActGenerarPrefactura := actGeneraPreFacturas; //Dic 7/16
@@ -890,43 +906,6 @@ begin
     end;
   end;
 end;
-
-//function TdmCuentasXCobrar.SacaTipoComp (TipoDoc:Integer) :String;
-//begin
-//  ADOdsAuxiliar.Close;
-//  ADOdsAuxiliar.CommandText:='Select * from CFDITipoDocumento where idCFDITipoDocumento = '+ intToSTR(TipoDoc);
-//  ADOdsAuxiliar.Open;
-//  if not ADOdsAuxiliar.eof then
-//    Result:=ADOdsAuxiliar.FieldByName('TipoComprobante').AsString;
-//end;
-
-//function TdmCuentasXCobrar.SacaDireccion (IDCliente:Integer) :Integer;
-//begin    //Verificar que pasa en caso que no tenga          //Dic 6/16
-//  Result:=-1;
-//  ADODtStDireccionesCliente.Close;
-//  ADODtStDireccionesCliente.Parameters.ParamByName('idPersona').Value:=   IDCliente;
-//  ADODtStDireccionesCliente.Open;
-//  if not ADODtStDireccionesCliente.eof then
-//  begin
-//    REsult:= ADODtStDireccionesCliente.FieldByName('IDPersonaDomicilio').AsInteger;
-//  end;
-//end;
-
-//function TdmCuentasXCobrar.SacaMetodo (IDCliente:Integer; var CtaPago:String) :Integer;
-//begin                                         //Dic 6/16
-//  CtaPago:='';
-//  ADOdsAuxiliar.Close;
-//  ADOdsAuxiliar.CommandText:='Select * from Personas where idPersona = '+ intToSTR(IDCliente);
-//  ADOdsAuxiliar.Open;
-//  if (not ADOdsAuxiliar.eof)  and not (ADOdsAuxiliar.FieldByName('IdMetodoPago').isnull) then
-//  begin
-//    Result:=ADOdsAuxiliar.FieldByName('IdMetodoPago').asInteger;
-//    if not ADOdsAuxiliar.FieldByName('NumCtaPagoCliente').isnull then
-//       CtaPago:= ADOdsAuxiliar.FieldByName('NumCtaPagoCliente').asstring;
-//  end
-//  else
-//    Result:=5; //Otros
-//end;
 
 end.
 

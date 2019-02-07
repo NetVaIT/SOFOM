@@ -27,7 +27,7 @@ uses
   dxPSPDFExport, cxDrawTextUtils, dxPSPrVwStd, dxPSPrVwAdv, dxPSPrVwRibbon,
   dxPScxPageControlProducer, dxPScxGridLnk, dxPScxGridLayoutViewLnk,
   dxPScxEditorProducers, dxPScxExtEditorProducers, dxSkinsdxRibbonPainter,
-  dxPSCore, dxPScxCommon, cxPropertiesStore;
+  dxPSCore, dxPScxCommon, cxPropertiesStore, cxCheckBox;
 
 type
   TfrmPersonasDomicilios = class(T_frmGrid)
@@ -38,6 +38,8 @@ type
     tvMasterDomicilio: TcxGridDBColumn;
     tvMasterTipo: TcxGridDBColumn;
     tvMasterPredeterminado: TcxGridDBColumn;
+    tvMasterRegimenFiscalPreferente: TcxGridDBColumn;
+    tvMasterListaGAFI: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private

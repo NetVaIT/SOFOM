@@ -11,24 +11,25 @@ inherited frmPersonaEdit: TfrmPersonaEdit
     Width = 654
     Height = 692
     ExplicitWidth = 654
-    ExplicitHeight = 646
+    ExplicitHeight = 692
     ClientRectBottom = 690
     ClientRectRight = 652
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 2
       ExplicitTop = 26
       ExplicitWidth = 650
-      ExplicitHeight = 618
+      ExplicitHeight = 664
       object PnlEmisor: TPanel
         Left = 0
-        Top = 351
+        Top = 352
         Width = 650
-        Height = 313
+        Height = 312
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 5
         Visible = False
-        ExplicitHeight = 267
+        ExplicitTop = 351
+        ExplicitHeight = 313
         object Label20: TLabel
           Left = 16
           Top = 4
@@ -148,9 +149,10 @@ inherited frmPersonaEdit: TfrmPersonaEdit
         object Label11: TLabel
           Left = 398
           Top = 51
-          Width = 19
+          Width = 60
           Height = 13
-          Caption = 'Pais'
+          Caption = 'Nacionalidad'
+          FocusControl = cxDBLookupComboBox1
         end
         object Label33: TLabel
           Left = 224
@@ -212,7 +214,7 @@ inherited frmPersonaEdit: TfrmPersonaEdit
         Left = 0
         Top = 142
         Width = 650
-        Height = 209
+        Height = 210
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 2
@@ -255,13 +257,15 @@ inherited frmPersonaEdit: TfrmPersonaEdit
           Width = 24
           Height = 13
           Caption = 'Sexo'
+          FocusControl = cxDBLookupComboBox3
         end
         object Label10: TLabel
-          Left = 195
+          Left = 192
           Top = 165
           Width = 55
           Height = 13
           Caption = 'Estado Civil'
+          FocusControl = cxDBLookupComboBox4
         end
         object Label12: TLabel
           Left = 192
@@ -287,11 +291,12 @@ inherited frmPersonaEdit: TfrmPersonaEdit
           Caption = 'C.U.R.P.'
         end
         object Label15: TLabel
-          Left = 352
+          Left = 398
           Top = 166
           Width = 60
           Height = 13
           Caption = 'Nacionalidad'
+          FocusControl = cxDBLookupComboBox6
         end
         object Label19: TLabel
           Left = 18
@@ -300,6 +305,14 @@ inherited frmPersonaEdit: TfrmPersonaEdit
           Height = 13
           Caption = 'Segundo nombre'
           FocusControl = edtSegundoNombre
+        end
+        object Label38: TLabel
+          Left = 397
+          Top = 123
+          Width = 88
+          Height = 13
+          Caption = 'Pa'#237's de nacimiento'
+          FocusControl = cxDBLookupComboBox5
         end
         object edtNombre: TcxDBTextEdit
           Left = 222
@@ -343,21 +356,21 @@ inherited frmPersonaEdit: TfrmPersonaEdit
           Width = 170
         end
         object cxDBLookupComboBox4: TcxDBLookupComboBox
-          Left = 195
+          Left = 192
           Top = 181
           DataBinding.DataField = 'EstadoCivil'
           DataBinding.DataSource = DataSource
           Properties.ListColumns = <>
           TabOrder = 10
-          Width = 150
+          Width = 200
         end
         object cxDBTextEdit2: TcxDBTextEdit
           Left = 192
-          Top = 140
+          Top = 139
           DataBinding.DataField = 'LugarNacimiento'
           DataBinding.DataSource = DataSource
           TabOrder = 8
-          Width = 440
+          Width = 199
         end
         object cxDBTextEdit3: TcxDBTextEdit
           Left = 16
@@ -385,13 +398,26 @@ inherited frmPersonaEdit: TfrmPersonaEdit
           OnClick = btnWebClick
         end
         object cxDBLookupComboBox6: TcxDBLookupComboBox
-          Left = 352
+          Left = 398
           Top = 182
           DataBinding.DataField = 'Pais'
           DataBinding.DataSource = DataSource
-          Properties.ListColumns = <>
+          Properties.ListColumns = <
+            item
+              FieldName = 'Pais'
+            end
+            item
+              Caption = 'RFP'
+              MinWidth = 40
+              FieldName = 'RegimenFiscalPreferente'
+            end
+            item
+              Caption = 'GAFI'
+              MinWidth = 40
+              FieldName = 'ListaGAFI'
+            end>
           TabOrder = 11
-          Width = 280
+          Width = 234
         end
         object edtSegundoNombre: TcxDBTextEdit
           Left = 18
@@ -401,28 +427,52 @@ inherited frmPersonaEdit: TfrmPersonaEdit
           TabOrder = 3
           Width = 200
         end
+        object cxDBLookupComboBox5: TcxDBLookupComboBox
+          Left = 397
+          Top = 139
+          DataBinding.DataField = 'PaisNacimiento'
+          DataBinding.DataSource = DataSource
+          Properties.ListColumns = <
+            item
+              FieldName = 'Pais'
+            end
+            item
+              Caption = 'RFP'
+              MinWidth = 40
+              FieldName = 'RegimenFiscalPreferente'
+            end
+            item
+              Caption = 'GAFI'
+              MinWidth = 40
+              FieldName = 'ListaGAFI'
+            end>
+          TabOrder = 12
+          Width = 234
+        end
       end
       object pnlOrigen: TPanel
         Left = 0
-        Top = 351
+        Top = 352
         Width = 650
-        Height = 313
+        Height = 312
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 3
         Visible = False
-        ExplicitHeight = 267
+        ExplicitTop = 351
+        ExplicitHeight = 313
       end
       object PnlCliente: TPanel
         Left = 0
-        Top = 351
+        Top = 352
         Width = 650
-        Height = 313
+        Height = 312
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 4
         Visible = False
-        ExplicitHeight = 267
+        ExplicitTop = 351
+        ExplicitHeight = 313
         object Label17: TLabel
           Left = 16
           Top = 80
@@ -532,7 +582,7 @@ inherited frmPersonaEdit: TfrmPersonaEdit
         end
         object DBLkpCmbBxRiesgo: TDBLookupComboBox
           Left = 224
-          Top = 16
+          Top = 13
           Width = 200
           Height = 21
           DataField = 'Riesgo'
@@ -786,48 +836,40 @@ inherited frmPersonaEdit: TfrmPersonaEdit
     object tsDomicilio: TcxTabSheet
       Caption = 'Domicilio'
       ImageIndex = 1
-      ExplicitHeight = 618
     end
     object tsTelefono: TcxTabSheet
       Caption = 'Telefono'
       ImageIndex = 2
-      ExplicitHeight = 618
     end
     object tsCorreo: TcxTabSheet
       Caption = 'Correo Electronico'
       ImageIndex = 3
-      ExplicitHeight = 618
     end
     object tsContacto: TcxTabSheet
       Caption = 'Contactos'
       ImageIndex = 4
-      ExplicitHeight = 618
     end
     object tsPerfil: TcxTabSheet
       Caption = 'PLD'
       ImageIndex = 8
-      ExplicitHeight = 618
     end
     object tsDocumentos: TcxTabSheet
       Caption = 'Documentos'
       ImageIndex = 7
-      ExplicitHeight = 618
     end
     object tsCuentasBancarias: TcxTabSheet
       Caption = 'Cuentas Bancarias'
       ImageIndex = 5
-      ExplicitHeight = 618
     end
     object tsCSD: TcxTabSheet
       Caption = 'Sello digital'
       ImageIndex = 6
-      ExplicitHeight = 618
     end
   end
   inherited pmlMain: TPanel
     Top = 692
     Width = 654
-    ExplicitTop = 646
+    ExplicitTop = 692
     ExplicitWidth = 654
     inherited btnCancel: TButton
       Left = 572

@@ -9,15 +9,15 @@ inherited frmDomiciliosEdit: TfrmDomiciliosEdit
   inherited pcMain: TcxPageControl
     Width = 477
     Height = 455
-    ExplicitWidth = 553
-    ExplicitHeight = 381
+    ExplicitWidth = 477
+    ExplicitHeight = 455
     ClientRectBottom = 453
     ClientRectRight = 475
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 2
       ExplicitTop = 26
-      ExplicitWidth = 549
-      ExplicitHeight = 353
+      ExplicitWidth = 473
+      ExplicitHeight = 427
       object Label1: TLabel
         Left = 16
         Top = 16
@@ -146,7 +146,17 @@ inherited frmDomiciliosEdit: TfrmDomiciliosEdit
         Properties.KeyFieldNames = 'IdPais'
         Properties.ListColumns = <
           item
-            FieldName = 'Descripcion'
+            FieldName = 'Pais'
+          end
+          item
+            Caption = 'REP'
+            MinWidth = 40
+            FieldName = 'RegimenFiscalPreferente'
+          end
+          item
+            Caption = 'GAFI'
+            MinWidth = 40
+            FieldName = 'ListaGAFI'
           end>
         Properties.ListOptions.SyncMode = True
         Properties.ListSource = dsPaises
@@ -251,15 +261,15 @@ inherited frmDomiciliosEdit: TfrmDomiciliosEdit
   inherited pmlMain: TPanel
     Top = 455
     Width = 477
-    ExplicitTop = 381
-    ExplicitWidth = 553
+    ExplicitTop = 455
+    ExplicitWidth = 477
     inherited btnCancel: TButton
       Left = 395
-      ExplicitLeft = 471
+      ExplicitLeft = 395
     end
     inherited btnOk: TButton
       Left = 314
-      ExplicitLeft = 390
+      ExplicitLeft = 314
     end
   end
   inherited cxImageList: TcxImageList

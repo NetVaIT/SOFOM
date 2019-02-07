@@ -115,6 +115,9 @@ type
     adodsMasterCLABEDeposito: TStringField;
     adodsBancos: TADODataSet;
     adodsMasterBancoDeposito: TStringField;
+    adodsMasterIdPaisNacimiento: TIntegerField;
+    adodsPaisN: TADODataSet;
+    adodsMasterPaisNacimiento: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsPersonaRolesNewRecord(DataSet: TDataSet);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
@@ -242,7 +245,7 @@ begin
   SQLSelect:= 'SELECT IdPersona, IdPersonaTipo, IdRolTipo, IdRazonSocialTipo, IdSexo, IdEstadoCivil, IdPais, IdPoblacion, IdRiesgoTipo, IdBCCalificacion, IdBCActividad1, IdBCActividad2, IdBCActividad3, RFC, CURP, RazonSocial, ' +
   'Nombre, SegundoNombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, LugarNacimiento, VigenciaFM34, IdMetodoPago, IdRegimenFiscal, IdDocumentoLogo, IdPersonaEstatus, Identificador, NumCtaPagoCliente, ' +
   'SaldoCliente, CalificacionInicial, CalificacionActual, PLDOrigenRecurso, PLDDestinoRecurso, PLDMontoMaximo, PLDPagarEfectivo, PLDMontoMaximoEfectivo, PLDNumeroPagos, IdCFDIFormaPago33, IdCFDIUsoCFDI, PPE, ' +
-  'IdBancoDeposito, CuentaDeposito, CLABEDeposito ' +
+  'IdBancoDeposito, CuentaDeposito, CLABEDeposito, IdPaisNacimiento ' +
   'FROM Personas';
   SQLOrderBy:= 'ORDER BY RazonSocial';
   actSearch.Execute;

@@ -20,6 +20,10 @@ type
     adodsDomiciliosIdDomicilio: TAutoIncField;
     adodsDomiciliosDomicilio: TStringField;
     adodsMasterDomicilio: TStringField;
+    adodsDomiciliosRegimenFiscalPreferente: TBooleanField;
+    adodsDomiciliosListaGAFI: TBooleanField;
+    adodsMasterRegimenFiscalPreferente: TBooleanField;
+    adodsMasterListaGAFI: TBooleanField;
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure DataModuleCreate(Sender: TObject);
     procedure actUpdateExecute(Sender: TObject);

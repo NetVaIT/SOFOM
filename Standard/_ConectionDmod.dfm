@@ -5,10 +5,10 @@ object _dmConection: T_dmConection
   object ADOConnection: TADOConnection
     ConnectionString = 
       'Provider=SQLOLEDB.1;Password=as47Pw3K;Persist Security Info=True' +
-      ';User ID=sa;Initial Catalog=SofomPrueba;Data Source=NAS4\Nominas' +
-      'V12;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=' +
-      '4096;Workstation ID=DESARROLLO3;Use Encryption for Data=False;Ta' +
-      'g with column collation when possible=False'
+      ';User ID=sa;Initial Catalog=SOFOM;Data Source=NAS4\NominasV12;Us' +
+      'e Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;W' +
+      'orkstation ID=DESARROLLO3;Use Encryption for Data=False;Tag with' +
+      ' column collation when possible=False'
     LoginPrompt = False
     Provider = 'SQLOLEDB.1'
     OnDisconnect = ADOConnectionDisconnect

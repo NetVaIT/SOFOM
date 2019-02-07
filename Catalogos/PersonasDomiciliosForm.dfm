@@ -35,7 +35,16 @@ inherited frmPersonasDomicilios: TfrmPersonasDomicilios
         end
         object tvMasterPredeterminado: TcxGridDBColumn
           DataBinding.FieldName = 'Predeterminado'
+          PropertiesClassName = 'TcxCheckBoxProperties'
           Width = 100
+        end
+        object tvMasterRegimenFiscalPreferente: TcxGridDBColumn
+          DataBinding.FieldName = 'RegimenFiscalPreferente'
+          PropertiesClassName = 'TcxCheckBoxProperties'
+        end
+        object tvMasterListaGAFI: TcxGridDBColumn
+          DataBinding.FieldName = 'ListaGAFI'
+          PropertiesClassName = 'TcxCheckBoxProperties'
         end
       end
     end

@@ -217,7 +217,9 @@ inherited dmDomicilios: TdmDomicilios
   object adodsPaises: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
-    CommandText = 'select IdPais, Descripcion from Paises'
+    CommandText = 
+      'SELECT IdPais, Descripcion AS Pais, RegimenFiscalPreferente, Lis' +
+      'taGAFI FROM Paises'
     Parameters = <>
     Left = 56
     Top = 112

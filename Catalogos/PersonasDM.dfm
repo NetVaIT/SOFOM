@@ -16,7 +16,8 @@ inherited dmPersonas: TdmPersonas
       'icial, CalificacionActual, PLDOrigenRecurso, PLDDestinoRecurso, ' +
       'PLDMontoMaximo, PLDPagarEfectivo, PLDMontoMaximoEfectivo, PLDNum' +
       'eroPagos, IdCFDIFormaPago33, IdCFDIUsoCFDI, PPE,'#13#10'IdBancoDeposit' +
-      'o, CuentaDeposito, CLABEDeposito'#13#10'FROM Personas'
+      'o, CuentaDeposito, CLABEDeposito, IdPaisNacimiento'#13#10'FROM Persona' +
+      's'
     Left = 64
     object adodsMasterIdPersona: TAutoIncField
       FieldName = 'IdPersona'
@@ -49,6 +50,10 @@ inherited dmPersonas: TdmPersonas
     end
     object adodsMasterIdPoblacion: TIntegerField
       FieldName = 'IdPoblacion'
+      Visible = False
+    end
+    object adodsMasterIdPaisNacimiento: TIntegerField
+      FieldName = 'IdPaisNacimiento'
       Visible = False
     end
     object adodsMasterIdMetodoPago: TIntegerField
@@ -150,27 +155,49 @@ inherited dmPersonas: TdmPersonas
     end
     object adodsMasterNombre: TStringField
       FieldName = 'Nombre'
+      Visible = False
       OnChange = adodsMasterNombreChange
       Size = 100
     end
     object adodsMasterSegundoNombre: TStringField
       DisplayLabel = 'Segundo nombre'
       FieldName = 'SegundoNombre'
+      Visible = False
       OnChange = adodsMasterNombreChange
       Size = 100
     end
     object adodsMasterApellidoPaterno: TStringField
       FieldName = 'ApellidoPaterno'
+      Visible = False
       OnChange = adodsMasterNombreChange
       Size = 100
     end
     object adodsMasterApellidoMaterno: TStringField
       FieldName = 'ApellidoMaterno'
+      Visible = False
       OnChange = adodsMasterNombreChange
       Size = 100
     end
     object adodsMasterFechaNacimiento: TDateTimeField
       FieldName = 'FechaNacimiento'
+      Visible = False
+    end
+    object adodsMasterLugarNacimiento: TStringField
+      FieldName = 'LugarNacimiento'
+      Visible = False
+      Size = 100
+    end
+    object adodsMasterPaisNacimiento: TStringField
+      DisplayLabel = 'Pa'#237's de nacimiento'
+      FieldKind = fkLookup
+      FieldName = 'PaisNacimiento'
+      LookupDataSet = adodsPaisN
+      LookupKeyFields = 'IdPais'
+      LookupResultField = 'Pais'
+      KeyFields = 'IdPaisNacimiento'
+      Visible = False
+      Size = 100
+      Lookup = True
     end
     object adodsMasterSexo: TStringField
       FieldKind = fkLookup
@@ -193,6 +220,7 @@ inherited dmPersonas: TdmPersonas
       Lookup = True
     end
     object adodsMasterPais: TStringField
+      DisplayLabel = 'Nacionalidad'
       FieldKind = fkLookup
       FieldName = 'Pais'
       LookupDataSet = adodsPais
@@ -221,10 +249,6 @@ inherited dmPersonas: TdmPersonas
       LookupResultField = 'ListaGAFI'
       KeyFields = 'IdPais'
       Lookup = True
-    end
-    object adodsMasterLugarNacimiento: TStringField
-      FieldName = 'LugarNacimiento'
-      Size = 100
     end
     object adodsMasterVigenciaFM34: TDateTimeField
       FieldName = 'VigenciaFM34'
@@ -740,5 +764,15 @@ inherited dmPersonas: TdmPersonas
     Parameters = <>
     Left = 168
     Top = 496
+  end
+  object adodsPaisN: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'SELECT IdPais, Descripcion AS Pais, RegimenFiscalPreferente, Lis' +
+      'taGAFI FROM Paises'
+    Parameters = <>
+    Left = 256
+    Top = 304
   end
 end
