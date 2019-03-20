@@ -91,4 +91,27 @@ inherited dmCFDIRelacionados: TdmCFDIRelacionados
       Size = 40
     end
   end
+  object adoqGetCFDI: TADOQuery
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    Parameters = <
+      item
+        Name = 'IdCFDI'
+        Attributes = [paSigned]
+        DataType = ftLargeint
+        Precision = 19
+        Size = 8
+        Value = Null
+      end>
+    SQL.Strings = (
+      'SELECT UUID_TB AS UUID FROM CFDI'
+      'WHERE IdCFDI = :IdCFDI'
+      '')
+    Left = 56
+    Top = 160
+    object adoqGetCFDIUUID: TStringField
+      FieldName = 'UUID'
+      Size = 40
+    end
+  end
 end

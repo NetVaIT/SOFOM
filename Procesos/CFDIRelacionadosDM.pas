@@ -17,6 +17,8 @@ type
     adodsCFDIParaRelacionarFolio: TStringField;
     adodsCFDIParaRelacionarUUID: TStringField;
     adodsMasterCFDIAsociado: TStringField;
+    adoqGetCFDI: TADOQuery;
+    adoqGetCFDIUUID: TStringField;
     procedure adodsMasterIDCFDIAsociadoChange(Sender: TField);
     procedure DataModuleCreate(Sender: TObject);
   private
@@ -24,6 +26,7 @@ type
     FIdPersonaReceptor: Integer;
     FIdCFDITipoDocumento: Integer;
     FSoloLectura: Boolean;
+    function GetUUID(IdCFDI: Int64): string;
     procedure SetIdPersonaReceptor(const Value: Integer);
     procedure SetSoloLectura(const Value: Boolean);
     procedure SetIdCFDITipoDocumento(const Value: Integer);
@@ -49,7 +52,8 @@ begin
   inherited;
   if adodsMaster.State in [dsInsert, dsEdit] then
   begin
-    adodsMasterUUID.AsString := adodsCFDIParaRelacionarUUID.AsString;
+//    adodsMasterUUID.AsString := adodsCFDIParaRelacionarUUID.AsString;
+    adodsMasterUUID.AsString := GetUUID(adodsMasterIDCFDIAsociado.Value);
   end;
 end;
 
@@ -84,6 +88,15 @@ begin
   adodsCFDIParaRelacionar.Parameters.ParamByName('IdCFDIEstatus').Value := IdEstatusCon;  //SEp 19/18
   adodsCFDIParaRelacionar.Parameters.ParamByName('IdPersonaReceptor').Value := IdPersonaReceptor;
   adodsCFDIParaRelacionar.Parameters.ParamByName('IdCFDITipoDocumento').Value := IdTipoDocConsulta; // sept 19/18 IdCFDITipoDocumento;
+end;
+
+function TdmCFDIRelacionados.GetUUID(IdCFDI: Int64): string;
+begin
+  adoqGetCFDI.Close;
+  adoqGetCFDI.Parameters.ParamByName('IdCFDI').Value := IdCFDI;
+  adoqGetCFDI.Open;
+  Result := adoqGetCFDIUUID.AsString;
+  adoqGetCFDI.Close;
 end;
 
 procedure TdmCFDIRelacionados.SetIdCFDITipoDocumento(const Value: Integer);

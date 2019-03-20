@@ -5,7 +5,7 @@ object _dmConection: T_dmConection
   object ADOConnection: TADOConnection
     ConnectionString = 
       'Provider=SQLOLEDB.1;Password=as47Pw3K;Persist Security Info=True' +
-      ';User ID=sa;Initial Catalog=SOFOM;Data Source=NAS4\NominasV12;Us' +
+      ';User ID=sa;Initial Catalog=SOFOM;Data Source=NAS4\DESARROLLO;Us' +
       'e Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;W' +
       'orkstation ID=DESARROLLO3;Use Encryption for Data=False;Tag with' +
       ' column collation when possible=False'
