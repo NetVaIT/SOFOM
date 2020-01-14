@@ -69,6 +69,10 @@ inherited frmPersonas: TfrmPersonas
           DataBinding.FieldName = 'IdPais'
           Visible = False
         end
+        object tvMasterIdPaisResidencia: TcxGridDBColumn
+          DataBinding.FieldName = 'IdPaisResidencia'
+          Visible = False
+        end
         object tvMasterIdPoblacion: TcxGridDBColumn
           DataBinding.FieldName = 'IdPoblacion'
           Visible = False
@@ -204,6 +208,20 @@ inherited frmPersonas: TfrmPersonas
           DataBinding.FieldName = 'ListaGAFI'
           PropertiesClassName = 'TcxCheckBoxProperties'
         end
+        object tvMasterResidencia: TcxGridDBColumn
+          DataBinding.FieldName = 'Residencia'
+          Width = 200
+        end
+        object tvMasterResidenciaRFP: TcxGridDBColumn
+          DataBinding.FieldName = 'ResidenciaRFP'
+          PropertiesClassName = 'TcxCheckBoxProperties'
+          Width = 42
+        end
+        object tvMasterResidenciaGAFI: TcxGridDBColumn
+          DataBinding.FieldName = 'ResidenciaGAFI'
+          PropertiesClassName = 'TcxCheckBoxProperties'
+          Width = 47
+        end
         object tvMasterTitular: TcxGridDBColumn
           DataBinding.FieldName = 'Titular'
           Visible = False
@@ -258,6 +276,13 @@ inherited frmPersonas: TfrmPersonas
         end
         object tvMasterPPE: TcxGridDBColumn
           DataBinding.FieldName = 'PPE'
+        end
+        object tvMasterBloqueada: TcxGridDBColumn
+          DataBinding.FieldName = 'Bloqueada'
+          Width = 67
+        end
+        object tvMasterFechaBloqueada: TcxGridDBColumn
+          DataBinding.FieldName = 'FechaBloqueada'
         end
         object tvMasterCalificacionInicial: TcxGridDBColumn
           DataBinding.FieldName = 'CalificacionInicial'
@@ -335,6 +360,9 @@ inherited frmPersonas: TfrmPersonas
     ExplicitTop = 387
     ExplicitWidth = 645
   end
+  inherited DataSource: TDataSource
+    DataSet = dmPersonas.adodsMaster
+  end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
       0
@@ -362,6 +390,14 @@ inherited frmPersonas: TfrmPersonas
         item
           Visible = True
           ItemName = 'btnAdministradores'
+        end
+        item
+          Visible = True
+          ItemName = 'btnWSPersonas'
+        end
+        item
+          Visible = True
+          ItemName = 'btnPersonasBloqueadas'
         end>
     end
     object btnAccionistas: TdxBarButton
@@ -373,6 +409,15 @@ inherited frmPersonas: TfrmPersonas
       Caption = 'Administradores'
       Category = 0
       Visible = ivAlways
+    end
+    object btnWSPersonas: TdxBarButton
+      Caption = 'Buscar en WEB'
+      Category = 0
+      Visible = ivAlways
+    end
+    object btnPersonasBloqueadas: TdxBarButton
+      Action = dmPersonas.actPersonasBloqueadas
+      Category = 0
     end
   end
   inherited cxStyleRepository: TcxStyleRepository

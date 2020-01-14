@@ -4,7 +4,11 @@ interface
 
 uses
   System.SysUtils, System.Classes, _StandarDMod, Data.DB, Data.Win.ADODB,
-  System.Actions, Vcl.ActnList;
+  System.Actions, Vcl.ActnList, Vcl.Dialogs, System.UITypes;
+
+resourcestring
+  strGenBlocked = '¿Desea ejecutar el proceso de bloqueo utilizando la listas restringidas?';
+  strBlocked = 'Se bloquearon %d persona(s)';
 
 type
   TRolTipo = (rNone, rDuenoProceso, rOutSourcing, rCliente, rProveedor, rEmpleado,
@@ -118,6 +122,16 @@ type
     adodsMasterIdPaisNacimiento: TIntegerField;
     adodsPaisN: TADODataSet;
     adodsMasterPaisNacimiento: TStringField;
+    adodsMasterIdPaisResidencia: TIntegerField;
+    adodsPais2: TADODataSet;
+    adodsMasterResidencia: TStringField;
+    adodsMasterResidenciaRFP: TBooleanField;
+    adodsMasterResidenciaGAFI: TBooleanField;
+    actWSPersonas: TAction;
+    actPersonasBloqueadas: TAction;
+    adospGenPersonasBloqueadas: TADOStoredProc;
+    adodsMasterBloqueada: TBooleanField;
+    adodsMasterFechaBloqueada: TDateTimeField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsPersonaRolesNewRecord(DataSet: TDataSet);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
@@ -126,6 +140,8 @@ type
     procedure adodsMasterNombreChange(Sender: TField);
     procedure actAdministradoresExecute(Sender: TObject);
     procedure actAdministradoresUpdate(Sender: TObject);
+    procedure actWSPersonasExecute(Sender: TObject);
+    procedure actPersonasBloqueadasExecute(Sender: TObject);
   private
     { Private declarations }
     FRolTipo: TRolTipo;
@@ -147,7 +163,7 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses PersonasForm, PersonasAccionistasDM, PersonasAdministradoresDM;
+uses PersonasForm, PersonasAccionistasDM, PersonasAdministradoresDM, _Utils;
 
 {$R *.dfm}
 
@@ -191,6 +207,32 @@ procedure TdmPersonas.actAdministradoresUpdate(Sender: TObject);
 begin
   inherited;
   TAction(Sender).Enabled := (adodsMasterIdPersonaTipo.Value = 2); // Solo personas morales
+end;
+
+procedure TdmPersonas.actPersonasBloqueadasExecute(Sender: TObject);
+var
+  Encontrados: Integer;
+begin
+  inherited;
+  if MessageDlg(strGenBlocked, mtConfirmation, mbYesNo, 0) = mrYes then
+  begin
+    ScreenCursorProc(crSQLWait);
+    try
+      adospGenPersonasBloqueadas.ExecProc;
+      Encontrados := adospGenPersonasBloqueadas.Parameters.ParamByName('@Encontrados').Value;
+      MessageDlg(Format(strBlocked, [Encontrados]), mtInformation, [mbOk], 0)
+    finally
+      ScreenCursorProc(crDefault);
+    end;
+  end;
+  RefreshADODS(adodsMaster, adodsMasterIdPersona);
+end;
+
+procedure TdmPersonas.actWSPersonasExecute(Sender: TObject);
+begin
+  inherited;
+  ExecuteUntilFinish('WSPersonas.exe');
+  RefreshADODS(adodsMaster, adodsMasterIdPersona);
 end;
 
 procedure TdmPersonas.adodsMasterNewRecord(DataSet: TDataSet);
@@ -241,11 +283,13 @@ begin
   TfrmPersonas(gGridForm).RolTipo := RolTipo;
   TfrmPersonas(gGridForm).actAccionistas := actAccionistas;
   TfrmPersonas(gGridForm).actAdminostradores := actAdministradores;
+  TfrmPersonas(gGridForm).actWSPersonas := actWSPersonas;
+  TfrmPersonas(gGridForm).actPersonasBloqueadas := actPersonasBloqueadas;
   // Busqueda
   SQLSelect:= 'SELECT IdPersona, IdPersonaTipo, IdRolTipo, IdRazonSocialTipo, IdSexo, IdEstadoCivil, IdPais, IdPoblacion, IdRiesgoTipo, IdBCCalificacion, IdBCActividad1, IdBCActividad2, IdBCActividad3, RFC, CURP, RazonSocial, ' +
   'Nombre, SegundoNombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento, LugarNacimiento, VigenciaFM34, IdMetodoPago, IdRegimenFiscal, IdDocumentoLogo, IdPersonaEstatus, Identificador, NumCtaPagoCliente, ' +
   'SaldoCliente, CalificacionInicial, CalificacionActual, PLDOrigenRecurso, PLDDestinoRecurso, PLDMontoMaximo, PLDPagarEfectivo, PLDMontoMaximoEfectivo, PLDNumeroPagos, IdCFDIFormaPago33, IdCFDIUsoCFDI, PPE, ' +
-  'IdBancoDeposito, CuentaDeposito, CLABEDeposito, IdPaisNacimiento ' +
+  'IdBancoDeposito, CuentaDeposito, CLABEDeposito, IdPaisNacimiento, IdPaisResidencia, Bloqueada, FechaBloqueada ' +
   'FROM Personas';
   SQLOrderBy:= 'ORDER BY RazonSocial';
   actSearch.Execute;

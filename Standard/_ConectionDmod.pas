@@ -35,6 +35,9 @@ type
       const Error: Error; var EventStatus: TEventStatus);
     procedure ADOConnectionDisconnect(Connection: TADOConnection;
       var EventStatus: TEventStatus);
+    procedure ADOConnectionWillConnect(Connection: TADOConnection;
+      var ConnectionString, UserID, Password: WideString;
+      var ConnectOptions: TConnectOption; var EventStatus: TEventStatus);
   private
     { Private declarations }
     FConectionCaption: String;
@@ -107,8 +110,11 @@ begin
     ADOConnection.Open;
     ADOConnection.Close;
   except
-    MessageDlg(strNotConnectToDB, mtError, [mbOK], 0);
-    Result:= False;
+    on E: Exception do
+    begin
+      MessageDlg(strNotConnectToDB+E.Message, mtError, [mbOK], 0);
+      Result:= False;
+    end;
   end;
 end;
 
@@ -122,6 +128,14 @@ begin
     esCancel: ;
     esUnwantedEvent: ;
   end;
+end;
+
+procedure T_dmConection.ADOConnectionWillConnect(Connection: TADOConnection;
+  var ConnectionString, UserID, Password: WideString;
+  var ConnectOptions: TConnectOption; var EventStatus: TEventStatus);
+begin
+//  UserID := 'sa';
+//  Password := 'as47Pw3K';
 end;
 
 function T_dmConection.EnabledAction(pTag: Integer): Boolean;

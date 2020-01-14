@@ -13,6 +13,7 @@ object _dmConection: T_dmConection
     Provider = 'SQLOLEDB.1'
     OnDisconnect = ADOConnectionDisconnect
     OnConnectComplete = ADOConnectionConnectComplete
+    OnWillConnect = ADOConnectionWillConnect
     Left = 48
     Top = 8
   end

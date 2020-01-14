@@ -98,6 +98,14 @@ type
     tvMasterCLABEDeposito: TcxGridDBColumn;
     tvMasterIdPaisNacimiento: TcxGridDBColumn;
     tvMasterPaisNacimiento: TcxGridDBColumn;
+    tvMasterIdPaisResidencia: TcxGridDBColumn;
+    tvMasterResidencia: TcxGridDBColumn;
+    tvMasterResidenciaRFP: TcxGridDBColumn;
+    tvMasterResidenciaGAFI: TcxGridDBColumn;
+    btnWSPersonas: TdxBarButton;
+    btnPersonasBloqueadas: TdxBarButton;
+    tvMasterBloqueada: TcxGridDBColumn;
+    tvMasterFechaBloqueada: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
@@ -105,14 +113,20 @@ type
     FRolTipo: TRolTipo;
     FactAccionistas: TBasicAction;
     FactAdminostradores: TBasicAction;
+    FactWSPersonas: TBasicAction;
+    FactPersonasBloqueadas: TBasicAction;
     procedure SetRolTipo(const Value: TRolTipo);
     procedure SetactAccionistas(const Value: TBasicAction);
     procedure SetactAdminostradores(const Value: TBasicAction);
+    procedure SetactWSPersonas(const Value: TBasicAction);
+    procedure SetactPersonasBloqueadas(const Value: TBasicAction);
   public
     { Public declarations }
     property RolTipo: TRolTipo read FRolTipo write SetRolTipo;
     property actAccionistas: TBasicAction read FactAccionistas write SetactAccionistas;
     property actAdminostradores: TBasicAction read FactAdminostradores write SetactAdminostradores;
+    property actWSPersonas: TBasicAction read FactWSPersonas write SetactWSPersonas;
+    property actPersonasBloqueadas: TBasicAction read FactPersonasBloqueadas write SetactPersonasBloqueadas;
   end;
 
 implementation
@@ -181,6 +195,18 @@ procedure TfrmPersonas.SetactAdminostradores(const Value: TBasicAction);
 begin
   FactAdminostradores := Value;
   btnAdministradores.Action := Value;
+end;
+
+procedure TfrmPersonas.SetactPersonasBloqueadas(const Value: TBasicAction);
+begin
+  FactPersonasBloqueadas := Value;
+  btnPersonasBloqueadas.Action := Value;
+end;
+
+procedure TfrmPersonas.SetactWSPersonas(const Value: TBasicAction);
+begin
+  FactWSPersonas := Value;
+  btnWSPersonas.Action := Value;
 end;
 
 procedure TfrmPersonas.SetRolTipo(const Value: TRolTipo);

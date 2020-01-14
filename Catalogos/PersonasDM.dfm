@@ -16,8 +16,8 @@ inherited dmPersonas: TdmPersonas
       'icial, CalificacionActual, PLDOrigenRecurso, PLDDestinoRecurso, ' +
       'PLDMontoMaximo, PLDPagarEfectivo, PLDMontoMaximoEfectivo, PLDNum' +
       'eroPagos, IdCFDIFormaPago33, IdCFDIUsoCFDI, PPE,'#13#10'IdBancoDeposit' +
-      'o, CuentaDeposito, CLABEDeposito, IdPaisNacimiento'#13#10'FROM Persona' +
-      's'
+      'o, CuentaDeposito, CLABEDeposito, IdPaisNacimiento, IdPaisReside' +
+      'ncia, Bloqueada, FechaBloqueada'#13#10'FROM Personas'
     Left = 64
     object adodsMasterIdPersona: TAutoIncField
       FieldName = 'IdPersona'
@@ -54,6 +54,10 @@ inherited dmPersonas: TdmPersonas
     end
     object adodsMasterIdPaisNacimiento: TIntegerField
       FieldName = 'IdPaisNacimiento'
+      Visible = False
+    end
+    object adodsMasterIdPaisResidencia: TIntegerField
+      FieldName = 'IdPaisResidencia'
       Visible = False
     end
     object adodsMasterIdMetodoPago: TIntegerField
@@ -250,6 +254,36 @@ inherited dmPersonas: TdmPersonas
       KeyFields = 'IdPais'
       Lookup = True
     end
+    object adodsMasterResidencia: TStringField
+      FieldKind = fkLookup
+      FieldName = 'Residencia'
+      LookupDataSet = adodsPais2
+      LookupKeyFields = 'IdPais'
+      LookupResultField = 'Pais'
+      KeyFields = 'IdPaisResidencia'
+      Size = 100
+      Lookup = True
+    end
+    object adodsMasterResidenciaRFP: TBooleanField
+      DisplayLabel = 'RFP (R)'
+      FieldKind = fkLookup
+      FieldName = 'ResidenciaRFP'
+      LookupDataSet = adodsPais2
+      LookupKeyFields = 'IdPais'
+      LookupResultField = 'RegimenFiscalPreferente'
+      KeyFields = 'IdPaisResidencia'
+      Lookup = True
+    end
+    object adodsMasterResidenciaGAFI: TBooleanField
+      DisplayLabel = 'GAFI (R)'
+      FieldKind = fkLookup
+      FieldName = 'ResidenciaGAFI'
+      LookupDataSet = adodsPais2
+      LookupKeyFields = 'IdPais'
+      LookupResultField = 'ListaGAFI'
+      KeyFields = 'IdPaisResidencia'
+      Lookup = True
+    end
     object adodsMasterVigenciaFM34: TDateTimeField
       FieldName = 'VigenciaFM34'
       Visible = False
@@ -407,6 +441,13 @@ inherited dmPersonas: TdmPersonas
       DisplayLabel = 'Persona politicamente expuesta'
       FieldName = 'PPE'
     end
+    object adodsMasterBloqueada: TBooleanField
+      FieldName = 'Bloqueada'
+    end
+    object adodsMasterFechaBloqueada: TDateTimeField
+      DisplayLabel = 'Fecha de bloqueo'
+      FieldName = 'FechaBloqueada'
+    end
     object adodsMasterBancoDeposito: TStringField
       DisplayLabel = 'Banco'
       FieldKind = fkLookup
@@ -444,8 +485,17 @@ inherited dmPersonas: TdmPersonas
       OnExecute = actAdministradoresExecute
       OnUpdate = actAdministradoresUpdate
     end
+    object actWSPersonas: TAction
+      Caption = 'Buscar en WEB'
+      OnExecute = actWSPersonasExecute
+    end
+    object actPersonasBloqueadas: TAction
+      Caption = 'Buscar en listas'
+      OnExecute = actPersonasBloqueadasExecute
+    end
   end
   object adodsPersonaTipo: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdPersonaTipo, Descripcion FROM PersonasTipos'
@@ -454,6 +504,7 @@ inherited dmPersonas: TdmPersonas
     Top = 72
   end
   object adodsRazonSocialTipo: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdRazonSocialTipo, Descripcion FROM RazonesSocialesTipos'
@@ -462,6 +513,7 @@ inherited dmPersonas: TdmPersonas
     Top = 128
   end
   object adodsSexo: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdSexo, Descripcion FROM Sexos'
@@ -470,6 +522,7 @@ inherited dmPersonas: TdmPersonas
     Top = 184
   end
   object adodsEstadoCivil: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdEstadoCivil, Descripcion FROM EstadosCiviles'
@@ -478,6 +531,7 @@ inherited dmPersonas: TdmPersonas
     Top = 240
   end
   object adodsPais: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -672,6 +726,7 @@ inherited dmPersonas: TdmPersonas
     Top = 16
   end
   object adodsRolesTipos: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdRolTipo, Identificador, Descripcion from RolesTipos'
@@ -680,6 +735,7 @@ inherited dmPersonas: TdmPersonas
     Top = 360
   end
   object ADOdsPersonaEstatus: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -690,6 +746,7 @@ inherited dmPersonas: TdmPersonas
     Top = 488
   end
   object ADOdsMetodosPago: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -700,6 +757,7 @@ inherited dmPersonas: TdmPersonas
     Top = 544
   end
   object ADOdsRegimenFiscal: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -710,6 +768,7 @@ inherited dmPersonas: TdmPersonas
     Top = 432
   end
   object adodsRiesgosTipos: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdRiesgoTipo, Descripcion from RiesgosTipos'
@@ -718,6 +777,7 @@ inherited dmPersonas: TdmPersonas
     Top = 432
   end
   object adodsBCCalificacion: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -728,6 +788,7 @@ inherited dmPersonas: TdmPersonas
     Top = 192
   end
   object adodsBCActividades1: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -738,6 +799,7 @@ inherited dmPersonas: TdmPersonas
     Top = 248
   end
   object adodsBCActividades2: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -748,6 +810,7 @@ inherited dmPersonas: TdmPersonas
     Top = 296
   end
   object adodsBCActividades3: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -758,6 +821,7 @@ inherited dmPersonas: TdmPersonas
     Top = 352
   end
   object adodsBancos: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdBanco, Nombre from Bancos'
@@ -766,6 +830,7 @@ inherited dmPersonas: TdmPersonas
     Top = 496
   end
   object adodsPaisN: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -774,5 +839,38 @@ inherited dmPersonas: TdmPersonas
     Parameters = <>
     Left = 256
     Top = 304
+  end
+  object adodsPais2: TADODataSet
+    Active = True
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'SELECT IdPais, Descripcion AS Pais, RegimenFiscalPreferente, Lis' +
+      'taGAFI FROM Paises'
+    Parameters = <>
+    Left = 256
+    Top = 248
+  end
+  object adospGenPersonasBloqueadas: TADOStoredProc
+    Connection = _dmConection.ADOConnection
+    ProcedureName = 'p_GenPersonasBloqueadas;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@Encontrados'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Direction = pdInputOutput
+        Precision = 10
+        Value = Null
+      end>
+    Left = 400
+    Top = 32
   end
 end

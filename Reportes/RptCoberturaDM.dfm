@@ -361,7 +361,7 @@ inherited dmRptCobertura: TdmRptCobertura
         AutoSize = False
         Border.BorderPositions = [bpBottom]
         Border.Visible = True
-        Border.Weight = 0.748799979686737000
+        Border.Weight = 0.748799979686737100
         Caption = 'Contrato'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -806,26 +806,6 @@ inherited dmRptCobertura: TdmRptCobertura
         BandType = 4
         LayerName = Foreground
       end
-      object ppDBText9: TppDBText
-        UserName = 'DBText9'
-        DataField = 'ValorComercialActualizado'
-        DataPipeline = dbpReport
-        DisplayFormat = '#,0;-#,0'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'ARIAL'
-        Font.Size = 8
-        Font.Style = []
-        TextAlignment = taRightJustified
-        Transparent = True
-        DataPipelineName = 'dbpReport'
-        mmHeight = 3440
-        mmLeft = 219605
-        mmTop = 0
-        mmWidth = 15875
-        BandType = 4
-        LayerName = Foreground
-      end
       object ppDBText10: TppDBText
         UserName = 'DBText10'
         DataField = 'Cobertura'
@@ -981,6 +961,26 @@ inherited dmRptCobertura: TdmRptCobertura
         DataPipelineName = 'dbpReport'
         mmHeight = 3440
         mmLeft = 111147
+        mmTop = 0
+        mmWidth = 15875
+        BandType = 4
+        LayerName = Foreground
+      end
+      object ppDBText9: TppDBText
+        UserName = 'DBText9'
+        DataField = 'ValorComercialActualizado'
+        DataPipeline = dbpReport
+        DisplayFormat = '#,0;-#,0'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'ARIAL'
+        Font.Size = 8
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        DataPipelineName = 'dbpReport'
+        mmHeight = 3440
+        mmLeft = 219605
         mmTop = 0
         mmWidth = 15875
         BandType = 4
