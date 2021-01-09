@@ -1,7 +1,5 @@
 inherited frmPLDAlertas: TfrmPLDAlertas
   Caption = 'frmPLDAlertas'
-  ExplicitWidth = 651
-  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlMaster: TPanel

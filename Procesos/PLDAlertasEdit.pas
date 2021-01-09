@@ -19,16 +19,17 @@ uses
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, Vcl.ImgList,
   System.Actions, Vcl.ActnList, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls, cxPC,
   cxContainer, cxEdit, cxCheckBox, cxDBEdit, Vcl.DBCtrls, cxSpinEdit,
-  cxTextEdit, cxMaskEdit, cxDropDownEdit, cxCalendar, cxMemo;
+  cxTextEdit, cxMaskEdit, cxDropDownEdit, cxCalendar, cxMemo, cxLookupEdit,
+  cxDBLookupEdit, cxDBLookupComboBox;
 
 type
   TfrmPLDAlertasEdit = class(T_frmEdit)
     Label1: TLabel;
-    cxDBDateEdit1: TcxDBDateEdit;
+    edtFechaDeteccion: TcxDBDateEdit;
     Label8: TLabel;
     DBLookupComboBox1: TDBLookupComboBox;
     Label9: TLabel;
-    DBLookupComboBox2: TDBLookupComboBox;
+    cmbTipo: TDBLookupComboBox;
     Label10: TLabel;
     DBLookupComboBox3: TDBLookupComboBox;
     Label11: TLabel;
@@ -47,19 +48,24 @@ type
     Label5: TLabel;
     Label7: TLabel;
     cxDBDateEdit2: TcxDBDateEdit;
-    cxDBTextEdit1: TcxDBTextEdit;
     cxDBTextEdit3: TcxDBTextEdit;
-    cxDBTextEdit5: TcxDBTextEdit;
     cxDBSpinEdit1: TcxDBSpinEdit;
     cxDBSpinEdit2: TcxDBSpinEdit;
     cxDBCheckBox2: TcxDBCheckBox;
     cxDBTextEdit2: TcxDBTextEdit;
     cxDBTextEdit4: TcxDBTextEdit;
     cxDBSpinEdit3: TcxDBSpinEdit;
+    dsPersonas: TDataSource;
+    dsPagos: TDataSource;
+    cmbPago: TcxDBLookupComboBox;
+    cmbCliente: TcxDBLookupComboBox;
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
+    FactAbrirLookup: TBasicAction;
   public
     { Public declarations }
+    property actAbrirLookup: TBasicAction read FactAbrirLookup write FactAbrirLookup;
   end;
 
 implementation
@@ -67,5 +73,21 @@ implementation
 {$R *.dfm}
 
 uses PLDAlertasDM;
+
+procedure TfrmPLDAlertasEdit.FormShow(Sender: TObject);
+var
+  CapturaManual: Boolean;
+  IdPersona: Integer;
+begin
+  inherited;
+  CapturaManual := DataSource.DataSet.FieldByName('CapturaManual').AsBoolean;
+  IdPersona := DataSource.DataSet.FieldByName('IdPersona').AsInteger;
+  edtFechaDeteccion.Enabled := CapturaManual;
+  cmbTipo.Enabled := CapturaManual;
+  cmbCliente.Enabled := CapturaManual;
+  cmbPago.Enabled := CapturaManual;
+  // Abrir pagos
+  actAbrirLookup.Execute;
+end;
 
 end.

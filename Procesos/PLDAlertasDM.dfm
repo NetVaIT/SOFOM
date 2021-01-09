@@ -1,22 +1,23 @@
 inherited dmPLDAlertas: TdmPLDAlertas
   OldCreateOrder = True
+  Width = 531
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
+    OnNewRecord = adodsMasterNewRecord
     CommandText = 
       'SELECT        PLDAlertas.IdPLDAlerta, PLDAlertas.IdPersona, PLDA' +
       'lertas.IdPago, PLDAlertas.IdPLDOperacionTipo, PLDAlertas.IdPLDAl' +
-      'ertaTipo, PLDAlertas.IdPLDAlertaEstatus, Personas.RazonSocial AS' +
-      ' Cliente, '#13#10'                         dbo.GetAnexoIdentificador(P' +
-      'agos.IdAnexo) AS Contrato, PLDAlertas.PeriodoMes, PLDAlertas.Per' +
-      'iodoAnio, PLDAlertas.SoloEfectivo, Pagos.FechaPago, MetodosPago.' +
-      'Descripcion AS MetodoPago, PLDAlertas.FechaDeteccion, '#13#10'        ' +
-      '                 PLDAlertas.Total, PLDAlertas.TotalUSD, PLDAlert' +
-      'as.TotalPagos, PLDAlertas.Descripcion, PLDAlertas.Razon, PLDAler' +
-      'tas.R24'#13#10'FROM            PLDAlertas LEFT JOIN'#13#10'                 ' +
-      '        Personas ON PLDAlertas.IdPersona = Personas.IdPersona LE' +
-      'FT JOIN'#13#10'                         Pagos ON PLDAlertas.IdPago = P' +
-      'agos.IdPago LEFT JOIN'#13#10'                         MetodosPago ON P' +
-      'agos.IdMetodoPago = MetodosPago.IdMetodoPago'
+      'ertaTipo, PLDAlertas.IdPLDAlertaEstatus, dbo.GetAnexoIdentificad' +
+      'or(Pagos.IdAnexo) AS Contrato, '#13#10'                         PLDAle' +
+      'rtas.PeriodoMes, PLDAlertas.PeriodoAnio, PLDAlertas.SoloEfectivo' +
+      ', Pagos.FechaPago, MetodosPago.Descripcion AS MetodoPago, PLDAle' +
+      'rtas.FechaDeteccion, PLDAlertas.Total, PLDAlertas.TotalUSD, '#13#10'  ' +
+      '                       PLDAlertas.TotalPagos, PLDAlertas.Descrip' +
+      'cion, PLDAlertas.Razon, PLDAlertas.R24, PLDAlertas.CapturaManual' +
+      #13#10'FROM            PLDAlertas LEFT OUTER JOIN'#13#10'                  ' +
+      '       Pagos ON PLDAlertas.IdPago = Pagos.IdPago LEFT OUTER JOIN' +
+      #13#10'                         MetodosPago ON Pagos.IdMetodoPago = M' +
+      'etodosPago.IdMetodoPago'#13#10
     Left = 32
     object adodsMasterIdPLDAlerta: TAutoIncField
       FieldName = 'IdPLDAlerta'
@@ -26,10 +27,12 @@ inherited dmPLDAlertas: TdmPLDAlertas
     object adodsMasterIdPersona: TIntegerField
       FieldName = 'IdPersona'
       Visible = False
+      OnChange = adodsMasterIdPersonaChange
     end
     object adodsMasterIdPago: TIntegerField
       FieldName = 'IdPago'
       Visible = False
+      OnChange = adodsMasterIdPagoChange
     end
     object adodsMasterIdPLDOperacionTipo: TIntegerField
       FieldName = 'IdPLDOperacionTipo'
@@ -44,8 +47,14 @@ inherited dmPLDAlertas: TdmPLDAlertas
       Visible = False
     end
     object adodsMasterCliente: TStringField
+      FieldKind = fkLookup
       FieldName = 'Cliente'
+      LookupDataSet = adodsPersonas
+      LookupKeyFields = 'IdPersona'
+      LookupResultField = 'Persona'
+      KeyFields = 'IdPersona'
       Size = 300
+      Lookup = True
     end
     object adodsMasterContrato: TStringField
       FieldName = 'Contrato'
@@ -139,6 +148,9 @@ inherited dmPLDAlertas: TdmPLDAlertas
       FieldName = 'R24'
       Visible = False
     end
+    object adodsMasterCapturaManual: TBooleanField
+      FieldName = 'CapturaManual'
+    end
   end
   inherited ActionList: TActionList
     object actGenerarAlertas: TAction
@@ -152,6 +164,10 @@ inherited dmPLDAlertas: TdmPLDAlertas
       Hint = 'Generar el archivo'
       ImageIndex = 14
       OnExecute = actGenerarArchivoExecute
+    end
+    object actAbrirLookup: TAction
+      Caption = 'actAbrirLookup'
+      OnExecute = actAbrirLookupExecute
     end
   end
   object adodsOperacionTipo: TADODataSet
@@ -203,8 +219,8 @@ inherited dmPLDAlertas: TdmPLDAlertas
         Precision = 10
         Value = Null
       end>
-    Left = 152
-    Top = 96
+    Left = 328
+    Top = 160
   end
   object adoqPLDAlertas: TADOQuery
     Connection = _dmConection.ADOConnection
@@ -240,8 +256,8 @@ inherited dmPLDAlertas: TdmPLDAlertas
       
         'AND IdPLDAlertaTipo = :IdPLDAlertaTipo AND PeriodoMes = :Periodo' +
         'Factor AND PeriodoAnio = :PeriodoAnio')
-    Left = 152
-    Top = 160
+    Left = 328
+    Top = 224
     object adoqPLDAlertasIdPLDAlerta: TIntegerField
       FieldName = 'IdPLDAlerta'
     end
@@ -453,8 +469,8 @@ inherited dmPLDAlertas: TdmPLDAlertas
       'PLDArchivoRuta, PLDArchivoExtension'
       'FROM PLDAlertasTipos CROSS JOIN Configuraciones'
       'WHERE PLDAlertasTipos.IdPLDAlertaTipo = :IdPLDAlertaTipo')
-    Left = 152
-    Top = 224
+    Left = 328
+    Top = 288
     object adoqConfiguracionPLDAlertaTipo: TStringField
       FieldName = 'PLDAlertaTipo'
       ReadOnly = True
@@ -488,8 +504,8 @@ inherited dmPLDAlertas: TdmPLDAlertas
         Size = 4
         Value = Null
       end>
-    Left = 240
-    Top = 96
+    Left = 416
+    Top = 160
   end
   object daMaster: TDataSource
     AutoEdit = False
@@ -621,14 +637,14 @@ inherited dmPLDAlertas: TdmPLDAlertas
         Precision = 10
         Value = Null
       end>
-    Left = 272
-    Top = 224
+    Left = 424
+    Top = 280
   end
   object dxmdAlerta: TdxMemData
     Indexes = <>
     SortOptions = []
-    Left = 272
-    Top = 176
+    Left = 424
+    Top = 216
     object dxmdAlertaFecha: TDateTimeField
       FieldName = 'Fecha'
     end
@@ -636,5 +652,99 @@ inherited dmPLDAlertas: TdmPLDAlertas
       FieldName = 'Mensaje'
       Size = 4000
     end
+  end
+  object adodsPersonas: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'SELECT        IdPersona, RazonSocial AS Persona'#13#10'FROM           ' +
+      ' Personas'#13#10'WHERE        (IdRolTipo = 3)'#13#10'ORDER BY Persona'#13#10
+    Parameters = <>
+    Left = 136
+    Top = 72
+  end
+  object adodsPagos: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'SELECT        IdPago, IdPersonaCliente, IdAnexo, IdMetodoPago, I' +
+      'dMonedaOrigen, dbo.GetAnexoIdentificador(IdAnexo) AS Contrato, F' +
+      'echaPago, YEAR(FechaPago) AS Anio, MONTH(FechaPago) AS Mes, Impo' +
+      'rte, USD, ImporteUSD, '#13#10'                         1 AS TotalPagos' +
+      ', CONVERT(bit, CASE WHEN IdMetodoPago = 3 THEN 1 ELSE 0 END) AS ' +
+      'Efectivo'#13#10'FROM            v_PagosImportes'#13#10'WHERE        IdPerson' +
+      'aCliente = :IdPersona'#13#10
+    Parameters = <
+      item
+        Name = 'IdPersona'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 136
+    Top = 128
+    object adodsPagosIdPago: TAutoIncField
+      FieldName = 'IdPago'
+      ReadOnly = True
+    end
+    object adodsPagosIdPersonaCliente: TIntegerField
+      FieldName = 'IdPersonaCliente'
+    end
+    object adodsPagosIdAnexo: TIntegerField
+      FieldName = 'IdAnexo'
+    end
+    object adodsPagosIdMetodoPago: TIntegerField
+      FieldName = 'IdMetodoPago'
+    end
+    object adodsPagosIdMonedaOrigen: TIntegerField
+      FieldName = 'IdMonedaOrigen'
+    end
+    object adodsPagosContrato: TStringField
+      FieldName = 'Contrato'
+      ReadOnly = True
+      Size = 15
+    end
+    object adodsPagosFechaPago: TDateTimeField
+      FieldName = 'FechaPago'
+    end
+    object adodsPagosAnio: TIntegerField
+      FieldName = 'Anio'
+      ReadOnly = True
+    end
+    object adodsPagosMes: TIntegerField
+      FieldName = 'Mes'
+      ReadOnly = True
+    end
+    object adodsPagosImporte: TFMTBCDField
+      FieldName = 'Importe'
+      Precision = 18
+      Size = 6
+    end
+    object adodsPagosUSD: TFMTBCDField
+      FieldName = 'USD'
+      ReadOnly = True
+      Precision = 16
+    end
+    object adodsPagosImporteUSD: TFMTBCDField
+      FieldName = 'ImporteUSD'
+      ReadOnly = True
+      Precision = 38
+      Size = 18
+    end
+    object adodsPagosTotalPagos: TIntegerField
+      FieldName = 'TotalPagos'
+      ReadOnly = True
+    end
+    object adodsPagosEfectivo: TBooleanField
+      FieldName = 'Efectivo'
+      ReadOnly = True
+    end
+  end
+  object dsPersonas: TDataSource
+    DataSet = adodsPersonas
+    Left = 208
+    Top = 72
   end
 end

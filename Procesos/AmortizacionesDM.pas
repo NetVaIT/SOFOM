@@ -927,7 +927,8 @@ const
 var
   Valido: Boolean;
   SaldoInsolutoR: Currency;
-  SaldoFinalAnterior: Extended;
+  SaldoFinalAnterior: Currency;
+  SaldoInicial: Currency;
   ImporteOrigen, ImporteCalculado: Currency;
   Periodo: Integer;
 begin
@@ -963,7 +964,8 @@ begin
   while not dxmAmortizaciones.Eof and Valido do
   begin
     Periodo := dxmAmortizacionesPeriodo.Value;
-    Valido := (SaldoFinalAnterior = SimpleRoundTo(dxmAmortizacionesSaldoInicial.AsCurrency, ROUND_RANGE));
+    SaldoInicial := SimpleRoundTo(dxmAmortizacionesSaldoInicial.AsCurrency, ROUND_RANGE);
+    Valido := (SaldoFinalAnterior = SaldoInicial);
     SaldoFinalAnterior := SimpleRoundTo(dxmAmortizacionesSaldoFinal.AsCurrency, ROUND_RANGE);
     dxmAmortizaciones.Next;
   end;

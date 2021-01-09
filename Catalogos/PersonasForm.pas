@@ -106,6 +106,7 @@ type
     btnPersonasBloqueadas: TdxBarButton;
     tvMasterBloqueada: TcxGridDBColumn;
     tvMasterFechaBloqueada: TcxGridDBColumn;
+    tvMasterCertificadoEFirma: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private

@@ -57,9 +57,11 @@ type
     dxbbGenerar: TdxBarButton;
     dxbbArchivo: TdxBarButton;
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     FactGenerarAlertas: TBasicAction;
     FactGenerarArchivo: TBasicAction;
+    FactAbrirLookup: TBasicAction;
     procedure SetactGenerarAlertas(const Value: TBasicAction);
     procedure SetactGenerarArchivo(const Value: TBasicAction);
     { Private declarations }
@@ -67,6 +69,7 @@ type
     { Public declarations }
     property actGenerarAlertas: TBasicAction read FactGenerarAlertas write SetactGenerarAlertas;
     property actGenerarArchivo: TBasicAction read FactGenerarArchivo write SetactGenerarArchivo;
+    property actAbrirLookup: TBasicAction read FactAbrirLookup write FactAbrirLookup;
   end;
 
 implementation
@@ -79,6 +82,12 @@ procedure TfrmPLDAlertas.FormCreate(Sender: TObject);
 begin
   inherited;
   gEditForm:= TfrmPLDAlertasEdit.Create(Self);
+end;
+
+procedure TfrmPLDAlertas.FormShow(Sender: TObject);
+begin
+  inherited;
+  TfrmPLDAlertasEdit(gEditForm).actAbrirLookup := actAbrirLookup;
 end;
 
 procedure TfrmPLDAlertas.SetactGenerarAlertas(const Value: TBasicAction);

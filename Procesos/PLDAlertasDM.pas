@@ -22,8 +22,6 @@ type
     adodsMasterIdPLDOperacionTipo: TIntegerField;
     adodsMasterIdPLDAlertaTipo: TIntegerField;
     adodsMasterIdPLDAlertaEstatus: TIntegerField;
-    adodsMasterCliente: TStringField;
-    adodsMasterContrato: TStringField;
     adodsMasterPeriodoMes: TIntegerField;
     adodsMasterPeriodoAnio: TIntegerField;
     adodsMasterSoloEfectivo: TBooleanField;
@@ -93,10 +91,35 @@ type
     dxmdAlerta: TdxMemData;
     dxmdAlertaFecha: TDateTimeField;
     dxmdAlertaMensaje: TStringField;
+    adodsPersonas: TADODataSet;
+    adodsPagos: TADODataSet;
+    adodsMasterCliente: TStringField;
+    adodsPagosIdPago: TAutoIncField;
+    adodsPagosIdPersonaCliente: TIntegerField;
+    adodsPagosIdAnexo: TIntegerField;
+    adodsPagosIdMetodoPago: TIntegerField;
+    adodsPagosIdMonedaOrigen: TIntegerField;
+    adodsPagosFechaPago: TDateTimeField;
+    adodsPagosAnio: TIntegerField;
+    adodsPagosMes: TIntegerField;
+    adodsPagosImporte: TFMTBCDField;
+    adodsPagosUSD: TFMTBCDField;
+    adodsPagosImporteUSD: TFMTBCDField;
+    adodsPagosTotalPagos: TIntegerField;
+    adodsMasterCapturaManual: TBooleanField;
+    adodsPagosContrato: TStringField;
+    adodsMasterContrato: TStringField;
+    dsPersonas: TDataSource;
+    actAbrirLookup: TAction;
+    adodsPagosEfectivo: TBooleanField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actGenerarAlertasExecute(Sender: TObject);
     procedure actGenerarArchivoExecute(Sender: TObject);
     procedure daMasterDataChange(Sender: TObject; Field: TField);
+    procedure adodsMasterIdPersonaChange(Sender: TField);
+    procedure adodsMasterNewRecord(DataSet: TDataSet);
+    procedure adodsMasterIdPagoChange(Sender: TField);
+    procedure actAbrirLookupExecute(Sender: TObject);
   private
     { Private declarations }
     function GenerarAlertas(Month, Year: Word): Boolean;
@@ -133,6 +156,14 @@ uses PLDAlertasForm, PLDAlertasFiltroForm, _Utils, PLDAlertasPreocupanteForm;
       Nueva := Copy(Origen,1, Longitud);
     Result := Nueva;
   end;
+
+procedure TdmPLDAlertas.actAbrirLookupExecute(Sender: TObject);
+begin
+  inherited;
+  adodsPagos.Close;
+  adodsPagos.Parameters.ParamByName('IdPersona').Value := adodsMasterIdPersona.Value;
+  adodsPagos.Open;
+end;
 
 procedure TdmPLDAlertas.actGenerarAlertasExecute(Sender: TObject);
 var
@@ -179,13 +210,47 @@ begin
   end;
 end;
 
+procedure TdmPLDAlertas.adodsMasterIdPagoChange(Sender: TField);
+begin
+  inherited;
+  adodsMasterTotal.AsFloat := adodsPagosImporte.AsFloat;
+  adodsMasterTotalUSD.AsFloat := adodsPagosImporteUSD.AsFloat;
+  adodsMasterTotalPagos.Value := adodsPagosTotalPagos.Value;
+  adodsMasterPeriodoMes.Value:= adodsPagosMes.Value;
+  adodsMasterPeriodoAnio.Value:= adodsPagosAnio.Value;
+  adodsMasterSoloEfectivo.Value := adodsPagosEfectivo.Value;
+end;
+
+procedure TdmPLDAlertas.adodsMasterIdPersonaChange(Sender: TField);
+begin
+  inherited;
+  actAbrirLookup.Execute;
+  adodsMasterIdPago.Clear;
+end;
+
+procedure TdmPLDAlertas.adodsMasterNewRecord(DataSet: TDataSet);
+begin
+  inherited;
+  adodsMasterIdPLDOperacionTipo.Value:= 11;
+  adodsMasterIdPLDAlertaTipo.Value:= 2;
+  adodsMasterIdPLDAlertaEstatus.Value:= 1;
+  adodsMasterFechaDeteccion.Value := Now;
+  adodsMasterR24.Value := False;
+  adodsMasterTotal.AsFloat := 0;
+  adodsMasterTotalUSD.AsFloat := 0;
+  adodsMasterTotalPagos.Value := 0;
+  adodsMasterPeriodoMes.Value:= 0;
+  adodsMasterPeriodoAnio.Value:= 0;
+  adodsMasterSoloEfectivo.Value := False;
+  adodsMasterCapturaManual.Value := True;
+end;
+
 procedure TdmPLDAlertas.daMasterDataChange(Sender: TObject; Field: TField);
 begin
   inherited;
-  if adodsMaster.State in [dsBrowse] then
-    if Assigned(gGridForm) then
-      gGridForm.ReadOnlyGrid := (adodsMasterIdPLDAlertaEstatus.Value = 3) or
-      (adodsMasterIdPLDAlertaEstatus.Value = 5);
+  if Assigned(gGridForm) then
+    gGridForm.CanEdit:= (adodsMasterIdPLDAlertaEstatus.Value = 1) or
+    (adodsMasterIdPLDAlertaEstatus.Value = 2);
 end;
 
 procedure TdmPLDAlertas.GenerarAlertaPreocupante;
@@ -326,6 +391,7 @@ begin
   gGridForm.DataSet:= adodsMaster;
   TfrmPLDAlertas(gGridForm).actGenerarAlertas := actGenerarAlertas;
   TfrmPLDAlertas(gGridForm).actGenerarArchivo := actGenerarArchivo;
+  TfrmPLDAlertas(gGridForm).actAbrirLookup := actAbrirLookup;
 end;
 
 function TdmPLDAlertas.GetNombreArchivo(IdPLDALertaTipo, Factor, Year: Word): TFileName;

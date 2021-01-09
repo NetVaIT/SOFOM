@@ -328,6 +328,10 @@ inherited frmPersonas: TfrmPersonas
           DataBinding.FieldName = 'CLABEDeposito'
           Visible = False
         end
+        object tvMasterCertificadoEFirma: TcxGridDBColumn
+          DataBinding.FieldName = 'CertificadoEFirma'
+          Visible = False
+        end
       end
     end
   end

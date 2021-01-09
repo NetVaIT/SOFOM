@@ -21,13 +21,15 @@ inherited frmPersonaEdit: TfrmPersonaEdit
       ExplicitHeight = 664
       object PnlEmisor: TPanel
         Left = 0
-        Top = 352
+        Top = 390
         Width = 650
-        Height = 312
+        Height = 274
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 5
         Visible = False
+        ExplicitTop = 352
+        ExplicitHeight = 312
         object Label20: TLabel
           Left = 16
           Top = 4
@@ -50,7 +52,7 @@ inherited frmPersonaEdit: TfrmPersonaEdit
         Left = 0
         Top = 0
         Width = 650
-        Height = 49
+        Height = 90
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
@@ -83,6 +85,13 @@ inherited frmPersonaEdit: TfrmPersonaEdit
           Height = 13
           Caption = 'Identificador(Alias)'
           FocusControl = cxDBTextEdit5
+        end
+        object Label42: TLabel
+          Left = 16
+          Top = 47
+          Width = 89
+          Height = 13
+          Caption = 'Certificado e.firma'
         end
         object cxDBTextEdit1: TcxDBTextEdit
           Left = 192
@@ -119,16 +128,25 @@ inherited frmPersonaEdit: TfrmPersonaEdit
           TabOrder = 3
           Width = 120
         end
+        object cxDBTextEdit14: TcxDBTextEdit
+          Left = 16
+          Top = 63
+          DataBinding.DataField = 'CertificadoEFirma'
+          DataBinding.DataSource = DataSource
+          TabOrder = 4
+          Width = 170
+        end
       end
       object pnlPersonaMoral: TPanel
         Left = 0
-        Top = 49
+        Top = 90
         Width = 650
-        Height = 93
+        Height = 90
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 1
         Visible = False
+        ExplicitTop = 86
         object Label3: TLabel
           Left = 16
           Top = 8
@@ -240,13 +258,14 @@ inherited frmPersonaEdit: TfrmPersonaEdit
       end
       object pnlPersonaFisica: TPanel
         Left = 0
-        Top = 142
+        Top = 180
         Width = 650
         Height = 210
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 2
         Visible = False
+        ExplicitTop = 142
         object Label5: TLabel
           Left = 222
           Top = -1
@@ -510,23 +529,27 @@ inherited frmPersonaEdit: TfrmPersonaEdit
       end
       object pnlOrigen: TPanel
         Left = 0
-        Top = 352
+        Top = 390
         Width = 650
-        Height = 312
+        Height = 274
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 3
         Visible = False
+        ExplicitTop = 352
+        ExplicitHeight = 312
       end
       object PnlCliente: TPanel
         Left = 0
-        Top = 352
+        Top = 390
         Width = 650
-        Height = 312
+        Height = 274
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 4
         Visible = False
+        ExplicitTop = 352
+        ExplicitHeight = 312
         object Label17: TLabel
           Left = 16
           Top = 80
