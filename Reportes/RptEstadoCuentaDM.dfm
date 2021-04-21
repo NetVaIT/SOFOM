@@ -4733,12 +4733,11 @@ inherited dmRptEstadoCuenta: TdmRptEstadoCuenta
           Font.Size = 9
           Font.Style = []
           Lines.Strings = (
-            
-              'Cualquier duda o aclaraci'#243'n favor de comunicarse con Carlos Arro' +
-              'yo Maga'#241'a a los siguientes tel'#233'fonos:'
-            'Directo: (33) 3003-0175'
-            'M'#243'vil: (33) 1409-4885'
-            'Favor de reportar sus pagos al correo: carroyo@manarina.com')
+            'Cualquier duda o aclaraci'#243'n favor de comunicarse con'
+            'Adriana Pulido Viruete al tel'#233'fono'
+            'M'#243'vil: 33 33496 1523'
+            'Favor de reportar sus pagos al correo:'
+            'apulido@manarina.com')
           RemoveEmptyLines = False
           Transparent = True
           mmHeight = 23548

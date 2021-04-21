@@ -80,8 +80,6 @@ implementation
 uses CuentasXCobrarDM;
 
 procedure TFrmEdCuentasXCobrar.FormCreate(Sender: TObject);
-var
-  IdAnexo: Integer;
 begin
   inherited;
   frmCuentasXCobrarDetalle:= TfrmCuentasXCobrarDetalle.Create(Self);

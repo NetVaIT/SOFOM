@@ -21,8 +21,8 @@ type
   TCTipoContrato = (tcNone, tcCreditoSimple, tcArrendamientoFinanciero, tcArrendamientoPuro);
   TCotizacionEstatus = (aeNone, aeAbierto, aeContratado, aeCerrado);
   TCFDITipoDocumento = (tdNone, tdFactura, tdNotaCredito, tdNotaCargo, tdCFDIPago);
-
   TAbonoCapital = (acReducirCuota, acReducirPlazo);
+  TPLDAlertasTipos = (pldtNone, pldtRelevante, pldtInusual, pldtPreocupante);
 
   TAmortizacion = record
   Periodo: Integer;

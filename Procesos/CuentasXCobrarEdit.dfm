@@ -118,7 +118,7 @@ inherited FrmEdCuentasXCobrar: TFrmEdCuentasXCobrar
         Width = 664
         Height = 200
         Align = alBottom
-        TabOrder = 13
+        TabOrder = 12
         OnEnter = PnlDetalleFactEnter
         ExplicitLeft = -3
         ExplicitTop = 221
@@ -159,7 +159,7 @@ inherited FrmEdCuentasXCobrar: TFrmEdCuentasXCobrar
         DataBinding.DataField = 'Fecha'
         DataBinding.DataSource = DataSource
         Properties.ReadOnly = True
-        TabOrder = 5
+        TabOrder = 4
         Width = 121
       end
       object edtFechaVencimiento: TcxDBDateEdit
@@ -167,7 +167,7 @@ inherited FrmEdCuentasXCobrar: TFrmEdCuentasXCobrar
         Top = 104
         DataBinding.DataField = 'FechaVencimiento'
         DataBinding.DataSource = DataSource
-        TabOrder = 6
+        TabOrder = 5
         Width = 121
       end
       object edtDescripcion: TcxDBTextEdit
@@ -175,7 +175,7 @@ inherited FrmEdCuentasXCobrar: TFrmEdCuentasXCobrar
         Top = 144
         DataBinding.DataField = 'Descripcion'
         DataBinding.DataSource = DataSource
-        TabOrder = 7
+        TabOrder = 6
         Width = 629
       end
       object DBLookupComboBox4: TDBLookupComboBox
@@ -195,7 +195,7 @@ inherited FrmEdCuentasXCobrar: TFrmEdCuentasXCobrar
         DataBinding.DataField = 'Importe'
         DataBinding.DataSource = DataSource
         Properties.ReadOnly = True
-        TabOrder = 8
+        TabOrder = 7
         Width = 121
       end
       object cxDBTextEdit3: TcxDBTextEdit
@@ -205,7 +205,7 @@ inherited FrmEdCuentasXCobrar: TFrmEdCuentasXCobrar
         DataBinding.DataField = 'Impuesto'
         DataBinding.DataSource = DataSource
         Properties.ReadOnly = True
-        TabOrder = 9
+        TabOrder = 8
         Width = 121
       end
       object cxDBTextEdit4: TcxDBTextEdit
@@ -215,7 +215,7 @@ inherited FrmEdCuentasXCobrar: TFrmEdCuentasXCobrar
         DataBinding.DataField = 'Interes'
         DataBinding.DataSource = DataSource
         Properties.ReadOnly = True
-        TabOrder = 10
+        TabOrder = 9
         Width = 121
       end
       object cxDBTextEdit5: TcxDBTextEdit
@@ -225,7 +225,7 @@ inherited FrmEdCuentasXCobrar: TFrmEdCuentasXCobrar
         DataBinding.DataField = 'Total'
         DataBinding.DataSource = DataSource
         Properties.ReadOnly = True
-        TabOrder = 11
+        TabOrder = 10
         Width = 121
       end
       object cxDBTextEdit6: TcxDBTextEdit
@@ -235,7 +235,7 @@ inherited FrmEdCuentasXCobrar: TFrmEdCuentasXCobrar
         DataBinding.DataField = 'Saldo'
         DataBinding.DataSource = DataSource
         Properties.ReadOnly = True
-        TabOrder = 12
+        TabOrder = 11
         Width = 121
       end
       object cxDBTextEdit7: TcxDBTextEdit

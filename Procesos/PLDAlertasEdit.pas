@@ -80,7 +80,9 @@ var
   IdPersona: Integer;
 begin
   inherited;
-  CapturaManual := DataSource.DataSet.FieldByName('CapturaManual').AsBoolean;
+//  Se evita esta validacion para no permitir la edicion de momento
+//  CapturaManual := DataSource.DataSet.FieldByName('CapturaManual').AsBoolean;
+  CapturaManual := False;
   IdPersona := DataSource.DataSet.FieldByName('IdPersona').AsInteger;
   edtFechaDeteccion.Enabled := CapturaManual;
   cmbTipo.Enabled := CapturaManual;

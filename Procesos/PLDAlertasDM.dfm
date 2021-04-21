@@ -6,18 +6,17 @@ inherited dmPLDAlertas: TdmPLDAlertas
     OnNewRecord = adodsMasterNewRecord
     CommandText = 
       'SELECT        PLDAlertas.IdPLDAlerta, PLDAlertas.IdPersona, PLDA' +
-      'lertas.IdPago, PLDAlertas.IdPLDOperacionTipo, PLDAlertas.IdPLDAl' +
-      'ertaTipo, PLDAlertas.IdPLDAlertaEstatus, dbo.GetAnexoIdentificad' +
-      'or(Pagos.IdAnexo) AS Contrato, '#13#10'                         PLDAle' +
-      'rtas.PeriodoMes, PLDAlertas.PeriodoAnio, PLDAlertas.SoloEfectivo' +
-      ', Pagos.FechaPago, MetodosPago.Descripcion AS MetodoPago, PLDAle' +
-      'rtas.FechaDeteccion, PLDAlertas.Total, PLDAlertas.TotalUSD, '#13#10'  ' +
-      '                       PLDAlertas.TotalPagos, PLDAlertas.Descrip' +
-      'cion, PLDAlertas.Razon, PLDAlertas.R24, PLDAlertas.CapturaManual' +
-      #13#10'FROM            PLDAlertas LEFT OUTER JOIN'#13#10'                  ' +
-      '       Pagos ON PLDAlertas.IdPago = Pagos.IdPago LEFT OUTER JOIN' +
-      #13#10'                         MetodosPago ON Pagos.IdMetodoPago = M' +
-      'etodosPago.IdMetodoPago'#13#10
+      'lertas.IdAnexo, PLDAlertas.IdPago, PLDAlertas.IdPLDOperacionTipo' +
+      ', PLDAlertas.IdPLDAlertaTipo, PLDAlertas.IdPLDAlertaEstatus, dbo' +
+      '.GetAnexoIdentificador(PLDAlertas.IdAnexo) AS Contrato, '#13#10'      ' +
+      '                   PLDAlertas.PeriodoMes, PLDAlertas.PeriodoAnio' +
+      ', PLDAlertas.SoloEfectivo, PLDAlertas.FechaDeteccion, PLDAlertas' +
+      '.FechaOperacion, PLDAlertas.Total, PLDAlertas.TotalUSD, MetodosP' +
+      'ago.Descripcion AS MetodoPago,  '#13#10'                         PLDAl' +
+      'ertas.TotalPagos, PLDAlertas.Descripcion, PLDAlertas.Razon, PLDA' +
+      'lertas.R24, PLDAlertas.CapturaManual'#13#10'FROM            PLDAlertas' +
+      ' LEFT OUTER JOIN'#13#10'                         MetodosPago ON PLDAle' +
+      'rtas.IdMetodoPago = MetodosPago.IdMetodoPago'#13#10
     Left = 32
     object adodsMasterIdPLDAlerta: TAutoIncField
       FieldName = 'IdPLDAlerta'
@@ -28,6 +27,10 @@ inherited dmPLDAlertas: TdmPLDAlertas
       FieldName = 'IdPersona'
       Visible = False
       OnChange = adodsMasterIdPersonaChange
+    end
+    object adodsMasterIdAnexo: TIntegerField
+      FieldName = 'IdAnexo'
+      Visible = False
     end
     object adodsMasterIdPago: TIntegerField
       FieldName = 'IdPago'
@@ -73,18 +76,13 @@ inherited dmPLDAlertas: TdmPLDAlertas
       DisplayLabel = 'Solo efectivo'
       FieldName = 'SoloEfectivo'
     end
-    object adodsMasterFechaPago: TDateTimeField
-      DisplayLabel = 'Fecha de pago'
-      FieldName = 'FechaPago'
-    end
-    object adodsMasterMetodoPago: TStringField
-      DisplayLabel = 'Metodo de pago'
-      FieldName = 'MetodoPago'
-      Size = 50
-    end
     object adodsMasterFechaDeteccion: TDateTimeField
-      DisplayLabel = 'Fechade detecci'#243'n'
+      DisplayLabel = 'Fecha de detecci'#243'n'
       FieldName = 'FechaDeteccion'
+    end
+    object adodsMasterFechaOperacion: TDateTimeField
+      DisplayLabel = 'Fecha de operaci'#243'n'
+      FieldName = 'FechaOperacion'
     end
     object adodsMasterOperacionTipo: TStringField
       DisplayLabel = 'Tipo de operaci'#243'n'
@@ -134,6 +132,11 @@ inherited dmPLDAlertas: TdmPLDAlertas
       DisplayLabel = 'Total de pagos'
       FieldName = 'TotalPagos'
     end
+    object adodsMasterMetodoPago: TStringField
+      DisplayLabel = 'Metodo de pago'
+      FieldName = 'MetodoPago'
+      Size = 50
+    end
     object adodsMasterDescripcion: TStringField
       DisplayLabel = 'Descripci'#243'n'
       FieldName = 'Descripcion'
@@ -149,7 +152,9 @@ inherited dmPLDAlertas: TdmPLDAlertas
       Visible = False
     end
     object adodsMasterCapturaManual: TBooleanField
+      DisplayLabel = 'Manual'
       FieldName = 'CapturaManual'
+      Visible = False
     end
   end
   inherited ActionList: TActionList
@@ -219,8 +224,8 @@ inherited dmPLDAlertas: TdmPLDAlertas
         Precision = 10
         Value = Null
       end>
-    Left = 328
-    Top = 160
+    Left = 448
+    Top = 16
   end
   object adoqPLDAlertas: TADOQuery
     Connection = _dmConection.ADOConnection
@@ -256,8 +261,8 @@ inherited dmPLDAlertas: TdmPLDAlertas
       
         'AND IdPLDAlertaTipo = :IdPLDAlertaTipo AND PeriodoMes = :Periodo' +
         'Factor AND PeriodoAnio = :PeriodoAnio')
-    Left = 328
-    Top = 224
+    Left = 448
+    Top = 176
     object adoqPLDAlertasIdPLDAlerta: TIntegerField
       FieldName = 'IdPLDAlerta'
     end
@@ -469,8 +474,8 @@ inherited dmPLDAlertas: TdmPLDAlertas
       'PLDArchivoRuta, PLDArchivoExtension'
       'FROM PLDAlertasTipos CROSS JOIN Configuraciones'
       'WHERE PLDAlertasTipos.IdPLDAlertaTipo = :IdPLDAlertaTipo')
-    Left = 328
-    Top = 288
+    Left = 448
+    Top = 120
     object adoqConfiguracionPLDAlertaTipo: TStringField
       FieldName = 'PLDAlertaTipo'
       ReadOnly = True
@@ -504,8 +509,8 @@ inherited dmPLDAlertas: TdmPLDAlertas
         Size = 4
         Value = Null
       end>
-    Left = 416
-    Top = 160
+    Left = 448
+    Top = 64
   end
   object daMaster: TDataSource
     AutoEdit = False
@@ -514,120 +519,68 @@ inherited dmPLDAlertas: TdmPLDAlertas
     Left = 128
     Top = 16
   end
-  object adopSetPLDAlertas: TADOStoredProc
+  object adopGenPLDAlertaManual: TADOStoredProc
     Connection = _dmConection.ADOConnection
-    ProcedureName = 'p_SetPLDAlertas;1'
+    ProcedureName = 'p_GenPLDAlertaManual;1'
     Parameters = <
       item
         Name = '@RETURN_VALUE'
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
-      end
-      item
-        Name = '@IdPersona'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = Null
-      end
-      item
-        Name = '@IdPago'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = Null
-      end
-      item
-        Name = '@IdPLDOperacionTipo'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = Null
       end
       item
         Name = '@IdPLDAlertaTipo'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
-        Value = Null
       end
       item
-        Name = '@IdPLDAlertaEstatus'
+        Name = '@IdPLDOperacionTipo'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
-        Value = Null
       end
       item
-        Name = '@PeriodoMes'
+        Name = '@IdPersona'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
-        Value = Null
       end
       item
-        Name = '@PeriodoAnio'
+        Name = '@IdAnexo'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
-        Value = Null
       end
       item
-        Name = '@SoloEfectivo'
+        Name = '@IdMetodoPago'
         Attributes = [paNullable]
-        DataType = ftBoolean
-        Value = Null
+        DataType = ftInteger
+        Precision = 10
+      end
+      item
+        Name = '@FechaOperacion'
+        Attributes = [paNullable]
+        DataType = ftDateTime
       end
       item
         Name = '@FechaDeteccion'
         Attributes = [paNullable]
         DataType = ftDateTime
-        Value = Null
       end
       item
         Name = '@Total'
         Attributes = [paNullable]
-        DataType = ftBCD
+        DataType = ftFMTBcd
         NumericScale = 6
         Precision = 18
-        Value = Null
-      end
-      item
-        Name = '@TotalUSD'
-        Attributes = [paNullable]
-        DataType = ftBCD
-        NumericScale = 6
-        Precision = 18
-        Value = Null
-      end
-      item
-        Name = '@TotalPagos'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = Null
       end
       item
         Name = '@Descripcion'
         Attributes = [paNullable]
         DataType = ftString
         Size = 4000
-        Value = Null
-      end
-      item
-        Name = '@Razon'
-        Attributes = [paNullable]
-        DataType = ftString
-        Size = 4000
-        Value = Null
-      end
-      item
-        Name = '@R24'
-        Attributes = [paNullable]
-        DataType = ftBoolean
-        Value = Null
       end
       item
         Name = '@IdPLDAlerta'
@@ -635,21 +588,46 @@ inherited dmPLDAlertas: TdmPLDAlertas
         DataType = ftInteger
         Direction = pdInputOutput
         Precision = 10
-        Value = Null
       end>
-    Left = 424
-    Top = 280
+    Left = 232
+    Top = 184
   end
   object dxmdAlerta: TdxMemData
     Indexes = <>
     SortOptions = []
-    Left = 424
-    Top = 216
-    object dxmdAlertaFecha: TDateTimeField
-      FieldName = 'Fecha'
+    OnNewRecord = dxmdAlertaNewRecord
+    Left = 136
+    Top = 192
+    object dxmdAlertaIdPLDOperacionTipo: TIntegerField
+      FieldName = 'IdPLDOperacionTipo'
+      Required = True
+    end
+    object dxmdAlertaIdPersona: TIntegerField
+      DisplayLabel = 'Persona'
+      FieldName = 'IdPersona'
+      Required = True
+      OnChange = dxmdAlertaIdPersonaChange
+    end
+    object dxmdAlertaIdAnexo: TIntegerField
+      DisplayLabel = 'Contrato'
+      FieldName = 'IdAnexo'
+    end
+    object dxmdAlertaIdMetodoPago: TIntegerField
+      DisplayLabel = 'Metodo de pago'
+      FieldName = 'IdMetodoPago'
+    end
+    object dxmdAlertaFechaOperacion: TDateTimeField
+      FieldName = 'FechaOperacion'
+    end
+    object dxmdAlertaFechaDeteccion: TDateTimeField
+      FieldName = 'FechaDeteccion'
+    end
+    object dxmdAlertaMonto: TCurrencyField
+      FieldName = 'Monto'
     end
     object dxmdAlertaMensaje: TStringField
       FieldName = 'Mensaje'
+      Required = True
       Size = 4000
     end
   end
@@ -658,7 +636,7 @@ inherited dmPLDAlertas: TdmPLDAlertas
     CursorType = ctStatic
     CommandText = 
       'SELECT        IdPersona, RazonSocial AS Persona'#13#10'FROM           ' +
-      ' Personas'#13#10'WHERE        (IdRolTipo = 3)'#13#10'ORDER BY Persona'#13#10
+      ' Personas'#13#10'WHERE        IdRolTipo IN (3,5)'#13#10'ORDER BY Persona'#13#10
     Parameters = <>
     Left = 136
     Top = 72
@@ -742,9 +720,67 @@ inherited dmPLDAlertas: TdmPLDAlertas
       ReadOnly = True
     end
   end
-  object dsPersonas: TDataSource
-    DataSet = adodsPersonas
-    Left = 208
-    Top = 72
+  object adoqPersonas: TADOQuery
+    Connection = _dmConection.ADOConnection
+    Parameters = <
+      item
+        Name = 'IdRolTipo'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    SQL.Strings = (
+      'SELECT        IdPersona, RazonSocial AS Persona'
+      'FROM            Personas'
+      'WHERE        (IdRolTipo = :IdRolTipo)'
+      'ORDER BY Persona')
+    Left = 136
+    Top = 240
+  end
+  object adoqAnexos: TADOQuery
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    Parameters = <
+      item
+        Name = 'IdPersona'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    SQL.Strings = (
+      
+        'SELECT        Anexos.IdAnexo, dbo.GetAnexoIdentificador(Anexos.I' +
+        'dAnexo) AS Contrato '
+      'FROM            Anexos INNER JOIN'
+      
+        '                         Contratos ON Anexos.IdContrato = Contra' +
+        'tos.IdContrato'
+      'WHERE        Contratos.IdPersona = :IdPersona')
+    Left = 136
+    Top = 288
+  end
+  object adoqOperacionTipo: TADOQuery
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select IdPLDOperacionTipo, Descripcion from PLDOperacionesTipos')
+    Left = 224
+    Top = 240
+  end
+  object adoqMetodosPago: TADOQuery
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'SELECT        IdMetodoPago, Descripcion, CNBVCodigo'
+      'FROM            MetodosPago'
+      'WHERE CNBVCodigo IS NOT NULL')
+    Left = 224
+    Top = 288
   end
 end

@@ -3,6 +3,7 @@ inherited frmMain: TfrmMain
   ClientWidth = 1186
   OnDestroy = FormDestroy
   ExplicitWidth = 1202
+  ExplicitHeight = 519
   PixelsPerInch = 96
   TextHeight = 13
   inherited dxRibbon1: TdxRibbon
@@ -128,9 +129,15 @@ inherited frmMain: TfrmMain
         item
           Visible = True
           ItemName = 'dxBarButton11'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarButton29'
         end>
     end
     inherited dxbArchivo: TdxBar
+      DockedDockControl = nil
+      DockedDockingStyle = dsNone
       FloatLeft = 545
       FloatClientWidth = 51
       FloatClientHeight = 76
@@ -627,7 +634,7 @@ inherited frmMain: TfrmMain
       Category = 0
     end
     object dxBarButton11: TdxBarButton
-      Action = actAgregarAlerta
+      Action = actAgregarAlerta3
       Category = 0
     end
     object dxBarLargeButton20: TdxBarLargeButton
@@ -744,6 +751,10 @@ inherited frmMain: TfrmMain
     object dxBarButton28: TdxBarButton
       Tag = 64
       Action = actRptCFDIContabilidad
+      Category = 0
+    end
+    object dxBarButton29: TdxBarButton
+      Action = actAgregarAlerta2
       Category = 0
     end
     object dxBrLrgBtnPerfiles: TdxBarLargeButton
@@ -12100,12 +12111,12 @@ inherited frmMain: TfrmMain
       ImageIndex = 19
       OnExecute = actCatalogoExecute
     end
-    object actAgregarAlerta: TAction
+    object actAgregarAlerta3: TAction
       Category = 'Procesos'
-      Caption = 'Agregar alerta'
+      Caption = 'Agregar alerta preocupante'
       Hint = 'Agregar alerta preocupante'
       ImageIndex = 19
-      OnExecute = actAgregarAlertaExecute
+      OnExecute = actAgregarAlerta3Execute
     end
     object actPLDAlertasConfiguracion: TAction
       Tag = 29
@@ -12120,6 +12131,13 @@ inherited frmMain: TfrmMain
       Caption = 'Matriz Riesgo'
       ImageIndex = 57
       OnExecute = actCatalogoExecute
+    end
+    object actAgregarAlerta2: TAction
+      Category = 'Procesos'
+      Caption = 'Agregar alerta inusual'
+      Hint = 'Agregar alerta inusual'
+      ImageIndex = 19
+      OnExecute = actAgregarAlerta2Execute
     end
     object actEvaluacionRiesgo: TAction
       Tag = 62

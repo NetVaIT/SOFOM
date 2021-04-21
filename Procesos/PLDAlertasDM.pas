@@ -5,7 +5,7 @@ interface
 uses
   System.SysUtils, System.Classes, _StandarDMod, System.Actions, Vcl.ActnList,
   Data.DB, Data.Win.ADODB, System.StrUtils, System.DateUtils, Vcl.Dialogs,
-  System.UITypes, System.IOUtils, dxmdaset;
+  System.UITypes, System.IOUtils, dxmdaset, ProcesosType;
 
 resourcestring
   strCreateFile    = 'Se creo el archivo %s, con %d registro(s).';
@@ -25,7 +25,6 @@ type
     adodsMasterPeriodoMes: TIntegerField;
     adodsMasterPeriodoAnio: TIntegerField;
     adodsMasterSoloEfectivo: TBooleanField;
-    adodsMasterFechaPago: TDateTimeField;
     adodsMasterMetodoPago: TStringField;
     adodsMasterFechaDeteccion: TDateTimeField;
     adodsMasterTotal: TFMTBCDField;
@@ -87,9 +86,8 @@ type
     adoqConfiguracionPLDArchivoExtension: TStringField;
     adcUpdPLDAlertas: TADOCommand;
     daMaster: TDataSource;
-    adopSetPLDAlertas: TADOStoredProc;
+    adopGenPLDAlertaManual: TADOStoredProc;
     dxmdAlerta: TdxMemData;
-    dxmdAlertaFecha: TDateTimeField;
     dxmdAlertaMensaje: TStringField;
     adodsPersonas: TADODataSet;
     adodsPagos: TADODataSet;
@@ -109,9 +107,21 @@ type
     adodsMasterCapturaManual: TBooleanField;
     adodsPagosContrato: TStringField;
     adodsMasterContrato: TStringField;
-    dsPersonas: TDataSource;
     actAbrirLookup: TAction;
     adodsPagosEfectivo: TBooleanField;
+    dxmdAlertaIdPersona: TIntegerField;
+    adoqPersonas: TADOQuery;
+    adoqAnexos: TADOQuery;
+    dxmdAlertaIdAnexo: TIntegerField;
+    dxmdAlertaFechaOperacion: TDateTimeField;
+    dxmdAlertaIdPLDOperacionTipo: TIntegerField;
+    dxmdAlertaMonto: TCurrencyField;
+    adoqOperacionTipo: TADOQuery;
+    dxmdAlertaFechaDeteccion: TDateTimeField;
+    dxmdAlertaIdMetodoPago: TIntegerField;
+    adoqMetodosPago: TADOQuery;
+    adodsMasterIdAnexo: TIntegerField;
+    adodsMasterFechaOperacion: TDateTimeField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actGenerarAlertasExecute(Sender: TObject);
     procedure actGenerarArchivoExecute(Sender: TObject);
@@ -120,6 +130,8 @@ type
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsMasterIdPagoChange(Sender: TField);
     procedure actAbrirLookupExecute(Sender: TObject);
+    procedure dxmdAlertaIdPersonaChange(Sender: TField);
+    procedure dxmdAlertaNewRecord(DataSet: TDataSet);
   private
     { Private declarations }
     function GenerarAlertas(Month, Year: Word): Boolean;
@@ -128,7 +140,8 @@ type
     function GetNombreArchivo(IdPLDALertaTipo, Factor, Year: Word): TFileName;
   public
     { Public declarations }
-    procedure GenerarAlertaPreocupante;
+//    procedure GenerarAlertaPreocupante;
+    function GenerarAlerta(Tipo: TPLDAlertasTipos): Integer;
   end;
 
 implementation
@@ -253,46 +266,97 @@ begin
     (adodsMasterIdPLDAlertaEstatus.Value = 2);
 end;
 
-procedure TdmPLDAlertas.GenerarAlertaPreocupante;
+function TdmPLDAlertas.GenerarAlerta(Tipo: TPLDAlertasTipos): Integer;
 var
   frmPLDAlertasPreocupante: TfrmPLDAlertasPreocupante;
 
-  procedure GenerarAlerta(Fecha: TDateTime; Descripcion: string);
-  var
-    Year, Month, Day: Word;
+  function GenerarAlerta: Integer;
   begin
-    DecodeDate(Fecha, Year, Month, Day);
-    adopSetPLDAlertas.Parameters.ParamByName('@IdPLDOperacionTipo').Value := 11;
-    adopSetPLDAlertas.Parameters.ParamByName('@IdPLDAlertaTipo').Value := 3;
-    adopSetPLDAlertas.Parameters.ParamByName('@IdPLDAlertaEstatus').Value := 1;
-    adopSetPLDAlertas.Parameters.ParamByName('@PeriodoMes').Value := Month;
-    adopSetPLDAlertas.Parameters.ParamByName('@PeriodoAnio').Value := Year;
-    adopSetPLDAlertas.Parameters.ParamByName('@SoloEfectivo').Value := 0;
-    adopSetPLDAlertas.Parameters.ParamByName('@FechaDeteccion').Value := Now;
-    adopSetPLDAlertas.Parameters.ParamByName('@Total').Value := 0;
-    adopSetPLDAlertas.Parameters.ParamByName('@TotalUSD').Value := 0;
-    adopSetPLDAlertas.Parameters.ParamByName('@TotalPagos').Value := 0;
-    adopSetPLDAlertas.Parameters.ParamByName('@Descripcion').Value := Descripcion;
-    adopSetPLDAlertas.Parameters.ParamByName('@R24').Value := 0;
-    adopSetPLDAlertas.ExecProc;
+    adopGenPLDAlertaManual.Parameters.ParamByName('@IdPLDAlertaTipo').Value := Ord(Tipo);
+    adopGenPLDAlertaManual.Parameters.ParamByName('@IdPLDOperacionTipo').Value := dxmdAlertaIdPLDOperacionTipo.Value;
+    adopGenPLDAlertaManual.Parameters.ParamByName('@IdPersona').Value := dxmdAlertaIdPersona.Value;
+    adopGenPLDAlertaManual.Parameters.ParamByName('@IdAnexo').Value := dxmdAlertaIdAnexo.Value;
+    adopGenPLDAlertaManual.Parameters.ParamByName('@IdMetodoPago').Value := dxmdAlertaIdMetodoPago.Value;
+    adopGenPLDAlertaManual.Parameters.ParamByName('@FechaOperacion').Value := dxmdAlertaFechaOperacion.Value;
+    adopGenPLDAlertaManual.Parameters.ParamByName('@FechaDeteccion').Value := dxmdAlertaFechaDeteccion.Value;
+    adopGenPLDAlertaManual.Parameters.ParamByName('@Total').Value := dxmdAlertaMonto.Value;
+    adopGenPLDAlertaManual.Parameters.ParamByName('@Descripcion').Value := dxmdAlertaMensaje.AsString;
+    adopGenPLDAlertaManual.ExecProc;
+    Result:= adopGenPLDAlertaManual.Parameters.ParamByName('@IdPLDAlerta').Value;
   end;
 
 begin
   frmPLDAlertasPreocupante := TfrmPLDAlertasPreocupante.Create(Self);
   try
+    dxmdAlertaIdAnexo.Required := (Tipo <> pldtPreocupante);
+    dxmdAlertaIdMetodoPago.Required := (Tipo <> pldtPreocupante);
+    adoqOperacionTipo.Close;
+    adoqOperacionTipo.Open;
+    adoqMetodosPago.Close;
+    adoqMetodosPago.Open;
+    adoqPersonas.Close;
+    if Tipo = pldtPreocupante then
+      adoqPersonas.Parameters.ParamByName('IdRolTipo').Value := 5  //Empleado
+    else
+      adoqPersonas.Parameters.ParamByName('IdRolTipo').Value := 3;  //Cliente
+    adoqPersonas.Open;
+    adoqAnexos.Close;
+    adoqAnexos.Parameters.ParamByName('IdPersona').Value := dxmdAlertaIdPersona.Value;
+    adoqAnexos.Open;
     dxmdAlerta.Open;
     dxmdAlerta.Insert;
-    dxmdAlertaFecha.Value := Now;
     frmPLDAlertasPreocupante.DataSet:= dxmdAlerta;
+    frmPLDAlertasPreocupante.Tipo := Tipo;
     if frmPLDAlertasPreocupante.ShowModal = mrOk then
-    begin
-      GenerarAlerta(dxmdAlertaFecha.Value, dxmdAlertaMensaje.AsString);
-    end;
+      Result := GenerarAlerta
+    else
+      Result:= 0;
   finally
     frmPLDAlertasPreocupante.Free;
   end;
   dxmdAlerta.Close;
 end;
+
+//procedure TdmPLDAlertas.GenerarAlertaPreocupante;
+//var
+//  frmPLDAlertasPreocupante: TfrmPLDAlertasPreocupante;
+//
+//  procedure GenerarAlerta(Fecha: TDateTime; Descripcion: string);
+//  var
+//    Year, Month, Day: Word;
+//  begin
+//    DecodeDate(Fecha, Year, Month, Day);
+//    adopSetPLDAlertas.Parameters.ParamByName('@IdPLDOperacionTipo').Value := 11;
+//    adopSetPLDAlertas.Parameters.ParamByName('@IdPLDAlertaTipo').Value := 3;
+//    adopSetPLDAlertas.Parameters.ParamByName('@IdPLDAlertaEstatus').Value := 1;
+//    adopSetPLDAlertas.Parameters.ParamByName('@PeriodoMes').Value := Month;
+//    adopSetPLDAlertas.Parameters.ParamByName('@PeriodoAnio').Value := Year;
+//    adopSetPLDAlertas.Parameters.ParamByName('@SoloEfectivo').Value := 0;
+//    adopSetPLDAlertas.Parameters.ParamByName('@FechaDeteccion').Value := Now;
+//    adopSetPLDAlertas.Parameters.ParamByName('@Total').Value := 0;
+//    adopSetPLDAlertas.Parameters.ParamByName('@TotalUSD').Value := 0;
+//    adopSetPLDAlertas.Parameters.ParamByName('@TotalPagos').Value := 0;
+//    adopSetPLDAlertas.Parameters.ParamByName('@Descripcion').Value := Descripcion;
+//    adopSetPLDAlertas.Parameters.ParamByName('@R24').Value := 0;
+//    adopSetPLDAlertas.ExecProc;
+//  end;
+//
+//begin
+//  frmPLDAlertasPreocupante := TfrmPLDAlertasPreocupante.Create(Self);
+//  try
+//    dxmdAlerta.Open;
+//    dxmdAlerta.Insert;
+//    dxmdAlertaFecha.Value := Now;
+//    frmPLDAlertasPreocupante.DataSet:= dxmdAlerta;
+//    if frmPLDAlertasPreocupante.ShowModal = mrOk then
+//    begin
+//      GenerarAlerta(dxmdAlertaFecha.Value, dxmdAlertaMensaje.AsString);
+//    end;
+//  finally
+//    frmPLDAlertasPreocupante.Free;
+//  end;
+//  dxmdAlerta.Close;
+//end;
 
 function TdmPLDAlertas.GenerarAlertas(Month, Year: Word): Boolean;
 begin
@@ -392,6 +456,24 @@ begin
   TfrmPLDAlertas(gGridForm).actGenerarAlertas := actGenerarAlertas;
   TfrmPLDAlertas(gGridForm).actGenerarArchivo := actGenerarArchivo;
   TfrmPLDAlertas(gGridForm).actAbrirLookup := actAbrirLookup;
+end;
+
+procedure TdmPLDAlertas.dxmdAlertaIdPersonaChange(Sender: TField);
+begin
+  inherited;
+  adoqAnexos.Close;
+  adoqAnexos.Parameters.ParamByName('IdPersona').Value := dxmdAlertaIdPersona.Value;
+  adoqAnexos.Open;
+  dxmdAlertaIdAnexo.Clear;
+end;
+
+procedure TdmPLDAlertas.dxmdAlertaNewRecord(DataSet: TDataSet);
+begin
+  inherited;
+  dxmdAlertaIdPLDOperacionTipo.Value := 11;
+  dxmdAlertaFechaDeteccion.Value := Now;
+  dxmdAlertaFechaOperacion.Value := Date;
+  dxmdAlertaMonto.Value := 0;
 end;
 
 function TdmPLDAlertas.GetNombreArchivo(IdPLDALertaTipo, Factor, Year: Word): TFileName;

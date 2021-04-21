@@ -138,7 +138,7 @@ type
     actAlertasPLD: TAction;
     dxBarLargeButton41: TdxBarLargeButton;
     actRptPagoAplicacionesMensual: TAction;
-    actAgregarAlerta: TAction;
+    actAgregarAlerta3: TAction;
     dxBarButton11: TdxBarButton;
     actPLDAlertasConfiguracion: TAction;
     dxBarLargeButton20: TdxBarLargeButton;
@@ -172,6 +172,8 @@ type
     dxBarButton28: TdxBarButton;
     actPerfiles: TAction;
     dxBrLrgBtnPerfiles: TdxBarLargeButton;
+    actAgregarAlerta2: TAction;
+    dxBarButton29: TdxBarButton;
     procedure actCatalogoExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -179,7 +181,8 @@ type
     procedure dxRibbon1ApplicationMenuClick(Sender: TdxCustomRibbon;
       var AHandled: Boolean);
     procedure actPoneFechaActualExecute(Sender: TObject);
-    procedure actAgregarAlertaExecute(Sender: TObject);
+    procedure actAgregarAlerta3Execute(Sender: TObject);
+    procedure actAgregarAlerta2Execute(Sender: TObject);
   private
     procedure UsarPermisos;
     { Private declarations }
@@ -213,14 +216,27 @@ uses ConfiguracionDM, UbicacionesDM, BancosDM, MonedasDM, PuestosDM, PlazasTurno
   PLDAlertasConfiguracionDM, MatrizRiesgoDM, EvaluacionesRiesgoDM,
   PagosRealesDM, RptCFDIContabilidadDM, UsuariosPerfilesDM;
 
-procedure TfrmMain.actAgregarAlertaExecute(Sender: TObject);
+procedure TfrmMain.actAgregarAlerta2Execute(Sender: TObject);
 var
   dmPLDAlertas: TdmPLDAlertas;
 begin
   inherited;
   dmPLDAlertas := TdmPLDAlertas.Create(Self);
   try
-    dmPLDAlertas.GenerarAlertaPreocupante;
+    dmPLDAlertas.GenerarAlerta(pldtInusual);
+  finally
+    dmPLDAlertas.Free;
+  end;
+end;
+
+procedure TfrmMain.actAgregarAlerta3Execute(Sender: TObject);
+var
+  dmPLDAlertas: TdmPLDAlertas;
+begin
+  inherited;
+  dmPLDAlertas := TdmPLDAlertas.Create(Self);
+  try
+    dmPLDAlertas.GenerarAlerta(pldtPreocupante);
   finally
     dmPLDAlertas.Free;
   end;
@@ -387,7 +403,8 @@ begin
   actNotasCredito.Enabled       := Conected;
   actAlertasPLD.Enabled         := Conected and _dmConection.OficialCumplimiento;
   actPLDAlertasConfiguracion.Enabled := Conected and _dmConection.OficialCumplimiento;
-  actAgregarAlerta.Enabled      := Conected;
+  actAgregarAlerta2.Enabled     := Conected;
+  actAgregarAlerta3.Enabled     := Conected;
   actMatrizRiesgo.Enabled       := Conected;
   actEvaluacionRiesgo.Enabled   := Conected;
   actRptCFDIContabilidad.Enabled  := Conected;

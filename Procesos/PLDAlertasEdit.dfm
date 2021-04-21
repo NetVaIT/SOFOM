@@ -132,14 +132,12 @@ inherited frmPLDAlertasEdit: TfrmPLDAlertasEdit
     object cxTabSheet1: TcxTabSheet
       Caption = 'Cliente'
       ImageIndex = 1
-      ExplicitLeft = 4
-      ExplicitTop = 28
       object Label2: TLabel
         Left = 16
         Top = 88
-        Width = 68
+        Width = 94
         Height = 13
-        Caption = 'Fechade pago'
+        Caption = 'Fecha de operaci'#243'n'
         FocusControl = cxDBDateEdit2
       end
       object Label3: TLabel
@@ -207,7 +205,7 @@ inherited frmPLDAlertasEdit: TfrmPLDAlertasEdit
       object cxDBDateEdit2: TcxDBDateEdit
         Left = 16
         Top = 104
-        DataBinding.DataField = 'FechaPago'
+        DataBinding.DataField = 'FechaOperacion'
         DataBinding.DataSource = DataSource
         Enabled = False
         TabOrder = 2

@@ -1,5 +1,7 @@
 inherited frmPLDAlertas: TfrmPLDAlertas
   Caption = 'frmPLDAlertas'
+  ExplicitWidth = 651
+  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlMaster: TPanel
@@ -11,6 +13,10 @@ inherited frmPLDAlertas: TfrmPLDAlertas
         end
         object tvMasterIdPersona: TcxGridDBColumn
           DataBinding.FieldName = 'IdPersona'
+          Visible = False
+        end
+        object tvMasterIdAnexo: TcxGridDBColumn
+          DataBinding.FieldName = 'IdAnexo'
           Visible = False
         end
         object tvMasterIdPago: TcxGridDBColumn
@@ -46,15 +52,15 @@ inherited frmPLDAlertas: TfrmPLDAlertas
           DataBinding.FieldName = 'SoloEfectivo'
           Width = 67
         end
-        object tvMasterFechaPago: TcxGridDBColumn
-          DataBinding.FieldName = 'FechaPago'
-        end
         object tvMasterMetodoPago: TcxGridDBColumn
           DataBinding.FieldName = 'MetodoPago'
           Width = 200
         end
         object tvMasterFechaDeteccion: TcxGridDBColumn
           DataBinding.FieldName = 'FechaDeteccion'
+        end
+        object tvMasterFechaOperacion: TcxGridDBColumn
+          DataBinding.FieldName = 'FechaOperacion'
         end
         object tvMasterOperacionTipo: TcxGridDBColumn
           DataBinding.FieldName = 'OperacionTipo'
@@ -86,12 +92,19 @@ inherited frmPLDAlertas: TfrmPLDAlertas
           DataBinding.FieldName = 'Razon'
           Width = 500
         end
+        object tvMasterCapturaManual: TcxGridDBColumn
+          DataBinding.FieldName = 'CapturaManual'
+          Visible = False
+        end
         object tvMasterR24: TcxGridDBColumn
           DataBinding.FieldName = 'R24'
           Visible = False
         end
       end
     end
+  end
+  inherited DataSource: TDataSource
+    DataSet = dmPLDAlertas.adodsMaster
   end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
@@ -199,16 +212,6 @@ inherited frmPLDAlertas: TfrmPLDAlertas
       end
       item
         Component = tvMasterFechaDeteccion
-        Properties.Strings = (
-          'GroupIndex'
-          'SortIndex'
-          'SortOrder'
-          'Summary'
-          'Visible'
-          'Width')
-      end
-      item
-        Component = tvMasterFechaPago
         Properties.Strings = (
           'GroupIndex'
           'SortIndex'

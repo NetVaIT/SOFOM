@@ -42,7 +42,6 @@ type
     tvMasterPeriodoMes: TcxGridDBColumn;
     tvMasterPeriodoAnio: TcxGridDBColumn;
     tvMasterSoloEfectivo: TcxGridDBColumn;
-    tvMasterFechaPago: TcxGridDBColumn;
     tvMasterMetodoPago: TcxGridDBColumn;
     tvMasterFechaDeteccion: TcxGridDBColumn;
     tvMasterTotal: TcxGridDBColumn;
@@ -56,6 +55,9 @@ type
     tvMasterEstatus: TcxGridDBColumn;
     dxbbGenerar: TdxBarButton;
     dxbbArchivo: TdxBarButton;
+    tvMasterIdAnexo: TcxGridDBColumn;
+    tvMasterFechaOperacion: TcxGridDBColumn;
+    tvMasterCapturaManual: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private

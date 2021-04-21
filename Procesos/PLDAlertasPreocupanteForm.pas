@@ -19,18 +19,43 @@ uses
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, cxContainer,
   cxEdit, cxTextEdit, cxMemo, cxDBEdit, Vcl.StdCtrls, Vcl.ImgList,
   System.Actions, Vcl.ActnList, Data.DB, Vcl.ExtCtrls, cxPC, cxMaskEdit,
-  cxDropDownEdit, cxCalendar;
+  cxDropDownEdit, cxCalendar, ProcesosType, cxLookupEdit, cxDBLookupEdit,
+  cxDBLookupComboBox;
 
 type
   TfrmPLDAlertasPreocupante = class(T_frmEdit)
-    Label11: TLabel;
-    cxDBMemo1: TcxDBMemo;
+    Panel1: TPanel;
     Label1: TLabel;
     cxDBDateEdit1: TcxDBDateEdit;
+    Panel2: TPanel;
+    Label11: TLabel;
+    cxDBMemo1: TcxDBMemo;
+    pnlContrado: TPanel;
+    Label13: TLabel;
+    cmbAnexo: TcxDBLookupComboBox;
+    dsClientes: TDataSource;
+    dsAnexos: TDataSource;
+    Label2: TLabel;
+    cxDBDateEdit2: TcxDBDateEdit;
+    Label4: TLabel;
+    cmbOperacionTipo: TcxDBLookupComboBox;
+    dsOperacionTipo: TDataSource;
+    pnlPersona: TPanel;
+    Label3: TLabel;
+    cmbCliente: TcxDBLookupComboBox;
+    Label5: TLabel;
+    cxDBTextEdit2: TcxDBTextEdit;
+    Label6: TLabel;
+    cmbMetodosPago: TcxDBLookupComboBox;
+    dsMetodosPago: TDataSource;
+    procedure FormShow(Sender: TObject);
   private
+    FTipo: TPLDAlertasTipos;
+    procedure SetTipo(const Value: TPLDAlertasTipos);
     { Private declarations }
   public
     { Public declarations }
+    property Tipo: TPLDAlertasTipos read FTipo write SetTipo;
   end;
 
 implementation
@@ -38,5 +63,22 @@ implementation
 {$R *.dfm}
 
 uses PLDAlertasDM;
+
+procedure TfrmPLDAlertasPreocupante.FormShow(Sender: TObject);
+begin
+  inherited;
+  pnlContrado.Visible := (Tipo <> pldtPreocupante);
+end;
+
+procedure TfrmPLDAlertasPreocupante.SetTipo(const Value: TPLDAlertasTipos);
+begin
+  FTipo := Value;
+  case Value of
+    pldtNone: tsGeneral.Caption:= 'General';
+    pldtRelevante: tsGeneral.Caption:= 'Relevante';
+    pldtInusual: tsGeneral.Caption:= 'Inusual';
+    pldtPreocupante: tsGeneral.Caption:= 'Preocupante';
+  end;
+end;
 
 end.
